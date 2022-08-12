@@ -7,7 +7,6 @@ Este é um projeto em desenvolvimento, involuntariamente influenciado por [amand
 
 
 ## Requisitos Mínimos 
----
 Para funcionamento dessa metodologia, é necessário instalar as seguintes `bibliotecas de Python`:
 ```
 numpy
@@ -17,7 +16,6 @@ pandas
 
 
 ## Leitura de Dados
----
 Os Dados do Sistema de Potência em estudo devem estar organizados em um arquivo `.pwf`.
 
 Um exemplo da leitura de dados do arquivo `.pwf` é mostrado abaixo:
@@ -34,8 +32,7 @@ dbarra, dlinha = LeituraPWF(arqv=arqv)
 
 
 
-## Matriz Admitância 
----    
+## Matriz Admitância
 Antes de inicializar o fluxo de potência, a matriz admitância (Y<sub>BARRA</sub>) necessita ser calculada. 
 
 Esse processo ocorre dentro da chamada da classe `PowerFlow()`.
@@ -45,7 +42,6 @@ Para mais detalhes sobre o cálculo e montagem dessa matriz, [leia o código](Ex
 
 
 ## Formulação da Matriz Jacobiana
----
 A Matriz Jacobiana pode é modelada de uma única maneira:
 - `'Completa':` Configuração tradicional, vetor coluna ∆P-∆Q associado ao vetor coluna ∆θ-∆V ([Ver exemplo](Exemplos/Jacobiana/Completa-Jacobiana.md)).
     - Para equações de controle `y` adicionais, associadas a variáveis de estado `x`, a formulação é reestruturada para ∆P-∆Q-∆y associado ao vetor coluna ∆θ-∆V-∆x.
@@ -54,7 +50,6 @@ A Matriz Jacobiana pode é modelada de uma única maneira:
 
 
 ## Fluxo de Potência
----
 A chamada do fluxo de potência é apresentada a seguir:
 
 > **Nota** O resto do código é omitido. Verifique este [exemplo](Exemplos/example-main.py) para ter uma experiência completa.
@@ -70,14 +65,13 @@ PF = PowerFlow(dbarra=dbarra, dlinha=dlinha).NewtonRaphson()
 
 
 ## Relatório
----
 A solução de fluxo de potência Newton-Raphson gera 2 relatórios principais:
 
 - `'RBARRA':` Gera o Resultado de Dados de Barra em caso Convergente ou Divergente.
 
 - `'RLINHA':` Gera o Resultado de Dados de Linha em caso Convergente ou Divergente.
 
-> Consulte o [exemplo](Exemplos/Relatorios/Relatorios.md) para entender como esses dados são armazenados e apresentados nos respectivos relatórios.
+> Consulte o [arquivo exemplo](Exemplos/Relatorios/Relatorios.md) para entender como esses dados são armazenados e apresentados nos respectivos relatórios.
 
 <!-- - `'RBARGER':` Gera apenas o Resultado de Dados de Barras Geradoras em caso Convergente ou Divergente. (Consulte [exemplo](Exemplos/Reports/RBARGER.md) para entender como esses dados são armazenados e apresentados). -->
 

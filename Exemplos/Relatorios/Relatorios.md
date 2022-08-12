@@ -1,6 +1,6 @@
 # Relatórios de Simulação
 ## Relatório de Barra (`RBARRA`)
----
+
 No relatório de barras é feito um levantamento dos resultados de tensão nodal (magnitude e ângulo de fase), potência gerada ativa e reativa, potência demandada ativa e reativa, e potência reativa de equipamento elétrico shunt para todas as barras do SEP em estudo.
 
 O relatório de barras é gerado automaticamente e é salvo no diretório `/Sistemas/Resultados/RelatorioBarra/`.
@@ -22,7 +22,6 @@ Mês dia, Ano
 ```
 
 ## Relatório de Linha (`RLINHA`)
----
 No relatório de linhas é feito um levantamento dos resultados de potência ativa e reativa entre barras `k` e `m`, potência ativa e reativa entre barras `m` e `k`, assim como um levantamento de perdas de potência ativa e reativa para todas as linhas do SEP em estudo.
 
 O relatório de linhas é gerado automaticamente e é salvo no diretório `/Sistemas/Resultados/RelatorioLinha/`.
