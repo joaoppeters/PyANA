@@ -1,0 +1,18 @@
+TITU
+Barra Infinita
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
+TEPA  1E-4  TEPR  1E-4  BASE   100  ACIT   10
+99999
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+   1 AL2   BARRA--INFT  1000 0.  0.   0.  -999999999       0.   0.   0.    11000
+   2 AL0   BARRA--LOAD  1000 0.  0.   0.     0.   0.       50.  0.   0.    11000
+99999
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+   1         2  1      0.     5.   
+99999
+EXLF NEWT
+RELA RBAR RLIN
+FIM

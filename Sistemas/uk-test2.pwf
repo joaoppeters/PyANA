@@ -1,0 +1,40 @@
+TITU
+Generic Network UKGDS1-EHV1                                                     
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
+BASE   100. DASE   100. TEPA  .1E-4 EXST  .4E-4 TETP     5. TBPA     5.
+TLPP     1. TEPR  .1E-4 QLST  .4E-4 TLPR     .1 TLPQ     2. TSBZ    .01
+TSBA     5. ASTP    .05 VSTP     5. TLVC     .5 TLTC    .01 TSFR  .1E-7
+ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
+PGER    30. TPST  .2E-4 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
+ACIT     30 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+PDIT     10 LCRT     96 LPRT     60 CSTP     5. ASDC     1.
+ICIT   9999 DMAX      5 FDIV     2. ICMN    .05 VART     5. TSTP     33
+ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.
+VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
+TLSI     0. NDIR    20. STTR     5. TRPT   100. STIR     1. BFPO     1.
+LFPO     .1 TLMT     .5 TLMF     .5 TLMG     .5                        
+99999
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+  100 L2 ABARRA----100 A1000  0.17.5530.79 -60.  60.                       11000                                   
+  301 L  BBARRA----301 A 968-.07                                           11000                                   
+  302 L  BBARRA----302 A1045-.01                                           11000                                   
+  303 L  BBARRA----303 A1045-.01                                           11000                                   
+  304 L  BBARRA----304 A 9862.82                                           11000                                   
+  305 L  BBARRA----305 A1042.165                                           11000                                   
+  306 L  BBARRA----306 A1042.165                                           11000                                   
+  307 L  BBARRA----307 A1042.248                                           11000                                   
+  308 L  BBARRA----308 A1042.248                                           11000                                   
+  309 L  BBARRA----309 A10361.05                                           11000                                   
+  310 L  BBARRA----310 A1014-.37                                           11000                                   
+  311 L  BBARRA----311 A 986-.45                                           11000                                   
+  312 L  BBARRA----312 A 985-.59                                           11000                                   
+  313 L  BBARRA----313 A 982-.58                                           11000                                   
+  314 L  BBARRA----314 A 978.218                                           11000                                   
+  315 L  BBARRA----315 A 978.235                                           11000                                   
+  316 L  BBARRA----316 A 974.125                                           11000                                   
+  317 L  BBARRA----317 A 974.125                                           11000                                   
+  318 L  BBARRA----318 A 975.478                                           11000                                   
+  319 L  BBARRA----319 A 975.478                                           11000                                   
+  320 L  BBARRA----320 A10643.44                                           11000                                   

@@ -1,0 +1,41 @@
+!      ---- Modo de Desenho da Barra ---
+BU
+!      ---- Tamanho da Fonte das Legendas ---
+F 1
+!      ---- Cores (Fundo - Identificador - Numero - Valor - Grid - Fluxo Ativo - Fluxo Reativo)---
+RF 255 255 255
+RI 128 0 128
+RN 128 0 128
+RV 0 0 255
+RG 0 0 0
+RA 0 0 255
+RR 255 0 0
+!      ---- Grupos Base de Tensão ----
+!Ten  lar  R   G   B ID
+!    ---- Componentes ----
+!Numero Tipo Rot Hac Px Py Cor sl SubTp ch1 ch2 ch3 ch4 Descrip
+C 28  1 513 0    -64    -80  0  0 -  1  0  0  0 0
+C 29  1 513 0    128    -80  0  0 -  2  0  0  0 0
+C 32  1 513 0    336    -80  0  0 -  3  0  0  0 0
+C 31  4 1 0   -144    -64  0  0 -  1  1  0  0 0
+C 43  9 1 0    224    -64  0  0 -  1  2  3  0 0
+C 45  5 0 0 290.891 22.1128  0  0 -  1  3  0  0 0
+C 46  6 0 0 317.464 -16.0576  0  0 -  1  3  0  0 0
+!      ---- Linhas ----
+!Numero Tipo hac sl De Para ch1 nsg segmentos
+L30 14 0 0  28  29  1  1 25 
+!     ---- Ligacoes ----
+!Numero Flags cor Inic Coni Fin Conf Linhas nqb quebras
+U25 0  0  28   2  29   2  30   0 
+U26 0  0  31   1  28   2  -1   0 
+U27 0  0  32   2  43   2  -1   0 
+U28 0  0  29   2  43   1  -1   0 
+U29 0  0  45   1  32   5  -1   0 
+U30 0  0  46   1  32   5  -1   0 
+!    ---- Posição de Legenda de Componentes ----
+!NumCompo Label Rot Px Py
+X  28  2  1     2.94    -3.25
+X  29  2  1     2.45    -3.25
+X  32  2  1     2.94    -3.25
+!     ---- Posição de Legenda de Ligacoes ----
+!Lado NumLig Label Px Py

@@ -1,0 +1,31 @@
+TITU
+CONTROLE DE TENSAO - PPEE 2019 - CAP14 PKundur p968                              
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
+TEPA  1E-6
+TEPR  1E-6 
+VDVN    1.
+VDVM  400.               
+99999
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+    1 L2  BARRA-001     1020  0.          -999999999                       11000                                   
+    2 L   BARRA-002     1000  0.                                           11000  
+    3 L   BARRA-003     1000  0.                                           11000          
+99999
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+    1         2 1         0.01                        
+    2         3 1         1.0
+99999
+DCER
+(No ) O Gr Un (Kb ) (Incl) ( Qg)( Qn)( Qm) C E
+    3   10  1     2     0.   0.0-200. 200. P L
+99999
+DMET
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
+AREA     1
+99999
+EXLF NEWT
+RELA RBAR RCER        
+FIM

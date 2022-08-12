@@ -1,0 +1,93 @@
+!      ---- Modo de Desenho da Barra ---
+BU
+!      ---- Tamanho da Fonte das Legendas ---
+F 1
+!      ---- Cores (Fundo - Identificador - Numero - Valor - Grid - Fluxo Ativo - Fluxo Reativo)---
+RF 255 255 255
+RI 128 0 128
+RN 128 0 128
+RV 0 0 255
+RG 0 0 0
+RA 0 0 255
+RR 255 0 0
+!      ---- Grupos Base de Tensão ----
+!Ten  lar  R   G   B ID
+G 1 1 0 0 0  0
+G 0 1 0 0 0  N
+G 0 1 0 0 0  L
+G 0 1 0 0 0  M
+G 0 1 0 0 0  P
+G 0 1 0 0 0  I
+G 0 1 0 0 0  A
+G 0 1 0 0 0  C
+G 0 1 0 0 0  E
+G 0 1 0 0 0  F
+G 0 1 0 0 0  G
+G 0 1 0 0 0  K
+G 0 1 0 0 0  R
+G 0 1 0 0 0  H
+G 0 1 0 0 0  D
+G 0 1 0 0 0  B
+G 0 1 0 0 0  W
+G 0 1 0 0 0  S
+G 0 1 0 0 0  Q
+G 0 1 0 0 0  3
+G 0 1 0 0 0  T
+G 0 1 0 0 0  Y
+G 0 1 0 0 0  Z
+G 0 1 0 0 0  X
+G 0 1 0 0 0  U
+G 0 1 0 0 0  4
+G 0 1 0 0 0  5
+G 0 1 0 0 0  V
+G 0 1 0 0 0  1
+G 0 1 0 0 0  2
+!    ---- Componentes ----
+!Numero Tipo Rot Hac Px Py Cor sl SubTp ch1 ch2 ch3 ch4 Descrip
+C  1  1 257 0    -64    -80  1  0 - 10  0  0  0 0
+C  2  1 1793 0    144   -128  1  0 - 105  0  0  0 0
+C  4  1 257 0    -64     16  1  0 - 11  0  0  0 0
+C 14  1 258 0   -112    160  1  0 - 181  0  0  0 0
+C 16  1 1280 0   -144    320  1  0 - 185  0  0  0 0
+C592  1 257 0    368     16  1  0 - 106  0  0  0 0
+C  3  9 1 0     32    -64  0  0 -  1 105 10  0 0
+C  5  9 1 0     32     32  0  0 -  1 105 11  0 0
+C  6  4 1 0   -128    -64  1  0 -  1 10  0  0 0
+C  7  4 1 0   -128     32  1  0 -  1 11  0  0 0
+C 15  9 3 0      0     96  0  0 -  1 181 105  0 0
+C588  5 0 0   -128    368  1  0 -  1 185  0  0 0
+C589  9 2 0     32    240  0  0 -  1 185 105  0 0
+C591  9 2 0   -128    240  0  0 -  1 185 181  0 0
+C595  4 3 0    448     32  1  0 -  1 106  0  0 0
+!      ---- Linhas ----
+!Numero Tipo hac sl De Para ch1 nsg segmentos
+L593 14 0 0   2 592  1  1 22 
+!     ---- Ligacoes ----
+!Numero Flags cor Inic Coni Fin Conf Linhas nqb quebras
+U 2 0  1   3   2   1   2  -1   0 
+U 3 0  1   5   1   2  11  -1   0 
+U 4 0  1   5   2   4   2  -1   0 
+U 5 0  1   6   1   1   2  -1   0 
+U 6 0  1   7   1   4   2  -1   0 
+U11 0  1  15   2   2  15  -1   0 
+U 1 0  1   3   1   2   5  -1   0 
+U10 0  1  15   1  14   2  -1   1    -128     96
+U15 0  1 588   1  16   2  -1   0 
+U16 0  1  16  12 589   1  -1   0 
+U17 0  1   2  19 589   2  -1   1      32    160
+U20 0  1  16   2 591   1  -1   0 
+U21 0  1  14   2 591   2  -1   0 
+U22 0  1   2  11 592   2 593   0 
+U23 0  1 595   1 592   2  -1   0 
+!    ---- Posição de Legenda de Componentes ----
+!NumCompo Label Rot Px Py
+X  14  0  2    43.52    -9.31
+X  14  1  2    42.10     4.41
+X  14  2  2   -40.74     5.36
+X  14  3  2   -39.65    21.86
+X  16  0  0    96.00    24.65
+X  16  1  0    96.00    40.65
+X  16  2  0   -37.90     1.87
+X  16  3  0   -40.35    13.68
+!     ---- Posição de Legenda de Ligacoes ----
+!Lado NumLig Label Px Py

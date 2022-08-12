@@ -1,0 +1,64 @@
+(=======================================================================
+( TITULO DO CASO
+(=======================================================================
+TITU
+Sistema Teste - 6 barras
+(
+(=======================================================================
+( DADOS DE OPCOES DEFAULT DE EXECUCAO
+(=======================================================================
+DOPC IMPR
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+QLIM L CREM d NEWT L RCVG L RMON L
+99999
+(
+(=======================================================================
+( CONSTANTES DO PROGRAMA
+(=======================================================================
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
+BASE   100. DASE   100. TEPA  .1E-9 EXST  .4E-9 TETP     5. TBPA  .1E-5
+TLPP     1. TEPR  .1E-9 QLST  .4E-9 TLPR   .001 TLPQ     2. TSBZ    .01
+TSBA     5. ASTP    .05 VSTP     5. TLVC  .1E-5 TLTC    .01 TSFR  .1E-7
+ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
+PGER    30. TPST  .2E-9 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
+ACIT     20 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+PDIT     10 LCRT     24 LPRT     60 CSTP   500.
+ICIT    250 DMAX     50 FDIV    1.5 ICMN    .05 VART     5. TSTP     32
+ICMV   1.01 APAS   99.5 CPAR    90. VAVT     2. VAVF     5. VMVF    15.
+VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
+99999
+(
+(=======================================================================
+( DADOS DE BARRA CA
+(=======================================================================
+DBAR
+(No )OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)
+    1  2  Gerador 01    1022  0.  50.10.04 -10.  26.     4                 11000
+    2  1  Gerador 02    1022 -2.  90.20.08 -30.  78.     4                 11000
+    3     Barra Term    1010-5.5                                           11000
+    4     Barra PQ      1000-13.                           180.   0.       11000
+    5     Barra PQ      1000-23.                            70.   0.       21000
+    6  1  Gerador 03    1000-21.  20.2.621 -10.  26.     5                 21000
+99999
+(
+(=======================================================================
+( DADOS DE CIRCUITOS CA
+(=======================================================================
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns
+    1         3 1            20.
+    2         3 1             7.
+    3         4 1            18.
+    3         4 2    3.      18.
+    4         5 1    5.      90.
+    5         6 1    5.      20.
+99999
+DGER
+(No ) O (Pmn ) (Pmx ) ( Fp) (FpR) (FPn) (Fa) (Fr) (Ag) ( Xq) (Sno) ( R )
+    1       0.  1000.    2.    2.                                  5.00
+    2       0.  1000.    4.    4.                                  2.50
+    6       0.  99999    1.    1.                                  10.0 
+99999
+(
+FIM
