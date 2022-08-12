@@ -195,7 +195,7 @@ class PowerFlow:
 
         q *= self.sol['voltage'][bar]
 
-        self.sol['reactive'][bar] = (q * self.sbase) + self.dbarra['potencia_reativa'][bar]
+        self.sol['reactive'][bar] = (q * self.sbase) + self.dbarra['demanda_reativa'][bar]
 
         return q
 

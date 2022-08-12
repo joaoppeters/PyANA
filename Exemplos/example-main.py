@@ -7,8 +7,8 @@ from os import getcwd
 dir = getcwd() + '/PowerFlow/Sistemas/'
 Folder(dir=dir)
 
-sistema = 'ieee14.pwf'
-dbarra, dlinha = LeituraPWF()._readfile(arqv=dir + "/" + sistema)
+sistema = '2b-teste.pwf'
+dbarra, dlinha = LeituraPWF()._readfile(arqv=dir + sistema)
 
 PF = PowerFlow(dbarra=dbarra, dlinha=dlinha, dir=dir, sistema=sistema).NewtonRaphson()
 
