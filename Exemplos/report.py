@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 from os import path
+from numpy import abs
 
 class Relatorio:
     """Classe para geração de relatórios
@@ -82,34 +83,34 @@ class Relatorio:
             )
         )
         file.write("\n")
-        file.write("-"*70)
+        file.write("-"*89)
         file.write("\n")
-        file.write(" "*28 + "SISTEMA {}\n".format(self.sistema.upper()))
-        file.write(" "*26 + "RELATÓRIO DE LINHAS\n")
-        file.write("-"*70)
+        file.write(" "*37 + "SISTEMA {}\n".format(self.sistema.upper()))
+        file.write(" "*35 + "RELATÓRIO DE LINHAS\n")
+        file.write("-"*89)
         file.write("\n")
-        file.write(" "*29 + "{} iterações\n".format(self.sol['iteracoes']))
-        file.write("-"*70)
+        file.write(" "*39 + "{} iterações\n".format(self.sol['iteracoes']))
+        file.write("-"*89)
         file.write("\n")
-        file.write("|     BARRA      |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    |\n")
-        file.write("-"*70)
+        file.write("|     BARRA      |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELÉTRICAS |\n")
+        file.write("-"*89)
         file.write("\n")
-        file.write("|  DE   |  PARA  |  Pkm[MW]  |  Qkm[Mvar]  |  Pmk[MW]  |  Qmk[Mvar]  |\n")
-        file.write("-"*70)
+        file.write("|  DE   |  PARA  |  Pkm[MW]  |  Qkm[Mvar]  |  Pmk[MW]  |  Qmk[Mvar]  |    MW   |  Mvar  |\n")
+        file.write("-"*89)
         # file.write("\n")
         for i in range(0, self.sol['nlin']):
             if i % 10 == 0 and i != 0:
                 file.write("\n\n")
-                file.write("-"*70)
+                file.write("-"*89)
                 file.write("\n")
-                file.write("|     BARRA      |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    |\n")
-                file.write("-"*70)
+                file.write("|     BARRA      |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELÉTRICAS |\n")
+                file.write("-"*89)
                 file.write("\n")
-                file.write("|  DE   |  PARA  |  Pkm[MW]  |  Qkm[Mvar]  |  Pmk[MW]  |  Qmk[Mvar]  |\n")
-                file.write("-"*70)
+                file.write("|  DE   |  PARA  |  Pkm[MW]  |  Qkm[Mvar]  |  Pmk[MW]  |  Qmk[Mvar]  |    MW   |  Mvar  |\n")
+                file.write("-"*89)
 
-            file.write(f"\n|{self.sol['dbarra']['nome'][self.sol['dlinha']['from'][i] - 1]:>7}{self.sol['dbarra']['nome'][self.sol['dlinha']['to'][i] - 1]:>9}{self.sol['active_flow_F2'][i]:>11.3f}{self.sol['reactive_flow_F2'][i]:>12.3f}{self.sol['active_flow_2F'][i]:>14.3f}{self.sol['reactive_flow_2F'][i]:>12.3f}   |")
+            file.write(f"\n|{self.sol['dbarra']['nome'][self.sol['dlinha']['from'][i] - 1]:>7}{self.sol['dbarra']['nome'][self.sol['dlinha']['to'][i] - 1]:>9}{self.sol['active_flow_F2'][i]:>11.3f}{self.sol['reactive_flow_F2'][i]:>12.3f}{self.sol['active_flow_2F'][i]:>14.3f}{self.sol['reactive_flow_2F'][i]:>12.3f}{abs(self.sol['active_flow_F2'][i])-abs(self.sol['active_flow_2F'][i]):>11.3f}{abs(self.sol['reactive_flow_F2'][i])-abs(self.sol['reactive_flow_2F'][i]):>9.3f} |")
             file.write("\n")
-            file.write("-"*70)
+            file.write("-"*89)
 
         file.close()

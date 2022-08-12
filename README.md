@@ -50,6 +50,8 @@ A Matriz Jacobiana pode é modelada de uma única maneira:
 - `'Completa':` Configuração tradicional, vetor coluna ∆P-∆Q associado ao vetor coluna ∆θ-∆V ([Ver exemplo](Exemplos/Jacobiana/Completa-Jacobiana.md)).
     - Para equações de controle `y` adicionais, associadas a variáveis de estado `x`, a formulação é reestruturada para ∆P-∆Q-∆y associado ao vetor coluna ∆θ-∆V-∆x.
 
+> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](Exemplos/Jacobiana/Alternada-Jacobiana.md) ou mesmo [`Reduzida`](Exemplos/Jacobiana/Reduzida-Jacobiana.md)
+
 
 ## Fluxo de Potência
 ---
@@ -71,9 +73,11 @@ PF = PowerFlow(dbarra=dbarra, dlinha=dlinha).NewtonRaphson()
 ---
 A solução de fluxo de potência Newton-Raphson gera 2 relatórios principais:
 
-- `'RBARRA':` Gera o Resultado de Dados de Barra em caso Convergente ou Divergente. (Consulte [exemplo](Exemplos/Relatorios/RBARRA.md) para entender como esses dados são armazenados e apresentados).
+- `'RBARRA':` Gera o Resultado de Dados de Barra em caso Convergente ou Divergente.
 
-- `'RLINHA':` Gera o Resultado de Dados de Linha em caso Convergente ou Divergente. (Consulte [example](Exemplos/Reports/RLINHA.md) para entender como esses dados são armazenados e apresentados).
+- `'RLINHA':` Gera o Resultado de Dados de Linha em caso Convergente ou Divergente.
+
+> Consulte o [exemplo](Exemplos/Relatorios/Relatorios.md) para entender como esses dados são armazenados e apresentados nos respectivos relatórios.
 
 <!-- - `'RBARGER':` Gera apenas o Resultado de Dados de Barras Geradoras em caso Convergente ou Divergente. (Consulte [exemplo](Exemplos/Reports/RBARGER.md) para entender como esses dados são armazenados e apresentados). -->
 
