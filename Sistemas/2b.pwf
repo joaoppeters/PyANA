@@ -18,7 +18,7 @@ VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
 99999
 DBAR
 (No )OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)
- 0001  2  BARRA-REFER  A1000  0.          -100. 100.                       11000
+ 0001  2  BARRA-REFER  A1000  0.          -999999999                       11000
  0002     BARRA-CARGA  A1000  0.                           100.            11000
 99999
 DLIN

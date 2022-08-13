@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 from os import path
-from numpy import abs
+from numpy import abs, degrees
 
 class Relatorio:
     """Classe para geração de relatórios
@@ -67,7 +67,7 @@ class Relatorio:
                 file.write("|   NOME   | T |   MOD   |  ANG  |    MW   |    Mvar   |   MW   |   Mvar  |   Mvar  |\n")
                 file.write("-"*85)
 
-            file.write(f"\n| {self.sol['dbarra']['nome'][i]:<10}{self.sol['dbarra']['tipo'][i]:>2}{self.sol['voltage'][i]:>9.3f}{self.sol['theta'][i]:>8.1f}{self.sol['active'][i]:>11.2f}{self.sol['reactive'][i]:>11.2f}{self.sol['dbarra']['demanda_ativa'][i]:>10.2f}{self.sol['dbarra']['demanda_reativa'][i]:>9.2f}{(self.sol['voltage'][i]**2)*self.sol['dbarra']['capacitor_reator'][i]:>10.2f}  |")
+            file.write(f"\n| {self.sol['dbarra']['nome'][i]:<10}{self.sol['dbarra']['tipo'][i]:>2}{self.sol['voltage'][i]:>9.3f}{degrees(self.sol['theta'][i]):>8.1f}{self.sol['active'][i]:>11.2f}{self.sol['reactive'][i]:>11.2f}{self.sol['dbarra']['demanda_ativa'][i]:>10.2f}{self.sol['dbarra']['demanda_reativa'][i]:>9.2f}{(self.sol['voltage'][i]**2)*self.sol['dbarra']['capacitor_reator'][i]:>10.2f}  |")
             file.write("\n")
             file.write("-"*85)
 

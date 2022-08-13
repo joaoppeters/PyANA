@@ -272,7 +272,7 @@ class LeituraPWF:
                     'tipo': 'int',
                     'grupo_base_tensao': 'int',
                     'nome': 'str',
-                    'grupo_limite_tensao': 'int',
+                    'grupo_limite_tensao': 'object',
                     'tensao': 'float',
                     'angulo': 'float',
                     'potencia_ativa': 'float',
