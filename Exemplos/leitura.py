@@ -268,7 +268,7 @@ class LeituraPWF:
                 {
                     'numero': 'int',
                     'operacao': 'int',
-                    'estado': 'int',
+                    'estado': 'object',
                     'tipo': 'int',
                     'grupo_base_tensao': 'int',
                     'nome': 'str',
