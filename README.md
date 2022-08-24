@@ -64,7 +64,7 @@ Para realizar a análise de fluxo de potência em regime permanente, `utilize a 
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control,)
+PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, rel=rel,)
 ```
 - `arqv: str, obrigatório, valor padrão None`
     - **Variável que indica diretório onde está localizado o SEP em estudo.**
@@ -119,32 +119,28 @@ PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=cont
         - `'SVC'` - controle de magnitude de tensão por meio de compensador estático de potência reativa.
         - `'VCTRL'` - controle de magnitude de tensão de todas as barras.
 
+- `rel: str, opcional, valor padrão None`
+    - **Determina o conjunto de relatórios a serem gerados.**
+    - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
+    - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
+    - **Opções:**
+        - `'RBARRA':` Gera o relatório de Dados de Barra em caso Convergente ou Divergente.
+            > [Consulte o arquivo exemplo.](docs/Relatorios/rbarra.md)
 
+        - `'RLINHA':` Gera o relatório de Dados de Linha em caso Convergente ou Divergente.
+            > [Consulte o arquivo exemplo.](docs/Relatorios/rlinha.md)
 
-## Relatório
-A solução de fluxo de potência pode gerar os seguintes relatórios:
+        - `'RGERA':` Gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente. 
+            > [Consulte o arquivo exemplo.](docs/Relatorios/rgera.md)
 
-- `'RBARRA':` Gera o relatório de Dados de Barra em caso Convergente ou Divergente.
-    > [Consulte o arquivo exemplo.](docs/Relatorios/rbarra.md)
+        - `'RSVC':` Gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.
+            > [Consulte o arquivo exemplo.](docs/Relatorios/rsvc.md)
 
-- `'RLINHA':` Gera o relatório de Dados de Linha em caso Convergente ou Divergente.
-    > [Consulte o arquivo exemplo.](docs/Relatorios/rlinha.md)
-
-- `'RGERA':` Gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente. 
-    > [Consulte o arquivo exemplo.](docs/Relatorios/rgera.md)
-
-- `'RSVC':` Gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.
-    > [Consulte o arquivo exemplo.](docs/Relatorios/rsvc.md)
-
-- `'RCPF':` Gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.
-    > [Consulte o arquivo exemplo.](docs/Relatorios/rcpf.md)
+        - `'RCPF':` Gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.
+            > [Consulte o arquivo exemplo.](docs/Relatorios/rcpf.md)
 
 ```Python
 from powerflow import PowerFlow
 
-a = PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, rel='RBARRA RLINHA RGERA RSVC RCPF',)
+PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, rel='RBARRA RLINHA RGERA RSVC RCPF',)
 ```
-- `rel: str, opicional, valor padrão igual a 'None'`
-    - Indica a opção de relatório a ser apresentada
-        - Apresentação de 1, 2 ou mesmo todas as opções de relatório.
-    - Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).
