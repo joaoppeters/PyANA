@@ -1,10 +1,16 @@
-from os import getcwd
-from os.path import dirname, realpath
+# !/usr/bin/env python3
+# -*- coding_ctrl: utf-8 -*-
+
+# ------------------------------------- #
+# Created by: Joao Pedro Peters Barbosa #
+# email: joao.peters@engenharia.ufjf.br #
+# ------------------------------------- #
+
 from powerflow import PowerFlow
 
 sistema = 'ieee14.pwf'
 
-arqv = realpath(dirname(dirname(__file__)) + '/sistemas/' + sistema)
+# arqv = realpath(dirname(dirname(__file__)) + '/sistemas/' + sistema)
 
 method = 'NEWTON'
 
@@ -24,13 +30,16 @@ options = {
     'cpfV2L': 0.85,
 }
 
+mon = 'PFLOW PGMON QGMON VMON'
+
 rel = ['RBARRA RLINHA RGERA RSVC RCPF']
 
 PowerFlow(
-    # arqv=arqv,
+    sistema=sistema,
     method=method,
     jacobi=jacobi,
     options=options,
     control=control,
+    mon=mon,
     rel=rel,
 )

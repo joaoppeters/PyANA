@@ -59,27 +59,28 @@ A Matriz Jacobiana é modelada de uma única maneira:
 
 
 ## Fluxo de Potência
-Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()`, como é apresentado a seguir:
+Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()` e passe os `parâmetros da classe` que gostaria de analisar.
 
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, rel=rel,)
+PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, mon=mon, rel=rel,)
 ```
-- `arqv: str, obrigatório, valor padrão None`
-    - **Variável que indica diretório onde está localizado o SEP em estudo.**
+- `sistema: str, obrigatório, valor padrão None`
+    - **Variável que indica o nome do arquivo do SEP em estudo.**
+    - **Utilize arquivos `.pwf` presentes dentro da pasta [sistemas](sistemas).**
 
-- `method: str, obrigatório, valor padrão NEWTON`
+- `method: str, obrigatório, valor padrão 'NEWTON'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
         - `'NEWTON'` - soluciona o SEP através do método de Newton-Raphson.
         - `'GAUSS'` - soluciona o SEP através do método de Gauss-Seidel.
         - `'LINEAR'` - soluciona o SEP através do método de Newton Raphson Linearizado.
         - `'DECOUP'` - soluciona o SEP através do método Desacoplado.
-        - `'f-DECOUP'` - soluciona o SEP através do método Desacoplado Rápido.
+        - `'fDECOUP'` - soluciona o SEP através do método Desacoplado Rápido.
         - `'CPF'` - soluciona o SEP através do método de Fluxo de Potência Continuado.
 
-- `jacobi: str, opcional, valor padrão COMPLETA`
+- `jacobi: str, opcional, valor padrão 'COMPLETA'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
         - `'Completa'` - organiza a matriz Jacobiana pela formulação [Completa](docs/Jacobiana/completa.md).
@@ -107,7 +108,7 @@ PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=cont
         - `cpfV2L` - transição da variável V para variável λ (3a parte da curva PV):
             - **valor padrão 85%.**
 
-- `control: str, opcional, valor padrão None`
+- `control: str, opcional, valor padrão ''`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
     - **Opções:**
         - `'CREM'` - controle remoto de magnitude de tensão de barras remotas.
@@ -119,7 +120,14 @@ PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=cont
         - `'SVC'` - controle de magnitude de tensão por meio de compensador estático de potência reativa.
         - `'VCTRL'` - controle de magnitude de tensão de todas as barras.
 
-- `rel: str, opcional, valor padrão None`
+- `mon: str, opcional, valor padrão ''`
+    - **Opções:**
+        - `'PFLOW'` - monitoramento do fluxo de potência ativa nas linhas de transmissão.
+        - `'PGMON'` - monitoramento do fluxo de potência ativa gerado por geradores.
+        - `'QGMON'` - monitoramento do fluxo de potência reativa gerado por geradores.
+        - `'VMON'` - monitoramento da magnitude de tensão de barras do SEP.
+
+- `rel: str, opcional, valor padrão ''`
     - **Determina o conjunto de relatórios a serem gerados.**
     - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
     - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
@@ -139,8 +147,30 @@ PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=cont
         - `'RCPF':` Gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.
             > [Consulte o arquivo exemplo.](docs/Relatorios/rcpf.md)
 
+
+> PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR. 
+> O CÓDIGO ABAIXO SE TRATA DE UM EXEMPLO, NÃO CONDIZ COM  
+
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, rel='RBARRA RLINHA RGERA RSVC RCPF',)
+PowerFlow(
+    arqv='sistemas/ieee14.pwf', 
+    method='NEWTON', 
+    jacobi='COMPLETA, 
+    options={
+        'itermx': 20,
+        'tolP': 1E-4,
+        'tolQ': 1E-4,
+        'tolY': 1E-4,
+        'vmax': 1.045,
+        'vmin': 0.965,
+        'cpfL': 5E-2,
+        'cpfV': 5E-4,
+        'cpfV2L': 0.90,
+    },
+    control='CREM CST CTAP CTAPd FREQ QLIM SVC VCTRL', 
+    mon='PFLOW PGMON QGMON VMON', 
+    rel='RBARRA RLINHA RGERA RSVC RCPF',
+    )
 ```
