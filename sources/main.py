@@ -14,7 +14,7 @@ method = 'NEWTON'
 
 jacobi = 'COMPLETA'
 
-control = ['CREM CST CTAP CTAPd FREQ QLIM SVC VCTRL']
+control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
 
 # options = {
 #     'itermx': 15,
@@ -30,7 +30,7 @@ control = ['CREM CST CTAP CTAPd FREQ QLIM SVC VCTRL']
 
 mon = 'PFLOW PGMON QGMON VMON'
 
-rel = ['RBARRA RLINHA RGERA RSVC RCPF']
+rel = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
 
 PowerFlow(
     system=system,

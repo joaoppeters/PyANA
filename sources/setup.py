@@ -9,6 +9,7 @@
 from os.path import dirname, realpath
 
 from admittance import Ybus
+from control import Control
 # from folder import Folder
 # from jacobian import Jac
 from monitor import Monitor
@@ -35,16 +36,19 @@ class Setup:
             self.arqv = realpath(dirname(dirname(__file__)) + '/sistemas/' + powerflow.system)
 
             # Classe para leitura de arquivo .pwf
-            PWF(powerflow, self)
+            PWF(powerflow, self,)
 
             # Classe para determinação dos valores padrão das variáveis de tolerância
-            Options(powerflow)
+            Options(powerflow,)
+
+            # Classe para determinar a realização das opções de controle escolhidas
+            Control(powerflow,)
 
             # Classe para determinar a realização de monitoramento de valores
-            Monitor(powerflow)
+            Monitor(powerflow,)
 
             # Classe para construção da matriz Admitância
-            Ybus(powerflow)
+            Ybus(powerflow,)
         
         else:
             ## ERROR - VERMELHO

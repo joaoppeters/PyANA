@@ -20,4 +20,16 @@ class Monitor:
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
-        pass
+        ## Inicialização
+        self.monitor = {
+            'PFLOW': False, 
+            'PGMON': False, 
+            'QGMON': False, 
+            'VMON': False,
+            }
+
+        for k, _ in self.monitor.items():
+            if k in powerflow.mon.split(' '):
+                self.monitor[k] = True
+
+        powerflow.mon = self.monitor
