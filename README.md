@@ -64,9 +64,9 @@ Para realizar a análise de fluxo de potência em regime permanente, `utilize a 
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=control, mon=mon, rel=rel,)
+PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=control, mon=mon, rel=rel,)
 ```
-- `sistema: str, obrigatório, valor padrão None`
+- `system: str, obrigatório, valor padrão ''`
     - **Variável que indica o nome do arquivo do SEP em estudo.**
     - **Utilize arquivos `.pwf` presentes dentro da pasta [sistemas](sistemas).**
 
@@ -155,7 +155,7 @@ PowerFlow(arqv=arqv, method=method, jacobi=jacobi, options=options, control=cont
 from powerflow import PowerFlow
 
 PowerFlow(
-    arqv='sistemas/ieee14.pwf', 
+    system='ieee14.pwf', 
     method='NEWTON', 
     jacobi='COMPLETA, 
     options={

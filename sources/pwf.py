@@ -6,51 +6,60 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from numpy import array
+from os.path import exists
 from pandas import DataFrame as DF
-
 
 class PWF:
     """classe para leitura de dados PWF"""
 
     def __init__(
         self,
-        arqv: str='',
+        powerflow,
+        setup,
     ):
         """inicialização
-
-        Parâmetros:
-            arqv: str, obrigatório
-                Diretório onde está localizado arquivo .pwf contendo os dados do sistema elétrico em estudo
-        """
-
-        ## Inicialização
-        # Variáveis
-        self.arqv = arqv
-        self.linecount = 0
-
-        # Funções
-        self.keywords()
-        self.dbarra()
-        self.dlinha()
-        # self.dsvc()
         
-        # Leitura
-        self.readfile()
-
-
-
-    def keywords(self):
-        """Palavras-chave de arquivo .pwf
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
         """
+
+        if exists(setup.arqv) is True:
+            ## Inicialização
+            # Variáveis
+            self.linecount = 0
+
+            # Funções
+            self.keywords()
+            self.dbarra()
+            self.dlinha()
+            # self.dsvc()
+            
+            # Leitura
+            self.readfile(powerflow, setup,)
+
+        else:
+            ## ERROR - AMARELO
+            raise ValueError('\033[93mEsse sistema não está presente na pasta de `sistemas/`.\033[0m')
+
+
+
+    def keywords(
+        self,
+        ):
+        """Palavras-chave de arquivo .pwf"""
+
         self.end_archive = 'FIM'
         self.end_block = ('9999', '99999')
         self.comment = '('
 
 
-    def dbarra(self):
-        """Inicialização das colunas de dados de barra
-        """
+
+    def dbarra(
+        self,
+        ):
+        """Inicialização das colunas de dados de barra"""
+
         self.dbar = dict()
         self.dbar['numero'] = list()
         self.dbar['operacao'] = list()
@@ -84,9 +93,12 @@ class PWF:
         # self.dbar['agreg10'] = list()
 
 
-    def dlinha(self):
-        """Inicialização das colunas de dados de linha
-        """
+
+    def dlinha(
+        self,
+        ):
+        """Inicialização das colunas de dados de linha"""
+
         self.dlin = dict()
         self.dlin['from'] = list()
         self.dlin['abertura_from'] = list()
@@ -120,18 +132,20 @@ class PWF:
         # self.dlin['agreg10'] = list()
 
 
-    def readfile(self,):
+
+    def readfile(
+        self,
+        powerflow,
+        setup,
+        ):
         """Leitura do arquivo .pwf
         
-        Retorno
-        -------
-        dbar_df: DataFrame, obj
-            Retorna a leitura completa dos dados de barra do sistema encontrados no arquivo .pwf
-
-        dlin_df: DataFrame, obj
-            Retorna a leitura completa dos dados de linha do sistema encontrados no arquivo .pwf
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
         """
-        f = open(f'{self.arqv}', 'r', encoding='latin-1')
+
+        f = open(f'{setup.arqv}', 'r', encoding='latin-1')
         self.lines = f.readlines()
         f.close()
         self.pwf2py = {}
@@ -225,87 +239,18 @@ class PWF:
 
                     self.linecount += 1
 
-
             self.linecount += 1
 
-        self.dbar_df = self._treatment(DF(data=self.dbar), data='DBARRA')
-        self.dlin_df = self._treatment(DF(data=self.dlin), data='DLINHA')
+        # DataFrame dos Dados de Barra
+        powerflow.dbarraDF = DF(data=self.dbar)
 
-        if self.dbar_df.empty or self.dlin_df.empty:
-            raise ValueError('\033[91m404: file reading has failed!\033[0m')
+        # DataFrame dos Dados de Linha
+        powerflow.dlinhaDF = DF(data=self.dlin)
+
+        if powerflow.dbarraDF.empty or powerflow.dlinhaDF.empty:
+            ## ERROR - VERMELHO
+            raise ValueError('\033[91mERROR: Falha na leitura de arquivo!\033[0m')
 
         else:
-            print('\033[93mFile read successfully!\033[0m')
-            return self.dbar_df, self.dlin_df
-
-
-    def _treatment(self, df: DF, data: str = None):
-        """Tratamento dos valores padrao adotados na leitura do arquivo .pwf
-
-        Parametros
-        ----------
-        df: DataFrame, obj
-            Arquivo para tratamento dos valores padrao
-
-        data: str, opicional
-
-
-        Retorno
-        -------
-        df: DataFrame, obj
-            Arquivo com valores padrao tratados
-        """
-
-        if data == 'DBARRA':
-            df = df.astype(
-                {
-                    'numero': 'int',
-                    'operacao': 'int',
-                    'estado': 'object',
-                    'tipo': 'int',
-                    'grupo_base_tensao': 'int',
-                    'nome': 'str',
-                    'grupo_limite_tensao': 'object',
-                    'tensao': 'float',
-                    'angulo': 'float',
-                    'potencia_ativa': 'float',
-                    'potencia_reativa': 'float',
-                    'potencia_reativa_min': 'float',
-                    'potencia_reativa_max': 'float',
-                    'barra_controlada': 'int',
-                    'demanda_ativa': 'float',
-                    'demanda_reativa': 'float',
-                    'capacitor_reator': 'float',
-                    'area': 'int',
-                    'demanda_tensao_base': 'int',
-                    'modo': 'int',
-                }
-            )
-
-        elif data == 'DLINHA':
-            df = df.astype(
-                {
-                    'from': 'int',
-                    'abertura_from': 'int',
-                    'operacao': 'int',
-                    'abertura_to': 'int',
-                    'to': 'int',
-                    'circuito': 'int',
-                    'estado': 'int',
-                    'proprietario': 'int',
-                    'resistencia': 'float',
-                    'reatancia': 'float',
-                    'susceptancia': 'float',
-                    'tap': 'float',
-                    'tap_min': 'float',
-                    'tap_max': 'float',
-                    'defasagem': 'float',
-                    'barra_controlada': 'int',
-                    'capacidade_normal': 'float',
-                    'capacidade_emergencia': 'float',
-                    'numero_taps': 'int',
-                    'capacidade_equipamento': 'float',
-                }
-            )
-
-        return df
+            ## SUCESSO
+            print('\033[32mSucesso na leitura de arquivo!\033[0m')

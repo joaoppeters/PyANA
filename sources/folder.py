@@ -14,28 +14,23 @@ class Folder:
 
     def __init__(
         self,
-        arqv: str='',
+        # arqv: str='',
     ):
         """ inicialização
 
         Parâmetros:
-            arqv: str, obrigatório
+            arqv: str, obrigatório, valor padrão ''
                 Diretório onde está localizado arquivo .pwf contendo os dados do sistema elétrico em estudo
         """
         
-        if arqv:
+        if self.arqv:
             # Diretório de Sistemas
-            dirSistemas = dirname(arqv)
+            dirSistemas = dirname(self.arqv)
 
             # Criação de diretório para armazenar Resultados
             dirResultados = dirSistemas + '/Resultados/'
             if exists(dirResultados) is False:
                 mkdir(dirResultados)
-
-            # Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
-            dirRCPF = dirResultados + 'Continuado'
-            if exists(dirRCPF) is False:
-                mkdir(dirRCPF)
 
             # Criação de diretório para armazenar Resultados de Matriz Admitância
             dirRAdmitancia = dirResultados + 'MatrizAdmitancia/'
@@ -51,3 +46,21 @@ class Folder:
             dirRRelatorios = dirResultados + 'Relatorios/'
             if exists(dirRRelatorios) is False:
                 mkdir(dirRRelatorios)
+
+
+    def rcpf(
+        self,
+        arqv: str='',
+    ):
+        """criação automática de folder para armazenar resultados específicos do fluxo de potência continuado
+
+        Parâmetros:
+            arqv: str, obrigatório, valor padrão ''
+                Diretório onde está localizado arquivo .pwf contendo os dados do sistema elétrico em estudo
+        """
+        if arqv:
+
+            # Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
+            dirRCPF = dirResultados + 'Continuado/'
+            if exists(dirRCPF) is False:
+                mkdir(dirRCPF)

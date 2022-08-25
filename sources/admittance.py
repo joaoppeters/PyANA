@@ -5,3 +5,15 @@
 # Created by: Joao Pedro Peters Barbosa #
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
+
+
+
+
+class Ybus:
+    """classe para construção da matriz admitância"""
+
+    def __init__(
+        self,
+    ):
+        """inicialização"""
+        
