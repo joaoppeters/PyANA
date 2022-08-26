@@ -1,4 +1,6 @@
-# Matriz Jacobiana - Configuração Reduzida
+# Matriz Jacobiana
+## Configuração Reduzida
+---
 
 Características da Configuração Reduzida para Matrizes Jacobianas:
 

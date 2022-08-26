@@ -1,4 +1,6 @@
-# Matriz Jacobiana - Configuração Alternada
+# Matriz Jacobiana
+## Configuração Alternada
+---
 
 Características da Configuração Alternada para Matrizes Jacobianas:
 

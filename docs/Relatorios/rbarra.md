@@ -1,4 +1,4 @@
-# Relatório de Barra (`RBARRA`)
+# Relatório de Barra - `'RBARRA'`
 
 No relatório de barras é feito um levantamento dos resultados de tensão nodal (magnitude e ângulo de fase), potência gerada ativa e reativa, potência demandada ativa e reativa, e potência reativa de equipamento elétrico shunt para todas as barras do SEP em estudo.
 

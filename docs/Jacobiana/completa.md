@@ -1,4 +1,6 @@
-# Matriz Jacobiana - Configuração Completa
+# Matriz Jacobiana
+## Configuração Completa
+---
 
 Características da Configuração Completa para Matrizes Jacobianas:
 

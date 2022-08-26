@@ -21,7 +21,7 @@ class Options:
             powerflow: self do arquivo powerflow.py
         """
         ## Inicialização
-        self.stdmethods = ['NEWTON', 'GAUSS', 'LINEAR', 'DECOUP', 'fDECOUP']
+        self.standard()
         # Configuração de variáveis para processos de convergência de fluxos de potência tradicionais
         if powerflow.method in self.stdmethods:
             self.pf(powerflow,)
@@ -29,12 +29,16 @@ class Options:
         elif powerflow.method == 'CPF':
             self.cpf(powerflow,)
 
-        # else:
-        #     ## ERROR - VERMELHO
-        #     raise ValueError('\033[91mNenhum sistema foi selecionado.\033[0m')
 
 
-
+    def standard(
+        self,
+    ):
+        """configuração padrão"""
+        self.stdmethods = ['NEWTON', 'GAUSS', 'LINEAR', 'DECOUP', 'fDECOUP']
+    
+    
+    
     def pf(
         self,
         powerflow,
@@ -48,6 +52,7 @@ class Options:
         ## Inicialização
         # Variáveis padrão
         self.stdpf = {
+            'sbase': 100.,
             'itermx': 15,
             'tolP': 1E-6,
             'tolQ': 1E-6,

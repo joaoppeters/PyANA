@@ -8,44 +8,49 @@
 
 from os.path import dirname, exists
 from os import mkdir
+from options import Options
 
 class Folder:
-    """criação automática de diretórios para armazenar resultados"""
+    """classe para criação automática de diretórios para armazenar resultados"""
 
     def __init__(
         self,
-        # arqv: str='',
+        setup,
     ):
         """ inicialização
 
-        Parâmetros:
-            arqv: str, obrigatório, valor padrão ''
-                Diretório onde está localizado arquivo .pwf contendo os dados do sistema elétrico em estudo
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
         """
         
-        if self.arqv:
+        if setup.arqv:
             # Diretório de Sistemas
-            dirSistemas = dirname(self.arqv)
+            self.dirSistemas = dirname(self.arqv)
 
-            # Criação de diretório para armazenar Resultados
-            dirResultados = dirSistemas + '/Resultados/'
-            if exists(dirResultados) is False:
-                mkdir(dirResultados)
 
-            # Criação de diretório para armazenar Resultados de Matriz Admitância
-            dirRAdmitancia = dirResultados + 'MatrizAdmitancia/'
-            if exists(dirRAdmitancia) is False:
-                mkdir(dirRAdmitancia)
 
-            # Criação de diretório para armazenar Resultados de Matriz Jacobiana
-            dirRJacobiana = dirResultados + 'MatrizJacobiana/'
-            if exists(dirRJacobiana) is False:
-                mkdir(dirRJacobiana)
+    def rpf(
+        self,
+    ):
+        # Criação de diretório para armazenar Resultados
+        self.dirResultados = dirname(self.dirSistemas) + '/Resultados/'
+        if exists(self.dirResultados) is False:
+            mkdir(self.dirResultados)
 
-            # Criação de diretório para armazenar Resultados de Relatórios
-            dirRRelatorios = dirResultados + 'Relatorios/'
-            if exists(dirRRelatorios) is False:
-                mkdir(dirRRelatorios)
+        # Criação de diretório para armazenar Resultados de Matriz Admitância
+        dirRAdmitancia = self.dirResultados + 'MatrizAdmitancia/'
+        if exists(dirRAdmitancia) is False:
+            mkdir(dirRAdmitancia)
+
+        # Criação de diretório para armazenar Resultados de Matriz Jacobiana
+        dirRJacobiana = self.dirResultados + 'MatrizJacobiana/'
+        if exists(dirRJacobiana) is False:
+            mkdir(dirRJacobiana)
+
+        # Criação de diretório para armazenar Resultados de Relatórios
+        dirRRelatorios = self.dirResultados + 'Relatorios/'
+        if exists(dirRRelatorios) is False:
+            mkdir(dirRRelatorios)
 
 
     def rcpf(
@@ -61,6 +66,6 @@ class Folder:
         if arqv:
 
             # Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
-            dirRCPF = dirResultados + 'Continuado/'
+            dirRCPF = self.dirResultados + 'Continuado/'
             if exists(dirRCPF) is False:
                 mkdir(dirRCPF)

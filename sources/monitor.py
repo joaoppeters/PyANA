@@ -29,7 +29,7 @@ class Monitor:
             }
 
         for k, _ in self.monitor.items():
-            if k in powerflow.mon.split(' '):
+            if k in powerflow.mon:
                 self.monitor[k] = True
 
         powerflow.mon = self.monitor

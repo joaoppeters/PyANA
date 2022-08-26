@@ -1,18 +1,8 @@
-# Newton-Raphson Power-Flow 
+# Fluxo de Potência via ANAREDE
 
 O principal objetivo deste projeto é fornecer um código Python base para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas de potência`.
 
 Esse projeto tem como base a leitura de dados de `Sistemas Elétricos de Potência via arquivos ANAREDE` do tipo `.pwf`.
-
-Serão desenvolvidos aqui diferentes ferramentas para análise de SEPs, como por exemplo:
-- Solução de Fluxo de Potência Não-Linear via Método de Newton-Raphson
-- Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel
-- Solução de Fluxo de Potência Linearizado
-- Solução de Fluxo de Potência Desacoplado
-- Solução de Fluxo de Potência Desacoplado Rápido
-- entre outros...
-
-> **Para todos os efeitos, considere que este é um projeto em desenvolvimento e que tais ferramentas serão integradas em partes.**
 
 
 
@@ -20,29 +10,41 @@ Serão desenvolvidos aqui diferentes ferramentas para análise de SEPs, como por
 `Bibliotecas de Python` empregadas no projeto e necessárias para o correto funcionamento das ferramentas:
 ```
 numpy
-os
 pandas
 ```
+
+
+## Métodos de Solução
+Serão desenvolvidos aqui `diferentes ferramentas para análise de SEPs em regime permanente`, como por exemplo:
+- [Solução de Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newton-raphson.md)
+- [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md)
+- [Solução de Fluxo de Potência Linearizado](docs/Metodos/linear.md)
+- [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
+- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md)
+
+> **Para todos os efeitos, considere que este é um projeto em desenvolvimento e que tais ferramentas serão integradas em partes.**
+
+
 
 
 
 ## Leitura de Dados
 Os `dados do Sistema Elétrico de Potência` em estudo devem estar organizados em um arquivo `.pwf`.
 
-Alguns dados de Sistemas Elétricos de Potência estão disponibilizados na pasta entitulada [sistemas](sistemas).
+Utilize a pasta entitulada [sistemas](sistemas) para armazenar os arquivos `.pwf` que contém os `dados de SEP` que pretende de estudar/analisar.
 
 Um exemplo de inicialização de variável para leitura de dados do arquivo `.pwf` é mostrado abaixo:
 
 ```Python
-arqv = os.path.join(os.getcwd() + '/sistemas/ieee14.pwf')
+system = 'ieee14.pwf'
 ```
 
-> **Ao inicializar a variável de arquivo, lembre-se de referenciar ao diretório correto onde está presente. Para isso, use a biblioteca `os`.**
+> **Ao inicializar a variável com o nome do sistema que gostaria de analisar, certifique-se que o arquivo `.pwf` deste sistema está contido na pasta [sistemas](sistemas/).**
 
 
 
 ## Matriz Admitância
-A matriz admitância (Y<sub>BARRA</sub>) é calculada antes da inicialização do fluxo de potência.
+A matriz Admitância (Y<sub>BARRA</sub>) é calculada antes da inicialização de `qualquer uma das opções de metodologias` para solução do fluxo de potência.
 
 Para mais detalhes sobre o cálculo e montagem dessa matriz, [clique aqui](docs/Admitancia/admitancia.md).
 
@@ -51,8 +53,8 @@ Para mais detalhes sobre o cálculo e montagem dessa matriz, [clique aqui](docs/
 ## Formulação da Matriz Jacobiana
 A Matriz Jacobiana é modelada de uma única maneira:
 
-- `'Completa':` Configuração tradicional, vetor coluna `∆P-∆Q` associado ao vetor coluna de `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
-    - Para `equações de controle y` adicionais, associadas a `variáveis de estado x`, essa formulação é reestruturada para associar `∆P-∆Q-∆y` ao vetor de variáveis de estado `∆θ-∆V-∆x`.
+- `'Completa':` Configuração tradicional, vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q` associado ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
+    - Para `equações de controle y` adicionais, associadas a `variáveis de estado x`, essa formulação é reestruturada para associar o vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q-∆y` ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V-∆x`.
 
 > No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](dosc/exemplos/Jacobiana/reduzida.md) (**essas formulações ainda não foram implementadas**).
 
@@ -73,22 +75,24 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
 - `method: str, obrigatório, valor padrão 'NEWTON'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
-        - `'NEWTON'` - soluciona o SEP através do método de Newton-Raphson.
-        - `'GAUSS'` - soluciona o SEP através do método de Gauss-Seidel.
-        - `'LINEAR'` - soluciona o SEP através do método de Newton Raphson Linearizado.
-        - `'DECOUP'` - soluciona o SEP através do método Desacoplado.
-        - `'fDECOUP'` - soluciona o SEP através do método Desacoplado Rápido.
-        - `'CPF'` - soluciona o SEP através do método de Fluxo de Potência Continuado.
+        - `'NEWTON'` - [soluciona o SEP através do método de Newton-Raphson.](docs/Metodos/newton-raphson.md)
+        - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md)
+        - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md)
+        - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
+        - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md)
+        - `'CPF'` - [soluciona o SEP através do método de Fluxo de Potência Continuado.](docs/Metodos/continuation.md)
 
 - `jacobi: str, opcional, valor padrão 'COMPLETA'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
-        - `'Completa'` - organiza a matriz Jacobiana pela formulação [Completa](docs/Jacobiana/completa.md).
-        - `'Alternada'`- organiza a matriz Jacobiana pela formulação [Alternada](docs/Jacobiana/alternada.md).
-        - `'Reduzida'` - organiza a matriz Jacobiana pela formulação [Reduzida](docs/Jacobiana/reduzida.md).
+        - `'Completa'` - [organiza a matriz Jacobiana pela formulação Completa](docs/Jacobiana/completa.md).
+        - `'Alternada'`- [organiza a matriz Jacobiana pela formulação Alternada](docs/Jacobiana/alternada.md).
+        - `'Reduzida'` - [organiza a matriz Jacobiana pela formulação Reduzida](docs/Jacobiana/reduzida.md).
 
 - `options: dict, opcional, valor padrão None`
     - **Opções:**
+        - `sbase` - potência aparente base do sistema:
+            - **valor padrão 100.**
         - `itermx` - número máximo de iterações:
             - **valor padrão 15.**
         - `tolP` - tolerância de convergência para potência ativa:
@@ -111,45 +115,41 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
 - `control: str, opcional, valor padrão ''`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
     - **Opções:**
-        - `'CREM'` - controle remoto de magnitude de tensão de barras remotas.
-        - `'CST'` - controle secundário de tensão de magnitude de tensão de barras remotas.
-        - `'CTAP'` - controle automático de taps de transformadores em fase.
-        - `'CTAPd'` - controle automático de taps de transformadores defasadores.
-        - `'FREQ'` - regulação primária de frequência.
-        - `'QLIM'` - tratamento de limite de geração de potência reativa.
-        - `'SVC'` - controle de magnitude de tensão por meio de compensador estático de potência reativa.
-        - `'VCTRL'` - controle de magnitude de tensão de todas as barras.
+        - `'CREM'` - [controle remoto de magnitude de tensão de barras remotas.](docs/Controle/controle-remoto-tensao.md)
+        - `'CST'` - [controle secundário de tensão de magnitude de tensão de barras remotas.](docs/Controle/controle-secundario-tensao.md)
+        - `'CTAP'` - [controle automático de taps de transformadores em fase.](docs/Controle/controle-transformador-tap-variavel.md)
+        - `'CTAPd'` - [controle automático de taps de transformadores defasadores.](docs/Controle/controle-transformador-defasador.md)
+        - `'FREQ'` - [regulação primária de frequência.](docs/Controle/controle-regulacao-primaria-frequencia.md)
+        - `'QLIM'` - [tratamento de limite de geração de potência reativa.](docs/Controle/controle-limite-potencia-reativa-geradores.md)
+        - `'SVC'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVC.md)
+        - `'VCTRL'` - [controle de magnitude de tensão de todas as barras.](docs/Controle/controle-tensao.md)
 
 - `mon: str, opcional, valor padrão ''`
     - **Opções:**
-        - `'PFLOW'` - monitoramento do fluxo de potência ativa nas linhas de transmissão.
-        - `'PGMON'` - monitoramento do fluxo de potência ativa gerado por geradores.
-        - `'QGMON'` - monitoramento do fluxo de potência reativa gerado por geradores.
-        - `'VMON'` - monitoramento da magnitude de tensão de barras do SEP.
+        - `'PFLOW'` - [monitoramento do fluxo de potência ativa nas linhas de transmissão.](docs/Monitoramento/fluxo-potencia-ativa-LT.md)
+        - `'PGMON'` - [monitoramento do fluxo de potência ativa gerado por geradores.](docs/Monitoramento/geracao-potencia-ativa-PV.md)
+        - `'QGMON'` - [monitoramento do fluxo de potência reativa gerado por geradores.](docs/Monitoramento/geracao-potencia-reativa-PV.md)
+        - `'VMON'` - [monitoramento da magnitude de tensão de barras do SEP.](docs/Monitoramento/tensao-barramentos.md)
 
 - `rel: str, opcional, valor padrão ''`
     - **Determina o conjunto de relatórios a serem gerados.**
     - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
     - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
     - **Opções:**
-        - `'RBARRA':` Gera o relatório de Dados de Barra em caso Convergente ou Divergente.
-            > [Consulte o arquivo exemplo.](docs/Relatorios/rbarra.md)
+        - `'RBARRA'` - [gera o relatório de Dados de Barra em caso Convergente ou Divergente.](docs/Relatorios/rbarra.md)
 
-        - `'RLINHA':` Gera o relatório de Dados de Linha em caso Convergente ou Divergente.
-            > [Consulte o arquivo exemplo.](docs/Relatorios/rlinha.md)
+        - `'RLINHA'` - [gera o relatório de Dados de Linha em caso Convergente ou Divergente.](docs/Relatorios/rlinha.md)
 
-        - `'RGERA':` Gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente. 
-            > [Consulte o arquivo exemplo.](docs/Relatorios/rgera.md)
+        - `'RGERA'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/rgera.md)
 
-        - `'RSVC':` Gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.
-            > [Consulte o arquivo exemplo.](docs/Relatorios/rsvc.md)
+        - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
-        - `'RCPF':` Gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.
-            > [Consulte o arquivo exemplo.](docs/Relatorios/rcpf.md)
+        - `'RCPF'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcpf.md)
 
 
-> PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR. 
-> O CÓDIGO ABAIXO SE TRATA DE UM EXEMPLO, NÃO CONDIZ COM  
+> **PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
+
+> **O CÓDIGO ABAIXO SE TRATA DE UM EXEMPLO, NÃO CONDIZ COM A REAL APLICAÇÃO PRÁTICA DEVIDO AO FATO QUE NEM TODAS AS OPÇÕES DE CONTROLE PODEM SER ATRIBUÍDAS AO MESMO TEMPO.**  
 
 ```Python
 from powerflow import PowerFlow
@@ -159,6 +159,7 @@ PowerFlow(
     method='NEWTON', 
     jacobi='COMPLETA, 
     options={
+        'sbase': 100.,
         'itermx': 20,
         'tolP': 1E-4,
         'tolQ': 1E-4,
@@ -169,8 +170,8 @@ PowerFlow(
         'cpfV': 5E-4,
         'cpfV2L': 0.90,
     },
-    control='CREM CST CTAP CTAPd FREQ QLIM SVC VCTRL', 
-    mon='PFLOW PGMON QGMON VMON', 
-    rel='RBARRA RLINHA RGERA RSVC RCPF',
+    control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL'], 
+    mon=['PFLOW', 'PGMON', 'QGMON', 'VMON'], 
+    rel=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF'],
     )
 ```

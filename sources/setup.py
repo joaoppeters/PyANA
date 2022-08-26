@@ -10,7 +10,7 @@ from os.path import dirname, realpath
 
 from admittance import Ybus
 from control import Control
-# from folder import Folder
+from folder import Folder
 # from jacobian import Jac
 from monitor import Monitor
 from options import Options
@@ -46,6 +46,9 @@ class Setup:
 
             # Classe para determinar a realização de monitoramento de valores
             Monitor(powerflow,)
+
+            # # Classe para criação automática de diretórios para armazenar resultados  ------------ COLOCAR SOMENTE AO FINAL DA CHAMADA DO FLUXO DE POTENCIA
+            # Folder(powerflow, self,)
 
             # Classe para construção da matriz Admitância
             Ybus(powerflow,)

@@ -33,11 +33,11 @@ class Control:
                 'VCTRL': False,
                 }
             
-            print("\033[93mOpções de controle escolhidas:", )
+            print("\033[93mOpções de controle escolhidas: ", end='')
             for k, _ in self.control.items():
                 if k in powerflow.control:
                     self.control[k] = True
-                    print(f"{k}", )
+                    print(f"{k}", end=' ')
             print("\033[0m")
             print("\n")
 

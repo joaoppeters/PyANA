@@ -182,3 +182,5 @@ Thumbs.db
 *.gif
 *.pwf
 *.lst
+
+!ieee14.pwf
