@@ -37,8 +37,8 @@ PowerFlow(
     system=system,
     method=method,
     jacobi=jacobi,
-    options=options,
-    control=control,
-    mon=mon,
+    options={},
+    control=[],
+    mon=[],
     rel=rel,
 )

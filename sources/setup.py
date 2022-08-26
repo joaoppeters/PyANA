@@ -6,7 +6,8 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from os.path import dirname, realpath
+from os.path import dirname, exists, realpath
+from os import mkdir
 
 from admittance import Ybus
 from control import Control
@@ -33,7 +34,8 @@ class Setup:
 
         if powerflow.system:
             ## Inicialização
-            self.arqv = realpath(dirname(dirname(__file__)) + '/sistemas/' + powerflow.system)
+            # Verificação de diretório
+            self.checkpath(powerflow,)
 
             # Classe para leitura de arquivo .pwf
             PWF(powerflow, self,)
@@ -51,7 +53,7 @@ class Setup:
             # Folder(powerflow, self,)
 
             # Classe para construção da matriz Admitância
-            Ybus(powerflow,)
+            Ybus(powerflow, self,)
         
         else:
             ## ERROR - VERMELHO
@@ -59,10 +61,26 @@ class Setup:
 
 
 
-    # def sFolder(
-    #     self,
-    #     ):
-    #     """Criação automática de folders para caso"""
+    def checkpath(
+        self,
+        powerflow,
+        ):
+        """Verificação automática de diretório sistemas
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        ## Inicialização
+        self.maindir = dirname(dirname(__file__))
+        self.name = powerflow.system.split('.')[0]
 
-    #     # Chamada de classe para criação automática de folders
-    #     Folder.__init__(self.arqv)
+        if exists(self.maindir + '/sistemas/') is True:
+            if exists(self.maindir + '/sistemas/' + powerflow.system) is True:
+                self.dirSEP = realpath(dirname(dirname(__file__)) + '/sistemas/' + powerflow.system)
+                print(f'\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PowerFlow/sistemas/` conforme solicitado!\033[0m')
+            else:
+                raise ValueError(f'\033[91mERROR: Pasta `PowerFlow/sistemas/` não contém o arquivo `{powerflow.system}` do SEP informado.\nInsira o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m')
+
+        else:
+            mkdir(self.maindir + '/sistemas/')
+            raise ValueError(f'\033[91mERROR: Pasta `PowerFlow/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m')

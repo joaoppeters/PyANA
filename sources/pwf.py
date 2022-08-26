@@ -24,20 +24,15 @@ class PWF:
             setup: self do arquivo setup.py
         """
 
-        if exists(setup.arqv) is True:
-            ## Inicialização
-            # Variáveis
-            self.linecount = 0
+        ## Inicialização
+        # Variáveis
+        self.linecount = 0
 
-            # Funções
-            self.keywords()
-            
-            # Leitura
-            self.readfile(powerflow, setup,)
-
-        else:
-            ## ERROR - AMARELO
-            raise ValueError('\033[93mEsse sistema não está presente na pasta de `sistemas/`.\033[0m')
+        # Funções
+        self.keywords()
+        
+        # Leitura
+        self.readfile(powerflow, setup,)
 
 
 
@@ -78,16 +73,16 @@ class PWF:
         self.dbar['area'] = list()
         self.dbar['demanda_tensao_base'] = list()
         self.dbar['modo'] = list()
-        # self.dbar['agreg1'] = list()
-        # self.dbar['agreg2'] = list()
-        # self.dbar['agreg3'] = list()
-        # self.dbar['agreg4'] = list()
-        # self.dbar['agreg5'] = list()
-        # self.dbar['agreg6'] = list()
-        # self.dbar['agreg7'] = list()
-        # self.dbar['agreg8'] = list()
-        # self.dbar['agreg9'] = list()
-        # self.dbar['agreg10'] = list()
+        self.dbar['agreg1'] = list()
+        self.dbar['agreg2'] = list()
+        self.dbar['agreg3'] = list()
+        self.dbar['agreg4'] = list()
+        self.dbar['agreg5'] = list()
+        self.dbar['agreg6'] = list()
+        self.dbar['agreg7'] = list()
+        self.dbar['agreg8'] = list()
+        self.dbar['agreg9'] = list()
+        self.dbar['agreg10'] = list()
 
 
 
@@ -114,19 +109,19 @@ class PWF:
         self.dlin['tap_defasagem'] = list()
         self.dlin['barra_controlada'] = list()
         self.dlin['capacidade_normal'] = list()
-        self.dlin['capacidade_emergencia'] = list()
+        self.dlin['capacidade_emergencial'] = list()
         self.dlin['numero_taps'] = list()
         self.dlin['capacidade_equipamento'] = list()
-        # self.dlin['agreg1'] = list()
-        # self.dlin['agreg2'] = list()
-        # self.dlin['agreg3'] = list()
-        # self.dlin['agreg4'] = list()
-        # self.dlin['agreg5'] = list()
-        # self.dlin['agreg6'] = list()
-        # self.dlin['agreg7'] = list()
-        # self.dlin['agreg8'] = list()
-        # self.dlin['agreg9'] = list()
-        # self.dlin['agreg10'] = list()
+        self.dlin['agreg1'] = list()
+        self.dlin['agreg2'] = list()
+        self.dlin['agreg3'] = list()
+        self.dlin['agreg4'] = list()
+        self.dlin['agreg5'] = list()
+        self.dlin['agreg6'] = list()
+        self.dlin['agreg7'] = list()
+        self.dlin['agreg8'] = list()
+        self.dlin['agreg9'] = list()
+        self.dlin['agreg10'] = list()
 
 
 
@@ -164,7 +159,7 @@ class PWF:
             setup: self do arquivo setup.py
         """
 
-        f = open(f'{setup.arqv}', 'r', encoding='latin-1')
+        f = open(f'{setup.dirSEP}', 'r', encoding='latin-1')
         self.lines = f.readlines()
         f.close()
         self.pwf2py = {}
@@ -198,23 +193,23 @@ class PWF:
                         self.dbar['area'].append(self.lines[self.linecount][73:76])
                         self.dbar['demanda_tensao_base'].append(self.lines[self.linecount][76:80])
                         self.dbar['modo'].append(self.lines[self.linecount][80])
-                        # self.dbar['agreg1'].append(self.lines[self.linecount][81:84])
-                        # self.dbar['agreg2'].append(self.lines[self.linecount][84:87])
-                        # self.dbar['agreg3'].append(self.lines[self.linecount][87:90])
-                        # self.dbar['agreg4'].append(self.lines[self.linecount][90:93])
-                        # self.dbar['agreg5'].append(self.lines[self.linecount][93:96])
-                        # self.dbar['agreg6'].append(self.lines[self.linecount][96:99])
-                        # self.dbar['agreg7'].append(self.lines[self.linecount][99:102])
-                        # self.dbar['agreg8'].append(self.lines[self.linecount][102:105])
-                        # self.dbar['agreg9'].append(self.lines[self.linecount][105:108])
-                        # self.dbar['agreg10'].append(self.lines[self.linecount][108:111])
+                        self.dbar['agreg1'].append(self.lines[self.linecount][81:84])
+                        self.dbar['agreg2'].append(self.lines[self.linecount][84:87])
+                        self.dbar['agreg3'].append(self.lines[self.linecount][87:90])
+                        self.dbar['agreg4'].append(self.lines[self.linecount][90:93])
+                        self.dbar['agreg5'].append(self.lines[self.linecount][93:96])
+                        self.dbar['agreg6'].append(self.lines[self.linecount][96:99])
+                        self.dbar['agreg7'].append(self.lines[self.linecount][99:102])
+                        self.dbar['agreg8'].append(self.lines[self.linecount][102:105])
+                        self.dbar['agreg9'].append(self.lines[self.linecount][105:108])
+                        self.dbar['agreg10'].append(self.lines[self.linecount][108:111])
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Barra
-                powerflow.dbarraDF = DF(data=self.dbar)
+                powerflow.dbarraDF = self.treatment(pandas=DF(data=self.dbar), data='DBAR')
                 if powerflow.dbarraDF.empty:
                     ## ERROR - VERMELHO
-                    raise ValueError('\033[91mERROR: Falha na leitura de arquivo `DBAR`!\033[0m')
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
 
 
             elif self.lines[self.linecount].strip() == 'DLIN':
@@ -241,26 +236,26 @@ class PWF:
                         self.dlin['tap_defasagem'].append(self.lines[self.linecount][53:58])
                         self.dlin['barra_controlada'].append(self.lines[self.linecount][58:64])
                         self.dlin['capacidade_normal'].append(self.lines[self.linecount][64:68])
-                        self.dlin['capacidade_emergencia'].append(self.lines[self.linecount][68:72])
+                        self.dlin['capacidade_emergencial'].append(self.lines[self.linecount][68:72])
                         self.dlin['numero_taps'].append(self.lines[self.linecount][72:74])
                         self.dlin['capacidade_equipamento'].append(self.lines[self.linecount][74:78])
-                        # self.dlin['agreg1'].append(self.lines[self.linecount][78:81])
-                        # self.dlin['agreg2'].append(self.lines[self.linecount][81:84])
-                        # self.dlin['agreg3'].append(self.lines[self.linecount][84:87])
-                        # self.dlin['agreg4'].append(self.lines[self.linecount][87:90])
-                        # self.dlin['agreg5'].append(self.lines[self.linecount][90:93])
-                        # self.dlin['agreg6'].append(self.lines[self.linecount][93:96])
-                        # self.dlin['agreg7'].append(self.lines[self.linecount][96:99])
-                        # self.dlin['agreg8'].append(self.lines[self.linecount][99:102])
-                        # self.dlin['agreg9'].append(self.lines[self.linecount][102:105])
-                        # self.dlin['agreg10'].append(self.lines[self.linecount][105:108])
+                        self.dlin['agreg1'].append(self.lines[self.linecount][78:81])
+                        self.dlin['agreg2'].append(self.lines[self.linecount][81:84])
+                        self.dlin['agreg3'].append(self.lines[self.linecount][84:87])
+                        self.dlin['agreg4'].append(self.lines[self.linecount][87:90])
+                        self.dlin['agreg5'].append(self.lines[self.linecount][90:93])
+                        self.dlin['agreg6'].append(self.lines[self.linecount][93:96])
+                        self.dlin['agreg7'].append(self.lines[self.linecount][96:99])
+                        self.dlin['agreg8'].append(self.lines[self.linecount][99:102])
+                        self.dlin['agreg9'].append(self.lines[self.linecount][102:105])
+                        self.dlin['agreg10'].append(self.lines[self.linecount][105:108])
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                powerflow.dlinhaDF = DF(data=self.dlin)
+                powerflow.dlinhaDF = self.treatment(pandas=DF(data=self.dlin), data='DLIN')
                 if powerflow.dlinhaDF.empty:
                     ## ERROR - VERMELHO
-                    raise ValueError('\033[91mERROR: Falha na leitura de arquivo `DLIN`!\033[0m')
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
                 
 
             elif self.lines[self.linecount].strip() == 'DGER':
@@ -286,15 +281,168 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                powerflow.dgeraDF = DF(data=self.dger)
+                powerflow.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
                 if powerflow.dgeraDF.empty:
                     ## ERROR - VERMELHO
-                    raise ValueError('\033[93mFalha na leitura de arquivo `DGER`!\033[0m')
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
 
             self.linecount += 1
 
 
         ## SUCESSO NA LEITURA
-        print("\n")
-        print('\033[32mSucesso na leitura de arquivo!\033[0m')
-        print("\n")
+        print(f'\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m')
+
+
+
+    def treatment(
+        self,
+        pandas: DF=DF.empty,
+        data: str='',
+    ):
+        """tratamento dos valores padrão adotadas nas leituras de códigos de execução
+        
+        Parâmetros
+            pandas: DataFrame, obrigatório, valor padrão DataFrame.empty
+                Arquivo que contém a leitura e armazenamento de dados de um respectivo código de execução
+
+            data: str, obrigatório, valor padrão 'None'
+                String que indica o código de execução lido para que haja o tratamento de dados das variáveis armazenadas no DataFrame
+
+        Retorno
+            pandas: DataFrame
+                Arquivo com os valores tratados
+        """
+
+        pandas = pandas.replace(r"^\s*$", '0', regex=True)
+
+        if data == 'DBAR':
+            pandas = pandas.astype(
+                {
+                    'numero': 'int',
+                    'operacao': 'object',
+                    'estado': 'object',
+                    'tipo': 'int',
+                    'grupo_base_tensao': 'object',
+                    'nome': 'str',
+                    'grupo_limite_tensao': 'object',
+                    'tensao': 'float',
+                    'angulo': 'float',
+                    'potencia_ativa': 'float',
+                    'potencia_reativa': 'float',
+                    'potencia_reativa_minima': 'float',
+                    'potencia_reativa_maxima': 'float',
+                    'barra_controlada': 'int',
+                    'demanda_ativa': 'float',
+                    'demanda_reativa': 'float',
+                    'shunt_barra': 'float',
+                    'area': 'int',
+                    'demanda_tensao_base': 'float',
+                    'modo': 'object',
+                    'agreg1': 'object',
+                    'agreg2': 'object',
+                    'agreg3': 'object',
+                    'agreg4': 'object',
+                    'agreg5': 'object',
+                    'agreg6': 'object',
+                    'agreg7': 'object',
+                    'agreg8': 'object',
+                    'agreg9': 'object',
+                    'agreg10': 'object',
+                }
+            )
+        
+        elif data == 'DBTB':
+            pandas = pandas.astype(
+                {
+                    'numero': 'int',
+                    'tensao_minima': 'float',
+                    'tensao_maxima': 'float',
+                }
+            )
+        
+        elif data == 'DCER':
+            pandas = pandas.astype(
+                {
+                    'numero': 'int',
+                    'operacao': 'object',
+                    'grupo_base_svc': 'int',
+                    'unidades': 'int',
+                    'barra_controlada': 'int',
+                    'droop': 'float',
+                    'potencia_reativa': 'float',
+                    'potencia_reativa_minima': 'float',
+                    'potencia_reativa_maxima': 'float',
+                    'controle': 'object',
+                    'estado': 'object',
+                }
+            )
+
+        elif data == 'DGER':
+            pandas = pandas.astype(
+                {
+                    'numero': 'int',
+                    'operacao': 'object',
+                    'potencia_ativa_minima': 'float',
+                    'potencia_ativa_maxima': 'float',
+                    'fator_participacao': 'float',
+                    'fator_participacao_controle_remoto': 'float',
+                    'fator_potencia_nominal': 'float',
+                    'fator_servico_armadura': 'float',
+                    'fator_servico_rotor': 'float',
+                    'angula_carga_maximo': 'float',
+                    'reatancia_maquina': 'float',
+                    'potencia_aparente_nominal': 'float',
+                    'estatismo': 'float',
+                }
+            )
+
+        elif data == 'DGLT':
+            pandas = pandas.astype(
+                {
+                    'grupo_limite_tensao': 'object',
+                    'tensao_minima': 'float',
+                    'tensao_maxima': 'float',
+                    'tensao_minima_emergencial': 'float',
+                    'tensao_maxima_emergencial': 'float',
+                }
+            )
+
+        
+
+        elif data == 'DLIN':
+            pandas = pandas.astype(
+                {
+                    'de': 'int',
+                    'abertura_de': 'object',
+                    'operacao': 'object',
+                    'abertura_para': 'object',
+                    'para': 'int',
+                    'circuito': 'int',
+                    'estado': 'object',
+                    'proprietario': 'object',
+                    'resistencia': 'float',
+                    'reatancia': 'float',
+                    'susceptancia': 'float',
+                    'tap': 'float',
+                    'tap_minimo': 'float',
+                    'tap_maximo': 'float',
+                    'tap_defasagem': 'float',
+                    'barra_controlada': 'int',
+                    'capacidade_normal': 'float',
+                    'capacidade_emergencial': 'float',
+                    'numero_taps': 'int',
+                    'capacidade_equipamento': 'float',
+                    'agreg1': 'object',
+                    'agreg2': 'object',
+                    'agreg3': 'object',
+                    'agreg4': 'object',
+                    'agreg5': 'object',
+                    'agreg6': 'object',
+                    'agreg7': 'object',
+                    'agreg8': 'object',
+                    'agreg9': 'object',
+                    'agreg10': 'object',
+                }
+            )
+
+        return pandas

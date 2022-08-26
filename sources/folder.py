@@ -20,52 +20,88 @@ class Folder:
         """ inicialização
 
         Parâmetros
-            powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
         """
         
-        if setup.arqv:
-            # Diretório de Sistemas
-            self.dirSistemas = dirname(self.arqv)
+        # Diretório de Sistemas
+        dirSistemas = dirname(setup.dirSEP)
+
+        # Criação de diretório Resultados
+        dirResultados = dirname(dirSistemas) + '/resultados/'
+        if exists(dirResultados) is False:
+            mkdir(dirResultados)
+        
+        setup.dirResultados = dirResultados
 
 
-
-    def rpf(
+    
+    def admittance(
         self,
+        setup,
     ):
-        # Criação de diretório para armazenar Resultados
-        self.dirResultados = dirname(self.dirSistemas) + '/Resultados/'
-        if exists(self.dirResultados) is False:
-            mkdir(self.dirResultados)
-
-        # Criação de diretório para armazenar Resultados de Matriz Admitância
-        dirRAdmitancia = self.dirResultados + 'MatrizAdmitancia/'
-        if exists(dirRAdmitancia) is False:
-            mkdir(dirRAdmitancia)
-
-        # Criação de diretório para armazenar Resultados de Matriz Jacobiana
-        dirRJacobiana = self.dirResultados + 'MatrizJacobiana/'
-        if exists(dirRJacobiana) is False:
-            mkdir(dirRJacobiana)
-
-        # Criação de diretório para armazenar Resultados de Relatórios
-        dirRRelatorios = self.dirResultados + 'Relatorios/'
-        if exists(dirRRelatorios) is False:
-            mkdir(dirRRelatorios)
-
-
-    def rcpf(
-        self,
-        arqv: str='',
-    ):
-        """criação automática de folder para armazenar resultados específicos do fluxo de potência continuado
-
-        Parâmetros:
-            arqv: str, obrigatório, valor padrão ''
-                Diretório onde está localizado arquivo .pwf contendo os dados do sistema elétrico em estudo
+        """Criação de diretório para armazenar Resultados de Matriz Admitância
+        
+        Parâmetros
+            setup: self do arquivo setup.py
         """
-        if arqv:
 
-            # Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
-            dirRCPF = self.dirResultados + 'Continuado/'
-            if exists(dirRCPF) is False:
-                mkdir(dirRCPF)
+        dirRadmittance = setup.dirResultados + 'MatrizAdmitancia/'
+        if exists(dirRadmittance) is False:
+            mkdir(dirRadmittance)
+        
+        setup.dirRadmittance = dirRadmittance
+
+
+
+    def jacobi(
+        self,
+        setup,
+    ):
+        """Criação de diretório para armazenar Resultados de Matriz Jacobiana
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        dirRjacobi = setup.dirResultados + 'MatrizJacobiana/'
+        if exists(dirRjacobi) is False:
+            mkdir(dirRjacobi)
+        
+        setup.dirRjacobi = dirRjacobi
+
+
+
+
+    def reports(
+        self,
+        setup,
+    ):
+        """Criação de diretório para armazenar Resultados de Relatórios
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        dirRreports = self.dirResultados + 'Relatorios/'
+        if exists(dirRreports) is False:
+            mkdir(dirRreports)
+        
+        setup.dirRreports = dirRreports
+
+
+
+    def cpf(
+        self,
+        setup,
+    ):
+        """Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        dirRcpf = self.dirResultados + 'Continuado/'
+        if exists(dirRcpf) is False:
+            mkdir(dirRcpf)
+        
+        setup.dirRcpf = dirRcpf
