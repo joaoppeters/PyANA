@@ -65,7 +65,7 @@ class Setup:
         self,
         powerflow,
         ):
-        """Verificação automática de diretório sistemas
+        """verificação automática de diretório sistemas
         
         Parâmetros
             powerflow: self do arquivo powerflow.py

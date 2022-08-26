@@ -29,15 +29,27 @@ class Monitor:
                 'VMON': False,
                 }
 
-            print('\033[96mOpções de monitoramento escolhidas: ', end='')
-            for k, _ in self.monitor.items():
-                if k in powerflow.mon:
-                    self.monitor[k] = True
-                    print(f'{k}', end=' ')
-            print('\033[0m')
-            print('\n')
-
-            powerflow.mon = self.monitor
-
         else:
             print('\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m')
+
+
+
+    def checkmonitor(
+        self,
+        powerflow,
+    ):
+        """verificação das opções de monitoramento escolhidas
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        print('\033[96mOpções de monitoramento escolhidas: ', end='')
+        for k, _ in self.monitor.items():
+            if k in powerflow.mon:
+                self.monitor[k] = True
+                print(f'{k}', end=' ')
+        print('\033[0m')
+        print('\n')
+
+        powerflow.mon = self.monitor

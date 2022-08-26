@@ -39,7 +39,7 @@ class Folder:
         self,
         setup,
     ):
-        """Criação de diretório para armazenar Resultados de Matriz Admitância
+        """criação de diretório para armazenar Resultados de Matriz Admitância
         
         Parâmetros
             setup: self do arquivo setup.py
@@ -57,7 +57,7 @@ class Folder:
         self,
         setup,
     ):
-        """Criação de diretório para armazenar Resultados de Matriz Jacobiana
+        """criação de diretório para armazenar Resultados de Matriz Jacobiana
         
         Parâmetros
             setup: self do arquivo setup.py
@@ -76,7 +76,7 @@ class Folder:
         self,
         setup,
     ):
-        """Criação de diretório para armazenar Resultados de Relatórios
+        """criação de diretório para armazenar Resultados de Relatórios
         
         Parâmetros
             setup: self do arquivo setup.py
@@ -94,7 +94,7 @@ class Folder:
         self,
         setup,
     ):
-        """Criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
+        """criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
         
         Parâmetros
             setup: self do arquivo setup.py

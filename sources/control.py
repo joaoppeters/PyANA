@@ -32,15 +32,27 @@ class Control:
                 'SVC' : False,
                 'VCTRL': False,
                 }
-            
-            print('\033[96mOpções de controle escolhidas: ', end='')
-            for k, _ in self.control.items():
-                if k in powerflow.control:
-                    self.control[k] = True
-                    print(f'{k}', end=' ')
-            print('\033[0m')
-
-            powerflow.control = self.control
 
         else:
             print('\033[96mNenhuma opção de controle foi escolhida.\033[0m')
+
+
+
+    def checkcontrol(
+        self,
+        powerflow,
+    ):
+        """verificação das opções de controle escolhidas
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        print('\033[96mOpções de controle escolhidas: ', end='')
+        for k, _ in self.control.items():
+            if k in powerflow.control:
+                self.control[k] = True
+                print(f'{k}', end=' ')
+        print('\033[0m')
+
+        powerflow.control = self.control
