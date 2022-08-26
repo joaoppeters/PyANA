@@ -44,10 +44,10 @@ class Setup:
             Options(powerflow,)
 
             # Classe para determinar a realização das opções de controle escolhidas
-            Control(powerflow,)
+            Control(powerflow,).checkcontrol(powerflow,)
 
             # Classe para determinar a realização de monitoramento de valores
-            Monitor(powerflow,)
+            Monitor(powerflow,).checkmonitor(powerflow,)
 
             # # Classe para criação automática de diretórios para armazenar resultados  ------------ COLOCAR SOMENTE AO FINAL DA CHAMADA DO FLUXO DE POTENCIA
             # Folder(powerflow, self,)
