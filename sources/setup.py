@@ -49,9 +49,6 @@ class Setup:
             # Classe para determinar a realização de monitoramento de valores
             Monitor(powerflow,).checkmonitor(powerflow,)
 
-            # # Classe para criação automática de diretórios para armazenar resultados  ------------ COLOCAR SOMENTE AO FINAL DA CHAMADA DO FLUXO DE POTENCIA
-            # Folder(powerflow, self,)
-
             # Classe para construção da matriz Admitância
             Ybus(powerflow, self,)
         
