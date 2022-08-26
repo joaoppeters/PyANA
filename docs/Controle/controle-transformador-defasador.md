@@ -1,0 +1,1 @@
+# Controle de Regulação de Transformadores Defasadores

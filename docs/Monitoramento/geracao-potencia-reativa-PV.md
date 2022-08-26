@@ -1,0 +1,1 @@
+# Monitoramento de Limite de Geração de Potência Reativa de Geradores

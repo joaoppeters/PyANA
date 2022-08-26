@@ -1,0 +1,1 @@
+# Constantes e Variáveis Utilizadas nos Processos de Convergência do Fluxo de Potência
