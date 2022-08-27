@@ -27,6 +27,7 @@ class PWF:
         ## Inicialização
         # Variáveis
         self.linecount = 0
+        setup.codes = {}
 
         # Funções
         self.keywords()
@@ -41,6 +42,7 @@ class PWF:
         ):
         """palavras-chave de arquivo .pwf"""
 
+        ## Inicialização
         self.end_archive = 'FIM'
         self.end_block = ('9999', '99999')
         self.comment = '('
@@ -52,6 +54,7 @@ class PWF:
         ):
         """inicialização para leitura de dados de barra"""
 
+        ## Inicialização
         self.dbar = dict()
         self.dbar['numero'] = list()
         self.dbar['operacao'] = list()
@@ -91,6 +94,7 @@ class PWF:
         ):
         """inicialização para leitura de dados de linha"""
 
+        ## Inicialização
         self.dlin = dict()
         self.dlin['de'] = list()
         self.dlin['abertura_de'] = list()
@@ -130,6 +134,7 @@ class PWF:
     ):
         """inicialização para leitura de dados de geradores"""
         
+        ## Inicialização
         self.dger = dict()
         self.dger['numero'] = list()
         self.dger['operacao'] = list()
@@ -159,14 +164,17 @@ class PWF:
             setup: self do arquivo setup.py
         """
 
+        ## Inicialização
         f = open(f'{setup.dirSEP}', 'r', encoding='latin-1')
         self.lines = f.readlines()
         f.close()
         self.pwf2py = {}
 
+        # Loop de leitura de linhas do `.pwf`
         while self.lines[self.linecount].strip() != self.end_archive:
 
             if self.lines[self.linecount].strip() == 'DBAR':
+                setup.codes['DBAR'] = False
                 self.dbar()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -206,13 +214,16 @@ class PWF:
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Barra
-                powerflow.dbarraDF = self.treatment(pandas=DF(data=self.dbar), data='DBAR')
-                if powerflow.dbarraDF.empty:
+                setup.dbarraDF = self.treatment(pandas=DF(data=self.dbar), data='DBAR')
+                if setup.dbarraDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
+                else:
+                    setup.codes['DBAR'] = True
 
 
             elif self.lines[self.linecount].strip() == 'DLIN':
+                setup.codes['DLIN'] = False
                 self.dlin()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -252,13 +263,16 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                powerflow.dlinhaDF = self.treatment(pandas=DF(data=self.dlin), data='DLIN')
-                if powerflow.dlinhaDF.empty:
+                setup.dlinhaDF = self.treatment(pandas=DF(data=self.dlin), data='DLIN')
+                if setup.dlinhaDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
+                else:
+                    setup.codes['DLIN'] = True
                 
 
             elif self.lines[self.linecount].strip() == 'DGER':
+                setup.codes['DGER'] = False
                 self.dger()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -281,10 +295,12 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                powerflow.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
-                if powerflow.dgeraDF.empty:
+                setup.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
+                if setup.dgeraDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
+                else:
+                    setup.codes['DGER'] = True
 
             self.linecount += 1
 
@@ -313,8 +329,11 @@ class PWF:
                 Arquivo com os valores tratados
         """
 
+        ## Inicialização
+        # Tratamento inicial
         pandas = pandas.replace(r"^\s*$", '0', regex=True)
 
+        # Tratamento específico 'DBAR'
         if data == 'DBAR':
             pandas = pandas.astype(
                 {
@@ -351,6 +370,7 @@ class PWF:
                 }
             )
         
+        # Tratamento específico 'DBTB'
         elif data == 'DBTB':
             pandas = pandas.astype(
                 {
@@ -360,6 +380,7 @@ class PWF:
                 }
             )
         
+        # Tratamento específico 'DCER'
         elif data == 'DCER':
             pandas = pandas.astype(
                 {
@@ -377,6 +398,7 @@ class PWF:
                 }
             )
 
+        # Tratamento específico 'DGER'
         elif data == 'DGER':
             pandas = pandas.astype(
                 {
@@ -396,6 +418,7 @@ class PWF:
                 }
             )
 
+        # Tratamento específico 'DGLT'
         elif data == 'DGLT':
             pandas = pandas.astype(
                 {
@@ -407,8 +430,7 @@ class PWF:
                 }
             )
 
-        
-
+        # Tratamento específico 'DLIN'
         elif data == 'DLIN':
             pandas = pandas.astype(
                 {

@@ -15,6 +15,7 @@ method = 'NEWTON'
 jacobi = 'COMPLETA'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
+control = ['CREM', 'CST', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
 
 options = {
     'sbase': 100.,
@@ -29,9 +30,10 @@ options = {
     'cpfV2L': 0.85,
 }
 
-mon = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
+monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
+monitor = ['PFLOW', 'VMON']
 
-rel = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
+report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
 
 PowerFlow(
     system=system,
@@ -39,6 +41,6 @@ PowerFlow(
     jacobi=jacobi,
     options={},
     control=[],
-    mon=[],
-    rel=rel,
+    monitor=[],
+    report=report,
 )

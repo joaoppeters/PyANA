@@ -9,15 +9,10 @@
 from os.path import dirname, exists, realpath
 from os import mkdir
 
-from admittance import Ybus
-from control import Control
-from folder import Folder
-# from jacobian import Jac
+from ctrl import Control
 from monitor import Monitor
 from options import Options
 from pwf import PWF
-# from report import Report
-
 
 class Setup:
     """classe para configuração inicial da rotina"""
@@ -41,16 +36,13 @@ class Setup:
             PWF(powerflow, self,)
 
             # Classe para determinação dos valores padrão das variáveis de tolerância
-            Options(powerflow,)
+            Options(powerflow, self,)
 
             # Classe para determinar a realização das opções de controle escolhidas
-            Control(powerflow,).checkcontrol(powerflow,)
+            Control(powerflow, self,)
 
             # Classe para determinar a realização de monitoramento de valores
-            Monitor(powerflow,).checkmonitor(powerflow,)
-
-            # Classe para construção da matriz Admitância
-            Ybus(powerflow, self,)
+            Monitor(powerflow, self,)
         
         else:
             ## ERROR - VERMELHO
@@ -67,8 +59,12 @@ class Setup:
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
+
         ## Inicialização
+        # Variável de diretório principal
         self.maindir = dirname(dirname(__file__))
+
+        # Variável de nome do SEP em estudo
         self.name = powerflow.system.split('.')[0]
 
         if exists(self.maindir + '/sistemas/') is True:

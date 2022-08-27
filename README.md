@@ -66,7 +66,7 @@ Para realizar a análise de fluxo de potência em regime permanente, `utilize a 
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=control, mon=mon, rel=rel,)
+PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=control, monitor=monitor, report=report,)
 ```
 - `system: str, obrigatório, valor padrão ''`
     - **Variável que indica o nome do arquivo do SEP em estudo.**
@@ -89,7 +89,7 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
         - `'Alternada'`- [organiza a matriz Jacobiana pela formulação Alternada](docs/Jacobiana/alternada.md).
         - `'Reduzida'` - [organiza a matriz Jacobiana pela formulação Reduzida](docs/Jacobiana/reduzida.md).
 
-- `options: dict, opcional, valor padrão None`
+- `options: dict, opcional, valor padrão dict()`
     - **Opções:**
         - `sbase` - potência aparente base do sistema:
             - **valor padrão 100.**
@@ -112,7 +112,7 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
         - `cpfV2L` - transição da variável V para variável λ (3a parte da curva PV):
             - **valor padrão 85%.**
 
-- `control: str, opcional, valor padrão ''`
+- `control: list, opcional, valor padrão list()`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
     - **Opções:**
         - `'CREM'` - [controle remoto de magnitude de tensão de barras remotas.](docs/Controle/controle-remoto-tensao.md)
@@ -124,14 +124,14 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
         - `'SVC'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVC.md)
         - `'VCTRL'` - [controle de magnitude de tensão de todas as barras.](docs/Controle/controle-tensao.md)
 
-- `mon: str, opcional, valor padrão ''`
+- `monitor: list, opcional, valor padrão list()`
     - **Opções:**
         - `'PFLOW'` - [monitoramento do fluxo de potência ativa nas linhas de transmissão.](docs/Monitoramento/fluxo-potencia-ativa-LT.md)
         - `'PGMON'` - [monitoramento do fluxo de potência ativa gerado por geradores.](docs/Monitoramento/geracao-potencia-ativa-PV.md)
         - `'QGMON'` - [monitoramento do fluxo de potência reativa gerado por geradores.](docs/Monitoramento/geracao-potencia-reativa-PV.md)
         - `'VMON'` - [monitoramento da magnitude de tensão de barras do SEP.](docs/Monitoramento/tensao-barramentos.md)
 
-- `rel: str, opcional, valor padrão ''`
+- `report: list, opcional, valor padrão list()`
     - **Determina o conjunto de relatórios a serem gerados.**
     - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
     - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
@@ -144,7 +144,7 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
 
         - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
-        - `'RCPF'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcpf.md)
+        - `'RCPF'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcontinuado.md)
 
 
 > **PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
@@ -171,7 +171,7 @@ PowerFlow(
         'cpfV2L': 0.90,
     },
     control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL'], 
-    mon=['PFLOW', 'PGMON', 'QGMON', 'VMON'], 
-    rel=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF'],
+    monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON'], 
+    report=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF'],
     )
 ```

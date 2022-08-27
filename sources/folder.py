@@ -8,7 +8,6 @@
 
 from os.path import dirname, exists
 from os import mkdir
-from options import Options
 
 class Folder:
     """classe para criação automática de diretórios para armazenar resultados"""

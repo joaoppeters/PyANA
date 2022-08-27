@@ -6,6 +6,8 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
+from admittance import Ybus
+from method import Method
 from setup import Setup
 
 class PowerFlow:
@@ -16,33 +18,38 @@ class PowerFlow:
         system: str='',
         method: str='NEWTON',
         jacobi: str='COMPLETA',
-        options: dict=None,
-        control: str='',
-        mon: str='',
-        rel: str='',
+        options: dict=dict(),
+        control: list=list(),
+        monitor: list=list(),
+        report: list=list(),
     ):
         """inicialização
 
         Parâmetros:
-            arqv: str, opcional, valor padrão ''
+            system: str, opcional, valor padrão ''
             method: str, opcional, valor padrão 'NEWTON'
             jacobi: str, opcional, valor padrão 'COMPLETA'
             options: dict, opcional, valor padrão None
-            control: str, opcional, valor padrão ''
-            mon: str, opcional, valor padrão ''
-            rel: str, opcional, valor padrão ''   
+            control: list, opcional, valor padrão None
+            monitor: list, opcional, valor padrão None
+            report: list, opcional, valor padrão None 
         """
 
         ## Inicialização
-        # Variáveis
+        # Variáveis chamadas
         self.system = system    # SEP em estudo
         self.method = method    # Método de solução do fluxo de potência
         self.jacobi = jacobi    # Formulação da matriz Jacobiana
         self.options = options  # Opções de convergência
         self.control = control  # Opções de controle
-        self.mon = mon          # Opções de monitoramento
-        self.rel = rel          # Opções de relatório
+        self.monitor = monitor  # Opções de monitoramento
+        self.report = report    # Opções de relatório
 
+        # Classe para configuração do SEP em estudo
+        self.setup = Setup(self)
 
-        # Classe para configuração inicial do SEP em estudo
-        Setup(self)
+        # Classe para construção da matriz Admitância
+        Ybus(self,)
+
+        # Classe para aplicação do método selecionado para análise de fluxo de potência
+        Method(self,)

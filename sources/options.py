@@ -6,7 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-
+from copy import deepcopy
 
 class Options:
     """classe para configuração dos valores padrão de variáveis de tolerância para o processo de convergência do fluxo de potência"""
@@ -14,20 +14,26 @@ class Options:
     def __init__(
         self,
         powerflow,
+        setup,
     ):
         """inicialização
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
         """
+
         ## Inicialização
         self.standard()
         # Configuração de variáveis para processos de convergência de fluxos de potência tradicionais
         if powerflow.method in self.stdmethods:
-            self.pf(powerflow,)
+            self.pf(powerflow, setup,)
         # Configuração de variáveis para processo de convergência do fluxo de potência continuado
         elif powerflow.method == 'CPF':
-            self.cpf(powerflow,)
+            self.cpf(powerflow, setup,)
+        # Nenhuma opção de método de solução para análise de fluxo de potência foi selecionado
+        else:
+            raise ValueError('\033[91mERROR: A opção de método de solução selecionada para análise de fluxo de potência não é válida!\nRode novamente o programa e selecione uma das alternativas informadas!\033[0m')
 
 
 
@@ -35,6 +41,8 @@ class Options:
         self,
     ):
         """configuração padrão"""
+
+        ## Inicialização
         self.stdmethods = ['NEWTON', 'GAUSS', 'LINEAR', 'DECOUP', 'fDECOUP']
     
     
@@ -42,11 +50,13 @@ class Options:
     def pf(
         self,
         powerflow,
+        setup,
     ):
         """configuração de variáveis para processos de convergência de fluxos de potência tradicionais
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
         """
 
         ## Inicialização
@@ -61,15 +71,20 @@ class Options:
             'vmin': 0.95,
         }
         
+        setup.options = dict()
+
         for k, v in self.stdpf.items():
             if k not in powerflow.options:
-                powerflow.options[k] = v
+                setup.options[k] = v
+            else:
+                setup.options[k] = deepcopy(powerflow.options[k])
 
 
 
     def cpf(
         self,
         powerflow,
+        setup,
     ):
         """configuração de variáveis para processos de convergência de fluxo de potência continuado
         
@@ -88,4 +103,6 @@ class Options:
         
         for k, v in self.stdcpf.items():
             if k not in powerflow.options:
-                powerflow.options[k] = v
+                setup.options[k] = v
+            else:
+                setup.options[k] = deepcopy(powerflow.options[k])
