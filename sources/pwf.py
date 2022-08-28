@@ -186,7 +186,7 @@ class PWF:
                         self.dbar['estado'].append(self.lines[self.linecount][6])
                         self.dbar['tipo'].append(self.lines[self.linecount][7])
                         self.dbar['grupo_base_tensao'].append(self.lines[self.linecount][8:10])
-                        self.dbar['nome'].append(self.lines[self.linecount][10:22])
+                        self.dbar['nome'].append(self.lines[self.linecount][10:22].split(' ')[0])
                         self.dbar['grupo_limite_tensao'].append(self.lines[self.linecount][22:24])
                         self.dbar['tensao'].append(self.lines[self.linecount][24:28])
                         self.dbar['angulo'].append(self.lines[self.linecount][28:32])

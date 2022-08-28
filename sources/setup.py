@@ -13,6 +13,7 @@ from ctrl import Control
 from monitor import Monitor
 from options import Options
 from pwf import PWF
+from report import Reports
 
 class Setup:
     """classe para configuração inicial da rotina"""
@@ -27,8 +28,8 @@ class Setup:
             powerflow: self do arquivo powerflow.py
         """
 
+        ## Inicialização
         if powerflow.system:
-            ## Inicialização
             # Verificação de diretório
             self.checkpath(powerflow,)
 
@@ -43,6 +44,9 @@ class Setup:
 
             # Classe para determinar a realização de monitoramento de valores
             Monitor(powerflow, self,)
+
+            # Classe para determinar a geração de relatórios
+            Reports(powerflow, self,)
         
         else:
             ## ERROR - VERMELHO

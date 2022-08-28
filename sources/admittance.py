@@ -79,4 +79,4 @@ class Ybus:
 
         # Salva matriz admitância em arquivo formato `.csv`
         Folder(powerflow.setup,).admittance(powerflow.setup,)
-        DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}setup.ybus.csv', header=None, index=None, sep=',')
+        DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}ybus.csv', header=None, index=None, sep=',')

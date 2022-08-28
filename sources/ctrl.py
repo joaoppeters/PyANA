@@ -22,26 +22,26 @@ class Control:
         """
 
         ## Inicialização
-        if powerflow.control:
-            if not hasattr(powerflow, 'setup'):
+        if not hasattr(powerflow, 'setup'):
+            if powerflow.control:
                 setup.control = dict()
-                if not setup.control:
-                    setup.control = {
-                        'CREM': False, 
-                        'CST': False,
-                        'CTAP': False,
-                        'CTAPd': False,
-                        'FREQ': False,
-                        'QLIM': False,
-                        'SVC' : False,
-                        'VCTRL': False,
-                        }
-                    
-                    self.checkcontrol(powerflow, setup,)
+                # if not setup.control:
+                self.control = {
+                    'CREM': False, 
+                    'CST': False,
+                    'CTAP': False,
+                    'CTAPd': False,
+                    'FREQ': False,
+                    'QLIM': False,
+                    'SVC' : False,
+                    'VCTRL': False,
+                    }
+                
+                self.checkcontrol(powerflow, setup,)
 
-        else:
-            setup.control = dict()
-            print('\033[96mNenhuma opção de controle foi escolhida.\033[0m')
+            else:
+                setup.control = dict()
+                print('\033[96mNenhuma opção de controle foi escolhida.\033[0m')
 
 
 
@@ -59,7 +59,7 @@ class Control:
         
         ## Inicialização
         print('\033[96mOpções de controle escolhidas: ', end='')
-        for k, _ in setup.control.items():
+        for k, _ in self.control.items():
             if k in powerflow.control:
                 setup.control[k] = True
                 print(f'{k}', end=' ')

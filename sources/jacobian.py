@@ -7,7 +7,11 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import concatenate, cos, ndarray, ones, sin, zeros
+from numpy import concatenate, cos, ndarray, ones, savetxt, sin, zeros
+from os.path import exists
+from os import remove
+
+from folder import Folder
 
 class Jacobi:
     """classe para construção da matriz Jacobiana"""
@@ -77,6 +81,10 @@ class Jacobi:
         # Montagem da Matriz Jacobiana
         self.assembly(powerflow,)
 
+        # Armazenamento da Matriz Jacobiana
+        Folder(powerflow.setup,).jacobi(powerflow.setup,)
+        self.savejacobi(powerflow,)
+        
 
 
     def pcalc(
@@ -157,15 +165,14 @@ class Jacobi:
 
         ## Inicialização
         # Tratamento de limite de geração de potência reativa & big-number
-        # self.bignumber(powerflow,)
+        self.bignumber(powerflow,)
 
         # Montagem da matriz Jacobiana
         # configuração completa
-        if powerflow.setup.jacobi == 'COMPLETA':
+        if powerflow.jacobi == 'COMPLETA':
             powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
-
         # configuração alternada
-        elif powerflow.setup.jacobi == 'ALTERNADA':
+        elif powerflow.jacobi == 'ALTERNADA':
             powerflow.setup.jacob: ndarray = zeros(shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype='float')
             for row in range(0, powerflow.setup.nbus):
                 ptpv = -1
@@ -183,46 +190,76 @@ class Jacobi:
                             powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.qt[row, qtqv])
                         else:
                             powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.qv[row, qtqv])
-
         # configuração reduzida
-        elif powerflow.setup.jacobi == 'REDUZIDA':
+        elif powerflow.jacobi == 'REDUZIDA':
             powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
-            self.mask = ones(2*powerflow.setup.nbus, bool)
-            for idx, value in powerflow.setup.dbarraDF.iterrows():
-                if (value['tipo'] == 2) or (value['tipo'] == 1):
-                    self.mask[powerflow.setup.nbus+idx] = False
-                    if (value['tipo'] == 2):
-                        self.mask[idx] = False
-            
-            powerflow.setup.jacob[self.mask, :][:, self.mask]
+            powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
             
 
 
-
-
-    # def bignumber(
-    #     self,
-    #     powerflow,
-    # ):
-    #     """
+    def bignumber(
+        self,
+        powerflow,
+    ):
+        """
         
-    #     Parâmetros
-    #         powerflow: self do arquivo powerflow.py
-    #     """
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
 
-    #     ## Inicialização
-    #     # Método Big-Number Refinado
-    #     for idx in range(powerflow.setup.nbus):
-    #         if self.dbarra.tipo[idx] == 2:
-    #             self.jacob[idx, :] = 0
-    #             self.jacob[:, idx] = 0
-    #             self.jacob[idx, idx] = 1
+        ## Inicialização Método Big-Number
+        # Mask H & M
+        powerflow.setup.BNP = ones(powerflow.setup.nbus) 
+        # Mask N & L
+        powerflow.setup.BNQ = ones(powerflow.setup.nbus)
+        for idx, value in powerflow.setup.dbarraDF.iterrows():
+            if (value['tipo'] == 2) or (value['tipo'] == 1):
+                powerflow.setup.BNQ[idx] = 0
+                if (value['tipo'] == 2):
+                    powerflow.setup.BNP[idx] = 0 
 
-    #             self.jacob[idx + powerflow.setup.nbus, :] = 0
-    #             self.jacob[:, idx + powerflow.setup.nbus] = 0
-    #             self.jacob[idx + powerflow.setup.nbus, idx + powerflow.setup.nbus] = 1
+        for v in range(0, powerflow.setup.nbus):
+            if powerflow.setup.BNP[v] == 0:
+                powerflow.setup.pt[v, :] = 0
+                powerflow.setup.pv[v, :] = 0
+                powerflow.setup.pt[:, v] = 0
+                powerflow.setup.qt[:, v] = 0
+                powerflow.setup.pt[v, v] = 1
+            
+            if powerflow.setup.BNQ[v] == 0:
+                powerflow.setup.qv[v, :] = 0
+                powerflow.setup.qt[v, :] = 0
+                powerflow.setup.qv[:, v] = 0
+                powerflow.setup.pv[:, v] = 0
+                powerflow.setup.qv[v, v] = 1
 
-    #         elif self.dbarra.tipo[idx] == 1:
-    #             self.jacob[idx + powerflow.setup.nbus, :] = 0
-    #             self.jacob[:, idx + powerflow.setup.nbus] = 0
-    #             self.jacob[idx + powerflow.setup.nbus, idx + powerflow.setup.nbus] = 1
+
+
+    def savejacobi(
+        self,
+        powerflow,
+    ):
+        """armazena a matriz jacobiana a cada iteração
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização
+        # Cabeçalho
+        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação ' + powerflow.jacobi + ' vv Iteração ' + str(powerflow.sol['iter']) + ' vv'
+
+        # Arquivo
+        file = powerflow.setup.dirRjacobi + powerflow.setup.name + '-jacobi.csv'
+
+        # Check
+        if exists(file) is False:
+            open(file, 'a').close()
+        elif True and powerflow.sol['iter'] == 0:
+            remove(file)
+            open(file, 'a').close()
+        
+        # Atualização
+        with open(file, 'a') as of:
+            savetxt(of, powerflow.setup.jacob, delimiter=',', header=header)
+            of.close()

@@ -34,6 +34,7 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['PFLOW', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
+report = ['RLINHA', 'RBARRA']
 
 PowerFlow(
     system=system,

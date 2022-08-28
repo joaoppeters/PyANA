@@ -70,7 +70,6 @@ class Folder:
 
 
 
-
     def reports(
         self,
         setup,
@@ -81,7 +80,7 @@ class Folder:
             setup: self do arquivo setup.py
         """
 
-        dirRreports = self.dirResultados + 'Relatorios/'
+        dirRreports = setup.dirResultados + 'Relatorios/'
         if exists(dirRreports) is False:
             mkdir(dirRreports)
         

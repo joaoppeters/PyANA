@@ -22,22 +22,22 @@ class Monitor:
         """
 
         ## Inicialização
-        if powerflow.monitor:
-            if not hasattr(powerflow, 'setup'):
+        if not hasattr(powerflow, 'setup'):
+            if powerflow.monitor:
                 setup.monitor = dict()
-                if not setup.monitor:
-                    setup.monitor = {
-                        'PFLOW': False, 
-                        'PGMON': False, 
-                        'QGMON': False, 
-                        'VMON': False,
-                        }
-                    
-                    self.checkmonitor(powerflow, setup,)
+                # if not setup.monitor:
+                self.monitor = {
+                    'PFLOW': False, 
+                    'PGMON': False, 
+                    'QGMON': False, 
+                    'VMON': False,
+                    }
+                
+                self.checkmonitor(powerflow, setup,)
 
-        else:
-            setup.monitor = dict()
-            print('\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m')
+            else:
+                setup.monitor = dict()
+                print('\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m')
 
 
 
@@ -56,7 +56,7 @@ class Monitor:
         ## Inicialização
         if powerflow.monitor:
             print('\033[96mOpções de monitoramento escolhidas: ', end='')
-            for k, _ in setup.monitor.items():
+            for k, _ in self.monitor.items():
                 if k in powerflow.monitor:
                     setup.monitor[k] = True
                     print(f'{k}', end=' ')
