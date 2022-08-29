@@ -1,0 +1,30 @@
+August 28, 2022
+
+
+relatório de monitoramento do sistema ieee14
+solução do fluxo de potência via método newton-raphson
+
+opções de relatório ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+A geração de potência reativa da BARRA-8 violou o limite máximo estabelecido para análise ( 17.36 > 10.0 ).
+
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da BARRA-1 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
+A magnitude de tensão da BARRA-6 violou o limite máximo estabelecido para análise ( 1.070 >= 1.05 ).
+A magnitude de tensão da BARRA-7 violou o limite máximo estabelecido para análise ( 1.062 >= 1.05 ).
+A magnitude de tensão da BARRA-8 violou o limite máximo estabelecido para análise ( 1.090 >= 1.05 ).
+A magnitude de tensão da BARRA-9 violou o limite máximo estabelecido para análise ( 1.056 >= 1.05 ).
+A magnitude de tensão da BARRA-10 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
+A magnitude de tensão da BARRA-11 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
+A magnitude de tensão da BARRA-12 violou o limite máximo estabelecido para análise ( 1.055 >= 1.05 ).
+A magnitude de tensão da BARRA-13 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+
+
+
+fim do relatório de monitoramento do sistema ieee14

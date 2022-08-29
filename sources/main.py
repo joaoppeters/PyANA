@@ -31,7 +31,7 @@ options = {
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
-monitor = ['PFLOW', 'VMON']
+monitor = ['QGMON', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
 report = ['RLINHA', 'RBARRA']
@@ -42,6 +42,6 @@ PowerFlow(
     jacobi=jacobi,
     options={},
     control=[],
-    monitor=[],
+    monitor=monitor,
     report=report,
 )

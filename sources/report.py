@@ -100,7 +100,6 @@ class Reports:
                     setup.report[k] = True
                     print(f'{k}', end=' ')
             print('\033[0m')
-            print('\n')
 
 
 
@@ -142,7 +141,7 @@ class Reports:
         self.file.write('opções de relatório ativadas: ')
         for k in powerflow.setup.report:
             self.file.write(f'{k} ')
-        self.file.write('\n\n\n')
+        self.file.write('\n\n\n\n')
 
 
 
