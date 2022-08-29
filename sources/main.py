@@ -10,7 +10,7 @@ from powerflow import PowerFlow
 
 system = 'ieee14.pwf'
 
-method = 'NEWTON'
+method = 'LINEAR'
 
 jacobi = 'COMPLETA'
 

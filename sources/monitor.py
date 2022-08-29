@@ -61,7 +61,7 @@ class Monitor:
                     elif r == 'PGMON':
                         self.monitorpgmon(powerflow,)
                     # monitoramento de potência reativa gerada
-                    elif r == 'QGMON':
+                    elif r == 'QGMON' and powerflow.method != 'LINEAR':
                         self.monitorqgmon(powerflow,)
                     # monitoramento de magnitude de tensão de barramentos
                     elif r == 'VMON':

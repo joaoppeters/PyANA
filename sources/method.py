@@ -7,6 +7,7 @@
 # ------------------------------------- #
 
 from folder import Folder
+from linear import LinearPowerFlow
 from monitor import Monitor
 from newtonraphson import NewtonRaphson
 from report import Reports
@@ -60,7 +61,7 @@ class Method():
 
         # Chamada específica método de Newton-Raphson Linearizado
         elif powerflow.method == 'LINEAR':
-            self.linearpowerflow(powerflow,)
+            LinearPowerFlow(powerflow,)
 
         # Chamada específica método Desacoplado
         elif powerflow.method == 'DECOUP':

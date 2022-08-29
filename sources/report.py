@@ -157,17 +157,20 @@ class Reports:
 
         ## Inicialização
         self.file.write('vv relatório de convergência vv')
-        self.file.write('\n\n')
-        self.file.write('       | FREQ | ERROR | BARRA | ERROR | BARRA |')
-        self.file.write('\n')
-        self.file.write('| ITER |   Hz |    MW |   NUM |  Mvar |   NUM |')
-        self.file.write('\n')
-        self.file.write('-'*47)
-        for i in range(0, powerflow.sol['iter']):
+        if powerflow.method != 'LINEAR':
+            self.file.write('\n\n')
+            self.file.write('       | FREQ | ERROR | BARRA | ERROR | BARRA |')
             self.file.write('\n')
-            self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freq'][i]:^4.1f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:>5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:>5d} |")
-        self.file.write('\n')
-        self.file.write('-'*47)
+            self.file.write('| ITER |   Hz |    MW |   NUM |  Mvar |   NUM |')
+            self.file.write('\n')
+            self.file.write('-'*47)
+            for i in range(0, powerflow.sol['iter']):
+                self.file.write('\n')
+                self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freq'][i]:^4.1f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:>5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:>5d} |")
+            self.file.write('\n')
+            self.file.write('-'*47)
+        if powerflow.method == 'LINEAR':
+            i = powerflow.sol['iter'] - 2
         self.file.write('\n\n')
         self.file.write(powerflow.sol['convergence'])
         self.file.write('\n\n')
@@ -256,14 +259,16 @@ class Reports:
         self.file.write('\n')
         self.file.write('|      MW |      MW |    MW |     MW | ')
         self.file.write('\n')
-        self.file.write('|    Mvar |    Mvar |  Mvar |   Mvar |')
-        self.file.write('\n')
+        if powerflow.method != 'LINEAR':
+            self.file.write('|    Mvar |    Mvar |  Mvar |   Mvar |')
+            self.file.write('\n')
         self.file.write('-'*38)
         self.file.write('\n')
         self.file.write(f"| {sum(powerflow.sol['active']):>+7.2f} | {sum(powerflow.setup.dbarraDF['demanda_ativa']):>+7.2f} |   0.0 | {sum(abs(abs(powerflow.sol['active_flow_F2'])-abs(powerflow.sol['active_flow_2F']))):>6.3f} |")
         self.file.write('\n')
-        self.file.write(f"| {sum(powerflow.sol['reactive']):>+7.2f} | {sum(powerflow.setup.dbarraDF['demanda_reativa']):>+7.2f} | {sum((powerflow.sol['voltage']**2)*powerflow.setup.dbarraDF['shunt_barra'].values.T):>5.2f} | {sum(abs(abs(powerflow.sol['reactive_flow_F2'])-abs(powerflow.sol['reactive_flow_2F']))):>6.3f} |")
-        self.file.write('\n')
+        if powerflow.method != 'LINEAR':
+            self.file.write(f"| {sum(powerflow.sol['reactive']):>+7.2f} | {sum(powerflow.setup.dbarraDF['demanda_reativa']):>+7.2f} | {sum((powerflow.sol['voltage']**2)*powerflow.setup.dbarraDF['shunt_barra'].values.T):>5.2f} | {sum(abs(abs(powerflow.sol['reactive_flow_F2'])-abs(powerflow.sol['reactive_flow_2F']))):>6.3f} |")
+            self.file.write('\n')
         self.file.write('-'*38)
         self.file.write('\n')
         self.file.write('\n\n\n\n')
