@@ -198,27 +198,30 @@ class Reports:
         """
 
         ## Inicialização
-        self.file.write('vv relatório de barras vv')
-        self.file.write('\n\n')
-        self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
-        self.file.write('\n')
-        self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
-        self.file.write('\n')
-        self.file.write('-'*91)
-        for i in range(0, powerflow.setup.nbus):
-            if i % 10 == 0 and i != 0:
-                self.file.write('\n\n')
-                self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
-                self.file.write('\n')
-                self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
-                self.file.write('\n')
-                self.file.write('-'*91)
-
+        # Loop por área
+        for area in powerflow.setup.dbarraDF['area'].unique():
+            self.file.write('vv relatório de barras vv área {} vv'.format(area))
+            self.file.write('\n\n')
+            self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
             self.file.write('\n')
-            self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:<8} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.sol['voltage'][i]:<5.3f} | {degrees(powerflow.sol['theta'][i]):>+6.2f} | {powerflow.sol['active'][i]:>8.2f} | {powerflow.sol['reactive'][i]:>8.2f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:>6.2f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:>7.2f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:>7.2f} |")
+            self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
             self.file.write('\n')
             self.file.write('-'*91)
-        self.file.write('\n\n\n\n')
+            for i in range(0, powerflow.setup.nbus):
+                if powerflow.setup.dbarraDF['area'][i] == area:
+                    if i % 10 == 0 and i != 0:
+                        self.file.write('\n\n')
+                        self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
+                        self.file.write('\n')
+                        self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
+                        self.file.write('\n')
+                        self.file.write('-'*91)
+
+                    self.file.write('\n')
+                    self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:<8} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.sol['voltage'][i]:<5.3f} | {degrees(powerflow.sol['theta'][i]):>+6.2f} | {powerflow.sol['active'][i]:>8.2f} | {powerflow.sol['reactive'][i]:>8.2f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:>6.2f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:>7.2f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:>7.2f} |")
+                    self.file.write('\n')
+                    self.file.write('-'*91)
+            self.file.write('\n\n\n\n')
 
 
 
