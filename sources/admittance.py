@@ -28,6 +28,9 @@ class Ybus:
         # Número de barras do sistema
         powerflow.setup.nbus = len(powerflow.setup.dbarraDF.tipo.values)
 
+        # Checa alteração no nível de carregamento
+        self.checkdanc(powerflow,)
+
         # Matriz Admitância
         powerflow.setup.ybus: ndarray = zeros(shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype='complex_')
         self.admit(powerflow,)
@@ -79,3 +82,24 @@ class Ybus:
         # Salva matriz admitância em arquivo formato `.csv`
         Folder(powerflow.setup,).admittance(powerflow.setup,)
         DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}admittance.csv', header=None, index=None, sep=',')
+
+
+
+    def checkdanc(
+        self,
+        powerflow,
+    ):
+        """checa alteração no nível de carregamento
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        ## Inicialização
+        # Variável
+        if powerflow.setup.codes['DANC']:
+            for idx, value in powerflow.setup.dbarraDF.iterrows():
+                if value['area'] == powerflow.setup.dancDF['area'][0]:
+                    powerflow.setup.dbarraDF.loc[idx, 'demanda_ativa'] *= (1 + powerflow.setup.dancDF['fator_carga_ativa'][0] / powerflow.setup.options['sbase'])
+                    powerflow.setup.dbarraDF.loc[idx, 'demanda_reativa'] *= (1 + powerflow.setup.dancDF['fator_carga_reativa'][0] / powerflow.setup.options['sbase'])
+                    powerflow.setup.dbarraDF.loc[idx, 'shunt_barra'] *= (1 + powerflow.setup.dancDF['fator_shunt_barra'][0] / powerflow.setup.options['sbase'])
