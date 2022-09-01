@@ -13,10 +13,17 @@ class Freq:
 
     def __init__(
         self,
+        powerflow,
     ):
-        """inicialização"""
+        """inicialização
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
 
         ## Inicialização
+        if not hasattr(powerflow.setup, 'freqjcount'):
+            powerflow.setup.freqjcount = 0
         pass
 
 
@@ -288,52 +295,57 @@ class Freq:
         # yxt   yxv   yxp   yxq   yxx
         # 
         
-        # Submatrizes
-        powerflow.setup.pxp = zeros([powerflow.setup.nbus, powerflow.setup.nger]) # -> APG
-        powerflow.setup.pxq = zeros([powerflow.setup.nbus, powerflow.setup.nger])
-        powerflow.setup.pxx = zeros([powerflow.setup.nbus, powerflow.setup.nare])        
+        # Condição
+        if powerflow.setup.freqjcount == 0:
+            # Variável
+            powerflow.setup.freqjcount += 1
+            
+            # Submatrizes
+            powerflow.setup.pxp = zeros([powerflow.setup.nbus, powerflow.setup.nger]) # -> APG
+            powerflow.setup.pxq = zeros([powerflow.setup.nbus, powerflow.setup.nger])
+            powerflow.setup.pxx = zeros([powerflow.setup.nbus, powerflow.setup.nare])        
 
-        powerflow.setup.qxp = zeros([powerflow.setup.nbus, powerflow.setup.nger])
-        powerflow.setup.qxq = zeros([powerflow.setup.nbus, powerflow.setup.nger]) # -> BQG
-        powerflow.setup.qxx = zeros([powerflow.setup.nbus, powerflow.setup.nare])
-        
-        powerflow.setup.ypt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
-        powerflow.setup.ypv = zeros([powerflow.setup.nger, powerflow.setup.nbus])
-        powerflow.setup.ypp = zeros([powerflow.setup.nger, powerflow.setup.nger]) # -> CPG
-        powerflow.setup.ypq = zeros([powerflow.setup.nger, powerflow.setup.nger])
-        powerflow.setup.ypx = zeros([powerflow.setup.nger, powerflow.setup.nare]) # -> CF        
+            powerflow.setup.qxp = zeros([powerflow.setup.nbus, powerflow.setup.nger])
+            powerflow.setup.qxq = zeros([powerflow.setup.nbus, powerflow.setup.nger]) # -> BQG
+            powerflow.setup.qxx = zeros([powerflow.setup.nbus, powerflow.setup.nare])
+            
+            powerflow.setup.ypt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
+            powerflow.setup.ypv = zeros([powerflow.setup.nger, powerflow.setup.nbus])
+            powerflow.setup.ypp = zeros([powerflow.setup.nger, powerflow.setup.nger]) # -> CPG
+            powerflow.setup.ypq = zeros([powerflow.setup.nger, powerflow.setup.nger])
+            powerflow.setup.ypx = zeros([powerflow.setup.nger, powerflow.setup.nare]) # -> CF        
 
-        powerflow.setup.yqt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
-        powerflow.setup.yqv = zeros([powerflow.setup.nger, powerflow.setup.nbus]) # -> EQG
-        powerflow.setup.yqp = zeros([powerflow.setup.nger, powerflow.setup.nger])
-        powerflow.setup.yqq = zeros([powerflow.setup.nger, powerflow.setup.nger])
-        powerflow.setup.yqx = zeros([powerflow.setup.nger, powerflow.setup.nare])
+            powerflow.setup.yqt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
+            powerflow.setup.yqv = zeros([powerflow.setup.nger, powerflow.setup.nbus]) # -> EQG
+            powerflow.setup.yqp = zeros([powerflow.setup.nger, powerflow.setup.nger])
+            powerflow.setup.yqq = zeros([powerflow.setup.nger, powerflow.setup.nger])
+            powerflow.setup.yqx = zeros([powerflow.setup.nger, powerflow.setup.nare])
 
-        powerflow.setup.yxt = zeros([powerflow.setup.nare, powerflow.setup.nbus]) # -> FT
-        powerflow.setup.yxv = zeros([powerflow.setup.nare, powerflow.setup.nbus])
-        powerflow.setup.yxp = zeros([powerflow.setup.nare, powerflow.setup.nger])
-        powerflow.setup.yxq = zeros([powerflow.setup.nare, powerflow.setup.nger])
-        powerflow.setup.yxx = zeros([powerflow.setup.nare, powerflow.setup.nare])
+            powerflow.setup.yxt = zeros([powerflow.setup.nare, powerflow.setup.nbus]) # -> FT
+            powerflow.setup.yxv = zeros([powerflow.setup.nare, powerflow.setup.nbus])
+            powerflow.setup.yxp = zeros([powerflow.setup.nare, powerflow.setup.nger])
+            powerflow.setup.yxq = zeros([powerflow.setup.nare, powerflow.setup.nger])
+            powerflow.setup.yxx = zeros([powerflow.setup.nare, powerflow.setup.nare])
 
-        # Contadores
-        nger = 0
-        nare = 0
+            # Contadores
+            nger = 0
+            nare = 0
 
-        # Submatrizes PXP QXP YQV YXT
-        for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
-                powerflow.setup.pxp[idx, nger] = -1.
-                powerflow.setup.qxq[idx, nger] = -1.
-                powerflow.setup.yqv[nger, idx] = 1.
-                nger += 1
+            # Submatrizes PXP QXP YQV YXT
+            for idx, value in powerflow.setup.dbarraDF.iterrows():
+                if value['tipo'] != 0:
+                    powerflow.setup.pxp[idx, nger] = -1.
+                    powerflow.setup.qxq[idx, nger] = -1.
+                    powerflow.setup.yqv[nger, idx] = 1.
+                    nger += 1
 
-                if value['tipo'] == 2:
-                    powerflow.setup.yxt[nare, idx] = 1.
+                    if value['tipo'] == 2:
+                        powerflow.setup.yxt[nare, idx] = 1.
 
-        # Submatrizes YPP YPX
-        for idx, value in powerflow.setup.dgeraDF.iterrows():
-            powerflow.setup.ypp[idx, idx] = 1.
-            powerflow.setup.ypx[idx, nare] = 1. / (value['estatismo'] * 1E-2)
+            # Submatrizes YPP YPX
+            for idx, value in powerflow.setup.dgeraDF.iterrows():
+                powerflow.setup.ypp[idx, idx] = 1.
+                powerflow.setup.ypx[idx, nare] = 1. / (value['estatismo'] * 1E-2)
 
         ## Montagem Jacobiana
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv

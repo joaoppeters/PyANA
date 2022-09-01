@@ -9,9 +9,7 @@ opções de monitoramento ativadas: QGMON VMON
 
 vv monitoramento de potência reativa gerada vv
 
-A geração de potência reativa da BARRA--14 violou o limite mínimo estabelecido para análise ( -67.22 <= -50.0 ).
-A geração de potência reativa da BARRA--15 violou o limite mínimo estabelecido para análise ( -53.47 <= -50.0 ).
-
+Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
 
 
 vv monitoramento de magnitude de tensão de barramentos vv

@@ -111,7 +111,7 @@ class Control:
             elif key == 'FREQ':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'FREQ'
-                Freq().freqsol(powerflow,)
+                Freq(powerflow,).freqsol(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
                 powerflow.setup.ctrlcount += 1
@@ -157,7 +157,7 @@ class Control:
                 self.solctapd(powerflow,)
             # controle de regulação primária de frequência
             elif key == 'FREQ':
-                Freq().freqsch(powerflow,)
+                Freq(powerflow,).freqsch(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
                 self.solqlim(powerflow,)
@@ -197,7 +197,7 @@ class Control:
                 self.solctapd(powerflow,)
             # controle de regulação primária de frequência
             elif key == 'FREQ':
-                Freq().freqres(powerflow,)
+                Freq(powerflow,).freqres(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
                 self.solqlim(powerflow,)
@@ -240,7 +240,7 @@ class Control:
                 self.solctapd(powerflow,)
             # controle de regulação primária de frequência
             elif key == 'FREQ':
-                Freq().freqsubjac(powerflow,)
+                Freq(powerflow,).freqsubjac(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
                 self.solqlim(powerflow,)
@@ -280,7 +280,7 @@ class Control:
                 self.solctapd(powerflow,)
             # controle de regulação primária de frequência
             elif key == 'FREQ':
-                Freq().frequpdt(powerflow,)
+                Freq(powerflow,).frequpdt(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
                 self.solqlim(powerflow,)

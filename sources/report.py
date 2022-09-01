@@ -117,7 +117,7 @@ class Reports:
         self.file.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
         self.file.write('\n\n\n')
         self.file.write('relatório do sistema ' + powerflow.setup.name)
-        self.file.write('\n')
+        self.file.write('\n\n')
         self.file.write('solução do fluxo de potência via método ')
         # Chamada específica método de Newton-Raphson Não-Linear
         if powerflow.method == 'NEWTON':
@@ -138,9 +138,19 @@ class Reports:
         elif powerflow.method == 'CPF':
             self.file.write('do fluxo de potência continuado')
         self.file.write('\n\n')
+        self.file.write('opções de controle ativadas: ')
+        if powerflow.setup.control:
+            for k in powerflow.setup.control:
+                self.file.write(f'{k} ')
+        else:
+            self.file.write('Nenhum controle ativo!')
+        self.file.write('\n\n')
         self.file.write('opções de relatório ativadas: ')
-        for k in powerflow.setup.report:
-            self.file.write(f'{k} ')
+        if powerflow.setup.report:
+            for k in powerflow.setup.report:
+                self.file.write(f'{k} ')
+        else:
+            self.file.write('RCONV (automático)')
         self.file.write('\n\n\n\n')
 
 
@@ -172,7 +182,7 @@ class Reports:
         if powerflow.method == 'LINEAR':
             i = powerflow.sol['iter'] - 2
         self.file.write('\n\n')
-        self.file.write(powerflow.sol['convergence'])
+        self.file.write(' * * * * ' + powerflow.sol['convergence'] + ' * * * * ')
         self.file.write('\n\n')
         self.file.write('       |  FREQ  |  ERROR | BARRA |  ERROR | BARRA |  ERROR | BARRA |')
         self.file.write('\n')
@@ -180,7 +190,7 @@ class Reports:
         self.file.write('\n')
         self.file.write('-'*68)
         self.file.write('\n')
-        self.file.write(f"| {(i):>4d} | {powerflow.sol['freqiter'][-1]:^6.3f} | {powerflow.sol['convP'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][-1]]:>5d} | {powerflow.sol['convQ'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][-1]]:>5d} | {powerflow.sol['convY'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][-1]]:>5d} |")
+        self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freqiter'][-1]:^6.3f} | {powerflow.sol['convP'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][-1]]:>5d} | {powerflow.sol['convQ'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][-1]]:>5d} | {powerflow.sol['convY'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][-1]]:>5d} |")
         self.file.write('\n')
         self.file.write('-'*68)
         self.file.write('\n\n\n\n')

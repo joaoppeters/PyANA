@@ -41,7 +41,7 @@ PowerFlow(
     method=method,
     jacobi=jacobi,
     options={},
-    control=control,
+    control=[],
     monitor=monitor,
-    report=report,
+    report=[],
 )
