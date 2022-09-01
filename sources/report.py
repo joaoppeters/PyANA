@@ -159,30 +159,30 @@ class Reports:
         self.file.write('vv relatório de convergência vv')
         if powerflow.method != 'LINEAR':
             self.file.write('\n\n')
-            self.file.write('       | FREQ | ERROR | BARRA | ERROR | BARRA |')
+            self.file.write('       |  FREQ  |  ERROR | BARRA |  ERROR | BARRA |  ERROR | BARRA |')
             self.file.write('\n')
-            self.file.write('| ITER |   Hz |    MW |   NUM |  Mvar |   NUM |')
+            self.file.write('| ITER |    Hz  |     MW |   NUM |   Mvar |   NUM |   CTRL |   NUM |')
             self.file.write('\n')
-            self.file.write('-'*47)
+            self.file.write('-'*68)
             for i in range(0, powerflow.sol['iter']):
                 self.file.write('\n')
-                self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freq'][i]:^4.1f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:>5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:>5d} |")
+                self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:>5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:>5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:>5d} |")
             self.file.write('\n')
-            self.file.write('-'*47)
+            self.file.write('-'*68)
         if powerflow.method == 'LINEAR':
             i = powerflow.sol['iter'] - 2
         self.file.write('\n\n')
         self.file.write(powerflow.sol['convergence'])
         self.file.write('\n\n')
-        self.file.write('       | FREQ | ERROR | BARRA | ERROR | BARRA |')
+        self.file.write('       |  FREQ  |  ERROR | BARRA |  ERROR | BARRA |  ERROR | BARRA |')
         self.file.write('\n')
-        self.file.write('| ITER |   Hz |    MW |   NUM |  Mvar |   NUM |')
+        self.file.write('| ITER |    Hz  |     MW |   NUM |   Mvar |   NUM |   CTRL |   NUM |')
         self.file.write('\n')
-        self.file.write('-'*47)
+        self.file.write('-'*68)
         self.file.write('\n')
-        self.file.write(f"| {(i+1):>4d} | {powerflow.sol['freq'][i+1]:^4.1f} | {powerflow.sol['convP'][i+1]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i+1]]:>5d} | {powerflow.sol['convQ'][i+1]*powerflow.setup.options['sbase']:>5.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i+1]]:>5d} |")
+        self.file.write(f"| {(i):>4d} | {powerflow.sol['freqiter'][-1]:^6.3f} | {powerflow.sol['convP'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][-1]]:>5d} | {powerflow.sol['convQ'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][-1]]:>5d} | {powerflow.sol['convY'][-1]*powerflow.setup.options['sbase']:>6.2f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][-1]]:>5d} |")
         self.file.write('\n')
-        self.file.write('-'*47)
+        self.file.write('-'*68)
         self.file.write('\n\n\n\n')
 
 
@@ -202,25 +202,25 @@ class Reports:
         for area in powerflow.setup.dbarraDF['area'].unique():
             self.file.write('vv relatório de barras vv área {} vv'.format(area))
             self.file.write('\n\n')
-            self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
+            self.file.write('|         BARRA        |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
             self.file.write('\n')
-            self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
+            self.file.write('| NUM |    NOME    | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
             self.file.write('\n')
-            self.file.write('-'*91)
+            self.file.write('-'*93)
             for i in range(0, powerflow.setup.nbus):
                 if powerflow.setup.dbarraDF['area'][i] == area:
                     if i % 10 == 0 and i != 0:
                         self.file.write('\n\n')
-                        self.file.write('|        BARRA       |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
+                        self.file.write('|         BARRA        |      TENSAO     |        GERACAO      |       CARGA      |  SHUNT  |')
                         self.file.write('\n')
-                        self.file.write('| NUM |   NOME   | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
+                        self.file.write('| NUM |    NOME    | T |   MOD  |   ANG  |    MW    |   Mvar   |   MW   |   Mvar  |   Mvar  |')
                         self.file.write('\n')
-                        self.file.write('-'*91)
+                        self.file.write('-'*93)
 
                     self.file.write('\n')
-                    self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:<8} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.sol['voltage'][i]:<5.3f} | {degrees(powerflow.sol['theta'][i]):>+6.2f} | {powerflow.sol['active'][i]:>8.2f} | {powerflow.sol['reactive'][i]:>8.2f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:>6.2f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:>7.2f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:>7.2f} |")
+                    self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:<10} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.sol['voltage'][i]:<5.3f} | {degrees(powerflow.sol['theta'][i]):>+6.2f} | {powerflow.sol['active'][i]:>8.2f} | {powerflow.sol['reactive'][i]:>8.2f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:>6.2f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:>7.2f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:>7.2f} |")
                     self.file.write('\n')
-                    self.file.write('-'*91)
+                    self.file.write('-'*93)
             self.file.write('\n\n\n\n')
 
 

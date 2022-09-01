@@ -11,6 +11,7 @@ from numpy import concatenate, cos, ndarray, ones, savetxt, sin, zeros
 from os.path import exists
 from os import remove
 
+from ctrl import Control
 from folder import Folder
 
 class Jacobi:
@@ -77,9 +78,12 @@ class Jacobi:
                     # Elemento Lkm
                     powerflow.setup.qv[idx, idy] += powerflow.sol['voltage'][idx] * (powerflow.setup.ybus[idx][idy].real * sin(powerflow.sol['theta'][idx] - powerflow.sol['theta'][idy]) - powerflow.setup.ybus[idx][idy].imag * cos(powerflow.sol['theta'][idx] - powerflow.sol['theta'][idy]))
 
-
         # Montagem da Matriz Jacobiana
         self.assembly(powerflow,)
+        
+        # Submatrizes de controles ativos
+        if powerflow.setup.ctrlcount > 0:
+            Control(powerflow, powerflow.setup,).controljac(powerflow,)
 
         # Armazenamento da Matriz Jacobiana
         Folder(powerflow.setup,).jacobi(powerflow.setup,)
@@ -165,7 +169,8 @@ class Jacobi:
 
         ## Inicialização
         # Tratamento de limite de geração de potência reativa & big-number
-        self.bignumber(powerflow,)
+        if not powerflow.control:
+            self.bignumber(powerflow,)
 
         # Montagem da matriz Jacobiana
         # configuração completa

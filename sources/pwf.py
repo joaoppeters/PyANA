@@ -27,10 +27,12 @@ class PWF:
         ## Inicialização
         # Variáveis
         self.linecount = 0
-        setup.codes = {}
 
         # Funções
         self.keywords()
+
+        # Códigos
+        self.codes(setup,)
         
         # Leitura
         self.readfile(powerflow, setup,)
@@ -39,13 +41,47 @@ class PWF:
 
     def keywords(
         self,
-        ):
+    ):
         """palavras-chave de arquivo .pwf"""
 
         ## Inicialização
         self.end_archive = 'FIM'
         self.end_block = ('9999', '99999')
         self.comment = '('
+
+    
+    def codes(
+        self,
+        setup,
+    ):
+        """códigos de dados de execução implementados
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        ## Inicialização
+        # Variável
+        setup.codes = {
+            'DANC': False,
+            'DBAR': False,
+            'DGER': False,
+            'DLIN': False,
+        }
+
+
+
+    def danc(
+        self,
+    ):
+        """inicialização para leitura de dados de alteração do nível de carregamento"""
+
+        ## Inicialização
+        self.danc = dict()
+        self.danc['area'] = list()
+        self.danc['fator_carga_ativa'] = list()
+        self.danc['fator_carga_reativa'] = list()
+        self.danc['fator_shunt_barra'] = list()
 
 
 
@@ -89,6 +125,29 @@ class PWF:
 
 
 
+    def dger(
+        self,
+    ):
+        """inicialização para leitura de dados de geradores"""
+        
+        ## Inicialização
+        self.dger = dict()
+        self.dger['numero'] = list()
+        self.dger['operacao'] = list()
+        self.dger['potencia_ativa_minima'] = list()
+        self.dger['potencia_ativa_maxima'] = list()
+        self.dger['fator_participacao'] = list()
+        self.dger['fator_participacao_controle_remoto'] = list()
+        self.dger['fator_potencia_nominal'] = list()
+        self.dger['fator_servico_armadura'] = list()
+        self.dger['fator_servico_rotor'] = list()
+        self.dger['angulo_maximo_carga'] = list()
+        self.dger['reatancia_maquina'] = list()
+        self.dger['potencia_aparente_nominal'] = list()
+        self.dger['estatismo'] = list()
+
+
+
     def dlin(
         self,
         ):
@@ -129,29 +188,6 @@ class PWF:
 
 
 
-    def dger(
-        self,
-    ):
-        """inicialização para leitura de dados de geradores"""
-        
-        ## Inicialização
-        self.dger = dict()
-        self.dger['numero'] = list()
-        self.dger['operacao'] = list()
-        self.dger['potencia_ativa_minima'] = list()
-        self.dger['potencia_ativa_maxima'] = list()
-        self.dger['fator_participacao'] = list()
-        self.dger['fator_participacao_controle_remoto'] = list()
-        self.dger['fator_potencia_nominal'] = list()
-        self.dger['fator_servico_armadura'] = list()
-        self.dger['fator_servico_rotor'] = list()
-        self.dger['angulo_maximo_carga'] = list()
-        self.dger['reatancia_maquina'] = list()
-        self.dger['potencia_aparente_nominal'] = list()
-        self.dger['estatismo'] = list()
-
-
-
     def readfile(
         self,
         powerflow,
@@ -172,8 +208,30 @@ class PWF:
 
         # Loop de leitura de linhas do `.pwf`
         while self.lines[self.linecount].strip() != self.end_archive:
-
-            if self.lines[self.linecount].strip() == 'DBAR':
+            # Dados de Alteração do Nível de Carregamento
+            if self.lines[self.linecount].strip() == 'DANC':
+                self.danc()
+                self.linecount += 1
+                while self.lines[self.linecount].strip() not in self.end_block:
+                    if self.lines[self.linecount][0] == self.comment:
+                        pass
+                    else:
+                        self.danc['area'].append(self.lines[self.linecount][:5])
+                        self.danc['fator_carga_ativa'].append(self.lines[self.linecount][5:12])
+                        self.danc['fator_carga_reativa'].append(self.lines[self.linecount][12:19])
+                        self.danc['fator_shunt_barra'].append(self.lines[self.linecount][19:24])
+                    self.linecount += 1
+                
+                # DataFrame dos Dados de Alteração do Nível de Carregamento
+                setup.dancDF = self.treatment(pandas=DF(data=self.danc), data='DANC')
+                if setup.dancDF.empty:
+                    ## ERROR - VERMELHO
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m')
+                else:
+                    setup.codes['DANC'] = True
+                
+            # Dados de Barra
+            elif self.lines[self.linecount].strip() == 'DBAR':
                 setup.codes['DBAR'] = False
                 self.dbar()
                 self.linecount += 1
@@ -220,8 +278,40 @@ class PWF:
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
                 else:
                     setup.codes['DBAR'] = True
+                
+            # Dados de Geradores
+            elif self.lines[self.linecount].strip() == 'DGER':
+                setup.codes['DGER'] = False
+                self.dger()
+                self.linecount += 1
+                while self.lines[self.linecount].strip() not in self.end_block:
+                    if self.lines[self.linecount][0] == self.comment:
+                        pass
+                    else:
+                        self.dger['numero'].append(self.lines[self.linecount][:5])
+                        self.dger['operacao'].append(self.lines[self.linecount][6])
+                        self.dger['potencia_ativa_minima'].append(self.lines[self.linecount][8:14])
+                        self.dger['potencia_ativa_maxima'].append(self.lines[self.linecount][15:21])
+                        self.dger['fator_participacao'].append(self.lines[self.linecount][22:27])
+                        self.dger['fator_participacao_controle_remoto'].append(self.lines[self.linecount][28:33])
+                        self.dger['fator_potencia_nominal'].append(self.lines[self.linecount][34:39])
+                        self.dger['fator_servico_armadura'].append(self.lines[self.linecount][40:44])
+                        self.dger['fator_servico_rotor'].append(self.lines[self.linecount][45:49])
+                        self.dger['angulo_maximo_carga'].append(self.lines[self.linecount][50:54])
+                        self.dger['reatancia_maquina'].append(self.lines[self.linecount][55:60])
+                        self.dger['potencia_aparente_nominal'].append(self.lines[self.linecount][61:66])
+                        self.dger['estatismo'].append(self.lines[self.linecount][66:72])
+                    self.linecount += 1
 
+                # DataFrame dos Dados de Linha
+                setup.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
+                if setup.dgeraDF.empty:
+                    ## ERROR - VERMELHO
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
+                else:
+                    setup.codes['DGER'] = True
 
+            # Dados de Linha
             elif self.lines[self.linecount].strip() == 'DLIN':
                 setup.codes['DLIN'] = False
                 self.dlin()
@@ -269,41 +359,8 @@ class PWF:
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
                 else:
                     setup.codes['DLIN'] = True
-                
-
-            elif self.lines[self.linecount].strip() == 'DGER':
-                setup.codes['DGER'] = False
-                self.dger()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dger['numero'].append(self.lines[self.linecount][:5])
-                        self.dger['operacao'].append(self.lines[self.linecount][6])
-                        self.dger['potencia_ativa_minima'].append(self.lines[self.linecount][8:14])
-                        self.dger['potencia_ativa_maxima'].append(self.lines[self.linecount][15:21])
-                        self.dger['fator_participacao'].append(self.lines[self.linecount][22:27])
-                        self.dger['fator_participacao_controle_remoto'].append(self.lines[self.linecount][28:33])
-                        self.dger['fator_potencia_nominal'].append(self.lines[self.linecount][34:39])
-                        self.dger['fator_servico_armadura'].append(self.lines[self.linecount][40:44])
-                        self.dger['fator_servico_rotor'].append(self.lines[self.linecount][45:49])
-                        self.dger['angulo_carga_maximo'].append(self.lines[self.linecount][50:54])
-                        self.dger['reatancia_maquina'].append(self.lines[self.linecount][55:60])
-                        self.dger['potencia_aparente_nominal'].append(self.lines[self.linecount][61:66])
-                        self.dger['estatismo'].append(self.lines[self.linecount][66:72])
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Linha
-                setup.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
-                if setup.dgeraDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
-                else:
-                    setup.codes['DGER'] = True
 
             self.linecount += 1
-
 
         ## SUCESSO NA LEITURA
         print(f'\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m')
@@ -333,8 +390,20 @@ class PWF:
         # Tratamento inicial
         pandas = pandas.replace(r"^\s*$", '0', regex=True)
 
+        ## Tratamentos
+        # Tratamento específico 'DANC'
+        if data == 'DANC':
+            pandas = pandas.astype(
+                {
+                    'area': 'int',
+                    'fator_carga_ativa': 'float',
+                    'fator_carga_reativa': 'float',
+                    'fator_shunt_barra': 'float',
+                }
+            )
+
         # Tratamento específico 'DBAR'
-        if data == 'DBAR':
+        elif data == 'DBAR':
             pandas = pandas.astype(
                 {
                     'numero': 'int',
@@ -411,7 +480,7 @@ class PWF:
                     'fator_potencia_nominal': 'float',
                     'fator_servico_armadura': 'float',
                     'fator_servico_rotor': 'float',
-                    'angula_carga_maximo': 'float',
+                    'angulo_maximo_carga': 'float',
                     'reatancia_maquina': 'float',
                     'potencia_aparente_nominal': 'float',
                     'estatismo': 'float',

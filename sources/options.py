@@ -63,6 +63,7 @@ class Options:
         # Variáveis padrão
         self.stdpf = {
             'sbase': 100.,
+            'fbase': 60.,
             'itermx': 15,
             'tolP': 1E-6,
             'tolQ': 1E-6,

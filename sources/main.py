@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee14.pwf'
+system = 'ieee24.pwf'
 
-method = 'LINEAR'
+method = 'NEWTON'
 
 jacobi = 'COMPLETA'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
-control = ['CREM', 'CST', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
+control = ['FREQ']
 
 options = {
     'sbase': 100.,
@@ -34,14 +34,14 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
-report = ['RLINHA', 'RBARRA']
+report = ['RBARRA']
 
 PowerFlow(
     system=system,
     method=method,
     jacobi=jacobi,
     options={},
-    control=[],
+    control=control,
     monitor=monitor,
     report=report,
 )

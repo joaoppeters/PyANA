@@ -25,6 +25,8 @@ class NewtonRaphson:
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
+
+        ## Inicialização
         self.newtonraphson(powerflow,)
 
 
@@ -48,7 +50,8 @@ class NewtonRaphson:
             'theta': array(radians(powerflow.setup.dbarraDF['angulo'])),
             'active': zeros(powerflow.setup.nbus),
             'reactive': zeros(powerflow.setup.nbus),
-            'freq': array([]),
+            'freq': 1.,
+            'freqiter': array([]),
             'convP': array([]),
             'busP': array([]),
             'convQ': array([]),
@@ -61,16 +64,17 @@ class NewtonRaphson:
             'reactive_flow_2F': zeros(powerflow.setup.nlin),
         }
 
+        # Controles
+        Control(powerflow, powerflow.setup).controlsol(powerflow,)
+
         # Variáveis Especificadas
         self.scheduled(powerflow,)
 
         # Resíduos
         self.residue(powerflow,)
 
-        # Controles
-        self.checkcontrol(powerflow,)
-
-        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
+        while ((max(abs(powerflow.setup.deltaPQY))) > powerflow.setup.options['tolP']):
+        # ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -85,9 +89,6 @@ class NewtonRaphson:
 
             # Atualização dos resíduos
             self.residue(powerflow,)
-
-            # Controles
-            self.checkcontrol(powerflow,)
             
             # Incremento de iteração
             powerflow.sol['iter'] += 1
@@ -98,6 +99,7 @@ class NewtonRaphson:
                 powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
                 break
 
+        # Iteração Adicional
         if powerflow.sol['iter'] < powerflow.setup.options['itermx']:
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
@@ -114,15 +116,11 @@ class NewtonRaphson:
             # Atualização dos resíduos
             self.residue(powerflow,)
 
-            # Controles
-            self.checkcontrol(powerflow,)
-
             # Fluxo em linhas de transmissão
             self.line_flow(powerflow,)
             
             # Convergência
             powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'
-
 
     
 
@@ -138,7 +136,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # Variável para armazenamento das potências ativa e reativa especificadas
-        self.vsch = {
+        powerflow.setup.vsch = {
             'potencia_ativa_especificada': zeros(powerflow.setup.nbus),
             'potencia_reativa_especificada': zeros(powerflow.setup.nbus),
         }
@@ -146,16 +144,20 @@ class NewtonRaphson:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Potência ativa especificada
-            self.vsch['potencia_ativa_especificada'][idx] += float(value['potencia_ativa'])
-            self.vsch['potencia_ativa_especificada'][idx] -= float(value['demanda_ativa'])
+            powerflow.setup.vsch['potencia_ativa_especificada'][idx] += value['potencia_ativa']
+            powerflow.setup.vsch['potencia_ativa_especificada'][idx] -= value['demanda_ativa']
 
             # Potência reativa especificada
-            self.vsch['potencia_reativa_especificada'][idx] += float(value['potencia_reativa'])
-            self.vsch['potencia_reativa_especificada'][idx] -= float(value['demanda_reativa'])
+            powerflow.setup.vsch['potencia_reativa_especificada'][idx] += value['potencia_reativa']
+            powerflow.setup.vsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
 
         # Tratamento
-        self.vsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
-        self.vsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.vsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.vsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+
+        # Variáveis especificadas de controle ativos
+        if powerflow.setup.ctrlcount > 0:
+            Control(powerflow, powerflow.setup).controlsch(powerflow,)
 
 
 
@@ -170,17 +172,31 @@ class NewtonRaphson:
         powerflow.setup.deltaP = zeros(powerflow.setup.nbus)
         powerflow.setup.deltaQ = zeros(powerflow.setup.nbus)
 
+        # Resíduo de equação de controle adicional
+        powerflow.setup.deltaY = array([])
+
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value['tipo'] == 1 or value['tipo'] == 0:
-                powerflow.setup.deltaP[idx] += self.vsch['potencia_ativa_especificada'][idx]
+                powerflow.setup.deltaP[idx] += powerflow.setup.vsch['potencia_ativa_especificada'][idx]
                 powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
 
                 # Tipo PQ - Resíduo Potência Reativa
                 if value['tipo'] == 0:
-                    powerflow.setup.deltaQ[idx] += self.vsch['potencia_reativa_especificada'][idx]
+                    powerflow.setup.deltaQ[idx] += powerflow.setup.vsch['potencia_reativa_especificada'][idx]
                     powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
+
+        # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
+        self.checkresidue(powerflow,)
+
+        # Resíduos de variáveis de estado de controle
+        if powerflow.setup.ctrlcount > 0:
+            Control(powerflow, powerflow.setup).controlres(powerflow,)
+            self.checkresidue(powerflow,)
+            powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
+        else:
+            powerflow.setup.deltaY = array([0])
 
 
 
@@ -247,61 +263,6 @@ class NewtonRaphson:
         powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
 
         return q
-
-
-
-    def checkcontrol(
-        self,
-        powerflow,
-    ):
-        """checagem automática de controles ativados
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        # Resíduo de equação de controle adicional
-        powerflow.setup.deltaY = array([])
-
-        for key, _ in powerflow.setup.control.items():
-            # Controle Remoto de Tensão
-            if (key == 'CREM') and (powerflow.setup.control[key]):
-                Control(powerflow, powerflow.setup).ctrlcrem(powerflow,)
-
-            # Controle Secundário de Tensão
-            elif (key == 'CST') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlcst(powerflow,)
-
-            # Controle de Tap Variável de Transformadores
-            elif (key == 'CTAP') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlctap(powerflow,)
-
-            # Controle de Ângulo de Transformadores Defasadores
-            elif (key == 'CTAPd') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlctapd(powerflow,)
-
-            # Controle de Regulação Primária de Frequência
-            elif (key == 'FREQ') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlfreq(powerflow,)
-
-            # Controle de Limite de Potência Reativa
-            elif (key == 'QLIM') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlqlim(powerflow,)
-
-            # Controle de Compensadores Estáticos de Potência Reativa
-            elif (key == 'SVC') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlsvc(powerflow,)
-
-            # Controle de Tensão de Barramentos
-            elif (key == 'VCTRL') and (powerflow.setup.control[key]):
-                Control(powerflow,).ctrlvctrl(powerflow,)
-
-        if not powerflow.setup.deltaY:
-            powerflow.setup.deltaY = array([0])
-
-        # Vetor resíduos
-        self.checkresidue(powerflow,) 
         
 
     
@@ -329,17 +290,15 @@ class NewtonRaphson:
                     powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaP[pq])
                 else:
                     powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaQ[pq])
-            powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
         # configuração reduzida
         elif powerflow.jacobi == 'REDUZIDA':
-            powerflow.setup.deltaPQY = concatenate((concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0), powerflow.setup.deltaY), axis=0)
+            powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
             powerflow.setup.mask = ones(2*powerflow.setup.nbus, bool)
             for idx, value in powerflow.setup.dbarraDF.iterrows():
                 if (value['tipo'] == 2) or (value['tipo'] == 1):
                     powerflow.setup.mask[powerflow.setup.nbus+idx] = False
                     if (value['tipo'] == 2):
                         powerflow.setup.mask[idx] = False
-
             powerflow.setup.deltaPQY[powerflow.setup.mask]
         ## ERROR
         else:
@@ -359,8 +318,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # Trajetória de convergência da frequência
-        if 'FREQ' not in powerflow.control:
-            powerflow.sol['freq'] = append(powerflow.sol['freq'], 60.0)
+        powerflow.sol['freqiter'] = append(powerflow.sol['freqiter'], powerflow.sol['freq'] * powerflow.setup.options['fbase'])
 
         # Trajetória de convergência da potência ativa
         powerflow.sol['convP'] = append(powerflow.sol['convP'], max(abs(powerflow.setup.deltaP)))
@@ -370,8 +328,13 @@ class NewtonRaphson:
         powerflow.sol['convQ'] = append(powerflow.sol['convQ'], max(abs(powerflow.setup.deltaQ)))
         powerflow.sol['busQ'] = append(powerflow.sol['busQ'], argmax(abs(powerflow.setup.deltaQ)))
 
-        # # Trajetória de convergência referente a cada equação de controle adicional
-        # sol['convY'] = append(sol['convY'], max(abs(powerflow.setup.deltaY)))
+        # Trajetória de convergência referente a cada equação de controle adicional
+        if powerflow.setup.deltaY.size != 0:
+            powerflow.sol['convY'] = append(powerflow.sol['convY'], max(abs(powerflow.setup.deltaY)))
+            powerflow.sol['busY'] = append(powerflow.sol['busY'], argmax(abs(powerflow.setup.deltaY)))
+        else:
+            powerflow.sol['convY'] = append(powerflow.sol['convY'], 0.)
+            powerflow.sol['busY'] = append(powerflow.sol['busY'], 0.)
 
     
 
@@ -388,8 +351,8 @@ class NewtonRaphson:
         ## Inicialização
         # configuração completa
         if powerflow.jacobi == 'COMPLETA':
-            powerflow.sol['theta'] += powerflow.setup.statevar[0:powerflow.setup.nbus]
-            powerflow.sol['voltage'] += powerflow.setup.statevar[powerflow.setup.nbus:2*powerflow.setup.nbus]
+            powerflow.sol['theta'] += powerflow.setup.statevar[0:(powerflow.setup.nbus)]
+            powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
         # configuração alternada
         elif powerflow.jacobi == 'ALTERNADA':
             for idx in range(0, powerflow.setup.nbus):
@@ -402,6 +365,10 @@ class NewtonRaphson:
                     powerflow.sol['theta'][idx] += powerflow.setup.statevar[idx]
                     if value['tipo'] == 0:
                         powerflow.sol['voltage'][idx] += powerflow.setup.statevar[idx + powerflow.setup.nbus]
+        
+        # Atualização das variáveis de estado adicionais para controles ativos
+        if powerflow.setup.ctrlcount > 0:
+            Control(powerflow, powerflow.setup).controlupdt(powerflow,)
 
 
 
