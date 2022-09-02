@@ -34,14 +34,14 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
-report = ['RBARRA']
+report = ['RBARRA',]
 
 PowerFlow(
     system=system,
     method=method,
     jacobi=jacobi,
     options={},
-    control=[],
+    control=control,
     monitor=monitor,
-    report=[],
+    report=report,
 )

@@ -1,4 +1,4 @@
-September 01, 2022
+September 02, 2022
 
 
 relatório de monitoramento do sistema ieee24
@@ -9,7 +9,9 @@ opções de monitoramento ativadas: QGMON VMON
 
 vv monitoramento de potência reativa gerada vv
 
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+A geração de potência reativa da BARRA--14 violou o limite mínimo estabelecido para análise ( -67.22 <= -50.0 ).
+A geração de potência reativa da BARRA--15 violou o limite mínimo estabelecido para análise ( -53.47 <= -50.0 ).
+
 
 
 vv monitoramento de magnitude de tensão de barramentos vv

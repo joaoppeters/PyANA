@@ -74,6 +74,7 @@ class Options:
         
         setup.options = dict()
 
+        # if powerflow.options:
         for k, v in self.stdpf.items():
             if k not in powerflow.options:
                 setup.options[k] = v
@@ -95,10 +96,11 @@ class Options:
 
         ## Inicialização
         # Variáveis padrão
-        self.pf(self, powerflow,)
+        self.pf(powerflow, setup,)
         self.stdcpf = {
-            'cpfL': 1E-1,
-            'cpfV': 1E-3,
+            'cpfBeta': 0., 
+            'cpfLambda': 1E-1,
+            'cpfVolt': 1E-3,
             'cpfV2L': 0.85,
         }
         

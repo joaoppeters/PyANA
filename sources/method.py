@@ -6,6 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
+from continuation import Continuation
 from folder import Folder
 from linear import LinearPowerFlow
 from monitor import Monitor
@@ -73,7 +74,7 @@ class Method():
 
         # Chamada específica método Continuado
         elif powerflow.method == 'CPF':
-            self.continuationpowerflow(powerflow,)
+            Continuation(powerflow,)
 
 
         # Armazenamento dos resultados
