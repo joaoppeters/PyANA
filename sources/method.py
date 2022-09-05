@@ -7,6 +7,7 @@
 # ------------------------------------- #
 
 from continuation import Continuation
+from convergence import Convergence
 from folder import Folder
 from linear import LinearPowerFlow
 from monitor import Monitor
@@ -80,4 +81,6 @@ class Method():
         # Armazenamento dos resultados
         Folder(powerflow.setup,).reports(powerflow.setup,)
         Reports(powerflow, powerflow.setup,)
-        Monitor(powerflow, powerflow.setup,)
+        if powerflow.method != 'CPF':
+            Monitor(powerflow, powerflow.setup,)
+            Convergence(powerflow, powerflow.setup,)

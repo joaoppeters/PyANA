@@ -46,11 +46,19 @@ class Continuation:
         """
 
         ## Inicialização
-        # Variável para armazenamento de solução
-        powerflow.csol = {
+        # Variável para armazenamento de solução do continuado
+        powerflow.cpfsol = {
             'system': powerflow.setup.name,
+            'step': powerflow.setup.options['cpfLambda'],
+            'prev': dict(),
+            'corr': dict(),
+        }
+
+        # Variável para armazenamento de solução por casos do continuado
+        powerflow.setup.cases = 0
+        powerflow.cases = {
             'iter': 0,
-            'iteriter': array([]),
+            'case': array([]),
             'voltage': powerflow.sol['voltage'],
             'theta': powerflow.sol['theta'],
             'active': powerflow.sol['active'],
@@ -63,65 +71,85 @@ class Continuation:
             'busQ': array([]),
             'convY': array([]),
             'busY': array([]),
-            'step': powerflow.setup.options['cpfLambda'],
         }
 
-        # Controles
-        Control(powerflow, powerflow.setup).controlsol(powerflow,)
+        # Loop
+        while (powerflow.csol['corr']['voltage'].any() >= 0.):# or (powerflow.csol['step'] >= 0.):
+            # Previsão
+            self.prediction(powerflow,)
 
+            # Correção
+            self.correction(powerflow,)
+            
+            """
+            
+
+            while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
+                # Armazenamento da trajetória de convergência
+                self.convergence(powerflow,)
+
+                # Atualização da Matriz Jacobiana
+                Jacobi(powerflow,)
+
+                # Variáveis de estado
+                powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+
+                # Atualização das Variáveis de estado
+                self.update_statevar(powerflow,)
+
+                # Atualização dos resíduos
+                self.residue(powerflow,)
+                
+                # Incremento de iteração
+                powerflow.sol['iter'] += 1
+
+                # Condição
+                if powerflow.sol['iter'] > powerflow.setup.options['itermx']:
+                    # Divergência
+                    powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
+                    break
+
+            # Iteração Adicional
+            if powerflow.sol['iter'] < powerflow.setup.options['itermx']:
+                # Armazenamento da trajetória de convergência
+                self.convergence(powerflow,)
+
+                # Atualização da Matriz Jacobiana
+                Jacobi(powerflow,)
+
+                # Variáveis de estado
+                powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+
+                # Atualização das Variáveis de estado
+                self.update_statevar(powerflow,)
+
+                # Atualização dos resíduos
+                self.residue(powerflow,)
+
+                # Fluxo em linhas de transmissão
+                self.line_flow(powerflow,)
+                
+                # Convergência
+                powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'
+            """
+
+    
+    def prediction(
+        self,
+        powerflow,
+    ):
+        """etapa de previsão do fluxo de potência continuado
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        ## Inicialização)
         # Variáveis Especificadas
         self.scheduled(powerflow,)
 
         # Resíduos
         self.residue(powerflow,)
-
-        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
-            # Armazenamento da trajetória de convergência
-            self.convergence(powerflow,)
-
-            # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
-
-            # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
-
-            # Atualização das Variáveis de estado
-            self.update_statevar(powerflow,)
-
-            # Atualização dos resíduos
-            self.residue(powerflow,)
-            
-            # Incremento de iteração
-            powerflow.sol['iter'] += 1
-
-            # Condição
-            if powerflow.sol['iter'] > powerflow.setup.options['itermx']:
-                # Divergência
-                powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
-                break
-
-        # Iteração Adicional
-        if powerflow.sol['iter'] < powerflow.setup.options['itermx']:
-            # Armazenamento da trajetória de convergência
-            self.convergence(powerflow,)
-
-            # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
-
-            # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
-
-            # Atualização das Variáveis de estado
-            self.update_statevar(powerflow,)
-
-            # Atualização dos resíduos
-            self.residue(powerflow,)
-
-            # Fluxo em linhas de transmissão
-            self.line_flow(powerflow,)
-            
-            # Convergência
-            powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'
 
     
 

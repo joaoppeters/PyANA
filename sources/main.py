@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee24.pwf'
+system = 'ieee14.pwf'
 
 method = 'NEWTON'
 
@@ -41,7 +41,7 @@ PowerFlow(
     method=method,
     jacobi=jacobi,
     options={},
-    control=control,
+    control=[],
     monitor=monitor,
     report=report,
 )

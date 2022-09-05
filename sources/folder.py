@@ -16,12 +16,13 @@ class Folder:
         self,
         setup,
     ):
-        """ inicialização
+        """inicialização
 
         Parâmetros
             setup: self do arquivo setup.py
         """
-        
+
+        ## Inicialização
         # Diretório de Sistemas
         dirSistemas = dirname(setup.dirSEP)
 
@@ -38,12 +39,13 @@ class Folder:
         self,
         setup,
     ):
-        """criação de diretório para armazenar Resultados de Matriz Admitância
+        """criação de diretório para armazenar resultados de matriz admitância
         
         Parâmetros
             setup: self do arquivo setup.py
         """
 
+        ## Inicialização
         dirRadmittance = setup.dirResultados + 'MatrizAdmitancia/'
         if exists(dirRadmittance) is False:
             mkdir(dirRadmittance)
@@ -52,16 +54,36 @@ class Folder:
 
 
 
-    def jacobi(
+    def convergence(
         self,
         setup,
     ):
-        """criação de diretório para armazenar Resultados de Matriz Jacobiana
+        """criação de diretório para armazenar resultados da trajetória de convergência
         
         Parâmetros
             setup: self do arquivo setup.py
         """
 
+        ## Inicialização
+        dirRconvergence = setup.dirResultados + 'TrajetoriaConvergencia/'
+        if exists(dirRconvergence) is False:
+            mkdir(dirRconvergence)
+
+        setup.dirRconvergence = dirRconvergence
+
+
+
+    def jacobi(
+        self,
+        setup,
+    ):
+        """criação de diretório para armazenar resultados de matriz jacobiana
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        ## Inicialização
         dirRjacobi = setup.dirResultados + 'MatrizJacobiana/'
         if exists(dirRjacobi) is False:
             mkdir(dirRjacobi)
@@ -74,12 +96,13 @@ class Folder:
         self,
         setup,
     ):
-        """criação de diretório para armazenar Resultados de Relatórios
+        """criação de diretório para armazenar resultados de relatórios
         
         Parâmetros
             setup: self do arquivo setup.py
         """
 
+        ## Inicialização
         dirRreports = setup.dirResultados + 'Relatorios/'
         if exists(dirRreports) is False:
             mkdir(dirRreports)
@@ -92,7 +115,7 @@ class Folder:
         self,
         setup,
     ):
-        """criação de diretório para armazenar Resultados de Fluxo de Potência Continuado
+        """criação de diretório para armazenar resultados de fluxo de potência continuado
         
         Parâmetros
             setup: self do arquivo setup.py
