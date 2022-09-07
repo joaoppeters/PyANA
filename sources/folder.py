@@ -73,6 +73,24 @@ class Folder:
 
 
 
+    def cpf(
+        self,
+        setup,
+    ):
+        """criação de diretório para armazenar resultados de fluxo de potência continuado
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        dirRcpf = self.dirResultados + 'Continuado/'
+        if exists(dirRcpf) is False:
+            mkdir(dirRcpf)
+        
+        setup.dirRcpf = dirRcpf
+
+
+
     def jacobi(
         self,
         setup,
@@ -110,19 +128,20 @@ class Folder:
         setup.dirRreports = dirRreports
 
 
-
-    def cpf(
+    
+    def statevar(
         self,
         setup,
     ):
-        """criação de diretório para armazenar resultados de fluxo de potência continuado
+        """criação de diretório para armazenar resultados finais de convergência das variáveis de estado
         
         Parâmetros
             setup: self do arquivo setup.py
         """
 
-        dirRcpf = self.dirResultados + 'Continuado/'
-        if exists(dirRcpf) is False:
-            mkdir(dirRcpf)
+        ## Inicialização
+        dirRstatevar = setup.dirResultados + 'VariaveisEstado/'
+        if exists(dirRstatevar) is False:
+            mkdir(dirRstatevar)
         
-        setup.dirRcpf = dirRcpf
+        setup.dirRstatevar = dirRstatevar
