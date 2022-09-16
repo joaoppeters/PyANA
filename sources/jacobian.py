@@ -85,9 +85,11 @@ class Jacobi:
         if powerflow.setup.ctrlcount > 0:
             Control(powerflow, powerflow.setup,).controljac(powerflow,)
 
-        # Armazenamento da Matriz Jacobiana
-        Folder(powerflow.setup,).jacobi(powerflow.setup,)
-        self.savejacobi(powerflow,)
+        # Condição
+        if powerflow.method != 'CPF':
+            # Armazenamento da Matriz Jacobiana
+            Folder(powerflow.setup,).jacobi(powerflow.setup,)
+            self.savejacobi(powerflow,)
         
 
 
@@ -169,7 +171,7 @@ class Jacobi:
 
         ## Inicialização
         # Tratamento de limite de geração de potência reativa & big-number
-        if not powerflow.control:
+        if not powerflow.setup.control:
             self.bignumber(powerflow,)
 
         # Montagem da matriz Jacobiana

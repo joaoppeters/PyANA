@@ -62,7 +62,12 @@ class StateVarProfile:
         # Plots 
         colors = plt.cm.viridis(arange(powerflow.setup.nbus)/powerflow.setup.nbus)
         bars = ax.bar(powerflow.sol['theta'], powerflow.sol['voltage'], width=0.005, bottom=0., color=colors, alpha=0.5, zorder=3,)
+        
+        # Limite tensão
         ax.plot(linspace(0, 2 * pi, 360, endpoint=False,), ones(360), linestyle='--', color=(0., 0., 0.), alpha=1., zorder=2,)
+        ax.plot(linspace(0, 2 * pi, 360, endpoint=False,), powerflow.setup.options['vmax'] * ones(360), linestyle='--', color=(1., 0.8, 0.7961), alpha=1., zorder=2,)
+        ax.plot(linspace(0, 2 * pi, 360, endpoint=False,), powerflow.setup.options['vmin'] * ones(360), linestyle='--', color=(1., 0.8, 0.7961), alpha=1., zorder=2,)
+
         for theta, rotation, label in zip(powerflow.sol['theta'], degrees(powerflow.sol['theta']), powerflow.setup.dbarraDF['nome'].values):
             ax.text(theta, ax.get_ylim()[1] + 0.075, label, ha='left', va='center', rotation=rotation-degrees(self.thetaref), rotation_mode='anchor', fontsize=5)
 
@@ -75,10 +80,9 @@ class StateVarProfile:
         ax.legend(bars, powerflow.setup.dbarraDF['nome'].values.tolist(), frameon=False, loc='upper center', bbox_to_anchor=(0.5, -0.025), fancybox=True, ncol=int(5), prop={'size': 7})
         ax.set_theta_offset(-self.thetaref)
         
-
-        
         # Save
-        fig.savefig(powerflow.setup.dirRstatevar + powerflow.setup.name + '-stateVT.png')
+        fig.savefig(powerflow.setup.dirRstatevar + powerflow.setup.name + '-stateVT.png', dpi=400)
+
 
 
     # def stateT(

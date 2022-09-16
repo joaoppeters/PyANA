@@ -8,9 +8,9 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee24.pwf'
+system = '2b-teste.pwf'
 
-method = 'NEWTON'
+method = 'CPF'
 
 jacobi = 'COMPLETA'
 
@@ -25,8 +25,9 @@ options = {
     'tolY': 1E-6,
     'vmax': 1.05,
     'vmin': 0.95,
-    'cpfL': 1E-1,
-    'cpfV': 1E-4,
+    'cpfBeta': 0.,
+    'cpfLambda': 5E-1,
+    'cpfVolt': 1E-1,
     'cpfV2L': 0.85,
 }
 
@@ -40,7 +41,7 @@ PowerFlow(
     system=system,
     method=method,
     jacobi=jacobi,
-    options={},
+    options=options,
     control=[],
     monitor=monitor,
     report=report,

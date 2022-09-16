@@ -37,6 +37,28 @@ class Ybus:
 
 
 
+    def checkdanc(
+        self,
+        powerflow,
+    ):
+        """checa alteração no nível de carregamento
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        ## Inicialização
+        # Variável
+        if powerflow.setup.codes['DANC']:
+            for area in powerflow.setup.dancDF['area'].values:
+                for idx, value in powerflow.setup.dbarraDF.iterrows():
+                    if value['area'] == area:
+                        powerflow.setup.dbarraDF.loc[idx, 'demanda_ativa'] *= (1 + powerflow.setup.dancDF['fator_carga_ativa'][0] / powerflow.setup.options['sbase'])
+                        powerflow.setup.dbarraDF.loc[idx, 'demanda_reativa'] *= (1 + powerflow.setup.dancDF['fator_carga_reativa'][0] / powerflow.setup.options['sbase'])
+                        powerflow.setup.dbarraDF.loc[idx, 'shunt_barra'] *= (1 + powerflow.setup.dancDF['fator_shunt_barra'][0] / powerflow.setup.options['sbase'])
+
+
+
     def admit(
         self,
         powerflow,
@@ -82,25 +104,3 @@ class Ybus:
         # Salva matriz admitância em arquivo formato `.csv`
         Folder(powerflow.setup,).admittance(powerflow.setup,)
         DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}admittance.csv', header=None, index=None, sep=',')
-
-
-
-    def checkdanc(
-        self,
-        powerflow,
-    ):
-        """checa alteração no nível de carregamento
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-        
-        ## Inicialização
-        # Variável
-        if powerflow.setup.codes['DANC']:
-            for area in powerflow.setup.dancDF['area'].values:
-                for idx, value in powerflow.setup.dbarraDF.iterrows():
-                    if value['area'] == area:
-                        powerflow.setup.dbarraDF.loc[idx, 'demanda_ativa'] *= (1 + powerflow.setup.dancDF['fator_carga_ativa'][0] / powerflow.setup.options['sbase'])
-                        powerflow.setup.dbarraDF.loc[idx, 'demanda_reativa'] *= (1 + powerflow.setup.dancDF['fator_carga_reativa'][0] / powerflow.setup.options['sbase'])
-                        powerflow.setup.dbarraDF.loc[idx, 'shunt_barra'] *= (1 + powerflow.setup.dancDF['fator_shunt_barra'][0] / powerflow.setup.options['sbase'])

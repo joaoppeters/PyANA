@@ -164,7 +164,11 @@ class NewtonRaphson:
         self,
         powerflow,
     ):
-        """cálculo de resíduos das equações diferenciáveis"""
+        """cálculo de resíduos das equações diferenciáveis
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
 
         ## Inicialização
         # Vetores de resíduo
