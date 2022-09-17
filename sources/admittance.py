@@ -101,6 +101,8 @@ class Ybus:
                     elif value['numero'] == v['para']:
                         powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] += ((1 / complex(real=v['resistencia'], imag=v['reatancia'])) * powerflow.setup.options['sbase']) * (1 - 1 / float(v['tap']))
 
-        # Salva matriz admitância em arquivo formato `.csv`
-        Folder(powerflow.setup,).admittance(powerflow.setup,)
-        DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}admittance.csv', header=None, index=None, sep=',')
+        # Condição
+        if powerflow.method != 'CPF':
+            # Salva matriz admitância em arquivo formato `.csv`
+            Folder(powerflow.setup,).admittance(powerflow.setup,)
+            DF(powerflow.setup.ybus).to_csv(f'{powerflow.setup.dirRadmittance + powerflow.setup.name + "-"}admittance.csv', header=None, index=None, sep=',')

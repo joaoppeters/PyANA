@@ -11,6 +11,7 @@ from numpy import abs, all, append, argmax, array, concatenate, cos, degrees, ma
 from numpy.linalg import solve
 
 from ctrl import Control
+from folder import Folder
 from jacobian import Jacobi
 from newtonraphson import NewtonRaphson
 
@@ -30,6 +31,7 @@ class Continuation:
         ## Inicialização
         # Newton-Raphson
         NewtonRaphson(powerflow,)
+
         # Continuado
         self.continuationpowerflow(powerflow,)
 
@@ -75,8 +77,8 @@ class Continuation:
             # Incremento de Caso
             powerflow.setup.cases += 1
 
-            print(' - - - CASO {} - - - '.format(powerflow.setup.cases))
-            print('Passo: ', powerflow.cpfsol['step'])
+            # print(' - - - CASO {} - - - '.format(powerflow.setup.cases))
+            # print('Passo: ', powerflow.cpfsol['step'])
 
             # Variável
             powerflow.cpfsol['case'][powerflow.setup.cases] = dict()
@@ -84,8 +86,8 @@ class Continuation:
             # Previsão
             self.prediction(powerflow,)
 
-            print('Jacobiana:\n', powerflow.setup.jacob)
-            print('\nVetor Tangente:\n', powerflow.setup.statevar)
+            # print('Jacobiana:\n', powerflow.setup.jacob)
+            # print('\nVetor Tangente:\n', powerflow.setup.statevar)
 
             # Correção
             self.correction(powerflow,)
@@ -93,14 +95,14 @@ class Continuation:
             # Avaliação
             self.evaluate(powerflow,)
 
-            # prints
-            print('\nPrevisão: ', powerflow.cpfsol['case'][powerflow.setup.cases]['prev']['voltage'][self.nodevarvolt], degrees(powerflow.cpfsol['case'][powerflow.setup.cases]['prev']['theta'][self.nodevarvolt]))
-            print('Correção: ', powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['voltage'][self.nodevarvolt], degrees(powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['theta'][self.nodevarvolt]))
-            print('VarLambda: ', self.varlambda)
-            print('VarVolt: ', self.varvolt)
-            if (powerflow.cpfsol['step'] > 3.5) or (powerflow.cpfsol['varstep'] == 'volt'):
-                print("")
-            print("\n\n")
+            # # prints
+            # print('\nPrevisão: ', powerflow.cpfsol['case'][powerflow.setup.cases]['prev']['voltage'][self.nodevarvolt], degrees(powerflow.cpfsol['case'][powerflow.setup.cases]['prev']['theta'][self.nodevarvolt]))
+            # print('Correção: ', powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['voltage'][self.nodevarvolt], degrees(powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['theta'][self.nodevarvolt]))
+            # print('VarLambda: ', self.varlambda)
+            # print('VarVolt: ', self.varvolt)
+            # if (powerflow.cpfsol['step'] > 3.5) or (powerflow.cpfsol['varstep'] == 'volt'):
+            #     print("")
+            # print("\n\n")
 
     
     def prediction(
@@ -513,16 +515,12 @@ class Continuation:
 
         colarray /= powerflow.setup.options['sbase']
 
-        # if (powerflow.cpfsol['pmc']) or (powerflow.cpfsol['varstep'] == 'volt'):
-        #     colarray *= -1
-
         # Expansão Inferior
         powerflow.setup.jacob = concatenate((powerflow.setup.jacob, colarray), axis=1)
         
         # Expansão Lateral
         powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((rowarray, [stepvar]), axis=1)), axis=0)
         
-
 
 
     def convergence(
@@ -611,21 +609,6 @@ class Continuation:
         if powerflow.setup.ctrlcount > 0:
             Control(powerflow, powerflow.setup).controlupdt(powerflow,)
 
-        # # Fluxo Continuado
-        # if stage == 'prev':
-        #     if powerflow.cpfsol['varstep'] == 'lambda':
-        #         powerflow.cpfsol['stepsch'] += powerflow.setup.statevar[-1]
-            
-        #     else:
-        #         powerflow.cpfsol['vsch'] += powerflow.setup.statevar[-1]
-
-        # elif stage == 'corr':
-        #     if powerflow.cpfsol['varstep'] == 'lambda':
-        #         powerflow.cpfsol['step'] += powerflow.setup.statevar[-1]
-            
-        #     else:
-        #         powerflow.sol['voltage'][self.nodevarvolt] += powerflow.setup.statevar[-1]
-
 
 
     def line_flow(
@@ -712,7 +695,7 @@ class Continuation:
 
         # Armazenamento do valor de passo e variável
         powerflow.cpfsol['case'][powerflow.setup.cases][stage]['step'] = deepcopy(powerflow.cpfsol['step'])
-        powerflow.cpfsol['case'][powerflow.setup.cases][stage]['var'] = deepcopy(powerflow.cpfsol['varstep'])
+        powerflow.cpfsol['case'][powerflow.setup.cases][stage]['varstep'] = deepcopy(powerflow.cpfsol['varstep'])
 
 
 

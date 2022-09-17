@@ -73,7 +73,7 @@ class Folder:
 
 
 
-    def cpf(
+    def continuation(
         self,
         setup,
     ):
@@ -83,11 +83,34 @@ class Folder:
             setup: self do arquivo setup.py
         """
 
-        dirRcpf = self.dirResultados + 'Continuado/'
-        if exists(dirRcpf) is False:
-            mkdir(dirRcpf)
+        ## Inicialização
+        self.dirRcpf = setup.dirResultados + 'Continuado/'
+        if exists(self.dirRcpf) is False:
+            mkdir(self.dirRcpf)
         
-        setup.dirRcpf = dirRcpf
+        setup.dirRcpf = self.dirRcpf
+
+        self.continuationsystem(setup,)
+
+
+
+    def continuationsystem(
+        self,
+        setup,
+    ):
+        """criação de diretório para armazenar resultados de fluxo de potência continuado
+        específico para cada sistema analisado
+        
+        Parâmetros
+            setup: self do arquivo setup.py
+        """
+
+        ## Inicialização
+        dircpfsys = self.dirRcpf + setup.name + '/'
+        if exists(dircpfsys) is False:
+            mkdir(dircpfsys)
+
+        setup.dircpfsys = dircpfsys
 
 
 
