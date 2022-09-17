@@ -1,0 +1,12 @@
+TITU
+****   Sistema teste 2 barras  ****
+DBAR
+(No )OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)
+ 0001  2  BARRA-REFER  A1000  0.          -999999999                       11000
+ 0002     BARRA-CARGA  A1000  0.                            10.            11000
+99999
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns
+ 0001      0002 1          100.
+99999
+FIM

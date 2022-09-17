@@ -368,39 +368,39 @@ class Reports:
         self.var = False
         self.file.write('vv relatório de execução do fluxo de potência continuado vv')
         self.file.write('\n\n')
-        self.file.write('|      | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |')
+        self.file.write('              | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |')
         self.file.write('\n')
-        self.file.write('| CASO |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |')
+        self.file.write('| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |')
         self.file.write('\n')
-        self.file.write('-'*75)
+        self.file.write('-'*82)
         for key, value in powerflow.cpfsol['case'].items():
             self.file.write('\n')
             if key == 0:
-                self.file.write(f"| {key:^4} |   0.0    |   0.0    | {sum(powerflow.cpfsol['demanda_ativa']):^8.3f} | {sum(powerflow.cpfsol['demanda_reativa']):^8.3f} |  lambda  | {(powerflow.setup.options['cpfLambda'] * 100):^9} |")
+                self.file.write(f"| {key:^4} | {value['iter']:^4} |   0.0    |   0.0    | {sum(powerflow.cpfsol['demanda_ativa']):^8.3f} | {sum(powerflow.cpfsol['demanda_reativa']):^8.3f} |  lambda  | {(powerflow.setup.options['cpfLambda'] * 100):^9} |")
 
             else:
                 if key % 5 == 0:
                     self.file.write('\n')
-                    self.file.write('|      | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |')
+                    self.file.write('              | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |')
                     self.file.write('\n')
-                    self.file.write('| CASO |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |')
+                    self.file.write('| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |')
                     self.file.write('\n')
-                    self.file.write('-'*75)
+                    self.file.write('-'*82)
                     self.file.write('\n')
                 
                 if not self.var and (value['corr']['varstep'] == 'lambda'):
-                    self.file.write(f"| {key:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
+                    self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
             
                 else:
                     self.var = True
                     if (value['corr']['varstep'] == 'volt'):
-                        self.file.write(f"| {key:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfVolt'] * 100):^+9.2f} |")
+                        self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfVolt'] * 100):^+9.2f} |")
 
                     elif (value['corr']['varstep'] == 'lambda'):
-                        self.file.write(f"| {key:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
+                        self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
             
             self.file.write('\n')
-            self.file.write('-'*75)
+            self.file.write('-'*82)
             
         self.file.write('\n\n\n\n')
 
