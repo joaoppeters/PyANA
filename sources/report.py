@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
-from numpy import abs, degrees, sum
+from numpy import abs, column_stack, degrees, savetxt, sum
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -184,7 +184,7 @@ class Reports:
             elif powerflow.method == 'CPF':
                 for i in range(0, powerflow.cpfsol['case'][0]['iter']):
                     self.file.write('\n')
-                    self.file.write(f"| {(i+1):^4d} | {powerflow.cpfsol['case'][0]['freqiter'][i]:^6.3f} | {powerflow.cpfsol['case'][0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
+                    self.file.write(f"| {(i+1):^4d} | {powerflow.cpfsol['case'][0]['freqiter'][i]:^6.3f} | {powerflow.cpfsol['case'][0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busP'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busQ'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busY'][i]]:^5d} |")
             
             self.file.write('\n')
             self.file.write('-'*71)
@@ -203,7 +203,7 @@ class Reports:
             self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
     
         elif powerflow.method == 'CPF':
-            self.file.write(f"| {(i+1):^4d} | {powerflow.cpfsol['case'][0]['freqiter'][i]:^6.3f} | {powerflow.cpfsol['case'][0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
+            self.file.write(f"| {(i+1):^4d} | {powerflow.cpfsol['case'][0]['freqiter'][i]:^6.3f} | {powerflow.cpfsol['case'][0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busP'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busQ'][i]]:^5d} | {powerflow.cpfsol['case'][0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.cpfsol['case'][0]['busY'][i]]:^5d} |")
         
         self.file.write('\n')
         self.file.write('-'*71)
@@ -480,7 +480,7 @@ class Reports:
                 self.filevtan.write('\n')
 
                 # FILEVARV
-                self.filevarv.write('\n')
+                self.filevarv.write('\n\n')
                 self.filevarv.write(f"Carregamento do Sistema: {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])} MW  | {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
                 self.filevarv.write('\n\n')
                 self.filevarv.write('|      BARRA        |        TENSÃO       |')
@@ -516,4 +516,8 @@ class Reports:
         self.filevarv.write('\n\n\n\n')
         self.filevarv.write('fim do relatório de análise da variação de tensão do sistema ' + powerflow.setup.name)
         self.filevarv.close()
+
+        # Arquivos em Loop
+        for key, value in powerflow.setup.pqtv.items():
+            savetxt(powerflow.setup.dircpfsys + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.pvar, value]))
                  

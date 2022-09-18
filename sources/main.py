@@ -29,7 +29,7 @@ options = {
     'cpfLambda': 5E-3,
     'cpfVolt': 1E-3,
     'cpfV2L': 0.85,
-    'prev': False,
+    'prev': True,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
