@@ -113,7 +113,7 @@ class Continuation:
             # if powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['varstep'] == 'volt':
             #     break
 
-            if powerflow.cpfsol['pmc']:
+            if (powerflow.cpfsol['pmc']) and (not powerflow.setup.options['full']):
                 break
             
         # Geração e armazenamento automático de gráficos
@@ -896,7 +896,7 @@ class Continuation:
                 ax.grid()
 
             # Save
-            fig.savefig(powerflow.setup.dircpfsys + key[0] + '-' + busname + '.png', dpi=400)
+            fig.savefig(powerflow.setup.dircpfsysimag + key[0] + '-' + busname + '.png', dpi=400)
             plt.close(fig)
 
         print('')

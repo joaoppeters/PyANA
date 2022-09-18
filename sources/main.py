@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee14.pwf'
+system = '2b-teste.pwf'
 
 method = 'CPF'
 
@@ -30,6 +30,7 @@ options = {
     'cpfVolt': 1E-2,
     'cpfV2L': 0.85,
     'prev': True,
+    'full': True,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']

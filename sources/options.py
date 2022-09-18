@@ -103,6 +103,7 @@ class Options:
             'cpfVolt': 1E-3,
             'cpfV2L': 0.85,
             'prev': True,
+            'full': True,
         }
         
         for k, v in self.stdcpf.items():

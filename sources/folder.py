@@ -98,7 +98,7 @@ class Folder:
         self,
         setup,
     ):
-        """criação de diretório para armazenar resultados de fluxo de potência continuado
+        """criação de diretório para armazenar resultados de fluxo de potência continuado (arquivos e imagens)
         específico para cada sistema analisado
         
         Parâmetros
@@ -110,7 +110,17 @@ class Folder:
         if exists(dircpfsys) is False:
             mkdir(dircpfsys)
 
+        dircpfsysimag = dircpfsys + 'imagens/'
+        if exists(dircpfsysimag) is False:
+            mkdir(dircpfsysimag)
+
+        dircpfsystxt = dircpfsys + 'txt/'
+        if exists(dircpfsystxt) is False:
+            mkdir(dircpfsystxt)
+
         setup.dircpfsys = dircpfsys
+        setup.dircpfsysimag = dircpfsysimag
+        setup.dircpfsystxt = dircpfsystxt
 
 
 

@@ -519,5 +519,5 @@ class Reports:
 
         # Arquivos em Loop
         for key, value in powerflow.setup.pqtv.items():
-            savetxt(powerflow.setup.dircpfsys + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.pvar, value]))
+            savetxt(powerflow.setup.dircpfsystxt + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.pvar, value]))
                  
