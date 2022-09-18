@@ -7,9 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
-from numpy import abs, degrees, sqrt, sum
-
-from folder import Folder
+from numpy import abs, degrees, sum
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -228,20 +226,20 @@ class Reports:
         for area in powerflow.setup.dbarraDF['area'].unique():
             self.file.write('vv relatório de barras vv área {} vv'.format(area))
             self.file.write('\n\n')
-            self.file.write('|         BARRA         |        TENSAO      |        GERACAO      |         CARGA       |   SHUNT  |')
+            self.file.write('|         BARRA         |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
             self.file.write('\n')
-            self.file.write('| NUM |     NOME    | T |    MOD   |   ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
+            self.file.write('| NUM |     NOME    | T |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
             self.file.write('\n')
-            self.file.write('-'*101)
+            self.file.write('-'*103)
             for i in range(0, powerflow.setup.nbus):
                 if powerflow.setup.dbarraDF['area'][i] == area:
                     if i % 10 == 0 and i != 0:
                         self.file.write('\n\n')
-                        self.file.write('|         BARRA         |        TENSAO      |        GERACAO      |         CARGA       |   SHUNT  |')
+                        self.file.write('|         BARRA         |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
                         self.file.write('\n')
-                        self.file.write('| NUM |     NOME    | T |    MOD   |   ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
+                        self.file.write('| NUM |     NOME    | T |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
                         self.file.write('\n')
-                        self.file.write('-'*101)
+                        self.file.write('-'*103)
 
                     self.file.write('\n')
                     if powerflow.method != 'CPF':
@@ -251,7 +249,7 @@ class Reports:
                         self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^11} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.cpfsol['case'][0]['voltage'][i]:^8.3f} | {degrees(powerflow.cpfsol['case'][0]['theta'][i]):^+8.2f} | {powerflow.cpfsol['case'][0]['active'][i]:^8.3f} | {powerflow.cpfsol['case'][0]['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
 
                     self.file.write('\n')
-                    self.file.write('-'*101)
+                    self.file.write('-'*103)
             self.file.write('\n\n\n\n')
 
 
@@ -418,9 +416,6 @@ class Reports:
 
         ## Inicialização
         self.var = False
-
-        # Criação automática de diretório
-        Folder(powerflow.setup,).continuation(powerflow.setup,)
 
         # Manipulação
         self.filevtan = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-tangent.txt', 'w')

@@ -26,9 +26,10 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
-    'cpfLambda': 5E-1,
-    'cpfVolt': 1E-1,
+    'cpfLambda': 5E-3,
+    'cpfVolt': 1E-3,
     'cpfV2L': 0.85,
+    'prev': False,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']

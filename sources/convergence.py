@@ -69,7 +69,7 @@ class Convergence:
         ax.grid()
 
         # Save
-        fig.savefig(powerflow.setup.dirRconvergence + powerflow.setup.name + '-trajconv-deltaP.png')
+        fig.savefig(powerflow.setup.dirRconvergence + powerflow.setup.name + '-trajconv-deltaP.png', dpi=400)
 
 
     def convQ(
@@ -98,7 +98,7 @@ class Convergence:
         ax.grid()
 
         # Save
-        fig.savefig(powerflow.setup.dirRconvergence + powerflow.setup.name + '-trajconv-deltaQ.png')
+        fig.savefig(powerflow.setup.dirRconvergence + powerflow.setup.name + '-trajconv-deltaQ.png', dpi=400)
 
 
 
