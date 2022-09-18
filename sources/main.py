@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = '2b-teste.pwf'
+system = 'ieee14.pwf'
 
 method = 'CPF'
 
@@ -26,8 +26,8 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
-    'cpfLambda': 5E-3,
-    'cpfVolt': 1E-3,
+    'cpfLambda': 1E-1,
+    'cpfVolt': 1E-2,
     'cpfV2L': 0.85,
     'prev': True,
 }

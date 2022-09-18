@@ -8,7 +8,7 @@
 
 from copy import deepcopy
 from matplotlib import pyplot as plt
-from numpy import abs, all, append, argmax, array, concatenate, cos, degrees, max, ndarray, ones, sin, sum, zeros
+from numpy import abs, all, append, argmax, around, array, concatenate, cos, degrees, max, ndarray, ones, sin, sum, zeros
 from numpy.linalg import solve
 
 from ctrl import Control
@@ -109,7 +109,13 @@ class Continuation:
             # if (powerflow.cpfsol['step'] > 3.5) or (powerflow.cpfsol['varstep'] == 'volt'):
             #     print("")
             # print("\n\n")
-        
+
+            # if powerflow.cpfsol['case'][powerflow.setup.cases]['corr']['varstep'] == 'volt':
+            #     break
+
+            if powerflow.cpfsol['pmc']:
+                break
+            
         # Geração e armazenamento automático de gráficos
         self.graph(powerflow,)
 
@@ -521,7 +527,8 @@ class Continuation:
         # Demanda
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             colarray[idx, 0] = value['demanda_ativa'] / (1 + powerflow.cpfsol['stepsch']) - value['potencia_ativa'] / (1 + (powerflow.cpfsol['stepsch'] * powerflow.cpfsol['beta']))
-            colarray[(idx + powerflow.setup.nbus), 0] = value['demanda_reativa'] / (1 + powerflow.cpfsol['stepsch'])
+            if value['tipo'] == 0:
+                colarray[(idx + powerflow.setup.nbus), 0] = value['demanda_reativa'] / (1 + powerflow.cpfsol['stepsch'])
 
         colarray /= powerflow.setup.options['sbase']
 
@@ -785,8 +792,8 @@ class Continuation:
             # Variável de Armazenamento de Magnitude de Tensão Corrigida
             powerflow.setup.pqtv['Vcorr-' + value['nome']] = array([])
 
-            # # Variável de Armazenamento de Defasagem Angular Corrigida
-            # powerflow.setup.pqtv['Tcorr-' + value['nome']] = array([])
+            # Variável de Armazenamento de Defasagem Angular Corrigida
+            powerflow.setup.pqtv['Tcorr-' + value['nome']] = array([])
 
 
         # Loop de Armazenamento
@@ -797,38 +804,38 @@ class Continuation:
                 for value in range(0, item['voltage'].shape[0]):
                     if powerflow.setup.dbarraDF['tipo'][value] != 0:
                         # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['active'][value])
+                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['active'][value], decimals=4))
 
                         # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['reactive'][value])
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['reactive'][value], decimals=4))
                     
                     # Armazenamento de Magnitude de Tensão
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['voltage'][value])
+                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['voltage'][value], decimals=4))
 
-                    # # Variável de Armazenamento de Defasagem Angular
-                    # powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['theta'][value])
+                    # Variável de Armazenamento de Defasagem Angular
+                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['theta'][value]), decimals=4))
 
                 # Demanda
-                powerflow.setup.pvar = append(powerflow.setup.pvar, sum(powerflow.cpfsol['demanda_ativa']))
+                powerflow.setup.pvar = append(powerflow.setup.pvar, around(sum(powerflow.cpfsol['demanda_ativa']), decimals=4))
 
 
             elif key != 0:
                 for value in range(0, item['corr']['voltage'].shape[0]):
                     if powerflow.setup.dbarraDF['tipo'][value] != 0:
                         # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['active'][value])
+                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['active'][value], decimals=4))
 
                         # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['reactive'][value])
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['reactive'][value], decimals=4))
                     
                     # Armazenamento de Magnitude de Tensão Corrigida
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['voltage'][value])
+                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['voltage'][value], decimals=4))
 
-                    # # Variável de Armazenamento de Defasagem Angular Corrigida
-                    # powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['theta'][value])
+                    # Variável de Armazenamento de Defasagem Angular Corrigida
+                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['corr']['theta'][value]), decimals=4))
 
                 # Demanda
-                powerflow.setup.pvar = append(powerflow.setup.pvar, ((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])))    
+                powerflow.setup.pvar = append(powerflow.setup.pvar, around(((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])), decimals=4))
                 
 
         # Geração de Gráfico
@@ -863,7 +870,7 @@ class Continuation:
                 ax.grid()
 
                 
-            elif (key[0] == 'V' and key[:5] != 'Vprev'):# or (key[0] == 'T' and key[:5] != 'Tprev'):
+            elif (key[0] == 'V' and key[:5] != 'Vprev') or (key[0] == 'T' and key[:5] != 'Tprev'):
                 fig, ax = plt.subplots(nrows=1, ncols=1)
 
                 # Variáveis
@@ -876,13 +883,13 @@ class Continuation:
                 ax.plot(powerflow.setup.pvar[:-1], item[:-1], color=f'C{color}', linewidth=2, alpha=0.85, label=busname, zorder=2)
                 
                 # Labels
-                # if key[0] == 'V':
-                ax.set_title('Variação da Magnitude de Tensão do Barramento')
-                ax.set_ylabel('Magnitude de Tensão do Barramento [p.u.]')
+                if key[0] == 'V':
+                    ax.set_title('Variação da Magnitude de Tensão do Barramento')
+                    ax.set_ylabel('Magnitude de Tensão do Barramento [p.u.]')
 
-                # elif key[0] == 'T':
-                #     ax.set_title('Variação da Defasagem Angular do Barramento')
-                #     ax.set_ylabel('Defasagem Angular do Barramento [graus]')
+                elif key[0] == 'T':
+                    ax.set_title('Variação da Defasagem Angular do Barramento')
+                    ax.set_ylabel('Defasagem Angular do Barramento [graus]')
 
                 ax.legend()
                 ax.set_xlabel('Carregamento [MW]')
@@ -890,5 +897,6 @@ class Continuation:
 
             # Save
             fig.savefig(powerflow.setup.dircpfsys + key[0] + '-' + busname + '.png', dpi=400)
+            plt.close(fig)
 
         print('')
