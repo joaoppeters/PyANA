@@ -1,7 +1,7 @@
 September 18, 2022
 
 
-análise do relatório de variação da tensão do sistema ieee14
+relatório de análise da variação da magnitude de tensão do sistema ieee14
 
 
 
@@ -1407,4 +1407,4 @@ Carregamento do Sistema: 1037.4086187355226 MW  | 294.3997431546754 Mvar
 
 
 
-fim do relatório de análise da variação de tensão do sistema ieee14
+fim do relatório de análise da variação da magnitude de tensão do sistema ieee14

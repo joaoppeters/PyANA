@@ -1,7 +1,7 @@
 September 18, 2022
 
 
-análise do relatório de variação da tensão do sistema 2b-teste
+relatório de análise da variação da magnitude de tensão do sistema 2b-teste
 
 
 
@@ -1261,4 +1261,4 @@ Carregamento do Sistema: -0.877959906423611 MW  | -0.0 Mvar
 
 
 
-fim do relatório de análise da variação de tensão do sistema 2b-teste
+fim do relatório de análise da variação da magnitude de tensão do sistema 2b-teste

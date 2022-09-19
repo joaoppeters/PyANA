@@ -419,26 +419,32 @@ class Reports:
 
         # Manipulação
         self.filevtan = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-tangent.txt', 'w')
-        self.filevarv = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-voltage.txt', 'w')
+        self.filevarv = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-voltagevar.txt', 'w')
+        self.filedeteigen = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-det&eigen.txt', 'w')
 
         # Cabeçalho FILEVTAN
         self.filevtan.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
         self.filevtan.write('\n\n\n')
-        self.filevtan.write('análise do relatório de análise da variação do vetor tangente do sistema ' + powerflow.setup.name)
+        self.filevtan.write('relatório de análise da variação do vetor tangente do sistema ' + powerflow.setup.name)
         self.filevtan.write('\n\n')
 
         # Cabeçalho FILEVARV
         self.filevarv.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
         self.filevarv.write('\n\n\n')
-        self.filevarv.write('análise do relatório de variação da tensão do sistema ' + powerflow.setup.name)
-        self.filevarv.write('\n')
+        self.filevarv.write('relatório de análise da variação da magnitude de tensão do sistema ' + powerflow.setup.name)
         self.filevarv.write('\n\n')
-        
+
+        # Cabeçalho FILEDETEIGEN
+        self.filedeteigen.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
+        self.filedeteigen.write('\n\n\n')
+        self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema ' + powerflow.setup.name)
+        self.filedeteigen.write('\n\n')
+
         # Loop
         for key, value in powerflow.cpfsol['case'].items():
             if key == 0:
                 # FILEVARV
-                self.filevarv.write('\n')
+                self.filevarv.write('\n\n')
                 self.filevarv.write(f"Carregamento do Sistema: {sum(powerflow.cpfsol['demanda_ativa'])} MW  | {sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
                 self.filevarv.write('\n\n')
                 self.filevarv.write('|      BARRA        |        TENSÃO       |')
@@ -450,11 +456,19 @@ class Reports:
 
                 # LOOP
                 for n in range(0, powerflow.setup.nbus):
-                    # FILEVARV
                     self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][n]:^3d} | {powerflow.setup.dbarraDF['nome'][n]:^11} | {value['voltage'][n]:^8.4f} | {(value['voltage'][n] - (powerflow.setup.dbarraDF['tensao'][n] * 1E-3)):^+8.4f} |")
                     self.filevarv.write('\n')
                     self.filevarv.write('-'*43)
                     self.filevarv.write('\n')
+
+                # FILEDETEIGEN
+                self.filedeteigen.write('\n\n')
+                self.filedeteigen.write(f"Carregamento do Sistema: {sum(powerflow.cpfsol['demanda_ativa'])} MW  | {sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
+                self.filedeteigen.write('\n')
+                self.filedeteigen.write(f"Determinante: {powerflow.cpfsol['case'][key]['determinant']}")
+                self.filedeteigen.write('\n')
+                self.filedeteigen.write(f"Autovalores: {powerflow.cpfsol['case'][key]['eigenvalues']}")
+                self.filedeteigen.write('\n')
             
             elif key != 0:
                 # FILEVTAN
@@ -507,6 +521,15 @@ class Reports:
                     self.filevarv.write('-'*43)
                     self.filevarv.write('\n')
 
+                # FILEDETEIGEN
+                self.filedeteigen.write('\n\n')
+                self.filedeteigen.write(f"Carregamento do Sistema: {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])} MW  | {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
+                self.filedeteigen.write('\n')
+                self.filedeteigen.write(f"Determinante: {powerflow.cpfsol['case'][key]['corr']['determinant']}")
+                self.filedeteigen.write('\n')
+                self.filedeteigen.write(f"Autovalores: {powerflow.cpfsol['case'][key]['corr']['eigenvalues']}")
+                self.filedeteigen.write('\n')
+
         # FILEVTAN
         self.filevtan.write('\n\n\n\n')
         self.filevtan.write('fim do relatório de análise da variação do vetor tangente do sistema ' + powerflow.setup.name)
@@ -514,8 +537,13 @@ class Reports:
 
         # FILEVARV
         self.filevarv.write('\n\n\n\n')
-        self.filevarv.write('fim do relatório de análise da variação de tensão do sistema ' + powerflow.setup.name)
+        self.filevarv.write('fim do relatório de análise da variação da magnitude de tensão do sistema ' + powerflow.setup.name)
         self.filevarv.close()
+
+        # FILEDETEIGEN
+        self.filedeteigen.write('\n\n\n\n')
+        self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema ' + powerflow.setup.name)
+        self.filedeteigen.close()
 
         # Arquivos em Loop
         for key, value in powerflow.setup.pqtv.items():

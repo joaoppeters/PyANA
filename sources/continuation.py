@@ -9,7 +9,7 @@
 from copy import deepcopy
 from matplotlib import pyplot as plt
 from numpy import abs, all, append, argmax, around, array, concatenate, cos, degrees, max, ndarray, ones, sin, sum, zeros
-from numpy.linalg import solve
+from numpy.linalg import det, eigvals, solve
 
 from ctrl import Control
 from folder import Folder
@@ -71,6 +71,10 @@ class Continuation:
 
         # Armazenamento da solução inicial
         powerflow.cpfsol['case'][0] = deepcopy(powerflow.sol)
+
+        # Armazenamento de determinante e autovalores
+        powerflow.cpfsol['case'][0]['determinant'] = det(powerflow.setup.jacob)
+        powerflow.cpfsol['case'][0]['eigenvalues'] = eigvals(powerflow.setup.jacob)
 
         # Variável para armazenamento de solução por casos do continuado (previsão e correção)
         powerflow.setup.cases = 0
@@ -714,6 +718,10 @@ class Continuation:
         powerflow.cpfsol['case'][powerflow.setup.cases][stage]['step'] = deepcopy(powerflow.cpfsol['step'])
         powerflow.cpfsol['case'][powerflow.setup.cases][stage]['varstep'] = deepcopy(powerflow.cpfsol['varstep'])
 
+        # Armazenamento de determinante e autovalores
+        powerflow.cpfsol['case'][powerflow.setup.cases][stage]['determinant'] = det(powerflow.setup.jacob)
+        powerflow.cpfsol['case'][powerflow.setup.cases][stage]['eigenvalues'] = eigvals(powerflow.setup.jacob)
+
 
 
     def evaluate(
@@ -778,6 +786,8 @@ class Continuation:
 
         # Variável
         powerflow.setup.pqtv = {}
+        powerflow.setup.det = array([])
+        powerflow.setup.eigvals = array([])
         powerflow.setup.pvar = array([])
         
         # Loop de Inicialização da Variável
@@ -817,6 +827,10 @@ class Continuation:
 
                 # Demanda
                 powerflow.setup.pvar = append(powerflow.setup.pvar, around(sum(powerflow.cpfsol['demanda_ativa']), decimals=4))
+                
+                # Determinante e Autovalores
+                powerflow.setup.det = append(powerflow.setup.det, item['determinant'])
+                powerflow.setup.eigvals = append(powerflow.setup.eigvals, item['eigenvalues'])
 
 
             elif key != 0:
@@ -836,7 +850,10 @@ class Continuation:
 
                 # Demanda
                 powerflow.setup.pvar = append(powerflow.setup.pvar, around(((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])), decimals=4))
-                
+
+                # Determinante e Autovalores
+                powerflow.setup.det = append(powerflow.setup.det, item['corr']['determinant'])
+                powerflow.setup.eigvals = append(powerflow.setup.eigvals, item['corr']['eigenvalues'])
 
         # Geração de Gráfico
         color=0

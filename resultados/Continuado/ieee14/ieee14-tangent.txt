@@ -1,7 +1,7 @@
 September 18, 2022
 
 
-análise do relatório de análise da variação do vetor tangente do sistema ieee14
+relatório de análise da variação do vetor tangente do sistema ieee14
 
 
 
