@@ -135,7 +135,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # Variável para armazenamento das potências ativa e reativa especificadas
-        powerflow.setup.vsch = {
+        powerflow.setup.pqsch = {
             'potencia_ativa_especificada': zeros(powerflow.setup.nbus),
             'potencia_reativa_especificada': zeros(powerflow.setup.nbus),
         }
@@ -143,16 +143,16 @@ class NewtonRaphson:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Potência ativa especificada
-            powerflow.setup.vsch['potencia_ativa_especificada'][idx] += value['potencia_ativa']
-            powerflow.setup.vsch['potencia_ativa_especificada'][idx] -= value['demanda_ativa']
+            powerflow.setup.pqsch['potencia_ativa_especificada'][idx] += value['potencia_ativa']
+            powerflow.setup.pqsch['potencia_ativa_especificada'][idx] -= value['demanda_ativa']
 
             # Potência reativa especificada
-            powerflow.setup.vsch['potencia_reativa_especificada'][idx] += value['potencia_reativa']
-            powerflow.setup.vsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
+            powerflow.setup.pqsch['potencia_reativa_especificada'][idx] += value['potencia_reativa']
+            powerflow.setup.pqsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
 
         # Tratamento
-        powerflow.setup.vsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
-        powerflow.setup.vsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
 
         # Variáveis especificadas de controle ativos
         if powerflow.setup.ctrlcount > 0:
@@ -182,12 +182,12 @@ class NewtonRaphson:
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value['tipo'] == 1 or value['tipo'] == 0:
-                powerflow.setup.deltaP[idx] += powerflow.setup.vsch['potencia_ativa_especificada'][idx]
+                powerflow.setup.deltaP[idx] += powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
                 powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
 
                 # Tipo PQ - Resíduo Potência Reativa
                 if value['tipo'] == 0:
-                    powerflow.setup.deltaQ[idx] += powerflow.setup.vsch['potencia_reativa_especificada'][idx]
+                    powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
                     powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana

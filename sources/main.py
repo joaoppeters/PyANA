@@ -26,10 +26,8 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
-    'cpfLambda': 1E-1,
-    'cpfVolt': 1E-2,
-    'cpfV2L': 0.85,
-    'prev': True,
+    'cpfLambda': 1E-2,
+    'cpfV2L': 0.95,
     'full': True,
 }
 

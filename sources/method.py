@@ -76,7 +76,7 @@ class Method():
 
         # Chamada específica método Continuado
         elif powerflow.method == 'CPF':
-            Continuation(powerflow, prev=powerflow.setup.options['prev'],)
+            Continuation(powerflow,)
 
 
         # Armazenamento dos resultados

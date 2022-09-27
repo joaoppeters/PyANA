@@ -100,9 +100,9 @@ class Options:
         self.stdcpf = {
             'cpfBeta': 0., 
             'cpfLambda': 1E-1,
-            'cpfVolt': 1E-3,
+            'cpfVolt': 5E-4,
             'cpfV2L': 0.85,
-            'prev': True,
+            'icmn': 5E-4,
             'full': True,
         }
         
