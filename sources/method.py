@@ -13,7 +13,7 @@ from linear import LinearPowerFlow
 from monitor import Monitor
 from newtonraphson import NewtonRaphson
 from report import Reports
-from statevar import StateVarProfile
+from statevar import StateVar
 
 class Method():
     """classe para aplicação do método selecionado para análise de fluxo de potência"""
@@ -85,4 +85,4 @@ class Method():
         if powerflow.method != 'CPF':
             Monitor(powerflow, powerflow.setup,)
             Convergence(powerflow, powerflow.setup,)
-            StateVarProfile(powerflow, powerflow.setup,)
+            StateVar(powerflow, powerflow.setup,)

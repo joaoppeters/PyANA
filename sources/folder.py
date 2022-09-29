@@ -27,11 +27,9 @@ class Folder:
         dirSistemas = dirname(setup.dirSEP)
 
         # Criação de diretório Resultados
-        dirResultados = dirname(dirSistemas) + '/resultados/'
-        if exists(dirResultados) is False:
-            mkdir(dirResultados)
-        
-        setup.dirResultados = dirResultados
+        setup.dirResultados = dirname(dirSistemas) + '/resultados/'
+        if exists(setup.dirResultados) is False:
+            mkdir(setup.dirResultados)
 
 
     
@@ -46,11 +44,9 @@ class Folder:
         """
 
         ## Inicialização
-        dirRadmittance = setup.dirResultados + 'MatrizAdmitancia/'
-        if exists(dirRadmittance) is False:
-            mkdir(dirRadmittance)
-        
-        setup.dirRadmittance = dirRadmittance
+        setup.dirRadmittance = setup.dirResultados + 'MatrizAdmitancia/'
+        if exists(setup.dirRadmittance) is False:
+            mkdir(setup.dirRadmittance)
 
 
 
@@ -65,11 +61,9 @@ class Folder:
         """
 
         ## Inicialização
-        dirRconvergence = setup.dirResultados + 'TrajetoriaConvergencia/'
-        if exists(dirRconvergence) is False:
-            mkdir(dirRconvergence)
-
-        setup.dirRconvergence = dirRconvergence
+        setup.dirRconvergence = setup.dirResultados + 'TrajetoriaConvergencia/'
+        if exists(setup.dirRconvergence) is False:
+            mkdir(setup.dirRconvergence)
 
 
 
@@ -84,12 +78,10 @@ class Folder:
         """
 
         ## Inicialização
-        self.dirRcpf = setup.dirResultados + 'Continuado/'
-        if exists(self.dirRcpf) is False:
-            mkdir(self.dirRcpf)
+        setup.dirRcpf = setup.dirResultados + 'Continuado/'
+        if exists(setup.dirRcpf) is False:
+            mkdir(setup.dirRcpf)
         
-        setup.dirRcpf = self.dirRcpf
-
         self.continuationsystem(setup,)
 
 
@@ -106,21 +98,17 @@ class Folder:
         """
 
         ## Inicialização
-        dircpfsys = self.dirRcpf + setup.name + '/'
-        if exists(dircpfsys) is False:
-            mkdir(dircpfsys)
+        setup.dircpfsys = setup.dirRcpf + setup.name + '/'
+        if exists(setup.dircpfsys) is False:
+            mkdir(setup.dircpfsys)
 
-        dircpfsysimag = dircpfsys + 'imagens/'
-        if exists(dircpfsysimag) is False:
-            mkdir(dircpfsysimag)
+        setup.dircpfsysimag = setup.dircpfsys + 'imagens/'
+        if exists(setup.dircpfsysimag) is False:
+            mkdir(setup.dircpfsysimag)
 
-        dircpfsystxt = dircpfsys + 'txt/'
-        if exists(dircpfsystxt) is False:
-            mkdir(dircpfsystxt)
-
-        setup.dircpfsys = dircpfsys
-        setup.dircpfsysimag = dircpfsysimag
-        setup.dircpfsystxt = dircpfsystxt
+        setup.dircpfsystxt = setup.dircpfsys + 'txt/'
+        if exists(setup.dircpfsystxt) is False:
+            mkdir(setup.dircpfsystxt)
 
 
 
@@ -135,11 +123,9 @@ class Folder:
         """
 
         ## Inicialização
-        dirRjacobi = setup.dirResultados + 'MatrizJacobiana/'
-        if exists(dirRjacobi) is False:
-            mkdir(dirRjacobi)
-        
-        setup.dirRjacobi = dirRjacobi
+        setup.dirRjacobi = setup.dirResultados + 'MatrizJacobiana/'
+        if exists(setup.dirRjacobi) is False:
+            mkdir(setup.dirRjacobi)
 
 
 
@@ -154,14 +140,12 @@ class Folder:
         """
 
         ## Inicialização
-        dirRreports = setup.dirResultados + 'Relatorios/'
-        if exists(dirRreports) is False:
-            mkdir(dirRreports)
-        
-        setup.dirRreports = dirRreports
+        setup.dirRreports = setup.dirResultados + 'Relatorios/'
+        if exists(setup.dirRreports) is False:
+            mkdir(setup.dirRreports)
 
 
-    
+
     def statevar(
         self,
         setup,
@@ -173,8 +157,6 @@ class Folder:
         """
 
         ## Inicialização
-        dirRstatevar = setup.dirResultados + 'VariaveisEstado/'
-        if exists(dirRstatevar) is False:
-            mkdir(dirRstatevar)
-        
-        setup.dirRstatevar = dirRstatevar
+        setup.dirRstatevar = setup.dirResultados + 'VariaveisEstado/'
+        if exists(setup.dirRstatevar) is False:
+            mkdir(setup.dirRstatevar)

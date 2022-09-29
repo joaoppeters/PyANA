@@ -10,7 +10,7 @@ from powerflow import PowerFlow
 
 system = 'ieee14.pwf'
 
-method = 'CPF'
+method = 'NEWTON'
 
 jacobi = 'COMPLETA'
 
@@ -28,7 +28,7 @@ options = {
     'cpfBeta': 0.,
     'cpfLambda': 1E-2,
     'cpfV2L': 0.95,
-    'full': True,
+    'full': False,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']

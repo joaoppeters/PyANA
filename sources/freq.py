@@ -110,10 +110,10 @@ class Freq:
 
         ## Inicialização
         # Variáveis adicionais
-        powerflow.setup.vsch['potencia_ativa_gerada_especificada'] = zeros(powerflow.setup.nger)
-        powerflow.setup.vsch['potencia_reativa_gerada_especificada'] = zeros(powerflow.setup.nger)
-        powerflow.setup.vsch['magnitude_tensao_especificada'] = zeros(powerflow.setup.nbus)
-        powerflow.setup.vsch['defasagem_angular_especificada'] = zeros(powerflow.setup.nbus)
+        powerflow.setup.pqsch['potencia_ativa_gerada_especificada'] = zeros(powerflow.setup.nger)
+        powerflow.setup.pqsch['potencia_reativa_gerada_especificada'] = zeros(powerflow.setup.nger)
+        powerflow.setup.pqsch['magnitude_tensao_especificada'] = zeros(powerflow.setup.nbus)
+        powerflow.setup.pqsch['defasagem_angular_especificada'] = zeros(powerflow.setup.nbus)
         
         # Contador de geradores
         nger = 0
@@ -121,21 +121,21 @@ class Freq:
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0.:
                 # Potência ativa gerada
-                powerflow.setup.vsch['potencia_ativa_gerada_especificada'][nger] = value['potencia_ativa']
+                powerflow.setup.pqsch['potencia_ativa_gerada_especificada'][nger] = value['potencia_ativa']
                 # Potência reativa gerada
-                powerflow.setup.vsch['potencia_reativa_gerada_especificada'][nger] = value['potencia_reativa']
+                powerflow.setup.pqsch['potencia_reativa_gerada_especificada'][nger] = value['potencia_reativa']
                 # Magnitude de tensão
-                powerflow.setup.vsch['magnitude_tensao_especificada'][idx] = value['tensao'] * 1E-3
+                powerflow.setup.pqsch['magnitude_tensao_especificada'][idx] = value['tensao'] * 1E-3
                 # Condição - slack
                 if value['tipo'] == 2:
                     # Defasagem angular
-                    powerflow.setup.vsch['defasagem_angular_especificada'][idx] = radians(value['angulo'])
+                    powerflow.setup.pqsch['defasagem_angular_especificada'][idx] = radians(value['angulo'])
                 # Incrementa contador
                 nger += 1
 
         # Tratamento
-        powerflow.setup.vsch['potencia_ativa_gerada_especificada'] /= powerflow.setup.options['sbase']
-        powerflow.setup.vsch['potencia_reativa_gerada_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_ativa_gerada_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_reativa_gerada_especificada'] /= powerflow.setup.options['sbase']
 
 
     
@@ -162,11 +162,11 @@ class Freq:
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0:
             #     # Cálculo do resíduo DeltaP
-            #     powerflow.setup.deltaPQY[idx] = powerflow.setup.vsch['potencia_ativa_especificada'][idx]
+            #     powerflow.setup.deltaPQY[idx] = powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
             #     powerflow.setup.deltaPQY[idx] -= self.pcalc(powerflow, idx,)
 
             #     # Cálculo do resíduo DeltaQ
-            #     powerflow.setup.deltaPQY[idx + powerflow.setup.nbus] = powerflow.setup.vsch['potencia_reativa_especificada'][idx]
+            #     powerflow.setup.deltaPQY[idx + powerflow.setup.nbus] = powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
             #     powerflow.setup.deltaPQY[idx + powerflow.setup.nbus] -= self.qcalc(powerflow, idx,)
 
             # else:
@@ -184,18 +184,18 @@ class Freq:
                 if powerflow.sol['freq'] >= powerflow.setup.freqger['max'][nger] or powerflow.sol['freq'] <= powerflow.setup.freqger['min'][nger]:
                     powerflow.setup.deltaPger[nger] = 0.
                 else:
-                    powerflow.setup.deltaPger[nger] += powerflow.setup.vsch['potencia_ativa_gerada_especificada'][nger]
+                    powerflow.setup.deltaPger[nger] += powerflow.setup.pqsch['potencia_ativa_gerada_especificada'][nger]
                     powerflow.setup.deltaPger[nger] -= powerflow.sol['active_generation'][nger]
                     powerflow.setup.deltaPger[nger] -= (1 / (powerflow.setup.dgeraDF['estatismo'][nger] * 1E-2)) * (powerflow.sol['freq'] - powerflow.setup.fesp)
 
                 # Tratamento de limite de magnitude de tensão
-                powerflow.setup.deltaQger[nger] += powerflow.setup.vsch['magnitude_tensao_especificada'][idx]
+                powerflow.setup.deltaQger[nger] += powerflow.setup.pqsch['magnitude_tensao_especificada'][idx]
                 powerflow.setup.deltaQger[nger] -= powerflow.sol['voltage'][idx]
                 
                 # Condição - slack
                 if value['tipo'] == 2:
                     # Tratamento de limite de 
-                    powerflow.setup.deltaTger += powerflow.setup.vsch['defasagem_angular_especificada'][idx]
+                    powerflow.setup.deltaTger += powerflow.setup.pqsch['defasagem_angular_especificada'][idx]
                     powerflow.setup.deltaTger -= powerflow.sol['theta'][idx]
                 
                 # Incrementa contador

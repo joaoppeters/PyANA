@@ -11,7 +11,7 @@ from numpy import arange, degrees, linspace, max, min, ones, pi
 
 from folder import Folder
 
-class StateVarProfile:
+class StateVar:
     """classe para geração dos resultados finais de convergência das variáveis de estado"""
 
     def __init__(
@@ -32,9 +32,6 @@ class StateVarProfile:
 
         # Resultado final de convergência das magnitudes e ângulos de tensão
         self.stateVT(powerflow,)
-
-        # # Resultado final de convergência dos ângulos de tensão
-        # self.stateT(powerflow,)
         
         # Condição
         if powerflow.setup.control:
@@ -82,36 +79,6 @@ class StateVarProfile:
         
         # Save
         fig.savefig(powerflow.setup.dirRstatevar + powerflow.setup.name + '-stateVT.png', dpi=400)
-
-
-
-    # def stateT(
-    #     self,
-    #     powerflow,
-    # ):
-    #     """resultado final de convergência dos ângulos de tensão
-        
-    #     Parâmetros
-    #         powerflow: self do arquivo powerflow.py
-    #     """
-
-    #     ## Inicialização
-    #     fig, ax = plt.subplots(nrows=1, ncols=1)
-        
-    #     # Plots 
-    #     line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color='C0', linewidth=2, alpha=0.85, zorder=2)
-    #     mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color='C5', marker='*', alpha=0.85, s=75, zorder=3)
-
-    #     # Label
-    #     ax.set_title('Trajetória de Convergência de Potência Reativa')
-    #     ax.set_xlabel('Iterações')
-    #     ax.set_xticks(arange(0, powerflow.sol['iter'] + 1))
-    #     ax.set_ylabel('Resíduo de Potência Reativa [Mvar]')
-    #     ax.legend([(line, mark,)], [f'abs(max($\Delta$Q))'])
-    #     ax.grid()
-
-    #     # Save
-    #     fig.savefig(powerflow.setup.dirRconvergence + powerflow.setup.name + '-trajconv-deltaQ.png')
 
 
 
