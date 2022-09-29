@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee24.pwf'
+system = 'ieee14.pwf'
 
 method = 'CPF'
 
@@ -28,7 +28,7 @@ options = {
     'cpfBeta': 0.,
     'cpfLambda': 1E-2,
     'cpfV2L': 0.95,
-    'full': False,
+    'full': True,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']

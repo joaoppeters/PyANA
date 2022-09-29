@@ -105,36 +105,13 @@ class Continuation:
             self.evaluate(powerflow,)
 
             # Heurísticas
-            if powerflow.setup.name != 'ieee24':
-                self.heuristics(powerflow,)
+            self.heuristics(powerflow,)
 
-            if self.case > 1:
-                print(all((powerflow.case[self.case]['corr']['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0)))
+            print("\n", (1 + powerflow.cpfsol['step']) * sum(powerflow.cpfsol['demanda_ativa']))
             
-            print('VarLambda: ', self.varlambda)
-            print('VarVolt: ', self.varvolt)
-
-            print('Step: ', powerflow.cpfsol['step'])
-            print('Stepsch: ', powerflow.cpfsol['stepsch'])
-            
-            print('Varstep: ', powerflow.cpfsol['varstep'])
-                
-            print((1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
-            
-            print('Magnitude de Tensão:\n', powerflow.case[self.case]['corr']['voltage'])
-            print('\n\n')
-            
-            if (1 + powerflow.case[self.case]['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa']) >= 4800.:
-                print('')
-
-            if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.cpfsol['div'] > 3):
-                powerflow.cpfsol['pmc'] = True
-                self.pmcidx = deepcopy(self.case)
-            
-            if (not powerflow.setup.options['full']) and (powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt'):
+            if (not powerflow.setup.options['full']) and (powerflow.cpfsol['pmc']):
                 break
                 
-
         # Geração e armazenamento automático de gráficos
         self.graph(powerflow,)
 
@@ -846,8 +823,10 @@ class Continuation:
         """
 
         ## Inicialização
-        # Condição de caso
-        if self.case == 1 and not powerflow.cpfsol['pmc']:
+        self.service = False
+
+        # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
+        if (self.case == 1) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
             if not all((powerflow.sol['voltage'] - powerflow.case[0]['voltage'] <= 0)):
                 # Reconfiguração do caso
                 self.case -= 1
@@ -861,7 +840,7 @@ class Continuation:
                 powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['voltage'])
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['theta'])
         
-        elif self.case == 2 and not powerflow.cpfsol['pmc']:
+        elif (self.case == 2) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
             if not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0)):
                 # Reconfiguração do caso
                 self.case -= 2
@@ -875,7 +854,7 @@ class Continuation:
                 powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['voltage'])
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['theta'])
                 
-        elif self.case > 2 and not powerflow.cpfsol['pmc']:
+        elif (self.case > 2) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
             if not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0)):
                 # Reconfiguração do caso
                 self.case -= 2
@@ -888,6 +867,45 @@ class Continuation:
                 # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
                 powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['corr']['voltage'])
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['corr']['theta'])
+
+        # Condição de divergência na etapa de previsão por excesso de iterações
+        if (powerflow.case[self.case]['prev']['iter'] > powerflow.setup.options['itermx']):
+            self.service = True
+
+            # Reconfiguração do caso
+            self.case -= 1
+
+            # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+            powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['corr']['voltage'])
+            powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['corr']['theta'])
+
+            # Reconfiguração da variável de passo
+            powerflow.cpfsol['div'] += 1
+
+            # Reconfiguração do valor da variável de passo
+            powerflow.cpfsol['step'] = deepcopy(powerflow.case[self.case]['corr']['step'])
+            powerflow.cpfsol['stepsch'] = deepcopy(powerflow.case[self.case]['corr']['stepsch'])
+            powerflow.cpfsol['vsch'] = deepcopy(powerflow.case[self.case]['corr']['vsch'])
+
+        # Condição de atingimento do PMC caso varstep volt pequeno
+        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['cpfVolt'] * (0.5 ** powerflow.cpfsol['div']) < powerflow.setup.options['icmn'] ** 2):
+            # Reconfiguração de caso (se previsão falhar)
+            if self.service:
+                self.case += 1
+
+            # Deletando último caso
+            del powerflow.case[self.case]
+
+            # Reconfiguração de caso
+            self.case -= 1
+            
+            # Reconfiguração da variável de passo
+            powerflow.cpfsol['div'] = 0
+
+            # Condição de máximo carregamento atingida
+            powerflow.cpfsol['pmc'] = True
+            powerflow.case[self.case]['corr']['pmc'] = True
+            self.pmcidx = deepcopy(self.case)
 
 
 
@@ -1025,7 +1043,7 @@ class Continuation:
                     ax.legend([(line, dashed, dotted)], [busname])
                 
                 elif not powerflow.setup.options['full']:
-                    ax.legend([(line,)], [busname])
+                    ax.legend([(line,   )], [busname])
                         
                 # Labels
                 if key[0] == 'V':
