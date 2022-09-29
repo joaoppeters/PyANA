@@ -25,9 +25,6 @@ class Ybus:
         """
 
         ## Inicialização
-        # Número de barras do sistema
-        powerflow.setup.nbus = len(powerflow.setup.dbarraDF.tipo.values)
-
         # Checa alteração no nível de carregamento
         self.checkdanc(powerflow,)
 

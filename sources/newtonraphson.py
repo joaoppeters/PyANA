@@ -296,12 +296,6 @@ class NewtonRaphson:
         # configuração reduzida
         elif powerflow.jacobi == 'REDUZIDA':
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
-            powerflow.setup.mask = ones(2*powerflow.setup.nbus, bool)
-            for idx, value in powerflow.setup.dbarraDF.iterrows():
-                if (value['tipo'] == 2) or (value['tipo'] == 1):
-                    powerflow.setup.mask[powerflow.setup.nbus+idx] = False
-                    if (value['tipo'] == 2):
-                        powerflow.setup.mask[idx] = False
             powerflow.setup.deltaPQY[powerflow.setup.mask]
         ## ERROR
         else:

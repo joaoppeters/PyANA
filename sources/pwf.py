@@ -6,7 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from os.path import exists
+from numpy import ones
 from pandas import DataFrame as DF
 
 class PWF:
@@ -223,7 +223,7 @@ class PWF:
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Alteração do Nível de Carregamento
-                setup.dancDF = self.treatment(pandas=DF(data=self.danc), data='DANC')
+                setup.dancDF = self.treatment(setup, pandas=DF(data=self.danc), data='DANC')
                 if setup.dancDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m')
@@ -272,7 +272,7 @@ class PWF:
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Barra
-                setup.dbarraDF = self.treatment(pandas=DF(data=self.dbar), data='DBAR')
+                setup.dbarraDF = self.treatment(setup, pandas=DF(data=self.dbar), data='DBAR')
                 if setup.dbarraDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
@@ -304,7 +304,7 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                setup.dgeraDF = self.treatment(pandas=DF(data=self.dger), data='DGER')
+                setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER')
                 if setup.dgeraDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
@@ -353,7 +353,7 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                setup.dlinhaDF = self.treatment(pandas=DF(data=self.dlin), data='DLIN')
+                setup.dlinhaDF = self.treatment(setup, pandas=DF(data=self.dlin), data='DLIN')
                 if setup.dlinhaDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
@@ -369,12 +369,15 @@ class PWF:
 
     def treatment(
         self,
+        setup,
         pandas: DF=DF.empty,
         data: str='',
     ):
         """tratamento dos valores padrão adotadas nas leituras de códigos de execução
         
         Parâmetros
+            setup: self do arquivo setup.py
+
             pandas: DataFrame, obrigatório, valor padrão DataFrame.empty
                 Arquivo que contém a leitura e armazenamento de dados de um respectivo código de execução
 
@@ -438,6 +441,25 @@ class PWF:
                     'agreg10': 'object',
                 }
             )
+
+            # Número de barras do sistema
+            setup.nbus = len(pandas.tipo.values)
+
+            # Barras geradoras: número & máscara
+            setup.nger = 0
+            setup.mask = ones(2 * setup.nbus, bool)
+            for idx, value in pandas.iterrows():
+                if (value['tipo'] == 2) or (value['tipo'] == 1):
+                    setup.nger += 1
+                    setup.mask[setup.nbus+idx] = False
+                    if (value['tipo'] == 2):
+                        setup.mask[idx] = False
+            
+            # Número de barras PV
+            setup.npv = setup.nger - 1
+
+            # Número de barras PQ
+            setup.npq = setup.nbus - setup.nger
         
         # Tratamento específico 'DBTB'
         elif data == 'DBTB':
@@ -535,5 +557,8 @@ class PWF:
                     'agreg10': 'object',
                 }
             )
+
+            # Número de barras do sistema
+            setup.nlin = len(pandas.de.values)
 
         return pandas
