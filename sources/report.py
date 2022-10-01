@@ -502,7 +502,7 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['determinant']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['eigenvalues']}")
+                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['eigenvalues'])}")
                 self.filedeteigen.write('\n')
             
             elif (key != list(powerflow.case.keys())[-1]):
@@ -562,7 +562,7 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['corr']['eigenvalues']}")
+                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['corr']['eigenvalues'])}")
                 self.filedeteigen.write('\n')
 
         # FILEVTAN
@@ -582,5 +582,5 @@ class Reports:
 
         # Arquivos em Loop
         for key, value in powerflow.setup.pqtv.items():
-            savetxt(powerflow.setup.dircpfsystxt + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.pvar, value]))
+            savetxt(powerflow.setup.dircpfsystxt + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.mw, value]))
                  

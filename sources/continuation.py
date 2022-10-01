@@ -8,13 +8,12 @@
 
 from copy import deepcopy
 from matplotlib import pyplot as plt
-from matplotlib.collections import LineCollection
-from numpy import abs, all, append, argmax, around, array, concatenate, cos, degrees, max, ndarray, ones, sin, sum, zeros
-from numpy.linalg import det, eig, solve
+from numpy import abs, all, append, argmax, array, concatenate, cos, dot, max, ndarray, ones, sin, sum, zeros
+from numpy.linalg import det, eig, solve, inv
 
 from ctrl import Control
-from folder import Folder
 from jacobian import Jacobi
+from loading import Loading
 from newtonraphson import NewtonRaphson
 
 class Continuation:
@@ -36,6 +35,9 @@ class Continuation:
 
         # Continuado
         self.continuationpowerflow(powerflow,)
+                
+        # Geração e armazenamento de gráficos
+        Loading(powerflow,)
 
 
 
@@ -75,8 +77,10 @@ class Continuation:
         # Armazenamento de determinante e autovalores
         powerflow.case[0]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
         rightvalues, rightvector = eig(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
-        powerflow.case[0]['eigenvalues'] = abs(rightvalues)
+        self.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - array(powerflow.setup.dbarraDF['tensao'].values.tolist()) * 1E-3))
+        powerflow.case[0]['eigenvalues'] = rightvalues
         powerflow.case[0]['eigenvectors'] = rightvector
+        powerflow.case[0]['participation_factor'] = dot(rightvector, inv(rightvector))[:, self.nodevarvolt]
 
         # Variável para armazenamento de solução por casos do continuado (previsão e correção)
         self.case = 0
@@ -88,7 +92,22 @@ class Continuation:
         powerflow.setup.mask = append(powerflow.setup.mask, False)
 
         # Loop
-        while all((powerflow.sol['voltage'] >= 0.)) and (sum(powerflow.setup.dbarraDF['demanda_ativa']) >= 0.99 * sum(powerflow.cpfsol['demanda_ativa'])):#(powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div']) >= powerflow.setup.options['icmn']):
+        self.loop(powerflow,)
+
+
+
+    def loop(
+        self,
+        powerflow,
+    ):
+        """loop do fluxo de potência continuado
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização
+        while all((powerflow.sol['voltage'] >= 0.)) and (sum(powerflow.setup.dbarraDF['demanda_ativa']) >= 0.99 * sum(powerflow.cpfsol['demanda_ativa'])):
             # Incremento de Caso
             self.case += 1
 
@@ -106,14 +125,9 @@ class Continuation:
 
             # Heurísticas
             self.heuristics(powerflow,)
-
-            print("\n", (1 + powerflow.cpfsol['step']) * sum(powerflow.cpfsol['demanda_ativa']))
             
             if (not powerflow.setup.options['full']) and (powerflow.cpfsol['pmc']):
                 break
-                
-        # Geração e armazenamento automático de gráficos
-        self.graph(powerflow,)
 
 
     
@@ -670,7 +684,7 @@ class Continuation:
 
                         elif not powerflow.cpfsol['pmc']:
                             powerflow.cpfsol['pmc'] = True
-                            self.pmcidx = deepcopy(self.case)
+                            powerflow.setup.pmcidx = deepcopy(self.case)
             
             # Condição de correção
             elif stage == 'corr':
@@ -754,12 +768,13 @@ class Continuation:
         # Armazenamento das variáveis de solução do fluxo de potência
         powerflow.case[self.case][stage] = {**deepcopy(powerflow.sol), **deepcopy(powerflow.cpfsol)}
 
-        # Armazenamento de determinante e autovalores
+        # Armazenamento de jacobiana, determinante e autovalores
+        powerflow.case[self.case][stage]['jacobian'] = deepcopy(powerflow.setup.jacob)
         powerflow.case[self.case][stage]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
         rightvalues, rightvector = eig(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
-        powerflow.case[self.case][stage]['eigenvalues'] = abs(rightvalues)
-        powerflow.case[self.case][stage]['eigenvectors'] = rightvector 
-
+        powerflow.case[self.case][stage]['eigenvalues'] = rightvalues
+        powerflow.case[self.case][stage]['eigenvectors'] = rightvector
+        powerflow.case[self.case][stage]['participation_factor'] = dot(rightvector, inv(rightvector))[:, self.nodevarvolt]
 
 
     def evaluate(
@@ -801,7 +816,7 @@ class Continuation:
                     powerflow.cpfsol['varstep'] = 'lambda'
                     powerflow.setup.options['cpfLambda'] = deepcopy(powerflow.case[1]['corr']['step'])
                     powerflow.cpfsol['v2l'] = True
-                    self.v2lidx = deepcopy(self.case)
+                    powerflow.setup.v2lidx = deepcopy(self.case)
 
                 elif (not powerflow.cpfsol['v2l']):
                     powerflow.cpfsol['varstep'] = 'volt'
@@ -905,160 +920,4 @@ class Continuation:
             # Condição de máximo carregamento atingida
             powerflow.cpfsol['pmc'] = True
             powerflow.case[self.case]['corr']['pmc'] = True
-            self.pmcidx = deepcopy(self.case)
-
-
-
-    def graph(
-        self,
-        powerflow,
-    ):
-        """geração e armazenamento automático de gráficos da solução do fluxo de potência continuado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        # Criação automática de diretório
-        Folder(powerflow.setup,).continuation(powerflow.setup,)
-
-        # Variável
-        powerflow.setup.pqtv = {}
-        powerflow.setup.det = array([])
-        powerflow.setup.eigenvalues = array([])
-        powerflow.setup.pvar = array([])
-        
-        # Loop de Inicialização da Variável
-        for _, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
-                # Variável de Armazenamento de Potência Ativa
-                powerflow.setup.pqtv['P-' + value['nome']] = array([])
-                
-                # Variável de Armazenamento de Potência Reativa
-                powerflow.setup.pqtv['Q-' + value['nome']] = array([])
-                
-            # Variável de Armazenamento de Magnitude de Tensão Corrigida
-            powerflow.setup.pqtv['Vcorr-' + value['nome']] = array([])
-
-            # Variável de Armazenamento de Defasagem Angular Corrigida
-            powerflow.setup.pqtv['Tcorr-' + value['nome']] = array([])
-
-        # Loop de Armazenamento
-        for key, item in powerflow.case.items():
-            # Condição
-            if key == 0:
-                aux = powerflow.setup.dbarraDF['nome'][0] # usado no loop seguinte
-                for value in range(0, item['voltage'].shape[0]):
-                    if powerflow.setup.dbarraDF['tipo'][value] != 0:
-                        # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['active'][value], decimals=4))
-
-                        # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['reactive'][value], decimals=4))
-                    
-                    # Armazenamento de Magnitude de Tensão
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['voltage'][value], decimals=4))
-
-                    # Variável de Armazenamento de Defasagem Angular
-                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['theta'][value]), decimals=4))
-
-                # Demanda
-                powerflow.setup.pvar = append(powerflow.setup.pvar, around(sum(powerflow.cpfsol['demanda_ativa']), decimals=4))
-                
-                # Determinante e Autovalores
-                powerflow.setup.det = append(powerflow.setup.det, item['determinant'])
-                powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
-
-            elif key != 0 and key != list(powerflow.case.keys())[-1]:
-                for value in range(0, item['corr']['voltage'].shape[0]):
-                    if powerflow.setup.dbarraDF['tipo'][value] != 0:
-                        # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['active'][value], decimals=4))
-
-                        # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['reactive'][value], decimals=4))
-                    
-                    # Armazenamento de Magnitude de Tensão Corrigida
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['voltage'][value], decimals=4))
-
-                    # Variável de Armazenamento de Defasagem Angular Corrigida
-                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['corr']['theta'][value]), decimals=4))
-
-                # Demanda
-                powerflow.setup.pvar = append(powerflow.setup.pvar, around(((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])), decimals=4))
-
-                # Determinante e Autovalores
-                powerflow.setup.det = append(powerflow.setup.det, item['corr']['determinant'])
-                powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
-
-        # Geração de Gráfico
-        linestyles = [('solid'), ('loosely dotted'), ('dashed')]
-        color=0
-        for key, item in powerflow.setup.pqtv.items():
-            if key[0] != 'V' and key[0] != 'T':
-                fig, ax = plt.subplots(nrows=1, ncols=1)
-                
-                # Variáveis
-                busname = key[2:]
-                if busname != aux:
-                    aux = key[2:]
-                    color += 1
-                
-                # Plot
-                line, = ax.plot(powerflow.setup.pvar, item, color=f'C{color}', linewidth=2, alpha=0.85, zorder=2)
-                
-                # Labels
-                # Condição de Potência Ativa
-                if key[0] == 'P':
-                    ax.set_title('Variação da Geração de Potência Ativa')
-                    ax.set_ylabel('Geração de Potência Ativa [MW]')
-                    ax.legend([line], [busname])
-                
-                # Condição de Potência Reativa
-                elif key[0] == 'Q':
-                    ax.set_title('Variação da Geração de Potência Reativa')
-                    ax.set_ylabel('Geração de Potência Reativa [Mvar]')
-                    ax.legend([line], [busname])
-
-                ax.set_xlabel('Carregamento [MW]')
-                ax.grid()
-
-                
-            elif (key[0] == 'V' and key[:5] != 'Vprev') or (key[0] == 'T' and key[:5] != 'Tprev'):
-                fig, ax = plt.subplots(nrows=1, ncols=1)
-
-                # Variáveis
-                busname = key[6:]
-                if busname != aux:
-                    aux = key[6:]
-                    color += 1
-                
-                # Plots
-                line, = ax.plot(powerflow.setup.pvar[:self.pmcidx], item[:self.pmcidx], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
-                
-                if powerflow.setup.options['full']:
-                    dashed, = ax.plot(powerflow.setup.pvar[(self.pmcidx):(self.v2lidx)], item[(self.pmcidx):(self.v2lidx)], color=f'C{color}', linestyle='dashed', linewidth=2, alpha=0.85, label=busname, zorder=2)
-                    dotted, = ax.plot(powerflow.setup.pvar[self.v2lidx:], item[self.v2lidx:], color=f'C{color}', linestyle='dotted', linewidth=2, alpha=0.85, label=busname, zorder=2)
-                    ax.legend([(line, dashed, dotted)], [busname])
-                
-                elif not powerflow.setup.options['full']:
-                    ax.legend([(line,   )], [busname])
-                        
-                # Labels
-                if key[0] == 'V':
-                    ax.set_title('Variação da Magnitude de Tensão do Barramento')
-                    ax.set_ylabel('Magnitude de Tensão do Barramento [p.u.]')
-
-                elif key[0] == 'T':
-                    ax.set_title('Variação da Defasagem Angular do Barramento')
-                    ax.set_ylabel('Defasagem Angular do Barramento [graus]')
-
-                ax.set_xlabel('Carregamento [MW]')
-                ax.grid()
-
-            # Save
-            fig.savefig(powerflow.setup.dircpfsysimag + key[0] + '-' + busname + '.png', dpi=400)
-            plt.close(fig)
-
-        print('')
+            powerflow.setup.pmcidx = deepcopy(self.case)

@@ -10,12 +10,12 @@ from powerflow import PowerFlow
 
 system = 'ieee14.pwf'
 
-method = 'NEWTON'
+method = 'CPF'
 
 jacobi = 'COMPLETA'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
-control = ['FREQ']
+control = ['QLIM']
 
 options = {
     'sbase': 100.,
