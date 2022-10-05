@@ -6,9 +6,11 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from numpy import array
+from copy import deepcopy
+from numpy import append, array, zeros
 
-from freq import Freq
+from ctrlfreq import Freq
+from ctrlqlim import Qlim
 
 class Control:
     """classe para determinar a realização das opções de controle escolhidas"""
@@ -116,7 +118,7 @@ class Control:
             elif key == 'QLIM':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'QLIM'
-                self.solqlim(powerflow,)
+                pass
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 powerflow.setup.ctrlcount += 1
@@ -160,7 +162,7 @@ class Control:
                 Freq(powerflow,).freqsch(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
-                self.solqlim(powerflow,)
+                pass
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 self.solsvc(powerflow,)
@@ -181,6 +183,9 @@ class Control:
         """
 
         ## Inicialização
+        # Variável
+        powerflow.setup.deltaY = array([])
+
         # Loop
         for key,_ in powerflow.setup.control.items():
             # controle remoto de tensão
@@ -200,7 +205,7 @@ class Control:
                 Freq(powerflow,).freqres(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
-                self.solqlim(powerflow,)
+                Qlim().qlimres(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 self.solsvc(powerflow,)
@@ -209,7 +214,7 @@ class Control:
                 self.solvctrl(powerflow,)
 
         if powerflow.setup.deltaY.size == 0:
-            powerflow.setup.deltaY = array([]) 
+            powerflow.setup.deltaY = array([0]) 
 
 
     
@@ -224,8 +229,14 @@ class Control:
         """
 
         ## Inicialização
+        # Variável
+        powerflow.setup.truedim = deepcopy(powerflow.setup.jacob.shape[0])
+
         # Loop
         for key,_ in powerflow.setup.control.items():
+            # Dimensão
+            powerflow.setup.controldim = powerflow.setup.jacob.shape[0] - powerflow.setup.truedim
+
             # controle remoto de tensão
             if key == 'CREM':
                 self.solcrem(powerflow,)
@@ -243,13 +254,19 @@ class Control:
                 Freq(powerflow,).freqsubjac(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
-                self.solqlim(powerflow,)
+                Qlim().qlimsubjac(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 self.solsvc(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
                 self.solvctrl(powerflow,)
+
+        # Dimensão
+        powerflow.setup.controldim = powerflow.setup.jacob.shape[0] - powerflow.setup.truedim
+        
+        # Atualização da Máscara da Jacobiana
+        powerflow.setup.mask = append(powerflow.setup.mask, zeros(powerflow.setup.controldim, dtype=bool))
 
     
 
@@ -283,108 +300,10 @@ class Control:
                 Freq(powerflow,).frequpdt(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
-                self.solqlim(powerflow,)
+                Qlim().qlimupdt(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 self.solsvc(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
                 self.solvctrl(powerflow,)
-
-
-
-    def solcrem(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle remoto de tensão esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solcst(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle secundário de tensão esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solctap(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle de tap variável de transformador esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solctapd(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle de ângulo de transformador defasador esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solqlim(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle de limite de geração de potência reativa esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solsvc(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle de compensadores estáticos de potência reativa esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass
-
-
-
-    def solvctrl(
-        self,
-        powerflow,
-    ):
-        """adiciona variáveis na solução para caso controle de magnitude de tensão de barramentos esteja ativado
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py"""
-
-        ## Inicialização
-        pass

@@ -6,6 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
+from email.utils import collapse_rfc2231_value
 from matplotlib import pyplot as plt
 from numpy import append, around, array, degrees, sum
 
@@ -34,8 +35,8 @@ class Loading:
         # Gráficos de variáveis de estado e controle em função do carregamento
         self.pqvt(powerflow,)
 
-        # Gráfico de rootlocus
-        self.ruthe(powerflow,)
+        # # Gráfico de rootlocus
+        # self.ruthe(powerflow,)
 
 
 
@@ -54,6 +55,8 @@ class Loading:
         powerflow.setup.pqtv = {}
         powerflow.setup.mw = array([])
         powerflow.setup.eigenvalues = array([])
+        powerflow.setup.eigenvaluesPT = array([])
+        powerflow.setup.eigenvaluesQV = array([])
         # powerflow.setup.det = array([])
         
         # Loop de Inicialização da Variável
@@ -95,6 +98,8 @@ class Loading:
                 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
+                powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['eigenvalues-PT'])
+                powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
                 # powerflow.setup.det = append(powerflow.setup.det, item['determinant'])
 
             elif key != 0 and key != list(powerflow.case.keys())[-1]:
@@ -117,6 +122,8 @@ class Loading:
 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
+                powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['corr']['eigenvalues-PT'])
+                powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['corr']['eigenvalues-QV'])
                 # powerflow.setup.det = append(powerflow.setup.det, item['corr']['determinant'])
 
 
@@ -135,45 +142,19 @@ class Loading:
         # Geração de Gráfico
         color = 0
         for key, item in powerflow.setup.pqtv.items():
-            if key[0] != 'V' and key[0] != 'T':
+            if key[:5] != 'Vprev' and key[:5] != 'Tprev':
                 fig, ax = plt.subplots(nrows=1, ncols=1)
                 
                 # Variáveis
-                busname = key[2:]
+                if key[1:5] == 'corr':
+                    busname = key[6:]
+                else:
+                    busname = key[2:]
                 if busname != self.aux:
                     self.aux = key[2:]
                     color += 1
                 
                 # Plot
-                line, = ax.plot(powerflow.setup.mw, item, color=f'C{color}', linewidth=2, alpha=0.85, zorder=2)
-                
-                # Labels
-                # Condição de Potência Ativa
-                if key[0] == 'P':
-                    ax.set_title('Variação da Geração de Potência Ativa')
-                    ax.set_ylabel('Geração de Potência Ativa [MW]')
-                    ax.legend([line], [busname])
-                
-                # Condição de Potência Reativa
-                elif key[0] == 'Q':
-                    ax.set_title('Variação da Geração de Potência Reativa')
-                    ax.set_ylabel('Geração de Potência Reativa [Mvar]')
-                    ax.legend([line], [busname])
-
-                ax.set_xlabel('Carregamento [MW]')
-                ax.grid()
-
-                
-            elif (key[0] == 'V' and key[:5] != 'Vprev') or (key[0] == 'T' and key[:5] != 'Tprev'):
-                fig, ax = plt.subplots(nrows=1, ncols=1)
-
-                # Variáveis
-                busname = key[6:]
-                if busname != self.aux:
-                    self.aux = key[6:]
-                    color += 1
-                
-                # Plots
                 line, = ax.plot(powerflow.setup.mw[:powerflow.setup.pmcidx], item[:powerflow.setup.pmcidx], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
                 
                 if powerflow.setup.options['full']:
@@ -183,12 +164,24 @@ class Loading:
                 
                 elif not powerflow.setup.options['full']:
                     ax.legend([(line,   )], [busname])
-                        
+                
                 # Labels
+                # Condição de Potência Ativa
+                if key[0] == 'P':
+                    ax.set_title('Variação da Geração de Potência Ativa')
+                    ax.set_ylabel('Geração de Potência Ativa [MW]')
+                
+                # Condição de Potência Reativa
+                elif key[0] == 'Q':
+                    ax.set_title('Variação da Geração de Potência Reativa')
+                    ax.set_ylabel('Geração de Potência Reativa [Mvar]')
+
+                # Magnitude de Tensão Nodal
                 if key[0] == 'V':
                     ax.set_title('Variação da Magnitude de Tensão do Barramento')
                     ax.set_ylabel('Magnitude de Tensão do Barramento [p.u.]')
 
+                # Defasagem Angular de Tensão Nodal
                 elif key[0] == 'T':
                     ax.set_title('Variação da Defasagem Angular do Barramento')
                     ax.set_ylabel('Defasagem Angular do Barramento [graus]')
@@ -215,26 +208,68 @@ class Loading:
         ## Inicialização
         # Variáveis
         rows = list(powerflow.case.keys())[-1]
-        cols = len(powerflow.case[0]['eigenvalues'])
+        cols = sum(powerflow.setup.mask)
+        colsP = sum(powerflow.setup.maskP)
+        colsQ = sum(powerflow.setup.maskQ)
 
         # Reconfiguração
         powerflow.setup.eigenvalues = powerflow.setup.eigenvalues.reshape(rows, cols).T.astype(dtype=complex)
+        powerflow.setup.eigenvaluesPT = powerflow.setup.eigenvaluesPT.reshape(rows, colsP).T.astype(dtype=complex)
+        powerflow.setup.eigenvaluesQV = powerflow.setup.eigenvaluesQV.reshape(rows, colsQ).T.astype(dtype=complex)
 
-        # Geração de Gráfico
+        # Geração de Gráfico - Autovalores da matriz Jacobiana Reduzida
         fig, ax = plt.subplots(nrows=1, ncols=1)
         color = 0
         for eigen in range(0, cols):
-            ax.scatter(-powerflow.setup.eigenvalues.real[eigen, 0], powerflow.setup.eigenvalues.imag[eigen, 0], color=f'C{color}', marker='x', alpha=1, zorder=3)
+            ax.scatter(-powerflow.setup.eigenvalues.real[eigen, 0], powerflow.setup.eigenvalues.imag[eigen, 0], marker='x', color=f'C{color}', alpha=1, zorder=3)
             ax.plot(-powerflow.setup.eigenvalues.real[eigen, :], powerflow.setup.eigenvalues.imag[eigen, :], color=f'C{color}', linewidth=2, alpha=0.85, zorder=2)
             color += 1
         
         ax.axhline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
         ax.axvline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
 
-        ax.set_title('Autovalores no Fluxo de Potência Continuado')
+        ax.set_title('Autovalores da Matriz Jacobiana Reduzida')
         ax.set_ylabel(f'Eixo Imaginário ($j\omega$)')
         ax.set_xlabel(f'Eixo Real ($\sigma$)')
 
         # Save
-        fig.savefig(powerflow.setup.dircpfsys + powerflow.setup.name + '-rootlocus.png', dpi=400)
+        fig.savefig(powerflow.setup.dircpfsys + powerflow.setup.name + '-rootlocus-Jacobian.png', dpi=400)
+        plt.close(fig)
+
+        # Geração de Gráfico - Autovalores da matriz de sensisbilidade PT
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        color = 0
+        for eigen in range(0, colsP):
+            ax.scatter(-powerflow.setup.eigenvaluesPT.real[eigen, 0], powerflow.setup.eigenvaluesPT.imag[eigen, 0], marker='x', color=f'C{color}', alpha=1, zorder=3)
+            ax.plot(-powerflow.setup.eigenvaluesPT.real[eigen, :], powerflow.setup.eigenvaluesPT.imag[eigen, :], color=f'C{color}', linewidth=2, alpha=0.85, zorder=2)
+            color += 1
+        
+        ax.axhline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
+        ax.axvline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
+
+        ax.set_title(f'Autovalores da Matriz de Sensibilidade $P\\theta$')
+        ax.set_ylabel(f'Eixo Imaginário ($j\omega$)')
+        ax.set_xlabel(f'Eixo Real ($\sigma$)')
+
+        # Save
+        fig.savefig(powerflow.setup.dircpfsys + powerflow.setup.name + '-rootlocus-PTsens.png', dpi=400)
+        plt.close(fig)
+
+        # Geração de Gráfico - Autovalores da matriz de sensibilidade QV
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        color = 0
+        for eigen in range(0, colsQ):
+            ax.scatter(-powerflow.setup.eigenvaluesQV.real[eigen, 0], powerflow.setup.eigenvaluesQV.imag[eigen, 0], marker='x', color=f'C{color}', alpha=1, zorder=3)
+            ax.plot(-powerflow.setup.eigenvaluesQV.real[eigen, :], powerflow.setup.eigenvaluesQV.imag[eigen, :], color=f'C{color}', linewidth=2, alpha=0.85, zorder=2)
+            color += 1
+        
+        ax.axhline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
+        ax.axvline(0., linestyle=':', color='k', linewidth=.75, zorder=-20)
+
+        ax.set_title(f'Autovalores da Matriz de Sensibilidade $QV$')
+        ax.set_ylabel(f'Eixo Imaginário ($j\omega$)')
+        ax.set_xlabel(f'Eixo Real ($\sigma$)')
+
+        # Save
+        fig.savefig(powerflow.setup.dircpfsys + powerflow.setup.name + '-rootlocus-QVsens.png', dpi=400)
         plt.close(fig)

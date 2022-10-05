@@ -175,9 +175,6 @@ class NewtonRaphson:
         powerflow.setup.deltaP = zeros(powerflow.setup.nbus)
         powerflow.setup.deltaQ = zeros(powerflow.setup.nbus)
 
-        # Resíduo de equação de controle adicional
-        powerflow.setup.deltaY = array([])
-
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
@@ -219,7 +216,7 @@ class NewtonRaphson:
             p: float
                 potência ativa calculada para o barramento `idx`
         """
-        
+
         ## Inicialização
         # Variável de potência ativa calculada para o barramento `idx`
         p = 0
@@ -252,7 +249,7 @@ class NewtonRaphson:
             q: float
                 potência reativa calculada para o barramento `idx`
         """
-        
+
         ## Inicialização
         # Variável de potência reativa calculada para o barramento `idx`
         q = 0

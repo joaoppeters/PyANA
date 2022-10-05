@@ -1,4 +1,4 @@
-September 29, 2022
+October 01, 2022
 
 
 relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema ieee24

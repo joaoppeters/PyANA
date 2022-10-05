@@ -170,8 +170,8 @@ class Jacobi:
         """
 
         ## Inicialização
-        # Tratamento de limite de geração de potência reativa & big-number
-        if not powerflow.setup.control:
+        # Tratamento de big-number
+        if ('FREQ' not in powerflow.setup.control) or (not powerflow.setup.control['FREQ']):
             self.bignumber(powerflow,)
 
         # Montagem da matriz Jacobiana
@@ -215,25 +215,15 @@ class Jacobi:
         """
 
         ## Inicialização Método Big-Number
-        # Mask H & M
-        powerflow.setup.BNP = ones(powerflow.setup.nbus) 
-        # Mask N & L
-        powerflow.setup.BNQ = ones(powerflow.setup.nbus)
-        for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if (value['tipo'] == 2) or (value['tipo'] == 1):
-                powerflow.setup.BNQ[idx] = 0
-                if (value['tipo'] == 2):
-                    powerflow.setup.BNP[idx] = 0 
-
         for v in range(0, powerflow.setup.nbus):
-            if powerflow.setup.BNP[v] == 0:
+            if (powerflow.setup.maskP[v] == False):
                 powerflow.setup.pt[v, :] = 0
                 powerflow.setup.pv[v, :] = 0
                 powerflow.setup.pt[:, v] = 0
                 powerflow.setup.qt[:, v] = 0
                 powerflow.setup.pt[v, v] = 1
             
-            if powerflow.setup.BNQ[v] == 0:
+            if (powerflow.setup.maskQ[v] == False) and ('QLIM' not in powerflow.setup.control):
                 powerflow.setup.qv[v, :] = 0
                 powerflow.setup.qt[v, :] = 0
                 powerflow.setup.qv[:, v] = 0

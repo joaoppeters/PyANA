@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
-from numpy import abs, column_stack, degrees, savetxt, sum
+from numpy import abs, argsort, column_stack, degrees, savetxt, sum
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -224,30 +224,30 @@ class Reports:
         for area in powerflow.setup.dbarraDF['area'].unique():
             self.file.write('vv relatório de barras vv área {} vv'.format(area))
             self.file.write('\n\n')
-            self.file.write('|         BARRA         |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
+            self.file.write('|          BARRA          |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
             self.file.write('\n')
-            self.file.write('| NUM |     NOME    | T |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
+            self.file.write('| NUM |     NOME    |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
             self.file.write('\n')
-            self.file.write('-'*103)
+            self.file.write('-'*105)
             for i in range(0, powerflow.setup.nbus):
                 if powerflow.setup.dbarraDF['area'][i] == area:
                     if i % 10 == 0 and i != 0:
                         self.file.write('\n\n')
-                        self.file.write('|         BARRA         |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
+                        self.file.write('|          BARRA          |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
                         self.file.write('\n')
-                        self.file.write('| NUM |     NOME    | T |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
+                        self.file.write('| NUM |     NOME    |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |')
                         self.file.write('\n')
-                        self.file.write('-'*103)
+                        self.file.write('-'*105)
 
                     self.file.write('\n')
                     if powerflow.method != 'CPF':
-                        self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^11} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.sol['voltage'][i]:^8.3f} | {degrees(powerflow.sol['theta'][i]):^+8.2f} | {powerflow.sol['active'][i]:^8.3f} | {powerflow.sol['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
+                        self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^11} | {powerflow.setup.dbarraDF['tipo'][i]:^3} |  {powerflow.sol['voltage'][i]:^8.3f} | {degrees(powerflow.sol['theta'][i]):^+8.2f} | {powerflow.sol['active'][i]:^8.3f} | {powerflow.sol['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
 
                     elif powerflow.method == 'CPF':
-                        self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^11} | {powerflow.setup.dbarraDF['tipo'][i]:^1} |  {powerflow.case[0]['voltage'][i]:^8.3f} | {degrees(powerflow.case[0]['theta'][i]):^+8.2f} | {powerflow.case[0]['active'][i]:^8.3f} | {powerflow.case[0]['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
+                        self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^11} | {powerflow.setup.dbarraDF['tipo'][i]:^3} |  {powerflow.case[0]['voltage'][i]:^8.3f} | {degrees(powerflow.case[0]['theta'][i]):^+8.2f} | {powerflow.case[0]['active'][i]:^8.3f} | {powerflow.case[0]['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
 
                     self.file.write('\n')
-                    self.file.write('-'*103)
+                    self.file.write('-'*105)
             self.file.write('\n\n\n\n')
 
 
@@ -460,7 +460,7 @@ class Reports:
         # Cabeçalho FILEDETEIGEN
         self.filedeteigen.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
         self.filedeteigen.write('\n\n\n')
-        self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema ' + powerflow.setup.name)
+        self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
         self.filedeteigen.write('\n\n')
         self.filedeteigen.write('opções de controle ativadas: ')
         if powerflow.setup.control:
@@ -478,6 +478,10 @@ class Reports:
         # Loop
         for key, value in powerflow.case.items():
             if key == 0:
+                # Variável de variação de tensão
+                self.varv = value['voltage'] - (powerflow.setup.dbarraDF['tensao'] * 1E-3)
+                self.argsort = argsort(self.varv)
+
                 # FILEVARV
                 self.filevarv.write('\n\n')
                 self.filevarv.write(f"Carregamento do Sistema: {sum(powerflow.cpfsol['demanda_ativa'])} MW  | {sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
@@ -491,7 +495,7 @@ class Reports:
 
                 # LOOP
                 for n in range(0, powerflow.setup.nbus):
-                    self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][n]:^3d} | {powerflow.setup.dbarraDF['nome'][n]:^11} | {value['voltage'][n]:^8.4f} | {(value['voltage'][n] - (powerflow.setup.dbarraDF['tensao'][n] * 1E-3)):^+8.4f} |")
+                    self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][self.argsort[n]]:^3d} | {powerflow.setup.dbarraDF['nome'][self.argsort[n]]:^11} | {value['voltage'][self.argsort[n]]:^8.4f} | {self.varv[self.argsort[n]]:^+8.4f} |")
                     self.filevarv.write('\n')
                     self.filevarv.write('-'*43)
                     self.filevarv.write('\n')
@@ -502,10 +506,19 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['determinant']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['eigenvalues'])}")
+                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['eigenvalues-QV'])}")
                 self.filedeteigen.write('\n')
             
             elif (key != list(powerflow.case.keys())[-1]):
+                # Variável de variação de tensão
+                if key == 1:
+                    self.varv = value['corr']['voltage'] - powerflow.case[0]['voltage']
+
+                elif key > 1:
+                    self.varv = value['corr']['voltage'] - powerflow.case[key-1]['corr']['voltage']
+
+                self.argsort = argsort(self.varv)
+
                 # FILEVTAN
                 self.filevtan.write('\n\n')
                 self.filevtan.write(f"Carregamento do Sistema: {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])} MW  | {(1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])} Mvar")
@@ -549,9 +562,9 @@ class Reports:
 
                     # FILEVARV
                     if key == 1:
-                        self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][n]:^3d} | {powerflow.setup.dbarraDF['nome'][n]:^11} | {value['corr']['voltage'][n]:^8.4f} | {(value['corr']['voltage'][n] - powerflow.case[0]['voltage'][n]):^+8.4f} |")
+                        self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][self.argsort[n]]:^3d} | {powerflow.setup.dbarraDF['nome'][self.argsort[n]]:^11} | {value['corr']['voltage'][self.argsort[n]]:^8.4f} | {self.varv[self.argsort[n]]:^+8.4f} |")
                     elif key > 1:
-                        self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][n]:^3d} | {powerflow.setup.dbarraDF['nome'][n]:^11} | {value['corr']['voltage'][n]:^8.4f} | {(value['corr']['voltage'][n] - powerflow.case[key-1]['corr']['voltage'][n]):^+8.4f} |")
+                        self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][self.argsort[n]]:^3d} | {powerflow.setup.dbarraDF['nome'][self.argsort[n]]:^11} | {value['corr']['voltage'][self.argsort[n]]:^8.4f} | {self.varv[self.argsort[n]]:^+8.4f} |")
                     self.filevarv.write('\n')
                     self.filevarv.write('-'*43)
                     self.filevarv.write('\n')
@@ -562,7 +575,7 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['corr']['eigenvalues'])}")
+                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['corr']['eigenvalues-QV'])}")
                 self.filedeteigen.write('\n')
 
         # FILEVTAN
@@ -577,7 +590,7 @@ class Reports:
 
         # FILEDETEIGEN
         self.filedeteigen.write('\n\n\n\n')
-        self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema ' + powerflow.setup.name)
+        self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
         self.filedeteigen.close()
 
         # Arquivos em Loop

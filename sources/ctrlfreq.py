@@ -6,6 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
+from copy import deepcopy
 from numpy import append, concatenate, cos, infty, radians, sin, zeros
 
 class Freq:
@@ -43,29 +44,27 @@ class Freq:
         powerflow.setup.nare = 1
 
         # Condição
-        if powerflow.setup.control['FREQ']:
-            # DGER contém dados de todos os geradores 
-            if powerflow.setup.dgeraDF.numero.shape[0] == powerflow.setup.nger:
-                # Variáveis
-                powerflow.sol['active_generation'] = zeros(powerflow.setup.nger)
-                powerflow.sol['reactive_generation'] = zeros(powerflow.setup.nger)        
-                powerflow.setup.fesp = 1
+        if (powerflow.setup.control['FREQ']) and (powerflow.setup.codes['DGER']):
+            # Variáveis
+            powerflow.sol['active_generation'] = zeros(powerflow.setup.nger)
+            powerflow.sol['reactive_generation'] = zeros(powerflow.setup.nger)        
+            powerflow.setup.fesp = 1
 
-                # Loop
-                nger = 0
-                for idx, value in powerflow.setup.dbarraDF.iterrows():
-                    # Barra tipo VT ou PV
-                    if value['tipo'] != 0:
-                        powerflow.sol['active_generation'][nger] = value['potencia_ativa'] / powerflow.setup.options['sbase']
-                        powerflow.sol['reactive_generation'][nger] = value['potencia_reativa'] / powerflow.setup.options['sbase']
-                        nger += 1
-                # Frequências máxima e mínima por gerador
-                self.freqgerlim(powerflow,)
-                
-            # DGER não contém dados de todos os geradores
-            else:
-                powerflow.setup.control['FREQ'] = False
-                print('\033[93mERROR: Controle `FREQ` não será ativado por insuficiência de dados de barras geradoras!\nAtualize o campo `DGER` do arquivo {}!\033[0m'.format(powerflow.system))
+            # Loop
+            nger = 0
+            for idx, value in powerflow.setup.dbarraDF.iterrows():
+                # Barra tipo VT ou PV
+                if value['tipo'] != 0:
+                    powerflow.sol['active_generation'][nger] = value['potencia_ativa'] / powerflow.setup.options['sbase']
+                    powerflow.sol['reactive_generation'][nger] = value['potencia_reativa'] / powerflow.setup.options['sbase']
+                    nger += 1
+            # Frequências máxima e mínima por gerador
+            self.freqgerlim(powerflow,)
+            
+        # DGER não ativado
+        else:
+            powerflow.setup.control['FREQ'] = False
+            print('\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{}`!\033[0m'.format(powerflow.system))
 
 
 
@@ -161,15 +160,6 @@ class Freq:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0:
-            #     # Cálculo do resíduo DeltaP
-            #     powerflow.setup.deltaPQY[idx] = powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
-            #     powerflow.setup.deltaPQY[idx] -= self.pcalc(powerflow, idx,)
-
-            #     # Cálculo do resíduo DeltaQ
-            #     powerflow.setup.deltaPQY[idx + powerflow.setup.nbus] = powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
-            #     powerflow.setup.deltaPQY[idx + powerflow.setup.nbus] -= self.qcalc(powerflow, idx,)
-
-            # else:
                 # Cálculo do resíduo DeltaP
                 powerflow.setup.deltaP[idx] = powerflow.sol['active_generation'][nger]
                 powerflow.setup.deltaP[idx] -= value['demanda_ativa'] / powerflow.setup.options['sbase']
@@ -294,6 +284,9 @@ class Freq:
         # yqt   yqv   yqp   yqq   yqx
         # yxt   yxv   yxp   yxq   yxx
         # 
+
+        # Variável
+        powerflow.setup.dimprefreq = deepcopy(powerflow.setup.jacob.shape[0])
         
         # Condição
         if powerflow.setup.freqjcount == 0:
@@ -348,17 +341,42 @@ class Freq:
                 powerflow.setup.ypx[idx, nare] = 1. / (value['estatismo'] * 1E-2)
 
         ## Montagem Jacobiana
-        # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((concatenate((powerflow.setup.ypt, powerflow.setup.ypv), axis=1), concatenate((powerflow.setup.yqt, powerflow.setup.yqv), axis=1), concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)), axis=0)
+        # Condição
+        if powerflow.setup.controldim != 0:
+            powerflow.setup.extrarowp = zeros([powerflow.setup.nger, powerflow.setup.controldim])
+            powerflow.setup.extrarowq = zeros([powerflow.setup.nger, powerflow.setup.controldim])
+            powerflow.setup.extrarowy = zeros([powerflow.setup.nger, powerflow.setup.controldim])
+            
+            powerflow.setup.extracolp = zeros([powerflow.setup.controldim, powerflow.setup.nger])
+            powerflow.setup.extracolq = zeros([powerflow.setup.controldim, powerflow.setup.nger])
+            powerflow.setup.extracoly = zeros([powerflow.setup.controldim, powerflow.setup.nger])
 
-        # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxp, powerflow.setup.qxp, powerflow.setup.ypp, powerflow.setup.yqp, powerflow.setup.yxp), axis=0)), axis=1)
+            # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((concatenate((powerflow.setup.ypt, powerflow.setup.ypv, powerflow.setup.extrarowp), axis=1), concatenate((powerflow.setup.yqt, powerflow.setup.yqv, powerflow.setup.extrarowq), axis=1), concatenate((powerflow.setup.yxt, powerflow.setup.yxv, powerflow.setup.extrarowy), axis=1)), axis=0)), axis=0)
 
-        # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxq, powerflow.setup.qxq, powerflow.setup.ypq, powerflow.setup.yqq, powerflow.setup.yxq), axis=0)), axis=1)
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxp, powerflow.setup.qxp, powerflow.setup.extracolp, powerflow.setup.ypp, powerflow.setup.yqp, powerflow.setup.yxp), axis=0)), axis=1)
 
-        # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.ypx, powerflow.setup.yqx, powerflow.setup.yxx), axis=0)), axis=1)
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxq, powerflow.setup.qxq, powerflow.setup.extracolq, powerflow.setup.ypq, powerflow.setup.yqq, powerflow.setup.yxq), axis=0)), axis=1)
+
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracoly, powerflow.setup.ypx, powerflow.setup.yqx, powerflow.setup.yxx), axis=0)), axis=1)
+
+
+        elif powerflow.setup.controldim == 0:
+            # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((concatenate((powerflow.setup.ypt, powerflow.setup.ypv), axis=1), concatenate((powerflow.setup.yqt, powerflow.setup.yqv), axis=1), concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)), axis=0)
+
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxp, powerflow.setup.qxp, powerflow.setup.ypp, powerflow.setup.yqp, powerflow.setup.yxp), axis=0)), axis=1)
+
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxq, powerflow.setup.qxq, powerflow.setup.ypq, powerflow.setup.yqq, powerflow.setup.yxq), axis=0)), axis=1)
+
+            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
+            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.ypx, powerflow.setup.yqx, powerflow.setup.yxx), axis=0)), axis=1)
+
 
 
 
@@ -374,11 +392,11 @@ class Freq:
 
         ## Inicialização
         # Atualização da potência ativa gerada
-        powerflow.sol['active_generation'] += powerflow.setup.statevar[(2 * powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.nger)]
+        powerflow.sol['active_generation'] += powerflow.setup.statevar[(powerflow.setup.dimprefreq):(powerflow.setup.dimprefreq + powerflow.setup.nger)]
         # Atualização da potência reativa gerada
-        powerflow.sol['reactive_generation'] += powerflow.setup.statevar[(2 * powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + 2 * powerflow.setup.nger)]
+        powerflow.sol['reactive_generation'] += powerflow.setup.statevar[(powerflow.setup.dimprefreq + powerflow.setup.nger):(powerflow.setup.dimprefreq + 2 * powerflow.setup.nger)]
         # Atualização da defasagem angular
-        powerflow.sol['freq'] += powerflow.setup.statevar[(2 * powerflow.setup.nbus + 2 * powerflow.setup.nger)]
+        powerflow.sol['freq'] += powerflow.setup.statevar[(powerflow.setup.dimprefreq + 2 * powerflow.setup.nger)]
 
         # Tratamento de limite de potência ativa
         for idx, value in powerflow.setup.dgeraDF.iterrows():

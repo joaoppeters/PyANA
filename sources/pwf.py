@@ -6,7 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from numpy import ones
+from numpy import concatenate, ones
 from pandas import DataFrame as DF
 
 class PWF:
@@ -232,7 +232,6 @@ class PWF:
                 
             # Dados de Barra
             elif self.lines[self.linecount].strip() == 'DBAR':
-                setup.codes['DBAR'] = False
                 self.dbar()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -281,7 +280,6 @@ class PWF:
                 
             # Dados de Geradores
             elif self.lines[self.linecount].strip() == 'DGER':
-                setup.codes['DGER'] = False
                 self.dger()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -305,7 +303,7 @@ class PWF:
 
                 # DataFrame dos Dados de Linha
                 setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER')
-                if setup.dgeraDF.empty:
+                if (setup.dgeraDF.empty) or (setup.dgeraDF.shape[0] != setup.nger):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
                 else:
@@ -313,7 +311,6 @@ class PWF:
 
             # Dados de Linha
             elif self.lines[self.linecount].strip() == 'DLIN':
-                setup.codes['DLIN'] = False
                 self.dlin()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
@@ -447,13 +444,15 @@ class PWF:
 
             # Barras geradoras: número & máscara
             setup.nger = 0
-            setup.mask = ones(2 * setup.nbus, bool)
+            setup.maskP = ones(setup.nbus, dtype=bool)
+            setup.maskQ = ones(setup.nbus, dtype=bool)
             for idx, value in pandas.iterrows():
                 if (value['tipo'] == 2) or (value['tipo'] == 1):
                     setup.nger += 1
-                    setup.mask[setup.nbus+idx] = False
+                    setup.maskQ[idx] = False
                     if (value['tipo'] == 2):
-                        setup.mask[idx] = False
+                        setup.maskP[idx] = False
+            setup.mask = concatenate((setup.maskP, setup.maskQ), axis=0)
             
             # Número de barras PV
             setup.npv = setup.nger - 1

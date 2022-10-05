@@ -1,0 +1,21 @@
+October 05, 2022
+
+
+relatório de monitoramento do sistema kundur
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da BARRA-003 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
+
+
+
+fim do relatório de monitoramento do sistema kundur
