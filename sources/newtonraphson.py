@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import abs, append, argmax, array, concatenate, cos, max, ndarray, ones, radians, sin, zeros
+from numpy import abs, append, argmax, array, concatenate, cos, max, ndarray, radians, sin, zeros
 from numpy.linalg import solve
 
 from ctrl import Control
@@ -178,14 +178,14 @@ class NewtonRaphson:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
-            if value['tipo'] == 1 or value['tipo'] == 0:
+            if (value['tipo'] != 2):
                 powerflow.setup.deltaP[idx] += powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
                 powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
 
-                # Tipo PQ - Resíduo Potência Reativa
-                if value['tipo'] == 0:
-                    powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
-                    powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
+            # Tipo PQ - Resíduo Potência Reativa
+            if ('QLIM' in powerflow.setup.control) or (value['tipo'] == 0):
+                powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
+                powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
         self.checkresidue(powerflow,)

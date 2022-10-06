@@ -28,7 +28,7 @@ class Freq:
         pass
 
 
-    
+
     def freqsol(
         self,
         powerflow,

@@ -595,9 +595,10 @@ class Continuation:
 
         # Demanda
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            colarray[idx, 0] = powerflow.cpfsol['demanda_ativa'][idx] - powerflow.cpfsol['potencia_ativa'][idx]
-            if value['tipo'] == 0:
-                colarray[(idx + powerflow.setup.nbus), 0] = powerflow.cpfsol['demanda_reativa'][idx]
+            if value['tipo'] != 2:
+                colarray[idx, 0] = powerflow.cpfsol['demanda_ativa'][idx] - powerflow.cpfsol['potencia_ativa'][idx]
+                if value['tipo'] == 0:
+                    colarray[(idx + powerflow.setup.nbus), 0] = powerflow.cpfsol['demanda_reativa'][idx]
 
         colarray /= powerflow.setup.options['sbase']
 

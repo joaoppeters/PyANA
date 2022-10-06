@@ -85,8 +85,10 @@ class Control:
 
         ## Inicialização
         # Variável
-        powerflow.setup.ctrlcount = 0
-        powerflow.setup.ctrlorder = dict()
+        if not hasattr(powerflow.setup, 'ctrlcount'):
+            powerflow.setup.ctrlcount = 0
+            powerflow.setup.ctrlorder = dict()
+
         # Loop
         for key,_ in powerflow.setup.control.items():
             # controle remoto de tensão
@@ -118,7 +120,7 @@ class Control:
             elif key == 'QLIM':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'QLIM'
-                pass
+                Qlim().qlimsol(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 powerflow.setup.ctrlcount += 1

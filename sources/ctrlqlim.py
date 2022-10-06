@@ -7,10 +7,27 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, cos, sin, zeros
+from numpy import append, array, concatenate, zeros
 
 class Qlim:
     """classe para tratamento de limites de geração de potência reativa"""
+
+    def qlimsol(
+        self,
+        powerflow,
+    ):
+        """variável de estado adicional para o problema de fluxo de potência
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        ## Inicialização
+        # Variáveis
+        if 'reactive_generation' not in powerflow.sol:
+            powerflow.sol['reactive_generation'] = zeros([powerflow.setup.nbus])
+                
+
     
     def qlimres(
         self,
@@ -32,53 +49,44 @@ class Qlim:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0:
-                # Modificação do resíduo de potência reativa
-                powerflow.setup.deltaQ[idx] = powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
-                powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
-
                 # Tratamento de limites em barras PV
                 if (value['tipo'] == 1):
-                    if (value['potencia_reativa'] < value['potencia_reativa_maxima']) and (value['potencia_reativa'] > value['potencia_reativa_minima']):
+                    if (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_maxima']) and (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_minima']):
                         # Tratamento de limite de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
                         powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
                 
-                    elif (value['potencia_reativa'] >= value['potencia_reativa_maxima']):
+                    elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']):
                         # Tratamento de limite de potência reativa gerada máxima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_maxima']
-                        powerflow.setup.deltaQlim[nger] -= value['potencia_reativa']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = -1
                     
-                    elif (value['potencia_reativa'] <= value['potencia_reativa_minima']):
+                    elif (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']):
                         # Tratamento de limite de potência reativa gerada mínima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_minima']
-                        powerflow.setup.deltaQlim[nger] -= value['potencia_reativa']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = -1
 
                 # Tratamento de limites em barras PQV
                 elif (value['tipo'] == -1):
-                    # Modificação do resíduo de potência ativa
-                    powerflow.setup.deltaP[idx] = powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
-                    powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
-
-                    if ((value['potencia_reativa'] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] > value['tensao'] * (1E-3)))\
-                        or ((value['potencia_reativa'] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] < value['tensao'] * (1E-3))):
+                    if ((powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] > value['tensao'] * (1E-3))) or ((powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] < value['tensao'] * (1E-3))):
                         # Tratamento de limite de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
                         powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = 1
                 
-                    elif (value['potencia_reativa'] >= value['potencia_reativa_maxima']):
+                    elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']):
                         # Tratamento de limite de potência reativa gerada máxima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_maxima']
-                        powerflow.setup.deltaQlim[nger] -= value['potencia_reativa']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                     
-                    elif (value['potencia_reativa'] <= value['potencia_reativa_minima']):
+                    elif (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']):
                         # Tratamento de limite de potência reativa gerada mínima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_minima']
-                        powerflow.setup.deltaQlim[nger] -= value['potencia_reativa']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                 
                 # Incrementa contador
                 nger += 1
@@ -86,72 +94,6 @@ class Qlim:
         # Resíduo de equação de controle
         powerflow.setup.deltaQlim /= powerflow.setup.options['sbase']
         powerflow.setup.deltaY = append(powerflow.setup.deltaY, powerflow.setup.deltaQlim)
-
-
-
-    def pcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência ativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência ativa
-
-        Retorno
-            p: float
-                potência ativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência ativa calculada para o barramento `idx`
-        p = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            p += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.ybus[idx][bus].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        p *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['active'][idx] = (p * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
-
-        return p
-
-
-
-    def qcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência reativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência reativa
-
-        Retorno
-            q: float
-                potência reativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        q *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
-
-        return q
 
 
 
@@ -243,13 +185,30 @@ class Qlim:
         # Atualização da potência reativa gerada
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0:
-                powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa'] = value['potencia_reativa'] + powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
-
-                # Atualização da potência reativa especificada
-                powerflow.setup.pqsch['potencia_reativa_especificada'][idx] = powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa']
-                powerflow.setup.pqsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
+                powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
 
                 # Incrementa contador
                 nger += 1
         
+        self.qlimsch(powerflow,)
+
+
+    
+    def qlimsch(
+        self,
+        powerflow,
+    ):
+        """
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+        
+        ## Inicialização
+        # Variável
+        powerflow.setup.pqsch['potencia_reativa_especificada'] = zeros([powerflow.setup.nbus])
+
+        # Atualização da potência reativa especificada
+        powerflow.setup.pqsch['potencia_reativa_especificada'] += powerflow.sol['reactive_generation']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] -= powerflow.setup.dbarraDF['demanda_reativa'].to_numpy()
         powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']

@@ -151,7 +151,10 @@ class Loading:
                 else:
                     busname = key[2:]
                 if busname != self.aux:
-                    self.aux = key[2:]
+                    if key[1:5] == 'corr':
+                        self.aux = key[6:]
+                    else:
+                        self.aux = key[2:]
                     color += 1
                 
                 # Plot
