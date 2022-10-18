@@ -447,11 +447,12 @@ class PWF:
             setup.maskP = ones(setup.nbus, dtype=bool)
             setup.maskQ = ones(setup.nbus, dtype=bool)
             for idx, value in pandas.iterrows():
-                if (value['tipo'] == 2) or (value['tipo'] == 1):
+                if ((value['tipo'] == 2) or (value['tipo'] == 1)):
                     setup.nger += 1
                     setup.maskQ[idx] = False
                     if (value['tipo'] == 2):
                         setup.maskP[idx] = False
+                        setup.slackidx = idx
             setup.mask = concatenate((setup.maskP, setup.maskQ), axis=0)
             
             # Número de barras PV

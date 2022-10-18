@@ -8,9 +8,9 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee14.pwf'
+system = '2b-milano.pwf'
 
-method = 'NEWTON'
+method = 'CPF'
 
 jacobi = 'COMPLETA'
 
@@ -26,7 +26,7 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
-    'cpfLambda': 1E-2,
+    'cpfLambda': 1E-0,
     'cpfV2L': 0.95,
     'full': False,
 }

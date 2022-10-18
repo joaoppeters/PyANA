@@ -8,13 +8,14 @@
 
 from copy import deepcopy
 from matplotlib import pyplot as plt
-from numpy import abs, all, append, argmax, array, concatenate, cos, dot, max, ndarray, ones, sin, sum, zeros
+from numpy import abs, all, append, argmax, around, array, concatenate, cos, dot, max, ndarray, ones, sin, sum, zeros
 from numpy.linalg import det, eig, solve, inv
 
 from ctrl import Control
 from jacobian import Jacobi
 from loading import Loading
 from newtonraphson import NewtonRaphson
+from pwf import PWF
 
 class Continuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
@@ -83,12 +84,18 @@ class Continuation:
         # Reconfiguração da Máscara - Elimina expansão da matriz Jacobiana
         powerflow.setup.mask = append(powerflow.setup.mask, False)
 
-        # Loop
-        self.loop(powerflow,)
+        # Dimensão da matriz Jacobiana
+        powerflow.setup.jdim = powerflow.setup.jacob.shape[0]
+
+        # Barra com maior variação de magnitude de tensão - CASO BASE
+        powerflow.setup.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - powerflow.setup.dbarraDF['tensao'] * 1E-3))
+
+        # Loop de Previsão - Correção
+        self.cpfloop(powerflow,)
 
 
 
-    def loop(
+    def cpfloop(
         self,
         powerflow,
     ):
@@ -118,6 +125,21 @@ class Continuation:
             # Heurísticas
             self.heuristics(powerflow,)
 
+            print(powerflow.cpfsol['pmc'])
+            
+            if (powerflow.cpfsol['varstep'] == 'volt'):
+                print('Var: ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * (0.5 ** powerflow.cpfsol['div']))
+            else:
+                print('Var: ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div']))
+
+            print('Step: ', powerflow.cpfsol['step'])
+            print('Stepsch: ', powerflow.cpfsol['stepsch'])
+
+            print(powerflow.sol['iter'], powerflow.sol['convergence'])
+            print((1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
+            print('\n')
+
+            # Break Curva de Carregamento - Somente Parte Estável
             if (not powerflow.setup.options['full']) and (powerflow.cpfsol['pmc']):
                 break
 
@@ -162,7 +184,7 @@ class Continuation:
         self.storage(powerflow, stage='prev',)
 
 
-    
+
     def correction(
         self,
         powerflow,
@@ -195,6 +217,9 @@ class Continuation:
             'reactive_flow_2F': zeros(powerflow.setup.nlin),
         }
 
+        # Adição de variáveis de controle na variável de armazenamento de solução
+        Control(powerflow, powerflow.setup,).controlcorrsol(powerflow, self.case,)
+
         # Incremento do Nível de Carregamento e Geração
         self.increment(powerflow,)
 
@@ -221,7 +246,7 @@ class Continuation:
             self.update_statevar(powerflow, stage='corr',)
 
             # Condição de variável de passo
-            if powerflow.cpfsol['varstep'] == 'volt':
+            if (powerflow.cpfsol['varstep'] == 'volt'):
                 # Incremento do Nível de Carregamento e Geração
                 self.increment(powerflow,)
 
@@ -235,14 +260,14 @@ class Continuation:
             powerflow.sol['iter'] += 1
 
             # Condição de Divergência por iterações
-            if powerflow.sol['iter'] > powerflow.setup.options['itermx']:
+            if (powerflow.sol['iter'] > powerflow.setup.options['itermx']):
                 powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
                 break
 
         ## Condição
         # Iteração Adicional em Caso de Convergência
-        if self.case == 1:
-            if (powerflow.sol['iter'] < powerflow.setup.options['itermx']):# and (all((powerflow.sol['voltage'] - powerflow.case[0]['voltage'] <= 0))):
+        if (self.case == 1):
+            if (powerflow.sol['iter'] < powerflow.setup.options['itermx']):
                 # Armazenamento da trajetória de convergência
                 self.convergence(powerflow,)
 
@@ -288,8 +313,8 @@ class Continuation:
                 powerflow.cpfsol['vsch'] = deepcopy(powerflow.case[self.case]['corr']['vsch'])
 
         # Iteração Adicional em Caso de Convergência
-        if self.case > 1:
-            if (powerflow.sol['iter'] < powerflow.setup.options['itermx']):# and (all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0))):
+        if (self.case > 1):
+            if (powerflow.sol['iter'] < powerflow.setup.options['itermx']):
                 # Armazenamento da trajetória de convergência
                 self.convergence(powerflow,)
 
@@ -388,7 +413,7 @@ class Continuation:
         powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
 
         # Variáveis especificadas de controle ativos
-        if powerflow.setup.ctrlcount > 0:
+        if (powerflow.setup.ctrlcount > 0):
             Control(powerflow, powerflow.setup).controlsch(powerflow,)
 
 
@@ -416,46 +441,47 @@ class Continuation:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
-            if value['tipo'] == 1 or value['tipo'] == 0:
+            if (value['tipo'] != 2):
                 powerflow.setup.deltaP[idx] += powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
                 powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
 
-                # Tipo PQ - Resíduo Potência Reativa
-                if value['tipo'] == 0:
-                    powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
-                    powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
+            # Tipo PQ - Resíduo Potência Reativa
+            if ('QLIM' in powerflow.setup.control) or (value['tipo'] == 0):
+                powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
+                powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
         self.checkresidue(powerflow,)
 
         # Resíduos de variáveis de estado de controle
-        if powerflow.setup.ctrlcount > 0:
+        if (powerflow.setup.ctrlcount > 0):
             Control(powerflow, powerflow.setup).controlres(powerflow,)
             self.checkresidue(powerflow,)
+            powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
 
         # Resíduo de Fluxo de Potência Continuado
         # Condição de previsão
-        if stage == 'prev':
-            powerflow.setup.deltaPQY = zeros((2 * powerflow.setup.nbus) + 1)
+        if (stage == 'prev'):
+            powerflow.setup.deltaPQY = zeros(powerflow.setup.deltaPQY.shape[0] + 1)
             # Condição de variável de passo
-            if powerflow.cpfsol['varstep'] == 'lambda':
-                if not powerflow.cpfsol['pmc']:
-                    powerflow.setup.deltaPQY[-1] = powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div'])
+            if (powerflow.cpfsol['varstep'] == 'lambda'):
+                if (not powerflow.cpfsol['pmc']):
+                    powerflow.setup.deltaPQY[-1] = powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])
 
-                elif powerflow.cpfsol['pmc']:
-                    powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div'])
+                elif (powerflow.cpfsol['pmc']):
+                    powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])
 
-            elif powerflow.cpfsol['varstep'] == 'volt':
-                powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfVolt'] * (0.5 ** powerflow.cpfsol['div'])
+            elif (powerflow.cpfsol['varstep'] == 'volt'):
+                powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div'])
 
         # Condição de correção
-        elif stage == 'corr':
+        elif (stage == 'corr'):
             # Condição de variável de passo
-            if powerflow.cpfsol['varstep'] == 'lambda':
+            if (powerflow.cpfsol['varstep'] == 'lambda'):
                 powerflow.setup.deltaY = array([powerflow.cpfsol['stepsch'] - powerflow.cpfsol['step']])
 
-            elif powerflow.cpfsol['varstep'] == 'volt':
-                powerflow.setup.deltaY = array([powerflow.cpfsol['vsch'] - powerflow.sol['voltage'][self.nodevarvolt]])
+            elif (powerflow.cpfsol['varstep'] == 'volt'):
+                powerflow.setup.deltaY = array([powerflow.cpfsol['vsch'] - powerflow.sol['voltage'][powerflow.setup.nodevarvolt]])
 
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
 
@@ -539,22 +565,22 @@ class Continuation:
 
         ## Inicialização
         # configuração completa
-        if powerflow.jacobi == 'COMPLETA':
+        if (powerflow.jacobi == 'COMPLETA'):
             powerflow.setup.deltaPQY  = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
 
         # configuração alternada
-        elif powerflow.jacobi == 'ALTERNADA':
+        elif (powerflow.jacobi == 'ALTERNADA'):
             powerflow.setup.deltaPQY: ndarray = zeros(shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype='float')
             pq = -1
             for row in range(0, powerflow.setup.nbus):
-                if row % 2 == 0:
+                if (row % 2 == 0):
                     pq += 1
                     powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaP[pq])
-                elif row % 2 != 0:
+                elif (row % 2 != 0):
                     powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaQ[pq])
 
         # configuração reduzida
-        elif powerflow.jacobi == 'REDUZIDA':
+        elif (powerflow.jacobi == 'REDUZIDA'):
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
             powerflow.setup.mask = ones(2*powerflow.setup.nbus, bool)
             for idx, value in powerflow.setup.dbarraDF.iterrows():
@@ -582,22 +608,22 @@ class Continuation:
 
         ## Inicialização       
         # Arrays adicionais
-        rowarray = zeros([1, (2 * powerflow.setup.nbus)])
-        colarray = zeros([(2 * powerflow.setup.nbus), 1])
+        rowarray = zeros([1, powerflow.setup.jdim])
+        colarray = zeros([powerflow.setup.jdim, 1])
         stepvar = zeros(1)
 
         # Condição de variável de passo
-        if powerflow.cpfsol['varstep'] == 'lambda':
+        if (powerflow.cpfsol['varstep'] == 'lambda'):
             stepvar[0] = 1
 
-        elif powerflow.cpfsol['varstep'] == 'volt':
-            rowarray[0, (powerflow.setup.nbus + self.nodevarvolt)] = 1
+        elif (powerflow.cpfsol['varstep'] == 'volt'):
+            rowarray[0, (powerflow.setup.nbus + powerflow.setup.nodevarvolt)] = 1
 
         # Demanda
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 2:
+            if (value['tipo'] != 2):
                 colarray[idx, 0] = powerflow.cpfsol['demanda_ativa'][idx] - powerflow.cpfsol['potencia_ativa'][idx]
-                if value['tipo'] == 0:
+                if (value['tipo'] == 0):
                     colarray[(idx + powerflow.setup.nbus), 0] = powerflow.cpfsol['demanda_reativa'][idx]
 
         colarray /= powerflow.setup.options['sbase']
@@ -633,11 +659,11 @@ class Continuation:
         powerflow.sol['busQ'] = append(powerflow.sol['busQ'], argmax(abs(powerflow.setup.deltaQ)))
 
         # Trajetória de convergência referente a cada equação de controle adicional
-        if powerflow.setup.deltaY.size != 0:
+        if (powerflow.setup.deltaY.size != 0):
             powerflow.sol['convY'] = append(powerflow.sol['convY'], max(abs(powerflow.setup.deltaY)))
             powerflow.sol['busY'] = append(powerflow.sol['busY'], argmax(abs(powerflow.setup.deltaY)))
 
-        elif powerflow.setup.deltaY.size == 0:
+        elif (powerflow.setup.deltaY.size == 0):
             powerflow.sol['convY'] = append(powerflow.sol['convY'], 0.)
             powerflow.sol['busY'] = append(powerflow.sol['busY'], 0.)
 
@@ -657,57 +683,57 @@ class Continuation:
 
         ## Inicialização
         # configuração completa
-        if powerflow.jacobi == 'COMPLETA':
+        if (powerflow.jacobi == 'COMPLETA'):
             powerflow.sol['theta'] += powerflow.setup.statevar[0:(powerflow.setup.nbus)]
             # Condição de previsão
-            if stage == 'prev':
+            if (stage == 'prev'):
                 # Condição de variável de passo
-                if powerflow.cpfsol['varstep'] == 'lambda':
+                if (powerflow.cpfsol['varstep'] == 'lambda'):
                     powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
                     powerflow.cpfsol['stepsch'] += powerflow.setup.statevar[-1]
 
-                elif powerflow.cpfsol['varstep'] == 'volt':
+                elif (powerflow.cpfsol['varstep'] == 'volt'):
                     powerflow.cpfsol['step'] += powerflow.setup.statevar[-1]
                     powerflow.cpfsol['stepsch'] += powerflow.setup.statevar[-1]
-                    powerflow.cpfsol['vsch'] = powerflow.sol['voltage'][self.nodevarvolt] + powerflow.setup.statevar[(powerflow.setup.nbus + self.nodevarvolt)]
+                    powerflow.cpfsol['vsch'] = powerflow.sol['voltage'][powerflow.setup.nodevarvolt] + powerflow.setup.statevar[(powerflow.setup.nbus + powerflow.setup.nodevarvolt)]
 
                 # Verificação do Ponto de Máximo Carregamento
-                if self.case > 0:
-                    if self.case == 1:
+                if (self.case > 0):
+                    if (self.case == 1):
                         powerflow.cpfsol['stepmax'] = deepcopy(powerflow.cpfsol['stepsch'])
 
-                    elif self.case != 1:
-                        if (powerflow.cpfsol['stepsch'] > powerflow.case[self.case - 1]['corr']['step']) and not powerflow.cpfsol['pmc']:
+                    elif (self.case != 1):
+                        if (powerflow.cpfsol['stepsch'] > powerflow.case[self.case - 1]['corr']['step']) and (not powerflow.cpfsol['pmc']):
                             powerflow.cpfsol['stepmax'] = deepcopy(powerflow.cpfsol['stepsch'])
 
-                        elif not powerflow.cpfsol['pmc']:
+                        elif (not powerflow.cpfsol['pmc']):
                             powerflow.cpfsol['pmc'] = True
                             powerflow.setup.pmcidx = deepcopy(self.case)
 
             # Condição de correção
-            elif stage == 'corr':
+            elif (stage == 'corr'):
                 powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
                 powerflow.cpfsol['step'] += powerflow.setup.statevar[-1]
 
-                if powerflow.cpfsol['varstep'] == 'volt':
+                if (powerflow.cpfsol['varstep'] == 'volt'):
                     powerflow.cpfsol['stepsch'] += powerflow.setup.statevar[-1]
 
         # configuração alternada
-        elif powerflow.jacobi == 'ALTERNADA':
+        elif (powerflow.jacobi == 'ALTERNADA'):
             for idx in range(0, powerflow.setup.nbus):
                 powerflow.sol['theta'][idx] += powerflow.setup.statevar[idx]
                 powerflow.sol['voltage'][idx] += powerflow.setup.statevar[idx+1]
 
         # configuração reduzida
-        elif powerflow.jacobi == 'REDUZIDA':
+        elif (powerflow.jacobi == 'REDUZIDA'):
             for idx, value in powerflow.setup.dbarraDF.iterrows():
                 if (value['tipo'] == 1) or (value['tipo'] == 0):
                     powerflow.sol['theta'][idx] += powerflow.setup.statevar[idx]
-                    if value['tipo'] == 0:
+                    if (value['tipo'] == 0):
                         powerflow.sol['voltage'][idx] += powerflow.setup.statevar[idx + powerflow.setup.nbus]
 
         # Atualização das variáveis de estado adicionais para controles ativos
-        if powerflow.setup.ctrlcount > 0:
+        if (powerflow.setup.ctrlcount > 0):
             Control(powerflow, powerflow.setup).controlupdt(powerflow,)
 
 
@@ -729,7 +755,7 @@ class Continuation:
             yline = 1 / ((value['resistencia'] / 100) + 1j * (value['reatancia'] / 100))
 
             # Verifica presença de transformadores com tap != 1.
-            if value['tap'] != 0:
+            if (value['tap'] != 0):
                 yline /= value['tap']
 
             # Potência ativa k -> m
@@ -768,6 +794,9 @@ class Continuation:
         # Armazenamento das variáveis de solução do fluxo de potência
         powerflow.case[self.case][stage] = {**deepcopy(powerflow.sol), **deepcopy(powerflow.cpfsol)}
 
+        # Armazenamento do índice do barramento com maior variação de magnitude de tensão
+        powerflow.case[self.case]['nodevarvolt'] = deepcopy(powerflow.setup.nodevarvolt)
+
         # Análise de sensibilidade e armazenamento 
         self.eigensens(powerflow, stage=stage,)
 
@@ -793,7 +822,7 @@ class Continuation:
         powerflow.setup.jacobQV = powerflow.setup.qv[powerflow.setup.maskQ, :][:, powerflow.setup.maskQ] - dot(dot(powerflow.setup.qt[powerflow.setup.maskQ, :][:, powerflow.setup.maskP], inv(powerflow.setup.pt[powerflow.setup.maskP, :][:, powerflow.setup.maskP])), powerflow.setup.pv[powerflow.setup.maskP, :][:, powerflow.setup.maskQ])
 
         # Condição
-        if stage == None:
+        if (stage == None):
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
             powerflow.case[self.case]['jacobian'] = powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
 
@@ -836,7 +865,7 @@ class Continuation:
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
             powerflow.case[self.case]['participation_factor-QV'] = dot(rightvectorQV, inv(rightvectorQV))
 
-        elif stage != None:
+        elif (stage != None):
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
             powerflow.case[self.case][stage]['jacobian'] = powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
 
@@ -851,6 +880,12 @@ class Continuation:
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
             powerflow.case[self.case][stage]['participation_factor'] = dot(rightvector, inv(rightvector))
 
+            # Armazenamento da matriz de sensibilidade PT
+            powerflow.case[self.case][stage]['jacobian-PT'] = powerflow.setup.jacobPT
+
+            # Armazenamento do determinante da matriz de sensibilidade PT
+            powerflow.case[self.case][stage]['determinant-PT'] = det(powerflow.setup.jacobPT)
+
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
             rightvaluesPT, rightvectorPT = eig(powerflow.setup.jacobPT)
             powerflow.case[self.case][stage]['eigenvalues-PT'] = rightvaluesPT
@@ -858,6 +893,12 @@ class Continuation:
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
             powerflow.case[self.case][stage]['participation_factor-PT'] = dot(rightvectorPT, inv(rightvectorPT))
+
+            # Armazenamento da matriz de sensibilidade QV
+            powerflow.case[self.case][stage]['jacobian-QV'] = powerflow.setup.jacobQV
+
+            # Armazenamento do determinante da matriz de sensibilidade QV
+            powerflow.case[self.case][stage]['determinant-QV'] = det(powerflow.setup.jacobQV)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
             rightvaluesQV, rightvectorQV = eig(powerflow.setup.jacobQV)
@@ -882,29 +923,29 @@ class Continuation:
 
         ## Inicialização
         # Condição Inicial
-        if self.case == 1:
+        if (self.case == 1):
             # Lambda
             self.varlambda = abs((powerflow.cpfsol['step'] - 0) / (powerflow.cpfsol['step']))
 
             # Voltage
-            self.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - powerflow.case[0]['voltage']))
-            self.varvolt = abs((powerflow.sol['voltage'][self.nodevarvolt] - powerflow.case[0]['voltage'][self.nodevarvolt]) / powerflow.sol['voltage'][self.nodevarvolt])
+            powerflow.setup.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - powerflow.case[0]['voltage']))
+            self.varvolt = abs((powerflow.sol['voltage'][powerflow.setup.nodevarvolt] - powerflow.case[0]['voltage'][powerflow.setup.nodevarvolt]) / powerflow.sol['voltage'][powerflow.setup.nodevarvolt])
 
         # Condição Durante
-        elif self.case != 1:
+        elif (self.case != 1):
             # Lambda
             self.varlambda = abs((powerflow.case[self.case]['corr']['step'] - powerflow.case[self.case - 1]['corr']['step']) / powerflow.case[self.case]['corr']['step'])
 
             # Voltage
-            self.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage']))
-            self.varvolt = abs((powerflow.case[self.case]['corr']['voltage'][self.nodevarvolt] - powerflow.case[self.case - 1]['corr']['voltage'][self.nodevarvolt]) / powerflow.case[self.case]['corr']['voltage'][self.nodevarvolt])
+            powerflow.setup.nodevarvolt = argmax(abs(powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage']))
+            self.varvolt = abs((powerflow.case[self.case]['corr']['voltage'][powerflow.setup.nodevarvolt] - powerflow.case[self.case - 1]['corr']['voltage'][powerflow.setup.nodevarvolt]) / powerflow.case[self.case]['corr']['voltage'][powerflow.setup.nodevarvolt])
 
         # Avaliação
         if (self.varlambda > self.varvolt) and (powerflow.cpfsol['varstep'] == 'lambda'):
             powerflow.cpfsol['varstep'] = 'lambda'
 
         else:
-            if powerflow.cpfsol['pmc']:
+            if (powerflow.cpfsol['pmc']):
                 if (powerflow.cpfsol['step'] < (powerflow.setup.options['cpfV2L'] * powerflow.cpfsol['stepmax'])) and (self.varlambda > self.varvolt) and (not powerflow.cpfsol['v2l']):
                     powerflow.cpfsol['varstep'] = 'lambda'
                     powerflow.setup.options['cpfLambda'] = deepcopy(powerflow.case[1]['corr']['step'])
@@ -914,7 +955,7 @@ class Continuation:
                 elif (not powerflow.cpfsol['v2l']):
                     powerflow.cpfsol['varstep'] = 'volt'
 
-            elif (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
+            elif (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
                 powerflow.cpfsol['varstep'] = 'volt'
                 powerflow.cpfsol['div'] = 0
 
@@ -935,7 +976,7 @@ class Continuation:
 
         # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
         if (self.case == 1) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
-            if not all((powerflow.sol['voltage'] - powerflow.case[0]['voltage'] <= 0)):
+            if (not all((powerflow.sol['voltage'] - powerflow.case[0]['voltage'] <= 0))):
                 # Reconfiguração do caso
                 self.case -= 1
 
@@ -949,7 +990,7 @@ class Continuation:
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['theta'])
         
         elif (self.case == 2) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
-            if not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0)):
+            if (not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0))):
                 # Reconfiguração do caso
                 self.case -= 2
 
@@ -963,7 +1004,7 @@ class Continuation:
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['theta'])
 
         elif (self.case > 2) and (not powerflow.cpfsol['pmc']) and (powerflow.setup.name != 'ieee24'):
-            if not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0)):
+            if (not all((powerflow.sol['voltage'] - powerflow.case[self.case - 1]['corr']['voltage'] <= 0))):
                 # Reconfiguração do caso
                 self.case -= 2
 
@@ -996,9 +1037,9 @@ class Continuation:
             powerflow.cpfsol['vsch'] = deepcopy(powerflow.case[self.case]['corr']['vsch'])
 
         # Condição de atingimento do PMC caso varstep volt pequeno
-        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['cpfVolt'] * (0.5 ** powerflow.cpfsol['div']) < powerflow.setup.options['icmn'] ** 2):
+        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) < powerflow.setup.options['icmn'] ** 2):
             # Reconfiguração de caso (se previsão falhar)
-            if self.service:
+            if (self.service):
                 self.case += 1
 
             # Deletando último caso

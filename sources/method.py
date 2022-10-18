@@ -30,14 +30,6 @@ class Method():
 
         ## Inicialização
         if not hasattr(powerflow, 'sol'):
-            # Variáveis de barra
-            powerflow.setup.npv = sum(powerflow.setup.dbarraDF.tipo.values == 1)
-            powerflow.setup.nger = powerflow.setup.npv + 1
-            powerflow.setup.npq = powerflow.setup.nbus - powerflow.setup.nger
-
-            # Variáveis de linha
-            powerflow.setup.nlin = len(powerflow.setup.dlinhaDF.de.values)
-
             # Chamada automática do método de solução selecionado
             self.method(powerflow,)
 

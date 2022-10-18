@@ -1,0 +1,36 @@
+DOPC CONT
+FILE L CONT L
+99999
+TITU
+SISTEMA TESTE DE DUAS BARRAS - Federico Milano
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
+BASE 100.00 DASE   6264 TEPA 1e-6   EXST 0.4000 TETP 5.0000 TBPA 5.0000
+TLPP 1.0000 TEPR 1e-6   QLST 0.4000 TLPR 1e-3   TSBZ 0.0100
+TSBA 5.0000 ASTP 0.0500 VSTP 5.0000 TLVC 1e-1   TLTC 0.1000 TSFR 0.0100
+ZMAX 500.00 VDVM 150.00 VDVN 01.000 TUDC 0.0100 TADC 0.0100
+PGER 30.000 TPST 500.00 LFIT     10 ACIT     30 LFCV      3
+DCIT     10 VSIT     10 LPIT     50 LFLP     10 LCRT     32
+ICIT   9000 ICMN 0.010 
+CPAR    20.
+99999
+DBAR
+(No )OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)
+ 0001  2  BARRA-VT     A1000  0.          -9999  65.                       11000
+ 0002     BARRA-PQ     A1000  0.                           10.             11000
+99999
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns
+ 0001      0002 1         15.788
+99999
+DMET
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
+AREA    1
+99999
+DINC
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
+BARR    2                                            100.  100.
+99999
+EXLF NEWT QLIM
+EXIC NEWT QLIM
+FIM

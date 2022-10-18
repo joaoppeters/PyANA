@@ -183,6 +183,7 @@ Thumbs.db
 *.pwf
 *.lst
 
+!2b-milano.pwf
 !2b-teste.pwf
 !ieee14.pwf
 !ieee24.pwf

@@ -1,7 +1,7 @@
-October 01, 2022
+October 14, 2022
 
 
-relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema 2b-teste
+relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-teste
 
 opções de controle ativadas: Nenhum controle ativo!
 
@@ -10,2010 +10,2010 @@ opções de relatório ativadas: RBARRA
 
 
 Carregamento do Sistema: 10.0 MW  | 0.0 Mvar
-Determinante: 0.9748343627376895
-Autovalores: [0.89213125 1.09270285]
+Determinante: 0.9847826873923469
+Autovalores: [0.98478269]
 
 
 Carregamento do Sistema: 10.1 MW  | 0.0 Mvar
-Determinante: 0.9743267106433815
-Autovalores: [0.89096933 1.09355808]
+Determinante: 0.9844733620868176
+Autovalores: [0.98447336]
 
 
 Carregamento do Sistema: 10.2 MW  | 0.0 Mvar
-Determinante: 0.973812211705351
-Autovalores: [0.88980463 1.09441126]
+Determinante: 0.9841596614421826
+Autovalores: [0.98415966]
 
 
 Carregamento do Sistema: 10.3 MW  | 0.0 Mvar
-Determinante: 0.9732924994813928
-Autovalores: [0.88863815 1.09526301]
+Determinante: 0.983842679480577
+Autovalores: [0.98384268]
 
 
 Carregamento do Sistema: 10.4 MW  | 0.0 Mvar
-Determinante: 0.9727675695481149
-Autovalores: [0.88746988 1.09611334]
+Determinante: 0.9835224103189326
+Autovalores: [0.98352241]
 
 
 Carregamento do Sistema: 10.5 MW  | 0.0 Mvar
-Determinante: 0.9722374174298855
-Autovalores: [0.8862998  1.09696224]
+Determinante: 0.9831988480027272
+Autovalores: [0.98319885]
 
 
 Carregamento do Sistema: 10.600000000000001 MW  | 0.0 Mvar
-Determinante: 0.9717020385985368
-Autovalores: [0.88512793 1.09780971]
+Determinante: 0.9828719865055277
+Autovalores: [0.98287199]
 
 
 Carregamento do Sistema: 10.700000000000001 MW  | 0.0 Mvar
-Determinante: 0.9711614284730717
-Autovalores: [0.88395425 1.09865576]
+Determinante: 0.9825418197285294
+Autovalores: [0.98254182]
 
 
 Carregamento do Sistema: 10.8 MW  | 0.0 Mvar
-Determinante: 0.9706155824193606
-Autovalores: [0.88277876 1.09950038]
+Determinante: 0.9822083415000865
+Autovalores: [0.98220834]
 
 
 Carregamento do Sistema: 10.9 MW  | 0.0 Mvar
-Determinante: 0.9700644957498379
-Autovalores: [0.88160145 1.10034358]
+Determinante: 0.9818715455752367
+Autovalores: [0.98187155]
 
 
 Carregamento do Sistema: 11.0 MW  | 0.0 Mvar
-Determinante: 0.9695081637231917
-Autovalores: [0.88042232 1.10118535]
+Determinante: 0.9815314256352192
+Autovalores: [0.98153143]
 
 
 Carregamento do Sistema: 11.099999999999998 MW  | 0.0 Mvar
-Determinante: 0.968946581544051
-Autovalores: [0.87924137 1.10202569]
+Determinante: 0.9811879752869841
+Autovalores: [0.98118798]
 
 
 Carregamento do Sistema: 11.2 MW  | 0.0 Mvar
-Determinante: 0.9683797443626653
-Autovalores: [0.8780586 1.1028646]
+Determinante: 0.9808411880626958
+Autovalores: [0.98084119]
 
 
 Carregamento do Sistema: 11.299999999999999 MW  | 0.0 Mvar
-Determinante: 0.9678076472745837
-Autovalores: [0.87687398 1.10370209]
+Determinante: 0.9804910574192286
+Autovalores: [0.98049106]
 
 
 Carregamento do Sistema: 11.399999999999999 MW  | 0.0 Mvar
-Determinante: 0.9672302853203258
-Autovalores: [0.87568754 1.10453814]
+Determinante: 0.9801375767376557
+Autovalores: [0.98013758]
 
 
 Carregamento do Sistema: 11.5 MW  | 0.0 Mvar
-Determinante: 0.9666476534850504
-Autovalores: [0.87449924 1.10537277]
+Determinante: 0.9797807393227289
+Autovalores: [0.97978074]
 
 
 Carregamento do Sistema: 11.6 MW  | 0.0 Mvar
-Determinante: 0.9660597466982176
-Autovalores: [0.87330911 1.10620597]
+Determinante: 0.9794205384023531
+Autovalores: [0.97942054]
 
 
 Carregamento do Sistema: 11.7 MW  | 0.0 Mvar
-Determinante: 0.9654665598332474
-Autovalores: [0.87211712 1.10703773]
+Determinante: 0.9790569671270506
+Autovalores: [0.97905697]
 
 
 Carregamento do Sistema: 11.799999999999999 MW  | 0.0 Mvar
-Determinante: 0.9648680877071731
-Autovalores: [0.87092327 1.10786807]
+Determinante: 0.9786900185694202
+Autovalores: [0.97869002]
 
 
 Carregamento do Sistema: 11.899999999999999 MW  | 0.0 Mvar
-Determinante: 0.9642643250802889
-Autovalores: [0.86972757 1.10869698]
+Determinante: 0.9783196857235857
+Autovalores: [0.97831969]
 
 
 Carregamento do Sistema: 12.0 MW  | 0.0 Mvar
-Determinante: 0.9636552666557946
-Autovalores: [0.86853    1.10952445]
+Determinante: 0.9779459615046397
+Autovalores: [0.97794596]
 
 
 Carregamento do Sistema: 12.1 MW  | 0.0 Mvar
-Determinante: 0.9630409070794336
-Autovalores: [0.86733056 1.11035049]
+Determinante: 0.9775688387480761
+Autovalores: [0.97756884]
 
 
 Carregamento do Sistema: 12.2 MW  | 0.0 Mvar
-Determinante: 0.962421240939124
-Autovalores: [0.86612924 1.1111751 ]
+Determinante: 0.9771883102092151
+Autovalores: [0.97718831]
 
 
 Carregamento do Sistema: 12.3 MW  | 0.0 Mvar
-Determinante: 0.961796262764591
-Autovalores: [0.86492604 1.11199827]
+Determinante: 0.9768043685626229
+Autovalores: [0.97680437]
 
 
 Carregamento do Sistema: 12.4 MW  | 0.0 Mvar
-Determinante: 0.9611659670269859
-Autovalores: [0.86372096 1.11282001]
+Determinante: 0.9764170064015186
+Autovalores: [0.97641701]
 
 
 Carregamento do Sistema: 12.5 MW  | 0.0 Mvar
-Determinante: 0.9605303481385057
-Autovalores: [0.86251399 1.11364032]
+Determinante: 0.9760262162371753
+Autovalores: [0.97602622]
 
 
 Carregamento do Sistema: 12.6 MW  | 0.0 Mvar
-Determinante: 0.9598894004520048
-Autovalores: [0.86130512 1.11445918]
+Determinante: 0.9756319904983125
+Autovalores: [0.97563199]
 
 
 Carregamento do Sistema: 12.7 MW  | 0.0 Mvar
-Determinante: 0.9592431182606009
-Autovalores: [0.86009435 1.11527662]
+Determinante: 0.9752343215304774
+Autovalores: [0.97523432]
 
 
 Carregamento do Sistema: 12.8 MW  | 0.0 Mvar
-Determinante: 0.9585914957972782
-Autovalores: [0.85888168 1.11609261]
+Determinante: 0.974833201595421
+Autovalores: [0.9748332]
 
 
 Carregamento do Sistema: 12.9 MW  | 0.0 Mvar
-Determinante: 0.9579345272344811
-Autovalores: [0.8576671  1.11690717]
+Determinante: 0.9744286228704621
+Autovalores: [0.97442862]
 
 
 Carregamento do Sistema: 13.0 MW  | 0.0 Mvar
-Determinante: 0.957272206683706
-Autovalores: [0.8564506  1.11772029]
+Determinante: 0.9740205774478434
+Autovalores: [0.97402058]
 
 
 Carregamento do Sistema: 13.100000000000001 MW  | 0.0 Mvar
-Determinante: 0.956604528195084
-Autovalores: [0.85523218 1.11853197]
+Determinante: 0.9736090573340792
+Autovalores: [0.97360906]
 
 
 Carregamento do Sistema: 13.200000000000001 MW  | 0.0 Mvar
-Determinante: 0.9559314857569602
-Autovalores: [0.85401183 1.1193422 ]
+Determinante: 0.973194054449291
+Autovalores: [0.97319405]
 
 
 Carregamento do Sistema: 13.3 MW  | 0.0 Mvar
-Determinante: 0.955253073295467
-Autovalores: [0.85278955 1.120151  ]
+Determinante: 0.9727755606265374
+Autovalores: [0.97277556]
 
 
 Carregamento do Sistema: 13.4 MW  | 0.0 Mvar
-Determinante: 0.9545692846740892
-Autovalores: [0.85156534 1.12095836]
+Determinante: 0.9723535676111305
+Autovalores: [0.97235357]
 
 
 Carregamento do Sistema: 13.5 MW  | 0.0 Mvar
-Determinante: 0.953880113693226
-Autovalores: [0.85033918 1.12176427]
+Determinante: 0.971928067059946
+Autovalores: [0.97192807]
 
 
 Carregamento do Sistema: 13.600000000000001 MW  | 0.0 Mvar
-Determinante: 0.9531855540897441
-Autovalores: [0.84911108 1.12256874]
+Determinante: 0.9714990505407204
+Autovalores: [0.97149905]
 
 
 Carregamento do Sistema: 13.700000000000001 MW  | 0.0 Mvar
-Determinante: 0.9524855995365283
-Autovalores: [0.84788102 1.12337176]
+Determinante: 0.9710665095313404
+Autovalores: [0.97106651]
 
 
 Carregamento do Sistema: 13.8 MW  | 0.0 Mvar
-Determinante: 0.9517802436420214
-Autovalores: [0.84664901 1.12417334]
+Determinante: 0.9706304354191212
+Autovalores: [0.97063044]
 
 
 Carregamento do Sistema: 13.900000000000002 MW  | 0.0 Mvar
-Determinante: 0.9510694799497594
-Autovalores: [0.84541503 1.12497347]
+Determinante: 0.970190819500073
+Autovalores: [0.97019082]
 
 
 Carregamento do Sistema: 14.000000000000002 MW  | 0.0 Mvar
-Determinante: 0.9503533019379037
-Autovalores: [0.84417908 1.12577215]
+Determinante: 0.9697476529781606
+Autovalores: [0.96974765]
 
 
 Carregamento do Sistema: 14.100000000000001 MW  | 0.0 Mvar
-Determinante: 0.9496317030187601
-Autovalores: [0.84294116 1.12656938]
+Determinante: 0.9693009269645487
+Autovalores: [0.96930093]
 
 
 Carregamento do Sistema: 14.200000000000001 MW  | 0.0 Mvar
-Determinante: 0.9489046765382969
-Autovalores: [0.84170125 1.12736517]
+Determinante: 0.9688506324768381
+Autovalores: [0.96885063]
 
 
 Carregamento do Sistema: 14.3 MW  | 0.0 Mvar
-Determinante: 0.9481722157756544
-Autovalores: [0.84045936 1.1281595 ]
+Determinante: 0.9683967604382917
+Autovalores: [0.96839676]
 
 
 Carregamento do Sistema: 14.400000000000002 MW  | 0.0 Mvar
-Determinante: 0.9474343139426452
-Autovalores: [0.83921548 1.12895238]
+Determinante: 0.9679393016770468
+Autovalores: [0.9679393]
 
 
 Carregamento do Sistema: 14.500000000000002 MW  | 0.0 Mvar
-Determinante: 0.9466909641832526
-Autovalores: [0.8379696  1.12974381]
+Determinante: 0.9674782469253196
+Autovalores: [0.96747825]
 
 
 Carregamento do Sistema: 14.600000000000001 MW  | 0.0 Mvar
-Determinante: 0.9459421595731151
-Autovalores: [0.83672171 1.13053378]
+Determinante: 0.9670135868185941
+Autovalores: [0.96701359]
 
 
 Carregamento do Sistema: 14.700000000000003 MW  | 0.0 Mvar
-Determinante: 0.9451878931190125
-Autovalores: [0.83547181 1.1313223 ]
+Determinante: 0.9665453118948044
+Autovalores: [0.96654531]
 
 
 Carregamento do Sistema: 14.800000000000002 MW  | 0.0 Mvar
-Determinante: 0.9444281577583351
-Autovalores: [0.8342199  1.13210936]
+Determinante: 0.9660734125934995
+Autovalores: [0.96607341]
 
 
 Carregamento do Sistema: 14.900000000000002 MW  | 0.0 Mvar
-Determinante: 0.9436629463585547
-Autovalores: [0.83296597 1.13289496]
+Determinante: 0.9655978792550025
+Autovalores: [0.96559788]
 
 
 Carregamento do Sistema: 15.000000000000002 MW  | 0.0 Mvar
-Determinante: 0.9428922517166805
-Autovalores: [0.83171001 1.1336791 ]
+Determinante: 0.9651187021195501
+Autovalores: [0.9651187]
 
 
 Carregamento do Sistema: 15.100000000000001 MW  | 0.0 Mvar
-Determinante: 0.9421160665587123
-Autovalores: [0.83045201 1.13446178]
+Determinante: 0.9646358713264276
+Autovalores: [0.96463587]
 
 
 Carregamento do Sistema: 15.200000000000003 MW  | 0.0 Mvar
-Determinante: 0.941334383539085
-Autovalores: [0.82919197 1.135243  ]
+Determinante: 0.9641493769130858
+Autovalores: [0.96414938]
 
 
 Carregamento do Sistema: 15.300000000000002 MW  | 0.0 Mvar
-Determinante: 0.9405471952401045
-Autovalores: [0.82792989 1.13602276]
+Determinante: 0.9636592088142472
+Autovalores: [0.96365921]
 
 
 Carregamento do Sistema: 15.400000000000002 MW  | 0.0 Mvar
-Determinante: 0.939754494171375
-Autovalores: [0.82666575 1.13680105]
+Determinante: 0.9631653568609997
+Autovalores: [0.96316536]
 
 
 Carregamento do Sistema: 15.500000000000004 MW  | 0.0 Mvar
-Determinante: 0.9389562727692218
-Autovalores: [0.82539956 1.13757787]
+Determinante: 0.9626678107798767
+Autovalores: [0.96266781]
 
 
 Carregamento do Sistema: 15.600000000000003 MW  | 0.0 Mvar
-Determinante: 0.9381525233961003
-Autovalores: [0.8241313  1.13835323]
+Determinante: 0.9621665601919227
+Autovalores: [0.96216656]
 
 
 Carregamento do Sistema: 15.700000000000003 MW  | 0.0 Mvar
-Determinante: 0.9373432383400034
-Autovalores: [0.82286096 1.13912712]
+Determinante: 0.9616615946117479
+Autovalores: [0.96166159]
 
 
 Carregamento do Sistema: 15.800000000000002 MW  | 0.0 Mvar
-Determinante: 0.9365284098138541
-Autovalores: [0.82158855 1.13989954]
+Determinante: 0.9611529034465666
+Autovalores: [0.9611529]
 
 
 Carregamento do Sistema: 15.900000000000002 MW  | 0.0 Mvar
-Determinante: 0.9357080299548948
-Autovalores: [0.82031406 1.14067048]
+Determinante: 0.9606404759952234
+Autovalores: [0.96064048]
 
 
 Carregamento do Sistema: 16.000000000000004 MW  | 0.0 Mvar
-Determinante: 0.9348820908240656
-Autovalores: [0.81903747 1.14143995]
+Determinante: 0.9601243014472051
+Autovalores: [0.9601243]
 
 
 Carregamento do Sistema: 16.1 MW  | 0.0 Mvar
-Determinante: 0.9340505844053719
-Autovalores: [0.81775878 1.14220795]
+Determinante: 0.9596043688816356
+Autovalores: [0.95960437]
 
 
 Carregamento do Sistema: 16.200000000000003 MW  | 0.0 Mvar
-Determinante: 0.9332135026052489
-Autovalores: [0.81647799 1.14297447]
+Determinante: 0.9590806672662613
+Autovalores: [0.95908067]
 
 
 Carregamento do Sistema: 16.300000000000004 MW  | 0.0 Mvar
-Determinante: 0.9323708372519105
-Autovalores: [0.81519509 1.14373951]
+Determinante: 0.9585531854564162
+Autovalores: [0.95855319]
 
 
 Carregamento do Sistema: 16.400000000000002 MW  | 0.0 Mvar
-Determinante: 0.9315225800946932
-Autovalores: [0.81391007 1.14450308]
+Determinante: 0.9580219121939759
+Autovalores: [0.95802191]
 
 
 Carregamento do Sistema: 16.500000000000004 MW  | 0.0 Mvar
-Determinante: 0.9306687228033891
-Autovalores: [0.81262293 1.14526516]
+Determinante: 0.9574868361062938
+Autovalores: [0.95748684]
 
 
 Carregamento do Sistema: 16.600000000000005 MW  | 0.0 Mvar
-Determinante: 0.9298092569675696
-Autovalores: [0.81133365 1.14602575]
+Determinante: 0.9569479457051225
+Autovalores: [0.95694795]
 
 
 Carregamento do Sistema: 16.700000000000003 MW  | 0.0 Mvar
-Determinante: 0.9289441740959006
-Autovalores: [0.81004223 1.14678486]
+Determinante: 0.956405229385521
+Autovalores: [0.95640523]
 
 
 Carregamento do Sistema: 16.800000000000004 MW  | 0.0 Mvar
-Determinante: 0.9280734656154472
-Autovalores: [0.80874867 1.14754249]
+Determinante: 0.9558586754247437
+Autovalores: [0.95585868]
 
 
 Carregamento do Sistema: 16.900000000000006 MW  | 0.0 Mvar
-Determinante: 0.9271971228709673
-Autovalores: [0.80745296 1.14829863]
+Determinante: 0.9553082719811131
+Autovalores: [0.95530827]
 
 
 Carregamento do Sistema: 17.000000000000004 MW  | 0.0 Mvar
-Determinante: 0.9263151371241963
-Autovalores: [0.80615508 1.14905327]
+Determinante: 0.9547540070928774
+Autovalores: [0.95475401]
 
 
 Carregamento do Sistema: 17.100000000000005 MW  | 0.0 Mvar
-Determinante: 0.9254274995531223
-Autovalores: [0.80485504 1.14980643]
+Determinante: 0.9541958686770498
+Autovalores: [0.95419587]
 
 
 Carregamento do Sistema: 17.200000000000003 MW  | 0.0 Mvar
-Determinante: 0.9245342012512509
-Autovalores: [0.80355283 1.15055809]
+Determinante: 0.9536338445282325
+Autovalores: [0.95363384]
 
 
 Carregamento do Sistema: 17.300000000000004 MW  | 0.0 Mvar
-Determinante: 0.9236352332268563
-Autovalores: [0.80224843 1.15130825]
+Determinante: 0.9530679223174203
+Autovalores: [0.95306792]
 
 
 Carregamento do Sistema: 17.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.9227305864022257
-Autovalores: [0.80094184 1.15205692]
+Determinante: 0.9524980895907897
+Autovalores: [0.95249809]
 
 
 Carregamento do Sistema: 17.500000000000004 MW  | 0.0 Mvar
-Determinante: 0.9218202516128928
-Autovalores: [0.79963306 1.15280408]
+Determinante: 0.9519243337684682
+Autovalores: [0.95192433]
 
 
 Carregamento do Sistema: 17.600000000000005 MW  | 0.0 Mvar
-Determinante: 0.9209042196068541
-Autovalores: [0.79832207 1.15354975]
+Determinante: 0.9513466421432839
+Autovalores: [0.95134664]
 
 
 Carregamento do Sistema: 17.700000000000003 MW  | 0.0 Mvar
-Determinante: 0.9199824810437828
-Autovalores: [0.79700887 1.15429391]
+Determinante: 0.9507650018795009
+Autovalores: [0.950765]
 
 
 Carregamento do Sistema: 17.800000000000004 MW  | 0.0 Mvar
-Determinante: 0.9190550264942265
-Autovalores: [0.79569345 1.15503656]
+Determinante: 0.9501794000115319
+Autovalores: [0.9501794]
 
 
 Carregamento do Sistema: 17.900000000000006 MW  | 0.0 Mvar
-Determinante: 0.9181218464387908
-Autovalores: [0.7943758  1.15577771]
+Determinante: 0.9495898234426312
+Autovalores: [0.94958982]
 
 
 Carregamento do Sistema: 18.000000000000004 MW  | 0.0 Mvar
-Determinante: 0.9171829312673181
-Autovalores: [0.79305592 1.15651734]
+Determinante: 0.9489962589435725
+Autovalores: [0.94899626]
 
 
 Carregamento do Sistema: 18.100000000000005 MW  | 0.0 Mvar
-Determinante: 0.9162382712780476
-Autovalores: [0.7917338  1.15725547]
+Determinante: 0.9483986931513017
+Autovalores: [0.94839869]
 
 
 Carregamento do Sistema: 18.200000000000006 MW  | 0.0 Mvar
-Determinante: 0.9152878566767672
-Autovalores: [0.79040943 1.15799208]
+Determinante: 0.9477971125675722
+Autovalores: [0.94779711]
 
 
 Carregamento do Sistema: 18.300000000000004 MW  | 0.0 Mvar
-Determinante: 0.9143316775759508
-Autovalores: [0.7890828  1.15872717]
+Determinante: 0.9471915035575591
+Autovalores: [0.9471915]
 
 
 Carregamento do Sistema: 18.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.9133697239938853
-Autovalores: [0.7877539  1.15946074]
+Determinante: 0.9465818523484527
+Autovalores: [0.94658185]
 
 
 Carregamento do Sistema: 18.500000000000007 MW  | 0.0 Mvar
-Determinante: 0.9124019858537831
-Autovalores: [0.78642273 1.16019279]
+Determinante: 0.9459681450280304
+Autovalores: [0.94596815]
 
 
 Carregamento do Sistema: 18.600000000000005 MW  | 0.0 Mvar
-Determinante: 0.9114284529828814
-Autovalores: [0.78508928 1.16092332]
+Determinante: 0.945350367543207
+Autovalores: [0.94535037]
 
 
 Carregamento do Sistema: 18.700000000000006 MW  | 0.0 Mvar
-Determinante: 0.9104491151115287
-Autovalores: [0.78375353 1.16165232]
+Determinante: 0.9447285056985615
+Autovalores: [0.94472851]
 
 
 Carregamento do Sistema: 18.800000000000004 MW  | 0.0 Mvar
-Determinante: 0.9094639618722583
-Autovalores: [0.78241549 1.1623798 ]
+Determinante: 0.9441025451548443
+Autovalores: [0.94410255]
 
 
 Carregamento do Sistema: 18.900000000000006 MW  | 0.0 Mvar
-Determinante: 0.9084729827988487
-Autovalores: [0.78107514 1.16310574]
+Determinante: 0.9434724714274604
+Autovalores: [0.94347247]
 
 
 Carregamento do Sistema: 19.000000000000007 MW  | 0.0 Mvar
-Determinante: 0.9074761673253674
-Autovalores: [0.77973248 1.16383015]
+Determinante: 0.9428382698849274
+Autovalores: [0.94283827]
 
 
 Carregamento do Sistema: 19.100000000000005 MW  | 0.0 Mvar
-Determinante: 0.9064735047852038
-Autovalores: [0.77838749 1.16455303]
+Determinante: 0.9421999257473129
+Autovalores: [0.94219993]
 
 
 Carregamento do Sistema: 19.200000000000006 MW  | 0.0 Mvar
-Determinante: 0.9054649844100852
-Autovalores: [0.77704017 1.16527436]
+Determinante: 0.9415574240846458
+Autovalores: [0.94155742]
 
 
 Carregamento do Sistema: 19.300000000000004 MW  | 0.0 Mvar
-Determinante: 0.9044505953290795
-Autovalores: [0.7756905  1.16599416]
+Determinante: 0.9409107498153038
+Autovalores: [0.94091075]
 
 
 Carregamento do Sistema: 19.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.9034303265675824
-Autovalores: [0.77433849 1.16671241]
+Determinante: 0.9402598877043757
+Autovalores: [0.94025989]
 
 
 Carregamento do Sistema: 19.500000000000007 MW  | 0.0 Mvar
-Determinante: 0.9024041670462905
-Autovalores: [0.77298412 1.16742912]
+Determinante: 0.9396048223619993
+Autovalores: [0.93960482]
 
 
 Carregamento do Sistema: 19.600000000000005 MW  | 0.0 Mvar
-Determinante: 0.9013721055801573
-Autovalores: [0.77162738 1.16814428]
+Determinante: 0.938945538241672
+Autovalores: [0.93894554]
 
 
 Carregamento do Sistema: 19.700000000000006 MW  | 0.0 Mvar
-Determinante: 0.9003341308773347
-Autovalores: [0.77026826 1.16885788]
+Determinante: 0.9382820196385359
+Autovalores: [0.93828202]
 
 
 Carregamento do Sistema: 19.800000000000008 MW  | 0.0 Mvar
-Determinante: 0.8992902315380977
-Autovalores: [0.76890676 1.16956994]
+Determinante: 0.9376142506876359
+Autovalores: [0.93761425]
 
 
 Carregamento do Sistema: 19.900000000000006 MW  | 0.0 Mvar
-Determinante: 0.8982403960537543
-Autovalores: [0.76754287 1.17028043]
+Determinante: 0.9369422153621513
+Autovalores: [0.93694222]
 
 
 Carregamento do Sistema: 20.000000000000007 MW  | 0.0 Mvar
-Determinante: 0.8971846128055366
-Autovalores: [0.76617657 1.17098937]
+Determinante: 0.9362658974715977
+Autovalores: [0.9362659]
 
 
 Carregamento do Sistema: 20.10000000000001 MW  | 0.0 Mvar
-Determinante: 0.8961228700634781
-Autovalores: [0.76480785 1.17169674]
+Determinante: 0.9355852806600041
+Autovalores: [0.93558528]
 
 
 Carregamento do Sistema: 20.200000000000003 MW  | 0.0 Mvar
-Determinante: 0.8950551559852705
-Autovalores: [0.76343672 1.17240255]
+Determinante: 0.9349003484040569
+Autovalores: [0.93490035]
 
 
 Carregamento do Sistema: 20.300000000000008 MW  | 0.0 Mvar
-Determinante: 0.8939814586151055
-Autovalores: [0.76206315 1.17310679]
+Determinante: 0.9342110840112173
+Autovalores: [0.93421108]
 
 
 Carregamento do Sistema: 20.40000000000001 MW  | 0.0 Mvar
-Determinante: 0.8929017658824979
-Autovalores: [0.76068715 1.17380946]
+Determinante: 0.9335174706178097
+Autovalores: [0.93351747]
 
 
 Carregamento do Sistema: 20.500000000000007 MW  | 0.0 Mvar
-Determinante: 0.8918160656010906
-Autovalores: [0.75930869 1.17451055]
+Determinante: 0.9328194911870754
+Autovalores: [0.93281949]
 
 
 Carregamento do Sistema: 20.600000000000005 MW  | 0.0 Mvar
-Determinante: 0.8907243454674418
-Autovalores: [0.75792777 1.17521007]
+Determinante: 0.9321171285072015
+Autovalores: [0.93211713]
 
 
 Carregamento do Sistema: 20.700000000000006 MW  | 0.0 Mvar
-Determinante: 0.8896265930597921
-Autovalores: [0.75654438 1.17590801]
+Determinante: 0.9314103651893122
+Autovalores: [0.93141037]
 
 
 Carregamento do Sistema: 20.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.8885227958368149
-Autovalores: [0.75515851 1.17660436]
+Determinante: 0.9306991836654323
+Autovalores: [0.93069918]
 
 
 Carregamento do Sistema: 20.900000000000006 MW  | 0.0 Mvar
-Determinante: 0.8874129411363458
-Autovalores: [0.75377015 1.17729913]
+Determinante: 0.9299835661864161
+Autovalores: [0.92998357]
 
 
 Carregamento do Sistema: 21.000000000000007 MW  | 0.0 Mvar
-Determinante: 0.8862970161740897
-Autovalores: [0.75237929 1.1779923 ]
+Determinante: 0.9292634948198418
+Autovalores: [0.92926349]
 
 
 Carregamento do Sistema: 21.10000000000001 MW  | 0.0 Mvar
-Determinante: 0.8851750080423142
-Autovalores: [0.75098593 1.17868388]
+Determinante: 0.9285389514478753
+Autovalores: [0.92853895]
 
 
 Carregamento do Sistema: 21.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.8840469037085166
-Autovalores: [0.74959004 1.17937387]
+Determinante: 0.9278099177650956
+Autovalores: [0.92780992]
 
 
 Carregamento do Sistema: 21.300000000000008 MW  | 0.0 Mvar
-Determinante: 0.8829126900140719
-Autovalores: [0.74819162 1.18006226]
+Determinante: 0.927076375276287
+Autovalores: [0.92707638]
 
 
 Carregamento do Sistema: 21.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.8817723536728609
-Autovalores: [0.74679066 1.18074904]
+Determinante: 0.9263383052941953
+Autovalores: [0.92633831]
 
 
 Carregamento do Sistema: 21.500000000000007 MW  | 0.0 Mvar
-Determinante: 0.8806258812698746
-Autovalores: [0.74538715 1.18143422]
+Determinante: 0.925595688937246
+Autovalores: [0.92559569]
 
 
 Carregamento do Sistema: 21.60000000000001 MW  | 0.0 Mvar
-Determinante: 0.8794732592597977
-Autovalores: [0.74398107 1.18211778]
+Determinante: 0.9248485071272272
+Autovalores: [0.92484851]
 
 
 Carregamento do Sistema: 21.70000000000001 MW  | 0.0 Mvar
-Determinante: 0.8783144739655683
-Autovalores: [0.74257243 1.18279974]
+Determinante: 0.924096740586931
+Autovalores: [0.92409674]
 
 
 Carregamento do Sistema: 21.800000000000004 MW  | 0.0 Mvar
-Determinante: 0.8771495115769182
-Autovalores: [0.7411612  1.18348007]
+Determinante: 0.9233403698377611
+Autovalores: [0.92334037]
 
 
 Carregamento do Sistema: 21.90000000000001 MW  | 0.0 Mvar
-Determinante: 0.8759783581488829
-Autovalores: [0.73974738 1.18415879]
+Determinante: 0.922579375197294
+Autovalores: [0.92257938]
 
 
 Carregamento do Sistema: 22.00000000000001 MW  | 0.0 Mvar
-Determinante: 0.8748009996002966
-Autovalores: [0.73833095 1.18483588]
+Determinante: 0.9218137367768076
+Autovalores: [0.92181374]
 
 
 Carregamento do Sistema: 22.10000000000001 MW  | 0.0 Mvar
-Determinante: 0.8736174217122555
-Autovalores: [0.73691191 1.18551134]
+Determinante: 0.9210434344787612
+Autovalores: [0.92104343]
 
 
 Carregamento do Sistema: 22.200000000000006 MW  | 0.0 Mvar
-Determinante: 0.87242761012656
-Autovalores: [0.73549023 1.18618517]
+Determinante: 0.9202684479942386
+Autovalores: [0.92026845]
 
 
 Carregamento do Sistema: 22.300000000000008 MW  | 0.0 Mvar
-Determinante: 0.8712315503441315
-Autovalores: [0.73406593 1.18685737]
+Determinante: 0.9194887568003463
+Autovalores: [0.91948876]
 
 
 Carregamento do Sistema: 22.400000000000013 MW  | 0.0 Mvar
-Determinante: 0.8700292277234024
-Autovalores: [0.73263897 1.18752792]
+Determinante: 0.9187043401575677
+Autovalores: [0.91870434]
 
 
 Carregamento do Sistema: 22.500000000000007 MW  | 0.0 Mvar
-Determinante: 0.8688206274786798
-Autovalores: [0.73120935 1.18819683]
+Determinante: 0.9179151771070737
+Autovalores: [0.91791518]
 
 
 Carregamento do Sistema: 22.60000000000001 MW  | 0.0 Mvar
-Determinante: 0.8676057346784848
-Autovalores: [0.72977705 1.1888641 ]
+Determinante: 0.9171212464679869
+Autovalores: [0.91712125]
 
 
 Carregamento do Sistema: 22.70000000000001 MW  | 0.0 Mvar
-Determinante: 0.8663845342438612
-Autovalores: [0.72834207 1.18952971]
+Determinante: 0.9163225268346007
+Autovalores: [0.91632253]
 
 
 Carregamento do Sistema: 22.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.8651570109466596
-Autovalores: [0.7269044  1.19019366]
+Determinante: 0.9155189965735497
+Autovalores: [0.915519]
 
 
 Carregamento do Sistema: 22.90000000000001 MW  | 0.0 Mvar
-Determinante: 0.8639231494077892
-Autovalores: [0.72546402 1.19085596]
+Determinante: 0.9147106338209312
+Autovalores: [0.91471063]
 
 
 Carregamento do Sistema: 23.000000000000007 MW  | 0.0 Mvar
-Determinante: 0.8626829340954464
-Autovalores: [0.72402091 1.1915166 ]
+Determinante: 0.9138974164793807
+Autovalores: [0.91389742]
 
 
 Carregamento do Sistema: 23.10000000000001 MW  | 0.0 Mvar
-Determinante: 0.8614363493233074
-Autovalores: [0.72257508 1.19217556]
+Determinante: 0.9130793222150928
+Autovalores: [0.91307932]
 
 
 Carregamento do Sistema: 23.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.8601833792486966
-Autovalores: [0.7211265  1.19283285]
+Determinante: 0.9122563284547941
+Autovalores: [0.91225633]
 
 
 Carregamento do Sistema: 23.30000000000001 MW  | 0.0 Mvar
-Determinante: 0.8589240078707197
-Autovalores: [0.71967516 1.19348847]
+Determinante: 0.9114284123826615
+Autovalores: [0.91142841]
 
 
 Carregamento do Sistema: 23.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.8576582190283688
-Autovalores: [0.71822105 1.19414241]
+Determinante: 0.910595550937189
+Autovalores: [0.91059555]
 
 
 Carregamento do Sistema: 23.50000000000001 MW  | 0.0 Mvar
-Determinante: 0.8563859963985947
-Autovalores: [0.71676417 1.19479466]
+Determinante: 0.9097577208079984
+Autovalores: [0.90975772]
 
 
 Carregamento do Sistema: 23.600000000000012 MW  | 0.0 Mvar
-Determinante: 0.8551073234943445
-Autovalores: [0.71530448 1.19544522]
+Determinante: 0.9089148984325943
+Autovalores: [0.9089149]
 
 
 Carregamento do Sistema: 23.70000000000001 MW  | 0.0 Mvar
-Determinante: 0.8538221836625689
-Autovalores: [0.71384199 1.19609408]
+Determinante: 0.9080670599930627
+Autovalores: [0.90806706]
 
 
 Carregamento do Sistema: 23.800000000000008 MW  | 0.0 Mvar
-Determinante: 0.8525305600821944
-Autovalores: [0.71237668 1.19674125]
+Determinante: 0.9072141814127119
+Autovalores: [0.90721418]
 
 
 Carregamento do Sistema: 23.90000000000001 MW  | 0.0 Mvar
-Determinante: 0.8512324357620605
-Autovalores: [0.71090854 1.19738671]
+Determinante: 0.9063562383526531
+Autovalores: [0.90635624]
 
 
 Carregamento do Sistema: 24.000000000000014 MW  | 0.0 Mvar
-Determinante: 0.8499277935388219
-Autovalores: [0.70943754 1.19803047]
+Determinante: 0.905493206208321
+Autovalores: [0.90549321]
 
 
 Carregamento do Sistema: 24.10000000000001 MW  | 0.0 Mvar
-Determinante: 0.8486166160748159
-Autovalores: [0.70796369 1.19867251]
+Determinante: 0.9046250601059331
+Autovalores: [0.90462506]
 
 
 Carregamento do Sistema: 24.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.8472988858558897
-Autovalores: [0.70648696 1.19931284]
+Determinante: 0.9037517748988831
+Autovalores: [0.90375177]
 
 
 Carregamento do Sistema: 24.30000000000001 MW  | 0.0 Mvar
-Determinante: 0.8459745851891938
-Autovalores: [0.70500735 1.19995144]
+Determinante: 0.9028733251640743
+Autovalores: [0.90287333]
 
 
 Carregamento do Sistema: 24.400000000000013 MW  | 0.0 Mvar
-Determinante: 0.8446436962009338
-Autovalores: [0.70352484 1.20058831]
+Determinante: 0.9019896851981815
+Autovalores: [0.90198969]
 
 
 Carregamento do Sistema: 24.50000000000001 MW  | 0.0 Mvar
-Determinante: 0.8433062008340875
-Autovalores: [0.70203941 1.20122345]
+Determinante: 0.901100829013852
+Autovalores: [0.90110083]
 
 
 Carregamento do Sistema: 24.60000000000001 MW  | 0.0 Mvar
-Determinante: 0.8419620808460763
-Autovalores: [0.70055105 1.20185686]
+Determinante: 0.9002067303358313
+Autovalores: [0.90020673]
 
 
 Carregamento do Sistema: 24.70000000000001 MW  | 0.0 Mvar
-Determinante: 0.8406113178063999
-Autovalores: [0.69905975 1.20248852]
+Determinante: 0.8993073625970229
+Autovalores: [0.89930736]
 
 
 Carregamento do Sistema: 24.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.8392538930942273
-Autovalores: [0.69756549 1.20311843]
+Determinante: 0.8984026989344737
+Autovalores: [0.8984027]
 
 
 Carregamento do Sistema: 24.900000000000013 MW  | 0.0 Mvar
-Determinante: 0.8378897878959465
-Autovalores: [0.69606826 1.20374659]
+Determinante: 0.8974927121852881
+Autovalores: [0.89749271]
 
 
 Carregamento do Sistema: 25.000000000000007 MW  | 0.0 Mvar
-Determinante: 0.8365189832026688
-Autovalores: [0.69456804 1.20437299]
+Determinante: 0.8965773748824643
+Autovalores: [0.89657737]
 
 
 Carregamento do Sistema: 25.100000000000012 MW  | 0.0 Mvar
-Determinante: 0.8351414598076916
-Autovalores: [0.69306482 1.20499762]
+Determinante: 0.8956566592506572
+Autovalores: [0.89565666]
 
 
 Carregamento do Sistema: 25.200000000000014 MW  | 0.0 Mvar
-Determinante: 0.8337571983039129
-Autovalores: [0.69155858 1.20562049]
+Determinante: 0.89473053720186
+Autovalores: [0.89473054]
 
 
 Carregamento do Sistema: 25.30000000000001 MW  | 0.0 Mvar
-Determinante: 0.8323661790811986
-Autovalores: [0.69004932 1.20624158]
+Determinante: 0.8937989803310058
+Autovalores: [0.89379898]
 
 
 Carregamento do Sistema: 25.40000000000001 MW  | 0.0 Mvar
-Determinante: 0.8309683823237078
-Autovalores: [0.68853701 1.20686089]
+Determinante: 0.8928619599114899
+Autovalores: [0.89286196]
 
 
 Carregamento do Sistema: 25.50000000000001 MW  | 0.0 Mvar
-Determinante: 0.8295637880071626
-Autovalores: [0.68702163 1.20747841]
+Determinante: 0.8919194468906044
+Autovalores: [0.89191945]
 
 
 Carregamento do Sistema: 25.600000000000016 MW  | 0.0 Mvar
-Determinante: 0.8281523758960737
-Autovalores: [0.68550318 1.20809414]
+Determinante: 0.8909714118848908
+Autovalores: [0.89097141]
 
 
 Carregamento do Sistema: 25.70000000000001 MW  | 0.0 Mvar
-Determinante: 0.826734125540912
-Autovalores: [0.68398164 1.20870807]
+Determinante: 0.8900178251754012
+Autovalores: [0.89001783]
 
 
 Carregamento do Sistema: 25.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.8253090162752302
-Autovalores: [0.68245698 1.2093202 ]
+Determinante: 0.8890586567028727
+Autovalores: [0.88905866]
 
 
 Carregamento do Sistema: 25.900000000000013 MW  | 0.0 Mvar
-Determinante: 0.82387702721273
-Autovalores: [0.6809292  1.20993052]
+Determinante: 0.8880938760628081
+Autovalores: [0.88809388]
 
 
 Carregamento do Sistema: 26.000000000000014 MW  | 0.0 Mvar
-Determinante: 0.8224381372442782
-Autovalores: [0.67939828 1.21053902]
+Determinante: 0.887123452500465
+Autovalores: [0.88712345]
 
 
 Carregamento do Sistema: 26.100000000000012 MW  | 0.0 Mvar
-Determinante: 0.8209923250348629
-Autovalores: [0.67786421 1.21114571]
+Determinante: 0.8861473549057463
+Autovalores: [0.88614735]
 
 
 Carregamento do Sistema: 26.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.8195395690204965
-Autovalores: [0.67632696 1.21175056]
+Determinante: 0.8851655518079933
+Autovalores: [0.88516555]
 
 
 Carregamento do Sistema: 26.30000000000001 MW  | 0.0 Mvar
-Determinante: 0.8180798474050592
-Autovalores: [0.67478652 1.21235357]
+Determinante: 0.884178011370679
+Autovalores: [0.88417801]
 
 
 Carregamento do Sistema: 26.400000000000013 MW  | 0.0 Mvar
-Determinante: 0.816613138157084
-Autovalores: [0.67324287 1.21295475]
+Determinante: 0.8831847013859974
+Autovalores: [0.8831847]
 
 
 Carregamento do Sistema: 26.500000000000014 MW  | 0.0 Mvar
-Determinante: 0.8151394190064822
-Autovalores: [0.671696   1.21355408]
+Determinante: 0.8821855892693498
+Autovalores: [0.88218559]
 
 
 Carregamento do Sistema: 26.60000000000001 MW  | 0.0 Mvar
-Determinante: 0.8136586674412023
-Autovalores: [0.67014588 1.21415155]
+Determinante: 0.8811806420537178
+Autovalores: [0.88118064]
 
 
 Carregamento do Sistema: 26.700000000000014 MW  | 0.0 Mvar
-Determinante: 0.8121708607038323
-Autovalores: [0.66859251 1.21474717]
+Determinante: 0.8801698263839335
+Autovalores: [0.88016983]
 
 
 Carregamento do Sistema: 26.800000000000015 MW  | 0.0 Mvar
-Determinante: 0.8106759757881309
-Autovalores: [0.66703586 1.21534091]
+Determinante: 0.8791531085108295
+Autovalores: [0.87915311]
 
 
 Carregamento do Sistema: 26.900000000000013 MW  | 0.0 Mvar
-Determinante: 0.8091739894354959
-Autovalores: [0.66547592 1.21593279]
+Determinante: 0.8781304542852784
+Autovalores: [0.87813045]
 
 
 Carregamento do Sistema: 27.00000000000001 MW  | 0.0 Mvar
-Determinante: 0.8076648781313647
-Autovalores: [0.66391266 1.21652278]
+Determinante: 0.8771018291521117
+Autovalores: [0.87710183]
 
 
 Carregamento do Sistema: 27.100000000000012 MW  | 0.0 Mvar
-Determinante: 0.8061486181015419
-Autovalores: [0.66234608 1.21711088]
+Determinante: 0.876067198143916
+Autovalores: [0.8760672]
 
 
 Carregamento do Sistema: 27.200000000000017 MW  | 0.0 Mvar
-Determinante: 0.8046251853084591
-Autovalores: [0.66077614 1.21769709]
+Determinante: 0.8750265258747075
+Autovalores: [0.87502653]
 
 
 Carregamento do Sistema: 27.30000000000001 MW  | 0.0 Mvar
-Determinante: 0.8030945554473619
-Autovalores: [0.65920284 1.2182814 ]
+Determinante: 0.8739797765334788
+Autovalores: [0.87397978]
 
 
 Carregamento do Sistema: 27.400000000000013 MW  | 0.0 Mvar
-Determinante: 0.8015567039424174
-Autovalores: [0.65762615 1.21886379]
+Determinante: 0.8729269138776118
+Autovalores: [0.87292691]
 
 
 Carregamento do Sistema: 27.500000000000014 MW  | 0.0 Mvar
-Determinante: 0.8000116059427512
-Autovalores: [0.65604606 1.21944427]
+Determinante: 0.8718679012261614
+Autovalores: [0.8718679]
 
 
 Carregamento do Sistema: 27.600000000000016 MW  | 0.0 Mvar
-Determinante: 0.7984592363184053
-Autovalores: [0.65446254 1.22002283]
+Determinante: 0.8708027014530024
+Autovalores: [0.8708027]
 
 
 Carregamento do Sistema: 27.700000000000014 MW  | 0.0 Mvar
-Determinante: 0.7968995696562102
-Autovalores: [0.65287557 1.22059945]
+Determinante: 0.8697312769798302
+Autovalores: [0.86973128]
 
 
 Carregamento do Sistema: 27.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.7953325802555805
-Autovalores: [0.65128515 1.22117414]
+Determinante: 0.8686535897690237
+Autovalores: [0.86865359]
 
 
 Carregamento do Sistema: 27.900000000000013 MW  | 0.0 Mvar
-Determinante: 0.7937582421242255
-Autovalores: [0.64969124 1.22174688]
+Determinante: 0.8675696013163591
+Autovalores: [0.8675696]
 
 
 Carregamento do Sistema: 28.000000000000014 MW  | 0.0 Mvar
-Determinante: 0.7921765289737724
-Autovalores: [0.64809383 1.22231766]
+Determinante: 0.8664792726435722
+Autovalores: [0.86647927]
 
 
 Carregamento do Sistema: 28.100000000000016 MW  | 0.0 Mvar
-Determinante: 0.7905874142152995
-Autovalores: [0.64649289 1.22288648]
+Determinante: 0.8653825642907637
+Autovalores: [0.86538256]
 
 
 Carregamento do Sistema: 28.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.788990870954784
-Autovalores: [0.64488841 1.22345333]
+Determinante: 0.8642794363086509
+Autovalores: [0.86427944]
 
 
 Carregamento do Sistema: 28.300000000000015 MW  | 0.0 Mvar
-Determinante: 0.7873868719884516
-Autovalores: [0.64328036 1.2240182 ]
+Determinante: 0.8631698482506516
+Autovalores: [0.86316985]
 
 
 Carregamento do Sistema: 28.400000000000016 MW  | 0.0 Mvar
-Determinante: 0.7857753897980329
-Autovalores: [0.64166873 1.22458108]
+Determinante: 0.8620537591648018
+Autovalores: [0.86205376]
 
 
 Carregamento do Sistema: 28.500000000000014 MW  | 0.0 Mvar
-Determinante: 0.7841563965459242
-Autovalores: [0.64005349 1.22514197]
+Determinante: 0.8609311275855046
+Autovalores: [0.86093113]
 
 
 Carregamento do Sistema: 28.600000000000012 MW  | 0.0 Mvar
-Determinante: 0.7825298640702462
-Autovalores: [0.63843462 1.22570085]
+Determinante: 0.8598019115251012
+Autovalores: [0.85980191]
 
 
 Carregamento do Sistema: 28.700000000000014 MW  | 0.0 Mvar
-Determinante: 0.7808957638798
-Autovalores: [0.63681211 1.22625772]
+Determinante: 0.8586660684652614
+Autovalores: [0.85866607]
 
 
 Carregamento do Sistema: 28.80000000000002 MW  | 0.0 Mvar
-Determinante: 0.779254067148918
-Autovalores: [0.63518591 1.22681257]
+Determinante: 0.8575235553481895
+Autovalores: [0.85752356]
 
 
 Carregamento do Sistema: 28.900000000000013 MW  | 0.0 Mvar
-Determinante: 0.7776047447122114
-Autovalores: [0.63355603 1.22736539]
+Determinante: 0.856374328567642
+Autovalores: [0.85637433]
 
 
 Carregamento do Sistema: 29.000000000000014 MW  | 0.0 Mvar
-Determinante: 0.7759477670591989
-Autovalores: [0.63192243 1.22791617]
+Determinante: 0.8552183439597469
+Autovalores: [0.85521834]
 
 
 Carregamento do Sistema: 29.100000000000016 MW  | 0.0 Mvar
-Determinante: 0.7742831043288271
-Autovalores: [0.63028508 1.22846491]
+Determinante: 0.8540555567936254
+Autovalores: [0.85405556]
 
 
 Carregamento do Sistema: 29.200000000000017 MW  | 0.0 Mvar
-Determinante: 0.7726107263038778
-Autovalores: [0.62864398 1.22901158]
+Determinante: 0.8528859217618099
+Autovalores: [0.85288592]
 
 
 Carregamento do Sistema: 29.300000000000015 MW  | 0.0 Mvar
-Determinante: 0.7709306024052472
-Autovalores: [0.62699908 1.22955619]
+Determinante: 0.8517093929704458
+Autovalores: [0.85170939]
 
 
 Carregamento do Sistema: 29.400000000000013 MW  | 0.0 Mvar
-Determinante: 0.7692427016861104
-Autovalores: [0.62535038 1.23009872]
+Determinante: 0.8505259239292828
+Autovalores: [0.85052592]
 
 
 Carregamento do Sistema: 29.500000000000014 MW  | 0.0 Mvar
-Determinante: 0.7675469928259538
-Autovalores: [0.62369784 1.23063917]
+Determinante: 0.8493354675414393
+Autovalores: [0.84933547]
 
 
 Carregamento do Sistema: 29.600000000000016 MW  | 0.0 Mvar
-Determinante: 0.7658434441244837
-Autovalores: [0.62204144 1.23117752]
+Determinante: 0.8481379760929407
+Autovalores: [0.84813798]
 
 
 Carregamento do Sistema: 29.700000000000017 MW  | 0.0 Mvar
-Determinante: 0.7641320234954012
-Autovalores: [0.62038116 1.23171377]
+Determinante: 0.8469334012420252
+Autovalores: [0.8469334]
 
 
 Carregamento do Sistema: 29.80000000000001 MW  | 0.0 Mvar
-Determinante: 0.7624126984600368
-Autovalores: [0.61871698 1.2322479 ]
+Determinante: 0.845721694008203
+Autovalores: [0.84572169]
 
 
 Carregamento do Sistema: 29.900000000000016 MW  | 0.0 Mvar
-Determinante: 0.7606854361408495
-Autovalores: [0.61704886 1.23277991]
+Determinante: 0.8445028047610726
+Autovalores: [0.8445028]
 
 
 Carregamento do Sistema: 30.000000000000014 MW  | 0.0 Mvar
-Determinante: 0.7589502032547812
-Autovalores: [0.61537678 1.23330978]
+Determinante: 0.8432766832088813
+Autovalores: [0.84327668]
 
 
 Carregamento do Sistema: 30.100000000000012 MW  | 0.0 Mvar
-Determinante: 0.7572069661064645
-Autovalores: [0.61370072 1.23383751]
+Determinante: 0.8420432783868248
+Autovalores: [0.84204328]
 
 
 Carregamento do Sistema: 30.20000000000001 MW  | 0.0 Mvar
-Determinante: 0.7554556905812756
-Autovalores: [0.61202065 1.23436308]
+Determinante: 0.8408025386450763
+Autovalores: [0.84080254]
 
 
 Carregamento do Sistema: 30.300000000000008 MW  | 0.0 Mvar
-Determinante: 0.7536963421382351
-Autovalores: [0.61033654 1.23488648]
+Determinante: 0.8395544116365407
+Autovalores: [0.83955441]
 
 
 Carregamento do Sistema: 30.400000000000006 MW  | 0.0 Mvar
-Determinante: 0.7519288858027494
-Autovalores: [0.60864837 1.23540771]
+Determinante: 0.8382988443043263
+Autovalores: [0.83829884]
 
 
 Carregamento do Sistema: 30.500000000000004 MW  | 0.0 Mvar
-Determinante: 0.7501532861591815
-Autovalores: [0.60695611 1.23592675]
+Determinante: 0.8370357828689193
+Autovalores: [0.83703578]
 
 
 Carregamento do Sistema: 30.6 MW  | 0.0 Mvar
-Determinante: 0.7483695073432617
-Autovalores: [0.60525973 1.23644359]
+Determinante: 0.8357651728150643
+Autovalores: [0.83576517]
 
 
 Carregamento do Sistema: 30.7 MW  | 0.0 Mvar
-Determinante: 0.7465775130343166
-Autovalores: [0.6035592  1.23695821]
+Determinante: 0.8344869588783305
+Autovalores: [0.83448696]
 
 
 Carregamento do Sistema: 30.799999999999997 MW  | 0.0 Mvar
-Determinante: 0.744777266447326
-Autovalores: [0.6018545  1.23747062]
+Determinante: 0.833201085031363
+Autovalores: [0.83320109]
 
 
 Carregamento do Sistema: 30.899999999999995 MW  | 0.0 Mvar
-Determinante: 0.7429687303247895
-Autovalores: [0.6001456  1.23798079]
+Determinante: 0.8319074944698056
+Autovalores: [0.83190749]
 
 
 Carregamento do Sistema: 30.999999999999993 MW  | 0.0 Mvar
-Determinante: 0.741151866928411
-Autovalores: [0.59843247 1.23848872]
+Determinante: 0.8306061295978885
+Autovalores: [0.83060613]
 
 
 Carregamento do Sistema: 31.09999999999999 MW  | 0.0 Mvar
-Determinante: 0.7393266380305826
-Autovalores: [0.59671508 1.23899439]
+Determinante: 0.8292969320136664
+Autovalores: [0.82929693]
 
 
 Carregamento do Sistema: 31.19999999999999 MW  | 0.0 Mvar
-Determinante: 0.7374930049056744
-Autovalores: [0.5949934  1.23949778]
+Determinante: 0.8279798424939048
+Autovalores: [0.82797984]
 
 
 Carregamento do Sistema: 31.299999999999986 MW  | 0.0 Mvar
-Determinante: 0.7356509283211132
-Autovalores: [0.5932674 1.2399989]
+Determinante: 0.8266548009785943
+Autovalores: [0.8266548]
 
 
 Carregamento do Sistema: 31.399999999999984 MW  | 0.0 Mvar
-Determinante: 0.7338003685282523
-Autovalores: [0.59153705 1.24049772]
+Determinante: 0.825321746555089
+Autovalores: [0.82532175]
 
 
 Carregamento do Sistema: 31.499999999999982 MW  | 0.0 Mvar
-Determinante: 0.7319412852530244
-Autovalores: [0.58980232 1.24099424]
+Determinante: 0.8239806174418578
+Autovalores: [0.82398062]
 
 
 Carregamento do Sistema: 31.59999999999998 MW  | 0.0 Mvar
-Determinante: 0.7300736376863671
-Autovalores: [0.58806318 1.24148844]
+Determinante: 0.8226313509718293
+Autovalores: [0.82263135]
 
 
 Carregamento do Sistema: 31.699999999999978 MW  | 0.0 Mvar
-Determinante: 0.7281973844744207
-Autovalores: [0.58631959 1.2419803 ]
+Determinante: 0.8212738835753293
+Autovalores: [0.82127388]
 
 
 Carregamento do Sistema: 31.799999999999976 MW  | 0.0 Mvar
-Determinante: 0.726312483708485
-Autovalores: [0.58457153 1.24246982]
+Determinante: 0.8199081507625887
+Autovalores: [0.81990815]
 
 
 Carregamento do Sistema: 31.899999999999974 MW  | 0.0 Mvar
-Determinante: 0.724418892914734
-Autovalores: [0.58281896 1.24295698]
+Determinante: 0.8185340871058151
+Autovalores: [0.81853409]
 
 
 Carregamento do Sistema: 31.99999999999997 MW  | 0.0 Mvar
-Determinante: 0.722516569043676
-Autovalores: [0.58106185 1.24344176]
+Determinante: 0.8171516262208103
+Autovalores: [0.81715163]
 
 
 Carregamento do Sistema: 32.099999999999966 MW  | 0.0 Mvar
-Determinante: 0.720605468459355
-Autovalores: [0.57930016 1.24392416]
+Determinante: 0.8157607007481239
+Autovalores: [0.8157607]
 
 
 Carregamento do Sistema: 32.19999999999997 MW  | 0.0 Mvar
-Determinante: 0.718685546928285
-Autovalores: [0.57753387 1.24440416]
+Determinante: 0.8143612423337259
+Autovalores: [0.81436124]
 
 
 Carregamento do Sistema: 32.29999999999996 MW  | 0.0 Mvar
-Determinante: 0.716756759608105
-Autovalores: [0.57576293 1.24488174]
+Determinante: 0.8129531816091815
+Autovalores: [0.81295318]
 
 
 Carregamento do Sistema: 32.39999999999996 MW  | 0.0 Mvar
-Determinante: 0.7148190610359546
-Autovalores: [0.57398732 1.24535689]
+Determinante: 0.8115364481713202
+Autovalores: [0.81153645]
 
 
 Carregamento do Sistema: 32.49999999999996 MW  | 0.0 Mvar
-Determinante: 0.7128724051165503
-Autovalores: [0.57220699 1.2458296 ]
+Determinante: 0.8101109705613712
+Autovalores: [0.81011097]
 
 
 Carregamento do Sistema: 32.59999999999996 MW  | 0.0 Mvar
-Determinante: 0.710916745109964
-Autovalores: [0.57042191 1.24629986]
+Determinante: 0.8086766762435605
+Autovalores: [0.80867668]
 
 
 Carregamento do Sistema: 32.69999999999995 MW  | 0.0 Mvar
-Determinante: 0.7089520336190884
-Autovalores: [0.56863205 1.24676763]
+Determinante: 0.8072334915831452
+Autovalores: [0.80723349]
 
 
 Carregamento do Sistema: 32.799999999999955 MW  | 0.0 Mvar
-Determinante: 0.7069782225767774
-Autovalores: [0.56683736 1.24723292]
+Determinante: 0.8057813418238657
+Autovalores: [0.80578134]
 
 
 Carregamento do Sistema: 32.89999999999995 MW  | 0.0 Mvar
-Determinante: 0.7049952632326596
-Autovalores: [0.56503782 1.24769571]
+Determinante: 0.804320151064806
+Autovalores: [0.80432015]
 
 
 Carregamento do Sistema: 32.99999999999995 MW  | 0.0 Mvar
-Determinante: 0.7030031061396066
-Autovalores: [0.56323338 1.24815597]
+Determinante: 0.8028498422366319
+Autovalores: [0.80284984]
 
 
 Carregamento do Sistema: 33.099999999999945 MW  | 0.0 Mvar
-Determinante: 0.7010017011398462
-Autovalores: [0.561424   1.24861369]
+Determinante: 0.8013703370771933
+Autovalores: [0.80137034]
 
 
 Carregamento do Sistema: 33.199999999999946 MW  | 0.0 Mvar
-Determinante: 0.6989909973507137
-Autovalores: [0.55960965 1.24906887]
+Determinante: 0.7998815561064688
+Autovalores: [0.79988156]
 
 
 Carregamento do Sistema: 33.29999999999994 MW  | 0.0 Mvar
-Determinante: 0.6969709431500237
-Autovalores: [0.55779029 1.24952147]
+Determinante: 0.7983834186008302
+Autovalores: [0.79838342]
 
 
 Carregamento do Sistema: 33.39999999999994 MW  | 0.0 Mvar
-Determinante: 0.6949414861610564
-Autovalores: [0.55596587 1.24997149]
+Determinante: 0.7968758425666038
+Autovalores: [0.79687584]
 
 
 Carregamento do Sistema: 33.499999999999936 MW  | 0.0 Mvar
-Determinante: 0.692902573237139
-Autovalores: [0.55413635 1.25041891]
+Determinante: 0.7953587447129078
+Autovalores: [0.79535874]
 
 
 Carregamento do Sistema: 33.59999999999994 MW  | 0.0 Mvar
-Determinante: 0.6908541504458096
-Autovalores: [0.5523017 1.2508637]
+Determinante: 0.793832040423734
+Autovalores: [0.79383204]
 
 
 Carregamento do Sistema: 33.69999999999993 MW  | 0.0 Mvar
-Determinante: 0.6887961630525603
-Autovalores: [0.55046187 1.25130585]
+Determinante: 0.7922956437292603
+Autovalores: [0.79229564]
 
 
 Carregamento do Sistema: 33.79999999999993 MW  | 0.0 Mvar
-Determinante: 0.6867285555041271
-Autovalores: [0.54861682 1.25174535]
+Determinante: 0.7907494672763556
+Autovalores: [0.79074947]
 
 
 Carregamento do Sistema: 33.89999999999993 MW  | 0.0 Mvar
-Determinante: 0.6846512714113313
-Autovalores: [0.5467665  1.25218218]
+Determinante: 0.7891934222982597
+Autovalores: [0.78919342]
 
 
 Carregamento do Sistema: 33.99999999999993 MW  | 0.0 Mvar
-Determinante: 0.6825642535314373
-Autovalores: [0.54491088 1.25261631]
+Determinante: 0.7876274185833987
+Autovalores: [0.78762742]
 
 
 Carregamento do Sistema: 34.09999999999992 MW  | 0.0 Mvar
-Determinante: 0.6804674437500294
-Autovalores: [0.5430499  1.25304773]
+Determinante: 0.7860513644433191
+Autovalores: [0.78605136]
 
 
 Carregamento do Sistema: 34.199999999999925 MW  | 0.0 Mvar
-Determinante: 0.6783607830623759
-Autovalores: [0.54118352 1.25347642]
+Determinante: 0.784465166679698
+Autovalores: [0.78446517]
 
 
 Carregamento do Sistema: 34.29999999999992 MW  | 0.0 Mvar
-Determinante: 0.6762442115542713
-Autovalores: [0.5393117  1.25390236]
+Determinante: 0.7828687305504033
+Autovalores: [0.78286873]
 
 
 Carregamento do Sistema: 34.39999999999992 MW  | 0.0 Mvar
-Determinante: 0.6741176683823357
-Autovalores: [0.53743438 1.25432553]
+Determinante: 0.7812619597345696
+Autovalores: [0.78126196]
 
 
 Carregamento do Sistema: 34.499999999999915 MW  | 0.0 Mvar
-Determinante: 0.6719810917537543
-Autovalores: [0.53555153 1.25474591]
+Determinante: 0.7796447562966549
+Autovalores: [0.77964476]
 
 
 Carregamento do Sistema: 34.599999999999916 MW  | 0.0 Mvar
-Determinante: 0.6698293720878612
-Autovalores: [0.53365948 1.25516251]
+Determinante: 0.7780130608456117
+Autovalores: [0.77801306]
 
 
 Carregamento do Sistema: 34.69999999999991 MW  | 0.0 Mvar
-Determinante: 0.6676724948362832
-Autovalores: [0.53176537 1.25557724]
+Determinante: 0.7763746507932963
+Autovalores: [0.77637465]
 
 
 Carregamento do Sistema: 34.79999999999991 MW  | 0.0 Mvar
-Determinante: 0.6655053921373782
-Autovalores: [0.52986557 1.25598912]
+Determinante: 0.7747255035265389
+Autovalores: [0.7747255]
 
 
 Carregamento do Sistema: 34.899999999999906 MW  | 0.0 Mvar
-Determinante: 0.6633279981703784
-Autovalores: [0.52796004 1.25639812]
+Determinante: 0.7730655142525806
+Autovalores: [0.77306551]
 
 
 Carregamento do Sistema: 34.99999999999991 MW  | 0.0 Mvar
-Determinante: 0.6611402460541691
-Autovalores: [0.52604871 1.25680423]
+Determinante: 0.7713945763670922
+Autovalores: [0.77139458]
 
 
 Carregamento do Sistema: 35.0999999999999 MW  | 0.0 Mvar
-Determinante: 0.6589420678232024
-Autovalores: [0.52413155 1.25720742]
+Determinante: 0.7697125814112702
+Autovalores: [0.76971258]
 
 
 Carregamento do Sistema: 35.1999999999999 MW  | 0.0 Mvar
-Determinante: 0.6567333944026784
-Autovalores: [0.52220849 1.25760767]
+Determinante: 0.7680194190276115
+Autovalores: [0.76801942]
 
 
 Carregamento do Sistema: 35.2999999999999 MW  | 0.0 Mvar
-Determinante: 0.6545141555829943
-Autovalores: [0.52027948 1.25800495]
+Determinante: 0.7663149769143371
+Autovalores: [0.76631498]
 
 
 Carregamento do Sistema: 35.3999999999999 MW  | 0.0 Mvar
-Determinante: 0.6522842799934091
-Autovalores: [0.51834446 1.25839925]
+Determinante: 0.7645991407783965
+Autovalores: [0.76459914]
 
 
 Carregamento do Sistema: 35.49999999999989 MW  | 0.0 Mvar
-Determinante: 0.6500436950749133
-Autovalores: [0.51640339 1.25879053]
+Determinante: 0.7628717942870091
+Autovalores: [0.76287179]
 
 
 Carregamento do Sistema: 35.599999999999895 MW  | 0.0 Mvar
-Determinante: 0.6477923270522613
-Autovalores: [0.5144562  1.25917878]
+Determinante: 0.7611328190176836
+Autovalores: [0.76113282]
 
 
 Carregamento do Sistema: 35.69999999999989 MW  | 0.0 Mvar
-Determinante: 0.6455301009051407
-Autovalores: [0.51250283 1.25956397]
+Determinante: 0.7593820944066549
+Autovalores: [0.75938209]
 
 
 Carregamento do Sistema: 35.79999999999989 MW  | 0.0 Mvar
-Determinante: 0.6432569403384443
-Autovalores: [0.51054323 1.25994608]
+Determinante: 0.7576194976956803
+Autovalores: [0.7576195]
 
 
 Carregamento do Sistema: 35.899999999999885 MW  | 0.0 Mvar
-Determinante: 0.6409727677516136
-Autovalores: [0.50857734 1.26032507]
+Determinante: 0.7558449038771317
+Autovalores: [0.7558449]
 
 
 Carregamento do Sistema: 35.999999999999886 MW  | 0.0 Mvar
-Determinante: 0.6386775042070058
-Autovalores: [0.50660509 1.26070093]
+Determinante: 0.7540581856373079
+Autovalores: [0.75405819]
 
 
 Carregamento do Sistema: 36.09999999999988 MW  | 0.0 Mvar
-Determinante: 0.6363710693972658
-Autovalores: [0.50462642 1.26107362]
+Determinante: 0.752259213297913
+Autovalores: [0.75225921]
 
 
 Carregamento do Sistema: 36.19999999999988 MW  | 0.0 Mvar
-Determinante: 0.6340533816116442
-Autovalores: [0.50264128 1.26144312]
+Determinante: 0.7504478547556078
+Autovalores: [0.75044785]
 
 
 Carregamento do Sistema: 36.299999999999876 MW  | 0.0 Mvar
-Determinante: 0.6317243577012331
-Autovalores: [0.50064959 1.26180941]
+Determinante: 0.748623975419575
+Autovalores: [0.74862398]
 
 
 Carregamento do Sistema: 36.39999999999988 MW  | 0.0 Mvar
-Determinante: 0.6293839130430713
-Autovalores: [0.49865129 1.26217244]
+Determinante: 0.7467874381470045
+Autovalores: [0.74678744]
 
 
 Carregamento do Sistema: 36.49999999999987 MW  | 0.0 Mvar
-Determinante: 0.6270319615030725
-Autovalores: [0.49664631 1.26253221]
+Determinante: 0.7449381031764212
+Autovalores: [0.7449381]
 
 
 Carregamento do Sistema: 36.59999999999987 MW  | 0.0 Mvar
-Determinante: 0.6246684153977344
-Autovalores: [0.49463459 1.26288866]
+Determinante: 0.7430758280587669
+Autovalores: [0.74307583]
 
 
 Carregamento do Sistema: 36.69999999999987 MW  | 0.0 Mvar
-Determinante: 0.6222931854545686
-Autovalores: [0.49261605 1.26324179]
+Determinante: 0.7412004675861348
+Autovalores: [0.74120047]
 
 
 Carregamento do Sistema: 36.79999999999987 MW  | 0.0 Mvar
-Determinante: 0.6199061807712097
-Autovalores: [0.49059064 1.26359155]
+Determinante: 0.73931187371807
+Autovalores: [0.73931187]
 
 
 Carregamento do Sistema: 36.899999999999864 MW  | 0.0 Mvar
-Determinante: 0.6175073087731472
-Autovalores: [0.48855826 1.26393791]
+Determinante: 0.7374098955053305
+Autovalores: [0.7374099]
 
 
 Carregamento do Sistema: 36.999999999999865 MW  | 0.0 Mvar
-Determinante: 0.6150964751700116
-Autovalores: [0.48651886 1.26428085]
+Determinante: 0.7354943790109931
+Autovalores: [0.73549438]
 
 
 Carregamento do Sistema: 37.09999999999986 MW  | 0.0 Mvar
-Determinante: 0.6126735839103679
-Autovalores: [0.48447235 1.26462033]
+Determinante: 0.7335651672288005
+Autovalores: [0.73356517]
 
 
 Carregamento do Sistema: 37.19999999999986 MW  | 0.0 Mvar
-Determinante: 0.6102385371349488
-Autovalores: [0.48241866 1.26495632]
+Determinante: 0.7316220999986311
+Autovalores: [0.7316221]
 
 
 Carregamento do Sistema: 37.299999999999855 MW  | 0.0 Mvar
-Determinante: 0.6077912351282544
-Autovalores: [0.48035772 1.26528878]
+Determinante: 0.7296650139189574
+Autovalores: [0.72966501]
 
 
 Carregamento do Sistema: 37.39999999999986 MW  | 0.0 Mvar
-Determinante: 0.6053315762684576
-Autovalores: [0.47828944 1.26561768]
+Determinante: 0.7276937422561712
+Autovalores: [0.72769374]
 
 
 Carregamento do Sistema: 37.49999999999985 MW  | 0.0 Mvar
-Determinante: 0.6028594569755364
-Autovalores: [0.47621375 1.26594299]
+Determinante: 0.7257081148506354
+Autovalores: [0.72570811]
 
 
 Carregamento do Sistema: 37.59999999999985 MW  | 0.0 Mvar
-Determinante: 0.6003747716575553
-Autovalores: [0.47413055 1.26626468]
+Determinante: 0.7237079580193113
+Autovalores: [0.72370796]
 
 
 Carregamento do Sistema: 37.69999999999985 MW  | 0.0 Mvar
-Determinante: 0.5978774126550147
-Autovalores: [0.47203978 1.26658269]
+Determinante: 0.7216930944548166
+Autovalores: [0.72169309]
 
 
 Carregamento do Sistema: 37.79999999999985 MW  | 0.0 Mvar
-Determinante: 0.5953672701831879
-Autovalores: [0.46994134 1.266897  ]
+Determinante: 0.7196633431207498
+Autovalores: [0.71966334]
 
 
 Carregamento do Sistema: 37.89999999999984 MW  | 0.0 Mvar
-Determinante: 0.592844232272346
-Autovalores: [0.46783514 1.26720758]
+Determinante: 0.7176185191431097
+Autovalores: [0.71761852]
 
 
 Carregamento do Sistema: 37.999999999999844 MW  | 0.0 Mvar
-Determinante: 0.590308184705779
-Autovalores: [0.4657211  1.26751437]
+Determinante: 0.7155584336976306
+Autovalores: [0.71555843]
 
 
 Carregamento do Sistema: 38.09999999999984 MW  | 0.0 Mvar
-Determinante: 0.587759010955517
-Autovalores: [0.46359912 1.26781735]
+Determinante: 0.7134828938928492
+Autovalores: [0.71348289]
 
 
 Carregamento do Sistema: 38.19999999999984 MW  | 0.0 Mvar
-Determinante: 0.5851965921156406
-Autovalores: [0.46146912 1.26811646]
+Determinante: 0.7113917026487011
+Autovalores: [0.7113917]
 
 
 Carregamento do Sistema: 38.299999999999834 MW  | 0.0 Mvar
-Determinante: 0.5826208068330708
-Autovalores: [0.459331   1.26841168]
+Determinante: 0.7092846585704364
+Autovalores: [0.70928466]
 
 
 Carregamento do Sistema: 38.399999999999835 MW  | 0.0 Mvar
-Determinante: 0.5800315312357185
-Autovalores: [0.45718466 1.26870296]
+Determinante: 0.7071615558176323
+Autovalores: [0.70716156]
 
 
 Carregamento do Sistema: 38.49999999999983 MW  | 0.0 Mvar
-Determinante: 0.5774286388578714
-Autovalores: [0.45503    1.26899025]
+Determinante: 0.7050221839680715
+Autovalores: [0.70502218]
 
 
 Carregamento do Sistema: 38.59999999999983 MW  | 0.0 Mvar
-Determinante: 0.5748120005626857
-Autovalores: [0.45286693 1.26927351]
+Determinante: 0.7028663278762348
+Autovalores: [0.70286633]
 
 
 Carregamento do Sistema: 38.699999999999825 MW  | 0.0 Mvar
-Determinante: 0.5721814844616464
-Autovalores: [0.45069534 1.2695527 ]
+Determinante: 0.7006937675261523
+Autovalores: [0.70069377]
 
 
 Carregamento do Sistema: 38.79999999999983 MW  | 0.0 Mvar
-Determinante: 0.5695369558308392
-Autovalores: [0.44851512 1.26982778]
+Determinante: 0.6985042778783226
+Autovalores: [0.69850428]
 
 
 Carregamento do Sistema: 38.89999999999982 MW  | 0.0 Mvar
-Determinante: 0.5668782770238983
-Autovalores: [0.44632617 1.27009868]
+Determinante: 0.6962976287104309
+Autovalores: [0.69629763]
 
 
 Carregamento do Sistema: 38.99999999999982 MW  | 0.0 Mvar
-Determinante: 0.5642053073814363
-Autovalores: [0.44412837 1.27036537]
+Determinante: 0.6940735844515228
+Autovalores: [0.69407358]
 
 
 Carregamento do Sistema: 39.09999999999982 MW  | 0.0 Mvar
-Determinante: 0.5615179031368184
-Autovalores: [0.44192162 1.2706278 ]
+Determinante: 0.6918319040093419
+Autovalores: [0.6918319]
 
 
 Carregamento do Sistema: 39.19999999999982 MW  | 0.0 Mvar
-Determinante: 0.5588159173180584
-Autovalores: [0.4397058  1.27088592]
+Determinante: 0.6895723405904475
+Autovalores: [0.68957234]
 
 
 Carregamento do Sistema: 39.29999999999981 MW  | 0.0 Mvar
-Determinante: 0.5560991996456713
-Autovalores: [0.4374808  1.27113967]
+Determinante: 0.6872946415127693
+Autovalores: [0.68729464]
 
 
 Carregamento do Sistema: 39.399999999999814 MW  | 0.0 Mvar
-Determinante: 0.5533675964262567
-Autovalores: [0.43524648 1.27138901]
+Determinante: 0.6849985480101914
+Autovalores: [0.68499855]
 
 
 Carregamento do Sistema: 39.49999999999981 MW  | 0.0 Mvar
-Determinante: 0.5506209504416008
-Autovalores: [0.43300274 1.27163388]
+Determinante: 0.682683795028756
+Autovalores: [0.6826838]
 
 
 Carregamento do Sistema: 39.59999999999981 MW  | 0.0 Mvar
-Determinante: 0.5478591008330593
-Autovalores: [0.43074944 1.27187421]
+Determinante: 0.6803501110140405
+Autovalores: [0.68035011]
 
 
 Carregamento do Sistema: 39.699999999999804 MW  | 0.0 Mvar
-Determinante: 0.5450818829809759
-Autovalores: [0.42848645 1.27210997]
+Determinante: 0.6779972176892404
+Autovalores: [0.67799722]
 
 
 Carregamento do Sistema: 39.799999999999805 MW  | 0.0 Mvar
-Determinante: 0.5422891283788703
-Autovalores: [0.42621364 1.27234109]
+Determinante: 0.6756248298234576
+Autovalores: [0.67562483]
 
 
 Carregamento do Sistema: 39.8999999999998 MW  | 0.0 Mvar
-Determinante: 0.5394806645021126
-Autovalores: [0.42393088 1.2725675 ]
+Determinante: 0.6732326549896586
+Autovalores: [0.67323265]
 
 
 Carregamento do Sistema: 39.9999999999998 MW  | 0.0 Mvar
-Determinante: 0.5366563146707927
-Autovalores: [0.42163803 1.27278916]
+Determinante: 0.6708203933117405
+Autovalores: [0.67082039]
 
 
 Carregamento do Sistema: 40.0999999999998 MW  | 0.0 Mvar
-Determinante: 0.5338158979064548
-Autovalores: [0.41933494 1.27300599]
+Determinante: 0.6683877372000969
+Autovalores: [0.66838774]
 
 
 Carregamento do Sistema: 40.199999999999804 MW  | 0.0 Mvar
-Determinante: 0.5309592287823682
-Autovalores: [0.41702148 1.27321794]
+Determinante: 0.6659343710750416
+Autovalores: [0.66593437]
 
 
 Carregamento do Sistema: 40.2999999999998 MW  | 0.0 Mvar
-Determinante: 0.5280861172669689
-Autovalores: [0.41469748 1.27342494]
+Determinante: 0.6634599710774061
+Autovalores: [0.66345997]
 
 
 Carregamento do Sistema: 40.39999999999979 MW  | 0.0 Mvar
-Determinante: 0.5251963685600823
-Autovalores: [0.41236281 1.27362691]
+Determinante: 0.6609642047655706
+Autovalores: [0.6609642]
 
 
 Carregamento do Sistema: 40.499999999999794 MW  | 0.0 Mvar
-Determinante: 0.5222897829215218
-Autovalores: [0.41001729 1.2738238 ]
+Determinante: 0.6584467307981552
+Autovalores: [0.65844673]
 
 
 Carregamento do Sistema: 40.599999999999795 MW  | 0.0 Mvar
-Determinante: 0.5193661554916164
-Autovalores: [0.40766078 1.27401552]
+Determinante: 0.6559071986015242
+Autovalores: [0.6559072]
 
 
 Carregamento do Sistema: 40.69999999999979 MW  | 0.0 Mvar
-Determinante: 0.5164252761032048
-Autovalores: [0.40529309 1.27420202]
+Determinante: 0.6533452480212193
+Autovalores: [0.65334525]
 
 
 Carregamento do Sistema: 40.799999999999784 MW  | 0.0 Mvar
-Determinante: 0.5134669290845808
-Autovalores: [0.40291407 1.2743832 ]
+Determinante: 0.650760508956351
+Autovalores: [0.65076051]
 
 
 Carregamento do Sistema: 40.899999999999785 MW  | 0.0 Mvar
-Determinante: 0.5104908930528627
-Autovalores: [0.40052355 1.274559  ]
+Determinante: 0.6481526009759335
+Autovalores: [0.6481526]
 
 
 Carregamento do Sistema: 40.99999999999979 MW  | 0.0 Mvar
-Determinante: 0.5074969406972071
-Autovalores: [0.39812133 1.27472934]
+Determinante: 0.6455211329160605
+Autovalores: [0.64552113]
 
 
 Carregamento do Sistema: 41.09999999999978 MW  | 0.0 Mvar
-Determinante: 0.5044848385512374
-Autovalores: [0.39570724 1.27489414]
+Determinante: 0.6428657024567318
+Autovalores: [0.6428657]
 
 
 Carregamento do Sistema: 41.199999999999775 MW  | 0.0 Mvar
-Determinante: 0.5014543467540356
-Autovalores: [0.39328108 1.27505331]
+Determinante: 0.6401858956770783
+Autovalores: [0.6401859]
 
 
 Carregamento do Sistema: 41.29999999999978 MW  | 0.0 Mvar
-Determinante: 0.4984052187989833
-Autovalores: [0.39084267 1.27520676]
+Determinante: 0.63748128658762
+Autovalores: [0.63748129]
 
 
 Carregamento do Sistema: 41.39999999999978 MW  | 0.0 Mvar
-Determinante: 0.49533720126967173
-Autovalores: [0.38839181 1.27535441]
+Determinante: 0.6347514366380856
+Autovalores: [0.63475144]
 
 
 Carregamento do Sistema: 41.49999999999977 MW  | 0.0 Mvar
-Determinante: 0.4922500335620754
-Autovalores: [0.38592827 1.27549617]
+Determinante: 0.6319958941992321
+Autovalores: [0.63199589]
 
 
 Carregamento do Sistema: 41.59999999999977 MW  | 0.0 Mvar
-Determinante: 0.48914344759208694
-Autovalores: [0.38345187 1.27563194]
+Determinante: 0.629214194016959
+Autovalores: [0.62921419]
 
 
 Carregamento do Sistema: 41.69999999999977 MW  | 0.0 Mvar
-Determinante: 0.486017167487464
-Autovalores: [0.38096237 1.27576162]
+Determinante: 0.6264058566368951
+Autovalores: [0.62640586]
 
 
 Carregamento do Sistema: 41.79999999999977 MW  | 0.0 Mvar
-Determinante: 0.4828709092631587
-Autovalores: [0.37845955 1.27588513]
+Determinante: 0.6235703877974836
+Autovalores: [0.62357039]
 
 
 Carregamento do Sistema: 41.899999999999764 MW  | 0.0 Mvar
-Determinante: 0.4797043804789126
-Autovalores: [0.37594318 1.27600235]
+Determinante: 0.6207072777894391
+Autovalores: [0.62070728]
 
 
 Carregamento do Sistema: 41.99999999999976 MW  | 0.0 Mvar
-Determinante: 0.47651727987791453
-Autovalores: [0.37341302 1.27611317]
+Determinante: 0.6178160007792682
+Autovalores: [0.617816]
 
 
 Carregamento do Sistema: 42.09999999999976 MW  | 0.0 Mvar
-Determinante: 0.4733092970052305
-Autovalores: [0.37086883 1.2762175 ]
+Determinante: 0.6148960140943771
+Autovalores: [0.61489601]
 
 
 Carregamento do Sistema: 42.19999999999976 MW  | 0.0 Mvar
-Determinante: 0.47008011180459114
-Autovalores: [0.36831036 1.27631521]
+Determinante: 0.611946757467062
+Autovalores: [0.61194676]
 
 
 Carregamento do Sistema: 42.299999999999756 MW  | 0.0 Mvar
-Determinante: 0.46682939419201175
-Autovalores: [0.36573733 1.2764062 ]
+Determinante: 0.6089676522344581
+Autovalores: [0.60896765]
 
 
 Carregamento do Sistema: 42.39999999999975 MW  | 0.0 Mvar
-Determinante: 0.4635568036046045
-Autovalores: [0.36314948 1.27649034]
+Determinante: 0.6059581004912924
+Autovalores: [0.6059581]
 
 
 Carregamento do Sistema: 42.49999999999975 MW  | 0.0 Mvar
-Determinante: 0.46026198852277395
-Autovalores: [0.36054653 1.2765675 ]
+Determinante: 0.6029174841919791
+Autovalores: [0.60291748]
 
 
 Carregamento do Sistema: 42.59999999999975 MW  | 0.0 Mvar
-Determinante: 0.45694458596386056
-Autovalores: [0.3579282  1.27663757]
+Determinante: 0.5998451641983316
+Autovalores: [0.59984516]
 
 
 Carregamento do Sistema: 42.69999999999975 MW  | 0.0 Mvar
-Determinante: 0.4536042209451033
-Autovalores: [0.35529418 1.2767004 ]
+Determinante: 0.5967404792688071
+Autovalores: [0.59674048]
 
 
 Carregamento do Sistema: 42.79999999999974 MW  | 0.0 Mvar
-Determinante: 0.45024050591361686
-Autovalores: [0.35264417 1.27675586]
+Determinante: 0.5936027449848509
+Autovalores: [0.59360274]
 
 
 Carregamento do Sistema: 42.89999999999974 MW  | 0.0 Mvar
-Determinante: 0.44685304014086347
-Autovalores: [0.34997784 1.27680381]
+Determinante: 0.590431252609495
+Autovalores: [0.59043125]
 
 
 Carregamento do Sistema: 42.999999999999744 MW  | 0.0 Mvar
-Determinante: 0.4434414090788732
-Autovalores: [0.34729487 1.2768441 ]
+Determinante: 0.5872252678729255
+Autovalores: [0.58722527]
 
 
 Carregamento do Sistema: 43.09999999999974 MW  | 0.0 Mvar
-Determinante: 0.44000518367521163
-Autovalores: [0.34459492 1.27687658]
+Determinante: 0.5839840296792398
+Autovalores: [0.58398403]
 
 
 Carregamento do Sistema: 43.19999999999973 MW  | 0.0 Mvar
-Determinante: 0.4365439196433976
-Autovalores: [0.34187763 1.27690109]
+Determinante: 0.5807067487280497
+Autovalores: [0.58070675]
 
 
 Carregamento do Sistema: 43.299999999999734 MW  | 0.0 Mvar
-Determinante: 0.4330571566851884
-Autovalores: [0.33914264 1.27691747]
+Determinante: 0.5773926060440127
+Autovalores: [0.57739261]
 
 
 Carregamento do Sistema: 43.399999999999736 MW  | 0.0 Mvar
-Determinante: 0.4295444176607633
-Autovalores: [0.33638956 1.27692555]
+Determinante: 0.574040751406651
+Autovalores: [0.57404075]
 
 
 Carregamento do Sistema: 43.49999999999973 MW  | 0.0 Mvar
-Determinante: 0.4260052077024803
-Autovalores: [0.333618   1.27692515]
+Determinante: 0.5706503016721054
+Autovalores: [0.5706503]
 
 
 Carregamento do Sistema: 43.599999999999724 MW  | 0.0 Mvar
-Determinante: 0.4224390132674174
-Autovalores: [0.33082754 1.27691609]
+Determinante: 0.5672203389775905
+Autovalores: [0.56722034]
 
 
 Carregamento do Sistema: 43.699999999999726 MW  | 0.0 Mvar
-Determinante: 0.4188453011234532
-Autovalores: [0.32801778 1.27689818]
+Determinante: 0.5637499088184097
+Autovalores: [0.56374991]
 
 
 Carregamento do Sistema: 43.79999999999973 MW  | 0.0 Mvar
-Determinante: 0.41522351726307294
-Autovalores: [0.32518825 1.27687122]
+Determinante: 0.5602380179863068
+Autovalores: [0.56023802]
 
 
 Carregamento do Sistema: 43.89999999999972 MW  | 0.0 Mvar
-Determinante: 0.41157308573849183
-Autovalores: [0.3223385 1.276835 ]
+Determinante: 0.5566836323567614
+Autovalores: [0.55668363]
 
 
 Carregamento do Sistema: 43.999999999999716 MW  | 0.0 Mvar
-Determinante: 0.4078934074109951
-Autovalores: [0.31946806 1.27678932]
+Determinante: 0.5530856745114991
+Autovalores: [0.55308567]
 
 
 Carregamento do Sistema: 44.09999999999972 MW  | 0.0 Mvar
-Determinante: 0.40418385860663025
-Autovalores: [0.31657642 1.27673395]
+Determinante: 0.5494430211809933
+Autovalores: [0.54944302]
 
 
 Carregamento do Sistema: 44.19999999999972 MW  | 0.0 Mvar
-Determinante: 0.4004437896695208
-Autovalores: [0.31366305 1.27666866]
+Determinante: 0.5457545004900534
+Autovalores: [0.5457545]
 
 
 Carregamento do Sistema: 44.29999999999971 MW  | 0.0 Mvar
-Determinante: 0.39667252340306963
-Autovalores: [0.31072743 1.2765932 ]
+Determinante: 0.5420188889876588
+Autovalores: [0.54201889]
 
 
 Carregamento do Sistema: 44.39999999999971 MW  | 0.0 Mvar
-Determinante: 0.3928693533882465
-Autovalores: [0.30776898 1.27650731]
+Determinante: 0.5382349084400806
+Autovalores: [0.53823491]
 
 
 Carregamento do Sistema: 44.49999999999971 MW  | 0.0 Mvar
-Determinante: 0.3890335421668501
-Autovalores: [0.30478711 1.27641075]
+Determinante: 0.534401222363827
+Autovalores: [0.53440122]
 
 
 Carregamento do Sistema: 44.59999999999971 MW  | 0.0 Mvar
-Determinante: 0.3851643192762515
-Autovalores: [0.3017812  1.27630322]
+Determinante: 0.5305164322722163
+Autovalores: [0.53051643]
 
 
 Carregamento do Sistema: 44.699999999999704 MW  | 0.0 Mvar
-Determinante: 0.38126087912045087
-Autovalores: [0.29875061 1.27618444]
+Determinante: 0.5265790736061475
+Autovalores: [0.52657907]
 
 
 Carregamento do Sistema: 44.7999999999997 MW  | 0.0 Mvar
-Determinante: 0.37732237866044127
-Autovalores: [0.29569466 1.2760541 ]
+Determinante: 0.5225876113160406
+Autovalores: [0.52258761]
 
 
 Carregamento do Sistema: 44.8999999999997 MW  | 0.0 Mvar
-Determinante: 0.37334793490473905
-Autovalores: [0.29261263 1.2759119 ]
+Determinante: 0.5185404350577475
+Autovalores: [0.51854044]
 
 
 Carregamento do Sistema: 44.9999999999997 MW  | 0.0 Mvar
-Determinante: 0.3693366221784908
-Autovalores: [0.28950379 1.27575748]
+Determinante: 0.5144358539604623
+Autovalores: [0.51443585]
 
 
 Carregamento do Sistema: 45.099999999999696 MW  | 0.0 Mvar
-Determinante: 0.3652874691467448
-Autovalores: [0.28636735 1.27559051]
+Determinante: 0.5102720909191509
+Autovalores: [0.51027209]
 
 
 Carregamento do Sistema: 45.19999999999969 MW  | 0.0 Mvar
-Determinante: 0.36119945556423105
-Autovalores: [0.28320249 1.27541061]
+Determinante: 0.5060472763576798
+Autovalores: [0.50604728]
 
 
 Carregamento do Sistema: 45.29999999999969 MW  | 0.0 Mvar
-Determinante: 0.35707150872025173
-Autovalores: [0.28000834 1.27521739]
+Determinante: 0.501759441401495
+Autovalores: [0.50175944]
 
 
 Carregamento do Sistema: 45.39999999999969 MW  | 0.0 Mvar
-Determinante: 0.3529024995428977
-Autovalores: [0.276784   1.27501045]
+Determinante: 0.4974065103901533
+Autovalores: [0.49740651]
 
 
 Carregamento do Sistema: 45.49999999999969 MW  | 0.0 Mvar
-Determinante: 0.3486912383217501
-Autovalores: [0.27352851 1.27478936]
+Determinante: 0.49298629265009153
+Autovalores: [0.49298629]
 
 
 Carregamento do Sistema: 45.59999999999968 MW  | 0.0 Mvar
-Determinante: 0.3444364700023024
-Autovalores: [0.27024086 1.27455366]
+Determinante: 0.4884964734364394
+Autovalores: [0.48849647]
 
 
 Carregamento do Sistema: 45.69999999999968 MW  | 0.0 Mvar
-Determinante: 0.34013686899840145
-Autovalores: [0.26691996 1.27430286]
+Determinante: 0.4839346039390871
+Autovalores: [0.4839346]
 
 
 Carregamento do Sistema: 45.799999999999685 MW  | 0.0 Mvar
-Determinante: 0.33579103346084094
-Autovalores: [0.2635647  1.27403646]
+Determinante: 0.4792980902322431
+Autovalores: [0.47929809]
 
 
 Carregamento do Sistema: 45.89999999999968 MW  | 0.0 Mvar
-Determinante: 0.3313974789306484
-Autovalores: [0.26017386 1.27375393]
+Determinante: 0.4745841810278935
+Autovalores: [0.47458418]
 
 
 Carregamento do Sistema: 45.99999999999967 MW  | 0.0 Mvar
-Determinante: 0.3269546312941941
-Autovalores: [0.25674619 1.27345467]
+Determinante: 0.46978995407122637
+Autovalores: [0.46978995]
 
 
 Carregamento do Sistema: 46.099999999999675 MW  | 0.0 Mvar
-Determinante: 0.32246081894375395
-Autovalores: [0.25328032 1.2731381 ]
+Determinante: 0.4649123009895787
+Autovalores: [0.4649123]
 
 
 Carregamento do Sistema: 46.199999999999676 MW  | 0.0 Mvar
-Determinante: 0.31791426403097633
-Autovalores: [0.24977481 1.27280355]
+Determinante: 0.4599479103747391
+Autovalores: [0.45994791]
 
 
 Carregamento do Sistema: 46.29999999999967 MW  | 0.0 Mvar
-Determinante: 0.3133130726813747
-Autovalores: [0.24622813 1.27245034]
+Determinante: 0.4548932488404733
+Autovalores: [0.45489325]
 
 
 Carregamento do Sistema: 46.399999999999665 MW  | 0.0 Mvar
-Determinante: 0.30865522401466233
-Autovalores: [0.24263865 1.27207772]
+Determinante: 0.4497445397513663
+Autovalores: [0.44974454]
 
 
 Carregamento do Sistema: 46.499999999999666 MW  | 0.0 Mvar
-Determinante: 0.3039385577875547
-Autovalores: [0.23900461 1.27168492]
+Determinante: 0.44449773926368646
+Autovalores: [0.44449774]
 
 
 Carregamento do Sistema: 46.59999999999967 MW  | 0.0 Mvar
-Determinante: 0.29916076044141243
-Autovalores: [0.23532413 1.27127107]
+Determinante: 0.43914850925162546
+Autovalores: [0.43914851]
 
 
 Carregamento do Sistema: 46.69999999999966 MW  | 0.0 Mvar
-Determinante: 0.29431934929520687
-Autovalores: [0.2315952  1.27083527]
+Determinante: 0.4336921866098936
+Autovalores: [0.43369219]
 
 
 Carregamento do Sistema: 46.799999999999656 MW  | 0.0 Mvar
-Determinante: 0.28941165457284396
-Autovalores: [0.22781565 1.27037655]
+Determinante: 0.4281237483224022
+Autovalores: [0.42812375]
 
 
 Carregamento do Sistema: 46.89999999999966 MW  | 0.0 Mvar
-Determinante: 0.2844347988902613
-Autovalores: [0.22398313 1.26989384]
+Determinante: 0.4224377715615293
+Autovalores: [0.42243777]
 
 
 Carregamento do Sistema: 46.99999999999966 MW  | 0.0 Mvar
-Determinante: 0.2793856737485794
-Autovalores: [0.22009513 1.269386  ]
+Determinante: 0.4166283879266172
+Autovalores: [0.41662839]
 
 
 Carregamento do Sistema: 47.09999999999965 MW  | 0.0 Mvar
-Determinante: 0.2742609124805355
-Autovalores: [0.21614889 1.26885179]
+Determinante: 0.41068923073516395
+Autovalores: [0.41068923]
 
 
 Carregamento do Sistema: 47.19999999999965 MW  | 0.0 Mvar
-Determinante: 0.26905685897248005
-Autovalores: [0.21214145 1.26828987]
+Determinante: 0.40461337403388875
+Autovalores: [0.40461337]
 
 
 Carregamento do Sistema: 47.29999999999965 MW  | 0.0 Mvar
-Determinante: 0.26376953132556724
-Autovalores: [0.20806956 1.26769877]
+Determinante: 0.3983932616839465
+Autovalores: [0.39839326]
 
 
 Carregamento do Sistema: 47.39999999999965 MW  | 0.0 Mvar
-Determinante: 0.25839457941656435
-Autovalores: [0.20392968 1.26707689]
+Determinante: 0.3920206244736451
+Autovalores: [0.39202062]
 
 
 Carregamento do Sistema: 47.499999999999645 MW  | 0.0 Mvar
-Determinante: 0.2529272350563343
-Autovalores: [0.1997179  1.26642246]
+Determinante: 0.38548638269410757
+Autovalores: [0.38548638]
 
 
 Carregamento do Sistema: 47.59999999999964 MW  | 0.0 Mvar
-Determinante: 0.24736225310211998
-Autovalores: [0.19542996 1.26573354]
+Determinante: 0.3787805309380659
+Autovalores: [0.37878053]
 
 
 Carregamento do Sistema: 47.69999999999964 MW  | 0.0 Mvar
-Determinante: 0.24169384142979622
-Autovalores: [0.19106112 1.265008  ]
+Determinante: 0.3718920009929493
+Autovalores: [0.371892]
 
 
 Carregamento do Sistema: 47.79999999999964 MW  | 0.0 Mvar
-Determinante: 0.23591557707383465
-Autovalores: [0.18660613 1.26424345]
+Determinante: 0.3648084975165569
+Autovalores: [0.3648085]
 
 
 Carregamento do Sistema: 47.899999999999636 MW  | 0.0 Mvar
-Determinante: 0.23002030503775914
-Autovalores: [0.18205915 1.26343724]
+Determinante: 0.3575162995917173
+Autovalores: [0.3575163]
 
 
 Carregamento do Sistema: 47.99999999999963 MW  | 0.0 Mvar
-Determinante: 0.2240000151816777
-Autovalores: [0.17741361 1.2625864 ]
+Determinante: 0.35000001908749667
+Autovalores: [0.35000002]
 
 
 Carregamento do Sistema: 48.09999999999963 MW  | 0.0 Mvar
-Determinante: 0.2178456910803735
-Autovalores: [0.17266215 1.26168759]
+Determinante: 0.3422423037594808
+Autovalores: [0.3422423]
 
 
 Carregamento do Sistema: 48.19999999999963 MW  | 0.0 Mvar
-Determinante: 0.2115471226262774
-Autovalores: [0.16779639 1.260737  ]
+Determinante: 0.33422346882492804
+Autovalores: [0.33422347]
 
 
 Carregamento do Sistema: 48.29999999999963 MW  | 0.0 Mvar
-Determinante: 0.20509267113533147
-Autovalores: [0.16280681 1.25973031]
+Determinante: 0.3259210347724376
+Autovalores: [0.32592103]
 
 
 Carregamento do Sistema: 48.39999999999962 MW  | 0.0 Mvar
-Determinante: 0.19846897134416266
-Autovalores: [0.15768243 1.25866253]
+Determinante: 0.31730914050416764
+Autovalores: [0.31730914]
 
 
 Carregamento do Sistema: 48.49999999999962 MW  | 0.0 Mvar
-Determinante: 0.19166054823150763
-Autovalores: [0.15241057 1.25752791]
+Determinante: 0.3083577881061521
+Autovalores: [0.30835779]
 
 
 Carregamento do Sistema: 48.599999999999625 MW  | 0.0 Mvar
-Determinante: 0.1846493168497881
-Autovalores: [0.14697638 1.25631969]
+Determinante: 0.2990318562023908
+Autovalores: [0.29903186]
 
 
 Carregamento do Sistema: 48.69999999999962 MW  | 0.0 Mvar
-Determinante: 0.17741391827197425
-Autovalores: [0.1413623 1.2550299]
+Determinante: 0.2892897889103472
+Autovalores: [0.28928979]
 
 
 Carregamento do Sistema: 48.79999999999961 MW  | 0.0 Mvar
-Determinante: 0.1699288207740091
-Autovalores: [0.13554737 1.25364899]
+Determinante: 0.2790818197764158
+Autovalores: [0.27908182]
 
 
 Carregamento do Sistema: 48.899999999999615 MW  | 0.0 Mvar
-Determinante: 0.16216307601302582
-Autovalores: [0.12950612 1.25216537]
+Determinante: 0.2683475118498664
+Autovalores: [0.26834751]
 
 
 Carregamento do Sistema: 48.999999999999616 MW  | 0.0 Mvar
-Determinante: 0.15407855300492826
-Autovalores: [0.12320717 1.25056478]
+Determinante: 0.2570122619141837
+Autovalores: [0.25701226]
 
 
 Carregamento do Sistema: 49.09999999999961 MW  | 0.0 Mvar
-Determinante: 0.1456273539502718
-Autovalores: [0.1166111  1.24882925]
+Determinante: 0.24498218060854193
+Autovalores: [0.24498218]
 
 
 Carregamento do Sistema: 49.199999999999605 MW  | 0.0 Mvar
-Determinante: 0.13674789475348356
-Autovalores: [0.10966716 1.24693567]
+Determinante: 0.23213631972711765
+Autovalores: [0.23213632]
 
 
 Carregamento do Sistema: 49.299999999999606 MW  | 0.0 Mvar
-Determinante: 0.12735869626462962
-Autovalores: [0.10230819 1.24485344]
+Determinante: 0.2183143474769489
+Autovalores: [0.21831435]
 
 
 Carregamento do Sistema: 49.39999999999961 MW  | 0.0 Mvar
-Determinante: 0.11734800643641889
-Autovalores: [0.094442   1.24254052]
+Determinante: 0.20329592533439422
+Autovalores: [0.20329593]
 
 
 Carregamento do Sistema: 49.4999999999996 MW  | 0.0 Mvar
-Determinante: 0.10655523228953578
-Autovalores: [0.08593604 1.23993646]
+Determinante: 0.1867637608483732
+Autovalores: [0.18676376]
 
 
 Carregamento do Sistema: 49.599999999999596 MW  | 0.0 Mvar
-Determinante: 0.09473463646927949
-Autovalores: [0.07658736 1.23694864]
+Determinante: 0.16823123841471543
+Autovalores: [0.16823124]
 
 
 Carregamento do Sistema: 49.6999999999996 MW  | 0.0 Mvar
-Determinante: 0.0814754572443509
-Autovalores: [0.06605644 1.23342194]
+Determinante: 0.1468826472085344
+Autovalores: [0.14688265]
 
 
 Carregamento do Sistema: 49.7999999999996 MW  | 0.0 Mvar
-Determinante: 0.06594468139319924
-Autovalores: [0.05365529 1.22904345]
+Determinante: 0.12107125172353059
+Autovalores: [0.12107125]
 
 
 Carregamento do Sistema: 49.899999999999594 MW  | 0.0 Mvar
-Determinante: 0.04609798170882848
-Autovalores: [0.03769136 1.2230384 ]
+Determinante: 0.08671355476171472
+Autovalores: [0.08671355]
 
 
 Carregamento do Sistema: 49.99999999999959 MW  | 0.0 Mvar
-Determinante: -0.0010178936441247576
-Autovalores: [8.43520426e-04 1.20672080e+00]
+Determinante: -0.0020387241862108714
+Autovalores: [0.00203872]
 
 
 
 
-fim do relatório de análise da variação do valor do determinante e autovalores da matriz jacobiana do sistema 2b-teste
+fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-teste

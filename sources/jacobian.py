@@ -215,20 +215,28 @@ class Jacobi:
         """
 
         ## Inicialização Método Big-Number
-        for v in range(0, powerflow.setup.nbus):
-            if (powerflow.setup.maskP[v] == False):
-                powerflow.setup.pt[v, :] = 0
-                powerflow.setup.pv[v, :] = 0
-                powerflow.setup.pt[:, v] = 0
-                powerflow.setup.qt[:, v] = 0
-                powerflow.setup.pt[v, v] = 1
+        for idx in range(0, powerflow.setup.nbus):
+            if (powerflow.setup.maskP[idx] == False):
+                powerflow.setup.pt[idx, :] = 0
+                powerflow.setup.pv[idx, :] = 0
+                powerflow.setup.pt[:, idx] = 0
+                powerflow.setup.qt[:, idx] = 0
+                powerflow.setup.pt[idx, idx] = 1
             
-            if (powerflow.setup.maskQ[v] == False) and ('QLIM' not in powerflow.setup.control):
-                powerflow.setup.qv[v, :] = 0
-                powerflow.setup.qt[v, :] = 0
-                powerflow.setup.qv[:, v] = 0
-                powerflow.setup.pv[:, v] = 0
-                powerflow.setup.qv[v, v] = 1
+            if (powerflow.setup.maskQ[idx] == False) and ('QLIM' not in powerflow.setup.control):
+                powerflow.setup.qv[idx, :] = 0
+                powerflow.setup.qt[idx, :] = 0
+                powerflow.setup.qv[:, idx] = 0
+                powerflow.setup.pv[:, idx] = 0
+                powerflow.setup.qv[idx, idx] = 1
+
+            elif (powerflow.setup.maskQ[idx] == False) and ('QLIM' in powerflow.setup.control):
+                if (idx == powerflow.setup.slackidx) and ((powerflow.sol['reactive_generation'][idx] > powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima']) and (powerflow.sol['reactive_generation'][idx] < powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_maxima'])):
+                    powerflow.setup.qv[idx, :] = 0
+                    powerflow.setup.qt[idx, :] = 0
+                    powerflow.setup.qv[:, idx] = 0
+                    powerflow.setup.pv[:, idx] = 0
+                    powerflow.setup.qv[idx, idx] = 1
 
 
 

@@ -30,6 +30,7 @@ class Control:
         ## Inicialização
         if not hasattr(powerflow, 'setup'):
             if powerflow.control:
+                setup.maskctrlcount = 0
                 setup.control = dict()
                 # if not setup.control:
                 self.control = {
@@ -95,22 +96,22 @@ class Control:
             if key == 'CREM':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'CREM'
-                self.solcrem(powerflow,)
+                pass
             # controle secundário de tensão
             elif key == 'CST':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'CST'
-                self.solcst(powerflow,)
+                pass
             # controle de tap variável de transformador
             elif key == 'CTAP':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'CTAP'
-                self.solctap(powerflow,)
+                pass
             # controle de ângulo de transformador defasador
             elif key == 'CTAPd':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'CTAPd'
-                self.solctapd(powerflow,)
+                pass
             # controle de regulação primária de frequência
             elif key == 'FREQ':
                 powerflow.setup.ctrlcount += 1
@@ -125,12 +126,12 @@ class Control:
             elif key == 'SVC':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'SVC'
-                self.solsvc(powerflow,)
+                pass
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
                 powerflow.setup.ctrlcount += 1
                 powerflow.setup.ctrlorder[powerflow.setup.ctrlcount] = 'VCTRL'
-                self.solvctrl(powerflow,)
+                pass
 
 
     
@@ -149,28 +150,28 @@ class Control:
         for key,_ in powerflow.setup.control.items():
             # controle remoto de tensão
             if key == 'CREM':
-                self.solcrem(powerflow,)
+                pass
             # controle secundário de tensão
             elif key == 'CST':
-                self.solcst(powerflow,)
+                pass
             # controle de tap variável de transformador
             elif key == 'CTAP':
-                self.solctap(powerflow,)
+                pass
             # controle de ângulo de transformador defasador
             elif key == 'CTAPd':
-                self.solctapd(powerflow,)
+                pass
             # controle de regulação primária de frequência
             elif key == 'FREQ':
                 Freq(powerflow,).freqsch(powerflow,)
             # controle de limite de geração de potência reativa
             elif key == 'QLIM':
-                pass
+                Qlim().qlimsch(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
-                self.solsvc(powerflow,)
+                pass
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
-                self.solvctrl(powerflow,)
+                pass
 
     
 
@@ -192,16 +193,16 @@ class Control:
         for key,_ in powerflow.setup.control.items():
             # controle remoto de tensão
             if key == 'CREM':
-                self.solcrem(powerflow,)
+                pass
             # controle secundário de tensão
             elif key == 'CST':
-                self.solcst(powerflow,)
+                pass
             # controle de tap variável de transformador
             elif key == 'CTAP':
-                self.solctap(powerflow,)
+                pass
             # controle de ângulo de transformador defasador
             elif key == 'CTAPd':
-                self.solctapd(powerflow,)
+                pass
             # controle de regulação primária de frequência
             elif key == 'FREQ':
                 Freq(powerflow,).freqres(powerflow,)
@@ -210,10 +211,10 @@ class Control:
                 Qlim().qlimres(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
-                self.solsvc(powerflow,)
+                pass
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
-                self.solvctrl(powerflow,)
+                pass
 
         if powerflow.setup.deltaY.size == 0:
             powerflow.setup.deltaY = array([0]) 
@@ -241,16 +242,16 @@ class Control:
 
             # controle remoto de tensão
             if key == 'CREM':
-                self.solcrem(powerflow,)
+                pass
             # controle secundário de tensão
             elif key == 'CST':
-                self.solcst(powerflow,)
+                pass
             # controle de tap variável de transformador
             elif key == 'CTAP':
-                self.solctap(powerflow,)
+                pass
             # controle de ângulo de transformador defasador
             elif key == 'CTAPd':
-                self.solctapd(powerflow,)
+                pass
             # controle de regulação primária de frequência
             elif key == 'FREQ':
                 Freq(powerflow,).freqsubjac(powerflow,)
@@ -259,16 +260,18 @@ class Control:
                 Qlim().qlimsubjac(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
-                self.solsvc(powerflow,)
+                pass
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
-                self.solvctrl(powerflow,)
+                pass
 
         # Dimensão
         powerflow.setup.controldim = powerflow.setup.jacob.shape[0] - powerflow.setup.truedim
         
         # Atualização da Máscara da Jacobiana
-        powerflow.setup.mask = append(powerflow.setup.mask, zeros(powerflow.setup.controldim, dtype=bool))
+        if powerflow.setup.maskctrlcount == 0:
+            powerflow.setup.mask = append(powerflow.setup.mask, zeros(powerflow.setup.controldim, dtype=bool))
+            powerflow.setup.maskctrlcount += 1
 
     
 
@@ -280,6 +283,7 @@ class Control:
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
+            case:
         """
 
         ## Inicialização
@@ -287,16 +291,16 @@ class Control:
         for key,_ in powerflow.setup.control.items():
             # controle remoto de tensão
             if key == 'CREM':
-                self.solcrem(powerflow,)
+                pass
             # controle secundário de tensão
             elif key == 'CST':
-                self.solcst(powerflow,)
+                pass
             # controle de tap variável de transformador
             elif key == 'CTAP':
-                self.solctap(powerflow,)
+                pass
             # controle de ângulo de transformador defasador
             elif key == 'CTAPd':
-                self.solctapd(powerflow,)
+                pass
             # controle de regulação primária de frequência
             elif key == 'FREQ':
                 Freq(powerflow,).frequpdt(powerflow,)
@@ -305,7 +309,49 @@ class Control:
                 Qlim().qlimupdt(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
-                self.solsvc(powerflow,)
+                pass
             # controle de magnitude de tensão de barramentos
             elif key == 'VCTRL':
-                self.solvctrl(powerflow,)
+                pass
+
+
+
+    def controlcorrsol(
+        self,
+        powerflow,
+        case,
+    ):
+        """atualização das variáveis de controle para a etapa de correção
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            case:
+        """
+
+        ## Inicialização
+        # Loop
+        for key,_ in powerflow.setup.control.items():
+            # controle remoto de tensão
+            if key == 'CREM':
+                pass
+            # controle secundário de tensão
+            elif key == 'CST':
+                pass
+            # controle de tap variável de transformador
+            elif key == 'CTAP':
+                pass
+            # controle de ângulo de transformador defasador
+            elif key == 'CTAPd':
+                pass
+            # controle de regulação primária de frequência
+            elif key == 'FREQ':
+                Freq(powerflow,).freqcorr(powerflow,)
+            # controle de limite de geração de potência reativa
+            elif key == 'QLIM':
+                Qlim().qlimcorr(powerflow, case,)
+            # controle de compensadores estáticos de potência reativa
+            elif key == 'SVC':
+                pass
+            # controle de magnitude de tensão de barramentos
+            elif key == 'VCTRL':
+                pass

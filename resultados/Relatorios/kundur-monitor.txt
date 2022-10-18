@@ -1,4 +1,4 @@
-October 06, 2022
+October 13, 2022
 
 
 relatório de monitoramento do sistema kundur
@@ -14,8 +14,7 @@ Nenhuma barra de geração violou os limites máximo e mínimo de geração de p
 
 vv monitoramento de magnitude de tensão de barramentos vv
 
-A magnitude de tensão da BARRA-003 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
-
+Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!
 
 
 fim do relatório de monitoramento do sistema kundur
