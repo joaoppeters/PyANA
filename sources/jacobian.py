@@ -223,14 +223,14 @@ class Jacobi:
                 powerflow.setup.qt[:, idx] = 0
                 powerflow.setup.pt[idx, idx] = 1
             
-            if (powerflow.setup.maskQ[idx] == False) and ('QLIM' not in powerflow.setup.control):
+            if (powerflow.setup.maskQ[idx] == False) and (('QLIM' not in powerflow.setup.control) or ('QLIMs' not in powerflow.setup.control)):
                 powerflow.setup.qv[idx, :] = 0
                 powerflow.setup.qt[idx, :] = 0
                 powerflow.setup.qv[:, idx] = 0
                 powerflow.setup.pv[:, idx] = 0
                 powerflow.setup.qv[idx, idx] = 1
 
-            elif (powerflow.setup.maskQ[idx] == False) and ('QLIM' in powerflow.setup.control):
+            elif (powerflow.setup.maskQ[idx] == False) and (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)):
                 if (idx == powerflow.setup.slackidx) and ((powerflow.sol['reactive_generation'][idx] > powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima']) and (powerflow.sol['reactive_generation'][idx] < powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_maxima'])):
                     powerflow.setup.qv[idx, :] = 0
                     powerflow.setup.qt[idx, :] = 0

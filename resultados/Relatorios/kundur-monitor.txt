@@ -1,4 +1,4 @@
-October 13, 2022
+October 20, 2022
 
 
 relatório de monitoramento do sistema kundur
@@ -9,12 +9,14 @@ opções de monitoramento ativadas: QGMON VMON
 
 vv monitoramento de potência reativa gerada vv
 
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+A geração de potência reativa da BARRA-002 violou o limite mínimo estabelecido para análise ( -120.00 <= -120.0 ).
+
 
 
 vv monitoramento de magnitude de tensão de barramentos vv
 
-Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!
+A magnitude de tensão da BARRA-003 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
+
 
 
 fim do relatório de monitoramento do sistema kundur

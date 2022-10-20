@@ -1,4 +1,4 @@
-October 14, 2022
+October 20, 2022
 
 
 relatório de monitoramento do sistema ieee14
@@ -16,13 +16,10 @@ vv monitoramento de magnitude de tensão de barramentos vv
 
 A magnitude de tensão da BARRA-1 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
 A magnitude de tensão da BARRA-6 violou o limite máximo estabelecido para análise ( 1.070 >= 1.05 ).
-A magnitude de tensão da BARRA-7 violou o limite máximo estabelecido para análise ( 1.062 >= 1.05 ).
+A magnitude de tensão da BARRA-7 violou o limite máximo estabelecido para análise ( 1.055 >= 1.05 ).
 A magnitude de tensão da BARRA-8 violou o limite máximo estabelecido para análise ( 1.090 >= 1.05 ).
-A magnitude de tensão da BARRA-9 violou o limite máximo estabelecido para análise ( 1.056 >= 1.05 ).
-A magnitude de tensão da BARRA-10 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
-A magnitude de tensão da BARRA-11 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
-A magnitude de tensão da BARRA-12 violou o limite máximo estabelecido para análise ( 1.055 >= 1.05 ).
-A magnitude de tensão da BARRA-13 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da BARRA-11 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
+A magnitude de tensão da BARRA-12 violou o limite máximo estabelecido para análise ( 1.052 >= 1.05 ).
 
 
 

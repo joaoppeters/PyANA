@@ -183,6 +183,9 @@ Thumbs.db
 *.pwf
 *.lst
 
+smooth.py
+ctrlqlims.py
+
 !2b-milano.pwf
 !2b-teste.pwf
 !ieee14.pwf

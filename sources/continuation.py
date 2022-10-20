@@ -446,7 +446,7 @@ class Continuation:
                 powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
 
             # Tipo PQ - Resíduo Potência Reativa
-            if ('QLIM' in powerflow.setup.control) or (value['tipo'] == 0):
+            if ('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control) or (value['tipo'] == 0):
                 powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
                 powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
 

@@ -99,39 +99,6 @@ class Qlim:
 
 
 
-    def qcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência reativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência reativa
-
-        Retorno
-            q: float
-                potência reativa calculada para o barramento `idx`
-        """
-
-        ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        q *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
-
-        return q
-
-
-
     def qlimsubjac(
         self,
         powerflow,
@@ -261,7 +228,7 @@ class Qlim:
         powerflow,
         case,
     ):
-        """atualização dos valores de potência reativa gerada para a etapa de correção
+        """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
