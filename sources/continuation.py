@@ -7,15 +7,13 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from matplotlib import pyplot as plt
-from numpy import abs, all, append, argmax, around, array, concatenate, cos, dot, max, ndarray, ones, sin, sum, zeros
+from numpy import abs, all, append, argmax, arange, array, concatenate, cos, dot, insert, max, ndarray, ones, sin, sum, zeros
 from numpy.linalg import det, eig, solve, inv
 
 from ctrl import Control
 from jacobian import Jacobi
 from loading import Loading
 from newtonraphson import NewtonRaphson
-from pwf import PWF
 
 class Continuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
@@ -124,19 +122,10 @@ class Continuation:
 
             # Heurísticas
             self.heuristics(powerflow,)
-
-            print(powerflow.cpfsol['pmc'])
             
-            if (powerflow.cpfsol['varstep'] == 'volt'):
-                print('Var: ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * (0.5 ** powerflow.cpfsol['div']))
-            else:
-                print('Var: ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (0.5 ** powerflow.cpfsol['div']))
-
-            print('Step: ', powerflow.cpfsol['step'])
-            print('Stepsch: ', powerflow.cpfsol['stepsch'])
-
-            print(powerflow.sol['iter'], powerflow.sol['convergence'])
+            print(powerflow.sol['voltage'], powerflow.sol['reactive_generation'])
             print((1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
+            print(powerflow.setup.jacob)
             print('\n')
 
             # Break Curva de Carregamento - Somente Parte Estável
@@ -815,11 +804,49 @@ class Continuation:
         """
 
         ## Inicialização
+        # # Jacobiana reduzida - sensibilidade PT
+        # powerflow.setup.jacobPT = powerflow.setup.pt[powerflow.setup.maskP, :][:, powerflow.setup.maskP] - dot(dot(powerflow.setup.pv[powerflow.setup.maskP, :][:, powerflow.setup.maskQ], inv(powerflow.setup.qv[powerflow.setup.maskQ, :][:, powerflow.setup.maskQ])), powerflow.setup.qt[powerflow.setup.maskQ, :][:, powerflow.setup.maskP])
+
+        # # Jacobiana reduzida - sensibilidade QV
+        # powerflow.setup.jacobQV = powerflow.setup.qv[powerflow.setup.maskQ, :][:, powerflow.setup.maskQ] - dot(dot(powerflow.setup.qt[powerflow.setup.maskQ, :][:, powerflow.setup.maskP], inv(powerflow.setup.pt[powerflow.setup.maskP, :][:, powerflow.setup.maskP])), powerflow.setup.pv[powerflow.setup.maskP, :][:, powerflow.setup.maskQ])
+
+
+        # Reorganização da Matriz Jacobiana Expandida
+        self.makeupslack = ones(powerflow.setup.jacob.shape[0], dtype=bool)
+        self.makeupslack[powerflow.setup.slackidx] = False
+        # self.jacob = deepcopy(powerflow.setup.jacob[self.makeupslack, :][:, self.makeupslack])
+        self.jacob = deepcopy(powerflow.setup.jacob)
+        
+        # if (self.case == 0):
+        #     # self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus) - 1)), (powerflow.setup.nbus - 1), (-1 * arange(1, powerflow.setup.nger + 1)))
+        #     self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus))), (powerflow.setup.nbus), (-1 * arange(1, powerflow.setup.nger + 1)))
+        
+        # elif (self.case > 0):
+        #     # self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus) - 1)), (powerflow.setup.nbus - 1), (-1 * arange(1, powerflow.setup.nger + 1)) - 1)
+        #     self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus))), (powerflow.setup.nbus), (-1 * arange(1, powerflow.setup.nger + 1)) - 1)
+        
+        # self.jacob = self.jacob[self.reidx, :][:, self.reidx]
+
+        # Submatrizes Jacobianas
+        # self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, :(powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        # self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, (powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        # self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, :(powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        # self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, (powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        # self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
+        # self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+        # self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
+        # self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+        self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, :(powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger - 1), :][:, (powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+        self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger - 1)])
+        self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger - 1):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+        
+
         # Jacobiana reduzida - sensibilidade PT
-        powerflow.setup.jacobPT = powerflow.setup.pt[powerflow.setup.maskP, :][:, powerflow.setup.maskP] - dot(dot(powerflow.setup.pv[powerflow.setup.maskP, :][:, powerflow.setup.maskQ], inv(powerflow.setup.qv[powerflow.setup.maskQ, :][:, powerflow.setup.maskQ])), powerflow.setup.qt[powerflow.setup.maskQ, :][:, powerflow.setup.maskP])
+        powerflow.setup.jacobPT = self.pt - dot(dot(self.pv, inv(self.qv)), self.qt)
 
         # Jacobiana reduzida - sensibilidade QV
-        powerflow.setup.jacobQV = powerflow.setup.qv[powerflow.setup.maskQ, :][:, powerflow.setup.maskQ] - dot(dot(powerflow.setup.qt[powerflow.setup.maskQ, :][:, powerflow.setup.maskP], inv(powerflow.setup.pt[powerflow.setup.maskP, :][:, powerflow.setup.maskP])), powerflow.setup.pv[powerflow.setup.maskP, :][:, powerflow.setup.maskQ])
+        powerflow.setup.jacobQV = self.qv - dot(dot(self.qt, inv(self.pt)), self.pv)
 
         # Condição
         if (stage == None):

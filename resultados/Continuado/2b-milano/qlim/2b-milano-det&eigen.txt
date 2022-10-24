@@ -1,0 +1,924 @@
+October 20, 2022
+
+
+relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-milano
+
+opções de controle ativadas: QLIM 
+
+opções de relatório ativadas: RBARRA 
+
+
+
+Carregamento do Sistema: 10.0 MW  | 0.0 Mvar
+Determinante: 6.331555462901854
+Autovalores: [6.33155546]
+
+
+Carregamento do Sistema: 11.0 MW  | 0.0 Mvar
+Determinante: 6.331057752439397
+Autovalores: [6.33105775]
+
+
+Carregamento do Sistema: 12.0 MW  | 0.0 Mvar
+Determinante: 6.330512556181093
+Autovalores: [6.33051256]
+
+
+Carregamento do Sistema: 13.0 MW  | 0.0 Mvar
+Determinante: 6.329919850961619
+Autovalores: [6.32991985]
+
+
+Carregamento do Sistema: 14.0 MW  | 0.0 Mvar
+Determinante: 6.3292796115846315
+Autovalores: [6.32927961]
+
+
+Carregamento do Sistema: 15.0 MW  | 0.0 Mvar
+Determinante: 6.3285918108186
+Autovalores: [6.32859181]
+
+
+Carregamento do Sistema: 16.0 MW  | 0.0 Mvar
+Determinante: 6.327856419392275
+Autovalores: [6.32785642]
+
+
+Carregamento do Sistema: 17.0 MW  | 0.0 Mvar
+Determinante: 6.327073405989827
+Autovalores: [6.32707341]
+
+
+Carregamento do Sistema: 18.0 MW  | 0.0 Mvar
+Determinante: 6.3262427372456465
+Autovalores: [6.32624274]
+
+
+Carregamento do Sistema: 19.0 MW  | 0.0 Mvar
+Determinante: 6.325364377738775
+Autovalores: [6.32536438]
+
+
+Carregamento do Sistema: 20.0 MW  | 0.0 Mvar
+Determinante: 6.324438289987021
+Autovalores: [6.32443829]
+
+
+Carregamento do Sistema: 20.999999999999996 MW  | 0.0 Mvar
+Determinante: 6.323464434440686
+Autovalores: [6.32346443]
+
+
+Carregamento do Sistema: 22.0 MW  | 0.0 Mvar
+Determinante: 6.322442769475973
+Autovalores: [6.32244277]
+
+
+Carregamento do Sistema: 23.0 MW  | 0.0 Mvar
+Determinante: 6.3213732513880085
+Autovalores: [6.32137325]
+
+
+Carregamento do Sistema: 24.000000000000004 MW  | 0.0 Mvar
+Determinante: 6.320255834383538
+Autovalores: [6.32025583]
+
+
+Carregamento do Sistema: 25.0 MW  | 0.0 Mvar
+Determinante: 6.319090470573222
+Autovalores: [6.31909047]
+
+
+Carregamento do Sistema: 26.000000000000007 MW  | 0.0 Mvar
+Determinante: 6.317877109963604
+Autovalores: [6.31787711]
+
+
+Carregamento do Sistema: 27.0 MW  | 0.0 Mvar
+Determinante: 6.316615700448692
+Autovalores: [6.3166157]
+
+
+Carregamento do Sistema: 28.000000000000007 MW  | 0.0 Mvar
+Determinante: 6.315306187801165
+Autovalores: [6.31530619]
+
+
+Carregamento do Sistema: 29.000000000000004 MW  | 0.0 Mvar
+Determinante: 6.3139485156632364
+Autovalores: [6.31394852]
+
+
+Carregamento do Sistema: 30.000000000000004 MW  | 0.0 Mvar
+Determinante: 6.312542625537092
+Autovalores: [6.31254263]
+
+
+Carregamento do Sistema: 31.000000000000007 MW  | 0.0 Mvar
+Determinante: 6.311088456774991
+Autovalores: [6.31108846]
+
+
+Carregamento do Sistema: 32.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.309585946568965
+Autovalores: [6.30958595]
+
+
+Carregamento do Sistema: 33.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.308035029940117
+Autovalores: [6.30803503]
+
+
+Carregamento do Sistema: 34.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.30643563972756
+Autovalores: [6.30643564]
+
+
+Carregamento do Sistema: 35.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.30478770657692
+Autovalores: [6.30478771]
+
+
+Carregamento do Sistema: 36.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.303091158928468
+Autovalores: [6.30309116]
+
+
+Carregamento do Sistema: 37.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.301345923004827
+Autovalores: [6.30134592]
+
+
+Carregamento do Sistema: 38.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.299551922798291
+Autovalores: [6.29955192]
+
+
+Carregamento do Sistema: 39.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.297709080057702
+Autovalores: [6.29770908]
+
+
+Carregamento do Sistema: 40.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.295817314274926
+Autovalores: [6.29581731]
+
+
+Carregamento do Sistema: 41.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.293876542670885
+Autovalores: [6.29387654]
+
+
+Carregamento do Sistema: 42.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.291886680181189
+Autovalores: [6.29188668]
+
+
+Carregamento do Sistema: 43.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.289847639441292
+Autovalores: [6.28984764]
+
+
+Carregamento do Sistema: 44.00000000000002 MW  | 0.0 Mvar
+Determinante: 6.287759330771241
+Autovalores: [6.28775933]
+
+
+Carregamento do Sistema: 45.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.285621662159944
+Autovalores: [6.28562166]
+
+
+Carregamento do Sistema: 46.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.283434539249017
+Autovalores: [6.28343454]
+
+
+Carregamento do Sistema: 47.00000000000002 MW  | 0.0 Mvar
+Determinante: 6.2811978653161304
+Autovalores: [6.28119787]
+
+
+Carregamento do Sistema: 48.00000000000003 MW  | 0.0 Mvar
+Determinante: 6.278911541257931
+Autovalores: [6.27891154]
+
+
+Carregamento do Sistema: 49.00000000000002 MW  | 0.0 Mvar
+Determinante: 6.276575465572449
+Autovalores: [6.27657547]
+
+
+Carregamento do Sistema: 50.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.27418953434105
+Autovalores: [6.27418953]
+
+
+Carregamento do Sistema: 51.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.2717536412098776
+Autovalores: [6.27175364]
+
+
+Carregamento do Sistema: 52.000000000000014 MW  | 0.0 Mvar
+Determinante: 6.269267677370826
+Autovalores: [6.26926768]
+
+
+Carregamento do Sistema: 53.00000000000001 MW  | 0.0 Mvar
+Determinante: 6.2667315315419785
+Autovalores: [6.26673153]
+
+
+Carregamento do Sistema: 54.0 MW  | 0.0 Mvar
+Determinante: 6.264145089947542
+Autovalores: [6.26414509]
+
+
+Carregamento do Sistema: 55.0 MW  | 0.0 Mvar
+Determinante: 6.261508236297284
+Autovalores: [6.26150824]
+
+
+Carregamento do Sistema: 56.0 MW  | 0.0 Mvar
+Determinante: 6.258820851765398
+Autovalores: [6.25882085]
+
+
+Carregamento do Sistema: 56.99999999999999 MW  | 0.0 Mvar
+Determinante: 6.256082814968858
+Autovalores: [6.25608281]
+
+
+Carregamento do Sistema: 57.999999999999986 MW  | 0.0 Mvar
+Determinante: 6.253294001945243
+Autovalores: [6.253294]
+
+
+Carregamento do Sistema: 58.999999999999986 MW  | 0.0 Mvar
+Determinante: 6.250454286129946
+Autovalores: [6.25045429]
+
+
+Carregamento do Sistema: 59.999999999999986 MW  | 0.0 Mvar
+Determinante: 6.247563538332877
+Autovalores: [6.24756354]
+
+
+Carregamento do Sistema: 60.99999999999998 MW  | 0.0 Mvar
+Determinante: 6.244621626714554
+Autovalores: [6.24462163]
+
+
+Carregamento do Sistema: 61.99999999999997 MW  | 0.0 Mvar
+Determinante: 6.241628416761627
+Autovalores: [6.24162842]
+
+
+Carregamento do Sistema: 62.99999999999997 MW  | 0.0 Mvar
+Determinante: 6.238583771261794
+Autovalores: [6.23858377]
+
+
+Carregamento do Sistema: 63.99999999999997 MW  | 0.0 Mvar
+Determinante: 6.235487550278094
+Autovalores: [6.23548755]
+
+
+Carregamento do Sistema: 64.99999999999997 MW  | 0.0 Mvar
+Determinante: 6.232339611122634
+Autovalores: [6.23233961]
+
+
+Carregamento do Sistema: 65.99999999999996 MW  | 0.0 Mvar
+Determinante: 6.229139808329618
+Autovalores: [6.22913981]
+
+
+Carregamento do Sistema: 66.99999999999996 MW  | 0.0 Mvar
+Determinante: 6.2258879936277705
+Autovalores: [6.22588799]
+
+
+Carregamento do Sistema: 67.99999999999996 MW  | 0.0 Mvar
+Determinante: 6.222584015912125
+Autovalores: [6.22258402]
+
+
+Carregamento do Sistema: 68.99999999999994 MW  | 0.0 Mvar
+Determinante: 6.219227721215089
+Autovalores: [6.21922772]
+
+
+Carregamento do Sistema: 69.99999999999994 MW  | 0.0 Mvar
+Determinante: 6.215818952676871
+Autovalores: [6.21581895]
+
+
+Carregamento do Sistema: 70.99999999999994 MW  | 0.0 Mvar
+Determinante: 6.212357550515223
+Autovalores: [6.21235755]
+
+
+Carregamento do Sistema: 71.99999999999994 MW  | 0.0 Mvar
+Determinante: 6.208843351994429
+Autovalores: [6.20884335]
+
+
+Carregamento do Sistema: 72.99999999999994 MW  | 0.0 Mvar
+Determinante: 6.2052761913936125
+Autovalores: [6.20527619]
+
+
+Carregamento do Sistema: 73.99999999999993 MW  | 0.0 Mvar
+Determinante: 6.201655899974307
+Autovalores: [6.2016559]
+
+
+Carregamento do Sistema: 74.99999999999993 MW  | 0.0 Mvar
+Determinante: 6.197982305947252
+Autovalores: [6.19798231]
+
+
+Carregamento do Sistema: 75.99999999999993 MW  | 0.0 Mvar
+Determinante: 6.1942552344384385
+Autovalores: [6.19425523]
+
+
+Carregamento do Sistema: 76.99999999999991 MW  | 0.0 Mvar
+Determinante: 6.190474507454375
+Autovalores: [6.19047451]
+
+
+Carregamento do Sistema: 77.99999999999991 MW  | 0.0 Mvar
+Determinante: 6.186639943846564
+Autovalores: [6.18663994]
+
+
+Carregamento do Sistema: 78.99999999999991 MW  | 0.0 Mvar
+Determinante: 6.1827513592751195
+Autovalores: [6.18275136]
+
+
+Carregamento do Sistema: 79.99999999999991 MW  | 0.0 Mvar
+Determinante: 6.1788085661716305
+Autovalores: [6.17880857]
+
+
+Carregamento do Sistema: 80.99999999999991 MW  | 0.0 Mvar
+Determinante: 6.174811373701084
+Autovalores: [6.17481137]
+
+
+Carregamento do Sistema: 81.9999999999999 MW  | 0.0 Mvar
+Determinante: 6.170759587723001
+Autovalores: [6.17075959]
+
+
+Carregamento do Sistema: 82.9999999999999 MW  | 0.0 Mvar
+Determinante: 6.1666530107516335
+Autovalores: [6.16665301]
+
+
+Carregamento do Sistema: 83.9999999999999 MW  | 0.0 Mvar
+Determinante: 6.162491441915278
+Autovalores: [6.16249144]
+
+
+Carregamento do Sistema: 84.99999999999989 MW  | 0.0 Mvar
+Determinante: 6.158274676914663
+Autovalores: [6.15827468]
+
+
+Carregamento do Sistema: 85.99999999999989 MW  | 0.0 Mvar
+Determinante: 6.154002507980371
+Autovalores: [6.15400251]
+
+
+Carregamento do Sistema: 86.99999999999989 MW  | 0.0 Mvar
+Determinante: 6.14967472382932
+Autovalores: [6.14967472]
+
+
+Carregamento do Sistema: 87.99999999999989 MW  | 0.0 Mvar
+Determinante: 6.145291109620239
+Autovalores: [6.14529111]
+
+
+Carregamento do Sistema: 88.99999999999989 MW  | 0.0 Mvar
+Determinante: 6.140851446908132
+Autovalores: [6.14085145]
+
+
+Carregamento do Sistema: 89.99999999999987 MW  | 0.0 Mvar
+Determinante: 6.136355513597713
+Autovalores: [6.13635551]
+
+
+Carregamento do Sistema: 90.99999999999987 MW  | 0.0 Mvar
+Determinante: 6.131803083895775
+Autovalores: [6.13180308]
+
+
+Carregamento do Sistema: 91.99999999999987 MW  | 0.0 Mvar
+Determinante: 6.127193928262484
+Autovalores: [6.12719393]
+
+
+Carregamento do Sistema: 92.99999999999986 MW  | 0.0 Mvar
+Determinante: 6.122527813361568
+Autovalores: [6.12252781]
+
+
+Carregamento do Sistema: 93.99999999999986 MW  | 0.0 Mvar
+Determinante: 6.117804502009329
+Autovalores: [6.1178045]
+
+
+Carregamento do Sistema: 94.99999999999986 MW  | 0.0 Mvar
+Determinante: 6.113023753122574
+Autovalores: [6.11302375]
+
+
+Carregamento do Sistema: 95.99999999999986 MW  | 0.0 Mvar
+Determinante: 6.10818532166528
+Autovalores: [6.10818532]
+
+
+Carregamento do Sistema: 96.99999999999986 MW  | 0.0 Mvar
+Determinante: 6.103288958594081
+Autovalores: [6.10328896]
+
+
+Carregamento do Sistema: 97.99999999999984 MW  | 0.0 Mvar
+Determinante: 6.098334410802494
+Autovalores: [6.09833441]
+
+
+Carregamento do Sistema: 98.99999999999984 MW  | 0.0 Mvar
+Determinante: 6.093321421063881
+Autovalores: [6.09332142]
+
+
+Carregamento do Sistema: 99.99999999999984 MW  | 0.0 Mvar
+Determinante: 6.0882497279730785
+Autovalores: [6.08824973]
+
+
+Carregamento do Sistema: 100.99999999999983 MW  | 0.0 Mvar
+Determinante: 6.0831190658867085
+Autovalores: [6.08311907]
+
+
+Carregamento do Sistema: 101.99999999999983 MW  | 0.0 Mvar
+Determinante: 6.077929164862113
+Autovalores: [6.07792916]
+
+
+Carregamento do Sistema: 102.99999999999983 MW  | 0.0 Mvar
+Determinante: 6.072679750594868
+Autovalores: [6.07267975]
+
+
+Carregamento do Sistema: 103.99999999999983 MW  | 0.0 Mvar
+Determinante: 6.067370544354857
+Autovalores: [6.06737054]
+
+
+Carregamento do Sistema: 104.99999999999983 MW  | 0.0 Mvar
+Determinante: 6.062001262920878
+Autovalores: [6.06200126]
+
+
+Carregamento do Sistema: 105.99999999999982 MW  | 0.0 Mvar
+Determinante: 6.056571618513703
+Autovalores: [6.05657162]
+
+
+Carregamento do Sistema: 106.99999999999982 MW  | 0.0 Mvar
+Determinante: 6.051081318727629
+Autovalores: [6.05108132]
+
+
+Carregamento do Sistema: 107.99999999999982 MW  | 0.0 Mvar
+Determinante: 6.045530066460377
+Autovalores: [6.04553007]
+
+
+Carregamento do Sistema: 108.9999999999998 MW  | 0.0 Mvar
+Determinante: 6.039917559841395
+Autovalores: [6.03991756]
+
+
+Carregamento do Sistema: 109.9999999999998 MW  | 0.0 Mvar
+Determinante: 6.034243492158458
+Autovalores: [6.03424349]
+
+
+Carregamento do Sistema: 110.9999999999998 MW  | 0.0 Mvar
+Determinante: 6.028507551782556
+Autovalores: [6.02850755]
+
+
+Carregamento do Sistema: 111.9999999999998 MW  | 0.0 Mvar
+Determinante: 6.022709422090999
+Autovalores: [6.02270942]
+
+
+Carregamento do Sistema: 112.9999999999998 MW  | 0.0 Mvar
+Determinante: 6.016848781388725
+Autovalores: [6.01684878]
+
+
+Carregamento do Sistema: 113.99999999999979 MW  | 0.0 Mvar
+Determinante: 6.010925302827716
+Autovalores: [6.0109253]
+
+
+Carregamento do Sistema: 114.99999999999979 MW  | 0.0 Mvar
+Determinante: 6.004938654324523
+Autovalores: [6.00493865]
+
+
+Carregamento do Sistema: 115.99999999999979 MW  | 0.0 Mvar
+Determinante: 5.998888498475818
+Autovalores: [5.9988885]
+
+
+Carregamento do Sistema: 116.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.992774492471903
+Autovalores: [5.99277449]
+
+
+Carregamento do Sistema: 117.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.9865962880081804
+Autovalores: [5.98659629]
+
+
+Carregamento do Sistema: 118.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.980353531194478
+Autovalores: [5.98035353]
+
+
+Carregamento do Sistema: 119.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.974045862462153
+Autovalores: [5.97404586]
+
+
+Carregamento do Sistema: 120.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.967672916468983
+Autovalores: [5.96767292]
+
+
+Carregamento do Sistema: 121.99999999999976 MW  | 0.0 Mvar
+Determinante: 5.961234322001731
+Autovalores: [5.96123432]
+
+
+Carregamento do Sistema: 122.99999999999976 MW  | 0.0 Mvar
+Determinante: 5.954729701876312
+Autovalores: [5.9547297]
+
+
+Carregamento do Sistema: 123.99999999999976 MW  | 0.0 Mvar
+Determinante: 5.948158672835543
+Autovalores: [5.94815867]
+
+
+Carregamento do Sistema: 124.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.941520845444334
+Autovalores: [5.94152085]
+
+
+Carregamento do Sistema: 125.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.934815823982348
+Autovalores: [5.93481582]
+
+
+Carregamento do Sistema: 126.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.928043206333921
+Autovalores: [5.92804321]
+
+
+Carregamento do Sistema: 127.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.921202583875321
+Autovalores: [5.92120258]
+
+
+Carregamento do Sistema: 128.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.914293541359125
+Autovalores: [5.91429354]
+
+
+Carregamento do Sistema: 129.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.907315656795721
+Autovalores: [5.90731566]
+
+
+Carregamento do Sistema: 130.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.900268501331813
+Autovalores: [5.9002685]
+
+
+Carregamento do Sistema: 131.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.893151639125867
+Autovalores: [5.89315164]
+
+
+Carregamento do Sistema: 132.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.88596462722035
+Autovalores: [5.88596463]
+
+
+Carregamento do Sistema: 133.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.87870701541073
+Autovalores: [5.87870702]
+
+
+Carregamento do Sistema: 134.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.87137834611112
+Autovalores: [5.87137835]
+
+
+Carregamento do Sistema: 135.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.863978154216443
+Autovalores: [5.86397815]
+
+
+Carregamento do Sistema: 136.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.856505966961008
+Autovalores: [5.85650597]
+
+
+Carregamento do Sistema: 137.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.848961303773463
+Autovalores: [5.8489613]
+
+
+Carregamento do Sistema: 138.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.841343676127893
+Autovalores: [5.84134368]
+
+
+Carregamento do Sistema: 139.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.83365258739104
+Autovalores: [5.83365259]
+
+
+Carregamento do Sistema: 140.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.825887532665466
+Autovalores: [5.82588753]
+
+
+Carregamento do Sistema: 141.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.81804799862859
+Autovalores: [5.818048]
+
+
+Carregamento do Sistema: 142.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.810133463367391
+Autovalores: [5.81013346]
+
+
+Carregamento do Sistema: 143.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.802143396208719
+Autovalores: [5.8021434]
+
+
+Carregamento do Sistema: 144.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.794077257544997
+Autovalores: [5.79407726]
+
+
+Carregamento do Sistema: 145.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.7859344986552355
+Autovalores: [5.7859345]
+
+
+Carregamento do Sistema: 146.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.777714561521172
+Autovalores: [5.77771456]
+
+
+Carregamento do Sistema: 147.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.769416878638342
+Autovalores: [5.76941688]
+
+
+Carregamento do Sistema: 148.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.761040872822028
+Autovalores: [5.76104087]
+
+
+Carregamento do Sistema: 149.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.752585957007752
+Autovalores: [5.75258596]
+
+
+Carregamento do Sistema: 150.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.744051534046305
+Autovalores: [5.74405153]
+
+
+Carregamento do Sistema: 151.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.7354369964929885
+Autovalores: [5.735437]
+
+
+Carregamento do Sistema: 152.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.726741726390957
+Autovalores: [5.72674173]
+
+
+Carregamento do Sistema: 153.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.717965095048435
+Autovalores: [5.7179651]
+
+
+Carregamento do Sistema: 154.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.709106462809595
+Autovalores: [5.70910646]
+
+
+Carregamento do Sistema: 155.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.700165178818891
+Autovalores: [5.70016518]
+
+
+Carregamento do Sistema: 156.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.691140580778611
+Autovalores: [5.69114058]
+
+
+Carregamento do Sistema: 157.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.6820319946994235
+Autovalores: [5.68203199]
+
+
+Carregamento do Sistema: 158.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.672838734643665
+Autovalores: [5.67283873]
+
+
+Carregamento do Sistema: 159.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.663560102461118
+Autovalores: [5.6635601]
+
+
+Carregamento do Sistema: 160.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.654195387517003
+Autovalores: [5.65419539]
+
+
+Carregamento do Sistema: 161.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.644743866411936
+Autovalores: [5.64474387]
+
+
+Carregamento do Sistema: 162.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.635204802693509
+Autovalores: [5.6352048]
+
+
+Carregamento do Sistema: 163.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.625577446559282
+Autovalores: [5.62557745]
+
+
+Carregamento do Sistema: 164.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.615861034550733
+Autovalores: [5.61586103]
+
+
+Carregamento do Sistema: 165.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.606054789238015
+Autovalores: [5.60605479]
+
+
+Carregamento do Sistema: 166.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.596157918895015
+Autovalores: [5.59615792]
+
+
+Carregamento do Sistema: 167.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.586169617164434
+Autovalores: [5.58616962]
+
+
+Carregamento do Sistema: 168.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.576089062712581
+Autovalores: [5.57608906]
+
+
+Carregamento do Sistema: 169.99999999999957 MW  | 0.0 Mvar
+Determinante: 5.565915418873297
+Autovalores: [5.56591542]
+
+
+Carregamento do Sistema: 170.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.555647833280846
+Autovalores: [5.55564783]
+
+
+Carregamento do Sistema: 171.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.545285437491129
+Autovalores: [5.54528544]
+
+
+Carregamento do Sistema: 172.9999999999996 MW  | 0.0 Mvar
+Determinante: 5.534827346590955
+Autovalores: [5.53482735]
+
+
+Carregamento do Sistema: 173.99999999999963 MW  | 0.0 Mvar
+Determinante: 5.524272658794743
+Autovalores: [5.52427266]
+
+
+Carregamento do Sistema: 174.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.513620455028326
+Autovalores: [5.51362046]
+
+
+Carregamento do Sistema: 175.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.502869798499211
+Autovalores: [5.5028698]
+
+
+Carregamento do Sistema: 176.99999999999966 MW  | 0.0 Mvar
+Determinante: 5.49201973425287
+Autovalores: [5.49201973]
+
+
+Carregamento do Sistema: 177.9999999999997 MW  | 0.0 Mvar
+Determinante: 5.481069288714417
+Autovalores: [5.48106929]
+
+
+Carregamento do Sistema: 178.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.470017469215149
+Autovalores: [5.47001747]
+
+
+Carregamento do Sistema: 179.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.458863263503325
+Autovalores: [5.45886326]
+
+
+Carregamento do Sistema: 180.99999999999972 MW  | 0.0 Mvar
+Determinante: 5.447605639238541
+Autovalores: [5.44760564]
+
+
+Carregamento do Sistema: 181.99999999999974 MW  | 0.0 Mvar
+Determinante: 5.436243543468978
+Autovalores: [5.43624354]
+
+
+Carregamento do Sistema: 182.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.424775902090933
+Autovalores: [5.4247759]
+
+
+Carregamento do Sistema: 183.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.413201619289766
+Autovalores: [5.41320162]
+
+
+Carregamento do Sistema: 184.99999999999977 MW  | 0.0 Mvar
+Determinante: 5.401519576961594
+Autovalores: [5.40151958]
+
+
+Carregamento do Sistema: 185.9999999999998 MW  | 0.0 Mvar
+Determinante: 5.3897286341148405
+Autovalores: [5.38972863]
+
+
+Carregamento do Sistema: 186.99999999999983 MW  | 0.0 Mvar
+Determinante: 5.377827626250835
+Autovalores: [5.37782763]
+
+
+Carregamento do Sistema: 187.99999999999983 MW  | 0.0 Mvar
+Determinante: 5.365815364722521
+Autovalores: [5.36581536]
+
+
+Carregamento do Sistema: 188.99999999999983 MW  | 0.0 Mvar
+Determinante: 5.353690636070394
+Autovalores: [5.35369064]
+
+
+Carregamento do Sistema: 189.99999999999986 MW  | 0.0 Mvar
+Determinante: 5.341452201334597
+Autovalores: [5.3414522]
+
+
+Carregamento do Sistema: 190.9999999999999 MW  | 0.0 Mvar
+Determinante: 5.329098795342191
+Autovalores: [5.3290988]
+
+
+
+
+fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-milano

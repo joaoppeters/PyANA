@@ -1,4 +1,4 @@
-October 24, 2022
+October 20, 2022
 
 
 relatório de análise da variação do vetor tangente do sistema 2b-milano
@@ -10,7 +10,7 @@ opções de relatório ativadas: RBARRA
 
 
 Carregamento do Sistema: 11.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -22,7 +22,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 12.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -34,7 +34,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 13.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -46,7 +46,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 14.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -58,7 +58,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 15.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -70,7 +70,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 16.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -82,7 +82,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 17.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -94,7 +94,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 18.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -106,7 +106,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 19.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -118,7 +118,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 20.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -130,7 +130,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 20.999999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -142,7 +142,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 22.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -154,7 +154,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 23.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -166,7 +166,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 24.000000000000004 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -178,7 +178,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 25.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -190,7 +190,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 26.000000000000007 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -202,7 +202,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 27.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -214,7 +214,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 28.000000000000007 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -226,7 +226,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 29.000000000000004 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -238,7 +238,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 30.000000000000004 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -250,7 +250,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 31.000000000000007 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -262,7 +262,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 32.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -274,7 +274,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 33.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -286,7 +286,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 34.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -298,7 +298,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 35.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -310,7 +310,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 36.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -322,7 +322,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 37.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -334,7 +334,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 38.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -346,7 +346,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 39.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -358,7 +358,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 40.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -370,7 +370,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 41.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -382,7 +382,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 42.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -394,7 +394,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 43.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -406,7 +406,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 44.00000000000002 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -418,7 +418,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 45.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -430,7 +430,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 46.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -442,7 +442,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 47.00000000000002 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -454,7 +454,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 48.00000000000003 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -466,7 +466,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 49.00000000000002 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -478,7 +478,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 50.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -490,7 +490,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 51.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -502,7 +502,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 52.000000000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -514,7 +514,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 53.00000000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -526,7 +526,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 54.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -538,7 +538,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 55.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -550,7 +550,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 56.0 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -562,7 +562,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 56.99999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -574,7 +574,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 57.999999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -586,7 +586,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 58.999999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -598,7 +598,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 59.999999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -610,7 +610,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 60.99999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -622,7 +622,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 61.99999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -634,7 +634,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 62.99999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -646,7 +646,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 63.99999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -658,7 +658,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 64.99999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -670,7 +670,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 65.99999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -682,7 +682,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 66.99999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -694,7 +694,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 67.99999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -706,7 +706,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 68.99999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -718,7 +718,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 69.99999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -730,7 +730,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 70.99999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -742,7 +742,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 71.99999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -754,7 +754,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 72.99999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -766,7 +766,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 73.99999999999993 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -778,7 +778,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 74.99999999999993 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -790,7 +790,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 75.99999999999993 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -802,7 +802,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 76.99999999999991 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -814,7 +814,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 77.99999999999991 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -826,7 +826,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 78.99999999999991 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -838,7 +838,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 79.99999999999991 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -850,7 +850,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 80.99999999999991 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -862,7 +862,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 81.9999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -874,7 +874,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 82.9999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -886,7 +886,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 83.9999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -898,7 +898,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 84.99999999999989 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -910,7 +910,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 85.99999999999989 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -922,7 +922,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 86.99999999999989 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -934,7 +934,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 87.99999999999989 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -946,7 +946,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 88.99999999999989 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -958,7 +958,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 89.99999999999987 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -970,7 +970,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 90.99999999999987 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -982,7 +982,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 91.99999999999987 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -994,7 +994,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 92.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1006,7 +1006,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 93.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1018,7 +1018,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 94.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1030,7 +1030,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 95.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1042,7 +1042,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 96.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1054,7 +1054,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 97.99999999999984 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1066,7 +1066,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 98.99999999999984 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1078,7 +1078,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 99.99999999999984 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1090,7 +1090,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 100.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1102,7 +1102,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 101.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1114,7 +1114,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 102.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1126,7 +1126,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 103.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1138,7 +1138,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 104.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1150,7 +1150,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 105.99999999999982 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1162,7 +1162,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 106.99999999999982 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1174,7 +1174,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 107.99999999999982 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1186,7 +1186,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 108.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1198,7 +1198,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 109.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1210,7 +1210,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 110.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1222,7 +1222,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 111.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1234,7 +1234,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 112.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1246,7 +1246,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 113.99999999999979 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1258,7 +1258,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 114.99999999999979 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1270,7 +1270,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 115.99999999999979 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1282,7 +1282,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 116.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1294,7 +1294,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 117.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1306,7 +1306,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 118.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1318,7 +1318,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 119.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1330,7 +1330,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 120.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1342,7 +1342,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 121.99999999999976 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1354,7 +1354,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 122.99999999999976 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1366,7 +1366,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 123.99999999999976 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1378,7 +1378,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 124.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1390,7 +1390,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 125.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1402,7 +1402,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 126.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1414,7 +1414,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 127.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1426,7 +1426,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 128.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1438,7 +1438,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 129.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1450,7 +1450,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 130.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1462,7 +1462,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 131.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1474,7 +1474,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 132.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1486,7 +1486,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 133.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1498,7 +1498,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 134.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1510,7 +1510,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 135.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1522,7 +1522,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 136.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1534,7 +1534,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 137.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1546,7 +1546,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 138.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1558,7 +1558,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 139.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1570,7 +1570,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 140.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1582,7 +1582,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 141.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1594,7 +1594,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 142.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1606,7 +1606,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 143.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1618,7 +1618,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 144.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1630,7 +1630,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 145.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1642,7 +1642,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 146.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1654,7 +1654,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 147.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1666,7 +1666,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 148.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1678,7 +1678,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 149.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1690,7 +1690,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 150.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1702,7 +1702,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 151.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1714,7 +1714,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 152.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1726,7 +1726,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 153.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1738,7 +1738,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 154.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1750,7 +1750,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 155.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1762,7 +1762,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 156.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1774,7 +1774,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 157.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1786,7 +1786,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 158.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1798,7 +1798,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 159.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1810,7 +1810,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 160.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1822,7 +1822,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 161.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1834,7 +1834,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 162.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1846,7 +1846,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 163.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1858,7 +1858,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 164.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1870,7 +1870,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 165.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1882,7 +1882,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 166.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1894,7 +1894,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 167.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1906,7 +1906,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 168.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1918,7 +1918,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 169.99999999999957 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1930,7 +1930,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 170.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1942,7 +1942,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 171.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1954,7 +1954,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 172.9999999999996 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1966,7 +1966,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 173.99999999999963 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1978,7 +1978,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 174.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -1990,7 +1990,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 175.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2002,7 +2002,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 176.99999999999966 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2014,7 +2014,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 177.9999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2026,7 +2026,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 178.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2038,7 +2038,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 179.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2050,7 +2050,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 180.99999999999972 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2062,7 +2062,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 181.99999999999974 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2074,7 +2074,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 182.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2086,7 +2086,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 183.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2098,7 +2098,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 184.99999999999977 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2110,7 +2110,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 185.9999999999998 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2122,7 +2122,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 186.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2134,7 +2134,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 187.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2146,7 +2146,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 188.99999999999983 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2158,7 +2158,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 189.99999999999986 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2170,7 +2170,7 @@ Variável de Continuação: lambda, 0.00%
 
 
 Carregamento do Sistema: 190.9999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
+Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2178,846 +2178,6 @@ Variável de Continuação: lambda, 0.00%
 |  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
 -----------------------------------------------------------------
 |  2  |  BARRA-PQ   |  0.9481  | -18.5460 |  0.9481  | -18.5462 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.09999999999988 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0005  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9486  | -18.5371 |  0.9480  | -18.5575 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.1999999999999 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9479  | -18.5689 |  0.9479  | -18.5689 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.29999999999993 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9479  | -18.5802 |  0.9479  | -18.5802 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.39999999999992 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9478  | -18.5916 |  0.9478  | -18.5916 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.49999999999994 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9478  | -18.6029 |  0.9478  | -18.6029 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.59999999999997 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9477  | -18.6143 |  0.9477  | -18.6143 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.7 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9476  | -18.6256 |  0.9476  | -18.6256 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.8 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9476  | -18.6370 |  0.9476  | -18.6370 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 191.9 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9475  | -18.6484 |  0.9475  | -18.6484 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.00000000000003 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9474  | -18.6598 |  0.9474  | -18.6598 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.10000000000005 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9474  | -18.6711 |  0.9474  | -18.6711 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.11000000000007 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9474  | -18.6702 |  0.9474  | -18.6723 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.12000000000006 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9474  | -18.6734 |  0.9474  | -18.6734 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.13000000000008 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9474  | -18.6745 |  0.9474  | -18.6745 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.1400000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6757 |  0.9473  | -18.6757 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.1500000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6768 |  0.9473  | -18.6768 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.1600000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6780 |  0.9473  | -18.6780 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.17000000000013 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6791 |  0.9473  | -18.6791 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.18000000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6802 |  0.9473  | -18.6802 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.19000000000017 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6814 |  0.9473  | -18.6814 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20000000000016 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6825 |  0.9473  | -18.6825 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20100000000016 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6824 |  0.9473  | -18.6826 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20200000000017 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6827 |  0.9473  | -18.6827 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20300000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6829 |  0.9473  | -18.6829 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20400000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6830 |  0.9473  | -18.6830 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20500000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6831 |  0.9473  | -18.6831 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20600000000016 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6832 |  0.9473  | -18.6832 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20700000000016 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6833 |  0.9473  | -18.6833 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20800000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6834 |  0.9473  | -18.6834 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.20900000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6835 |  0.9473  | -18.6835 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21000000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6836 |  0.9473  | -18.6836 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21100000000013 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21110000000013 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21120000000013 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21130000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21140000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21150000000011 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21160000000012 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21170000000012 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2118000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2119000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2120000000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2120100000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2120200000001 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21203000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21204000000014 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21205000000015 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21206000000018 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21207000000018 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21208000000019 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2120900000002 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2121000000002 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21211000000022 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21212000000023 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213000000023 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213100000026 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213200000025 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213300000028 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213400000028 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2121350000003 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.2121360000003 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213700000033 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213700000033 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213800000044 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21213900000134 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21214000001032 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21214100010036 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21214200100036 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21214301000037 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
------------------------------------------------------------------
-
-
-Carregamento do Sistema: 192.21214410000042 MW  | 0.0 Mvar
-Variável de Continuação: lambda, 0.00% 
-
-|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
------------------------------------------------------------------
-|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
------------------------------------------------------------------
-|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
 -----------------------------------------------------------------
 
 

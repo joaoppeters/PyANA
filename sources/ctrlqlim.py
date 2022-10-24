@@ -27,7 +27,7 @@ class Qlim:
         if 'reactive_generation' not in powerflow.sol:
             powerflow.sol['reactive_generation'] = zeros([powerflow.setup.nbus])
             powerflow.setup.maskQ = ones(powerflow.setup.nbus, dtype=bool)
-            powerflow.setup.maskQ[powerflow.setup.slackidx] = False
+            powerflow.setup.slackqlim = False
                 
 
     
@@ -79,7 +79,7 @@ class Qlim:
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
                         powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = 1
-                
+                    
                     elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] <= value['tensao'] * (1E-3)):
                         # Tratamento de limite de potência reativa gerada máxima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_maxima']
@@ -89,6 +89,46 @@ class Qlim:
                         # Tratamento de limite de potência reativa gerada mínima
                         powerflow.setup.deltaQlim[nger] += value['potencia_reativa_minima']
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
+
+                # Tratamento de limites de barra SLACK
+                elif (value['tipo'] == 2) and (not powerflow.setup.slackqlim):
+                    if (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_maxima']) and (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_minima']):
+                        # Tratamento de limite de magnitude de tensão
+                        powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                
+                    elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']):
+                        # Tratamento de limite de potência reativa gerada máxima
+                        powerflow.setup.deltaQlim[nger] += value['potencia_reativa_maxima']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
+                        powerflow.setup.slackqlim = True
+                    
+                    elif (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']):
+                        # Tratamento de limite de potência reativa gerada mínima
+                        powerflow.setup.deltaQlim[nger] += value['potencia_reativa_minima']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
+                        powerflow.setup.slackqlim = True
+                    
+                # Tratamento de limites de barra SLACK
+                elif (value['tipo'] == 2) and (powerflow.setup.slackqlim):
+                    if ((powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] > value['tensao'] * (1E-3))) or ((powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] < value['tensao'] * (1E-3))):
+                        # Tratamento de limite de magnitude de tensão
+                        powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                        powerflow.setup.slackqlim = False
+                    
+                    elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] <= value['tensao'] * (1E-3)):
+                        # Tratamento de limite de potência reativa gerada máxima
+                        powerflow.setup.deltaQlim[nger] += value['potencia_reativa_maxima']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
+                    
+                    elif (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] >= value['tensao'] * (1E-3)):
+                        # Tratamento de limite de potência reativa gerada mínima
+                        powerflow.setup.deltaQlim[nger] += value['potencia_reativa_minima']
+                        powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
+
                 
                 # Incrementa contador
                 nger += 1
@@ -133,16 +173,16 @@ class Qlim:
 
         # Submatrizes PXP QXP YQV YXT
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 # dQg/dx
                 powerflow.setup.qxx[idx, nger] = -1
 
                 # Barras PV
-                if value['tipo'] != -1:
+                if (value['tipo'] == 1) or ((value['tipo'] == 2) and (not powerflow.setup.slackqlim)):
                     powerflow.setup.yxv[nger, idx] = 1
 
                 # Barras PQV
-                elif value['tipo'] == -1:
+                elif (value['tipo'] == -1) or ((value['tipo'] == 2) and (powerflow.setup.slackqlim)):
                     powerflow.setup.yxx[nger, nger] = 1
 
                 # Incrementa contador
@@ -189,14 +229,14 @@ class Qlim:
             if value['tipo'] != 0:
                 powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
 
-                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima']):
+                if (value['tipo'] == 1) and ((powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'])):
                     powerflow.setup.dbarraDF.loc[idx, 'tipo'] = -1
+
+                if (value['tipo'] == 2) and ((powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'])):
+                    powerflow.setup.slackqlim = True
 
                 # Incrementa contador
                 nger += 1
-
-        if (powerflow.sol['reactive_generation'][powerflow.setup.slackidx] >= powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][powerflow.setup.slackidx] <= powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'potencia_reativa_minima']):
-            powerflow.setup.maskQ[powerflow.setup.slackidx] = True
         
         self.qlimsch(powerflow,)
 

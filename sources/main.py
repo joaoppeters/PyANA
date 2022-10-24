@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee14.pwf'
+system = '2b-milano.pwf'
 
-method = 'NEWTON'
+method = 'CPF'
 
 jacobi = 'COMPLETA'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIMs']
+control = ['QLIM']
 
 options = {
     'sbase': 100.,
@@ -26,7 +26,7 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
-    'cpfLambda': 1E-2,
+    'cpfLambda': 1E-1,
     'cpfV2L': 0.95,
     'full': False,
 }
