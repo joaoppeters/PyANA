@@ -12,22 +12,23 @@ system = '2b-milano.pwf'
 
 method = 'CPF'
 
-jacobi = 'COMPLETA'
-
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIM']
+control = ['QLIMs']
+# control = []
 
 options = {
     'sbase': 100.,
     'itermx': 15,
-    'tolP': 1E-6,
-    'tolQ': 1E-6,
-    'tolY': 1E-6,
+    'tolP': 1E-10,
+    'tolQ': 1E-10,
+    'tolY': 1E-10,
     'vmax': 1.05,
     'vmin': 0.95,
     'cpfBeta': 0.,
     'cpfLambda': 1E-1,
     'cpfV2L': 0.95,
+    'cpfVolt': 1E-8,
+    'icmn': 1E-8,
     'full': False,
 }
 
@@ -40,7 +41,6 @@ report = ['RBARRA',]
 PowerFlow(
     system=system,
     method=method,
-    jacobi=jacobi,
     options=options,
     control=control,
     monitor=monitor,

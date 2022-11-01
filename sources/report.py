@@ -198,7 +198,7 @@ class Reports:
         self.file.write('-'*71)
         self.file.write('\n')
         if powerflow.method != 'CPF':
-            self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
+            self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i+1]:^6.3f} | {powerflow.sol['convP'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i+1]]:^5d} | {powerflow.sol['convQ'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i+1]]:^5d} | {powerflow.sol['convY'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i+1]]:^5d} |")
     
         elif powerflow.method == 'CPF':
             self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
@@ -507,6 +507,11 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['eigenvalues-QV'])}")
                 self.filedeteigen.write('\n')
+                self.filedeteigen.write('Fator de Participação:')
+                for b in range(0, powerflow.setup.nbus):
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"p{b}: {powerflow.case[key]['participationfactor-QV'][:, b]}")
+                self.filedeteigen.write('\n')
             
             elif (key != list(powerflow.case.keys())[-1]):
                 # Variável de variação de tensão
@@ -575,6 +580,11 @@ class Reports:
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant-QV']}")
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['corr']['eigenvalues-QV'])}")
+                self.filedeteigen.write('\n')
+                self.filedeteigen.write('Fator de Participação:')
+                for b in range(0, powerflow.setup.nbus):
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"p{b}: {powerflow.case[key]['corr']['participationfactor-QV'][:, b]}")
                 self.filedeteigen.write('\n')
 
         # FILEVTAN

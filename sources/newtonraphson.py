@@ -10,6 +10,7 @@ from copy import deepcopy
 from numpy import abs, append, argmax, array, concatenate, cos, max, ndarray, radians, sin, zeros
 from numpy.linalg import solve
 
+from calc import PQCalc
 from ctrl import Control
 from jacobian import Jacobi
 
@@ -180,12 +181,12 @@ class NewtonRaphson:
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if (value['tipo'] != 2):
                 powerflow.setup.deltaP[idx] += powerflow.setup.pqsch['potencia_ativa_especificada'][idx]
-                powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
+                powerflow.setup.deltaP[idx] -= PQCalc().pcalc(powerflow, idx,)
 
             # Tipo PQ - Resíduo Potência Reativa
             if ('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control) or (value['tipo'] == 0):
                 powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
-                powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
+                powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
         self.checkresidue(powerflow,)
@@ -197,72 +198,6 @@ class NewtonRaphson:
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
         else:
             powerflow.setup.deltaY = array([0])
-
-
-
-    def pcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência ativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência ativa
-
-        Retorno
-            p: float
-                potência ativa calculada para o barramento `idx`
-        """
-
-        ## Inicialização
-        # Variável de potência ativa calculada para o barramento `idx`
-        p = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            p += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.ybus[idx][bus].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        p *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['active'][idx] = (p * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
-
-        return p
-
-
-
-    def qcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência reativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência reativa
-
-        Retorno
-            q: float
-                potência reativa calculada para o barramento `idx`
-        """
-
-        ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        q *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
-
-        return q
         
 
     
@@ -278,25 +213,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # configuração completa
-        if powerflow.jacobi == 'COMPLETA':
-            powerflow.setup.deltaPQY  = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
-        # configuração alternada
-        elif powerflow.jacobi == 'ALTERNADA':
-            powerflow.setup.deltaPQY: ndarray = zeros(shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype='float')
-            pq = -1
-            for row in range(0, powerflow.setup.nbus):
-                if row % 2 == 0:
-                    pq += 1
-                    powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaP[pq])
-                else:
-                    powerflow.setup.deltaPQY[row] = deepcopy(powerflow.setup.deltaQ[pq])
-        # configuração reduzida
-        elif powerflow.jacobi == 'REDUZIDA':
-            powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
-            powerflow.setup.deltaPQY[powerflow.setup.mask]
-        ## ERROR
-        else:
-            raise ValueError('\033[91mERROR: Falha na escolha da formulação para montagem da matriz Jacobiana.\nRevise as opções disponíveis e rode novamente o programa!\033[0m')
+        powerflow.setup.deltaPQY  = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
 
 
 
@@ -344,22 +261,9 @@ class NewtonRaphson:
 
         ## Inicialização
         # configuração completa
-        if powerflow.jacobi == 'COMPLETA':
-            powerflow.sol['theta'] += powerflow.setup.statevar[0:(powerflow.setup.nbus)]
-            powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
-        # configuração alternada
-        elif powerflow.jacobi == 'ALTERNADA':
-            for idx in range(0, powerflow.setup.nbus):
-                powerflow.sol['theta'][idx] += powerflow.setup.statevar[idx]
-                powerflow.sol['voltage'][idx] += powerflow.setup.statevar[idx+1]
-        # configuração reduzida
-        elif powerflow.jacobi == 'REDUZIDA':
-            for idx, value in powerflow.setup.dbarraDF.iterrows():
-                if (value['tipo'] == 1) or (value['tipo'] == 0):
-                    powerflow.sol['theta'][idx] += powerflow.setup.statevar[idx]
-                    if value['tipo'] == 0:
-                        powerflow.sol['voltage'][idx] += powerflow.setup.statevar[idx + powerflow.setup.nbus]
-        
+        powerflow.sol['theta'] += powerflow.setup.statevar[0:(powerflow.setup.nbus)]
+        powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
+
         # Atualização das variáveis de estado adicionais para controles ativos
         if powerflow.setup.ctrlcount > 0:
             Control(powerflow, powerflow.setup).controlupdt(powerflow,)

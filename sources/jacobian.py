@@ -11,6 +11,7 @@ from numpy import concatenate, cos, ndarray, ones, savetxt, sin, zeros
 from os.path import exists
 from os import remove
 
+from calc import PQCalc
 from ctrl import Control
 from folder import Folder
 
@@ -50,20 +51,20 @@ class Jacobi:
         powerflow.setup.qt = zeros([powerflow.setup.nbus, powerflow.setup.nbus])
         powerflow.setup.qv = zeros([powerflow.setup.nbus, powerflow.setup.nbus])
 
-        for idx in range(powerflow.setup.nbus):
-            for idy in range(powerflow.setup.nbus):
+        for idx in range(0, powerflow.setup.nbus):
+            for idy in range(0, powerflow.setup.nbus):
                 if idx is idy:
                     # Elemento Hkk
-                    powerflow.setup.pt[idx, idy] += (-powerflow.sol['voltage'][idx] ** 2) * powerflow.setup.ybus[idx][idy].imag - self.qcalc(powerflow, idx,)
+                    powerflow.setup.pt[idx, idy] += (-powerflow.sol['voltage'][idx] ** 2) * powerflow.setup.ybus[idx][idy].imag - PQCalc().qcalc(powerflow, idx,)
 
                     # Elemento Nkk
-                    powerflow.setup.pv[idx, idy] += (self.pcalc(powerflow, idx,) + powerflow.sol['voltage'][idx] ** 2 * powerflow.setup.ybus[idx][idy].real) / powerflow.sol['voltage'][idx]
+                    powerflow.setup.pv[idx, idy] += (PQCalc().pcalc(powerflow, idx,) + powerflow.sol['voltage'][idx] ** 2 * powerflow.setup.ybus[idx][idy].real) / powerflow.sol['voltage'][idx]
 
                     # Elemento Mkk
-                    powerflow.setup.qt[idx, idy] += self.pcalc(powerflow, idx,) - (powerflow.sol['voltage'][idx] ** 2) * powerflow.setup.ybus[idx][idy].real
+                    powerflow.setup.qt[idx, idy] += PQCalc().pcalc(powerflow, idx,) - (powerflow.sol['voltage'][idx] ** 2) * powerflow.setup.ybus[idx][idy].real
 
                     # Elemento Lkk
-                    powerflow.setup.qv[idx, idy] += (self.qcalc(powerflow, idx,) - powerflow.sol['voltage'][idx] ** 2 * powerflow.setup.ybus[idx][idy].imag) / powerflow.sol['voltage'][idx]
+                    powerflow.setup.qv[idx, idy] += (PQCalc().qcalc(powerflow, idx,) - powerflow.sol['voltage'][idx] ** 2 * powerflow.setup.ybus[idx][idy].imag) / powerflow.sol['voltage'][idx]
                 
                 else:
                     # Elemento Hkm
@@ -90,72 +91,6 @@ class Jacobi:
             # Armazenamento da Matriz Jacobiana
             Folder(powerflow.setup,).jacobi(powerflow.setup,)
             self.savejacobi(powerflow,)
-        
-
-
-    def pcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência ativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência ativa
-
-        Retorno
-            p: float
-                potência ativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência ativa calculada para o barramento `idx`
-        p = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            p += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.ybus[idx][bus].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        p *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['active'][idx] = (p * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
-
-        return p
-
-
-
-    def qcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência reativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência reativa
-
-        Retorno
-            q: float
-                potência reativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        q *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
-
-        return q
 
 
     
@@ -176,32 +111,8 @@ class Jacobi:
 
         # Montagem da matriz Jacobiana
         # configuração completa
-        if powerflow.jacobi == 'COMPLETA':
-            powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
-        # configuração alternada
-        elif powerflow.jacobi == 'ALTERNADA':
-            powerflow.setup.jacob: ndarray = zeros(shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype='float')
-            for row in range(0, powerflow.setup.nbus):
-                ptpv = -1
-                qtqv = -1
-                for col in range(0, powerflow.setup.nbus):
-                    if row % 2 == 0:
-                        if col % 2 == 0:
-                            ptpv += 1
-                            powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.pt[row, ptpv])
-                        else:
-                            powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.pv[row, ptpv])
-                    else:
-                        if col % 2 == 0:
-                            qtqv += 1
-                            powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.qt[row, qtqv])
-                        else:
-                            powerflow.setup.jacob[row, col] = deepcopy(powerflow.setup.qv[row, qtqv])
-        # configuração reduzida
-        elif powerflow.jacobi == 'REDUZIDA':
-            powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
-            powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
-            
+        powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
+
 
 
     def bignumber(
@@ -244,7 +155,7 @@ class Jacobi:
 
         ## Inicialização
         # Cabeçalho
-        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação ' + powerflow.jacobi + ' vv Iteração ' + str(powerflow.sol['iter']) + ' vv'
+        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação Completa vv Iteração ' + str(powerflow.sol['iter']) + ' vv'
 
         # Arquivo
         file = powerflow.setup.dirRjacobi + powerflow.setup.name + '-jacobi.csv'

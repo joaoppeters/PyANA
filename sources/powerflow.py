@@ -17,7 +17,6 @@ class PowerFlow:
         self,
         system: str='',
         method: str='NEWTON',
-        jacobi: str='COMPLETA',
         options: dict=dict(),
         control: list=list(),
         monitor: list=list(),
@@ -28,7 +27,6 @@ class PowerFlow:
         Parâmetros:
             system: str, opcional, valor padrão ''
             method: str, opcional, valor padrão 'NEWTON'
-            jacobi: str, opcional, valor padrão 'COMPLETA'
             options: dict, opcional, valor padrão None
             control: list, opcional, valor padrão None
             monitor: list, opcional, valor padrão None
@@ -39,7 +37,6 @@ class PowerFlow:
         # Variáveis chamadas
         self.system = system    # SEP em estudo
         self.method = method    # Método de solução do fluxo de potência
-        self.jacobi = jacobi    # Formulação da matriz Jacobiana
         self.options = options  # Opções de convergência
         self.control = control  # Opções de controle
         self.monitor = monitor  # Opções de monitoramento

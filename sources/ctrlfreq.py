@@ -7,7 +7,9 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, cos, infty, radians, sin, zeros
+from numpy import append, concatenate, infty, radians, zeros
+
+from calc import PQCalc
 
 class Freq:
     """classe para regulação primária de frequência"""
@@ -163,12 +165,12 @@ class Freq:
                 # Cálculo do resíduo DeltaP
                 powerflow.setup.deltaP[idx] = powerflow.sol['active_generation'][nger]
                 powerflow.setup.deltaP[idx] -= value['demanda_ativa'] / powerflow.setup.options['sbase']
-                powerflow.setup.deltaP[idx] -= self.pcalc(powerflow, idx,)
+                powerflow.setup.deltaP[idx] -= PQCalc().pcalc(powerflow, idx,)
 
                 # Cálculo do resíduo DeltaQ
                 powerflow.setup.deltaQ[idx] = powerflow.sol['reactive_generation'][nger]
                 powerflow.setup.deltaQ[idx] -= value['demanda_reativa'] / powerflow.setup.options['sbase']
-                powerflow.setup.deltaQ[idx] -= self.qcalc(powerflow, idx,)
+                powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
                 # Tratamento de limite de potência ativa
                 if powerflow.sol['freq'] >= powerflow.setup.freqger['max'][nger] or powerflow.sol['freq'] <= powerflow.setup.freqger['min'][nger]:
@@ -195,72 +197,6 @@ class Freq:
         powerflow.setup.deltaY = append(powerflow.setup.deltaY, powerflow.setup.deltaPger)
         powerflow.setup.deltaY = append(powerflow.setup.deltaY, powerflow.setup.deltaQger)
         powerflow.setup.deltaY = append(powerflow.setup.deltaY, powerflow.setup.deltaTger)
-
-
-
-    def pcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência ativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência ativa
-
-        Retorno
-            p: float
-                potência ativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência ativa calculada para o barramento `idx`
-        p = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            p += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.ybus[idx][bus].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        p *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['active'][idx] = (p * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
-
-        return p
-
-
-
-    def qcalc(
-        self,
-        powerflow,
-        idx: int=None,
-    ):
-        """cálculo da potência reativa de cada barra
-        
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            idx: int, obrigatório, valor padrão None
-                referencia o índice da barra a qual vai ser calculada a potência reativa
-
-        Retorno
-            q: float
-                potência reativa calculada para o barramento `idx`
-        """
-        
-        ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
-
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
-
-        q *= powerflow.sol['voltage'][idx]
-
-        # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
-
-        return q
 
 
 

@@ -1,4 +1,4 @@
-October 20, 2022
+October 31, 2022
 
 
 relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-milano
@@ -10,913 +10,1931 @@ opções de relatório ativadas: RBARRA
 
 
 Carregamento do Sistema: 10.0 MW  | 0.0 Mvar
-Determinante: 6.331555462901854
-Autovalores: [6.33155546]
+Determinante: 63315554628.998604
+Autovalores: [1.00000000e+10 6.33155546e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01236017e-19]
+p1: [4.01236017e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 11.0 MW  | 0.0 Mvar
-Determinante: 6.331057752439397
-Autovalores: [6.33105775]
+Determinante: 63310577524.56808
+Autovalores: [1.00000000e+10 6.33105775e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01246528e-19]
+p1: [4.01246528e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 12.0 MW  | 0.0 Mvar
-Determinante: 6.330512556181093
-Autovalores: [6.33051256]
+Determinante: 63305125561.98088
+Autovalores: [1.00000000e+10 6.33051255e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01258041e-19]
+p1: [4.01258041e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 13.0 MW  | 0.0 Mvar
-Determinante: 6.329919850961619
-Autovalores: [6.32991985]
+Determinante: 63299198509.7814
+Autovalores: [1.00000000e+10 6.32991985e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01270558e-19]
+p1: [4.01270558e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 14.0 MW  | 0.0 Mvar
-Determinante: 6.3292796115846315
-Autovalores: [6.32927961]
+Determinante: 63292796116.00635
+Autovalores: [1.00000000e+10 6.32927961e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0128408e-19]
+p1: [4.0128408e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 15.0 MW  | 0.0 Mvar
-Determinante: 6.3285918108186
-Autovalores: [6.32859181]
+Determinante: 63285918108.340744
+Autovalores: [1.00000000e+10 6.32859181e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01298606e-19]
+p1: [4.01298606e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 16.0 MW  | 0.0 Mvar
-Determinante: 6.327856419392275
-Autovalores: [6.32785642]
+Determinante: 63278564194.0717
+Autovalores: [1.00000000e+10 6.32785642e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01314139e-19]
+p1: [4.01314139e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 17.0 MW  | 0.0 Mvar
-Determinante: 6.327073405989827
-Autovalores: [6.32707341]
+Determinante: 63270734060.04107
+Autovalores: [1.0000000e+10 6.3270734e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01330678e-19]
+p1: [4.01330678e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 18.0 MW  | 0.0 Mvar
-Determinante: 6.3262427372456465
-Autovalores: [6.32624274]
+Determinante: 63262427372.592606
+Autovalores: [1.00000000e+10 6.32624273e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01348225e-19]
+p1: [4.01348225e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 19.0 MW  | 0.0 Mvar
-Determinante: 6.325364377738775
-Autovalores: [6.32536438]
+Determinante: 63253643777.51711
+Autovalores: [1.00000000e+10 6.32536437e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01366781e-19]
+p1: [4.01366781e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 20.0 MW  | 0.0 Mvar
-Determinante: 6.324438289987021
-Autovalores: [6.32443829]
+Determinante: 63244382899.99217
+Autovalores: [1.00000000e+10 6.32443829e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01386345e-19]
+p1: [4.01386345e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 20.999999999999996 MW  | 0.0 Mvar
-Determinante: 6.323464434440686
-Autovalores: [6.32346443]
+Determinante: 63234644344.52127
+Autovalores: [1.00000000e+10 6.32346443e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01406921e-19]
+p1: [4.01406921e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 22.0 MW  | 0.0 Mvar
-Determinante: 6.322442769475973
-Autovalores: [6.32244277]
+Determinante: 63224427694.86596
+Autovalores: [1.00000000e+10 6.32244277e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01428508e-19]
+p1: [4.01428508e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 23.0 MW  | 0.0 Mvar
-Determinante: 6.3213732513880085
-Autovalores: [6.32137325]
+Determinante: 63213732513.97814
+Autovalores: [1.00000000e+10 6.32137325e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01451108e-19]
+p1: [4.01451108e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 24.000000000000004 MW  | 0.0 Mvar
-Determinante: 6.320255834383538
-Autovalores: [6.32025583]
+Determinante: 63202558343.924614
+Autovalores: [1.00000000e+10 6.32025583e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01474722e-19]
+p1: [4.01474722e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 25.0 MW  | 0.0 Mvar
-Determinante: 6.319090470573222
-Autovalores: [6.31909047]
+Determinante: 63190904705.81222
+Autovalores: [1.00000000e+10 6.31909047e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01499351e-19]
+p1: [4.01499351e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 26.000000000000007 MW  | 0.0 Mvar
-Determinante: 6.317877109963604
-Autovalores: [6.31787711]
+Determinante: 63178771099.7066
+Autovalores: [1.00000000e+10 6.31787711e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01524996e-19]
+p1: [4.01524996e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 27.0 MW  | 0.0 Mvar
-Determinante: 6.316615700448692
-Autovalores: [6.3166157]
+Determinante: 63166157004.54753
+Autovalores: [1.0000000e+10 6.3166157e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0155166e-19]
+p1: [4.0155166e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 28.000000000000007 MW  | 0.0 Mvar
-Determinante: 6.315306187801165
-Autovalores: [6.31530619]
+Determinante: 63153061878.06183
+Autovalores: [1.00000000e+10 6.31530618e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01579342e-19]
+p1: [4.01579342e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 29.000000000000004 MW  | 0.0 Mvar
-Determinante: 6.3139485156632364
-Autovalores: [6.31394852]
+Determinante: 63139485156.672066
+Autovalores: [1.00000000e+10 6.31394851e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01608046e-19]
+p1: [4.01608046e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 30.000000000000004 MW  | 0.0 Mvar
-Determinante: 6.312542625537092
-Autovalores: [6.31254263]
+Determinante: 63125426255.3994
+Autovalores: [1.00000000e+10 6.31254262e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01637772e-19]
+p1: [4.01637772e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 31.000000000000007 MW  | 0.0 Mvar
-Determinante: 6.311088456774991
-Autovalores: [6.31108846]
+Determinante: 63110884567.76696
+Autovalores: [1.00000000e+10 6.31108845e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01668521e-19]
+p1: [4.01668521e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 32.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.309585946568965
-Autovalores: [6.30958595]
+Determinante: 63095859465.69497
+Autovalores: [1.00000000e+10 6.30958594e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01700297e-19]
+p1: [4.01700297e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 33.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.308035029940117
-Autovalores: [6.30803503]
+Determinante: 63080350299.39434
+Autovalores: [1.00000000e+10 6.30803503e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01733099e-19]
+p1: [4.01733099e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 34.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.30643563972756
-Autovalores: [6.30643564]
+Determinante: 63064356397.256065
+Autovalores: [1.00000000e+10 6.30643564e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0176693e-19]
+p1: [4.0176693e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 35.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.30478770657692
-Autovalores: [6.30478771]
+Determinante: 63047877065.73676
+Autovalores: [1.0000000e+10 6.3047877e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01801792e-19]
+p1: [4.01801792e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 36.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.303091158928468
-Autovalores: [6.30309116]
+Determinante: 63030911589.23903
+Autovalores: [1.00000000e+10 6.30309115e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01837687e-19]
+p1: [4.01837687e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 37.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.301345923004827
-Autovalores: [6.30134592]
+Determinante: 63013459229.98891
+Autovalores: [1.00000000e+10 6.30134592e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01874616e-19]
+p1: [4.01874616e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 38.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.299551922798291
-Autovalores: [6.29955192]
+Determinante: 62995519227.90943
+Autovalores: [1.00000000e+10 6.29955192e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01912582e-19]
+p1: [4.01912582e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 39.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.297709080057702
-Autovalores: [6.29770908]
+Determinante: 62977090800.48912
+Autovalores: [1.00000000e+10 6.29770908e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01951587e-19]
+p1: [4.01951587e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 40.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.295817314274926
-Autovalores: [6.29581731]
+Determinante: 62958173142.64657
+Autovalores: [1.00000000e+10 6.29581731e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.01991632e-19]
+p1: [4.01991632e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 41.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.293876542670885
-Autovalores: [6.29387654]
+Determinante: 62938765426.59091
+Autovalores: [1.00000000e+10 6.29387654e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0203272e-19]
+p1: [4.0203272e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 42.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.291886680181189
-Autovalores: [6.29188668]
+Determinante: 62918866801.678276
+Autovalores: [1.00000000e+10 6.29188668e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02074854e-19]
+p1: [4.02074854e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 43.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.289847639441292
-Autovalores: [6.28984764]
+Determinante: 62898476394.26349
+Autovalores: [1.00000000e+10 6.28984764e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02118034e-19]
+p1: [4.02118034e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 44.00000000000002 MW  | 0.0 Mvar
-Determinante: 6.287759330771241
-Autovalores: [6.28775933]
+Determinante: 62877593307.546455
+Autovalores: [1.00000000e+10 6.28775933e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02162265e-19]
+p1: [4.02162265e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 45.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.285621662159944
-Autovalores: [6.28562166]
+Determinante: 62856216621.41686
+Autovalores: [1.00000000e+10 6.28562166e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02207547e-19]
+p1: [4.02207547e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 46.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.283434539249017
-Autovalores: [6.28343454]
+Determinante: 62834345392.29045
+Autovalores: [1.00000000e+10 6.28343454e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02253884e-19]
+p1: [4.02253884e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 47.00000000000002 MW  | 0.0 Mvar
-Determinante: 6.2811978653161304
-Autovalores: [6.28119787]
+Determinante: 62811978652.94413
+Autovalores: [1.00000000e+10 6.28119786e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02301279e-19]
+p1: [4.02301279e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 48.00000000000003 MW  | 0.0 Mvar
-Determinante: 6.278911541257931
-Autovalores: [6.27891154]
+Determinante: 62789115412.3442
+Autovalores: [1.00000000e+10 6.27891154e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02349733e-19]
+p1: [4.02349733e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 49.00000000000002 MW  | 0.0 Mvar
-Determinante: 6.276575465572449
-Autovalores: [6.27657547]
+Determinante: 62765754655.47114
+Autovalores: [1.00000000e+10 6.27657546e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02399249e-19]
+p1: [4.02399249e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 50.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.27418953434105
-Autovalores: [6.27418953]
+Determinante: 62741895343.13856
+Autovalores: [1.00000000e+10 6.27418953e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02449831e-19]
+p1: [4.02449831e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 51.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.2717536412098776
-Autovalores: [6.27175364]
+Determinante: 62717536411.807846
+Autovalores: [1.00000000e+10 6.27175364e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0250148e-19]
+p1: [4.0250148e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 52.000000000000014 MW  | 0.0 Mvar
-Determinante: 6.269267677370826
-Autovalores: [6.26926768]
+Determinante: 62692676773.39776
+Autovalores: [1.00000000e+10 6.26926767e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02554201e-19]
+p1: [4.02554201e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 53.00000000000001 MW  | 0.0 Mvar
-Determinante: 6.2667315315419785
-Autovalores: [6.26673153]
+Determinante: 62667315315.0895
+Autovalores: [1.00000000e+10 6.26673153e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02607995e-19]
+p1: [4.02607995e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 54.0 MW  | 0.0 Mvar
-Determinante: 6.264145089947542
-Autovalores: [6.26414509]
+Determinante: 62641450899.12497
+Autovalores: [1.00000000e+10 6.26414509e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02662865e-19]
+p1: [4.02662865e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 55.0 MW  | 0.0 Mvar
-Determinante: 6.261508236297284
-Autovalores: [6.26150824]
+Determinante: 62615082362.60178
+Autovalores: [1.00000000e+10 6.26150823e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02718816e-19]
+p1: [4.02718816e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 56.0 MW  | 0.0 Mvar
-Determinante: 6.258820851765398
-Autovalores: [6.25882085]
+Determinante: 62588208517.26214
+Autovalores: [1.00000000e+10 6.25882085e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02775849e-19]
+p1: [4.02775849e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 56.99999999999999 MW  | 0.0 Mvar
-Determinante: 6.256082814968858
-Autovalores: [6.25608281]
+Determinante: 62560828149.275345
+Autovalores: [1.00000000e+10 6.25608281e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02833968e-19]
+p1: [4.02833968e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 57.999999999999986 MW  | 0.0 Mvar
-Determinante: 6.253294001945243
-Autovalores: [6.253294]
+Determinante: 62532940019.01736
+Autovalores: [1.000000e+10 6.253294e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02893177e-19]
+p1: [4.02893177e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 58.999999999999986 MW  | 0.0 Mvar
-Determinante: 6.250454286129946
-Autovalores: [6.25045429]
+Determinante: 62504542860.842384
+Autovalores: [1.00000000e+10 6.25045428e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.02953478e-19]
+p1: [4.02953478e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 59.999999999999986 MW  | 0.0 Mvar
-Determinante: 6.247563538332877
-Autovalores: [6.24756354]
+Determinante: 62475635382.84931
+Autovalores: [1.00000000e+10 6.24756353e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03014875e-19]
+p1: [4.03014875e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 60.99999999999998 MW  | 0.0 Mvar
-Determinante: 6.244621626714554
-Autovalores: [6.24462163]
+Determinante: 62446216266.64316
+Autovalores: [1.00000000e+10 6.24462162e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03077371e-19]
+p1: [4.03077371e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 61.99999999999997 MW  | 0.0 Mvar
-Determinante: 6.241628416761627
-Autovalores: [6.24162842]
+Determinante: 62416284167.090706
+Autovalores: [1.00000000e+10 6.24162841e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03140971e-19]
+p1: [4.03140971e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 62.99999999999997 MW  | 0.0 Mvar
-Determinante: 6.238583771261794
-Autovalores: [6.23858377]
+Determinante: 62385837712.06852
+Autovalores: [1.00000000e+10 6.23858377e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03205677e-19]
+p1: [4.03205677e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 63.99999999999997 MW  | 0.0 Mvar
-Determinante: 6.235487550278094
-Autovalores: [6.23548755]
+Determinante: 62354875502.2075
+Autovalores: [1.00000000e+10 6.23548755e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03271493e-19]
+p1: [4.03271493e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 64.99999999999997 MW  | 0.0 Mvar
-Determinante: 6.232339611122634
-Autovalores: [6.23233961]
+Determinante: 62323396110.628456
+Autovalores: [1.00000000e+10 6.23233961e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03338423e-19]
+p1: [4.03338423e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 65.99999999999996 MW  | 0.0 Mvar
-Determinante: 6.229139808329618
-Autovalores: [6.22913981]
+Determinante: 62291398082.6735
+Autovalores: [1.0000000e+10 6.2291398e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03406472e-19]
+p1: [4.03406472e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 66.99999999999996 MW  | 0.0 Mvar
-Determinante: 6.2258879936277705
-Autovalores: [6.22588799]
+Determinante: 62258879935.629845
+Autovalores: [1.00000000e+10 6.22588799e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03475641e-19]
+p1: [4.03475641e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 67.99999999999996 MW  | 0.0 Mvar
-Determinante: 6.222584015912125
-Autovalores: [6.22258402]
+Determinante: 62225840158.447914
+Autovalores: [1.00000000e+10 6.22258401e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03545937e-19]
+p1: [4.03545937e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 68.99999999999994 MW  | 0.0 Mvar
-Determinante: 6.219227721215089
-Autovalores: [6.21922772]
+Determinante: 62192277211.451416
+Autovalores: [1.00000000e+10 6.21922772e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03617362e-19]
+p1: [4.03617362e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 69.99999999999994 MW  | 0.0 Mvar
-Determinante: 6.215818952676871
-Autovalores: [6.21581895]
+Determinante: 62158189526.04287
+Autovalores: [1.00000000e+10 6.21581895e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03689922e-19]
+p1: [4.03689922e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 70.99999999999994 MW  | 0.0 Mvar
-Determinante: 6.212357550515223
-Autovalores: [6.21235755]
+Determinante: 62123575504.39968
+Autovalores: [1.00000000e+10 6.21235755e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03763619e-19]
+p1: [4.03763619e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 71.99999999999994 MW  | 0.0 Mvar
-Determinante: 6.208843351994429
-Autovalores: [6.20884335]
+Determinante: 62088433519.16451
+Autovalores: [1.00000000e+10 6.20884335e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03838459e-19]
+p1: [4.03838459e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 72.99999999999994 MW  | 0.0 Mvar
-Determinante: 6.2052761913936125
-Autovalores: [6.20527619]
+Determinante: 62052761913.1288
+Autovalores: [1.00000000e+10 6.20527619e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03914445e-19]
+p1: [4.03914445e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 73.99999999999993 MW  | 0.0 Mvar
-Determinante: 6.201655899974307
-Autovalores: [6.2016559]
+Determinante: 62016558998.9078
+Autovalores: [1.0000000e+10 6.2016559e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.03991583e-19]
+p1: [4.03991583e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 74.99999999999993 MW  | 0.0 Mvar
-Determinante: 6.197982305947252
-Autovalores: [6.19798231]
+Determinante: 61979823058.60901
+Autovalores: [1.0000000e+10 6.1979823e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04069876e-19]
+p1: [4.04069876e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 75.99999999999993 MW  | 0.0 Mvar
-Determinante: 6.1942552344384385
-Autovalores: [6.19425523]
+Determinante: 61942552343.49208
+Autovalores: [1.00000000e+10 6.19425523e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0414933e-19]
+p1: [4.0414933e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 76.99999999999991 MW  | 0.0 Mvar
-Determinante: 6.190474507454375
-Autovalores: [6.19047451]
+Determinante: 61904745073.6225
+Autovalores: [1.0000000e+10 6.1904745e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04229948e-19]
+p1: [4.04229948e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 77.99999999999991 MW  | 0.0 Mvar
-Determinante: 6.186639943846564
-Autovalores: [6.18663994]
+Determinante: 61866399437.5148
+Autovalores: [1.00000000e+10 6.18663994e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04311737e-19]
+p1: [4.04311737e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 78.99999999999991 MW  | 0.0 Mvar
-Determinante: 6.1827513592751195
-Autovalores: [6.18275136]
+Determinante: 61827513591.77043
+Autovalores: [1.00000000e+10 6.18275136e+00]
+Fator de Participação:
+p0: [1.000000e+00 4.043947e-19]
+p1: [4.043947e-19 1.000000e+00]
 
 
 Carregamento do Sistema: 79.99999999999991 MW  | 0.0 Mvar
-Determinante: 6.1788085661716305
-Autovalores: [6.17880857]
+Determinante: 61788085660.70518
+Autovalores: [1.00000000e+10 6.17880856e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04478842e-19]
+p1: [4.04478842e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 80.99999999999991 MW  | 0.0 Mvar
-Determinante: 6.174811373701084
-Autovalores: [6.17481137]
+Determinante: 61748113735.96904
+Autovalores: [1.00000000e+10 6.17481137e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0456417e-19]
+p1: [4.0456417e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 81.9999999999999 MW  | 0.0 Mvar
-Determinante: 6.170759587723001
-Autovalores: [6.17075959]
+Determinante: 61707595876.15712
+Autovalores: [1.00000000e+10 6.17075958e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04650687e-19]
+p1: [4.04650687e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 82.9999999999999 MW  | 0.0 Mvar
-Determinante: 6.1666530107516335
-Autovalores: [6.16665301]
+Determinante: 61666530106.411865
+Autovalores: [1.00000000e+10 6.16665301e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04738399e-19]
+p1: [4.04738399e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 83.9999999999999 MW  | 0.0 Mvar
-Determinante: 6.162491441915278
-Autovalores: [6.16249144]
+Determinante: 61624914418.01666
+Autovalores: [1.00000000e+10 6.16249144e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04827311e-19]
+p1: [4.04827311e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 84.99999999999989 MW  | 0.0 Mvar
-Determinante: 6.158274676914663
-Autovalores: [6.15827468]
+Determinante: 61582746767.978035
+Autovalores: [1.00000000e+10 6.15827467e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.04917429e-19]
+p1: [4.04917429e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 85.99999999999989 MW  | 0.0 Mvar
-Determinante: 6.154002507980371
-Autovalores: [6.15400251]
+Determinante: 61540025078.60255
+Autovalores: [1.0000000e+10 6.1540025e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05008758e-19]
+p1: [4.05008758e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 86.99999999999989 MW  | 0.0 Mvar
-Determinante: 6.14967472382932
-Autovalores: [6.14967472]
+Determinante: 61496747237.05906
+Autovalores: [1.00000000e+10 6.14967472e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05101304e-19]
+p1: [4.05101304e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 87.99999999999989 MW  | 0.0 Mvar
-Determinante: 6.145291109620239
-Autovalores: [6.14529111]
+Determinante: 61452911094.93467
+Autovalores: [1.00000000e+10 6.14529111e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05195072e-19]
+p1: [4.05195072e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 88.99999999999989 MW  | 0.0 Mvar
-Determinante: 6.140851446908132
-Autovalores: [6.14085145]
+Determinante: 61408514467.779915
+Autovalores: [1.00000000e+10 6.14085144e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05290069e-19]
+p1: [4.05290069e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 89.99999999999987 MW  | 0.0 Mvar
-Determinante: 6.136355513597713
-Autovalores: [6.13635551]
+Determinante: 61363555134.64152
+Autovalores: [1.00000000e+10 6.13635551e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05386299e-19]
+p1: [4.05386299e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 90.99999999999987 MW  | 0.0 Mvar
-Determinante: 6.131803083895775
-Autovalores: [6.13180308]
+Determinante: 61318030837.58745
+Autovalores: [1.00000000e+10 6.13180308e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0548377e-19]
+p1: [4.0548377e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 91.99999999999987 MW  | 0.0 Mvar
-Determinante: 6.127193928262484
-Autovalores: [6.12719393]
+Determinante: 61271939281.21962
+Autovalores: [1.00000000e+10 6.12719392e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05582487e-19]
+p1: [4.05582487e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 92.99999999999986 MW  | 0.0 Mvar
-Determinante: 6.122527813361568
-Autovalores: [6.12252781]
+Determinante: 61225278132.17493
+Autovalores: [1.00000000e+10 6.12252781e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05682456e-19]
+p1: [4.05682456e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 93.99999999999986 MW  | 0.0 Mvar
-Determinante: 6.117804502009329
-Autovalores: [6.1178045]
+Determinante: 61178045018.61659
+Autovalores: [1.0000000e+10 6.1178045e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05783684e-19]
+p1: [4.05783684e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 94.99999999999986 MW  | 0.0 Mvar
-Determinante: 6.113023753122574
-Autovalores: [6.11302375]
+Determinante: 61130237529.71299
+Autovalores: [1.00000000e+10 6.11302375e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05886177e-19]
+p1: [4.05886177e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 95.99999999999986 MW  | 0.0 Mvar
-Determinante: 6.10818532166528
-Autovalores: [6.10818532]
+Determinante: 61081853215.10329
+Autovalores: [1.00000000e+10 6.10818532e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.05989941e-19]
+p1: [4.05989941e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 96.99999999999986 MW  | 0.0 Mvar
-Determinante: 6.103288958594081
-Autovalores: [6.10328896]
+Determinante: 61032889584.35439
+Autovalores: [1.00000000e+10 6.10328895e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06094983e-19]
+p1: [4.06094983e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 97.99999999999984 MW  | 0.0 Mvar
-Determinante: 6.098334410802494
-Autovalores: [6.09833441]
+Determinante: 60983344106.40111
+Autovalores: [1.00000000e+10 6.09833441e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06201311e-19]
+p1: [4.06201311e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 98.99999999999984 MW  | 0.0 Mvar
-Determinante: 6.093321421063881
-Autovalores: [6.09332142]
+Determinante: 60933214208.97724
+Autovalores: [1.00000000e+10 6.09332142e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0630893e-19]
+p1: [4.0630893e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 99.99999999999984 MW  | 0.0 Mvar
-Determinante: 6.0882497279730785
-Autovalores: [6.08824973]
+Determinante: 60882497278.03103
+Autovalores: [1.00000000e+10 6.08824972e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06417847e-19]
+p1: [4.06417847e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 100.99999999999983 MW  | 0.0 Mvar
-Determinante: 6.0831190658867085
-Autovalores: [6.08311907]
+Determinante: 60831190657.12875
+Autovalores: [1.00000000e+10 6.08311906e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0652807e-19]
+p1: [4.0652807e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 101.99999999999983 MW  | 0.0 Mvar
-Determinante: 6.077929164862113
-Autovalores: [6.07792916]
+Determinante: 60779291646.84365
+Autovalores: [1.00000000e+10 6.07792916e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06639606e-19]
+p1: [4.06639606e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 102.99999999999983 MW  | 0.0 Mvar
-Determinante: 6.072679750594868
-Autovalores: [6.07267975]
+Determinante: 60726797504.13197
+Autovalores: [1.00000000e+10 6.07267975e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06752463e-19]
+p1: [4.06752463e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 103.99999999999983 MW  | 0.0 Mvar
-Determinante: 6.067370544354857
-Autovalores: [6.06737054]
+Determinante: 60673705441.69209
+Autovalores: [1.00000000e+10 6.06737054e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06866646e-19]
+p1: [4.06866646e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 104.99999999999983 MW  | 0.0 Mvar
-Determinante: 6.062001262920878
-Autovalores: [6.06200126]
+Determinante: 60620012627.31208
+Autovalores: [1.00000000e+10 6.06200126e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.06982165e-19]
+p1: [4.06982165e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 105.99999999999982 MW  | 0.0 Mvar
-Determinante: 6.056571618513703
-Autovalores: [6.05657162]
+Determinante: 60565716183.1998
+Autovalores: [1.00000000e+10 6.05657161e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07099027e-19]
+p1: [4.07099027e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 106.99999999999982 MW  | 0.0 Mvar
-Determinante: 6.051081318727629
-Autovalores: [6.05108132]
+Determinante: 60510813185.29811
+Autovalores: [1.00000000e+10 6.05108131e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07217239e-19]
+p1: [4.07217239e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 107.99999999999982 MW  | 0.0 Mvar
-Determinante: 6.045530066460377
-Autovalores: [6.04553007]
+Determinante: 60455300662.58416
+Autovalores: [1.00000000e+10 6.04553006e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07336809e-19]
+p1: [4.07336809e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 108.9999999999998 MW  | 0.0 Mvar
-Determinante: 6.039917559841395
-Autovalores: [6.03991756]
+Determinante: 60399175596.35276
+Autovalores: [1.00000000e+10 6.03991756e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07457746e-19]
+p1: [4.07457746e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 109.9999999999998 MW  | 0.0 Mvar
-Determinante: 6.034243492158458
-Autovalores: [6.03424349]
+Determinante: 60342434919.48125
+Autovalores: [1.00000000e+10 6.03424349e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07580058e-19]
+p1: [4.07580058e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 110.9999999999998 MW  | 0.0 Mvar
-Determinante: 6.028507551782556
-Autovalores: [6.02850755]
+Determinante: 60285075515.67972
+Autovalores: [1.00000000e+10 6.02850755e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07703753e-19]
+p1: [4.07703753e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 111.9999999999998 MW  | 0.0 Mvar
-Determinante: 6.022709422090999
-Autovalores: [6.02270942]
+Determinante: 60227094218.721214
+Autovalores: [1.00000000e+10 6.02270942e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07828839e-19]
+p1: [4.07828839e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 112.9999999999998 MW  | 0.0 Mvar
-Determinante: 6.016848781388725
-Autovalores: [6.01684878]
+Determinante: 60168487811.65521
+Autovalores: [1.00000000e+10 6.01684878e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.07955325e-19]
+p1: [4.07955325e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 113.99999999999979 MW  | 0.0 Mvar
-Determinante: 6.010925302827716
-Autovalores: [6.0109253]
+Determinante: 60109253026.00143
+Autovalores: [1.0000000e+10 6.0109253e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0808322e-19]
+p1: [4.0808322e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 114.99999999999979 MW  | 0.0 Mvar
-Determinante: 6.004938654324523
-Autovalores: [6.00493865]
+Determinante: 60049386540.92554
+Autovalores: [1.00000000e+10 6.00493865e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.08212532e-19]
+p1: [4.08212532e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 115.99999999999979 MW  | 0.0 Mvar
-Determinante: 5.998888498475818
-Autovalores: [5.9988885]
+Determinante: 59988884982.394035
+Autovalores: [1.00000000e+10 5.99888849e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.08343271e-19]
+p1: [4.08343271e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 116.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.992774492471903
-Autovalores: [5.99277449]
+Determinante: 59927744922.31011
+Autovalores: [1.00000000e+10 5.99277449e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.08475446e-19]
+p1: [4.08475446e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 117.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.9865962880081804
-Autovalores: [5.98659629]
+Determinante: 59865962877.62773
+Autovalores: [1.00000000e+10 5.98659628e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.08609066e-19]
+p1: [4.08609066e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 118.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.980353531194478
-Autovalores: [5.98035353]
+Determinante: 59803535309.44505
+Autovalores: [1.00000000e+10 5.98035353e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.08744141e-19]
+p1: [4.08744141e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 119.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.974045862462153
-Autovalores: [5.97404586]
+Determinante: 59740458622.07581
+Autovalores: [1.00000000e+10 5.97404586e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0888068e-19]
+p1: [4.0888068e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 120.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.967672916468983
-Autovalores: [5.96767292]
+Determinante: 59676729162.0978
+Autovalores: [1.00000000e+10 5.96767291e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09018693e-19]
+p1: [4.09018693e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 121.99999999999976 MW  | 0.0 Mvar
-Determinante: 5.961234322001731
-Autovalores: [5.96123432]
+Determinante: 59612343217.37861
+Autovalores: [1.00000000e+10 5.96123432e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09158189e-19]
+p1: [4.09158189e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 122.99999999999976 MW  | 0.0 Mvar
-Determinante: 5.954729701876312
-Autovalores: [5.9547297]
+Determinante: 59547297016.07742
+Autovalores: [1.0000000e+10 5.9547297e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.0929918e-19]
+p1: [4.0929918e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 123.99999999999976 MW  | 0.0 Mvar
-Determinante: 5.948158672835543
-Autovalores: [5.94815867]
+Determinante: 59481586725.62226
+Autovalores: [1.00000000e+10 5.94815867e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09441675e-19]
+p1: [4.09441675e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 124.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.941520845444334
-Autovalores: [5.94152085]
+Determinante: 59415208451.662186
+Autovalores: [1.00000000e+10 5.94152084e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09585685e-19]
+p1: [4.09585685e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 125.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.934815823982348
-Autovalores: [5.93481582]
+Determinante: 59348158236.994255
+Autovalores: [1.00000000e+10 5.93481582e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09731221e-19]
+p1: [4.09731221e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 126.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.928043206333921
-Autovalores: [5.92804321]
+Determinante: 59280432060.461395
+Autovalores: [1.0000000e+10 5.9280432e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.09878292e-19]
+p1: [4.09878292e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 127.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.921202583875321
-Autovalores: [5.92120258]
+Determinante: 59212025835.826515
+Autovalores: [1.00000000e+10 5.92120258e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10026911e-19]
+p1: [4.10026911e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 128.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.914293541359125
-Autovalores: [5.91429354]
+Determinante: 59142935410.6154
+Autovalores: [1.00000000e+10 5.91429354e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10177088e-19]
+p1: [4.10177088e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 129.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.907315656795721
-Autovalores: [5.90731566]
+Determinante: 59073156564.931656
+Autovalores: [1.00000000e+10 5.90731565e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10328835e-19]
+p1: [4.10328835e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 130.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.900268501331813
-Autovalores: [5.9002685]
+Determinante: 59002685010.242775
+Autovalores: [1.0000000e+10 5.9002685e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10482163e-19]
+p1: [4.10482163e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 131.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.893151639125867
-Autovalores: [5.89315164]
+Determinante: 58931516388.132935
+Autovalores: [1.00000000e+10 5.89315164e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10637084e-19]
+p1: [4.10637084e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 132.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.88596462722035
-Autovalores: [5.88596463]
+Determinante: 58859646269.02698
+Autovalores: [1.00000000e+10 5.88596462e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10793611e-19]
+p1: [4.10793611e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 133.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.87870701541073
-Autovalores: [5.87870702]
+Determinante: 58787070150.87979
+Autovalores: [1.00000000e+10 5.87870701e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.10951754e-19]
+p1: [4.10951754e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 134.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.87137834611112
-Autovalores: [5.87137835]
+Determinante: 58713783457.83231
+Autovalores: [1.00000000e+10 5.87137834e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.11111526e-19]
+p1: [4.11111526e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 135.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.863978154216443
-Autovalores: [5.86397815]
+Determinante: 58639781538.833984
+Autovalores: [1.00000000e+10 5.86397815e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.11272941e-19]
+p1: [4.11272941e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 136.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.856505966961008
-Autovalores: [5.85650597]
+Determinante: 58565059666.22752
+Autovalores: [1.00000000e+10 5.85650596e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.1143601e-19]
+p1: [4.1143601e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 137.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.848961303773463
-Autovalores: [5.8489613]
+Determinante: 58489613034.29989
+Autovalores: [1.0000000e+10 5.8489613e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.11600746e-19]
+p1: [4.11600746e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 138.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.841343676127893
-Autovalores: [5.84134368]
+Determinante: 58413436757.79166
+Autovalores: [1.00000000e+10 5.84134367e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.11767164e-19]
+p1: [4.11767164e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 139.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.83365258739104
-Autovalores: [5.83365259]
+Determinante: 58336525870.3701
+Autovalores: [1.00000000e+10 5.83365258e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.11935276e-19]
+p1: [4.11935276e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 140.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.825887532665466
-Autovalores: [5.82588753]
+Determinante: 58258875323.06111
+Autovalores: [1.00000000e+10 5.82588753e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12105096e-19]
+p1: [4.12105096e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 141.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.81804799862859
-Autovalores: [5.818048]
+Determinante: 58180479982.638626
+Autovalores: [1.00000000e+10 5.81804799e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12276638e-19]
+p1: [4.12276638e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 142.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.810133463367391
-Autovalores: [5.81013346]
+Determinante: 58101334629.972984
+Autovalores: [1.00000000e+10 5.81013346e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12449915e-19]
+p1: [4.12449915e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 143.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.802143396208719
-Autovalores: [5.8021434]
+Determinante: 58021433958.33213
+Autovalores: [1.00000000e+10 5.80214339e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12624943e-19]
+p1: [4.12624943e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 144.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.794077257544997
-Autovalores: [5.79407726]
+Determinante: 57940772571.64038
+Autovalores: [1.00000000e+10 5.79407725e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12801736e-19]
+p1: [4.12801736e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 145.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.7859344986552355
-Autovalores: [5.7859345]
+Determinante: 57859344982.68801
+Autovalores: [1.00000000e+10 5.78593449e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.12980309e-19]
+p1: [4.12980309e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 146.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.777714561521172
-Autovalores: [5.77771456]
+Determinante: 57777145611.29245
+Autovalores: [1.00000000e+10 5.77771456e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.13160677e-19]
+p1: [4.13160677e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 147.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.769416878638342
-Autovalores: [5.76941688]
+Determinante: 57694168782.40891
+Autovalores: [1.00000000e+10 5.76941687e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.13342855e-19]
+p1: [4.13342855e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 148.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.761040872822028
-Autovalores: [5.76104087]
+Determinante: 57610408724.19036
+Autovalores: [1.00000000e+10 5.76104087e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.1352686e-19]
+p1: [4.1352686e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 149.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.752585957007752
-Autovalores: [5.75258596]
+Determinante: 57525859565.991905
+Autovalores: [1.00000000e+10 5.75258595e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.13712706e-19]
+p1: [4.13712706e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 150.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.744051534046305
-Autovalores: [5.74405153]
+Determinante: 57440515336.32146
+Autovalores: [1.00000000e+10 5.74405153e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.13900411e-19]
+p1: [4.13900411e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 151.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.7354369964929885
-Autovalores: [5.735437]
+Determinante: 57354369960.73215
+Autovalores: [1.00000000e+10 5.73543699e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.1408999e-19]
+p1: [4.1408999e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 152.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.726741726390957
-Autovalores: [5.72674173]
+Determinante: 57267417259.655426
+Autovalores: [1.00000000e+10 5.72674172e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.14281461e-19]
+p1: [4.14281461e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 153.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.717965095048435
-Autovalores: [5.7179651]
+Determinante: 57179650946.173676
+Autovalores: [1.00000000e+10 5.71796509e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.1447484e-19]
+p1: [4.1447484e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 154.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.709106462809595
-Autovalores: [5.70910646]
+Determinante: 57091064623.72844
+Autovalores: [1.00000000e+10 5.70910646e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.14670146e-19]
+p1: [4.14670146e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 155.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.700165178818891
-Autovalores: [5.70016518]
+Determinante: 57001651783.76455
+Autovalores: [1.00000000e+10 5.70016517e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.14867396e-19]
+p1: [4.14867396e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 156.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.691140580778611
-Autovalores: [5.69114058]
+Determinante: 56911405803.3046
+Autovalores: [1.00000000e+10 5.69114058e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.15066608e-19]
+p1: [4.15066608e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 157.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.6820319946994235
-Autovalores: [5.68203199]
+Determinante: 56820319942.45551
+Autovalores: [1.00000000e+10 5.68203199e+00]
+Fator de Participação:
+p0: [1.000000e+00 4.152678e-19]
+p1: [4.152678e-19 1.000000e+00]
 
 
 Carregamento do Sistema: 158.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.672838734643665
-Autovalores: [5.67283873]
+Determinante: 56728387341.84047
+Autovalores: [1.00000000e+10 5.67283873e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.15470991e-19]
+p1: [4.15470991e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 159.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.663560102461118
-Autovalores: [5.6635601]
+Determinante: 56635601019.95744
+Autovalores: [1.0000000e+10 5.6635601e+00]
+Fator de Participação:
+p0: [1.000000e+00 4.156762e-19]
+p1: [4.156762e-19 1.000000e+00]
 
 
 Carregamento do Sistema: 160.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.654195387517003
-Autovalores: [5.65419539]
+Determinante: 56541953870.45857
+Autovalores: [1.00000000e+10 5.65419538e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.15883447e-19]
+p1: [4.15883447e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 161.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.644743866411936
-Autovalores: [5.64474387]
+Determinante: 56447438659.350365
+Autovalores: [1.00000000e+10 5.64474386e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.16092751e-19]
+p1: [4.16092751e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 162.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.635204802693509
-Autovalores: [5.6352048]
+Determinante: 56352048022.108215
+Autovalores: [1.0000000e+10 5.6352048e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.16304133e-19]
+p1: [4.16304133e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 163.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.625577446559282
-Autovalores: [5.62557745]
+Determinante: 56255774460.70822
+Autovalores: [1.00000000e+10 5.62557744e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.16517613e-19]
+p1: [4.16517613e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 164.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.615861034550733
-Autovalores: [5.61586103]
+Determinante: 56158610340.5648
+Autovalores: [1.00000000e+10 5.61586103e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.16733212e-19]
+p1: [4.16733212e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 165.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.606054789238015
-Autovalores: [5.60605479]
+Determinante: 56060547887.37978
+Autovalores: [1.00000000e+10 5.60605479e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.16950951e-19]
+p1: [4.16950951e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 166.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.596157918895015
-Autovalores: [5.59615792]
+Determinante: 55961579183.891815
+Autovalores: [1.00000000e+10 5.59615791e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.17170853e-19]
+p1: [4.17170853e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 167.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.586169617164434
-Autovalores: [5.58616962]
+Determinante: 55861696166.52828
+Autovalores: [1.00000000e+10 5.58616961e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.17392938e-19]
+p1: [4.17392938e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 168.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.576089062712581
-Autovalores: [5.57608906]
+Determinante: 55760890621.95192
+Autovalores: [1.00000000e+10 5.57608906e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.17617231e-19]
+p1: [4.17617231e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 169.99999999999957 MW  | 0.0 Mvar
-Determinante: 5.565915418873297
-Autovalores: [5.56591542]
+Determinante: 55659154183.501366
+Autovalores: [1.00000000e+10 5.56591541e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.17843753e-19]
+p1: [4.17843753e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 170.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.555647833280846
-Autovalores: [5.55564783]
+Determinante: 55556478327.51928
+Autovalores: [1.00000000e+10 5.55564783e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.18072528e-19]
+p1: [4.18072528e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 171.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.545285437491129
-Autovalores: [5.54528544]
+Determinante: 55452854369.564606
+Autovalores: [1.00000000e+10 5.54528543e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.18303581e-19]
+p1: [4.18303581e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 172.9999999999996 MW  | 0.0 Mvar
-Determinante: 5.534827346590955
-Autovalores: [5.53482735]
+Determinante: 55348273460.50552
+Autovalores: [1.00000000e+10 5.53482734e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.18536935e-19]
+p1: [4.18536935e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 173.99999999999963 MW  | 0.0 Mvar
-Determinante: 5.524272658794743
-Autovalores: [5.52427266]
+Determinante: 55242726582.48639
+Autovalores: [1.00000000e+10 5.52427265e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.18772615e-19]
+p1: [4.18772615e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 174.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.513620455028326
-Autovalores: [5.51362046]
+Determinante: 55136204544.76536
+Autovalores: [1.00000000e+10 5.51362045e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.19010647e-19]
+p1: [4.19010647e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 175.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.502869798499211
-Autovalores: [5.5028698]
+Determinante: 55028697979.417625
+Autovalores: [1.00000000e+10 5.50286979e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.19251057e-19]
+p1: [4.19251057e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 176.99999999999966 MW  | 0.0 Mvar
-Determinante: 5.49201973425287
-Autovalores: [5.49201973]
+Determinante: 54920197336.89775
+Autovalores: [1.00000000e+10 5.49201973e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.19493871e-19]
+p1: [4.19493871e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 177.9999999999997 MW  | 0.0 Mvar
-Determinante: 5.481069288714417
-Autovalores: [5.48106929]
+Determinante: 54810692881.4573
+Autovalores: [1.00000000e+10 5.48106928e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.19739115e-19]
+p1: [4.19739115e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 178.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.470017469215149
-Autovalores: [5.47001747]
+Determinante: 54700174686.408966
+Autovalores: [1.00000000e+10 5.47001747e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.19986818e-19]
+p1: [4.19986818e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 179.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.458863263503325
-Autovalores: [5.45886326]
+Determinante: 54588632629.23569
+Autovalores: [1.00000000e+10 5.45886326e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.20237007e-19]
+p1: [4.20237007e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 180.99999999999972 MW  | 0.0 Mvar
-Determinante: 5.447605639238541
-Autovalores: [5.44760564]
+Determinante: 54476056386.533005
+Autovalores: [1.00000000e+10 5.44760564e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.20489711e-19]
+p1: [4.20489711e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 181.99999999999974 MW  | 0.0 Mvar
-Determinante: 5.436243543468978
-Autovalores: [5.43624354]
+Determinante: 54362435428.78317
+Autovalores: [1.00000000e+10 5.43624354e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.20744959e-19]
+p1: [4.20744959e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 182.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.424775902090933
-Autovalores: [5.4247759]
+Determinante: 54247759014.94916
+Autovalores: [1.0000000e+10 5.4247759e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.21002781e-19]
+p1: [4.21002781e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 183.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.413201619289766
-Autovalores: [5.41320162]
+Determinante: 54132016186.88449
+Autovalores: [1.00000000e+10 5.41320162e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.21263207e-19]
+p1: [4.21263207e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 184.99999999999977 MW  | 0.0 Mvar
-Determinante: 5.401519576961594
-Autovalores: [5.40151958]
+Determinante: 54015195763.55045
+Autovalores: [1.00000000e+10 5.40151957e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.21526268e-19]
+p1: [4.21526268e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 185.9999999999998 MW  | 0.0 Mvar
-Determinante: 5.3897286341148405
-Autovalores: [5.38972863]
+Determinante: 53897286335.031136
+Autovalores: [1.00000000e+10 5.38972863e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.21791996e-19]
+p1: [4.21791996e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 186.99999999999983 MW  | 0.0 Mvar
-Determinante: 5.377827626250835
-Autovalores: [5.37782763]
+Determinante: 53778276256.34019
+Autovalores: [1.00000000e+10 5.37782762e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.22060424e-19]
+p1: [4.22060424e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 187.99999999999983 MW  | 0.0 Mvar
-Determinante: 5.365815364722521
-Autovalores: [5.36581536]
+Determinante: 53658153641.00721
+Autovalores: [1.00000000e+10 5.36581536e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.22331584e-19]
+p1: [4.22331584e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 188.99999999999983 MW  | 0.0 Mvar
-Determinante: 5.353690636070394
-Autovalores: [5.35369064]
+Determinante: 53536906354.43687
+Autovalores: [1.00000000e+10 5.35369063e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2260551e-19]
+p1: [4.2260551e-19 1.0000000e+00]
 
 
 Carregamento do Sistema: 189.99999999999986 MW  | 0.0 Mvar
-Determinante: 5.341452201334597
-Autovalores: [5.3414522]
+Determinante: 53414522007.03079
+Autovalores: [1.0000000e+10 5.3414522e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.22882237e-19]
+p1: [4.22882237e-19 1.00000000e+00]
 
 
 Carregamento do Sistema: 190.9999999999999 MW  | 0.0 Mvar
-Determinante: 5.329098795342191
-Autovalores: [5.3290988]
+Determinante: 53290987947.059814
+Autovalores: [1.00000000e+10 5.32909879e+00]
+Fator de Participação:
+p0: [1.000000e+00 4.231618e-19]
+p1: [4.231618e-19 1.000000e+00]
+
+
+Carregamento do Sistema: 191.12499999999986 MW  | 0.0 Mvar
+Determinante: 53275464707.64088
+Autovalores: [1.00000000e+10 5.32754647e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23196947e-19]
+p1: [4.23196947e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.24999999999986 MW  | 0.0 Mvar
+Determinante: 53259923279.085815
+Autovalores: [1.00000000e+10 5.32599232e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23232138e-19]
+p1: [4.23232138e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.37499999999986 MW  | 0.0 Mvar
+Determinante: 53244363633.58943
+Autovalores: [1.00000000e+10 5.32443636e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23267375e-19]
+p1: [4.23267375e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.49999999999983 MW  | 0.0 Mvar
+Determinante: 53228785745.47839
+Autovalores: [1.00000000e+10 5.32287857e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23302656e-19]
+p1: [4.23302656e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.62499999999983 MW  | 0.0 Mvar
+Determinante: 53213189589.01055
+Autovalores: [1.00000000e+10 5.32131896e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23337983e-19]
+p1: [4.23337983e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.74999999999983 MW  | 0.0 Mvar
+Determinante: 53197575138.37532
+Autovalores: [1.00000000e+10 5.31975751e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23373355e-19]
+p1: [4.23373355e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.87499999999983 MW  | 0.0 Mvar
+Determinante: 53181942367.69338
+Autovalores: [1.00000000e+10 5.31819423e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23408772e-19]
+p1: [4.23408772e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 191.99999999999983 MW  | 0.0 Mvar
+Determinante: 53166291251.01589
+Autovalores: [1.00000000e+10 5.31662912e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23444235e-19]
+p1: [4.23444235e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.03124999999983 MW  | 0.0 Mvar
+Determinante: 53162375602.23689
+Autovalores: [1.00000000e+10 5.31623756e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23453108e-19]
+p1: [4.23453108e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.06249999999983 MW  | 0.0 Mvar
+Determinante: 53158458804.80054
+Autovalores: [1.00000000e+10 5.31584588e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23461983e-19]
+p1: [4.23461983e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.09374999999983 MW  | 0.0 Mvar
+Determinante: 53154540858.2992
+Autovalores: [1.00000000e+10 5.31545408e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23470862e-19]
+p1: [4.23470862e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.12499999999983 MW  | 0.0 Mvar
+Determinante: 53150621762.32461
+Autovalores: [1.00000000e+10 5.31506217e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23479743e-19]
+p1: [4.23479743e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.15624999999986 MW  | 0.0 Mvar
+Determinante: 53146701516.469315
+Autovalores: [1.00000000e+10 5.31467015e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23488627e-19]
+p1: [4.23488627e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.16406249999983 MW  | 0.0 Mvar
+Determinante: 53145721275.28873
+Autovalores: [1.00000000e+10 5.31457212e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23490849e-19]
+p1: [4.23490849e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.17187499999983 MW  | 0.0 Mvar
+Determinante: 53144740962.20866
+Autovalores: [1.00000000e+10 5.31447409e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2349307e-19]
+p1: [4.2349307e-19 1.0000000e+00]
+
+
+Carregamento do Sistema: 192.17968749999983 MW  | 0.0 Mvar
+Determinante: 53143760577.22279
+Autovalores: [1.00000000e+10 5.31437605e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23495292e-19]
+p1: [4.23495292e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.18749999999983 MW  | 0.0 Mvar
+Determinante: 53142780120.32484
+Autovalores: [1.00000000e+10 5.31427801e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23497514e-19]
+p1: [4.23497514e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.19531249999983 MW  | 0.0 Mvar
+Determinante: 53141799591.50791
+Autovalores: [1.00000000e+10 5.31417996e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23499736e-19]
+p1: [4.23499736e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2031249999998 MW  | 0.0 Mvar
+Determinante: 53140818990.76628
+Autovalores: [1.0000000e+10 5.3140819e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23501959e-19]
+p1: [4.23501959e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.20703124999983 MW  | 0.0 Mvar
+Determinante: 53140328663.42148
+Autovalores: [1.00000000e+10 5.31403286e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2350307e-19]
+p1: [4.2350307e-19 1.0000000e+00]
+
+
+Carregamento do Sistema: 192.20898437499983 MW  | 0.0 Mvar
+Determinante: 53140083494.63501
+Autovalores: [1.00000000e+10 5.31400835e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23503626e-19]
+p1: [4.23503626e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.20996093749983 MW  | 0.0 Mvar
+Determinante: 53139960906.51868
+Autovalores: [1.00000000e+10 5.31399609e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23503904e-19]
+p1: [4.23503904e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2109374999998 MW  | 0.0 Mvar
+Determinante: 53139838318.500694
+Autovalores: [1.00000000e+10 5.31398383e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504181e-19]
+p1: [4.23504181e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2114257812498 MW  | 0.0 Mvar
+Determinante: 53139777023.76443
+Autovalores: [1.0000000e+10 5.3139777e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2350432e-19]
+p1: [4.2350432e-19 1.0000000e+00]
+
+
+Carregamento do Sistema: 192.2116699218748 MW  | 0.0 Mvar
+Determinante: 53139746376.36739
+Autovalores: [1.00000000e+10 5.31397463e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2350439e-19]
+p1: [4.2350439e-19 1.0000000e+00]
+
+
+Carregamento do Sistema: 192.21179199218733 MW  | 0.0 Mvar
+Determinante: 53139731052.66164
+Autovalores: [1.0000000e+10 5.3139731e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504425e-19]
+p1: [4.23504425e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21191406249983 MW  | 0.0 Mvar
+Determinante: 53139715728.95746
+Autovalores: [1.00000000e+10 5.31397157e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504459e-19]
+p1: [4.23504459e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21203613281233 MW  | 0.0 Mvar
+Determinante: -8.692176794197435
+Autovalores: [12.35161407  0.70372801]
+Fator de Participação:
+p0: [0.5390628 0.4609372]
+p1: [0.4609372 0.5390628]
+
+
+Carregamento do Sistema: 192.21215820312483 MW  | 0.0 Mvar
+Determinante: 53139690639.61434
+Autovalores: [1.00000000e+10 5.31396906e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504569e-19]
+p1: [4.23504569e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21228027343733 MW  | 0.0 Mvar
+Determinante: 53139733102.85449
+Autovalores: [1.00000000e+10 5.31397331e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23505024e-19]
+p1: [4.23505024e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21240234374986 MW  | 0.0 Mvar
+Determinante: 53139775566.00266
+Autovalores: [1.00000000e+10 5.31397755e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23505479e-19]
+p1: [4.23505479e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21252441406236 MW  | 0.0 Mvar
+Determinante: 53139818029.05902
+Autovalores: [1.0000000e+10 5.3139818e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23505934e-19]
+p1: [4.23505934e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21264648437486 MW  | 0.0 Mvar
+Determinante: 53139860492.02358
+Autovalores: [1.00000000e+10 5.31398605e+00]
+Fator de Participação:
+p0: [1.0000000e+00 4.2350639e-19]
+p1: [4.2350639e-19 1.0000000e+00]
+
+
+Carregamento do Sistema: 192.2127075195311 MW  | 0.0 Mvar
+Determinante: 53139881723.648476
+Autovalores: [1.00000000e+10 5.31398817e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23506617e-19]
+p1: [4.23506617e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21276855468733 MW  | 0.0 Mvar
+Determinante: 53139902955.09079
+Autovalores: [1.00000000e+10 5.31399029e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23506845e-19]
+p1: [4.23506845e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21279907226545 MW  | 0.0 Mvar
+Determinante: 53139913570.90047
+Autovalores: [1.00000000e+10 5.31399135e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23506958e-19]
+p1: [4.23506958e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21282958984358 MW  | 0.0 Mvar
+Determinante: 53139924186.61144
+Autovalores: [1.00000000e+10 5.31399242e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507072e-19]
+p1: [4.23507072e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2128601074217 MW  | 0.0 Mvar
+Determinante: 53139934802.31699
+Autovalores: [1.00000000e+10 5.31399348e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507186e-19]
+p1: [4.23507186e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21287536621077 MW  | 0.0 Mvar
+Determinante: 53139940110.220406
+Autovalores: [1.00000000e+10 5.31399401e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507243e-19]
+p1: [4.23507243e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2128829956053 MW  | 0.0 Mvar
+Determinante: 53139942764.17212
+Autovalores: [1.00000000e+10 5.31399427e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507271e-19]
+p1: [4.23507271e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21289062499983 MW  | 0.0 Mvar
+Determinante: 53139945418.097534
+Autovalores: [1.00000000e+10 5.31399454e+00]
+Fator de Participação:
+p0: [1.000000e+00 4.235073e-19]
+p1: [4.235073e-19 1.000000e+00]
+
+
+Carregamento do Sistema: 192.2128944396971 MW  | 0.0 Mvar
+Determinante: 53139946745.07332
+Autovalores: [1.00000000e+10 5.31399467e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507314e-19]
+p1: [4.23507314e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.2128944396971 MW  | 0.0 Mvar
+Determinante: 53139946745.08654
+Autovalores: [1.00000000e+10 5.31399467e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23507314e-19]
+p1: [4.23507314e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21289443969715 MW  | 0.0 Mvar
+Determinante: -8.69225703400424
+Autovalores: [12.35161805  0.70373428]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290016174345 MW  | 0.0 Mvar
+Determinante: -8.692257652822123
+Autovalores: [12.35161803  0.70373433]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290206909254 MW  | 0.0 Mvar
+Determinante: -8.692257858743352
+Autovalores: [12.35161802  0.70373435]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290302276773 MW  | 0.0 Mvar
+Determinante: -8.692257961704135
+Autovalores: [12.35161802  0.70373436]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129039764439 MW  | 0.0 Mvar
+Determinante: -8.692258064665117
+Autovalores: [12.35161801  0.70373437]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290493012188 MW  | 0.0 Mvar
+Determinante: -8.692258167626479
+Autovalores: [12.35161801  0.70373437]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129054069663 MW  | 0.0 Mvar
+Determinante: -8.69225821910836
+Autovalores: [12.35161801  0.70373438]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290564539942 MW  | 0.0 Mvar
+Determinante: -8.692258244851633
+Autovalores: [12.35161801  0.70373438]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290588384707 MW  | 0.0 Mvar
+Determinante: -8.692258270598064
+Autovalores: [12.35161801  0.70373438]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129060031146 MW  | 0.0 Mvar
+Determinante: -8.692258283480706
+Autovalores: [12.351618    0.70373438]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129061224403 MW  | 0.0 Mvar
+Determinante: -8.692258296375922
+Autovalores: [12.351618    0.70373438]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290618227778 MW  | 0.0 Mvar
+Determinante: -8.69225830286124
+Autovalores: [12.351618    0.70373439]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290624234808 MW  | 0.0 Mvar
+Determinante: -8.692258309396806
+Autovalores: [12.351618    0.70373439]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.21290630288408 MW  | 0.0 Mvar
+Determinante: -8.692258316032946
+Autovalores: [12.351618    0.70373439]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129063643514 MW  | 0.0 Mvar
+Determinante: -8.692258322870154
+Autovalores: [12.351618    0.70373439]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
+
+
+Carregamento do Sistema: 192.2129063829778 MW  | 0.0 Mvar
+Determinante: -8.692258325283332
+Autovalores: [12.351618    0.70373439]
+Fator de Participação:
+p0: [0.53906311 0.46093689]
+p1: [0.46093689 0.53906311]
 
 
 

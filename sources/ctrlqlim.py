@@ -177,6 +177,8 @@ class Qlim:
                 # dQg/dx
                 powerflow.setup.qxx[idx, nger] = -1
 
+                powerflow.setup.yxx[nger, nger] = 1E-10
+
                 # Barras PV
                 if (value['tipo'] == 1) or ((value['tipo'] == 2) and (not powerflow.setup.slackqlim)):
                     powerflow.setup.yxv[nger, idx] = 1
