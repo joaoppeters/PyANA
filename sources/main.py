@@ -13,7 +13,7 @@ system = '2b-milano.pwf'
 method = 'CPF'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIMs']
+control = ['QLIM']
 # control = []
 
 options = {
@@ -24,6 +24,8 @@ options = {
     'tolY': 1E-10,
     'vmax': 1.05,
     'vmin': 0.95,
+    'vvar': 1E-10,
+    'qvar': 1E-10,
     'cpfBeta': 0.,
     'cpfLambda': 1E-1,
     'cpfV2L': 0.95,

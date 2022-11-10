@@ -6,7 +6,6 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from email.utils import collapse_rfc2231_value
 from matplotlib import pyplot as plt
 from numpy import append, around, array, degrees, sum
 

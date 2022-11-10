@@ -1,4 +1,4 @@
-October 14, 2022
+November 03, 2022
 
 
 relatório de análise da variação da magnitude de tensão do sistema 2b-teste
@@ -4414,7 +4414,7 @@ Carregamento do Sistema: 49.99999999999959 MW  | 0.0 Mvar
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
 -------------------------------------------
-|  2  | BARRA-CARGA |  0.7069  | -0.0223  |
+|  2  | BARRA-CARGA |  0.7071  | -0.0220  |
 -------------------------------------------
 |  1  | BARRA-REFER |  1.0000  | +0.0000  |
 -------------------------------------------

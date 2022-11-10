@@ -83,7 +83,7 @@ class Jacobi:
         self.assembly(powerflow,)
         
         # Submatrizes de controles ativos
-        if powerflow.setup.ctrlcount > 0:
+        if powerflow.setup.controlcount > 0:
             Control(powerflow, powerflow.setup,).controljac(powerflow,)
 
         # Condição

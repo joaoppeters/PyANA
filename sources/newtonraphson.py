@@ -156,7 +156,7 @@ class NewtonRaphson:
         powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
 
         # Variáveis especificadas de controle ativos
-        if powerflow.setup.ctrlcount > 0:
+        if powerflow.setup.controlcount > 0:
             Control(powerflow, powerflow.setup).controlsch(powerflow,)
 
 
@@ -192,7 +192,7 @@ class NewtonRaphson:
         self.checkresidue(powerflow,)
 
         # Resíduos de variáveis de estado de controle
-        if powerflow.setup.ctrlcount > 0:
+        if powerflow.setup.controlcount > 0:
             Control(powerflow, powerflow.setup).controlres(powerflow,)
             self.checkresidue(powerflow,)
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
@@ -265,7 +265,7 @@ class NewtonRaphson:
         powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
 
         # Atualização das variáveis de estado adicionais para controles ativos
-        if powerflow.setup.ctrlcount > 0:
+        if powerflow.setup.controlcount > 0:
             Control(powerflow, powerflow.setup).controlupdt(powerflow,)
 
 

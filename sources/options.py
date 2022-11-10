@@ -70,6 +70,8 @@ class Options:
             'tolY': 1E-6,
             'vmax': 1.05,
             'vmin': 0.95,
+            'vvar': 1E-6,
+            'qvar': 1E-6,
         }
         
         setup.options = dict()

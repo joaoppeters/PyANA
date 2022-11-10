@@ -505,7 +505,7 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['determinant-QV']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['eigenvalues-QV'])}")
+                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['eigenvalues-QV']}")
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write('Fator de Participação:')
                 for b in range(0, powerflow.setup.nbus):
@@ -579,7 +579,7 @@ class Reports:
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant-QV']}")
                 self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {abs(powerflow.case[key]['corr']['eigenvalues-QV'])}")
+                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['corr']['eigenvalues-QV']}")
                 self.filedeteigen.write('\n')
                 self.filedeteigen.write('Fator de Participação:')
                 for b in range(0, powerflow.setup.nbus):

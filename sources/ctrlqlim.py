@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, cos, ones, sin, zeros
+from numpy import append, concatenate, ones, zeros
 
 class Qlim:
     """classe para tratamento de limites de geração de potência reativa"""
@@ -279,3 +279,24 @@ class Qlim:
         ## Inicialização
         # Variável
         powerflow.sol['reactive_generation'] = deepcopy(powerflow.case[case]['prev']['reactive_generation'])
+
+
+
+    def qlimheur(
+        self,
+        powerflow,
+    ):
+        """
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização 
+        # Condição
+        if all((powerflow.sol['reactive_generation'] - powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() > powerflow.setup.options['qvar'])):
+            powerflow.setup.controlheur = True
+
+        # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
+        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
+            powerflow.setup.bifurcation = True
