@@ -1,9 +1,9 @@
-November 10, 2022
+November 12, 2022
 
 
 relatório de análise da variação da magnitude de tensão do sistema 2b-milano
 
-opções de controle ativadas: QLIM 
+opções de controle ativadas: QLIMs 
 
 opções de relatório ativadas: RBARRA 
 
@@ -2000,40 +2000,161 @@ Carregamento do Sistema: 189.99999999999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 190.9999999999999 MW  | 0.0 Mvar
+Carregamento do Sistema: 190.12499999999986 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
 -------------------------------------------
-|  2  |  BARRA-PQ   |  0.9481  | -0.0006  |
+|  2  |  BARRA-PQ   |  0.9486  | -0.0001  |
 -------------------------------------------
 |  1  |  BARRA-VT   |  1.0000  | +0.0000  |
 -------------------------------------------
 
 
-Carregamento do Sistema: 191.4999999999999 MW  | 0.0 Mvar
+Carregamento do Sistema: 190.24999999999983 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
 -------------------------------------------
-|  2  |  BARRA-PQ   |  0.9478  | -0.0003  |
+|  2  |  BARRA-PQ   |  0.9485  | -0.0001  |
 -------------------------------------------
 |  1  |  BARRA-VT   |  1.0000  | +0.0000  |
 -------------------------------------------
 
 
-Carregamento do Sistema: 191.74999999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 190.37499999999983 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
 -------------------------------------------
-|  2  |  BARRA-PQ   |  0.9476  | -0.0002  |
+|  2  |  BARRA-PQ   |  0.9485  | -0.0001  |
 -------------------------------------------
 |  1  |  BARRA-VT   |  1.0000  | +0.0000  |
 -------------------------------------------
 
 
-Carregamento do Sistema: 191.87499999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 190.49999999999983 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9484  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 190.62499999999983 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9483  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 190.74999999999983 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9482  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 190.8749999999998 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9481  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 190.9999999999998 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9481  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.1249999999998 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9480  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.24999999999977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9479  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.37499999999977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9478  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.49999999999977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9478  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.62499999999977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9477  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.74999999999977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9476  | -0.0001  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 191.87499999999974 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2044,7 +2165,7 @@ Carregamento do Sistema: 191.87499999999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 191.99999999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 191.99999999999974 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2055,7 +2176,7 @@ Carregamento do Sistema: 191.99999999999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.06249999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.00781249999974 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2066,7 +2187,7 @@ Carregamento do Sistema: 192.06249999999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.1249999999999 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.01562499999972 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2077,7 +2198,172 @@ Carregamento do Sistema: 192.1249999999999 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.1562499999999 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.02343749999972 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.03124999999972 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.03906249999972 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.04687499999972 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.0546874999997 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.0624999999997 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.0703124999997 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.07812499999966 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.08593749999966 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.09374999999966 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.10156249999966 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.10937499999966 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.11718749999963 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.12499999999963 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.13281249999963 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9474  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.1406249999996 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2088,7 +2374,7 @@ Carregamento do Sistema: 192.1562499999999 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.1718749999999 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.1484374999996 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2099,7 +2385,7 @@ Carregamento do Sistema: 192.1718749999999 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.18749999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.1562499999996 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2110,7 +2396,7 @@ Carregamento do Sistema: 192.18749999999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.19531249999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.1640624999996 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2121,7 +2407,7 @@ Carregamento do Sistema: 192.19531249999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.20312499999983 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.1718749999996 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2132,7 +2418,7 @@ Carregamento do Sistema: 192.20312499999983 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.20703124999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.17968749999957 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2143,7 +2429,7 @@ Carregamento do Sistema: 192.20703124999986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.20898437499986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.18749999999957 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2154,7 +2440,7 @@ Carregamento do Sistema: 192.20898437499986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.20996093749986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.19531249999957 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2165,7 +2451,7 @@ Carregamento do Sistema: 192.20996093749986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21093749999983 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.19628906249955 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2176,7 +2462,7 @@ Carregamento do Sistema: 192.21093749999983 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21142578124983 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.19726562499955 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2187,7 +2473,7 @@ Carregamento do Sistema: 192.21142578124983 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21166992187483 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.19824218749952 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2198,7 +2484,7 @@ Carregamento do Sistema: 192.21166992187483 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21179199218736 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.19921874999952 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2209,7 +2495,7 @@ Carregamento do Sistema: 192.21179199218736 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21191406249986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2001953124995 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2220,7 +2506,7 @@ Carregamento do Sistema: 192.21191406249986 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21197509765608 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2011718749995 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2231,7 +2517,7 @@ Carregamento do Sistema: 192.21197509765608 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21203613281233 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20214843749946 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2242,7 +2528,7 @@ Carregamento do Sistema: 192.21203613281233 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21206665039045 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20312499999946 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2253,7 +2539,7 @@ Carregamento do Sistema: 192.21206665039045 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21209716796858 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20410156249943 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2264,7 +2550,7 @@ Carregamento do Sistema: 192.21209716796858 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21211242675764 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20507812499943 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2275,7 +2561,7 @@ Carregamento do Sistema: 192.21211242675764 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.2121276855467 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2060546874994 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2286,7 +2572,7 @@ Carregamento do Sistema: 192.2121276855467 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21213531494126 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2070312499994 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2297,7 +2583,7 @@ Carregamento do Sistema: 192.21213531494126 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.2121391296385 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20800781249937 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2308,7 +2594,7 @@ Carregamento do Sistema: 192.2121391296385 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20898437499937 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2319,7 +2605,7 @@ Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.20996093749935 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2330,7 +2616,7 @@ Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214389801008 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21020507812437 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2341,7 +2627,7 @@ Carregamento do Sistema: 192.21214389801008 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214485168443 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21044921874937 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2352,7 +2638,7 @@ Carregamento do Sistema: 192.21214485168443 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.2121453285216 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2106933593744 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2363,7 +2649,7 @@ Carregamento do Sistema: 192.2121453285216 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214580535874 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2109374999994 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2374,7 +2660,7 @@ Carregamento do Sistema: 192.21214580535874 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214604377732 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21118164062443 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2385,7 +2671,7 @@ Carregamento do Sistema: 192.21214604377732 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214616298658 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21142578124943 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |
@@ -2396,7 +2682,359 @@ Carregamento do Sistema: 192.21214616298658 MW  | 0.0 Mvar
 -------------------------------------------
 
 
-Carregamento do Sistema: 192.21214628219587 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21166992187446 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21179199218696 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21182250976508 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21185302734318 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2118835449213 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21191406249943 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21194458007756 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21197509765568 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21200561523378 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2120361328119 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21206665039003 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21207427978456 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2120819091791 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21208953857365 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21209716796818 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2121047973627 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21211242675724 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21212005615178 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21212768554633 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21213150024357 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21213531494084 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21213722228947 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21213912963808 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2121410369867 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214199066105 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214294433537 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214389800969 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214437484687 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214485168403 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2121453285212 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214556693977 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214580535832 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.2121460437769 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |

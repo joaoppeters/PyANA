@@ -398,7 +398,7 @@ class Control:
         
         # Loop
         for key,_ in powerflow.setup.control.items():
-            if powerflow.setup.controlheur or powerflow.setup.bifurcation:
+            if (powerflow.setup.controlheur) or ((powerflow.setup.bifurcation) and (not powerflow.setup.options['full'])):
                 break
             
             elif not powerflow.setup.controlheur:

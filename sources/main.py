@@ -8,12 +8,12 @@
 
 from powerflow import PowerFlow
 
-system = '2b-milano.pwf'
+system = 'ieee14.pwf'
 
 method = 'CPF'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIM']
+control = ['QLIMs']
 # control = []
 
 options = {
@@ -27,7 +27,7 @@ options = {
     'vvar': 1E-10,
     'qvar': 1E-10,
     'cpfBeta': 0.,
-    'cpfLambda': 1E-1,
+    'cpfLambda': 1E-2,
     'cpfV2L': 0.95,
     'cpfVolt': 1E-8,
     'icmn': 1E-8,

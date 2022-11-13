@@ -133,7 +133,7 @@ class Continuation:
             if (powerflow.cpfsol['pmc']):
                 print('')
 
-            if ((1 + powerflow.case[self.case]['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa']) > 188.) and (powerflow.setup.name == '2b-milano'):
+            if ((1 + powerflow.case[self.case]['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa']) > 190.) and (powerflow.setup.name == '2b-milano'):
                 print('')
 
             # Break Curva de Carregamento - Somente Parte Estável
@@ -705,104 +705,110 @@ class Continuation:
             self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])
             self.qt = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
             self.qv = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])
-        
-        # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida 
-        rightvalues, rightvector = eig(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
-        powerflow.setup.PF = zeros([powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[0], powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[1]])
 
-        # Jacobiana reduzida - sensibilidade PT
-        powerflow.setup.jacobPT = self.pt - dot(dot(self.pv, inv(self.qv)), self.qt)
-        rightvaluesPT, rightvectorPT = eig(powerflow.setup.jacobPT)
-        powerflow.setup.PFPT = zeros([powerflow.setup.jacobPT.shape[0], powerflow.setup.jacobPT.shape[1]])
+        try:
+            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida 
+            rightvalues, rightvector = eig(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
+            powerflow.setup.PF = zeros([powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[0], powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[1]])
 
-        # Jacobiana reduzida - sensibilidade QV
-        powerflow.setup.jacobQV = self.qv - dot(dot(self.qt, inv(self.pt)), self.pv)
-        rightvaluesQV, rightvectorQV = eig(powerflow.setup.jacobQV)
-        powerflow.setup.PFQV = zeros([powerflow.setup.jacobQV.shape[0], powerflow.setup.jacobQV.shape[1]])
-        for row in range(0, powerflow.setup.jacobQV.shape[0]):
-            for col in range(0, powerflow.setup.jacobQV.shape[1]):
-                powerflow.setup.PFQV[col, row] = rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
+            # Jacobiana reduzida - sensibilidade PT
+            powerflow.setup.jacobPT = self.pt - dot(dot(self.pv, inv(self.qv)), self.qt)
+            rightvaluesPT, rightvectorPT = eig(powerflow.setup.jacobPT)
+            powerflow.setup.PFPT = zeros([powerflow.setup.jacobPT.shape[0], powerflow.setup.jacobPT.shape[1]])
 
-        # Condição
-        if (stage == None):
-            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.case[self.case]['jacobian'] = powerflow.setup.jacob#[powerflow.setup.mask, :][:, powerflow.setup.mask]
+            # Jacobiana reduzida - sensibilidade QV
+            powerflow.setup.jacobQV = self.qv - dot(dot(self.qt, inv(self.pt)), self.pv)
+            rightvaluesQV, rightvectorQV = eig(powerflow.setup.jacobQV)
+            powerflow.setup.PFQV = zeros([powerflow.setup.jacobQV.shape[0], powerflow.setup.jacobQV.shape[1]])
+            for row in range(0, powerflow.setup.jacobQV.shape[0]):
+                for col in range(0, powerflow.setup.jacobQV.shape[1]):
+                    powerflow.setup.PFQV[col, row] = rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
 
-            # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.case[self.case]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
+            # Condição
+            if (stage == None):
+                # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
+                powerflow.case[self.case]['jacobian'] = powerflow.setup.jacob#[powerflow.setup.mask, :][:, powerflow.setup.mask]
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.case[self.case]['eigenvalues'] = rightvalues
-            powerflow.case[self.case]['eigenvectors'] = rightvector
+                # Armazenamento do determinante da matriz Jacobiana reduzida
+                powerflow.case[self.case]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
 
-            # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.case[self.case]['participation_factor'] = powerflow.setup.PF
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+                powerflow.case[self.case]['eigenvalues'] = rightvalues
+                powerflow.case[self.case]['eigenvectors'] = rightvector
 
-            # Armazenamento da matriz de sensibilidade PT
-            powerflow.case[self.case]['jacobian-PT'] = powerflow.setup.jacobPT
+                # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
+                powerflow.case[self.case]['participation_factor'] = powerflow.setup.PF
 
-            # Armazenamento do determinante da matriz de sensibilidade PT
-            powerflow.case[self.case]['determinant-PT'] = det(powerflow.setup.jacobPT)
+                # Armazenamento da matriz de sensibilidade PT
+                powerflow.case[self.case]['jacobian-PT'] = powerflow.setup.jacobPT
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
-            powerflow.case[self.case]['eigenvalues-PT'] = rightvaluesPT
-            powerflow.case[self.case]['eigenvectors-PT'] = rightvectorPT
+                # Armazenamento do determinante da matriz de sensibilidade PT
+                powerflow.case[self.case]['determinant-PT'] = det(powerflow.setup.jacobPT)
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
-            powerflow.case[self.case]['participation_factor-PT'] = powerflow.setup.PFPT
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
+                powerflow.case[self.case]['eigenvalues-PT'] = rightvaluesPT
+                powerflow.case[self.case]['eigenvectors-PT'] = rightvectorPT
 
-            # Armazenamento da matriz de sensibilidade QV
-            powerflow.case[self.case]['jacobian-QV'] = powerflow.setup.jacobQV
+                # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
+                powerflow.case[self.case]['participation_factor-PT'] = powerflow.setup.PFPT
 
-            # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.case[self.case]['determinant-QV'] = det(powerflow.setup.jacobQV)
+                # Armazenamento da matriz de sensibilidade QV
+                powerflow.case[self.case]['jacobian-QV'] = powerflow.setup.jacobQV
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.case[self.case]['eigenvalues-QV'] = rightvaluesQV
-            powerflow.case[self.case]['eigenvectors-QV'] = rightvectorQV
+                # Armazenamento do determinante da matriz de sensibilidade QV
+                powerflow.case[self.case]['determinant-QV'] = det(powerflow.setup.jacobQV)
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.case[self.case]['participationfactor-QV'] = powerflow.setup.PFQV
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
+                powerflow.case[self.case]['eigenvalues-QV'] = rightvaluesQV
+                powerflow.case[self.case]['eigenvectors-QV'] = rightvectorQV
 
-        elif (stage != None):
-            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.case[self.case][stage]['jacobian'] = powerflow.setup.jacob#[powerflow.setup.mask, :][:, powerflow.setup.mask]
+                # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
+                powerflow.case[self.case]['participationfactor-QV'] = powerflow.setup.PFQV
 
-            # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.case[self.case][stage]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
+            elif (stage != None):
+                # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
+                powerflow.case[self.case][stage]['jacobian'] = powerflow.setup.jacob#[powerflow.setup.mask, :][:, powerflow.setup.mask]
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.case[self.case][stage]['eigenvalues'] = rightvalues
-            powerflow.case[self.case][stage]['eigenvectors'] = rightvector
+                # Armazenamento do determinante da matriz Jacobiana reduzida
+                powerflow.case[self.case][stage]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
 
-            # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.case[self.case][stage]['participationfactor'] = powerflow.setup.PF
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+                powerflow.case[self.case][stage]['eigenvalues'] = rightvalues
+                powerflow.case[self.case][stage]['eigenvectors'] = rightvector
 
-            # Armazenamento da matriz de sensibilidade PT
-            powerflow.case[self.case][stage]['jacobian-PT'] = powerflow.setup.jacobPT
+                # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
+                powerflow.case[self.case][stage]['participationfactor'] = powerflow.setup.PF
 
-            # Armazenamento do determinante da matriz de sensibilidade PT
-            powerflow.case[self.case][stage]['determinant-PT'] = det(powerflow.setup.jacobPT)
+                # Armazenamento da matriz de sensibilidade PT
+                powerflow.case[self.case][stage]['jacobian-PT'] = powerflow.setup.jacobPT
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
-            powerflow.case[self.case][stage]['eigenvalues-PT'] = rightvaluesPT
-            powerflow.case[self.case][stage]['eigenvectors-PT'] = rightvectorPT
+                # Armazenamento do determinante da matriz de sensibilidade PT
+                powerflow.case[self.case][stage]['determinant-PT'] = det(powerflow.setup.jacobPT)
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
-            powerflow.case[self.case][stage]['participationfactor-PT'] = powerflow.setup.PFPT
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
+                powerflow.case[self.case][stage]['eigenvalues-PT'] = rightvaluesPT
+                powerflow.case[self.case][stage]['eigenvectors-PT'] = rightvectorPT
 
-            # Armazenamento da matriz de sensibilidade QV
-            powerflow.case[self.case][stage]['jacobian-QV'] = powerflow.setup.jacobQV
+                # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
+                powerflow.case[self.case][stage]['participationfactor-PT'] = powerflow.setup.PFPT
 
-            # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.case[self.case][stage]['determinant-QV'] = det(powerflow.setup.jacobQV)
+                # Armazenamento da matriz de sensibilidade QV
+                powerflow.case[self.case][stage]['jacobian-QV'] = powerflow.setup.jacobQV
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.case[self.case][stage]['eigenvalues-QV'] = rightvaluesQV
-            powerflow.case[self.case][stage]['eigenvectors-QV'] = rightvectorQV
+                # Armazenamento do determinante da matriz de sensibilidade QV
+                powerflow.case[self.case][stage]['determinant-QV'] = det(powerflow.setup.jacobQV)
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.case[self.case][stage]['participationfactor-QV'] = powerflow.setup.PFQV
+                # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
+                powerflow.case[self.case][stage]['eigenvalues-QV'] = rightvaluesQV
+                powerflow.case[self.case][stage]['eigenvectors-QV'] = rightvectorQV
+
+                # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
+                powerflow.case[self.case][stage]['participationfactor-QV'] = powerflow.setup.PFQV
+
+        # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa 
+        # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
+        except: 
+            pass
 
 
 
