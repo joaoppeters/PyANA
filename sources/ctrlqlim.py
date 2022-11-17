@@ -293,7 +293,7 @@ class Qlim:
         """
 
         ## Inicialização 
-        # Condição
+        # Condição de geração de potência reativa ser superior ao valor máximo
         if all((powerflow.sol['reactive_generation'] - powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() > powerflow.setup.options['qvar'])):
             powerflow.setup.controlheur = True
 

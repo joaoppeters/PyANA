@@ -401,7 +401,7 @@ class Control:
             if (powerflow.setup.controlheur) or ((powerflow.setup.bifurcation) and (not powerflow.setup.options['full'])):
                 break
             
-            elif not powerflow.setup.controlheur:
+            elif (not powerflow.setup.controlheur) and (not powerflow.cpfsol['pmc']):
                 # controle remoto de tensão
                 if key == 'CREM':
                     pass

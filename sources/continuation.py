@@ -127,8 +127,15 @@ class Continuation:
                 else:
                     print('Var: ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div']))
                 print((1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
-                print(powerflow.case[self.case]['corr']['voltage'], powerflow.case[self.case]['corr']['reactive_generation'])
+                print('Previsao')
+                print(powerflow.case[self.case]['prev']['voltage'])
+                print(powerflow.case[self.case]['prev']['reactive_generation'])
                 print('\n')
+                print('Correcao')
+                print(powerflow.case[self.case]['corr']['voltage'])
+                print(powerflow.case[self.case]['corr']['reactive_generation'])
+                print('\n')
+                
 
             if (powerflow.cpfsol['pmc']):
                 print('')
@@ -943,7 +950,7 @@ class Continuation:
             powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['corr']['voltage'])
             powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['corr']['theta'])
 
-        # Condição de atingimento do PMC caso varstep volt pequeno
+        # Condição de atingimento do PMC para varstep volt pequeno
         if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) < powerflow.setup.options['icmn']):
             # Reconfiguração de caso (se previsão falhar)
             if (self.service):
@@ -964,7 +971,7 @@ class Continuation:
             powerflow.setup.pmcidx = deepcopy(self.case)
 
         # Condição de valor de tensão da barra slack variar
-        if (powerflow.sol['voltage'][powerflow.setup.slackidx] != (powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'tensao'] * 1E-3)):
+        if ((powerflow.sol['voltage'][powerflow.setup.slackidx]) != (powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'tensao'] * 1E-3)):
             # Reconfiguração do caso
             self.auxdiv = deepcopy(powerflow.cpfsol['div']) + 1
             self.case -= 1
@@ -998,7 +1005,7 @@ class Continuation:
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['corr']['theta'])
 
             # Condição de atingimento de ponto de bifurcação
-            if powerflow.setup.bifurcation:
+            if (powerflow.setup.bifurcation) and (not powerflow.cpfsol['pmc']):
                 powerflow.cpfsol['pmc'] = True
                 powerflow.setup.pmcidx = deepcopy(self.case)
                 powerflow.cpfsol['varstep'] = 'volt'
