@@ -281,8 +281,8 @@ class NewtonRaphson:
         """
         ## Inicialização 
         for idx, value in powerflow.setup.dlinhaDF.iterrows():
-            k = int(value['de']) - 1
-            m = int(value['para']) - 1
+            k = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]
+            m = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]
             yline = 1 / ((value['resistencia'] / 100) + 1j * (value['reatancia'] / 100))
             
             # Verifica presença de transformadores com tap != 1.

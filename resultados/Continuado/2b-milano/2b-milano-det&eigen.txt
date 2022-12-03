@@ -1,4 +1,4 @@
-November 16, 2022
+December 03, 2022
 
 
 relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema 2b-milano
@@ -1679,6 +1679,22 @@ Autovalores: [1.00000000e+10 5.31396874e+00]
 Fator de Participação:
 p0: [1.00000000e+00 4.23504523e-19]
 p1: [4.23504523e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
+Determinante: 53139687236.391685
+Autovalores: [1.00000000e+10 5.31396872e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504524e-19]
+p1: [4.23504524e-19 1.00000000e+00]
+
+
+Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
+Determinante: 53139686996.95827
+Autovalores: [1.0000000e+10 5.3139687e+00]
+Fator de Participação:
+p0: [1.00000000e+00 4.23504524e-19]
+p1: [4.23504524e-19 1.00000000e+00]
 
 
 

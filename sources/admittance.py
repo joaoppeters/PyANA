@@ -71,32 +71,32 @@ class Ybus:
         for _, value in powerflow.setup.dlinhaDF.iterrows():
             # Elementos fora da diagonal (elemento série)
             if value['tap'] == 0.:
-                powerflow.setup.ybus[int(value['de']) - 1, int(value['para']) - 1] -= (1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']
-                powerflow.setup.ybus[int(value['para']) - 1, int(value['de']) - 1] -= (1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']
+                powerflow.setup.ybus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= (1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']
+                powerflow.setup.ybus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= (1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']
             else:
-                powerflow.setup.ybus[int(value['de']) - 1, int(value['para']) - 1] -= ((1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
-                powerflow.setup.ybus[int(value['para']) - 1, int(value['de']) - 1] -= ((1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
+                powerflow.setup.ybus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= ((1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
+                powerflow.setup.ybus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= ((1 / complex(real=value['resistencia'], imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
 
         # Bancos de capacitores e reatores
-        for _, value in powerflow.setup.dbarraDF.iterrows():
-            powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] = sum(-powerflow.setup.ybus[:, int(value['numero']) - 1])
+        for idx, value in powerflow.setup.dbarraDF.iterrows():
+            powerflow.setup.ybus[idx, idx] = sum(-powerflow.setup.ybus[:, idx])
             # Elementos na diagonal (elemento shunt de barra)
             if value['shunt_barra'] != 0.:
-                powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] += complex(real=0., imag=float(value['shunt_barra'])) / powerflow.setup.options['sbase']
+                powerflow.setup.ybus[idx, idx] += complex(real=0., imag=float(value['shunt_barra'])) / powerflow.setup.options['sbase']
 
             for _, v in powerflow.setup.dlinhaDF.iterrows():
                 ## Elementos na diagonal 
                 # (shunt de linha)
                 if v['de'] == value['numero'] or v['para'] == value['numero']:
                     if v['susceptancia'] != 0.:
-                        powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] += complex(real=0., imag=v['susceptancia']) / (2 * powerflow.setup.options['sbase'])
+                        powerflow.setup.ybus[idx, idx] += complex(real=0., imag=v['susceptancia']) / (2 * powerflow.setup.options['sbase'])
                 # (transformador)   
                 if v['tap'] != 0:
                     if value['numero'] == v['de']:
-                        powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] += (((1 / complex(real=v['resistencia'], imag=v['reatancia'])) * powerflow.setup.options['sbase']) / float(v['tap'])) * (1 / float(v['tap']) - 1)
+                        powerflow.setup.ybus[idx, idx] += (((1 / complex(real=v['resistencia'], imag=v['reatancia'])) * powerflow.setup.options['sbase']) / float(v['tap'])) * (1 / float(v['tap']) - 1)
 
                     elif value['numero'] == v['para']:
-                        powerflow.setup.ybus[int(value['numero']) - 1, int(value['numero']) - 1] += ((1 / complex(real=v['resistencia'], imag=v['reatancia'])) * powerflow.setup.options['sbase']) * (1 - 1 / float(v['tap']))
+                        powerflow.setup.ybus[idx, idx] += ((1 / complex(real=v['resistencia'], imag=v['reatancia'])) * powerflow.setup.options['sbase']) * (1 - 1 / float(v['tap']))
 
         # Condição
         if powerflow.method != 'CPF':

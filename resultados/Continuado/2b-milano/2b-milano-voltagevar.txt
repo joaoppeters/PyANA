@@ -1,4 +1,4 @@
-November 16, 2022
+December 03, 2022
 
 
 relatório de análise da variação da magnitude de tensão do sistema 2b-milano
@@ -2298,6 +2298,28 @@ Carregamento do Sistema: 192.21213531494126 MW  | 0.0 Mvar
 
 
 Carregamento do Sistema: 192.2121391296385 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
+
+|      BARRA        |        TENSÃO       |
+| NUM |     NOME    |    MOD   | VARIAÇÃO |
+-------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -0.0000  |
+-------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |
+-------------------------------------------
+
+
+Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
 
 |      BARRA        |        TENSÃO       |
 | NUM |     NOME    |    MOD   | VARIAÇÃO |

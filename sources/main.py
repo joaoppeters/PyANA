@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = 'neves.pwf'
+system = '107-Barras.pwf'
 
 method = 'CPF'
 
@@ -25,11 +25,11 @@ options = {
     'vmax': 1.05,
     'vmin': 0.95,
     'vvar': 1E-10,
-    'qvar': 1E-10,
+    'qvar': 1E-8,
     'cpfBeta': 0.,
-    'cpfLambda': 1E-1,
+    'cpfLambda': 5E-3,
     'cpfV2L': 0.95,
-    'cpfVolt': 1E-6,
+    'cpfVolt': 1E-4,
     'icmn': 1E-14,
     'full': False,
 }

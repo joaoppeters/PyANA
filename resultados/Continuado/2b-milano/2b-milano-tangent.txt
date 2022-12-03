@@ -1,4 +1,4 @@
-November 16, 2022
+December 03, 2022
 
 
 relatório de análise da variação do vetor tangente do sistema 2b-milano
@@ -2494,6 +2494,30 @@ Variável de Continuação: lambda, 10.00%
 
 
 Carregamento do Sistema: 192.2121391296385 MW  | 0.0 Mvar
+Variável de Continuação: lambda, 10.00% 
+
+|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
+-----------------------------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+-----------------------------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+-----------------------------------------------------------------
+
+
+Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
+Variável de Continuação: lambda, 10.00% 
+
+|      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME    |    MOD   |    ANG   |    MOD   |    ANG   |
+-----------------------------------------------------------------
+|  1  |  BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+-----------------------------------------------------------------
+|  2  |  BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+-----------------------------------------------------------------
+
+
+Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
 Variável de Continuação: lambda, 10.00% 
 
 |      BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |

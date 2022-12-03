@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, ones, zeros
+from numpy import any, append, concatenate, ones, zeros
 
 class Qlim:
     """classe para tratamento de limites de geração de potência reativa"""
@@ -294,7 +294,7 @@ class Qlim:
 
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo
-        if all((powerflow.sol['reactive_generation'] - powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() > powerflow.setup.options['qvar'])):
+        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy()), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
@@ -304,5 +304,5 @@ class Qlim:
             if (powerflow.setup.options['full']):
                 powerflow.setup.dbarraDF['true_potencia_reativa_minima'] = powerflow.setup.dbarraDF.loc[:, 'potencia_reativa_minima']
                 for idx, value in powerflow.setup.dbarraDF.iterrows():
-                    if (powerflow.sol['reactive_generation'][idx] - value['potencia_reativa_maxima'] > powerflow.setup.options['qvar']):
+                    if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']):
                         powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima'] = deepcopy(value['potencia_reativa_maxima'])

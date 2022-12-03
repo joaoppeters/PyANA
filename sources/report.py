@@ -281,10 +281,10 @@ class Reports:
 
             self.file.write('\n')
             if powerflow.method != 'CPF':
-                self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dlinhaDF['de'][i] - 1]:^11} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dlinhaDF['para'][i] - 1]:^11} | {powerflow.sol['active_flow_F2'][i]:^+10.3f} | {powerflow.sol['reactive_flow_F2'][i]:^+10.3f} | {powerflow.sol['active_flow_2F'][i]:^+10.3f} | {powerflow.sol['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.sol['active_flow_F2'][i])-abs(powerflow.sol['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.sol['reactive_flow_F2'][i])-abs(powerflow.sol['reactive_flow_2F'][i])):^6.3f} |")
+                self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['de'][i]][0]]:^11} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['para'][i]][0]]:^11} | {powerflow.sol['active_flow_F2'][i]:^+10.3f} | {powerflow.sol['reactive_flow_F2'][i]:^+10.3f} | {powerflow.sol['active_flow_2F'][i]:^+10.3f} | {powerflow.sol['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.sol['active_flow_F2'][i])-abs(powerflow.sol['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.sol['reactive_flow_F2'][i])-abs(powerflow.sol['reactive_flow_2F'][i])):^6.3f} |")
 
             elif powerflow.method == 'CPF':
-                self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dlinhaDF['de'][i] - 1]:^11} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dlinhaDF['para'][i] - 1]:^11} | {powerflow.case[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.case[0]['active_flow_F2'][i])-abs(powerflow.case[0]['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.case[0]['reactive_flow_F2'][i])-abs(powerflow.case[0]['reactive_flow_2F'][i])):^6.3f} |")
+                self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['de'][i]][0]]:^11} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['para'][i]][0]]:^11} | {powerflow.case[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.case[0]['active_flow_F2'][i])-abs(powerflow.case[0]['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.case[0]['reactive_flow_F2'][i])-abs(powerflow.case[0]['reactive_flow_2F'][i])):^6.3f} |")
 
             self.file.write('\n')
             self.file.write('-'*100)
@@ -385,15 +385,15 @@ class Reports:
                     self.file.write('\n')
                 
                 if not self.var and (value['corr']['varstep'] == 'lambda'):
-                    self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
+                    self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(powerflow.setup.options['cpfLambda'] * (5E-1 ** value['corr']['div']) * 100):^+9.2f} |")
             
                 else:
                     self.var = True
                     if (value['corr']['varstep'] == 'volt'):
-                        self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfVolt'] * 100):^+9.2f} |")
+                        self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfVolt'] * (5E-1 ** value['corr']['div']) * 100):^+9.2f} |")
 
                     elif (value['corr']['varstep'] == 'lambda'):
-                            self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfLambda'] * 100):^+9.2f} |")
+                        self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 100):^8.3f} | {(value['corr']['step'] * 100):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])):^8.3f} | {((1 + value['corr']['step']) * sum(powerflow.cpfsol['demanda_reativa'])):^8.3f} | {value['corr']['varstep']:^8} | {(-1 * powerflow.setup.options['cpfLambda'] * (5E-1 ** value['corr']['div']) * 100):^+9.2f} |")
             
             self.file.write('\n')
             self.file.write('-'*82)

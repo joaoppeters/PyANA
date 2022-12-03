@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from matplotlib import pyplot as plt
-from numpy import append, around, array, degrees, sum
+from numpy import append, array, degrees, sum
 
 from folder import Folder
 
@@ -81,19 +81,19 @@ class Loading:
                 for value in range(0, item['voltage'].shape[0]):
                     if powerflow.setup.dbarraDF['tipo'][value] != 0:
                         # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['active'][value], decimals=4))
+                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['active'][value])
 
                         # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['reactive'][value], decimals=4))
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['reactive'][value])
                     
                     # Armazenamento de Magnitude de Tensão
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['voltage'][value], decimals=4))
+                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['voltage'][value])
 
                     # Variável de Armazenamento de Defasagem Angular
-                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['theta'][value]), decimals=4))
+                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], degrees(item['theta'][value]))
 
                 # Demanda
-                powerflow.setup.mw = append(powerflow.setup.mw, around(sum(powerflow.cpfsol['demanda_ativa']), decimals=4))
+                powerflow.setup.mw = append(powerflow.setup.mw, sum(powerflow.cpfsol['demanda_ativa']))
                 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
@@ -105,19 +105,19 @@ class Loading:
                 for value in range(0, item['corr']['voltage'].shape[0]):
                     if powerflow.setup.dbarraDF['tipo'][value] != 0:
                         # Armazenamento de Potência Ativa
-                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['active'][value], decimals=4))
+                        powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['active'][value])
 
                         # Armazenamento de Potência Reativa
-                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['reactive'][value], decimals=4))
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['reactive'][value])
                     
                     # Armazenamento de Magnitude de Tensão Corrigida
-                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(item['corr']['voltage'][value], decimals=4))
+                    powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['voltage'][value])
 
                     # Variável de Armazenamento de Defasagem Angular Corrigida
-                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], around(degrees(item['corr']['theta'][value]), decimals=4))
+                    powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], degrees(item['corr']['theta'][value]))
 
                 # Demanda
-                powerflow.setup.mw = append(powerflow.setup.mw, around(((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])), decimals=4))
+                powerflow.setup.mw = append(powerflow.setup.mw, ((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])))
 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
