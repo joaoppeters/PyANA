@@ -10,10 +10,10 @@ from powerflow import PowerFlow
 
 system = '107-Barras.pwf'
 
-method = 'CPF'
+method = 'NEWTON'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIM']
+control = ['QLIMs']
 # control = []
 
 options = {

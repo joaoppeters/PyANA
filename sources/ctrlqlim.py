@@ -71,10 +71,10 @@ class Qlim:
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = -1
 
-                # Tratamento de limites em barras PQV
+                # Tratamento de backoff em barras PQV
                 elif (value['tipo'] == -1):
                     if ((powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] > value['tensao'] * (1E-3))) or ((powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] < value['tensao'] * (1E-3))):
-                        # Tratamento de limite de magnitude de tensão
+                        # Tratamento de backoff de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
                         powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
@@ -110,10 +110,10 @@ class Qlim:
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['reactive_generation'][idx]
                         powerflow.setup.slackqlim = True
                     
-                # Tratamento de limites de barra SLACK
+                # Tratamento de backoff de barra SLACK
                 elif (value['tipo'] == 2) and (powerflow.setup.slackqlim):
                     if ((powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] > value['tensao'] * (1E-3))) or ((powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima']) and (powerflow.sol['voltage'][idx] < value['tensao'] * (1E-3))):
-                        # Tratamento de limite de magnitude de tensão
+                        # Tratamento de backoff de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
                         powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']

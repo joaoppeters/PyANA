@@ -453,6 +453,13 @@ class PWF:
                     if (value['tipo'] == 2):
                         setup.maskP[idx] = False
                         setup.slackidx = idx
+
+                    if (value['potencia_reativa'] > value['potencia_reativa_maxima']):
+                        pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_maxima']
+
+                    elif (value['potencia_reativa'] < value['potencia_reativa_minima']):
+                        pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_minima']
+
             setup.mask = concatenate((setup.maskP, setup.maskQ), axis=0)
             
             # Número de barras PV

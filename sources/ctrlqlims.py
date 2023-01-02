@@ -102,11 +102,11 @@ class Qlims:
 
                 # Barras PV
                 powerflow.setup.yxv[nger, idx] = powerflow.setup.diffy[idx][0]
+                powerflow.setup.yxx[nger, nger] = 1E-10
 
                 # Barras PQV
-                if (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_maxima'] + powerflow.setup.options['qvar']):
-                    powerflow.setup.yxx[nger, nger] = 1E-10
-                else:
+                if (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima'] - powerflow.setup.tolsq) or \
+                    (powerflow.sol['reactive_generation'][idx] <= value['potencia_reativa_minima'] + powerflow.setup.tolsq):
                     powerflow.setup.yxx[nger, nger] = powerflow.setup.diffy[idx][1]
 
                 # Incrementa contador
@@ -210,7 +210,7 @@ class Qlims:
 
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() + powerflow.setup.options['qvar']), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
+        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy()), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
@@ -220,5 +220,5 @@ class Qlims:
             if (powerflow.setup.options['full']):
                 powerflow.setup.dbarraDF['true_potencia_reativa_minima'] = powerflow.setup.dbarraDF.loc[:, 'potencia_reativa_minima']
                 for idx, value in powerflow.setup.dbarraDF.iterrows():
-                    if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] + powerflow.setup.options['qvar']) and (value['tipo'] != 0):
+                    if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) and (value['tipo'] != 0):
                         powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima'] = deepcopy(value['potencia_reativa_maxima'])

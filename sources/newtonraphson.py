@@ -74,7 +74,10 @@ class NewtonRaphson:
         # Resíduos
         self.residue(powerflow,)
 
-        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
+        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or \
+            (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or \
+                (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
+
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -83,7 +86,7 @@ class NewtonRaphson:
 
             # Variáveis de estado
             powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
-
+            
             # Atualização das Variáveis de estado
             self.update_statevar(powerflow,)
 
