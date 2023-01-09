@@ -10,6 +10,7 @@ from matplotlib import pyplot as plt
 from numpy import append, array, degrees, sum
 
 from folder import Folder
+from smooth import Smooth
 
 class Loading:
     """classe para geração e armazenamento automático de gráficos da solução do fluxo de potência continuado"""
@@ -53,6 +54,7 @@ class Loading:
         # Variável
         powerflow.setup.pqtv = {}
         powerflow.setup.mw = array([])
+        powerflow.setup.mvar = array([])
         powerflow.setup.eigenvalues = array([])
         powerflow.setup.eigenvaluesPT = array([])
         powerflow.setup.eigenvaluesQV = array([])
@@ -94,6 +96,7 @@ class Loading:
 
                 # Demanda
                 powerflow.setup.mw = append(powerflow.setup.mw, sum(powerflow.cpfsol['demanda_ativa']))
+                powerflow.setup.mvar = append(powerflow.setup.mvar, sum(powerflow.cpfsol['demanda_reativa']))
                 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
@@ -101,7 +104,7 @@ class Loading:
                 powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
                 # powerflow.setup.det = append(powerflow.setup.det, item['determinant'])
 
-            elif key != 0 and key != list(powerflow.case.keys())[-1]:
+            elif key > 0:
                 for value in range(0, item['corr']['voltage'].shape[0]):
                     if powerflow.setup.dbarraDF['tipo'][value] != 0:
                         # Armazenamento de Potência Ativa
@@ -117,7 +120,29 @@ class Loading:
                     powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Tcorr-' + powerflow.setup.dbarraDF['nome'][value]], degrees(item['corr']['theta'][value]))
 
                 # Demanda
-                powerflow.setup.mw = append(powerflow.setup.mw, ((1 + item['corr']['step']) * sum(powerflow.cpfsol['demanda_ativa'])))
+                totalmw = sum(powerflow.cpfsol['demanda_ativa'])
+                totalmvar = sum(powerflow.cpfsol['demanda_reativa'])
+                for _, valueinc in powerflow.setup.dincDF.iterrows():
+                    if valueinc['tipo_incremento_1'] == 'AREA':
+                        # MW
+                        areamw = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
+                        totalmw += areamw - sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
+
+                        # Mvar
+                        areamvar = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
+                        totalmvar += areamvar - sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
+
+                    elif powerflow.setup.dincDF.loc[0, 'tipo_incremento_1'] == 'BARR':
+                        # MW
+                        barramw = (1 + item['corr']['step']) * powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
+                        totalmw += barramw - powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
+
+                        # Mvar
+                        barramvar = (1 + item['corr']['step']) * powerflow.cpfsol['demanda_reativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
+                        totalmvar += barramvar - powerflow.cpfsol['demanda_reativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
+                    
+                powerflow.setup.mw = append(powerflow.setup.mw, totalmw)
+                powerflow.setup.mvar = append(powerflow.setup.mvar, totalmvar)
 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
@@ -157,10 +182,10 @@ class Loading:
                     color += 1
                 
                 # Plot
-                line, = ax.plot(powerflow.setup.mw[:powerflow.setup.pmcidx], item[:powerflow.setup.pmcidx], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
+                line, = ax.plot(powerflow.setup.mw[:powerflow.setup.pmcidx+1], item[:powerflow.setup.pmcidx+1], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
                 
                 if powerflow.setup.options['full']:
-                    dashed, = ax.plot(powerflow.setup.mw[(powerflow.setup.pmcidx):(powerflow.setup.v2lidx)], item[(powerflow.setup.pmcidx):(powerflow.setup.v2lidx)], color=f'C{color}', linestyle='dashed', linewidth=2, alpha=0.85, label=busname, zorder=2)
+                    dashed, = ax.plot(powerflow.setup.mw[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], item[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], color=f'C{color}', linestyle='dashed', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     dotted, = ax.plot(powerflow.setup.mw[powerflow.setup.v2lidx:], item[powerflow.setup.v2lidx:], color=f'C{color}', linestyle='dotted', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     ax.legend([(line, dashed, dotted)], [busname])
                 

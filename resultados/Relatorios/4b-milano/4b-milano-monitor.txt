@@ -1,0 +1,20 @@
+January 07, 2023
+
+
+relatório de monitoramento do sistema 4b-milano
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!
+
+
+fim do relatório de monitoramento do sistema 4b-milano

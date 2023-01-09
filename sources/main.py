@@ -8,9 +8,9 @@
 
 from powerflow import PowerFlow
 
-system = '107-Barras.pwf'
+system = '4b-milano.pwf'
 
-method = 'NEWTON'
+method = 'CPF'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
 control = ['QLIMs']
@@ -27,7 +27,7 @@ options = {
     'vvar': 1E-10,
     'qvar': 1E-8,
     'cpfBeta': 0.,
-    'cpfLambda': 5E-3,
+    'cpfLambda': 1E-1,
     'cpfV2L': 0.95,
     'cpfVolt': 1E-4,
     'icmn': 1E-14,

@@ -148,6 +148,34 @@ class PWF:
 
 
 
+    def dinc(
+        self,
+    ):
+        """inicialização para leitura de dados de incremento do nível de carregamento"""
+
+        ## Inicialização
+        self.dinc = dict()
+        self.dinc["tipo_incremento_1"] = list()
+        self.dinc["identificacao_incremento_1"] = list()
+        self.dinc["condicao_incremento_1"] = list()
+        self.dinc["tipo_incremento_2"] = list()
+        self.dinc["identificacao_incremento_2"] = list()
+        self.dinc["condicao_incremento_2"] = list()
+        self.dinc["tipo_incremento_3"] = list()
+        self.dinc["identificacao_incremento_3"] = list()
+        self.dinc["condicao_incremento_3"] = list()
+        self.dinc["tipo_incremento_4"] = list()
+        self.dinc["identificacao_incremento_4"] = list()
+        self.dinc["condicao_incremento_4"] = list()
+        self.dinc["passo_incremento_potencia_ativa"] = list()
+        self.dinc["passo_incremento_potencia_reativa"] = list()
+        self.dinc["maximo_incremento_potencia_ativa"] = list()
+        self.dinc["maximo_incremento_potencia_reativa"] = list()
+        self.dinc["tratamento_incremento_potencia_ativa"] = list()
+        self.dinc["tratamento_incremento_potencia_reativa"] = list()
+
+
+
     def dlin(
         self,
         ):
@@ -301,13 +329,49 @@ class PWF:
                         self.dger['estatismo'].append(self.lines[self.linecount][66:72])
                     self.linecount += 1
 
-                # DataFrame dos Dados de Linha
+                # DataFrame dos Dados de Geradores
                 setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER')
                 if (setup.dgeraDF.empty) or (setup.dgeraDF.shape[0] != setup.nger):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
                 else:
                     setup.codes['DGER'] = True
+
+            # Dados de Incremento do Nível de Carregamento
+            elif self.lines[self.linecount].strip() == 'DINC':
+                self.dinc()
+                self.linecount += 1
+                while self.lines[self.linecount].strip() not in self.end_block:
+                    if self.lines[self.linecount][0] == self.comment:
+                        pass
+                    else:
+                        self.dinc["tipo_incremento_1"].append(self.lines[self.linecount][:4])
+                        self.dinc["identificacao_incremento_1"].append(self.lines[self.linecount][5:10])
+                        self.dinc["condicao_incremento_1"].append(self.lines[self.linecount][11])
+                        self.dinc["tipo_incremento_2"].append(self.lines[self.linecount][13:17])
+                        self.dinc["identificacao_incremento_2"].append(self.lines[self.linecount][18:23])
+                        self.dinc["condicao_incremento_2"].append(self.lines[self.linecount][24])
+                        self.dinc["tipo_incremento_3"].append(self.lines[self.linecount][26:30])
+                        self.dinc["identificacao_incremento_3"].append(self.lines[self.linecount][31:36])
+                        self.dinc["condicao_incremento_3"].append(self.lines[self.linecount][37])
+                        self.dinc["tipo_incremento_4"].append(self.lines[self.linecount][39:43])
+                        self.dinc["identificacao_incremento_4"].append(self.lines[self.linecount][44:49])
+                        self.dinc["condicao_incremento_4"].append(self.lines[self.linecount][50])
+                        self.dinc["passo_incremento_potencia_ativa"].append(self.lines[self.linecount][52:57])
+                        self.dinc["passo_incremento_potencia_reativa"].append(self.lines[self.linecount][58:63])
+                        self.dinc["maximo_incremento_potencia_ativa"].append(self.lines[self.linecount][64:69])
+                        self.dinc["maximo_incremento_potencia_reativa"].append(self.lines[self.linecount][70:75])
+                        self.dinc["tratamento_incremento_potencia_ativa"].append(False if self.lines[self.linecount][64:69] != '' else True)
+                        self.dinc["tratamento_incremento_potencia_reativa"].append(False if self.lines[self.linecount][70:75] != '' else True)
+                    self.linecount += 1
+
+                # DataFrame dos dados de Incremento do Nível de Carregamento
+                setup.dincDF = self.treatment(setup, pandas=DF(data=self.dinc), data='DINC')
+                if setup.dincDF.empty:
+                    ## ERROR - VERMELHO
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m')
+                else:
+                    setup.codes['DINC'] = True
 
             # Dados de Linha
             elif self.lines[self.linecount].strip() == 'DLIN':
@@ -527,6 +591,42 @@ class PWF:
                     'tensao_maxima_emergencial': 'float',
                 }
             )
+
+        # Tratamento específico 'DINC'
+        elif data == 'DINC':
+            pandas = pandas.astype(
+                {
+                    'tipo_incremento_1': 'object',
+                    'identificacao_incremento_1': 'int',
+                    'condicao_incremento_1': 'object',
+                    'tipo_incremento_2': 'object',
+                    'identificacao_incremento_2': 'int',
+                    'condicao_incremento_2': 'object',
+                    'tipo_incremento_3': 'object',
+                    'identificacao_incremento_3': 'int',
+                    'condicao_incremento_3': 'object',
+                    'tipo_incremento_4': 'object',
+                    'identificacao_incremento_4': 'int',
+                    'condicao_incremento_4': 'object',
+                    'passo_incremento_potencia_ativa': 'float',
+                    'passo_incremento_potencia_reativa': 'float',
+                    'maximo_incremento_potencia_ativa': 'float',
+                    'maximo_incremento_potencia_reativa': 'float',
+                }
+            )
+
+            for idx, value in pandas.iterrows():
+                pandas.at[idx, 'passo_incremento_potencia_ativa'] *= 1E-2
+                if value['tratamento_incremento_potencia_ativa']:
+                    pandas.at[idx, 'maximo_incremento_potencia_ativa'] = 99.99
+                else:
+                    pandas.at[idx, 'maximo_incremento_potencia_ativa'] *= 1E-2
+
+                pandas.at[idx, 'passo_incremento_potencia_reativa'] *= 1E-2                
+                if value['tratamento_incremento_potencia_reativa']:
+                    pandas.at[idx, 'maximo_incremento_potencia_reativa'] = 99.99
+                else:
+                    pandas.at[idx, 'maximo_incremento_potencia_reativa'] *= 1E-2
 
         # Tratamento específico 'DLIN'
         elif data == 'DLIN':

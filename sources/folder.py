@@ -48,6 +48,10 @@ class Folder:
         if exists(setup.dirRadmittance) is False:
             mkdir(setup.dirRadmittance)
 
+        setup.dirRadmittance = setup.dirRadmittance + setup.name + '/'   
+        if exists(setup.dirRadmittance) is False:
+            mkdir(setup.dirRadmittance)
+
 
 
     def convergence(
@@ -62,6 +66,10 @@ class Folder:
 
         ## Inicialização
         setup.dirRconvergence = setup.dirResultados + 'TrajetoriaConvergencia/'
+        if exists(setup.dirRconvergence) is False:
+            mkdir(setup.dirRconvergence)
+
+        setup.dirRconvergence = setup.dirRconvergence + setup.name + '/'   
         if exists(setup.dirRconvergence) is False:
             mkdir(setup.dirRconvergence)
 
@@ -127,6 +135,10 @@ class Folder:
         if exists(setup.dirRjacobi) is False:
             mkdir(setup.dirRjacobi)
 
+        setup.dirRjacobi = setup.dirRjacobi + setup.name + '/'   
+        if exists(setup.dirRjacobi) is False:
+            mkdir(setup.dirRjacobi)
+
 
 
     def reports(
@@ -144,6 +156,40 @@ class Folder:
         if exists(setup.dirRreports) is False:
             mkdir(setup.dirRreports)
 
+        setup.dirRreports = setup.dirRreports + setup.name + '/'   
+        if exists(setup.dirRreports) is False:
+            mkdir(setup.dirRreports)
+
+
+    
+    def smooth(
+        self,
+        powerflow,
+        setup,
+    ):
+        """criação de diretório para armazenar resultados suaves
+
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            setup: self do arquivo setup.py
+        """
+
+        ## Inicialização
+        # Condição de método
+        if powerflow.method == 'NEWTON':
+            setup.dirsmooth = setup.dirResultados + 'Smooth/'
+            if exists(setup.dirsmooth) is False:
+                mkdir(setup.dirsmooth)
+
+            setup.dirsmoothsys = setup.dirsmooth + setup.name + '/'
+            if exists(setup.dirsmoothsys) is False:
+                mkdir(setup.dirsmoothsys)
+
+        elif powerflow.method == 'CPF':
+            setup.dirsmoothsys = setup.dircpfsys + 'smooth/'
+            if exists(setup.dirsmoothsys) is False:
+                mkdir(setup.dirsmoothsys)
+
 
 
     def statevar(
@@ -160,3 +206,7 @@ class Folder:
         setup.dirRstatevar = setup.dirResultados + 'VariaveisEstado/'
         if exists(setup.dirRstatevar) is False:
             mkdir(setup.dirRstatevar)
+
+        setup.dirRstatevar = setup.dirRstatevar + setup.name + '/'   
+        if exists(setup.dirRstatevar) is False:
+            mkdir(setup.dirRstatevar) 

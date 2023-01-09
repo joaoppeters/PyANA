@@ -1,0 +1,22 @@
+January 08, 2023
+
+
+relatório de monitoramento do sistema 2b-milano
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+A geração de potência reativa da BARRA-VT violou o limite máximo estabelecido para análise ( 65.07 >= 65.0 ).
+
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da BARRA-PQ violou o limite mínimo estabelecido para análise ( 0.947 <= 0.95 ).
+
+
+
+fim do relatório de monitoramento do sistema 2b-milano

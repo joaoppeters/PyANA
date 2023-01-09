@@ -113,3 +113,6 @@ class Options:
                 setup.options[k] = v
             else:
                 setup.options[k] = deepcopy(powerflow.options[k])
+
+        if not setup.dincDF.empty:
+            setup.options['cpfLambda'] = setup.dincDF.loc[0, 'passo_incremento_potencia_ativa']

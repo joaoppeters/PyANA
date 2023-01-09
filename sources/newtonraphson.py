@@ -13,6 +13,7 @@ from numpy.linalg import solve
 from calc import PQCalc
 from ctrl import Control
 from jacobian import Jacobi
+from smooth import Smooth
 
 class NewtonRaphson:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
@@ -29,6 +30,10 @@ class NewtonRaphson:
 
         ## Inicialização
         self.newtonraphson(powerflow,)
+
+        # Smooth
+        if ('QLIMs' in powerflow.setup.control) and (powerflow.method == 'NEWTON'):
+            Smooth(powerflow,).storage(powerflow,)
 
 
 
@@ -99,7 +104,7 @@ class NewtonRaphson:
             # Condição
             if powerflow.sol['iter'] > powerflow.setup.options['itermx']:
                 # Divergência
-                powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
+                powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE'
                 break
 
         # Iteração Adicional

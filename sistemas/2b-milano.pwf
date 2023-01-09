@@ -29,7 +29,7 @@ AREA    1
 99999
 DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
-BARR    2                                            100.  100.
+BARR    2                                            10.
 99999
 EXLF NEWT QLIM
 EXIC NEWT QLIM

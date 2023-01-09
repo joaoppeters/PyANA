@@ -189,11 +189,14 @@ class Control:
     def controlres(
         self,
         powerflow,
+        case: int=0,
     ):
         """adiciona resíduos de equações de controle de controles ativos
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
+            case: caso analisado do fluxo de potência continuado (prev + corr)
+                valor padrão igual a zero -> Newton-Raphson
         """
 
         ## Inicialização
@@ -222,7 +225,7 @@ class Control:
                 Qlim().qlimres(powerflow,)
             # controle suave de limite de geração de potência reativa
             elif key == 'QLIMs':
-                Qlims().qlimsres(powerflow,)
+                Qlims().qlimsres(powerflow, case,)
             # controle de compensadores estáticos de potência reativa
             elif key == 'SVC':
                 pass
@@ -429,3 +432,48 @@ class Control:
                 # controle de magnitude de tensão de barramentos
                 elif key == 'VCTRL':
                     pass
+
+
+
+    def controlpop(
+        self,
+        powerflow,
+        pop: int=1,
+    ):
+        """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            pop: quantidade de ações necessárias
+        """
+
+        ## Inicialização
+        # Loop
+        for key,_ in powerflow.setup.control.items():
+            # controle remoto de tensão
+            if key == 'CREM':
+                pass
+            # controle secundário de tensão
+            elif key == 'CST':
+                pass
+            # controle de tap variável de transformador
+            elif key == 'CTAP':
+                pass
+            # controle de ângulo de transformador defasador
+            elif key == 'CTAPd':
+                pass
+            # controle de regulação primária de frequência
+            elif key == 'FREQ':
+                pass
+            # controle de limite de geração de potência reativa
+            elif key == 'QLIM':
+                pass
+            # controle suave de limite de geração de potência reativa
+            elif key == 'QLIMs':
+                Qlims().qlimspop(powerflow, pop=pop)
+            # controle de compensadores estáticos de potência reativa
+            elif key == 'SVC':
+                pass
+            # controle de magnitude de tensão de barramentos
+            elif key == 'VCTRL':
+                pass

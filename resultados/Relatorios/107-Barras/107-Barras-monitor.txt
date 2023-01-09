@@ -1,0 +1,35 @@
+January 03, 2023
+
+
+relatório de monitoramento do sistema 107-Barras
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+A geração de potência reativa da LCBARRET-4GR violou o limite mínimo estabelecido para análise ( -140.00 <= -140.0 ).
+
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da MARIMBON-500 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
+A magnitude de tensão da ARARAQUA-500 violou o limite máximo estabelecido para análise ( 1.070 >= 1.05 ).
+A magnitude de tensão da POCOS----500 violou o limite máximo estabelecido para análise ( 1.061 >= 1.05 ).
+A magnitude de tensão da CAMPINAS-500 violou o limite máximo estabelecido para análise ( 1.074 >= 1.05 ).
+A magnitude de tensão da C.PAULIS-500 violou o limite máximo estabelecido para análise ( 1.064 >= 1.05 ).
+A magnitude de tensão da ADRIANO--500 violou o limite máximo estabelecido para análise ( 1.052 >= 1.05 ).
+A magnitude de tensão da IBIUNA---500 violou o limite máximo estabelecido para análise ( 1.068 >= 1.05 ).
+A magnitude de tensão da MARIMBON-345 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
+A magnitude de tensão da PCOLOMBIA345 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
+A magnitude de tensão da ITUMBIARA345 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
+A magnitude de tensão da CORUMBA--345 violou o limite máximo estabelecido para análise ( 1.052 >= 1.05 ).
+A magnitude de tensão da CNOVOS---500 violou o limite máximo estabelecido para análise ( 1.058 >= 1.05 ).
+A magnitude de tensão da MACHADIN-500 violou o limite máximo estabelecido para análise ( 1.052 >= 1.05 ).
+A magnitude de tensão da ITAJUBA--500 violou o limite máximo estabelecido para análise ( 1.063 >= 1.05 ).
+
+
+
+fim do relatório de monitoramento do sistema 107-Barras
