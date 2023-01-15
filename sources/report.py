@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
-from numpy import abs, argsort, around, column_stack, degrees, savetxt, sum
+from numpy import abs, argsort, around, column_stack, degrees, pi, savetxt, sum
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -348,18 +348,51 @@ class Reports:
         ## Inicialização
         self.file.write('vv relatório de compensadores estáticos de potência reativa vv')
         self.file.write('\n\n')
-        self.file.write('|             BARRA             | DROOP |    V0     |          GERACAO Mvar          |  BARRA CONTROL  |       CONTROL      |')
+        self.file.write('|             BARRA             | DROOP |    V0     |          GERACAO Mvar          |  BARRA CONTROL  |              CONTROL            |')
         self.file.write('\n')
-        self.file.write('| NUM |     NOME    |  TENSAO   |  [%]  |  [p.u.]   |  MINIMA  |  ATUAL   |  MAXIMA  | NUM |  TENSAO   | T | UNIDADES | GRP |')
+        self.file.write('| NUM |     NOME    |  TENSAO   |  [%]  |  [p.u.]   |  MINIMA  |  ATUAL   |  MAXIMA  | NUM |  TENSAO   | T | UNIDADES | GRP |   REGIAO   |')
         self.file.write('\n')
-        self.file.write('-'*125)
+        self.file.write('-'*138)
         for i in range(0, powerflow.setup.ncer):
             idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra'][i]][0]
             idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra_controlada'][i]][0]
-            self.file.write('\n')
-            self.file.write(f"| {powerflow.setup.dcerDF['barra'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][idxcer]:^11} | {powerflow.sol['voltage'][idxcer]:^9.3f} | {(-powerflow.setup.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.setup.dbarraDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.sol['svc_reactive_generation'][i]:^8.3f} | {(powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.setup.dcerDF['barra_controlada'][i]:^3d} | {powerflow.sol['voltage'][idxctrl]:^9.3f} | {powerflow.setup.dcerDF['controle'][i]:1} | {powerflow.setup.dcerDF['unidades'][i]:^8d} | {powerflow.setup.dcerDF['grupo_base'][i]:^3d} |")
-            self.file.write('\n')
-            self.file.write('-'*125)
+            if powerflow.setup.dcerDF['controle'][i] == 'P':
+                if powerflow.sol['reactive'][idxcer] < (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):
+                    regiao = 'CAPACITIVA'
+                
+                elif powerflow.sol['reactive'][idxcer] > (powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):
+                    regiao = 'INDUTIVA'
+
+                else:
+                    regiao = 'LINEAR'
+
+                self.file.write('\n')
+                self.file.write(f"| {powerflow.setup.dcerDF['barra'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][idxcer]:^11} | {powerflow.sol['voltage'][idxcer]:^9.3f} | {(-powerflow.setup.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.setup.dbarraDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.sol['svc_reactive_generation'][i]:^8.3f} | {(powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.setup.dcerDF['barra_controlada'][i]:^3d} | {powerflow.sol['voltage'][idxctrl]:^9.3f} | {powerflow.setup.dcerDF['controle'][i]:1} | {powerflow.setup.dcerDF['unidades'][i]:^8d} | {powerflow.setup.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |")
+                self.file.write('\n')
+                self.file.write('-'*138)
+            
+            elif powerflow.setup.dcerDF['controle'][i] == 'A':
+                if powerflow.sol['alpha'] == pi/2:
+                    regiao = 'CAPACITIVA'
+
+                elif powerflow.sol['alpha'] == pi:
+                    regiao = 'INDUTIVA'
+                    
+                else:
+                    regiao = 'LINEAR'
+
+                self.file.write('\n')
+                self.file.write(f"| {powerflow.setup.dcerDF['barra'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][idxcer]:^11} | {powerflow.sol['voltage'][idxcer]:^9.3f} | {(-powerflow.setup.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.setup.dbarraDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.sol['svc_reactive_generation'][i]:^8.3f} | {(powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.setup.dcerDF['barra_controlada'][i]:^3d} | {powerflow.sol['voltage'][idxctrl]:^9.3f} | {powerflow.setup.dcerDF['controle'][i]:1} | {powerflow.setup.dcerDF['unidades'][i]:^8d} | {powerflow.setup.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |")
+                self.file.write('\n')
+                self.file.write(f"| {' '*3} | {' '*11} | {' '*9} | {' '*5} | {' '*9} | {90.00:^8.2f} | {powerflow.sol['alpha'] * (180 / pi):^8.2f} | {180.00:8.2f} | {' '*3} | {' '*9} | {' '*1} | {' '*8} | {' '*3} | {' '*10} |")
+                self.file.write('\n')
+                self.file.write('-'*138)
+                self.file.write('\n')
+                self.file.write('                                                    |  MINIMO  |  ATUAL   |  MAXIMO  |                                                    ')
+                self.file.write('\n')
+                self.file.write('                                                    | âNGULO DISPARO DO TIRISTOR [˚] |                                                    ')
+        
+                
 
         self.file.write('\n')
         self.file.write('\n\n\n\n')

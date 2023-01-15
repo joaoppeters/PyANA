@@ -32,11 +32,11 @@ class SVC:
         if 'svc_reactive_generation' not in powerflow.sol:
             powerflow.sol['svc_reactive_generation'] = powerflow.setup.dcerDF['potencia_reativa'].to_numpy()
             if powerflow.setup.dcerDF['controle'][0] == 'A':
-                self.alpha(powerflow,)
+                self.alphavar(powerflow,)
 
 
 
-    def alpha(
+    def alphavar(
         self,
         powerflow,
     ):
@@ -49,16 +49,17 @@ class SVC:
         ## Inicialização
         powerflow.setup.alphaxc = (powerflow.setup.options['sbase']) / (powerflow.setup.dcerDF['potencia_reativa_maxima'][0])
         powerflow.setup.alphaxl = ((powerflow.setup.options['sbase']) / (powerflow.setup.dcerDF['potencia_reativa_maxima'][0])) / (1 - (powerflow.setup.dcerDF['potencia_reativa_minima'][0]) / (powerflow.setup.dcerDF['potencia_reativa_maxima'][0]))
-        powerflow.setup.alpha = roots([(8 / 1856156927625), 0, (-4 / 10854718875), 0, (16 / 638512875), 0, (-8 / 6081075), 0, (8 / 155925), 0, (-4 / 2835), 0, (8 / 315), 0, (-4 / 15), 0, (4 / 3), 0, 0, -(2 * pi) + ((powerflow.setup.alphaxl * pi) / powerflow.setup.alphaxc),])
-        powerflow.setup.alpha = powerflow.setup.alpha[isreal(powerflow.setup.alpha)][0].real
+        powerflow.sol['alpha'] = roots([(8 / 1856156927625), 0, (-4 / 10854718875), 0, (16 / 638512875), 0, (-8 / 6081075), 0, (8 / 155925), 0, (-4 / 2835), 0, (8 / 315), 0, (-4 / 15), 0, (4 / 3), 0, 0, -(2 * pi) + ((powerflow.setup.alphaxl * pi) / powerflow.setup.alphaxc),])
+        powerflow.sol['alpha'] = powerflow.sol['alpha'][isreal(powerflow.sol['alpha'])][0].real
 
         # Variáveis Simbólicas
-        powerflow.setup.alphasym = Symbol('alpha')
-        powerflow.setup.alphabeq = -(((powerflow.setup.alphaxc) / (pi)) * (2 * (pi - powerflow.setup.alphasym) + sin(2 * powerflow.setup.alphasym)) - powerflow.setup.alphaxl) / (powerflow.setup.alphaxc * powerflow.setup.alphaxl)
+        global alpha
+        alpha = Symbol('alpha')
+        powerflow.setup.alphabeq = -((powerflow.setup.alphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha)) - powerflow.setup.alphaxl) / (powerflow.setup.alphaxc * powerflow.setup.alphaxl)
 
         # Potência Reativa
-        idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra']].tolist()[0]
-        powerflow.sol['svc_reactive_generation']
+        idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra'][0]].tolist()[0]
+        powerflow.sol['svc_reactive_generation'][0] = (powerflow.sol['voltage'][idxcer] ** 2) * powerflow.setup.alphabeq.subs(alpha, powerflow.sol['alpha'])
 
                 
 
@@ -86,12 +87,17 @@ class SVC:
         for _, value in powerflow.setup.dcerDF.iterrows():
             idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra']].tolist()[0]
             idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra_controlada']].tolist()[0]
+            
+            if value['controle'] == 'A':
+                Smooth(powerflow,).alphasmooth(idxcer, idxctrl, powerflow, ncer, case,)
+            
+            else:
+                Smooth(powerflow,).svcsmooth(idxcer, idxctrl, powerflow, ncer, case,)
 
             powerflow.setup.deltaQ[idxcer] = deepcopy(powerflow.sol['svc_reactive_generation'][ncer]) / powerflow.setup.options['sbase']
+            powerflow.setup.deltaQ[idxcer] -= powerflow.setup.dbarraDF['demanda_reativa'][idxcer] / powerflow.setup.options['sbase']
             powerflow.setup.deltaQ[idxcer] -= PQCalc().qcalc(powerflow, idxcer,)
-            
-            Smooth(powerflow,).svcsmooth(idxcer, idxctrl, powerflow, ncer, case,)
-            
+                
             # Incrementa contador
             ncer += 1
         
@@ -136,18 +142,28 @@ class SVC:
         for idx, value in powerflow.setup.dcerDF.iterrows():
             idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra']].tolist()[0]
             idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra_controlada']].tolist()[0]
-            
-            # Derivada Vk
-            powerflow.setup.yxv[ncer, idxcer] = powerflow.setup.diffy[idxcer][0]
 
-            # Derivada Vm
-            powerflow.setup.yxv[ncer, idxctrl] = powerflow.setup.diffy[idxcer][1]
+            if value['barra'] != value['barra_controlada']:
+                # Derivada Vk
+                powerflow.setup.yxv[ncer, idxcer] = powerflow.setup.diffy[idxcer][0]
+
+                # Derivada Vm
+                powerflow.setup.yxv[ncer, idxctrl] = powerflow.setup.diffy[idxcer][1]
+
+            elif value['barra'] == value['barra_controlada']:
+                # Derivada Vk + Vm
+                powerflow.setup.yxv[ncer, idxcer] = powerflow.setup.diffy[idxcer][0] + powerflow.setup.diffy[idxcer][1]
+
+            # Derivada Equação de Controle Adicional por Variável de Estado Adicional
+            powerflow.setup.yxx[ncer, ncer] = powerflow.setup.diffy[idxcer][2]
 
             # Derivada Qk
-            powerflow.setup.qxx[idxcer, ncer] = -1
-
-            # Derivada Qgk - Variável de Estado Adicional
-            powerflow.setup.yxx[ncer, ncer] = powerflow.setup.diffy[idxcer][2]
+            if value['controle'] == 'P':
+                powerflow.setup.qxx[idxcer, ncer] = -1
+            
+            elif value['controle'] == 'A':
+                powerflow.setup.jacob[powerflow.setup.nbus + idxcer, powerflow.setup.nbus + idxcer] -= (2 * powerflow.sol['voltage'][idxcer] * float(powerflow.setup.alphabeq.subs(alpha, powerflow.sol['alpha'])))
+                powerflow.setup.qxx[idxcer, ncer] = -(powerflow.sol['voltage'][idxcer] ** 2) * float(powerflow.setup.alphabeq.diff(alpha).subs(alpha, powerflow.sol['alpha']))
 
             # Incrementa contador
             ncer += 1
@@ -190,7 +206,13 @@ class SVC:
 
         # Atualização da potência reativa gerada
         for idx, value in powerflow.setup.dcerDF.iterrows():
-            powerflow.sol['svc_reactive_generation'][ncer] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + ncer)] * powerflow.setup.options['sbase']
+            idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra']].tolist()[0]
+            
+            if value['controle'] == 'P':
+                powerflow.sol['svc_reactive_generation'][ncer] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + ncer)] * powerflow.setup.options['sbase']
+
+            elif value['controle'] == 'A':
+                powerflow.sol['alpha'] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + ncer)]
 
             # Incrementa contador
             ncer += 1
