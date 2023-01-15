@@ -54,7 +54,7 @@ class Qlims:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if value['tipo'] != 0:
-                Smooth(powerflow,).qlimsmooth(idx, powerflow, nger, case,)
+                Smooth(powerflow,).qlimssmooth(idx, powerflow, nger, case,)
                 
                 # Incrementa contador
                 nger += 1
@@ -107,8 +107,8 @@ class Qlims:
                 powerflow.setup.yxx[nger, nger] = 1E-10
 
                 # Barras PQV
-                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.tolsq) or \
-                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.tolsq):
+                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.tolqlimq) or \
+                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.tolqlimq):
                     powerflow.setup.yxx[nger, nger] = powerflow.setup.diffy[idx][1]
 
                 # Incrementa contador
@@ -201,7 +201,7 @@ class Qlims:
 
 
 
-    def qlimheur(
+    def qlimsheur(
         self,
         powerflow,
     ):
@@ -213,7 +213,7 @@ class Qlims:
 
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.tolsq), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
+        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.tolqlimq), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 

@@ -8,12 +8,12 @@
 
 from powerflow import PowerFlow
 
-system = '4b-milano.pwf'
+system = 'kundursvc.pwf'
 
-method = 'CPF'
+method = 'NEWTON'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIMs']
+control = ['SVC']
 # control = []
 
 options = {
@@ -38,7 +38,7 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
-report = ['RBARRA',]
+report = ['RBARRA', 'RSVC']
 
 PowerFlow(
     system=system,

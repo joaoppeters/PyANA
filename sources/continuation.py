@@ -42,7 +42,7 @@ class Continuation:
 
         # Smooth
         if 'QLIMs' in powerflow.setup.control:
-            Smooth(powerflow,).storage(powerflow,)
+            Smooth(powerflow,).qlimstorage(powerflow,)
 
 
 
@@ -126,21 +126,21 @@ class Continuation:
             # Correção
             self.correction(powerflow,)
 
-            if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
-                print('Aumento Sistema (%): ', powerflow.cpfsol['step'] * 1E2)
-                if powerflow.cpfsol['varstep'] == 'volt':
-                    print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
-                else:
-                    print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
-                # print('Carga Sistema: ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
-                # print('Previsao')
-                # print(powerflow.case[self.case]['prev']['voltage'])
-                # print(powerflow.case[self.case]['prev']['reactive_generation'])
-                # print('\n')
-                # print('Correcao')
-                # print(powerflow.case[self.case]['corr']['voltage'])
-                # print(powerflow.case[self.case]['corr']['reactive_generation'])
-                print('\n')
+            # if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
+            print('Aumento Sistema (%): ', powerflow.cpfsol['step'] * 1E2)
+            if powerflow.cpfsol['varstep'] == 'volt':
+                print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
+            else:
+                print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
+            # print('Carga Sistema: ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_ativa']), 'MW ', (1 + powerflow.case[self.case]['corr']['step'])*sum(powerflow.cpfsol['demanda_reativa']), 'Mvar')
+            # print('Previsao')
+            # print(powerflow.case[self.case]['prev']['voltage'])
+            # print(powerflow.case[self.case]['prev']['reactive_generation'])
+            # print('\n')
+            # print('Correcao')
+            # print(powerflow.case[self.case]['corr']['voltage'])
+            # print(powerflow.case[self.case]['corr']['reactive_generation'])
+            print('\n')
             
             if (1 + powerflow.case[self.case]['prev']['step'])*sum(powerflow.cpfsol['demanda_ativa']) >= 190. and powerflow.setup.name == '2b-milano':
                 print('')
@@ -461,12 +461,12 @@ class Continuation:
                 powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
-        self.checkresidue(powerflow,)
+        self.concatresidue(powerflow,)
 
         # Resíduos de variáveis de estado de controle
         if (powerflow.setup.controlcount > 0):
             Control(powerflow, powerflow.setup).controlres(powerflow, self.case,)
-            self.checkresidue(powerflow,)
+            self.concatresidue(powerflow,)
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
 
         # Resíduo de Fluxo de Potência Continuado
@@ -497,7 +497,7 @@ class Continuation:
 
 
 
-    def checkresidue(
+    def concatresidue(
         self,
         powerflow,
     ):

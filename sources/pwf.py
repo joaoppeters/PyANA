@@ -65,7 +65,9 @@ class PWF:
         setup.codes = {
             'DANC': False,
             'DBAR': False,
+            'DCER': False,
             'DGER': False,
+            'DINC': False,
             'DLIN': False,
         }
 
@@ -110,7 +112,7 @@ class PWF:
         self.dbar['demanda_reativa'] = list()
         self.dbar['shunt_barra'] = list()
         self.dbar['area'] = list()
-        self.dbar['demanda_tensao_base'] = list()
+        self.dbar['tensao_base'] = list()
         self.dbar['modo'] = list()
         self.dbar['agreg1'] = list()
         self.dbar['agreg2'] = list()
@@ -122,6 +124,27 @@ class PWF:
         self.dbar['agreg8'] = list()
         self.dbar['agreg9'] = list()
         self.dbar['agreg10'] = list()
+
+
+
+    def dcer(
+        self,
+    ):
+        """inicialização para leitura de dados de compensadores estáticos de potência reativa"""
+
+        ## Inicialização
+        self.dcer = dict()
+        self.dcer['barra'] = list()
+        self.dcer['operacao'] = list()
+        self.dcer['grupo_base'] = list()
+        self.dcer['unidades'] = list()
+        self.dcer['barra_controlada'] = list()
+        self.dcer['droop'] = list()
+        self.dcer['potencia_reativa'] = list()
+        self.dcer['potencia_reativa_minima'] = list()
+        self.dcer['potencia_reativa_maxima'] = list()
+        self.dcer['controle'] = list()
+        self.dcer['estado'] = list()
 
 
 
@@ -251,7 +274,7 @@ class PWF:
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Alteração do Nível de Carregamento
-                setup.dancDF = self.treatment(setup, pandas=DF(data=self.danc), data='DANC')
+                setup.dancDF = self.treatment(setup, pandas=DF(data=self.danc), data='DANC',)
                 if setup.dancDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m')
@@ -284,7 +307,7 @@ class PWF:
                         self.dbar['demanda_reativa'].append(self.lines[self.linecount][63:68])
                         self.dbar['shunt_barra'].append(self.lines[self.linecount][68:73])
                         self.dbar['area'].append(self.lines[self.linecount][73:76])
-                        self.dbar['demanda_tensao_base'].append(self.lines[self.linecount][76:80])
+                        self.dbar['tensao_base'].append(self.lines[self.linecount][76:80])
                         self.dbar['modo'].append(self.lines[self.linecount][80])
                         self.dbar['agreg1'].append(self.lines[self.linecount][81:84])
                         self.dbar['agreg2'].append(self.lines[self.linecount][84:87])
@@ -299,12 +322,41 @@ class PWF:
                     self.linecount += 1
                 
                 # DataFrame dos Dados de Barra
-                setup.dbarraDF = self.treatment(setup, pandas=DF(data=self.dbar), data='DBAR')
+                setup.dbarraDF = self.treatment(setup, pandas=DF(data=self.dbar), data='DBAR',)
                 if setup.dbarraDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
                 else:
                     setup.codes['DBAR'] = True
+
+            # Dados de Compensadores Estáticos de Potência Reativa
+            elif self.lines[self.linecount].strip() == 'DCER':
+                self.dcer()
+                self.linecount += 1
+                while self.lines[self.linecount].strip() not in self.end_block:
+                    if self.lines[self.linecount][0] == self.comment:
+                        pass
+                    else:
+                        self.dcer['barra'].append(self.lines[self.linecount][:5])
+                        self.dcer['operacao'].append(self.lines[self.linecount][6])
+                        self.dcer['grupo_base'].append(self.lines[self.linecount][8:10])
+                        self.dcer['unidades'].append(self.lines[self.linecount][11:13])
+                        self.dcer['barra_controlada'].append(self.lines[self.linecount][14:19])
+                        self.dcer['droop'].append(self.lines[self.linecount][20:26])
+                        self.dcer['potencia_reativa'].append(self.lines[self.linecount][27:32])
+                        self.dcer['potencia_reativa_minima'].append(self.lines[self.linecount][32:37])
+                        self.dcer['potencia_reativa_maxima'].append(self.lines[self.linecount][37:42])
+                        self.dcer['controle'].append(self.lines[self.linecount][43])
+                        self.dcer['estado'].append(self.lines[self.linecount][45])
+                    self.linecount += 1
+
+                # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
+                setup.dcerDF = self.treatment(setup, pandas=DF(data=self.dcer), data='DCER',)
+                if setup.dcerDF.empty:
+                    ## ERROR - VERMELHO
+                    raise ValueError('\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m')
+                else:
+                    setup.codes['DCER'] = True
                 
             # Dados de Geradores
             elif self.lines[self.linecount].strip() == 'DGER':
@@ -330,7 +382,7 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Geradores
-                setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER')
+                setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER',)
                 if (setup.dgeraDF.empty) or (setup.dgeraDF.shape[0] != setup.nger):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
@@ -366,7 +418,7 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos dados de Incremento do Nível de Carregamento
-                setup.dincDF = self.treatment(setup, pandas=DF(data=self.dinc), data='DINC')
+                setup.dincDF = self.treatment(setup, pandas=DF(data=self.dinc), data='DINC',)
                 if setup.dincDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m')
@@ -414,7 +466,7 @@ class PWF:
                     self.linecount += 1
 
                 # DataFrame dos Dados de Linha
-                setup.dlinhaDF = self.treatment(setup, pandas=DF(data=self.dlin), data='DLIN')
+                setup.dlinhaDF = self.treatment(setup, pandas=DF(data=self.dlin), data='DLIN',)
                 if setup.dlinhaDF.empty:
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
@@ -488,7 +540,7 @@ class PWF:
                     'demanda_reativa': 'float',
                     'shunt_barra': 'float',
                     'area': 'int',
-                    'demanda_tensao_base': 'float',
+                    'tensao_base': 'float',
                     'modo': 'object',
                     'agreg1': 'object',
                     'agreg2': 'object',
@@ -546,9 +598,9 @@ class PWF:
         elif data == 'DCER':
             pandas = pandas.astype(
                 {
-                    'numero': 'int',
+                    'barra': 'int',
                     'operacao': 'object',
-                    'grupo_base_svc': 'int',
+                    'grupo_base': 'int',
                     'unidades': 'int',
                     'barra_controlada': 'int',
                     'droop': 'float',
@@ -559,6 +611,35 @@ class PWF:
                     'estado': 'object',
                 }
             )
+
+            setup.ncer = 0
+            for idx, value in pandas.iterrows():
+                if (value['estado'] == 'D'):
+                    pandas = pandas.drop(labels=idx, axis=0,)
+                    
+                elif (((value['estado'] == '0') or (value['estado'] == 'L')) and ((value['controle'] == '0') or (value['controle'] == 'P'))):
+                    setup.ncer += 1
+                    pandas.at[idx, 'droop'] = -value['droop'] /(1E2 * value['unidades'])
+
+                    if (value['barra_controlada'] == 0):
+                        pandas.at[idx, 'barra_controlada'] = value['barra']
+                    
+                    if (value['potencia_reativa'] > value['potencia_reativa_maxima']):
+                        pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_maxima']
+
+                    elif (value['potencia_reativa'] < value['potencia_reativa_minima']):
+                        pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_minima']
+
+                    if (value['controle'] == '0'):
+                        pandas.at[idx, 'controle'] = 'P'
+
+                elif (((value['estado'] == '0') or (value['estado'] == 'L')) and (value['controle'] == 'A')):
+                    setup.ncer += 1
+                    pandas.at[idx, 'droop'] = -value['droop'] / (1E2 * value['unidades'])
+
+                    if (value['barra_controlada'] == 0):
+                        pandas.at[idx, 'barra_controlada'] = value['barra']
+
 
         # Tratamento específico 'DGER'
         elif data == 'DGER':

@@ -6,8 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from copy import deepcopy
-from numpy import abs, append, argmax, array, concatenate, cos, max, ndarray, radians, sin, zeros
+from numpy import abs, append, argmax, array, concatenate, cos, max, radians, sin, zeros
 from numpy.linalg import solve
 
 from calc import PQCalc
@@ -33,7 +32,7 @@ class NewtonRaphson:
 
         # Smooth
         if ('QLIMs' in powerflow.setup.control) and (powerflow.method == 'NEWTON'):
-            Smooth(powerflow,).storage(powerflow,)
+            Smooth(powerflow,).qlimstorage(powerflow,)
 
 
 
@@ -197,23 +196,23 @@ class NewtonRaphson:
                 powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
         # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
-        self.checkresidue(powerflow,)
+        self.concatresidue(powerflow,)
 
         # Resíduos de variáveis de estado de controle
         if powerflow.setup.controlcount > 0:
             Control(powerflow, powerflow.setup).controlres(powerflow,)
-            self.checkresidue(powerflow,)
+            self.concatresidue(powerflow,)
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
         else:
             powerflow.setup.deltaY = array([0])
         
 
     
-    def checkresidue(
+    def concatresidue(
         self,
         powerflow,
     ):
-        """
+        """concatenação de resíduos de potências ativa e reativa
         
         Parâmetros
             powerflow: self do arquivo powerflow.py
@@ -221,7 +220,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # configuração completa
-        powerflow.setup.deltaPQY  = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
+        powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaP, powerflow.setup.deltaQ), axis=0)
 
 
 

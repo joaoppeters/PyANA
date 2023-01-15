@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
-from numpy import abs, argsort, column_stack, degrees, savetxt, sum
+from numpy import abs, argsort, around, column_stack, degrees, savetxt, sum
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -346,7 +346,23 @@ class Reports:
         """
 
         ## Inicialização
-        pass
+        self.file.write('vv relatório de compensadores estáticos de potência reativa vv')
+        self.file.write('\n\n')
+        self.file.write('|             BARRA             | DROOP |    V0     |          GERACAO Mvar          |  BARRA CONTROL  |       CONTROL      |')
+        self.file.write('\n')
+        self.file.write('| NUM |     NOME    |  TENSAO   |  [%]  |  [p.u.]   |  MINIMA  |  ATUAL   |  MAXIMA  | NUM |  TENSAO   | T | UNIDADES | GRP |')
+        self.file.write('\n')
+        self.file.write('-'*125)
+        for i in range(0, powerflow.setup.ncer):
+            idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra'][i]][0]
+            idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra_controlada'][i]][0]
+            self.file.write('\n')
+            self.file.write(f"| {powerflow.setup.dcerDF['barra'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][idxcer]:^11} | {powerflow.sol['voltage'][idxcer]:^9.3f} | {(-powerflow.setup.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.setup.dbarraDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.sol['svc_reactive_generation'][i]:^8.3f} | {(powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.setup.dcerDF['barra_controlada'][i]:^3d} | {powerflow.sol['voltage'][idxctrl]:^9.3f} | {powerflow.setup.dcerDF['controle'][i]:1} | {powerflow.setup.dcerDF['unidades'][i]:^8d} | {powerflow.setup.dcerDF['grupo_base'][i]:^3d} |")
+            self.file.write('\n')
+            self.file.write('-'*125)
+
+        self.file.write('\n')
+        self.file.write('\n\n\n\n')
 
 
     
@@ -671,7 +687,8 @@ class Reports:
                     self.filesmooth.write('\n')
 
                     for item in items[it:]:
-                        self.filesmooth.write(f"| {iter:^4d} | {int(item[0]):^3d} | {int(item[1]):^3d} | {int(item[2]):^3d} | {int(item[3]):^3d} |")
+                        self.filesmooth.write(f"| {iter:^4d} | {float(item[0]):^3.2f} | {float(item[1]):^3.2f} | {float(item[2]):^3.2f} | {float(item[3]):^3.2f} |")
+                        # self.filesmooth.write(f"| {iter:^4d} | {int(around(float(item[0]))):^3d} | {int(around(float(item[1]))):^3d} | {int(around(float(item[2]))):^3d} | {int(around(float(item[3]))):^3d} |")
                         self.filesmooth.write('\n')
                         iter += 1
                     

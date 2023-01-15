@@ -1,0 +1,582 @@
+January 09, 2023
+
+
+relatório de análise da variação da função suave referente a - SSEGREDO-4GR
+
+opções de controle ativadas: QLIMs 
+
+opções de relatório ativadas: RBARRA 
+
+
+
+Caso 0
+Carregamento do Sistema: 12681.699999999999 MW  | 3597.4100000000003 Mvar
+Geração de Potência Reativa: -72.19206726914251 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  1  |  0  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 1
+Carregamento do Sistema: 12745.108499999998 MW  | 3615.3970499999996 Mvar
+Geração de Potência Reativa: -70.39598228527998 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 2
+Carregamento do Sistema: 12808.517 MW  | 3633.3841 Mvar
+Geração de Potência Reativa: -68.37180547254661 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 3
+Carregamento do Sistema: 12871.925499999998 MW  | 3651.3711499999995 Mvar
+Geração de Potência Reativa: -66.11130708043538 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 4
+Carregamento do Sistema: 12935.333999999997 MW  | 3669.3582 Mvar
+Geração de Potência Reativa: -63.60492509927349 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 5
+Carregamento do Sistema: 12998.742499999997 MW  | 3687.3452500000003 Mvar
+Geração de Potência Reativa: -60.84152059452791 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 6
+Carregamento do Sistema: 13062.151 MW  | 3705.3323000000005 Mvar
+Geração de Potência Reativa: -57.808061493935156 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 7
+Carregamento do Sistema: 13125.5595 MW  | 3723.31935 Mvar
+Geração de Potência Reativa: -54.489207121221284 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 8
+Carregamento do Sistema: 13188.968 MW  | 3741.3064 Mvar
+Geração de Potência Reativa: -50.866751372524845 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 9
+Carregamento do Sistema: 13252.376499999998 MW  | 3759.29345 Mvar
+Geração de Potência Reativa: -46.91885810110239 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 10
+Carregamento do Sistema: 13315.785 MW  | 3777.2805000000008 Mvar
+Geração de Potência Reativa: -42.6189787209955 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 11
+Carregamento do Sistema: 13379.193499999998 MW  | 3795.2675499999996 Mvar
+Geração de Potência Reativa: -37.93425780944142 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 12
+Carregamento do Sistema: 13442.601999999999 MW  | 3813.2546000000007 Mvar
+Geração de Potência Reativa: -32.82305053987557 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 13
+Carregamento do Sistema: 13506.010499999999 MW  | 3831.24165 Mvar
+Geração de Potência Reativa: -27.230710148089287 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 14
+Carregamento do Sistema: 13569.418999999998 MW  | 3849.2287000000006 Mvar
+Geração de Potência Reativa: -21.081222033376264 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 15
+Carregamento do Sistema: 13632.827499999998 MW  | 3867.2157500000008 Mvar
+Geração de Potência Reativa: -14.252929006912296 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+|  6   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 16
+Carregamento do Sistema: 13648.679624999997 MW  | 3871.7125125000002 Mvar
+Geração de Potência Reativa: -12.412806356440598 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 17
+Carregamento do Sistema: 13664.531749999996 MW  | 3876.209275 Mvar
+Geração de Potência Reativa: -10.499474678761715 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  1  |  0  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  0  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 18
+Carregamento do Sistema: 13666.513265625 MW  | 3876.7713703125 Mvar
+Geração de Potência Reativa: -10.253520921683332 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+|  5   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 19
+Carregamento do Sistema: 13667.504023437497 MW  | 3877.0524179687504 Mvar
+Geração de Potência Reativa: -10.129806801047692 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 20
+Carregamento do Sistema: 13667.99940234375 MW  | 3877.192941796875 Mvar
+Geração de Potência Reativa: -10.067750894456793 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 21
+Carregamento do Sistema: 13668.247091796875 MW  | 3877.263203710938 Mvar
+Geração de Potência Reativa: -10.036671086450866 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 22
+Carregamento do Sistema: 13668.370936523437 MW  | 3877.298334667969 Mvar
+Geração de Potência Reativa: -10.021117926074197 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  0  |
+|  1   |  0  |  0  |  0  |  1  |
+|  2   |  0  |  0  |  0  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 23
+Carregamento do Sistema: 13668.401897705075 MW  | 3877.307117407227 Mvar
+Geração de Potência Reativa: -10.01722824028073 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+|  4   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 24
+Carregamento do Sistema: 13668.409638000488 MW  | 3877.309313092042 Mvar
+Geração de Potência Reativa: -10.016255731223424 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 25
+Carregamento do Sistema: 13668.41157307434 MW  | 3877.3098620132446 Mvar
+Geração de Potência Reativa: -10.016012598488658 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 26
+Carregamento do Sistema: 13668.413508148195 MW  | 3877.3104109344486 Mvar
+Geração de Potência Reativa: -10.015769463544842 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 27
+Carregamento do Sistema: 13668.413750032425 MW  | 3877.310479549599 Mvar
+Geração de Potência Reativa: -10.015739071532096 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 28
+Carregamento do Sistema: 13668.413870974538 MW  | 3877.3105138571736 Mvar
+Geração de Potência Reativa: -10.015723875513402 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 29
+Carregamento do Sistema: 13668.413931445597 MW  | 3877.3105310109613 Mvar
+Geração de Potência Reativa: -10.015716277483762 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 30
+Carregamento do Sistema: 13668.413961681126 MW  | 3877.3105395878556 Mvar
+Geração de Potência Reativa: -10.015712478477639 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 31
+Carregamento do Sistema: 13668.413976798889 MW  | 3877.3105438763023 Mvar
+Geração de Potência Reativa: -10.015710578985448 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 32
+Carregamento do Sistema: 13668.413984357774 MW  | 3877.310546020526 Mvar
+Geração de Potência Reativa: -10.015709629227757 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 33
+Carregamento do Sistema: 13668.413986247495 MW  | 3877.3105465565823 Mvar
+Geração de Potência Reativa: -10.015709391791233 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 34
+Carregamento do Sistema: 13668.413986719925 MW  | 3877.310546690596 Mvar
+Geração de Potência Reativa: -10.015709332436813 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+|  3   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 35
+Carregamento do Sistema: 13668.413986778976 MW  | 3877.310546707348 Mvar
+Geração de Potência Reativa: -10.015709325008089 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 36
+Carregamento do Sistema: 13668.413986786361 MW  | 3877.3105467094415 Mvar
+Geração de Potência Reativa: -10.015709324102147 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 37
+Carregamento do Sistema: 13668.41398679005 MW  | 3877.310546710488 Mvar
+Geração de Potência Reativa: -10.015709323635406 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+|  2   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 38
+Carregamento do Sistema: 13668.413986790974 MW  | 3877.3105467107507 Mvar
+Geração de Potência Reativa: -10.015709323306368 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 39
+Carregamento do Sistema: 13668.413986791204 MW  | 3877.310546710816 Mvar
+Geração de Potência Reativa: -10.01570932341943 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+Caso 40
+Carregamento do Sistema: 13668.41398679132 MW  | 3877.3105467108485 Mvar
+Geração de Potência Reativa: -10.015709323441172 Mvar
+Máxima Geração de Potência Reativa: 532.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   |  0  |  0  |  1  |  1  |
+|  1   |  0  |  0  |  1  |  1  |
+--------------------------------
+
+
+
+fim do relatório de análise da variação da função suave referente a - SSEGREDO-4GR
