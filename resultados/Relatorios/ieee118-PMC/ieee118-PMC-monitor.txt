@@ -1,0 +1,89 @@
+February 04, 2023
+
+
+relatório de monitoramento do sistema ieee118-PMC
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+A geração de potência reativa da Riversde--V2 violou o limite máximo estabelecido para análise ( 15.45 >= 15.0 ).
+A geração de potência reativa da Kankakee--V2 violou o limite máximo estabelecido para análise ( 50.23 >= 50.0 ).
+A geração de potência reativa da FtWayne---V2 violou o limite máximo estabelecido para análise ( 30.87 >= 30.0 ).
+A geração de potência reativa da Lincoln---V2 violou o limite máximo estabelecido para análise ( 25.13 >= 24.0 ).
+A geração de potência reativa da Sterling--V2 violou o limite máximo estabelecido para análise ( 25.19 >= 24.0 ).
+A geração de potência reativa da W.Lancst--V2 violou o limite máximo estabelecido para análise ( 100.55 >= 100.0 ).
+A geração de potência reativa da Wagenhls--V2 violou o limite máximo estabelecido para análise ( 26.20 >= 23.0 ).
+A geração de potência reativa da Tidd------V2 violou o limite máximo estabelecido para análise ( 181.43 >= 180.0 ).
+A geração de potência reativa da Muskngum--V1 violou o limite máximo estabelecido para análise ( 203.25 >= 200.0 ).
+A geração de potência reativa da Bellefnt--V2 violou o limite máximo estabelecido para análise ( 9.83 >= 9.0 ).
+A geração de potência reativa da Darrah----V2 violou o limite máximo estabelecido para análise ( 23.12 >= 23.0 ).
+A geração de potência reativa da Turner----V2 violou o limite máximo estabelecido para análise ( 74.43 >= 70.0 ).
+A geração de potência reativa da Saltvlle--V2 violou o limite máximo estabelecido para análise ( 10.36 >= 9.0 ).
+A geração de potência reativa da Hancock---V2 violou o limite máximo estabelecido para análise ( 25.23 >= 23.0 ).
+A geração de potência reativa da Fieldale--V2 violou o limite máximo estabelecido para análise ( 23.36 >= 23.0 ).
+
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da Riversde--V2 violou o limite mínimo estabelecido para análise ( 0.936 <= 0.95 ).
+A magnitude de tensão da Breed-----V1 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da Concord---V2 violou o limite mínimo estabelecido para análise ( 0.943 <= 0.95 ).
+A magnitude de tensão da FtWayne---V2 violou o limite mínimo estabelecido para análise ( 0.945 <= 0.95 ).
+A magnitude de tensão da Lincoln---V2 violou o limite mínimo estabelecido para análise ( 0.938 <= 0.95 ).
+A magnitude de tensão da Adams-----V2 violou o limite mínimo estabelecido para análise ( 0.922 <= 0.95 ).
+A magnitude de tensão da Jay-------V2 violou o limite mínimo estabelecido para análise ( 0.919 <= 0.95 ).
+A magnitude de tensão da Randolph--V2 violou o limite mínimo estabelecido para análise ( 0.935 <= 0.95 ).
+A magnitude de tensão da TannrsCk--V2 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da Haviland--V2 violou o limite mínimo estabelecido para análise ( 0.925 <= 0.95 ).
+A magnitude de tensão da Rockhill--V2 violou o limite mínimo estabelecido para análise ( 0.933 <= 0.95 ).
+A magnitude de tensão da WestLima--V2 violou o limite mínimo estabelecido para análise ( 0.928 <= 0.95 ).
+A magnitude de tensão da Sterling--V2 violou o limite mínimo estabelecido para análise ( 0.928 <= 0.95 ).
+A magnitude de tensão da EastLima--V2 violou o limite mínimo estabelecido para análise ( 0.939 <= 0.95 ).
+A magnitude de tensão da EastLima--V1 violou o limite mínimo estabelecido para análise ( 0.888 <= 0.95 ).
+A magnitude de tensão da NwLibrty--V2 violou o limite mínimo estabelecido para análise ( 0.948 <= 0.95 ).
+A magnitude de tensão da S.Kenton--V2 violou o limite mínimo estabelecido para análise ( 0.891 <= 0.95 ).
+A magnitude de tensão da WMVernon--V2 violou o limite mínimo estabelecido para análise ( 0.880 <= 0.95 ).
+A magnitude de tensão da N.Newark--V2 violou o limite mínimo estabelecido para análise ( 0.892 <= 0.95 ).
+A magnitude de tensão da Crooksvl--V2 violou o limite mínimo estabelecido para análise ( 0.915 <= 0.95 ).
+A magnitude de tensão da WCambrdg--V2 violou o limite mínimo estabelecido para análise ( 0.948 <= 0.95 ).
+A magnitude de tensão da Newcmrst--V2 violou o limite mínimo estabelecido para análise ( 0.921 <= 0.95 ).
+A magnitude de tensão da SCoshoct--V2 violou o limite mínimo estabelecido para análise ( 0.913 <= 0.95 ).
+A magnitude de tensão da Wooster---V2 violou o limite mínimo estabelecido para análise ( 0.920 <= 0.95 ).
+A magnitude de tensão da Wagenhls--V2 violou o limite mínimo estabelecido para análise ( 0.947 <= 0.95 ).
+A magnitude de tensão da Sunnysde--V2 violou o limite mínimo estabelecido para análise ( 0.948 <= 0.95 ).
+A magnitude de tensão da WNwPhil1--V2 violou o limite mínimo estabelecido para análise ( 0.941 <= 0.95 ).
+A magnitude de tensão da WNwPhil2--V2 violou o limite mínimo estabelecido para análise ( 0.928 <= 0.95 ).
+A magnitude de tensão da Tidd------V1 violou o limite mínimo estabelecido para análise ( 0.948 <= 0.95 ).
+A magnitude de tensão da Sporn-----V2 violou o limite mínimo estabelecido para análise ( 0.944 <= 0.95 ).
+A magnitude de tensão da Portsmth--V2 violou o limite mínimo estabelecido para análise ( 0.819 <= 0.95 ).
+A magnitude de tensão da NPortsmt--V2 violou o limite mínimo estabelecido para análise ( 0.870 <= 0.95 ).
+A magnitude de tensão da Sargents--V2 violou o limite mínimo estabelecido para análise ( 0.919 <= 0.95 ).
+A magnitude de tensão da Bellefnt--V2 violou o limite mínimo estabelecido para análise ( 0.760 <= 0.95 ).
+A magnitude de tensão da SthPoint--V2 violou o limite mínimo estabelecido para análise ( 0.772 <= 0.95 ).
+A magnitude de tensão da Darrah----V2 violou o limite mínimo estabelecido para análise ( 0.756 <= 0.95 ).
+A magnitude de tensão da Turner----V2 violou o limite mínimo estabelecido para análise ( 0.894 <= 0.95 ).
+A magnitude de tensão da Chemical--V2 violou o limite mínimo estabelecido para análise ( 0.891 <= 0.95 ).
+A magnitude de tensão da CapitlHl--V2 violou o limite mínimo estabelecido para análise ( 0.905 <= 0.95 ).
+A magnitude de tensão da Logan-----V2 violou o limite mínimo estabelecido para análise ( 0.897 <= 0.95 ).
+A magnitude de tensão da Sprigg----V2 violou o limite mínimo estabelecido para análise ( 0.909 <= 0.95 ).
+A magnitude de tensão da BetsyLne--V2 violou o limite mínimo estabelecido para análise ( 0.930 <= 0.95 ).
+A magnitude de tensão da Tazewell--V2 violou o limite mínimo estabelecido para análise ( 0.949 <= 0.95 ).
+A magnitude de tensão da Switchbk--V2 violou o limite mínimo estabelecido para análise ( 0.938 <= 0.95 ).
+A magnitude de tensão da Caldwell--V2 violou o limite mínimo estabelecido para análise ( 0.911 <= 0.95 ).
+A magnitude de tensão da Baileysv--V2 violou o limite mínimo estabelecido para análise ( 0.918 <= 0.95 ).
+A magnitude de tensão da Sundial---V2 violou o limite mínimo estabelecido para análise ( 0.937 <= 0.95 ).
+A magnitude de tensão da Hancock---V2 violou o limite mínimo estabelecido para análise ( 0.944 <= 0.95 ).
+A magnitude de tensão da Roanoke---V2 violou o limite mínimo estabelecido para análise ( 0.943 <= 0.95 ).
+A magnitude de tensão da Cloverdl--V2 violou o limite mínimo estabelecido para análise ( 0.934 <= 0.95 ).
+A magnitude de tensão da Blaine----V2 violou o limite mínimo estabelecido para análise ( 0.947 <= 0.95 ).
+A magnitude de tensão da Franklin--V2 violou o limite mínimo estabelecido para análise ( 0.950 <= 0.95 ).
+A magnitude de tensão da Corey-----V2 violou o limite mínimo estabelecido para análise ( 0.950 <= 0.95 ).
+A magnitude de tensão da WHuntngd--V2 violou o limite mínimo estabelecido para análise ( 0.750 <= 0.95 ).
+
+
+
+fim do relatório de monitoramento do sistema ieee118-PMC

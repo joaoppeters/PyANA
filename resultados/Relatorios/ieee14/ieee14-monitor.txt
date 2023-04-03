@@ -1,4 +1,4 @@
-December 23, 2022
+March 06, 2023
 
 
 relatório de monitoramento do sistema ieee14
@@ -9,20 +9,22 @@ opções de monitoramento ativadas: QGMON VMON
 
 vv monitoramento de potência reativa gerada vv
 
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+A geração de potência reativa da BARRA-2 violou o limite máximo estabelecido para análise ( 92.25 >= 50.0 ).
+A geração de potência reativa da BARRA-3 violou o limite máximo estabelecido para análise ( 139.96 >= 40.0 ).
+A geração de potência reativa da BARRA-6 violou o limite máximo estabelecido para análise ( 141.97 >= 24.0 ).
+A geração de potência reativa da BARRA-8 violou o limite máximo estabelecido para análise ( 134.91 >= 24.0 ).
+
 
 
 vv monitoramento de magnitude de tensão de barramentos vv
 
 A magnitude de tensão da BARRA-1 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
 A magnitude de tensão da BARRA-6 violou o limite máximo estabelecido para análise ( 1.070 >= 1.05 ).
-A magnitude de tensão da BARRA-7 violou o limite máximo estabelecido para análise ( 1.062 >= 1.05 ).
+A magnitude de tensão da BARRA-7 violou o limite mínimo estabelecido para análise ( 0.934 <= 0.95 ).
 A magnitude de tensão da BARRA-8 violou o limite máximo estabelecido para análise ( 1.090 >= 1.05 ).
-A magnitude de tensão da BARRA-9 violou o limite máximo estabelecido para análise ( 1.056 >= 1.05 ).
-A magnitude de tensão da BARRA-10 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
-A magnitude de tensão da BARRA-11 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
-A magnitude de tensão da BARRA-12 violou o limite máximo estabelecido para análise ( 1.055 >= 1.05 ).
-A magnitude de tensão da BARRA-13 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da BARRA-9 violou o limite mínimo estabelecido para análise ( 0.870 <= 0.95 ).
+A magnitude de tensão da BARRA-10 violou o limite mínimo estabelecido para análise ( 0.869 <= 0.95 ).
+A magnitude de tensão da BARRA-14 violou o limite mínimo estabelecido para análise ( 0.812 <= 0.95 ).
 
 
 

@@ -344,3 +344,22 @@ class Freq:
                 powerflow.setup.ypp[idx][idx] = infty
             else:
                 powerflow.setup.ypp[idx][idx] = 1
+
+
+
+    def freqcorr(
+        self,
+        powerflow,
+        case,
+    ):
+        """atualização dos valores de frequência para a etapa de correção do fluxo de potência continuado
+        
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização
+        # Variável
+        powerflow.sol['freq'] = deepcopy(powerflow.case[case]['prev']['freq'])
+        powerflow.sol['active_generation'] = deepcopy(powerflow.case[case]['prev']['active_generation'])
+        powerflow.sol['reactive_generation'] = deepcopy(powerflow.case[case]['prev']['reactive_generation'])

@@ -383,7 +383,7 @@ class PWF:
 
                 # DataFrame dos Dados de Geradores
                 setup.dgeraDF = self.treatment(setup, pandas=DF(data=self.dger), data='DGER',)
-                if (setup.dgeraDF.empty) or (setup.dgeraDF.shape[0] != setup.nger):
+                if (setup.dgeraDF.empty):# or (setup.dgeraDF.shape[0] != setup.nger):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m')
                 else:
@@ -566,15 +566,22 @@ class PWF:
                 if ((value['tipo'] == 2) or (value['tipo'] == 1)):
                     setup.nger += 1
                     setup.maskQ[idx] = False
+                    
                     if (value['tipo'] == 2):
                         setup.maskP[idx] = False
                         setup.slackidx = idx
+                    
+                    elif (value['tipo'] == 1):
+                        pandas.at[idx, 'angulo'] = 0.
 
                     if (value['potencia_reativa'] > value['potencia_reativa_maxima']):
                         pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_maxima']
 
                     elif (value['potencia_reativa'] < value['potencia_reativa_minima']):
                         pandas.at[idx, 'potencia_reativa'] = value['potencia_reativa_minima']
+
+                elif (value['tipo'] == 0):
+                    pandas.at[idx, 'angulo'] = 0.
 
             setup.mask = concatenate((setup.maskP, setup.maskQ), axis=0)
             
@@ -617,9 +624,9 @@ class PWF:
                 if (value['estado'] == 'D'):
                     pandas = pandas.drop(labels=idx, axis=0,)
                     
-                elif (((value['estado'] == '0') or (value['estado'] == 'L')) and ((value['controle'] == '0') or (value['controle'] == 'P'))):
+                elif (((value['estado'] == '0') or (value['estado'] == 'L')) and ((value['controle'] == '0') or (value['controle'] == 'P') or (value['controle'] == 'I'))):
                     setup.ncer += 1
-                    pandas.at[idx, 'droop'] = -value['droop'] /(1E2 * value['unidades'])
+                    pandas.at[idx, 'droop'] = -value['droop'] / (1E2 * value['unidades'])
 
                     if (value['barra_controlada'] == 0):
                         pandas.at[idx, 'barra_controlada'] = value['barra']
@@ -660,6 +667,8 @@ class PWF:
                     'estatismo': 'float',
                 }
             )
+
+            pandas['fator_participacao'] = pandas['fator_participacao'].apply(lambda x: x*1E-2)
 
         # Tratamento específico 'DGLT'
         elif data == 'DGLT':

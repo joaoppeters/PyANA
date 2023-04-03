@@ -1,0 +1,29 @@
+February 16, 2023
+
+
+relatório de monitoramento do sistema ieee118
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: QGMON VMON 
+
+
+vv monitoramento de potência reativa gerada vv
+
+A geração de potência reativa da Lincoln---V2 violou o limite mínimo estabelecido para análise ( -8.00 <= -8.0 ).
+A geração de potência reativa da Claytor---V2 violou o limite máximo estabelecido para análise ( 40.00 >= 40.0 ).
+A geração de potência reativa da Roanoke---V2 violou o limite mínimo estabelecido para análise ( -8.00 <= -8.0 ).
+
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da Breed-----V1 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da TannrsCk--V2 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da Wooster---V2 violou o limite mínimo estabelecido para análise ( 0.946 <= 0.95 ).
+A magnitude de tensão da Muskngum--V2 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+A magnitude de tensão da Darrah----V2 violou o limite mínimo estabelecido para análise ( 0.943 <= 0.95 ).
+A magnitude de tensão da WHuntngd--V2 violou o limite mínimo estabelecido para análise ( 0.949 <= 0.95 ).
+
+
+
+fim do relatório de monitoramento do sistema ieee118

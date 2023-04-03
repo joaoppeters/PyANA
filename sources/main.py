@@ -8,20 +8,23 @@
 
 from powerflow import PowerFlow
 
-system = 'kundursvc.pwf'
+system = 'libsvc.pwf'
 
 method = 'NEWTON'
+method = 'CPF'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
+control = ['QLIMs']
 control = ['SVC']
+# control = ['QLIM', 'SVC',]
 # control = []
 
 options = {
     'sbase': 100.,
     'itermx': 15,
-    'tolP': 1E-10,
-    'tolQ': 1E-10,
-    'tolY': 1E-10,
+    'tolP': 1E-10, #10
+    'tolQ': 1E-10, #10
+    'tolY': 1E-10, #10
     'vmax': 1.05,
     'vmin': 0.95,
     'vvar': 1E-10,
@@ -37,8 +40,8 @@ options = {
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
 
-report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
-report = ['RBARRA', 'RSVC']
+report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC',]
+report = ['RBARRA']
 
 PowerFlow(
     system=system,

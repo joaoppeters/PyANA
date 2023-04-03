@@ -58,17 +58,23 @@ class Loading:
         powerflow.setup.eigenvalues = array([])
         powerflow.setup.eigenvaluesPT = array([])
         powerflow.setup.eigenvaluesQV = array([])
-        # powerflow.setup.det = array([])
+        if 'FREQ' in powerflow.setup.control:
+            powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = array([])
+
         
         # Loop de Inicialização da Variável
         for _, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 # Variável de Armazenamento de Potência Ativa
                 powerflow.setup.pqtv['P-' + value['nome']] = array([])
                 
                 # Variável de Armazenamento de Potência Reativa
                 powerflow.setup.pqtv['Q-' + value['nome']] = array([])
-                
+
+            elif (value['tipo'] == 0) and (('SVC' in powerflow.setup.control) and (value['numero'] in powerflow.setup.dcerDF['barra'].to_numpy())):
+                # Variável de Armazenamento de Potência Reativa
+                powerflow.setup.pqtv['Q-' + value['nome']] = array([])
+
             # Variável de Armazenamento de Magnitude de Tensão Corrigida
             powerflow.setup.pqtv['Vcorr-' + value['nome']] = array([])
 
@@ -78,15 +84,21 @@ class Loading:
         # Loop de Armazenamento
         for key, item in powerflow.case.items():
             # Condição
-            if key == 0:
+            if (key == 0):
                 self.aux = powerflow.setup.dbarraDF['nome'][0] # usado no loop seguinte
                 for value in range(0, item['voltage'].shape[0]):
-                    if powerflow.setup.dbarraDF['tipo'][value] != 0:
+                    if (powerflow.setup.dbarraDF['tipo'][value] != 0):
                         # Armazenamento de Potência Ativa
                         powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['active'][value])
 
                         # Armazenamento de Potência Reativa
                         powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['reactive'][value])
+                            
+                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVC' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
+                        busidxcer = powerflow.setup.dcerDF.index[powerflow.setup.dcerDF['barra'] == powerflow.setup.dbarraDF['numero'].iloc[value]].tolist()[0]
+                        
+                        # Armazenamento de Potência Reativa
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['svc_reactive_generation'][busidxcer])
                     
                     # Armazenamento de Magnitude de Tensão
                     powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['voltage'][value])
@@ -102,16 +114,25 @@ class Loading:
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
                 powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['eigenvalues-PT'])
                 powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
-                # powerflow.setup.det = append(powerflow.setup.det, item['determinant'])
+                
+                # Frequência
+                if ('FREQ' in powerflow.setup.control):
+                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])], item['freq'] * powerflow.setup.options['fbase'])
 
-            elif key > 0:
+            elif (key > 0):
                 for value in range(0, item['corr']['voltage'].shape[0]):
-                    if powerflow.setup.dbarraDF['tipo'][value] != 0:
+                    if (powerflow.setup.dbarraDF['tipo'][value] != 0):
                         # Armazenamento de Potência Ativa
                         powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['P-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['active'][value])
 
                         # Armazenamento de Potência Reativa
                         powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['reactive'][value])
+                    
+                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVC' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
+                        busidxcer = powerflow.setup.dcerDF.index[powerflow.setup.dcerDF['barra'] == powerflow.setup.dbarraDF['numero'].iloc[value]].tolist()[0]
+
+                        # Armazenamento de Potência Reativa
+                        powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['svc_reactive_generation'][busidxcer])
                     
                     # Armazenamento de Magnitude de Tensão Corrigida
                     powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Vcorr-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['voltage'][value])
@@ -148,7 +169,10 @@ class Loading:
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
                 powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['corr']['eigenvalues-PT'])
                 powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['corr']['eigenvalues-QV'])
-                # powerflow.setup.det = append(powerflow.setup.det, item['corr']['determinant'])
+                
+                # Frequência
+                if ('FREQ' in powerflow.setup.control):
+                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])], item['corr']['freq'] * powerflow.setup.options['fbase'])
 
 
 
@@ -212,6 +236,11 @@ class Loading:
                 elif key[0] == 'T':
                     ax.set_title('Variação da Defasagem Angular do Barramento')
                     ax.set_ylabel('Defasagem Angular do Barramento [graus]')
+
+                # Frequência
+                elif key[0] == 'F':
+                    ax.set_title('Variação da Frequência do SEP')
+                    ax.set_ylabel('Frequência [Hz]')
 
                 ax.set_xlabel('Carregamento [MW]')
                 ax.grid()

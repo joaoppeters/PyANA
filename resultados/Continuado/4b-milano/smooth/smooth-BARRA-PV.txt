@@ -1,4 +1,4 @@
-January 13, 2023
+March 31, 2023
 
 
 relatório de análise da variação da função suave referente a - BARRA-PV
@@ -25,7 +25,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 1
 Carregamento do Sistema: 21.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.15866130309625248 Mvar
+Geração de Potência Reativa: 0.15791937297464642 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -39,7 +39,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 2
 Carregamento do Sistema: 22.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.15945093939642163 Mvar
+Geração de Potência Reativa: 0.15791937300333458 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -53,7 +53,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 3
 Carregamento do Sistema: 23.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16028829789442867 Mvar
+Geração de Potência Reativa: 0.15791937303468728 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -67,7 +67,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 4
 Carregamento do Sistema: 24.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16117339603098912 Mvar
+Geração de Potência Reativa: 0.15791937306843806 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -81,7 +81,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 5
 Carregamento do Sistema: 25.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16210625264525547 Mvar
+Geração de Potência Reativa: 0.15791937310458692 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -95,7 +95,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 6
 Carregamento do Sistema: 26.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16308688797774806 Mvar
+Geração de Potência Reativa: 0.1579193731433115 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -109,7 +109,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 7
 Carregamento do Sistema: 27.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.1641153236729309 Mvar
+Geração de Potência Reativa: 0.15791937318452298 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -123,7 +123,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 8
 Carregamento do Sistema: 28.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16519158278205381 Mvar
+Geração de Potência Reativa: 0.15791937322822136 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -137,7 +137,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 9
 Carregamento do Sistema: 29.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16631568976741562 Mvar
+Geração de Potência Reativa: 0.15791937327440664 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -151,7 +151,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 10
 Carregamento do Sistema: 30.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.1674876705046735 Mvar
+Geração de Potência Reativa: 0.15791937332325645 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -165,7 +165,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 11
 Carregamento do Sistema: 30.999999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.1687075522880832 Mvar
+Geração de Potência Reativa: 0.15791937337450435 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -179,7 +179,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 12
 Carregamento do Sistema: 32.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.16997536383360767 Mvar
+Geração de Potência Reativa: 0.15791937342823914 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -193,7 +193,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 13
 Carregamento do Sistema: 33.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.1712911352827362 Mvar
+Geração de Potência Reativa: 0.15791937348454965 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -207,7 +207,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 14
 Carregamento do Sistema: 34.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.17265489820843527 Mvar
+Geração de Potência Reativa: 0.15791937354334706 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -221,7 +221,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 15
 Carregamento do Sistema: 35.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.17406668561790184 Mvar
+Geração de Potência Reativa: 0.1579193736047202 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -235,7 +235,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 16
 Carregamento do Sistema: 36.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.17552653195869183 Mvar
+Geração de Potência Reativa: 0.15791937366858022 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -249,7 +249,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 17
 Carregamento do Sistema: 37.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.17703447312387155 Mvar
+Geração de Potência Reativa: 0.15791937373483833 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -263,7 +263,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 18
 Carregamento do Sistema: 38.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.17859054645628092 Mvar
+Geração de Potência Reativa: 0.15791937380376098 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -277,7 +277,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 19
 Carregamento do Sistema: 39.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.18019479075510603 Mvar
+Geração de Potência Reativa: 0.15791937387517052 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -291,7 +291,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 20
 Carregamento do Sistema: 40.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.18184724628058646 Mvar
+Geração de Potência Reativa: 0.15791937394906697 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -305,7 +305,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 21
 Carregamento do Sistema: 41.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.18354795476174246 Mvar
+Geração de Potência Reativa: 0.15791937402553913 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -319,7 +319,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 22
 Carregamento do Sistema: 42.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.18529695940037172 Mvar
+Geração de Potência Reativa: 0.157919374104587 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -333,7 +333,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 23
 Carregamento do Sistema: 43.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.18709430487922063 Mvar
+Geração de Potência Reativa: 0.15791937418612179 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -347,7 +347,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 24
 Carregamento do Sistema: 44.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.1889400373681127 Mvar
+Geração de Potência Reativa: 0.15791937427023228 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -361,7 +361,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 25
 Carregamento do Sistema: 45.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.19083420453016586 Mvar
+Geração de Potência Reativa: 0.1579193743569185 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -375,7 +375,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 26
 Carregamento do Sistema: 46.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.19277685553023005 Mvar
+Geração de Potência Reativa: 0.15791937444626925 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -389,7 +389,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 27
 Carregamento do Sistema: 47.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.19476804104145984 Mvar
+Geração de Potência Reativa: 0.15791937453792926 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -403,7 +403,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 28
 Carregamento do Sistema: 48.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.19680781325277508 Mvar
+Geração de Potência Reativa: 0.15791937463234262 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -417,7 +417,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 29
 Carregamento do Sistema: 49.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.19889622587747624 Mvar
+Geração de Potência Reativa: 0.1579193747293317 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -431,7 +431,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 30
 Carregamento do Sistema: 50.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2010333341610604 Mvar
+Geração de Potência Reativa: 0.15791937482871887 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -445,7 +445,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 31
 Carregamento do Sistema: 51.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2032191948896589 Mvar
+Geração de Potência Reativa: 0.1579193749308594 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -459,7 +459,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 32
 Carregamento do Sistema: 52.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.20545386639785335 Mvar
+Geração de Potência Reativa: 0.1579193750354868 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -473,7 +473,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 33
 Carregamento do Sistema: 53.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2077374085790673 Mvar
+Geração de Potência Reativa: 0.1579193751425123 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -487,7 +487,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 34
 Carregamento do Sistema: 54.00000000000002 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.21006988289391515 Mvar
+Geração de Potência Reativa: 0.15791937525237998 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -501,7 +501,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 35
 Carregamento do Sistema: 55.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.21245135237961676 Mvar
+Geração de Potência Reativa: 0.15791937536464573 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -515,7 +515,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 36
 Carregamento do Sistema: 56.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.21488188165958988 Mvar
+Geração de Potência Reativa: 0.1579193754794872 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -529,7 +529,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 37
 Carregamento do Sistema: 57.00000000000002 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.21736153695401939 Mvar
+Geração de Potência Reativa: 0.15791937559708202 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -543,7 +543,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 38
 Carregamento do Sistema: 58.00000000000003 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2198903860896273 Mvar
+Geração de Potência Reativa: 0.15791937571716375 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -557,7 +557,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 39
 Carregamento do Sistema: 59.00000000000002 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.22246849851015327 Mvar
+Geração de Potência Reativa: 0.15791937583991 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -571,7 +571,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 40
 Carregamento do Sistema: 60.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.22509594528736798 Mvar
+Geração de Potência Reativa: 0.15791937596523198 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -585,7 +585,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 41
 Carregamento do Sistema: 61.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.22777279913226423 Mvar
+Geração de Potência Reativa: 0.1579193760932185 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -599,7 +599,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 42
 Carregamento do Sistema: 62.000000000000014 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.23049913440678083 Mvar
+Geração de Potência Reativa: 0.15791937622395835 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -613,7 +613,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 43
 Carregamento do Sistema: 63.00000000000001 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.23327502713428316 Mvar
+Geração de Potência Reativa: 0.15791937635718512 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -627,7 +627,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 44
 Carregamento do Sistema: 64.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.23610055501253058 Mvar
+Geração de Potência Reativa: 0.15791937649289878 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -641,7 +641,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 45
 Carregamento do Sistema: 65.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.23897579742646613 Mvar
+Geração de Potência Reativa: 0.1579193766314546 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -655,7 +655,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 46
 Carregamento do Sistema: 66.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.24190083545931884 Mvar
+Geração de Potência Reativa: 0.15791937677258616 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -669,7 +669,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 47
 Carregamento do Sistema: 67.0 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.24487575190699218 Mvar
+Geração de Potência Reativa: 0.15791937691629343 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -683,7 +683,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 48
 Carregamento do Sistema: 67.99999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.24790063129014328 Mvar
+Geração de Potência Reativa: 0.15791937706266523 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -697,7 +697,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 49
 Carregamento do Sistema: 68.99999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2509755598689267 Mvar
+Geração de Potência Reativa: 0.15791937721170157 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -711,7 +711,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 50
 Carregamento do Sistema: 69.99999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2541006256559619 Mvar
+Geração de Potência Reativa: 0.15791937736349126 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -725,7 +725,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 51
 Carregamento do Sistema: 70.99999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2572759184311657 Mvar
+Geração de Potência Reativa: 0.1579193775179455 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -739,7 +739,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 52
 Carregamento do Sistema: 71.99999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2605015297555191 Mvar
+Geração de Potência Reativa: 0.15791937767497544 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -753,7 +753,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 53
 Carregamento do Sistema: 72.99999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2637775529869657 Mvar
+Geração de Potência Reativa: 0.15791937783475873 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -767,7 +767,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 54
 Carregamento do Sistema: 73.99999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.26710408329559954 Mvar
+Geração de Potência Reativa: 0.15791937799711775 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -781,7 +781,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 55
 Carregamento do Sistema: 74.99999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.27048121767832 Mvar
+Geração de Potência Reativa: 0.15791937816223012 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -795,7 +795,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 56
 Carregamento do Sistema: 75.99999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2739090549762402 Mvar
+Geração de Potência Reativa: 0.15791937833009584 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -809,7 +809,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 57
 Carregamento do Sistema: 76.99999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.27738769588978585 Mvar
+Geração de Potência Reativa: 0.1579193785007149 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -823,7 +823,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 58
 Carregamento do Sistema: 77.99999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2809172429961926 Mvar
+Geração de Potência Reativa: 0.15791937867408734 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -837,7 +837,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 59
 Carregamento do Sistema: 78.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2844978007667365 Mvar
+Geração de Potência Reativa: 0.15791937885003549 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -851,7 +851,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 60
 Carregamento do Sistema: 79.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2881294755836983 Mvar
+Geração de Potência Reativa: 0.15791937902873698 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -865,7 +865,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 61
 Carregamento do Sistema: 80.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2918123757590152 Mvar
+Geração de Potência Reativa: 0.15791937921019183 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -879,7 +879,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 62
 Carregamento do Sistema: 81.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.29554661155177797 Mvar
+Geração de Potência Reativa: 0.15791937939431122 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -893,7 +893,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 63
 Carregamento do Sistema: 82.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.2993322951877708 Mvar
+Geração de Potência Reativa: 0.15791937958127278 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -907,7 +907,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 64
 Carregamento do Sistema: 83.99999999999993 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3031695408785673 Mvar
+Geração de Potência Reativa: 0.1579193797709877 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -921,7 +921,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 65
 Carregamento do Sistema: 84.99999999999993 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3070584648404484 Mvar
+Geração de Potência Reativa: 0.15791937996354477 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -935,7 +935,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 66
 Carregamento do Sistema: 85.99999999999993 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.31099918531545256 Mvar
+Geração de Potência Reativa: 0.1579193801588552 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -949,7 +949,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 67
 Carregamento do Sistema: 86.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.31499182259073777 Mvar
+Geração de Potência Reativa: 0.1579193803570078 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -963,7 +963,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 68
 Carregamento do Sistema: 87.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.31903649902087494 Mvar
+Geração de Potência Reativa: 0.15791938055782495 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -977,7 +977,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 69
 Carregamento do Sistema: 88.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.32313333904836483 Mvar
+Geração de Potência Reativa: 0.15791938076139544 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -991,7 +991,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 70
 Carregamento do Sistema: 89.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.32728246922530957 Mvar
+Geração de Potência Reativa: 0.1579193809678081 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1005,7 +1005,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 71
 Carregamento do Sistema: 90.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3314840182368606 Mvar
+Geração de Potência Reativa: 0.15791938117706295 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1019,7 +1019,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 72
 Carregamento do Sistema: 91.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.33573811692342304 Mvar
+Geração de Potência Reativa: 0.15791938138924877 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1033,7 +1033,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 73
 Carregamento do Sistema: 92.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3400448983037485 Mvar
+Geração de Potência Reativa: 0.15791938160418795 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1047,7 +1047,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 74
 Carregamento do Sistema: 93.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.34440449759935987 Mvar
+Geração de Potência Reativa: 0.1579193818219693 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1061,7 +1061,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 75
 Carregamento do Sistema: 94.99999999999989 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.348817052259065 Mvar
+Geração de Potência Reativa: 0.15791938204259282 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1075,7 +1075,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 76
 Carregamento do Sistema: 95.99999999999989 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.35328270198347056 Mvar
+Geração de Potência Reativa: 0.1579193822659697 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1089,7 +1089,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 77
 Carregamento do Sistema: 96.99999999999989 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3578015887507391 Mvar
+Geração de Potência Reativa: 0.15791938249245518 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1103,7 +1103,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 78
 Carregamento do Sistema: 97.99999999999989 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.36237385684243506 Mvar
+Geração de Potência Reativa: 0.15791938272178285 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1117,7 +1117,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 79
 Carregamento do Sistema: 98.99999999999989 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.36699965287088077 Mvar
+Geração de Potência Reativa: 0.15791938295386387 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1131,7 +1131,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 80
 Carregamento do Sistema: 99.99999999999987 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3716791258055352 Mvar
+Geração de Potência Reativa: 0.1579193831889647 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1145,7 +1145,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 81
 Carregamento do Sistema: 100.99999999999987 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3764124270010605 Mvar
+Geração de Potência Reativa: 0.15791938342699652 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1159,7 +1159,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 82
 Carregamento do Sistema: 101.99999999999987 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3811997102261877 Mvar
+Geração de Potência Reativa: 0.1579193836677817 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1173,7 +1173,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 83
 Carregamento do Sistema: 102.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3860411316920498 Mvar
+Geração de Potência Reativa: 0.15791938391167548 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1187,7 +1187,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 84
 Carregamento do Sistema: 103.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.39093685008291246 Mvar
+Geração de Potência Reativa: 0.15791938415841145 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1201,7 +1201,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 85
 Carregamento do Sistema: 104.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.3958870265853953 Mvar
+Geração de Potência Reativa: 0.15791938440834485 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1215,7 +1215,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 86
 Carregamento do Sistema: 105.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4008918249199134 Mvar
+Geração de Potência Reativa: 0.1579193846609428 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1229,7 +1229,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 87
 Carregamento do Sistema: 106.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.40595141137318436 Mvar
+Geração de Potência Reativa: 0.15791938491656055 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1243,7 +1243,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 88
 Carregamento do Sistema: 107.99999999999984 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4110659548289597 Mvar
+Geração de Potência Reativa: 0.15791938517528692 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1257,7 +1257,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 89
 Carregamento do Sistema: 108.99999999999984 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4162356268032852 Mvar
+Geração de Potência Reativa: 0.15791938543694428 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1271,7 +1271,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 90
 Carregamento do Sistema: 109.99999999999984 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4214606014757649 Mvar
+Geração de Potência Reativa: 0.1579193857017991 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1285,7 +1285,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 91
 Carregamento do Sistema: 110.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.42674105572659826 Mvar
+Geração de Potência Reativa: 0.15791938596958488 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1299,7 +1299,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 92
 Carregamento do Sistema: 111.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.43207716917059713 Mvar
+Geração de Potência Reativa: 0.15791938624021284 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1313,7 +1313,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 93
 Carregamento do Sistema: 112.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4374691241936901 Mvar
+Geração de Potência Reativa: 0.15791938651403825 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1327,7 +1327,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 94
 Carregamento do Sistema: 113.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.442917105989693 Mvar
+Geração de Potência Reativa: 0.15791938679088346 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1341,7 +1341,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 95
 Carregamento do Sistema: 114.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4484213025981454 Mvar
+Geração de Potência Reativa: 0.15791938707110376 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1355,7 +1355,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 96
 Carregamento do Sistema: 115.99999999999982 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.45398190494312374 Mvar
+Geração de Potência Reativa: 0.15791938735425504 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1369,7 +1369,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 97
 Carregamento do Sistema: 116.99999999999982 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.45959910687241035 Mvar
+Geração de Potência Reativa: 0.15791938764015967 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1383,7 +1383,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 98
 Carregamento do Sistema: 117.99999999999982 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.46527310519799414 Mvar
+Geração de Potência Reativa: 0.1579193879295282 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1397,7 +1397,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 99
 Carregamento do Sistema: 118.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.471004099737371 Mvar
+Geração de Potência Reativa: 0.15791938822209417 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1411,7 +1411,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 100
 Carregamento do Sistema: 119.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.47679229335564344 Mvar
+Geração de Potência Reativa: 0.15791938851767995 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1425,7 +1425,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 101
 Carregamento do Sistema: 120.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.48263789200895246 Mvar
+Geração de Potência Reativa: 0.15791938881646317 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1439,7 +1439,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 102
 Carregamento do Sistema: 121.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.48854110478773194 Mvar
+Geração de Potência Reativa: 0.1579193891182662 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1453,7 +1453,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 103
 Carregamento do Sistema: 122.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.4945021439628938 Mvar
+Geração de Potência Reativa: 0.15791938942335548 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1467,7 +1467,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 104
 Carregamento do Sistema: 123.99999999999979 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5005212250311253 Mvar
+Geração de Potência Reativa: 0.1579193897316422 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1481,7 +1481,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 105
 Carregamento do Sistema: 124.99999999999979 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5065985667628503 Mvar
+Geração de Potência Reativa: 0.15791939004312638 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1495,7 +1495,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 106
 Carregamento do Sistema: 125.99999999999979 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5127343912495697 Mvar
+Geração de Potência Reativa: 0.15791939035798563 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1509,7 +1509,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 107
 Carregamento do Sistema: 126.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5189289239536876 Mvar
+Geração de Potência Reativa: 0.1579193906759535 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1523,7 +1523,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 108
 Carregamento do Sistema: 127.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5251823937596711 Mvar
+Geração de Potência Reativa: 0.15791939099738528 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1537,7 +1537,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 109
 Carregamento do Sistema: 128.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5314950330240542 Mvar
+Geração de Potência Reativa: 0.1579193913220145 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1551,7 +1551,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 110
 Carregamento do Sistema: 129.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5378670776301497 Mvar
+Geração de Potência Reativa: 0.15791939164975233 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1565,7 +1565,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 111
 Carregamento do Sistema: 130.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5442987670407184 Mvar
+Geração de Potência Reativa: 0.15791939198086524 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1579,7 +1579,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 112
 Carregamento do Sistema: 131.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5507903443538353 Mvar
+Geração de Potência Reativa: 0.1579193923156197 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1593,7 +1593,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 113
 Carregamento do Sistema: 132.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5573420563599996 Mvar
+Geração de Potência Reativa: 0.15791939265339394 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1607,7 +1607,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 114
 Carregamento do Sistema: 133.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5639541535991555 Mvar
+Geração de Potência Reativa: 0.15791939299454327 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1621,7 +1621,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 115
 Carregamento do Sistema: 134.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.570626890420467 Mvar
+Geração de Potência Reativa: 0.15791939333924532 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1635,7 +1635,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 116
 Carregamento do Sistema: 135.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5773605250432468 Mvar
+Geração de Potência Reativa: 0.15791939368732244 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1649,7 +1649,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 117
 Carregamento do Sistema: 136.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5841553196187732 Mvar
+Geração de Potência Reativa: 0.15791939403886346 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1663,7 +1663,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 118
 Carregamento do Sistema: 137.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5910115402940619 Mvar
+Geração de Potência Reativa: 0.15791939439360192 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1677,7 +1677,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 119
 Carregamento do Sistema: 138.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.5979294572768801 Mvar
+Geração de Potência Reativa: 0.15791939475207073 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1691,7 +1691,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 120
 Carregamento do Sistema: 139.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6049093449023601 Mvar
+Geração de Potência Reativa: 0.15791939511391462 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1705,7 +1705,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 121
 Carregamento do Sistema: 140.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6119514817020999 Mvar
+Geração de Potência Reativa: 0.15791939547931122 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1719,7 +1719,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 122
 Carregamento do Sistema: 141.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6190561504728187 Mvar
+Geração de Potência Reativa: 0.15791939584799408 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1733,7 +1733,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 123
 Carregamento do Sistema: 142.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.626223638349277 Mvar
+Geração de Potência Reativa: 0.15791939622058493 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1747,7 +1747,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 124
 Carregamento do Sistema: 143.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6334542368768403 Mvar
+Geração de Potência Reativa: 0.15791939659655085 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1761,7 +1761,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 125
 Carregamento do Sistema: 144.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.640748242086886 Mvar
+Geração de Potência Reativa: 0.15791939697598067 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1775,7 +1775,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 126
 Carregamento do Sistema: 145.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.648105954574163 Mvar
+Geração de Potência Reativa: 0.15791939735914085 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1789,7 +1789,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 127
 Carregamento do Sistema: 146.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.655527679575485 Mvar
+Geração de Potência Reativa: 0.15791939774594255 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1803,7 +1803,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 128
 Carregamento do Sistema: 147.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6630137270507319 Mvar
+Geração de Potência Reativa: 0.15791939813629696 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1817,7 +1817,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 129
 Carregamento do Sistema: 148.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6705644117651843 Mvar
+Geração de Potência Reativa: 0.1579193985302929 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1831,7 +1831,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 130
 Carregamento do Sistema: 149.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6781800533757654 Mvar
+Geração de Potência Reativa: 0.15791939892819684 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1845,7 +1845,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 131
 Carregamento do Sistema: 150.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6858609765168389 Mvar
+Geração de Potência Reativa: 0.1579193993297423 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1859,7 +1859,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 132
 Carregamento do Sistema: 151.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.6936075108905371 Mvar
+Geração de Potência Reativa: 0.15791939973484048 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1873,7 +1873,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 133
 Carregamento do Sistema: 152.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.701419991357799 Mvar
+Geração de Potência Reativa: 0.15791940014393546 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1887,7 +1887,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 134
 Carregamento do Sistema: 153.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7092987580325172 Mvar
+Geração de Potência Reativa: 0.15791940055658316 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1901,7 +1901,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 135
 Carregamento do Sistema: 154.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.71724415637755 Mvar
+Geração de Potência Reativa: 0.15791940097331647 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1915,7 +1915,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 136
 Carregamento do Sistema: 155.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7252565373043751 Mvar
+Geração de Potência Reativa: 0.1579194013936025 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1929,7 +1929,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 137
 Carregamento do Sistema: 156.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7333362572733648 Mvar
+Geração de Potência Reativa: 0.15791940181788533 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1943,7 +1943,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 138
 Carregamento do Sistema: 157.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7414836783985912 Mvar
+Geração de Potência Reativa: 0.15791940224598733 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1957,7 +1957,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 139
 Carregamento do Sistema: 158.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7496991685546739 Mvar
+Geração de Potência Reativa: 0.1579194026779085 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1971,7 +1971,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 140
 Carregamento do Sistema: 159.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7579831014849603 Mvar
+Geração de Potência Reativa: 0.1579194031140041 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1985,7 +1985,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 141
 Carregamento do Sistema: 160.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7663358569161005 Mvar
+Geração de Potência Reativa: 0.15791940355383005 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -1999,7 +1999,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 142
 Carregamento do Sistema: 161.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7747578206712014 Mvar
+Geração de Potência Reativa: 0.1579194039976528 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2013,7 +2013,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 143
 Carregamento do Sistema: 162.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7832493847903521 Mvar
+Geração de Potência Reativa: 0.15791940444573882 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2027,7 +2027,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 144
 Carregamento do Sistema: 163.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.7918109476511503 Mvar
+Geração de Potência Reativa: 0.15791940489773282 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2041,7 +2041,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 145
 Carregamento do Sistema: 164.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8004429140935798 Mvar
+Geração de Potência Reativa: 0.15791940535372362 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2055,7 +2055,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 146
 Carregamento do Sistema: 165.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8091456955486187 Mvar
+Geração de Potência Reativa: 0.15791940581397768 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2069,7 +2069,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 147
 Carregamento do Sistema: 166.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.817919710170667 Mvar
+Geração de Potência Reativa: 0.15791940627822854 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2083,7 +2083,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 148
 Carregamento do Sistema: 167.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8267653829721056 Mvar
+Geração de Potência Reativa: 0.15791940674665383 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2097,7 +2097,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 149
 Carregamento do Sistema: 168.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8356831459629177 Mvar
+Geração de Potência Reativa: 0.1579194072194312 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2111,7 +2111,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 150
 Carregamento do Sistema: 169.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8446734382941301 Mvar
+Geração de Potência Reativa: 0.1579194076962942 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2125,7 +2125,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 151
 Carregamento do Sistema: 170.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8537367064038293 Mvar
+Geração de Potência Reativa: 0.15791940817733163 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2139,7 +2139,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 152
 Carregamento do Sistema: 171.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8628734041693953 Mvar
+Geração de Potência Reativa: 0.15791940866280996 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2153,7 +2153,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 153
 Carregamento do Sistema: 172.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8720839930629332 Mvar
+Geração de Potência Reativa: 0.15791940915264036 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2167,7 +2167,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 154
 Carregamento do Sistema: 173.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8813689423099014 Mvar
+Geração de Potência Reativa: 0.1579194096466452 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2181,7 +2181,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 155
 Carregamento do Sistema: 174.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.8907287290555566 Mvar
+Geração de Potência Reativa: 0.15791941014517974 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2195,7 +2195,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 156
 Carregamento do Sistema: 175.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9001638385323751 Mvar
+Geração de Potência Reativa: 0.15791941064806636 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2209,7 +2209,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 157
 Carregamento do Sistema: 176.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9096747642350245 Mvar
+Geração de Potência Reativa: 0.1579194111554827 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2223,7 +2223,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 158
 Carregamento do Sistema: 177.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9192620080993308 Mvar
+Geração de Potência Reativa: 0.15791941166733992 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2237,7 +2237,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 159
 Carregamento do Sistema: 178.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9289260806865762 Mvar
+Geração de Potência Reativa: 0.15791941218372685 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2251,7 +2251,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 160
 Carregamento do Sistema: 179.99999999999957 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.938667501373569 Mvar
+Geração de Potência Reativa: 0.1579194127047323 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2265,7 +2265,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 161
 Carregamento do Sistema: 180.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9484867985481316 Mvar
+Geração de Potência Reativa: 0.15791941323026748 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2279,7 +2279,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 162
 Carregamento do Sistema: 181.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9583845098092958 Mvar
+Geração de Potência Reativa: 0.15791941376051 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2293,7 +2293,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 163
 Carregamento do Sistema: 182.9999999999996 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9683611821768245 Mvar
+Geração de Potência Reativa: 0.1579194142956375 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2307,7 +2307,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 164
 Carregamento do Sistema: 183.99999999999963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9784173723027756 Mvar
+Geração de Potência Reativa: 0.15791941483520588 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2321,7 +2321,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 165
 Carregamento do Sistema: 184.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9885536466928357 Mvar
+Geração de Potência Reativa: 0.15791941537965926 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2335,7 +2335,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 166
 Carregamento do Sistema: 185.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 0.9987705819325399 Mvar
+Geração de Potência Reativa: 0.15791941592881997 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2349,7 +2349,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 167
 Carregamento do Sistema: 186.99999999999966 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0090687649213947 Mvar
+Geração de Potência Reativa: 0.1579194164829545 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2363,7 +2363,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 168
 Carregamento do Sistema: 187.9999999999997 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0194487931140195 Mvar
+Geração de Potência Reativa: 0.15791941704188517 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2377,7 +2377,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 169
 Carregamento do Sistema: 188.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0299112747689243 Mvar
+Geração de Potência Reativa: 0.15791941760587846 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2391,7 +2391,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 170
 Carregamento do Sistema: 189.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0404568292044836 Mvar
+Geração de Potência Reativa: 0.15791941817484556 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2405,7 +2405,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 171
 Carregamento do Sistema: 190.99999999999972 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0510860870645011 Mvar
+Geração de Potência Reativa: 0.15791941874869764 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2419,7 +2419,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 172
 Carregamento do Sistema: 191.99999999999974 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0617996905903482 Mvar
+Geração de Potência Reativa: 0.15791941932770115 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2433,7 +2433,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 173
 Carregamento do Sistema: 192.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0725982939031375 Mvar
+Geração de Potência Reativa: 0.1579194199118561 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2447,7 +2447,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 174
 Carregamento do Sistema: 193.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0834825632949574 Mvar
+Geração de Potência Reativa: 0.15791942050116248 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2461,7 +2461,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 175
 Carregamento do Sistema: 194.99999999999977 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.0944531775291644 Mvar
+Geração de Potência Reativa: 0.15791942109579793 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2475,7 +2475,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 176
 Carregamento do Sistema: 195.9999999999998 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1055108281504467 Mvar
+Geração de Potência Reativa: 0.15791942169558482 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2489,7 +2489,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 177
 Carregamento do Sistema: 196.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1166562198057228 Mvar
+Geração de Potência Reativa: 0.1579194223008784 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2503,7 +2503,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 178
 Carregamento do Sistema: 197.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.12789007057561 Mvar
+Geração de Potência Reativa: 0.1579194229111458 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2517,7 +2517,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 179
 Carregamento do Sistema: 198.99999999999983 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.139213112315396 Mvar
+Geração de Potência Reativa: 0.15791942352727517 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2531,7 +2531,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 180
 Carregamento do Sistema: 199.99999999999986 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1506260910121746 Mvar
+Geração de Potência Reativa: 0.1579194241486448 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2545,7 +2545,7 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 Caso 181
 Carregamento do Sistema: 200.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1621297671466913 Mvar
+Geração de Potência Reativa: 0.15791942477569876 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2558,8 +2558,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 182
-Carregamento do Sistema: 201.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1737249160757024 Mvar
+Carregamento do Sistema: 201.4999999999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942509135737 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2572,8 +2572,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 183
-Carregamento do Sistema: 202.9999999999999 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1854123284212648 Mvar
+Carregamento do Sistema: 201.74999999999986 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942524963076 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2586,8 +2586,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 184
-Carregamento do Sistema: 203.99999999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.1971928104768992 Mvar
+Carregamento do Sistema: 201.87499999999986 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194253289451 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2600,8 +2600,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 185
-Carregamento do Sistema: 204.99999999999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2090671846271661 Mvar
+Carregamento do Sistema: 201.99999999999986 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194254081706 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2614,8 +2614,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 186
-Carregamento do Sistema: 205.12499999999991 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2105581247825903 Mvar
+Carregamento do Sistema: 202.06249999999986 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942544787219 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2628,8 +2628,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 187
-Carregamento do Sistema: 205.12890624999994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106047405304743 Mvar
+Carregamento do Sistema: 202.1249999999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942548766258 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2642,8 +2642,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 188
-Carregamento do Sistema: 205.13085937499994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106280489471821 Mvar
+Carregamento do Sistema: 202.1562499999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942550755778 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2652,11 +2652,12 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  4   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 189
-Carregamento do Sistema: 205.13183593749994 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106397032911609 Mvar
+Carregamento do Sistema: 202.1874999999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942552736415 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2665,11 +2666,12 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  4   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 190
-Carregamento do Sistema: 205.13208007812494 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106426168912776 Mvar
+Carregamento do Sistema: 202.1953124999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942553233795 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2678,11 +2680,12 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  4   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 191
-Carregamento do Sistema: 205.1321411132812 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106433452921728 Mvar
+Carregamento do Sistema: 202.2031249999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942553731175 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2691,11 +2694,12 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  4   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 192
-Carregamento do Sistema: 205.13214492797843 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106433908171788 Mvar
+Carregamento do Sistema: 202.2070312499999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942553979865 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2704,11 +2708,12 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  4   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 193
-Carregamento do Sistema: 205.13214588165278 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434021986523 Mvar
+Carregamento do Sistema: 202.2089843749999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255410421 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2720,8 +2725,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 194
-Carregamento do Sistema: 205.1321468353271 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434135797706 Mvar
+Carregamento do Sistema: 202.2099609374999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554166383 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2733,8 +2738,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 195
-Carregamento do Sistema: 205.13214731216425 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434192703297 Mvar
+Carregamento do Sistema: 202.2109374999999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554228555 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2746,8 +2751,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 196
-Carregamento do Sistema: 205.13214743137354 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434206931027 Mvar
+Carregamento do Sistema: 202.21142578124986 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.157919425542552 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2759,8 +2764,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 197
-Carregamento do Sistema: 205.13214749097818 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434214044448 Mvar
+Carregamento do Sistema: 202.2116699218749 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554290728 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2772,8 +2777,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 198
-Carregamento do Sistema: 205.13214752078053 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434217600714 Mvar
+Carregamento do Sistema: 202.2117919921874 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554281846 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2785,8 +2790,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 199
-Carregamento do Sistema: 205.13214753568167 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.210643421921631 Mvar
+Carregamento do Sistema: 202.2119140624999 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554290728 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2798,8 +2803,8 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 --------------------------------
 
 Caso 200
-Carregamento do Sistema: 205.132147539407 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434216129003 Mvar
+Carregamento do Sistema: 202.21197509765614 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255429961 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2807,11 +2812,233 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  0   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 Caso 201
-Carregamento do Sistema: 205.13214754126963 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434215163553 Mvar
+Carregamento do Sistema: 202.21203613281236 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554290728 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 202
+Carregamento do Sistema: 202.21206665039048 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255429961 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 203
+Carregamento do Sistema: 202.2120971679686 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 204
+Carregamento do Sistema: 202.2121276855467 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 205
+Carregamento do Sistema: 202.21213531494126 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 206
+Carregamento do Sistema: 202.2121429443358 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 207
+Carregamento do Sistema: 202.21214389801014 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 208
+Carregamento do Sistema: 202.21214485168446 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 209
+Carregamento do Sistema: 202.21214532852161 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 210
+Carregamento do Sistema: 202.21214580535877 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 211
+Carregamento do Sistema: 202.21214604377735 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 212
+Carregamento do Sistema: 202.21214628219593 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 213
+Carregamento do Sistema: 202.2121464014052 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 214
+Carregamento do Sistema: 202.21214646100987 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 215
+Carregamento do Sistema: 202.2121464908122 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 216
+Carregamento do Sistema: 202.2121465206145 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 217
+Carregamento do Sistema: 202.21214653551567 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.1579194255430849 Mvar
+Máxima Geração de Potência Reativa: 9999.0 Mvar
+
+| ITER | CH1 | CH2 | CH3 | CH4 |
+--------------------------------
+|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  3   | 0.00 | 0.00 | 0.50 | 0.50 |
+--------------------------------
+
+Caso 218
+Carregamento do Sistema: 202.21214654296625 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554317373 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
@@ -2821,191 +3048,16 @@ Máxima Geração de Potência Reativa: 9999.0 Mvar
 |  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
-Caso 202
-Carregamento do Sistema: 205.1321475417353 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220111595 Mvar
+Caso 219
+Carregamento do Sistema: 202.2121465448289 MW  | 0.0 Mvar
+Geração de Potência Reativa: 0.15791942554317373 Mvar
 Máxima Geração de Potência Reativa: 9999.0 Mvar
 
 | ITER | CH1 | CH2 | CH3 | CH4 |
 --------------------------------
 |  0   | 0.00 | 0.00 | 0.50 | 0.50 |
 |  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 203
-Carregamento do Sistema: 205.1321475418517 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.210643422006008 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 204
-Carregamento do Sistema: 205.13214754196812 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220109819 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 205
-Carregamento do Sistema: 205.13214754208457 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220166662 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 206
-Carregamento do Sistema: 205.13214754214275 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220068962 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 207
-Carregamento do Sistema: 205.13214754215733 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220146234 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 208
-Carregamento do Sistema: 205.13214754217188 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.210643422015245 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 209
-Carregamento do Sistema: 205.13214754217915 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 210
-Carregamento do Sistema: 205.1321475421828 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220154227 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 211
-Carregamento do Sistema: 205.1321475421864 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 212
-Carregamento do Sistema: 205.13214754218822 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 213
-Carregamento do Sistema: 205.13214754218868 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 214
-Carregamento do Sistema: 205.13214754218916 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 215
-Carregamento do Sistema: 205.13214754218936 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 216
-Carregamento do Sistema: 205.13214754218956 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 217
-Carregamento do Sistema: 205.13214754218978 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
---------------------------------
-
-Caso 218
-Carregamento do Sistema: 205.13214754218984 MW  | 0.0 Mvar
-Geração de Potência Reativa: 1.2106434220155116 Mvar
-Máxima Geração de Potência Reativa: 9999.0 Mvar
-
-| ITER | CH1 | CH2 | CH3 | CH4 |
---------------------------------
-|  0   | 0.00 | 0.00 | 0.50 | 0.50 |
-|  1   | 0.00 | 0.00 | 0.50 | 0.50 |
+|  2   | 0.00 | 0.00 | 0.50 | 0.50 |
 --------------------------------
 
 

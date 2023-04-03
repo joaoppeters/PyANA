@@ -6,8 +6,9 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
-from numpy import abs, append, argmax, array, concatenate, cos, max, radians, sin, zeros
-from numpy.linalg import solve
+from copy import deepcopy
+from numpy import abs, append, arange, argmax, array, concatenate, cos, dot, insert, max, radians, sin, zeros
+from numpy.linalg import det, eig, solve, inv
 
 from calc import PQCalc
 from ctrl import Control
@@ -107,7 +108,7 @@ class NewtonRaphson:
                 break
 
         # Iteração Adicional
-        if powerflow.sol['iter'] < powerflow.setup.options['itermx']:
+        if powerflow.sol['iter'] <= powerflow.setup.options['itermx']:
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -125,6 +126,9 @@ class NewtonRaphson:
 
             # Fluxo em linhas de transmissão
             self.line_flow(powerflow,)
+
+            # Análise de autovalores & sensibilidade
+            self.eigensens(powerflow,)
             
             # Convergência
             powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'
@@ -300,16 +304,115 @@ class NewtonRaphson:
             powerflow.sol['active_flow_F2'][idx] = yline.real * (powerflow.sol['voltage'][k] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa k -> m
-            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência ativa m -> k
             powerflow.sol['active_flow_2F'][idx] = yline.real * (powerflow.sol['voltage'][m] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa m -> k
-            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
         powerflow.sol['active_flow_F2'] *= powerflow.setup.options['sbase']
         powerflow.sol['active_flow_2F'] *= powerflow.setup.options['sbase']
 
         powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['sbase']
         powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['sbase']
+
+
+
+    def eigensens(
+        self,
+        powerflow,
+    ):
+        """análise de autovalores e autovetores
+
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização
+        # Reorganização da Matriz Jacobiana Expandida
+        self.jacob = deepcopy(powerflow.setup.jacob)
+        
+        if (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)):
+            self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus))), (powerflow.setup.nbus), (-1 * arange(1, powerflow.setup.nger + 1)))
+
+            self.jacob = self.jacob[self.reidx, :][:, self.reidx]
+
+            # Submatrizes Jacobianas
+            self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
+            self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+            self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
+            self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
+
+        elif not (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)):
+            # Submatrizes Jacobianas
+            self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
+            self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])
+            self.qt = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
+            self.qv = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])
+
+        try:
+            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida 
+            rightvalues, rightvector = eig(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
+            powerflow.setup.PF = zeros([powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[0], powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask].shape[1]])
+
+            # Jacobiana reduzida - sensibilidade PT
+            powerflow.setup.jacobPT = self.pt - dot(dot(self.pv, inv(self.qv)), self.qt)
+            rightvaluesPT, rightvectorPT = eig(powerflow.setup.jacobPT)
+            powerflow.setup.PFPT = zeros([powerflow.setup.jacobPT.shape[0], powerflow.setup.jacobPT.shape[1]])
+
+            # Jacobiana reduzida - sensibilidade QV
+            powerflow.setup.jacobQV = self.qv - dot(dot(self.qt, inv(self.pt)), self.pv)
+            # powerflow.setup.jacobQV = deepcopy(powerflow.setup.jacob)
+            rightvaluesQV, rightvectorQV = eig(powerflow.setup.jacobQV)
+            powerflow.setup.PFQV = zeros([powerflow.setup.jacobQV.shape[0], powerflow.setup.jacobQV.shape[1]])
+            for row in range(0, powerflow.setup.jacobQV.shape[0]):
+                for col in range(0, powerflow.setup.jacobQV.shape[1]):
+                    powerflow.setup.PFQV[col, row] = rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
+
+            # Condição
+            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
+            powerflow.case[self.case]['jacobian'] = powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
+
+            # Armazenamento do determinante da matriz Jacobiana reduzida
+            powerflow.case[self.case]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
+
+            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+            powerflow.case[self.case]['eigenvalues'] = rightvalues
+            powerflow.case[self.case]['eigenvectors'] = rightvector
+
+            # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
+            powerflow.case[self.case]['participation_factor'] = powerflow.setup.PF
+
+            # Armazenamento da matriz de sensibilidade PT
+            powerflow.case[self.case]['jacobian-PT'] = powerflow.setup.jacobPT
+
+            # Armazenamento do determinante da matriz de sensibilidade PT
+            powerflow.case[self.case]['determinant-PT'] = det(powerflow.setup.jacobPT)
+
+            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
+            powerflow.case[self.case]['eigenvalues-PT'] = rightvaluesPT
+            powerflow.case[self.case]['eigenvectors-PT'] = rightvectorPT
+
+            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
+            powerflow.case[self.case]['participation_factor-PT'] = powerflow.setup.PFPT
+
+            # Armazenamento da matriz de sensibilidade QV
+            powerflow.case[self.case]['jacobian-QV'] = powerflow.setup.jacobQV
+
+            # Armazenamento do determinante da matriz de sensibilidade QV
+            powerflow.case[self.case]['determinant-QV'] = det(powerflow.setup.jacobQV)
+
+            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
+            powerflow.case[self.case]['eigenvalues-QV'] = rightvaluesQV
+            powerflow.case[self.case]['eigenvectors-QV'] = rightvectorQV
+
+            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
+            powerflow.case[self.case]['participationfactor-QV'] = powerflow.setup.PFQV
+
+        # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa 
+        # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
+        except:
+            # Loop
+            pass

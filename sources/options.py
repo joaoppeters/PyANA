@@ -6,6 +6,7 @@
 # email: joao.peters@engenharia.ufjf.br #
 # ------------------------------------- #
 
+from numpy import zeros
 from copy import deepcopy
 
 class Options:
@@ -116,3 +117,10 @@ class Options:
 
         if not setup.dincDF.empty:
             setup.options['cpfLambda'] = setup.dincDF.loc[0, 'passo_incremento_potencia_ativa']
+
+        
+        setup.options['cpfBeta'] = zeros(setup.nbus)
+        if (hasattr(setup, 'dgeraDF')) and (not setup.dgeraDF.empty):
+            for idx, value in setup.dgeraDF.iterrows():
+                idx = value['numero'] - 1
+                setup.options['cpfBeta'][idx] = value['fator_participacao']
