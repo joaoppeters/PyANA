@@ -385,19 +385,6 @@ class NewtonRaphson:
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
             powerflow.case[self.case]['participation_factor'] = powerflow.setup.PF
 
-            # Armazenamento da matriz de sensibilidade PT
-            powerflow.case[self.case]['jacobian-PT'] = powerflow.setup.jacobPT
-
-            # Armazenamento do determinante da matriz de sensibilidade PT
-            powerflow.case[self.case]['determinant-PT'] = det(powerflow.setup.jacobPT)
-
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade PT
-            powerflow.case[self.case]['eigenvalues-PT'] = rightvaluesPT
-            powerflow.case[self.case]['eigenvectors-PT'] = rightvectorPT
-
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade PT
-            powerflow.case[self.case]['participation_factor-PT'] = powerflow.setup.PFPT
-
             # Armazenamento da matriz de sensibilidade QV
             powerflow.case[self.case]['jacobian-QV'] = powerflow.setup.jacobQV
 

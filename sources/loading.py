@@ -112,7 +112,6 @@ class Loading:
                 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
-                powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['eigenvalues-PT'])
                 powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
                 
                 # Frequência
@@ -167,7 +166,6 @@ class Loading:
 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
-                powerflow.setup.eigenvaluesPT = append(powerflow.setup.eigenvaluesPT, item['corr']['eigenvalues-PT'])
                 powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['corr']['eigenvalues-QV'])
                 
                 # Frequência

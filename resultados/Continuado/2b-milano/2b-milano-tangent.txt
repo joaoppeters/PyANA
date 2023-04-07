@@ -1,4 +1,4 @@
-March 30, 2023
+April 05, 2023
 
 
 relatório de análise da variação do vetor tangente do sistema 2b-milano
@@ -2363,59 +2363,20 @@ Variável de Passo: lambda, 10.00%
 
 
 Caso 182
-Carregamento do Sistema: 191.4999999999999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 5.00% 
+Carregamento do Sistema: 191.9999999999999 MW  | 0.0 Mvar
+Variável de Passo: lambda, 10.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
 ------------------------------------------------------------------
 |  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
 ------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9478  | -18.6029 |  0.9478  | -18.6029 |
+|  2  |   BARRA-PQ   |  0.9474  | -18.6596 |  0.9474  | -18.6598 |
 ------------------------------------------------------------------
 
 
 Caso 183
-Carregamento do Sistema: 191.74999999999986 MW  | 0.0 Mvar
-Variável de Passo: lambda, 2.50% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9476  | -18.6313 |  0.9476  | -18.6313 |
-------------------------------------------------------------------
-
-
-Caso 184
-Carregamento do Sistema: 191.87499999999986 MW  | 0.0 Mvar
-Variável de Passo: lambda, 1.25% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9475  | -18.6455 |  0.9475  | -18.6455 |
-------------------------------------------------------------------
-
-
-Caso 185
-Carregamento do Sistema: 191.99999999999986 MW  | 0.0 Mvar
-Variável de Passo: lambda, 1.25% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9474  | -18.6598 |  0.9474  | -18.6598 |
-------------------------------------------------------------------
-
-
-Caso 186
-Carregamento do Sistema: 192.06249999999986 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.0624999999999 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.62% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2427,8 +2388,8 @@ Variável de Passo: lambda, 0.62%
 ------------------------------------------------------------------
 
 
-Caso 187
-Carregamento do Sistema: 192.1249999999999 MW  | 0.0 Mvar
+Caso 184
+Carregamento do Sistema: 192.12499999999991 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.62% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2440,22 +2401,9 @@ Variável de Passo: lambda, 0.62%
 ------------------------------------------------------------------
 
 
-Caso 188
-Carregamento do Sistema: 192.1562499999999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.31% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6775 |  0.9473  | -18.6775 |
-------------------------------------------------------------------
-
-
-Caso 189
-Carregamento do Sistema: 192.1874999999999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.31% 
+Caso 185
+Carregamento do Sistema: 192.18749999999994 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.62% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2466,8 +2414,8 @@ Variável de Passo: lambda, 0.31%
 ------------------------------------------------------------------
 
 
-Caso 190
-Carregamento do Sistema: 192.1953124999999 MW  | 0.0 Mvar
+Caso 186
+Carregamento do Sistema: 192.19531249999991 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.08% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2479,8 +2427,8 @@ Variável de Passo: lambda, 0.08%
 ------------------------------------------------------------------
 
 
-Caso 191
-Carregamento do Sistema: 192.2031249999999 MW  | 0.0 Mvar
+Caso 187
+Carregamento do Sistema: 192.20312499999991 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.08% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2492,48 +2440,9 @@ Variável de Passo: lambda, 0.08%
 ------------------------------------------------------------------
 
 
-Caso 192
-Carregamento do Sistema: 192.2070312499999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.04% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6833 |  0.9473  | -18.6833 |
-------------------------------------------------------------------
-
-
-Caso 193
-Carregamento do Sistema: 192.2089843749999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.02% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6835 |  0.9473  | -18.6835 |
-------------------------------------------------------------------
-
-
-Caso 194
-Carregamento do Sistema: 192.2099609374999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.01% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6836 |  0.9473  | -18.6836 |
-------------------------------------------------------------------
-
-
-Caso 195
-Carregamento do Sistema: 192.2109374999999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.01% 
+Caso 188
+Carregamento do Sistema: 192.21093749999991 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.08% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
@@ -2544,59 +2453,20 @@ Variável de Passo: lambda, 0.01%
 ------------------------------------------------------------------
 
 
-Caso 196
-Carregamento do Sistema: 192.21142578124986 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
-------------------------------------------------------------------
-
-
-Caso 197
-Carregamento do Sistema: 192.2116699218749 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6838 |  0.9473  | -18.6838 |
-------------------------------------------------------------------
-
-
-Caso 198
-Carregamento do Sistema: 192.2117919921874 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 199
+Caso 189
 Carregamento do Sistema: 192.2119140624999 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
+Variável de Passo: lambda, 0.01% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
 | NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
 ------------------------------------------------------------------
 |  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
 ------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+|  2  |   BARRA-PQ   |  0.9473  | -18.6837 |  0.9473  | -18.6839 |
 ------------------------------------------------------------------
 
 
-Caso 200
+Caso 190
 Carregamento do Sistema: 192.21197509765614 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
@@ -2609,7 +2479,7 @@ Variável de Passo: lambda, 0.00%
 ------------------------------------------------------------------
 
 
-Caso 201
+Caso 191
 Carregamento do Sistema: 192.21203613281236 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
@@ -2622,7 +2492,7 @@ Variável de Passo: lambda, 0.00%
 ------------------------------------------------------------------
 
 
-Caso 202
+Caso 192
 Carregamento do Sistema: 192.21206665039048 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
@@ -2635,7 +2505,7 @@ Variável de Passo: lambda, 0.00%
 ------------------------------------------------------------------
 
 
-Caso 203
+Caso 193
 Carregamento do Sistema: 192.2120971679686 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
@@ -2648,8 +2518,138 @@ Variável de Passo: lambda, 0.00%
 ------------------------------------------------------------------
 
 
+Caso 194
+Carregamento do Sistema: 192.21211242675767 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 195
+Carregamento do Sistema: 192.21212768554676 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 196
+Carregamento do Sistema: 192.2121353149413 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 197
+Carregamento do Sistema: 192.21213912963856 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 198
+Carregamento do Sistema: 192.21214103698716 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 199
+Carregamento do Sistema: 192.2121429443358 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 200
+Carregamento do Sistema: 192.21214389801014 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 201
+Carregamento do Sistema: 192.21214485168446 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 202
+Carregamento do Sistema: 192.21214532852161 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
+Caso 203
+Carregamento do Sistema: 192.21214580535877 MW  | 0.0 Mvar
+Variável de Passo: lambda, 0.00% 
+
+|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
+| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
+------------------------------------------------------------------
+|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
+------------------------------------------------------------------
+|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
+------------------------------------------------------------------
+
+
 Caso 204
-Carregamento do Sistema: 192.2121276855467 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214592456806 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2662,7 +2662,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 205
-Carregamento do Sistema: 192.21213531494126 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214604377735 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2675,7 +2675,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 206
-Carregamento do Sistema: 192.21213722228987 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214616298664 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2688,7 +2688,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 207
-Carregamento do Sistema: 192.2121391296385 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214628219593 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2701,7 +2701,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 208
-Carregamento do Sistema: 192.21214103698713 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214634180058 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2714,7 +2714,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 209
-Carregamento do Sistema: 192.21214294433577 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214640140522 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2727,7 +2727,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 210
-Carregamento do Sistema: 192.21214389801008 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214643120757 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2740,7 +2740,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 211
-Carregamento do Sistema: 192.21214485168443 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2121464461087 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2753,7 +2753,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 212
-Carregamento do Sistema: 192.2121453285216 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214645355928 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2766,7 +2766,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 213
-Carregamento do Sistema: 192.21214580535874 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214646100987 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2779,7 +2779,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 214
-Carregamento do Sistema: 192.21214604377732 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214646846045 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2792,7 +2792,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 215
-Carregamento do Sistema: 192.21214616298658 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.21214646939174 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
@@ -2805,150 +2805,7 @@ Variável de Passo: lambda, 0.00%
 
 
 Caso 216
-Carregamento do Sistema: 192.21214628219587 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 217
-Carregamento do Sistema: 192.21214634180055 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 218
-Carregamento do Sistema: 192.2121464014052 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 219
-Carregamento do Sistema: 192.21214640885577 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 220
-Carregamento do Sistema: 192.21214641630635 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 221
-Carregamento do Sistema: 192.2121464237569 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 222
-Carregamento do Sistema: 192.2121464312075 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 223
-Carregamento do Sistema: 192.21214643865807 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 224
-Carregamento do Sistema: 192.21214644610865 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 225
-Carregamento do Sistema: 192.21214645355923 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 226
-Carregamento do Sistema: 192.21214646100978 MW  | 0.0 Mvar
-Variável de Passo: lambda, 0.00% 
-
-|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |
-| NUM |     NOME     |    MOD   |    ANG   |    MOD   |    ANG   |
-------------------------------------------------------------------
-|  1  |   BARRA-VT   |  1.0000  | +0.0000  |  1.0000  | +0.0000  |
-------------------------------------------------------------------
-|  2  |   BARRA-PQ   |  0.9473  | -18.6839 |  0.9473  | -18.6839 |
-------------------------------------------------------------------
-
-
-Caso 227
-Carregamento do Sistema: 192.21214646846036 MW  | 0.0 Mvar
+Carregamento do Sistema: 192.2121464698574 MW  | 0.0 Mvar
 Variável de Passo: lambda, 0.00% 
 
 |       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |

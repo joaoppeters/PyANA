@@ -53,7 +53,7 @@ class Qlims:
 
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 Smooth(powerflow,).qlimssmooth(idx, powerflow, nger, case,)
                 
                 # Incrementa contador
@@ -114,10 +114,9 @@ class Qlims:
                 # Incrementa contador
                 nger += 1
 
-
         ## Montagem Jacobiana
         # Condição
-        if powerflow.setup.controldim != 0:
+        if (powerflow.setup.controldim != 0):
             powerflow.setup.extrarow = zeros([powerflow.setup.nger, powerflow.setup.controldim])
             powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.nger])
 
@@ -127,7 +126,7 @@ class Qlims:
             # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracol, powerflow.setup.yxx), axis=0)), axis=1)
 
-        elif powerflow.setup.controldim == 0:
+        elif (powerflow.setup.controldim == 0):
             # H-N M-L + yxt-yxv
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)
 

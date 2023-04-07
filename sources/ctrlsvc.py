@@ -295,8 +295,8 @@ class SVC:
 
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-        if any((powerflow.sol['svc_reactive_generation'] > powerflow.setup.dcerDF['potencia_reativa_maxima'].to_numpy() - 1E-10)):
-            powerflow.setup.controlheur = True
+        # if any((powerflow.sol['svc_reactive_generation'] > powerflow.setup.dcerDF['potencia_reativa_maxima'].to_numpy() - 1E-10)):
+        #     powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
         if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):

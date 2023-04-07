@@ -1,4 +1,4 @@
-March 31, 2023
+April 06, 2023
 
 
 relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema libsvc
@@ -11,3068 +11,1992 @@ opções de relatório ativadas: RBARRA
 
 Caso 0
 Carregamento do Sistema: 10.0 MW  | 5.0 Mvar
-Determinante: 1.095316092981677
-Autovalores: [1.0465735 1.0465735 1.       ]
+Determinante: 0.5745703892795078
+Autovalores: [0.57457039]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 1
 Carregamento do Sistema: 11.0 MW  | 5.5 Mvar
-Determinante: 1.0952408238078764
-Autovalores: [1.04653754 1.04653754 1.        ]
+Determinante: 0.5749849591900013
+Autovalores: [0.57498496]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 2
 Carregamento do Sistema: 12.0 MW  | 6.0 Mvar
-Determinante: 1.0951626857807948
-Autovalores: [1.04650021 1.04650021 1.        ]
+Determinante: 0.5754160240409143
+Autovalores: [0.57541602]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 3
 Carregamento do Sistema: 13.0 MW  | 6.5 Mvar
-Determinante: 1.0950816684168458
-Autovalores: [1.0464615 1.0464615 1.       ]
+Determinante: 0.5758637214988268
+Autovalores: [0.57586372]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 4
 Carregamento do Sistema: 14.0 MW  | 7.0 Mvar
-Determinante: 1.0949977605948957
-Autovalores: [1.04642141 1.04642141 1.        ]
+Determinante: 0.5763281964426279
+Autovalores: [0.5763282]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 5
 Carregamento do Sistema: 15.0 MW  | 7.5 Mvar
-Determinante: 1.0949109505486943
-Autovalores: [1.04637993 1.04637993 1.        ]
+Determinante: 0.5768096011149679
+Autovalores: [0.5768096]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 6
 Carregamento do Sistema: 16.0 MW  | 8.0 Mvar
-Determinante: 1.0948212258587835
-Autovalores: [1.04633705 1.04633705 1.        ]
+Determinante: 0.5773080952830605
+Autovalores: [0.5773081]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 7
 Carregamento do Sistema: 17.0 MW  | 8.5 Mvar
-Determinante: 1.0947285734439391
-Autovalores: [1.04629278 1.04629278 1.        ]
+Determinante: 0.5778238464088167
+Autovalores: [0.57782385]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 8
 Carregamento do Sistema: 18.0 MW  | 9.0 Mvar
-Determinante: 1.0946329795521292
-Autovalores: [1.04624709 1.04624709 1.        ]
+Determinante: 0.5783570298286678
+Autovalores: [0.57835703]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 9
 Carregamento do Sistema: 19.0 MW  | 9.5 Mvar
-Determinante: 1.094534429750983
-Autovalores: [1.0462 1.0462 1.    ]
+Determinante: 0.5789078289434557
+Autovalores: [0.57890783]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 10
 Carregamento do Sistema: 20.0 MW  | 10.0 Mvar
-Determinante: 1.0944329089177522
-Autovalores: [1.04615148 1.04615148 1.        ]
+Determinante: 0.5794764354188047
+Autovalores: [0.57947644]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 11
 Carregamento do Sistema: 20.999999999999996 MW  | 10.499999999999998 Mvar
-Determinante: 1.0943284012287529
-Autovalores: [1.04610153 1.04610153 1.        ]
+Determinante: 0.5800630493964012
+Autovalores: [0.58006305]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 12
 Carregamento do Sistema: 22.0 MW  | 11.0 Mvar
-Determinante: 1.0942208901482742
-Autovalores: [1.04605014 1.04605014 1.        ]
+Determinante: 0.580667879716649
+Autovalores: [0.58066788]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 13
 Carregamento do Sistema: 23.0 MW  | 11.5 Mvar
-Determinante: 1.094110358416935
-Autovalores: [1.0459973 1.0459973 1.       ]
+Determinante: 0.581291144153189
+Autovalores: [0.58129114]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 14
 Carregamento do Sistema: 24.000000000000004 MW  | 12.000000000000002 Mvar
-Determinante: 1.0939967880394743
-Autovalores: [1.04594301 1.04594301 1.        ]
+Determinante: 0.5819330696598096
+Autovalores: [0.58193307]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 15
 Carregamento do Sistema: 25.0 MW  | 12.5 Mvar
-Determinante: 1.0938801602719603
-Autovalores: [1.04588726 1.04588726 1.        ]
+Determinante: 0.5825938926303033
+Autovalores: [0.58259389]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 16
 Carregamento do Sistema: 26.000000000000007 MW  | 13.000000000000004 Mvar
-Determinante: 1.0937604556083929
-Autovalores: [1.04583003 1.04583003 1.        ]
+Determinante: 0.583273859171866
+Autovalores: [0.58327386]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 17
 Carregamento do Sistema: 27.0 MW  | 13.5 Mvar
-Determinante: 1.0936376537666874
-Autovalores: [1.04577132 1.04577132 1.        ]
+Determinante: 0.5839732253926685
+Autovalores: [0.58397323]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 18
 Carregamento do Sistema: 28.000000000000007 MW  | 14.000000000000004 Mvar
-Determinante: 1.0935117336740157
-Autovalores: [1.04571111 1.04571111 1.        ]
+Determinante: 0.5846922577042721
+Autovalores: [0.58469226]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 19
 Carregamento do Sistema: 29.000000000000004 MW  | 14.500000000000002 Mvar
-Determinante: 1.0933826734514813
-Autovalores: [1.0456494 1.0456494 1.       ]
+Determinante: 0.5854312331396085
+Autovalores: [0.58543123]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 20
 Carregamento do Sistema: 30.000000000000004 MW  | 15.000000000000002 Mvar
-Determinante: 1.093250450398111
-Autovalores: [1.04558618 1.04558618 1.        ]
+Determinante: 0.5861904396872795
+Autovalores: [0.58619044]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 21
 Carregamento do Sistema: 31.000000000000007 MW  | 15.500000000000004 Mvar
-Determinante: 1.093115040974134
-Autovalores: [1.04552142 1.04552142 1.        ]
+Determinante: 0.5869701766429919
+Autovalores: [0.58697018]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 22
 Carregamento do Sistema: 32.00000000000001 MW  | 16.000000000000004 Mvar
-Determinante: 1.092976420783524
-Autovalores: [1.04545513 1.04545513 1.        ]
+Determinante: 0.5877707549789909
+Autovalores: [0.58777075]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 23
 Carregamento do Sistema: 33.00000000000001 MW  | 16.500000000000004 Mvar
-Determinante: 1.0928345645557838
-Autovalores: [1.04538728 1.04538728 1.        ]
+Determinante: 0.5885924977324076
+Autovalores: [0.5885925]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 24
 Carregamento do Sistema: 34.00000000000001 MW  | 17.000000000000004 Mvar
-Determinante: 1.0926894461269332
-Autovalores: [1.04531787 1.04531787 1.        ]
+Determinante: 0.5894357404135079
+Autovalores: [0.58943574]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 25
 Carregamento do Sistema: 35.00000000000001 MW  | 17.500000000000004 Mvar
-Determinante: 1.0925410384196805
-Autovalores: [1.04524688 1.04524688 1.        ]
+Determinante: 0.590300831434875
+Autovalores: [0.59030083]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 26
 Carregamento do Sistema: 36.00000000000001 MW  | 18.000000000000004 Mvar
-Determinante: 1.0923893134227434
-Autovalores: [1.0451743 1.0451743 1.       ]
+Determinante: 0.591188132562651
+Autovalores: [0.59118813]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 27
 Carregamento do Sistema: 37.000000000000014 MW  | 18.500000000000007 Mvar
-Determinante: 1.0922342421692843
-Autovalores: [1.04510011 1.04510011 1.        ]
+Determinante: 0.5920980193910125
+Autovalores: [0.59209802]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 28
 Carregamento do Sistema: 38.000000000000014 MW  | 19.000000000000007 Mvar
-Determinante: 1.0920757947144268
-Autovalores: [1.0450243 1.0450243 1.       ]
+Determinante: 0.5930308818411504
+Autovalores: [0.59303088]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 29
 Carregamento do Sistema: 39.000000000000014 MW  | 19.500000000000007 Mvar
-Determinante: 1.0919139401118207
-Autovalores: [1.04494686 1.04494686 1.        ]
+Determinante: 0.5939871246861032
+Autovalores: [0.59398712]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 30
 Carregamento do Sistema: 40.000000000000014 MW  | 20.000000000000007 Mvar
-Determinante: 1.0917486463892094
-Autovalores: [1.04486777 1.04486777 1.        ]
+Determinante: 0.5949671681028799
+Autovalores: [0.59496717]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 31
 Carregamento do Sistema: 41.000000000000014 MW  | 20.500000000000007 Mvar
-Determinante: 1.0915798805229688
-Autovalores: [1.044787 1.044787 1.      ]
+Determinante: 0.5959714482534155
+Autovalores: [0.59597145]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 32
 Carregamento do Sistema: 42.000000000000014 MW  | 21.000000000000007 Mvar
-Determinante: 1.091407608411566
-Autovalores: [1.04470456 1.04470456 1.        ]
+Determinante: 0.5970004178959947
+Autovalores: [0.59700042]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 33
 Carregamento do Sistema: 43.000000000000014 MW  | 21.500000000000007 Mvar
-Determinante: 1.0912317948479004
-Autovalores: [1.04462041 1.04462041 1.        ]
+Determinante: 0.5980545470289054
+Autovalores: [0.59805455]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 34
 Carregamento do Sistema: 44.00000000000002 MW  | 22.00000000000001 Mvar
-Determinante: 1.0910524034904747
-Autovalores: [1.04453454 1.04453454 1.        ]
+Determinante: 0.5991343235681926
+Autovalores: [0.59913432]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 35
 Carregamento do Sistema: 45.000000000000014 MW  | 22.500000000000007 Mvar
-Determinante: 1.0908693968333505
-Autovalores: [1.04444693 1.04444693 1.        ]
+Determinante: 0.6002402540615221
+Autovalores: [0.60024025]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 36
 Carregamento do Sistema: 46.000000000000014 MW  | 23.000000000000007 Mvar
-Determinante: 1.09068273617483
-Autovalores: [1.04435757 1.04435757 1.        ]
+Determinante: 0.6013728644403009
+Autovalores: [0.60137286]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 37
 Carregamento do Sistema: 47.00000000000002 MW  | 23.50000000000001 Mvar
-Determinante: 1.0904923815848155
-Autovalores: [1.04426643 1.04426643 1.        ]
+Determinante: 0.6025327008123521
+Autovalores: [0.6025327]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 38
 Carregamento do Sistema: 48.00000000000003 MW  | 24.000000000000014 Mvar
-Determinante: 1.0902982918707833
-Autovalores: [1.0441735 1.0441735 1.       ]
+Determinante: 0.6037203302976102
+Autovalores: [0.60372033]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 39
 Carregamento do Sistema: 49.00000000000002 MW  | 24.50000000000001 Mvar
-Determinante: 1.0901004245423105
-Autovalores: [1.04407874 1.04407874 1.        ]
+Determinante: 0.6049363419094711
+Autovalores: [0.60493634]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 40
 Carregamento do Sistema: 50.000000000000014 MW  | 25.000000000000007 Mvar
-Determinante: 1.0898987357740928
-Autovalores: [1.04398215 1.04398215 1.        ]
+Determinante: 0.6061813474846343
+Autovalores: [0.60618135]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 41
 Carregamento do Sistema: 51.000000000000014 MW  | 25.500000000000007 Mvar
-Determinante: 1.0896931803673815
-Autovalores: [1.0438837 1.0438837 1.       ]
+Determinante: 0.6074559826644684
+Autovalores: [0.60745598]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 42
 Carregamento do Sistema: 52.000000000000014 MW  | 26.000000000000007 Mvar
-Determinante: 1.0894837117097669
-Autovalores: [1.04378336 1.04378336 1.        ]
+Determinante: 0.6087609079311654
+Autovalores: [0.60876091]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 43
 Carregamento do Sistema: 53.00000000000001 MW  | 26.500000000000004 Mvar
-Determinante: 1.0892702817332347
-Autovalores: [1.04368112 1.04368112 1.        ]
+Determinante: 0.6100968097021852
+Autovalores: [0.61009681]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 44
 Carregamento do Sistema: 54.0 MW  | 27.0 Mvar
-Determinante: 1.08905284087041
-Autovalores: [1.04357695 1.04357695 1.        ]
+Determinante: 0.611464401486755
+Autovalores: [0.6114644]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 45
 Carregamento do Sistema: 55.0 MW  | 27.5 Mvar
-Determinante: 1.0888313380089065
-Autovalores: [1.04347081 1.04347081 1.        ]
+Determinante: 0.6128644251084779
+Autovalores: [0.61286443]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 46
 Carregamento do Sistema: 56.0 MW  | 28.0 Mvar
-Determinante: 1.0886057204436876
-Autovalores: [1.0433627 1.0433627 1.       ]
+Determinante: 0.6142976519984059
+Autovalores: [0.61429765]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 47
 Carregamento do Sistema: 56.99999999999999 MW  | 28.499999999999996 Mvar
-Determinante: 1.0883759338273458
-Autovalores: [1.04325257 1.04325257 1.        ]
+Determinante: 0.6157648845632757
+Autovalores: [0.61576488]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 48
 Carregamento do Sistema: 57.999999999999986 MW  | 28.999999999999993 Mvar
-Determinante: 1.0881419221181974
-Autovalores: [1.04314041 1.04314041 1.        ]
+Determinante: 0.6172669576339685
+Autovalores: [0.61726696]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 49
 Carregamento do Sistema: 58.999999999999986 MW  | 29.499999999999993 Mvar
-Determinante: 1.087903627526084
-Autovalores: [1.04302619 1.04302619 1.        ]
+Determinante: 0.6188047399996461
+Autovalores: [0.61880474]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 50
 Carregamento do Sistema: 59.999999999999986 MW  | 29.999999999999993 Mvar
-Determinante: 1.0876609904557708
-Autovalores: [1.04290987 1.04290987 1.        ]
+Determinante: 0.6203791360334616
+Autovalores: [0.62037914]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 51
 Carregamento do Sistema: 60.99999999999998 MW  | 30.49999999999999 Mvar
-Determinante: 1.0874139494478143
-Autovalores: [1.04279142 1.04279142 1.        ]
+Determinante: 0.6219910874161995
+Autovalores: [0.62199109]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 52
 Carregamento do Sistema: 61.99999999999997 MW  | 30.999999999999986 Mvar
-Determinante: 1.0871624411167804
-Autovalores: [1.04267082 1.04267082 1.        ]
+Determinante: 0.6236415749647246
+Autovalores: [0.62364157]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 53
 Carregamento do Sistema: 62.99999999999997 MW  | 31.499999999999986 Mvar
-Determinante: 1.086906400086668
-Autovalores: [1.04254803 1.04254803 1.        ]
+Determinante: 0.6253316205726754
+Autovalores: [0.62533162]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 54
 Carregamento do Sistema: 63.99999999999997 MW  | 31.999999999999986 Mvar
-Determinante: 1.0866457589234009
-Autovalores: [1.04242302 1.04242302 1.        ]
+Determinante: 0.6270622892714526
+Autovalores: [0.62706229]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 55
 Carregamento do Sistema: 64.99999999999997 MW  | 32.499999999999986 Mvar
-Determinante: 1.0863804480642314
-Autovalores: [1.04229576 1.04229576 1.        ]
+Determinante: 0.6288346914202241
+Autovalores: [0.62883469]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 56
 Carregamento do Sistema: 65.99999999999996 MW  | 32.99999999999998 Mvar
-Determinante: 1.0861103957438967
-Autovalores: [1.0421662 1.0421662 1.       ]
+Determinante: 0.6306499850344027
+Autovalores: [0.63064999]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 57
 Carregamento do Sistema: 66.99999999999996 MW  | 33.49999999999998 Mvar
-Determinante: 1.0858355279173508
-Autovalores: [1.04203432 1.04203432 1.        ]
+Determinante: 0.6325093782628556
+Autovalores: [0.63250938]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 58
 Carregamento do Sistema: 67.99999999999996 MW  | 33.99999999999998 Mvar
-Determinante: 1.0855557681788952
-Autovalores: [1.04190008 1.04190008 1.        ]
+Determinante: 0.6344141320249864
+Autovalores: [0.63441413]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 59
 Carregamento do Sistema: 68.99999999999994 MW  | 34.49999999999997 Mvar
-Determinante: 1.0852710376775068
-Autovalores: [1.04176343 1.04176343 1.        ]
+Determinante: 0.6363655628198048
+Autovalores: [0.63636556]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 60
 Carregamento do Sistema: 69.99999999999994 MW  | 34.99999999999997 Mvar
-Determinante: 1.0849812550281608
-Autovalores: [1.04162433 1.04162433 1.        ]
+Determinante: 0.6383650457201561
+Autovalores: [0.63836505]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 61
 Carregamento do Sistema: 70.99999999999994 MW  | 35.49999999999997 Mvar
-Determinante: 1.0846863362189265
-Autovalores: [1.04148276 1.04148276 1.        ]
+Determinante: 0.6404140175664552
+Autovalores: [0.64041402]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 62
 Carregamento do Sistema: 71.99999999999994 MW  | 35.99999999999997 Mvar
-Determinante: 1.0843861945136004
-Autovalores: [1.04133866 1.04133866 1.        ]
+Determinante: 0.6425139803755652
+Autovalores: [0.64251398]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 63
 Carregamento do Sistema: 72.99999999999994 MW  | 36.49999999999997 Mvar
-Determinante: 1.084080740349626
-Autovalores: [1.04119198 1.04119198 1.        ]
+Determinante: 0.6446665049818686
+Autovalores: [0.6446665]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 64
 Carregamento do Sistema: 73.99999999999993 MW  | 36.999999999999964 Mvar
-Determinante: 1.0837698812310355
-Autovalores: [1.04104269 1.04104269 1.        ]
+Determinante: 0.646873234929165
+Autovalores: [0.64687323]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 65
 Carregamento do Sistema: 74.99999999999993 MW  | 37.499999999999964 Mvar
-Determinante: 1.0834535216161267
-Autovalores: [1.04089073 1.04089073 1.        ]
+Determinante: 0.6491358906337388
+Autovalores: [0.64913589]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 66
 Carregamento do Sistema: 75.99999999999993 MW  | 37.999999999999964 Mvar
-Determinante: 1.0831315627995728
-Autovalores: [1.04073607 1.04073607 1.        ]
+Determinante: 0.6514562738408789
+Autovalores: [0.65145627]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 67
 Carregamento do Sistema: 76.99999999999991 MW  | 38.49999999999996 Mvar
-Determinante: 1.0828039027886387
-Autovalores: [1.04057864 1.04057864 1.        ]
+Determinante: 0.6538362723992331
+Autovalores: [0.65383627]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 68
 Carregamento do Sistema: 77.99999999999991 MW  | 38.99999999999996 Mvar
-Determinante: 1.0824704361731603
-Autovalores: [1.04041839 1.04041839 1.        ]
+Determinante: 0.6562778653797444
+Autovalores: [0.65627787]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 69
 Carregamento do Sistema: 78.99999999999991 MW  | 39.49999999999996 Mvar
-Determinante: 1.082131053988913
-Autovalores: [1.04025528 1.04025528 1.        ]
+Determinante: 0.6587831285685143
+Autovalores: [0.65878313]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 70
 Carregamento do Sistema: 79.99999999999991 MW  | 39.99999999999996 Mvar
-Determinante: 1.0817856435739763
-Autovalores: [1.04008925 1.04008925 1.        ]
+Determinante: 0.6613542403658461
+Autovalores: [0.66135424]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 71
 Carregamento do Sistema: 80.99999999999991 MW  | 40.49999999999996 Mvar
-Determinante: 1.0814340884176656
-Autovalores: [1.03992023 1.03992023 1.        ]
+Determinante: 0.6639934881269381
+Autovalores: [0.66399349]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 72
 Carregamento do Sistema: 81.9999999999999 MW  | 40.99999999999995 Mvar
-Determinante: 1.0810762680015842
-Autovalores: [1.03974818 1.03974818 1.        ]
+Determinante: 0.6667032749832914
+Autovalores: [0.66670327]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 73
 Carregamento do Sistema: 82.9999999999999 MW  | 41.49999999999995 Mvar
-Determinante: 1.0807120576322995
-Autovalores: [1.03957302 1.03957302 1.        ]
+Determinante: 0.669486127187904
+Autovalores: [0.66948613]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 74
 Carregamento do Sistema: 83.9999999999999 MW  | 41.99999999999995 Mvar
-Determinante: 1.0803413282651282
-Autovalores: [1.03939469 1.03939469 1.        ]
+Determinante: 0.6723447020317983
+Autovalores: [0.6723447]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 75
 Carregamento do Sistema: 84.99999999999989 MW  | 42.49999999999994 Mvar
-Determinante: 1.0799639463184678
-Autovalores: [1.03921314 1.03921314 1.        ]
+Determinante: 0.675281796384434
+Autovalores: [0.6752818]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 76
 Carregamento do Sistema: 85.99999999999989 MW  | 42.99999999999994 Mvar
-Determinante: 1.0795797734780717
-Autovalores: [1.03902828 1.03902828 1.        ]
+Determinante: 0.6783003559161621
+Autovalores: [0.67830036]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 77
 Carregamento do Sistema: 86.99999999999989 MW  | 43.49999999999994 Mvar
-Determinante: 1.0791886664906212
-Autovalores: [1.03884006 1.03884006 1.        ]
+Determinante: 0.68140348506717
+Autovalores: [0.68140349]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 78
 Carregamento do Sistema: 87.99999999999989 MW  | 43.99999999999994 Mvar
-Determinante: 1.07879047694171
-Autovalores: [1.03864839 1.03864839 1.        ]
+Determinante: 0.6845944578681823
+Autovalores: [0.68459446]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 79
 Carregamento do Sistema: 88.99999999999989 MW  | 44.49999999999994 Mvar
-Determinante: 1.0783850510423936
-Autovalores: [1.0384532 1.0384532 1.       ]
+Determinante: 0.6878767294921855
+Autovalores: [0.68787673]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 80
 Carregamento do Sistema: 89.99999999999987 MW  | 44.999999999999936 Mvar
-Determinante: 1.0779722293618346
-Autovalores: [1.03825441 1.03825441 1.        ]
+Determinante: 0.6912539491204273
+Autovalores: [0.69125395]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 81
 Carregamento do Sistema: 90.99999999999987 MW  | 45.499999999999936 Mvar
-Determinante: 1.0775518465866227
-Autovalores: [1.03805195 1.03805195 1.        ]
+Determinante: 0.6947299735687386
+Autovalores: [0.69472997]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 82
 Carregamento do Sistema: 91.99999999999987 MW  | 45.999999999999936 Mvar
-Determinante: 1.0771237312453121
-Autovalores: [1.03784572 1.03784572 1.        ]
+Determinante: 0.6983088822681819
+Autovalores: [0.69830888]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 83
 Carregamento do Sistema: 92.99999999999986 MW  | 46.49999999999993 Mvar
-Determinante: 1.0766877054211528
-Autovalores: [1.03763563 1.03763563 1.        ]
+Determinante: 0.7019949935313684
+Autovalores: [0.70199499]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 84
 Carregamento do Sistema: 93.99999999999986 MW  | 46.99999999999993 Mvar
-Determinante: 1.0762435844479594
-Autovalores: [1.0374216 1.0374216 1.       ]
+Determinante: 0.7057928822736289
+Autovalores: [0.70579288]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 85
 Carregamento do Sistema: 94.99999999999986 MW  | 47.49999999999993 Mvar
-Determinante: 1.0757911765879415
-Autovalores: [1.03720354 1.03720354 1.        ]
+Determinante: 0.7097073993433041
+Autovalores: [0.7097074]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 86
 Carregamento do Sistema: 95.99999999999986 MW  | 47.99999999999993 Mvar
-Determinante: 1.0753302826902158
-Autovalores: [1.03698133 1.03698133 1.        ]
+Determinante: 0.713743692634439
+Autovalores: [0.71374369]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 87
 Carregamento do Sistema: 96.99999999999986 MW  | 48.49999999999993 Mvar
-Determinante: 1.0748606958286135
-Autovalores: [1.03675489 1.03675489 1.        ]
+Determinante: 0.7179072301768368
+Autovalores: [0.71790723]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 88
 Carregamento do Sistema: 97.99999999999984 MW  | 48.99999999999992 Mvar
-Determinante: 1.0743822009172899
-Autovalores: [1.0365241 1.0365241 1.       ]
+Determinante: 0.722203825423211
+Autovalores: [0.72220383]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 89
 Carregamento do Sistema: 98.99999999999984 MW  | 49.49999999999992 Mvar
-Determinante: 1.0738945743025021
-Autovalores: [1.03628885 1.03628885 1.        ]
+Determinante: 0.7266396649815599
+Autovalores: [0.72663966]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 90
 Carregamento do Sistema: 99.99999999999984 MW  | 49.99999999999992 Mvar
-Determinante: 1.0733975833287988
-Autovalores: [1.03604903 1.03604903 1.        ]
+Determinante: 0.7312213390734584
+Autovalores: [0.73122134]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 91
 Carregamento do Sistema: 100.99999999999983 MW  | 50.499999999999915 Mvar
-Determinante: 1.0728909858776905
-Autovalores: [1.03580451 1.03580451 1.        ]
+Determinante: 0.7359558750364414
+Autovalores: [0.73595588]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 92
 Carregamento do Sistema: 101.99999999999983 MW  | 50.999999999999915 Mvar
-Determinante: 1.0723745298767233
-Autovalores: [1.03555518 1.03555518 1.        ]
+Determinante: 0.7408507742318446
+Autovalores: [0.74085077]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 93
 Carregamento do Sistema: 102.99999999999983 MW  | 51.499999999999915 Mvar
-Determinante: 1.0718479527766762
-Autovalores: [1.0353009 1.0353009 1.       ]
+Determinante: 0.745914052769384
+Autovalores: [0.74591405]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 94
 Carregamento do Sistema: 103.99999999999983 MW  | 51.999999999999915 Mvar
-Determinante: 1.0713109809944064
-Autovalores: [1.03504154 1.03504154 1.        ]
+Determinante: 0.7511542865175562
+Autovalores: [0.75115429]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 95
 Carregamento do Sistema: 104.99999999999983 MW  | 52.499999999999915 Mvar
-Determinante: 1.0707633293186385
-Autovalores: [1.03477695 1.03477695 1.        ]
+Determinante: 0.7565806609360647
+Autovalores: [0.75658066]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 96
 Carregamento do Sistema: 105.99999999999982 MW  | 52.99999999999991 Mvar
-Determinante: 1.070204700275745
-Autovalores: [1.03450698 1.03450698 1.        ]
+Determinante: 0.7622030263445831
+Autovalores: [0.76220303]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 97
 Carregamento do Sistema: 106.99999999999982 MW  | 53.49999999999991 Mvar
-Determinante: 1.0696347834522886
-Autovalores: [1.03423149 1.03423149 1.        ]
+Determinante: 0.7680319593333462
+Autovalores: [0.76803196]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 98
 Carregamento do Sistema: 107.99999999999982 MW  | 53.99999999999991 Mvar
-Determinante: 1.0690532547707936
-Autovalores: [1.03395032 1.03395032 1.        ]
+Determinante: 0.7740788311277086
+Autovalores: [0.77407883]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 99
 Carregamento do Sistema: 108.9999999999998 MW  | 54.4999999999999 Mvar
-Determinante: 1.068459775714873
-Autovalores: [1.03366328 1.03366328 1.        ]
+Determinante: 0.7803558838440271
+Autovalores: [0.78035588]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 100
 Carregamento do Sistema: 109.9999999999998 MW  | 54.9999999999999 Mvar
-Determinante: 1.0678539924994652
-Autovalores: [1.03337021 1.03337021 1.        ]
+Determinante: 0.7868763157214974
+Autovalores: [0.78687632]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 101
 Carregamento do Sistema: 110.9999999999998 MW  | 55.4999999999999 Mvar
-Determinante: 1.0672355351815088
-Autovalores: [1.03307092 1.03307092 1.        ]
+Determinante: 0.7936543765885141
+Autovalores: [0.79365438]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 102
 Carregamento do Sistema: 111.9999999999998 MW  | 55.9999999999999 Mvar
-Determinante: 1.066604016705933
-Autovalores: [1.03276523 1.03276523 1.        ]
+Determinante: 0.8007054750279967
+Autovalores: [0.80070548]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 103
 Carregamento do Sistema: 112.9999999999998 MW  | 56.4999999999999 Mvar
-Determinante: 1.0659590318813064
-Autovalores: [1.03245292 1.03245292 1.        ]
+Determinante: 0.8080462989507677
+Autovalores: [0.8080463]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 104
 Carregamento do Sistema: 113.99999999999979 MW  | 56.99999999999989 Mvar
-Determinante: 1.0653001562789213
-Autovalores: [1.03213379 1.03213379 1.        ]
+Determinante: 0.8156949515776265
+Autovalores: [0.81569495]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 105
 Carregamento do Sistema: 114.99999999999979 MW  | 57.49999999999989 Mvar
-Determinante: 1.064626945048435
-Autovalores: [1.03180761 1.03180761 1.        ]
+Determinante: 0.8236711051795389
+Autovalores: [0.82367111]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 106
 Carregamento do Sistema: 115.99999999999979 MW  | 57.99999999999989 Mvar
-Determinante: 1.0639389316424726
-Autovalores: [1.03147415 1.03147415 1.        ]
+Determinante: 0.8319961753440785
+Autovalores: [0.83199618]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 107
 Carregamento do Sistema: 116.99999999999977 MW  | 58.499999999999886 Mvar
-Determinante: 1.063235626441776
-Autovalores: [1.03113318 1.03113318 1.        ]
+Determinante: 0.8406935190408448
+Autovalores: [0.84069352]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 108
 Carregamento do Sistema: 117.99999999999977 MW  | 58.999999999999886 Mvar
-Determinante: 1.0625165152715783
-Autovalores: [1.03078442 1.03078442 1.        ]
+Determinante: 0.8497886603691012
+Autovalores: [0.84978866]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 109
 Carregamento do Sistema: 118.99999999999977 MW  | 59.499999999999886 Mvar
-Determinante: 1.0617810577988531
-Autovalores: [1.03042761 1.03042761 1.        ]
+Determinante: 0.8593095486126202
+Autovalores: [0.85930955]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 110
 Carregamento do Sistema: 119.99999999999977 MW  | 59.999999999999886 Mvar
-Determinante: 1.0610286857989313
-Autovalores: [1.03006247 1.03006247 1.        ]
+Determinante: 0.8692868541317276
+Autovalores: [0.86928685]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 111
 Carregamento do Sistema: 120.99999999999977 MW  | 60.499999999999886 Mvar
-Determinante: 1.0602588012786742
-Autovalores: [1.02968869 1.02968869 1.        ]
+Determinante: 0.879754308731912
+Autovalores: [0.87975431]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 112
 Carregamento do Sistema: 121.99999999999976 MW  | 60.99999999999988 Mvar
-Determinante: 1.0594707744419167
-Autovalores: [1.02930597 1.02930597 1.        ]
+Determinante: 0.8907490985144906
+Autovalores: [0.8907491]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 113
 Carregamento do Sistema: 122.99999999999976 MW  | 61.49999999999988 Mvar
-Determinante: 1.0586639414812162
-Autovalores: [1.02891396 1.02891396 1.        ]
+Determinante: 0.9023123189056378
+Autovalores: [0.90231232]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 114
 Carregamento do Sistema: 123.99999999999976 MW  | 61.99999999999988 Mvar
-Determinante: 1.0578376021780536
-Autovalores: [1.02851232 1.02851232 1.        ]
+Determinante: 0.9144895036636305
+Autovalores: [0.9144895]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 115
 Carregamento do Sistema: 124.99999999999974 MW  | 62.49999999999987 Mvar
-Determinante: 1.0569910172914627
-Autovalores: [1.02810068 1.02810068 1.        ]
+Determinante: 0.9273312422954428
+Autovalores: [0.92733124]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 116
 Carregamento do Sistema: 125.99999999999974 MW  | 62.99999999999987 Mvar
-Determinante: 1.0561234057126154
-Autovalores: [1.02767865 1.02767865 1.        ]
+Determinante: 0.9408939036242604
+Autovalores: [0.9408939]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 117
 Carregamento do Sistema: 126.12499999999974 MW  | 63.06249999999987 Mvar
-Determinante: 1.0560134351956614
-Autovalores: [1.02762514 1.02762514 1.        ]
+Determinante: 0.942642985122127
+Autovalores: [0.94264299]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 118
 Carregamento do Sistema: 126.24999999999973 MW  | 63.124999999999865 Mvar
-Determinante: 1.055903121626177
-Autovalores: [1.02757147 1.02757147 1.        ]
+Determinante: 0.9444044365598921
+Autovalores: [0.94440444]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 119
 Carregamento do Sistema: 126.37499999999973 MW  | 63.187499999999865 Mvar
-Determinante: 1.0557924633274056
-Autovalores: [1.02751762 1.02751762 1.        ]
+Determinante: 0.9461783907368684
+Autovalores: [0.94617839]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 120
 Carregamento do Sistema: 126.49999999999972 MW  | 63.24999999999986 Mvar
-Determinante: 1.0556814586105636
-Autovalores: [1.0274636 1.0274636 1.       ]
+Determinante: 0.947964982377713
+Autovalores: [0.94796498]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 121
 Carregamento do Sistema: 126.62499999999972 MW  | 63.31249999999986 Mvar
-Determinante: 1.0555701057747429
-Autovalores: [1.02740941 1.02740941 1.        ]
+Determinante: 0.9497643481673111
+Autovalores: [0.94976435]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 122
 Carregamento do Sistema: 126.7499999999997 MW  | 63.37499999999985 Mvar
-Determinante: 1.055458403106798
-Autovalores: [1.02735505 1.02735505 1.        ]
+Determinante: 0.9515766267866274
+Autovalores: [0.95157663]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 123
 Carregamento do Sistema: 126.8749999999997 MW  | 63.43749999999985 Mvar
-Determinante: 1.0553463488812327
-Autovalores: [1.02730052 1.02730052 1.        ]
+Determinante: 0.9534019589493561
+Autovalores: [0.95340196]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 124
 Carregamento do Sistema: 126.99999999999969 MW  | 63.499999999999844 Mvar
-Determinante: 1.0552339413600837
-Autovalores: [1.0272458 1.0272458 1.       ]
+Determinante: 0.9552404874393731
+Autovalores: [0.95524049]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 125
 Carregamento do Sistema: 127.12499999999969 MW  | 63.562499999999844 Mvar
-Determinante: 1.0551211787928068
-Autovalores: [1.02719092 1.02719092 1.        ]
+Determinante: 0.9570923571490252
+Autovalores: [0.95709236]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 126
 Carregamento do Sistema: 127.15624999999969 MW  | 63.578124999999844 Mvar
-Determinante: 1.0550929324686666
-Autovalores: [1.02717717 1.02717717 1.        ]
+Determinante: 0.9575574263257254
+Autovalores: [0.95755743]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 127
 Carregamento do Sistema: 127.1874999999997 MW  | 63.59374999999985 Mvar
-Determinante: 1.0550646638163415
-Autovalores: [1.02716341 1.02716341 1.        ]
+Determinante: 0.9580233408264552
+Autovalores: [0.95802334]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 128
 Carregamento do Sistema: 127.2187499999997 MW  | 63.60937499999985 Mvar
-Determinante: 1.0550363728080923
-Autovalores: [1.02714964 1.02714964 1.        ]
+Determinante: 0.958490102978742
+Autovalores: [0.9584901]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 129
 Carregamento do Sistema: 127.24999999999972 MW  | 63.62499999999986 Mvar
-Determinante: 1.0550080594161424
-Autovalores: [1.02713585 1.02713585 1.        ]
+Determinante: 0.9589577151185097
+Autovalores: [0.95895772]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 130
 Carregamento do Sistema: 127.28124999999972 MW  | 63.64062499999986 Mvar
-Determinante: 1.0549797236126661
-Autovalores: [1.02712206 1.02712206 1.        ]
+Determinante: 0.959426179590345
+Autovalores: [0.95942618]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 131
 Carregamento do Sistema: 127.31249999999973 MW  | 63.656249999999865 Mvar
-Determinante: 1.0549513653697862
-Autovalores: [1.02710825 1.02710825 1.        ]
+Determinante: 0.9598954987475424
+Autovalores: [0.9598955]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 132
 Carregamento do Sistema: 127.31640624999972 MW  | 63.65820312499986 Mvar
-Determinante: 1.0549478190102652
-Autovalores: [1.02710653 1.02710653 1.        ]
+Determinante: 0.9599542238548018
+Autovalores: [0.95995422]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 133
 Carregamento do Sistema: 127.32031249999972 MW  | 63.66015624999986 Mvar
-Determinante: 1.0549442722996378
-Autovalores: [1.0271048 1.0271048 1.       ]
+Determinante: 0.9600129623580382
+Autovalores: [0.96001296]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 134
 Carregamento do Sistema: 127.32421874999972 MW  | 63.66210937499986 Mvar
-Determinante: 1.054940725237849
-Autovalores: [1.02710307 1.02710307 1.        ]
+Determinante: 0.9600717142618771
+Autovalores: [0.96007171]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 135
 Carregamento do Sistema: 127.32812499999972 MW  | 63.66406249999986 Mvar
-Determinante: 1.0549371778248446
-Autovalores: [1.02710135 1.02710135 1.        ]
+Determinante: 0.9601304795709459
+Autovalores: [0.96013048]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 136
 Carregamento do Sistema: 127.33203124999972 MW  | 63.66601562499986 Mvar
-Determinante: 1.0549336300605696
-Autovalores: [1.02709962 1.02709962 1.        ]
+Determinante: 0.9601892582898731
+Autovalores: [0.96018926]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 137
 Carregamento do Sistema: 127.3359374999997 MW  | 63.66796874999985 Mvar
-Determinante: 1.0549300819449694
-Autovalores: [1.02709789 1.02709789 1.        ]
+Determinante: 0.9602480504232918
+Autovalores: [0.96024805]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 138
 Carregamento do Sistema: 127.3398437499997 MW  | 63.66992187499985 Mvar
-Determinante: 1.0549265334779894
-Autovalores: [1.02709617 1.02709617 1.        ]
+Determinante: 0.9603068559758347
+Autovalores: [0.96030686]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 139
 Carregamento do Sistema: 127.3437499999997 MW  | 63.67187499999985 Mvar
-Determinante: 1.0549229846595751
-Autovalores: [1.02709444 1.02709444 1.        ]
+Determinante: 0.9603656749521382
+Autovalores: [0.96036567]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 140
 Carregamento do Sistema: 127.34765624999969 MW  | 63.673828124999844 Mvar
-Determinante: 1.0549194354896716
-Autovalores: [1.02709271 1.02709271 1.        ]
+Determinante: 0.9604245073568397
+Autovalores: [0.96042451]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 141
 Carregamento do Sistema: 127.3486328124997 MW  | 63.67431640624985 Mvar
-Determinante: 1.0549185481457743
-Autovalores: [1.02709228 1.02709228 1.        ]
+Determinante: 0.9604392174986384
+Autovalores: [0.96043922]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 142
 Carregamento do Sistema: 127.3496093749997 MW  | 63.67480468749985 Mvar
-Determinante: 1.0549176607763995
-Autovalores: [1.02709185 1.02709185 1.        ]
+Determinante: 0.9604539285381787
+Autovalores: [0.96045393]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 143
 Carregamento do Sistema: 127.3505859374997 MW  | 63.67529296874985 Mvar
-Determinante: 1.0549167733850517
-Autovalores: [1.02709141 1.02709141 1.        ]
+Determinante: 0.9604686404174274
+Autovalores: [0.96046864]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 144
 Carregamento do Sistema: 127.35156249999972 MW  | 63.67578124999986 Mvar
-Determinante: 1.0549158859717298
-Autovalores: [1.02709098 1.02709098 1.        ]
+Determinante: 0.9604833531364599
+Autovalores: [0.96048335]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 145
 Carregamento do Sistema: 127.35253906249972 MW  | 63.67626953124986 Mvar
-Determinante: 1.054914998536433
-Autovalores: [1.02709055 1.02709055 1.        ]
+Determinante: 0.9604986971258126
+Autovalores: [0.9604987]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 146
 Carregamento do Sistema: 127.35278320312472 MW  | 63.67639160156236 Mvar
-Determinante: 1.0549147766708884
-Autovalores: [1.02709044 1.02709044 1.        ]
+Determinante: 0.9605017452707982
+Autovalores: [0.96050175]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 147
 Carregamento do Sistema: 127.3530273437497 MW  | 63.67651367187485 Mvar
-Determinante: 1.0549145548072572
-Autovalores: [1.02709033 1.02709033 1.        ]
+Determinante: 0.9605054238443061
+Autovalores: [0.96050542]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 148
 Carregamento do Sistema: 127.3532714843747 MW  | 63.67663574218735 Mvar
-Determinante: 1.0549143329422521
-Autovalores: [1.02709023 1.02709023 1.        ]
+Determinante: 0.960511077721088
+Autovalores: [0.96051108]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 149
 Carregamento do Sistema: 127.35339355468722 MW  | 63.67669677734361 Mvar
-Determinante: 1.0549142220090704
-Autovalores: [1.02709017 1.02709017 1.        ]
+Determinante: 0.9613549433278865
+Autovalores: [0.96135494]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 150
 Carregamento do Sistema: 127.35345458984347 MW  | 63.67672729492173 Mvar
-Determinante: 1.0549141665423916
-Autovalores: [1.02709015 1.02709015 1.        ]
+Determinante: 0.9767384058099483
+Autovalores: [0.97673841]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 151
 Carregamento do Sistema: 127.35351562499972 MW  | 63.67675781249986 Mvar
-Determinante: 1.0549141110754832
-Autovalores: [1.02709012 1.02709012 1.        ]
+Determinante: 1.1996963163303698
+Autovalores: [1.19969632]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 152
 Carregamento do Sistema: 127.35354614257784 MW  | 63.67677307128892 Mvar
-Determinante: 1.0549140833422073
-Autovalores: [1.0270901 1.0270901 1.       ]
+Determinante: 1.5958665782730033
+Autovalores: [1.59586658]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 153
 Carregamento do Sistema: 127.35356140136689 MW  | 63.676780700683445 Mvar
-Determinante: 1.054914070331837
-Autovalores: [1.0270901 1.0270901 1.       ]
+Determinante: 2.2966110778875843
+Autovalores: [2.29661108]
 Autovalores:
-right eigen vector 0: [0.         0.70710678 0.70710678]
-right eigen vector 1: [0.         0.70710678 0.70710678]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 154
 Carregamento do Sistema: 127.35357666015595 MW  | 63.676788330077976 Mvar
-Determinante: 1.0549958640283386
-Autovalores: [1.02712992 1.02712992 1.        ]
+Determinante: 1.953566812092113
+Autovalores: [1.95356681]
 Autovalores:
-right eigen vector 0: [0.         0.70709236 0.7071212 ]
-right eigen vector 1: [0.         0.70709236 0.7071212 ]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 155
 Carregamento do Sistema: 127.3535842895505 MW  | 63.67679214477525 Mvar
-Determinante: 1.0595169424494577
-Autovalores: [1.02932839 1.02932839 1.        ]
+Determinante: 2.10140600825019
+Autovalores: [2.10140601]
 Autovalores:
-right eigen vector 0: [0.         0.70629792 0.70791472]
-right eigen vector 1: [0.         0.70629792 0.70791472]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 156
 Carregamento do Sistema: 127.35359191894503 MW  | 63.676795959472514 Mvar
-Determinante: 1.098106228952848
-Autovalores: [1.04790564 1.04790564 1.        ]
+Determinante: 1.7455860756273183
+Autovalores: [1.74558608]
 Autovalores:
-right eigen vector 0: [0.         0.6996491  0.71448663]
-right eigen vector 1: [0.         0.6996491  0.71448663]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 157
 Carregamento do Sistema: 127.35359382629366 MW  | 63.67679691314683 Mvar
-Determinante: 1.588393227389301
-Autovalores: [1.26031473 1.26031473 1.        ]
+Determinante: 2.0277139391301575
+Autovalores: [2.02771394]
 Autovalores:
-right eigen vector 0: [0.         0.62891897 0.77747086]
-right eigen vector 1: [0.         0.62891897 0.77747086]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 158
 Carregamento do Sistema: 127.35359573364228 MW  | 63.67679786682114 Mvar
-Determinante: 1.8801842682773804
-Autovalores: [1.37119811 1.37119811 1.        ]
+Determinante: 1.8741249982020094
+Autovalores: [1.874125]
 Autovalores:
-right eigen vector 0: [0.         0.59611082 0.80290217]
-right eigen vector 1: [0.         0.59611082 0.80290217]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 159
-Carregamento do Sistema: 127.3535976409909 MW  | 63.67679882049545 Mvar
-Determinante: 2.0506318424141936
-Autovalores: [1.43200274 1.43200274 1.        ]
+Carregamento do Sistema: 127.35359621047945 MW  | 63.676798105239726 Mvar
+Determinante: 1.8418669143536301
+Autovalores: [1.84186691]
 Autovalores:
-right eigen vector 0: [0.         0.57978807 0.81476732]
-right eigen vector 1: [0.         0.57978807 0.81476732]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 160
-Carregamento do Sistema: 127.35359859466521 MW  | 63.67679929733261 Mvar
-Determinante: 2.369047828430896
-Autovalores: [1.53917115 1.53917115 1.        ]
+Carregamento do Sistema: 127.35359668731661 MW  | 63.676798343658305 Mvar
+Determinante: 1.7856690535989739
+Autovalores: [1.78566905]
 Autovalores:
-right eigen vector 0: [0.         0.55258178 0.83345868]
-right eigen vector 1: [0.         0.55258178 0.83345868]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 161
-Carregamento do Sistema: 127.35359954833953 MW  | 63.676799774169766 Mvar
-Determinante: 2.1238337759395187
-Autovalores: [1.45733791 1.45733791 1.        ]
+Carregamento do Sistema: 127.35359716415377 MW  | 63.676798582076884 Mvar
+Determinante: 1.7218284344440076
+Autovalores: [1.72182843]
 Autovalores:
-right eigen vector 0: [0.         0.57570518 0.81765736]
-right eigen vector 1: [0.         0.57570518 0.81765736]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 162
-Carregamento do Sistema: 127.35360002517669 MW  | 63.676800012588345 Mvar
-Determinante: 2.052233684055565
-Autovalores: [1.43256193 1.43256193 1.        ]
+Carregamento do Sistema: 127.35359764099094 MW  | 63.67679882049547 Mvar
+Determinante: 1.6489681916884151
+Autovalores: [1.64896819]
 Autovalores:
-right eigen vector 0: [0.         0.58473734 0.81122268]
-right eigen vector 1: [0.         0.58473734 0.81122268]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 163
-Carregamento do Sistema: 127.35360050201386 MW  | 63.67680025100693 Mvar
-Determinante: 1.60457049548196
-Autovalores: [1.26671642 1.26671642 1.        ]
+Carregamento do Sistema: 127.35359811782811 MW  | 63.67679905891406 Mvar
+Determinante: 1.5649538321437655
+Autovalores: [1.56495383]
 Autovalores:
-right eigen vector 0: [0.         0.63485518 0.77263115]
-right eigen vector 1: [0.         0.63485518 0.77263115]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 164
-Carregamento do Sistema: 127.35360062122314 MW  | 63.67680031061157 Mvar
-Determinante: 1.7698500479664754
-Autovalores: [1.33035711 1.33035711 1.        ]
+Carregamento do Sistema: 127.35359859466527 MW  | 63.676799297332636 Mvar
+Determinante: 1.4667820529555158
+Autovalores: [1.46678205]
 Autovalores:
-right eigen vector 0: [0.         0.62769354 0.77846055]
-right eigen vector 1: [0.         0.62769354 0.77846055]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 165
-Carregamento do Sistema: 127.35360074043243 MW  | 63.67680037021621 Mvar
-Determinante: 1.5302173525760165
-Autovalores: [1.23701954 1.23701954 1.        ]
+Carregamento do Sistema: 127.35359907150243 MW  | 63.676799535751215 Mvar
+Determinante: 1.3500684271547967
+Autovalores: [1.35006843]
 Autovalores:
-right eigen vector 0: [0.         0.66434211 0.74742864]
-right eigen vector 1: [0.         0.66434211 0.74742864]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 166
-Carregamento do Sistema: 127.35360085964172 MW  | 63.67680042982086 Mvar
-Determinante: 1.3030492969901692
-Autovalores: [1.14151185 1.14151185 1.        ]
+Carregamento do Sistema: 127.3535995483396 MW  | 63.6767997741698 Mvar
+Determinante: 1.2082795030423432
+Autovalores: [1.2082795]
 Autovalores:
-right eigen vector 0: [0.         0.69559483 0.71843429]
-right eigen vector 1: [0.         0.69559483 0.71843429]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 167
-Carregamento do Sistema: 127.35360088944404 MW  | 63.67680044472202 Mvar
-Determinante: 0.9962673379653992
-Autovalores: [0.99813192 0.99813192 1.        ]
+Carregamento do Sistema: 127.35360002517677 MW  | 63.67680001258839 Mvar
+Determinante: 1.0332166567793226
+Autovalores: [1.03321666]
 Autovalores:
-right eigen vector 0: [0.         0.78107761 0.62443396]
-right eigen vector 1: [0.         0.78107761 0.62443396]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 168
-Carregamento do Sistema: 127.35360091924636 MW  | 63.67680045962318 Mvar
-Determinante: 0.7736906930664291
-Autovalores: [0.87959689 0.87959689 1.        ]
+Carregamento do Sistema: 127.35360050201393 MW  | 63.676800251006966 Mvar
+Determinante: 0.8646077165986195
+Autovalores: [0.86460772]
 Autovalores:
-right eigen vector 0: [0.         0.85445198 0.51953038]
-right eigen vector 1: [0.         0.85445198 0.51953038]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 169
-Carregamento do Sistema: 127.35360092110902 MW  | 63.67680046055451 Mvar
-Determinante: 0.6569071690016417
-Autovalores: [0.8104981 0.8104981 1.       ]
+Carregamento do Sistema: 127.35360056161858 MW  | 63.67680028080929 Mvar
+Determinante: 0.6893251896293271
+Autovalores: [0.68932519]
 Autovalores:
-right eigen vector 0: [0.         0.90541878 0.42451954]
-right eigen vector 1: [0.         0.90541878 0.42451954]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 170
-Carregamento do Sistema: 127.35360092297168 MW  | 63.67680046148584 Mvar
-Determinante: 0.6354711951112998
-Autovalores: [0.79716447 0.79716447 1.        ]
+Carregamento do Sistema: 127.35360062122322 MW  | 63.67680031061161 Mvar
+Determinante: 0.639463320051995
+Autovalores: [0.63946332]
 Autovalores:
-right eigen vector 0: [0.         0.91528661 0.40280321]
-right eigen vector 1: [0.         0.91528661 0.40280321]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 171
-Carregamento do Sistema: 127.35360092483432 MW  | 63.67680046241716 Mvar
-Determinante: 0.615461358595497
-Autovalores: [0.78451345 0.78451345 1.        ]
+Carregamento do Sistema: 127.35360068082785 MW  | 63.67680034041393 Mvar
+Determinante: 0.58459791195782
+Autovalores: [0.58459791]
 Autovalores:
-right eigen vector 0: [0.         0.92473124 0.38062072]
-right eigen vector 1: [0.         0.92473124 0.38062072]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 172
-Carregamento do Sistema: 127.35360092669697 MW  | 63.676800463348485 Mvar
-Determinante: 0.5946434906800344
-Autovalores: [0.77113131 0.77113131 1.        ]
+Carregamento do Sistema: 127.3536007404325 MW  | 63.67680037021625 Mvar
+Determinante: 0.5232196757453801
+Autovalores: [0.52321968]
 Autovalores:
-right eigen vector 0: [0.         0.93488836 0.35494191]
-right eigen vector 1: [0.         0.93488836 0.35494191]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 173
-Carregamento do Sistema: 127.35360092855963 MW  | 63.676800464279815 Mvar
-Determinante: 0.5729301792485786
-Autovalores: [0.75692151 0.75692151 1.        ]
+Carregamento do Sistema: 127.35360080003714 MW  | 63.67680040001857 Mvar
+Determinante: 0.4534009769416806
+Autovalores: [0.45340098]
 Autovalores:
-right eigen vector 0: [0.         0.94586321 0.32456553]
-right eigen vector 1: [0.         0.94586321 0.32456553]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [0.  0.5 0.5]
-p1: [0.  0.5 0.5]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 174
-Carregamento do Sistema: 127.35360093042229 MW  | 63.676800465211144 Mvar
-Determinante: 0.5502156763659659
-Autovalores: [0.59961284 0.91761824 1.        ]
+Carregamento do Sistema: 127.35360085964177 MW  | 63.67680042982089 Mvar
+Determinante: 0.3741803068618508
+Autovalores: [0.37418031]
 Autovalores:
-right eigen vector 0: [0.         0.89490355 0.44625961]
-right eigen vector 1: [0.         0.98406946 0.17778439]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         -0.56811123  1.56811123]
-p1: [ 0.          1.56811123 -0.56811123]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 175
-Carregamento do Sistema: 127.35360093228493 MW  | 63.67680046614247 Mvar
-Determinante: 0.5263707182605422
-Autovalores: [0.53132921 0.99066777 1.        ]
+Carregamento do Sistema: 127.35360091924642 MW  | 63.67680045962321 Mvar
+Determinante: 0.3556066569866953
+Autovalores: [0.35560666]
 Autovalores:
-right eigen vector 0: [0.         0.8699159  0.49320009]
-right eigen vector 1: [0.         0.99425954 0.10699516]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         -0.23427796  1.23427796]
-p1: [ 0.          1.23427796 -0.23427796]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 176
 Carregamento do Sistema: 127.35360093414758 MW  | 63.67680046707379 Mvar
-Determinante: 0.5012347425199019
-Autovalores: [0.47761446 1.0494547  1.        ]
+Determinante: 0.19124622313338088
+Autovalores: [0.19124622]
 Autovalores:
-right eigen vector 0: [0.         0.84964909 0.52734848]
-right eigen vector 1: [0.         0.99881014 0.04876788]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         -0.08538395  1.08538395]
-p1: [ 0.          1.08538395 -0.08538395]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 177
-Carregamento do Sistema: 127.35360093601024 MW  | 63.67680046800512 Mvar
-Determinante: 0.4746048381070403
-Autovalores: [0.43079016 1.1017077  1.        ]
+Carregamento do Sistema: 127.35360094904875 MW  | 63.67680047452438 Mvar
+Determinante: 0.1667728385168321
+Autovalores: [0.16677284]
 Autovalores:
-right eigen vector 0: [0.         0.8317339  0.55517449]
-right eigen vector 1: [0.         0.99999413 0.00342701]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.00510797  0.99489203]
-p1: [0.         0.99489203 0.00510797]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 178
-Carregamento do Sistema: 127.3536009378729 MW  | 63.67680046893645 Mvar
-Determinante: 0.4462193840540713
-Autovalores: [0.38784825 1.15049994 1.        ]
+Carregamento do Sistema: 127.35360095649932 MW  | 63.67680047824966 Mvar
+Determinante: 0.04450736318700693
+Autovalores: [0.04450736]
 Autovalores:
-right eigen vector 0: [0.         0.81521655 0.57915627]
-right eigen vector 1: [0.         0.99863936 0.05214821]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.06847066  0.93152934]
-p1: [0.         0.93152934 0.06847066]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 179
-Carregamento do Sistema: 127.35360093973554 MW  | 63.67680046986777 Mvar
-Determinante: 0.4157290653726143
-Autovalores: [0.34714656 1.19756065 1.        ]
+Carregamento do Sistema: 127.35360095836198 MW  | 63.67680047918099 Mvar
+Determinante: 0.05212478303301039
+Autovalores: [0.05212478]
 Autovalores:
-right eigen vector 0: [0.         0.79956453 0.60058019]
-right eigen vector 1: [0.         0.99510788 0.09879429]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         0.1167431  0.8832569]
-p1: [0.        0.8832569 0.1167431]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 180
-Carregamento do Sistema: 127.35360094159819 MW  | 63.676800470799094 Mvar
-Determinante: 0.38265161627874783
-Autovalores: [0.30756563 1.24412997 1.        ]
+Carregamento do Sistema: 127.35360096022463 MW  | 63.67680048011231 Mvar
+Determinante: 0.013464434363017249
+Autovalores: [0.01346443]
 Autovalores:
-right eigen vector 0: [0.         0.78440896 0.62024397]
-right eigen vector 1: [0.         0.98953073 0.14432236]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.15572801  0.84427199]
-p1: [0.         0.84427199 0.15572801]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 181
-Carregamento do Sistema: 127.35360094346085 MW  | 63.676800471730424 Mvar
-Determinante: 0.3462860972552617
-Autovalores: [0.26816321 1.29132589 1.        ]
+Carregamento do Sistema: 127.35360096069029 MW  | 63.67680048034514 Mvar
+Determinante: 0.06323515210115077
+Autovalores: [0.06323515]
 Autovalores:
-right eigen vector 0: [0.         0.76943681 0.63872294]
-right eigen vector 1: [0.         0.9818719  0.18954568]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.        0.188675  0.811325]
-p1: [0.       0.811325 0.188675]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 182
-Carregamento do Sistema: 127.3536009453235 MW  | 63.67680047266175 Mvar
-Determinante: 0.30555439174731597
-Autovalores: [0.22795731 1.34040181 1.        ]
+Carregamento do Sistema: 127.3536009609231 MW  | 63.67680048046155 Mvar
+Determinante: 0.03646874104903907
+Autovalores: [0.03646874]
 Autovalores:
-right eigen vector 0: [0.         0.75432228 0.6565043 ]
-right eigen vector 1: [0.         0.97191752 0.23532178]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.21764784  0.78235216]
-p1: [0.         0.78235216 0.21764784]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 183
-Carregamento do Sistema: 127.35360094718615 MW  | 63.676800473593076 Mvar
-Determinante: 0.25864140424813764
-Autovalores: [0.18565812 1.39310581 1.        ]
+Carregamento do Sistema: 127.35360096103953 MW  | 63.676800480519766 Mvar
+Determinante: 0.019618393694305736
+Autovalores: [0.01961839]
 Autovalores:
-right eigen vector 0: [0.         0.73864029 0.67409979]
-right eigen vector 1: [0.         0.9591816  0.28279084]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.24417218  0.75582782]
-p1: [0.         0.75582782 0.24417218]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 184
-Carregamento do Sistema: 127.3536009490488 MW  | 63.6768004745244 Mvar
-Determinante: 0.2020874071300394
-Autovalores: [0.13913611 1.45244395 1.        ]
+Carregamento do Sistema: 127.35360096115596 MW  | 63.67680048057798 Mvar
+Determinante: 0.01982550323562826
+Autovalores: [0.0198255]
 Autovalores:
-right eigen vector 0: [0.         0.72169568 0.69221048]
-right eigen vector 1: [0.         0.94262823 0.3338443 ]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.26967271  0.73032729]
-p1: [0.         0.73032729 0.26967271]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 185
-Carregamento do Sistema: 127.35360094998013 MW  | 63.67680047499007 Mvar
-Determinante: 0.18484319565423743
-Autovalores: [0.12572206 1.47025263 1.        ]
+Carregamento do Sistema: 127.35360096127238 MW  | 63.67680048063619 Mvar
+Determinante: 0.011066787495595195
+Autovalores: [0.01106679]
 Autovalores:
-right eigen vector 0: [0.         0.71687438 0.69720235]
-right eigen vector 1: [0.         0.93725893 0.34863404]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.27665564  0.72334436]
-p1: [0.         0.72334436 0.27665564]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 186
-Carregamento do Sistema: 127.35360095091146 MW  | 63.67680047545573 Mvar
-Determinante: 0.20045124143597137
-Autovalores: [0.13784776 1.4541494  1.        ]
+Carregamento do Sistema: 127.35360096133059 MW  | 63.67680048066529 Mvar
+Determinante: 0.008506678245673525
+Autovalores: [0.00850668]
 Autovalores:
-right eigen vector 0: [0.         0.72123132 0.69269429]
-right eigen vector 1: [0.         0.94212152 0.33527159]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.        0.270355  0.729645]
-p1: [0.       0.729645 0.270355]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 187
-Carregamento do Sistema: 127.35360095184278 MW  | 63.67680047592139 Mvar
-Determinante: 0.11607555607044062
-Autovalores: [0.07555555 1.53629432 1.        ]
+Carregamento do Sistema: 127.35360096138879 MW  | 63.676800480694396 Mvar
+Determinante: 0.004851423956731772
+Autovalores: [0.00485142]
 Autovalores:
-right eigen vector 0: [0.         0.69911838 0.71500593]
-right eigen vector 1: [0.         0.91598448 0.4012137 ]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.29985762  0.70014238]
-p1: [-0.          0.70014238  0.29985762]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 188
-Carregamento do Sistema: 127.35360095207561 MW  | 63.676800476037805 Mvar
-Determinante: 0.08716224735345683
-Autovalores: [0.05573011 1.56400642 1.        ]
+Carregamento do Sistema: 127.35360096144701 MW  | 63.67680048072351 Mvar
+Determinante: -0.006090939135736331
+Autovalores: [0.00609094]
 Autovalores:
-right eigen vector 0: [0.         0.69222609 0.7216807 ]
-right eigen vector 1: [0.         0.90650973 0.42218493]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.30878013  0.69121987]
-p1: [-0.          0.69121987  0.30878013]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 189
-Carregamento do Sistema: 127.35360095230844 MW  | 63.67680047615422 Mvar
-Determinante: 0.12752311500478283
-Autovalores: [0.0835916  1.52554942 1.        ]
+Carregamento do Sistema: 127.35360096145429 MW  | 63.676800480727145 Mvar
+Determinante: 0.00478518259032956
+Autovalores: [0.00478518]
 Autovalores:
-right eigen vector 0: [0.         0.70193262 0.71224336]
-right eigen vector 1: [0.         0.9195782  0.39290703]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.29631154  0.70368846]
-p1: [-0.          0.70368846  0.29631154]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 190
-Carregamento do Sistema: 127.35360095254126 MW  | 63.67680047627063 Mvar
-Determinante: 0.10136073688766825
-Autovalores: [0.06538522 1.55020879 1.        ]
+Carregamento do Sistema: 127.35360096146158 MW  | 63.67680048073079 Mvar
+Determinante: 0.0010712106310877267
+Autovalores: [0.00107121]
 Autovalores:
-right eigen vector 0: [0.         0.69557362 0.71845483]
-right eigen vector 1: [0.         0.91126282 0.41182529]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.30436486  0.69563514]
-p1: [-0.          0.69563514  0.30436486]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 191
-Carregamento do Sistema: 127.35360095277409 MW  | 63.676800476387044 Mvar
-Determinante: 0.08249124882027478
-Autovalores: [0.05262369 1.56756861 1.        ]
+Carregamento do Sistema: 127.35360096146886 MW  | 63.67680048073443 Mvar
+Determinante: -0.005669623993656002
+Autovalores: [0.00566962]
 Autovalores:
-right eigen vector 0: [0.         0.69115276 0.7227087 ]
-right eigen vector 1: [0.         0.9052717  0.42483309]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.30977228  0.69022772]
-p1: [-0.          0.69022772  0.30977228]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 192
-Carregamento do Sistema: 127.35360095300692 MW  | 63.67680047650346 Mvar
-Determinante: 0.05951708446554309
-Autovalores: [0.03747061 1.58836718 1.        ]
+Carregamento do Sistema: 127.35360096147615 MW  | 63.67680048073807 Mvar
+Determinante: 0.0053585246140476234
+Autovalores: [0.00535852]
 Autovalores:
-right eigen vector 0: [0.         0.68594302 0.72765526]
-right eigen vector 1: [0.         0.8979596  0.44007789]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.31600206  0.68399794]
-p1: [-0.          0.68399794  0.31600206]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 193
-Carregamento do Sistema: 127.35360095323975 MW  | 63.676800476619874 Mvar
-Determinante: 0.02512295028583035
-Autovalores: [0.01551871 1.61888151 1.        ]
+Carregamento do Sistema: 127.35360096148342 MW  | 63.67680048074171 Mvar
+Determinante: 0.01144280367166906
+Autovalores: [0.0114428]
 Autovalores:
-right eigen vector 0: [0.         0.67847329 0.73462507]
-right eigen vector 1: [0.         0.88699856 0.46177219]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         0.3246931  0.6753069]
-p1: [-0.         0.6753069  0.3246931]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 194
-Carregamento do Sistema: 127.35360095335616 MW  | 63.67680047667808 Mvar
-Determinante: -0.05657688279381354
-Autovalores: [0.03347284 1.69023234 1.        ]
+Carregamento do Sistema: 127.35360096149071 MW  | 63.67680048074536 Mvar
+Determinante: 0.0027401505365595154
+Autovalores: [0.00274015]
 Autovalores:
-right eigen vector 0: [0.         0.66214044 0.74937977]
-right eigen vector 1: [0.         0.86053333 0.50939414]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.34341816  0.65658184]
-p1: [-0.          0.65658184  0.34341816]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 195
-Carregamento do Sistema: 127.3536009534726 MW  | 63.6768004767363 Mvar
-Determinante: 0.008415793712066431
-Autovalores: [0.00515229 1.63340984 1.        ]
+Carregamento do Sistema: 127.35360096149799 MW  | 63.676800480748994 Mvar
+Determinante: -0.0073251824632085665
+Autovalores: [0.00732518]
 Autovalores:
-right eigen vector 0: [0.         0.67497812 0.73783774]
-right eigen vector 1: [0.         0.88169462 0.47182051]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.32865143  0.67134857]
-p1: [-0.          0.67134857  0.32865143]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 196
-Carregamento do Sistema: 127.35360095350168 MW  | 63.67680047675084 Mvar
-Determinante: -0.07164653727284964
-Autovalores: [0.04211432 1.70123918 1.        ]
+Carregamento do Sistema: 127.3536009614981 MW  | 63.67680048074905 Mvar
+Determinante: -0.0018312316530632031
+Autovalores: [0.00183123]
 Autovalores:
-right eigen vector 0: [0.         0.65930871 0.75187235]
-right eigen vector 1: [0.         0.85637314 0.51635748]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.         0.3458613  0.6541387]
-p1: [-0.         0.6541387  0.3458613]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 197
-Carregamento do Sistema: 127.35360095353079 MW  | 63.67680047676539 Mvar
-Determinante: -0.02380537283132119
-Autovalores: [0.01433039 1.66118114 1.        ]
+Carregamento do Sistema: 127.3536009615055 MW  | 63.67680048075275 Mvar
+Determinante: -0.0030657995446615725
+Autovalores: [0.0030658]
 Autovalores:
-right eigen vector 0: [0.         0.66846602 0.74374269]
-right eigen vector 1: [0.         0.87142638 0.49052632]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.33595738  0.66404262]
-p1: [-0.          0.66404262  0.33595738]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 Caso 198
-Carregamento do Sistema: 127.35360095355988 MW  | 63.67680047677994 Mvar
-Determinante: 0.011647304618943458
-Autovalores: [0.00714298 1.63059406 1.        ]
+Carregamento do Sistema: 127.35360096150664 MW  | 63.67680048075332 Mvar
+Determinante: -0.005771780981434383
+Autovalores: [0.00577178]
 Autovalores:
-right eigen vector 0: [0.         0.67564769 0.73722466]
-right eigen vector 1: [0.         0.8827265  0.46988714]
-right eigen vector 2: [1. 0. 0.]
+right eigen vector 0: [1.]
 Fator de Participação:
-p0: [-0.          0.32789001  0.67210999]
-p1: [-0.          0.67210999  0.32789001]
-p2: [1. 0. 0.]
-
-
-Caso 199
-Carregamento do Sistema: 127.35360095357443 MW  | 63.676800476787214 Mvar
-Determinante: -0.04720008621720766
-Autovalores: [0.02808066 1.68087506 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66391493 0.74780811]
-right eigen vector 1: [0.         0.86405666 0.50339457]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.34090666  0.65909334]
-p1: [-0.          0.65909334  0.34090666]
-p2: [1. 0. 0.]
-
-
-Caso 200
-Carregamento do Sistema: 127.35360095358898 MW  | 63.67680047679449 Mvar
-Determinante: 0.018872792442816665
-Autovalores: [0.01161922 1.62427353 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.67715608 0.73583941]
-right eigen vector 1: [0.         0.88503599 0.46552261]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.32616591  0.67383409]
-p1: [-0.          0.67383409  0.32616591]
-p2: [1. 0. 0.]
-
-
-Caso 201
-Carregamento do Sistema: 127.35360095360352 MW  | 63.67680047680176 Mvar
-Determinante: -0.04731629549508326
-Autovalores: [0.02814859 1.6809472  1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66389254 0.74782798]
-right eigen vector 1: [0.         0.86402955 0.5034411 ]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.34092093  0.65907907]
-p1: [-0.          0.65907907  0.34092093]
-p2: [1. 0. 0.]
-
-
-Caso 202
-Carregamento do Sistema: 127.35360095361807 MW  | 63.676800476809035 Mvar
-Determinante: -0.04870687388517438
-Autovalores: [0.02895602 1.68209862 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66362647 0.7480641 ]
-right eigen vector 1: [0.         0.86359669 0.50418325]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.34120357  0.65879643]
-p1: [-0.          0.65879643  0.34120357]
-p2: [1. 0. 0.]
-
-
-Caso 203
-Carregamento do Sistema: 127.35360095363262 MW  | 63.67680047681631 Mvar
-Determinante: -0.03462641675107405
-Autovalores: [0.02073127 1.67025098 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.6663428  0.74564554]
-right eigen vector 1: [0.        0.8680405 0.4964934]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33824738  0.66175262]
-p1: [-0.          0.66175262  0.33824738]
-p2: [1. 0. 0.]
-
-
-Caso 204
-Carregamento do Sistema: 127.35360095364717 MW  | 63.67680047682359 Mvar
-Determinante: 0.01964627160923536
-Autovalores: [0.01210096 1.62353059 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.67731865 0.73568978]
-right eigen vector 1: [0.         0.88530683 0.46500734]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.32595275  0.67404725]
-p1: [-0.          0.67404725  0.32595275]
-p2: [1. 0. 0.]
-
-
-Caso 205
-Carregamento do Sistema: 127.35360095366173 MW  | 63.67680047683086 Mvar
-Determinante: -0.06665269772445291
-Autovalores: [0.03927702 1.69698978 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66023683 0.75105748]
-right eigen vector 1: [0.         0.85798117 0.51368114]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.34482552  0.65517448]
-p1: [-0.          0.65517448  0.34482552]
-p2: [1. 0. 0.]
-
-
-Caso 206
-Carregamento do Sistema: 127.353600953669 MW  | 63.6768004768345 Mvar
-Determinante: -0.03987490613868387
-Autovalores: [0.02381089 1.67465006 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66532415 0.74655461]
-right eigen vector 1: [0.         0.86639316 0.49936249]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33934804  0.66065196]
-p1: [-0.          0.66065196  0.33934804]
-p2: [1. 0. 0.]
-
-
-Caso 207
-Carregamento do Sistema: 127.35360095367628 MW  | 63.67680047683814 Mvar
-Determinante: 0.017310477545108633
-Autovalores: [0.01064889 1.62556596 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.67682877 0.73614048]
-right eigen vector 1: [0.         0.88456452 0.46641786]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.32650921  0.67349079]
-p1: [-0.          0.67349079  0.32650921]
-p2: [1. 0. 0.]
-
-
-Caso 208
-Carregamento do Sistema: 127.35360095368357 MW  | 63.676800476841784 Mvar
-Determinante: -0.08828807905942487
-Autovalores: [0.05148727 1.71475558 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.65625412 0.75453995]
-right eigen vector 1: [0.         0.85124379 0.52477044]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.         0.3490318  0.6509682]
-p1: [-0.         0.6509682  0.3490318]
-p2: [1. 0. 0.]
-
-
-Caso 209
-Carregamento do Sistema: 127.35360095369086 MW  | 63.67680047684543 Mvar
-Determinante: -0.02228253755995618
-Autovalores: [0.01342532 1.65973921 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66876689 0.74347216]
-right eigen vector 1: [0.         0.8719633  0.48957124]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33556684  0.66443316]
-p1: [-0.          0.66443316  0.33556684]
-p2: [1. 0. 0.]
-
-
-Caso 210
-Carregamento do Sistema: 127.35360095369266 MW  | 63.67680047684633 Mvar
-Determinante: 0.10585086610177212
-Autovalores: [0.06850567 1.54514013 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.6966592  0.71740223]
-right eigen vector 1: [0.         0.91299138 0.40797884]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.30262023  0.69737977]
-p1: [-0.          0.69737977  0.30262023]
-p2: [1. 0. 0.]
-
-
-Caso 211
-Carregamento do Sistema: 127.35360095369447 MW  | 63.676800476847234 Mvar
-Determinante: 0.035801365212669876
-Autovalores: [0.02224745 1.60923484 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.6807531  0.73251295]
-right eigen vector 1: [0.         0.89049131 0.45500025]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.32196486  0.67803514]
-p1: [-0.          0.67803514  0.32196486]
-p2: [1. 0. 0.]
-
-
-Caso 212
-Carregamento do Sistema: 127.35360095369629 MW  | 63.67680047684814 Mvar
-Determinante: -0.031667373002800564
-Autovalores: [0.01898859 1.66770546 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66692006 0.74512928]
-right eigen vector 1: [0.         0.86899224 0.49482572]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33759815  0.66240185]
-p1: [-0.          0.66240185  0.33759815]
-p2: [1. 0. 0.]
-
-
-Caso 213
-Carregamento do Sistema: 127.3536009536981 MW  | 63.67680047684905 Mvar
-Determinante: 0.04087423676791788
-Autovalores: [0.02547137 1.60471298 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.6818485  0.73149342]
-right eigen vector 1: [0.         0.89212005 0.45179842]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.         0.3206807  0.6793193]
-p1: [-0.         0.6793193  0.3206807]
-p2: [1. 0. 0.]
-
-
-Caso 214
-Carregamento do Sistema: 127.35360095369991 MW  | 63.676800476849955 Mvar
-Determinante: -0.023472110760012765
-Autovalores: [0.01413345 1.66074863 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66853147 0.74368385]
-right eigen vector 1: [0.         0.87158747 0.49024003]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33582541  0.66417459]
-p1: [-0.          0.66417459  0.33582541]
-p2: [1. 0. 0.]
-
-
-Caso 215
-Carregamento do Sistema: 127.35360095370001 MW  | 63.676800476850005 Mvar
-Determinante: 0.044670126811877896
-Autovalores: [0.02799439 1.59568109 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.68270715 0.7306921 ]
-right eigen vector 1: [0.         0.89535627 0.44535059]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.31728305  0.68271695]
-p1: [-0.          0.68271695  0.31728305]
-p2: [1. 0. 0.]
-
-
-Caso 216
-Carregamento do Sistema: 127.35360095370012 MW  | 63.67680047685006 Mvar
-Determinante: -0.023620584264148734
-Autovalores: [0.01422176 1.6608763  1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.66850212 0.74371023]
-right eigen vector 1: [0.         0.87153992 0.49032455]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.33585832  0.66414168]
-p1: [-0.          0.66414168  0.33585832]
-p2: [1. 0. 0.]
-
-
-Caso 217
-Carregamento do Sistema: 127.35360095370024 MW  | 63.67680047685012 Mvar
-Determinante: 0.06538397364566659
-Autovalores: [0.04131359 1.58262639 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.68726016 0.72641137]
-right eigen vector 1: [0.         0.89999166 0.43590711]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.31424233  0.68575767]
-p1: [-0.          0.68575767  0.31424233]
-p2: [1. 0. 0.]
-
-
-Caso 218
-Carregamento do Sistema: 127.35360095370034 MW  | 63.67680047685017 Mvar
-Determinante: 0.004609770728603844
-Autovalores: [0.00281664 1.63661963 1.        ]
-Autovalores:
-right eigen vector 0: [0.         0.67419351 0.73855474]
-right eigen vector 1: [0.         0.88051615 0.47401615]
-right eigen vector 2: [1. 0. 0.]
-Fator de Participação:
-p0: [-0.          0.32950053  0.67049947]
-p1: [-0.          0.67049947  0.32950053]
-p2: [1. 0. 0.]
+p0: [1.]
 
 
 
