@@ -2,7 +2,7 @@
 
 O principal objetivo deste projeto é fornecer um código Python base para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas de potência`.
 
-Esse projeto tem como base a leitura de dados de `Sistemas Elétricos de Potência via arquivos ANAREDE` do tipo `.pwf`.
+Esse projeto tem como base a leitura de dados de `Sistemas Elétricos de Potência via arquivos ANAREDE (.pwf)`.
 
 
 
@@ -14,22 +14,27 @@ pandas
 ```
 
 
+
 ## Métodos de Solução
 Serão desenvolvidos aqui `diferentes ferramentas para análise de SEPs em regime permanente`, como por exemplo:
-- [Solução de Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newton-raphson.md)
-- [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md)
-- [Solução de Fluxo de Potência Linearizado](docs/Metodos/linear.md)
-- [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
-- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md)
+- [Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newton-raphson.md)
+
+<!-- - [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md) -->
+
+- [Solução do Fluxo de Potência Linearizado](docs/Metodos/linear.md)
+
+<!-- - [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
+
+- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md) -->
+
+- [Solução do Fluxo de Potência Continuado (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
 
 > **Para todos os efeitos, considere que este é um projeto em desenvolvimento e que tais ferramentas serão integradas em partes.**
 
 
 
-
-
 ## Leitura de Dados
-Os `dados do Sistema Elétrico de Potência` em estudo devem estar organizados em um arquivo `.pwf`.
+Os dados do Sistema Elétrico de Potência em estudo devem estar organizados em um arquivo `.pwf`.
 
 Utilize a pasta entitulada [sistemas](sistemas) para armazenar os arquivos `.pwf` que contém os `dados de SEP` que pretende de estudar/analisar.
 
@@ -53,10 +58,10 @@ Para mais detalhes sobre o cálculo e montagem dessa matriz, [clique aqui](docs/
 ## Formulação da Matriz Jacobiana
 A Matriz Jacobiana é modelada de uma única maneira:
 
-- `'Completa':` Configuração tradicional, vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q` associado ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
+- `'Completa':` Vetor coluna de resíduos das `equações diferenciáveis ∆P-∆Q` associado ao vetor coluna de resíduos das `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
     - Para `equações de controle y` adicionais, associadas a `variáveis de estado x`, essa formulação é reestruturada para associar o vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q-∆y` ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V-∆x`.
 
-> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](dosc/exemplos/Jacobiana/reduzida.md) (**essas formulações ainda não foram implementadas**).
+> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](docs/exemplos/Jacobiana/reduzida.md) (**essas formulações ainda não foram implementadas**).
 
 
 
@@ -66,7 +71,15 @@ Para realizar a análise de fluxo de potência em regime permanente, `utilize a 
 ```Python
 from powerflow import PowerFlow
 
-PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=control, monitor=monitor, report=report,)
+PowerFlow(
+    system=system, 
+    method=method, 
+    jacobi=jacobi, 
+    options=options, 
+    control=control, 
+    monitor=monitor, 
+    report=report,
+)
 ```
 - `system: str, obrigatório, valor padrão ''`
     - **Variável que indica o nome do arquivo do SEP em estudo.**
@@ -76,53 +89,66 @@ PowerFlow(system=system, method=method, jacobi=jacobi, options=options, control=
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
         - `'NEWTON'` - [soluciona o SEP através do método de Newton-Raphson.](docs/Metodos/newton-raphson.md)
-        - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md)
+        <!-- - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md) -->
         - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md)
-        - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
-        - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md)
+        <!-- - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
+        - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md) -->
         - `'CPF'` - [soluciona o SEP através do método de Fluxo de Potência Continuado.](docs/Metodos/continuation.md)
 
 - `jacobi: str, opcional, valor padrão 'COMPLETA'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
         - `'Completa'` - [organiza a matriz Jacobiana pela formulação Completa](docs/Jacobiana/completa.md).
-        - `'Alternada'`- [organiza a matriz Jacobiana pela formulação Alternada](docs/Jacobiana/alternada.md).
-        - `'Reduzida'` - [organiza a matriz Jacobiana pela formulação Reduzida](docs/Jacobiana/reduzida.md).
+        <!-- - `'Alternada'`- [organiza a matriz Jacobiana pela formulação Alternada](docs/Jacobiana/alternada.md).
+        - `'Reduzida'` - [organiza a matriz Jacobiana pela formulação Reduzida](docs/Jacobiana/reduzida.md). -->
 
 - `options: dict, opcional, valor padrão dict()`
     - **Opções:**
-        - `sbase` - potência aparente base do sistema:
-            - **valor padrão 100.**
+        - `sbase` - potência aparente base do sistema (MVA): 
+            - **valor padrão: 100.**
+        - `fbase` - frequência base do sistema (Hz):
+            - **valor padrão: 60.**
         - `itermx` - número máximo de iterações:
-            - **valor padrão 15.**
-        - `tolP` - tolerância de convergência para potência ativa:
-            - **valor padrão 1E-6.**
-        - `tolQ` - tolerância de convergência para potência reativa:
-            - **valor padrão 1E-6.**
-        - `tolY` - tolerância de convergência para equações de controle adicionais:
-            - **valor padrão 1E-6.**
-        - `vmax` - valor de magnitude de tensão máximo para todas as barras do SEP:
-            - **valor padrão 1.05.**
-        - `vmin` - valor de magnitude de tensão mínimo para todas as barras do SEP:
-            - **valor padrão 0.95.**
-        - `cpfL` - passo para solução do fluxo de potência continuado por meio da variável λ (1a parte da curva PV):
-            - **valor padrão 1E-1.**
-        - `cpfV` - passo para solução do fluxo de potência continuado por meio da variável V (2a parte da curva PV):
-            - **valor padrão 1E-3.**
+            - **valor padrão: 15.**
+        - `tolP` - tolerância de convergência para potência ativa (p.u.):
+            - **valor padrão: 1E-6.**
+        - `tolQ` - tolerância de convergência para potência reativa (p.u.):
+            - **valor padrão: 1E-6.**
+        - `tolY` - tolerância de convergência para equações de controle adicionais (p.u.):
+            - **valor padrão: 1E-6.**
+        - `vmax` - valor de magnitude de tensão máximo para todas as barras do SEP (p.u.):
+            - **valor padrão: 1.05.**
+        - `vmin` - valor de magnitude de tensão mínimo para todas as barras do SEP (p.u.):
+            - **valor padrão: 0.95.**
+        - `vvar` - variação máxima permitida de magnitude de tensão (p.u.):
+            - **valor padrão: 1E-6.**
+        - `qvar` - variação máxima permitida de geração de potência reativa (p.u.):
+            - **valor padrão: 1E-6.**
+        - `cpfLambda` - passo para solução do fluxo de potência continuado por meio da variável λ (1a parte da curva PV):
+            - **valor padrão: 1E-1.**
+        - `cpfBeta` - variável para incremento de geração de potência ativa durante o fluxo de potência continuado:
+            - **valor padrão: 0%.** 
+        - `cpfVolt` - passo para solução do fluxo de potência continuado por meio da variável V (2a parte da curva PV):
+            - **valor padrão: 5E-4.**
         - `cpfV2L` - transição da variável V para variável λ (3a parte da curva PV):
-            - **valor padrão 85%.**
+            - **valor padrão: 85%.**
+        - `icmn` - valor mínimo do incremento de carga:
+            - **valor padrão: 5E-4.**
+        - `full` - realiza simulação completa do fluxo de potência continuado:
+            - **valor padrão False
+
 
 - `control: list, opcional, valor padrão list()`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
     - **Opções:**
-        - `'CREM'` - [controle remoto de magnitude de tensão de barras remotas.](docs/Controle/controle-remoto-tensao.md)
+        <!-- - `'CREM'` - [controle remoto de magnitude de tensão de barras remotas.](docs/Controle/controle-remoto-tensao.md)
         - `'CST'` - [controle secundário de tensão de magnitude de tensão de barras remotas.](docs/Controle/controle-secundario-tensao.md)
         - `'CTAP'` - [controle automático de taps de transformadores em fase.](docs/Controle/controle-transformador-tap-variavel.md)
-        - `'CTAPd'` - [controle automático de taps de transformadores defasadores.](docs/Controle/controle-transformador-defasador.md)
+        - `'CTAPd'` - [controle automático de taps de transformadores defasadores.](docs/Controle/controle-transformador-defasador.md) -->
         - `'FREQ'` - [regulação primária de frequência.](docs/Controle/controle-regulacao-primaria-frequencia.md)
         - `'QLIM'` - [tratamento de limite de geração de potência reativa.](docs/Controle/controle-limite-potencia-reativa-geradores.md)
         - `'SVC'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVC.md)
-        - `'VCTRL'` - [controle de magnitude de tensão de todas as barras.](docs/Controle/controle-tensao.md)
+        <!-- - `'VCTRL'` - [controle de magnitude de tensão de todas as barras.](docs/Controle/controle-tensao.md) -->
 
 - `monitor: list, opcional, valor padrão list()`
     - **Opções:**
@@ -156,8 +182,11 @@ from powerflow import PowerFlow
 
 PowerFlow(
     system='ieee14.pwf', 
+    
     method='NEWTON', 
+    
     jacobi='COMPLETA, 
+
     options={
         'sbase': 100.,
         'itermx': 20,
@@ -166,12 +195,16 @@ PowerFlow(
         'tolY': 1E-4,
         'vmax': 1.045,
         'vmin': 0.965,
-        'cpfL': 5E-2,
-        'cpfV': 5E-4,
+        'cpfLambda': 5E-2,
+        'cpfVolt': 5E-4,
         'cpfV2L': 0.90,
+        'full': True,
     },
+
     control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL'], 
+    
     monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON'], 
+    
     report=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF'],
-    )
+)
 ```

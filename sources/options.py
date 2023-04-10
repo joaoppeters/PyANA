@@ -106,7 +106,7 @@ class Options:
             'cpfVolt': 5E-4,
             'cpfV2L': 0.85,
             'icmn': 5E-4,
-            'full': True,
+            'full': False,
         }
         
         for k, v in self.stdcpf.items():
