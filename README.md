@@ -59,7 +59,7 @@ A Matriz Jacobiana é modelada de uma única maneira:
 - `'Completa':` Vetor coluna de resíduos das `equações diferenciáveis ∆P-∆Q` associado ao vetor coluna de resíduos das `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
     - Para `equações de controle y` adicionais, associadas a `variáveis de estado x`, essa formulação é reestruturada para associar o vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q-∆y` ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V-∆x`.
 
-> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](docs/exemplos/Jacobiana/reduzida.md) (**essas formulações ainda não foram implementadas**).
+> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](docs/Jacobiana/reduzida.md) (**essas formulações ainda não foram implementadas**).
 
 
 
