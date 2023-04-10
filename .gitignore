@@ -183,6 +183,8 @@ Thumbs.db
 *.pwf
 *.lst
 
+*resultados/Continuado/
+
 */107-Barras*
 
 smooth.py
