@@ -1,1 +1,1 @@
-# Relatório de Convergência do Fluxo de Potência - `'RCPF'`
+# Relatório de Convergência do Fluxo de Potência - `'RCONV'`
