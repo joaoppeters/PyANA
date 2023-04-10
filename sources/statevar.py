@@ -34,7 +34,7 @@ class StateVar:
         self.stateVT(powerflow,)
         
         # Condição
-        if powerflow.setup.control:
+        if (powerflow.setup.control):
             # Resultado final de convergência das variáveis de estado adicionais
             self.stateY(powerflow,)
 

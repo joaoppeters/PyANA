@@ -29,7 +29,7 @@ class SVC:
         
         ## Inicialização
         # Variáveis
-        if 'svc_reactive_generation' not in powerflow.sol:
+        if ('svc_reactive_generation' not in powerflow.sol):
             if (powerflow.setup.dcerDF['controle'][0] == 'A'):
                 powerflow.sol['svc_reactive_generation'] = powerflow.setup.dcerDF['potencia_reativa'].to_numpy()
                 self.alphavar(powerflow,)
@@ -186,7 +186,7 @@ class SVC:
 
         ## Montagem Jacobiana
         # Condição
-        if powerflow.setup.controldim != 0:
+        if (powerflow.setup.controldim != 0):
             powerflow.setup.extrarow = zeros([powerflow.setup.ncer, powerflow.setup.controldim])
             powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.ncer])
 
@@ -196,7 +196,7 @@ class SVC:
             # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracol, powerflow.setup.yxx), axis=0)), axis=1)
 
-        elif powerflow.setup.controldim == 0:
+        elif (powerflow.setup.controldim == 0):
             # H-N M-L + yxt-yxv
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)
 
@@ -294,10 +294,6 @@ class SVC:
         """
 
         ## Inicialização 
-        # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-        # if any((powerflow.sol['svc_reactive_generation'] > powerflow.setup.dcerDF['potencia_reativa_maxima'].to_numpy() - 1E-10)):
-        #     powerflow.setup.controlheur = True
-
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
         if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
             powerflow.setup.bifurcation = True

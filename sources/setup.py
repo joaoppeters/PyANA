@@ -29,7 +29,7 @@ class Setup:
         """
 
         ## Inicialização
-        if powerflow.system:
+        if (powerflow.system):
             # Verificação de diretório
             self.checkpath(powerflow,)
 
@@ -71,8 +71,8 @@ class Setup:
         # Variável de nome do SEP em estudo
         self.name = powerflow.system.split('.')[0]
 
-        if exists(self.maindir + '/sistemas/') is True:
-            if exists(self.maindir + '/sistemas/' + powerflow.system) is True:
+        if (exists(self.maindir + '/sistemas/') is True):
+            if (exists(self.maindir + '/sistemas/' + powerflow.system) is True):
                 self.dirSEP = realpath(dirname(dirname(__file__)) + '/sistemas/' + powerflow.system)
                 print(f'\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PowerFlow/sistemas/` conforme solicitado!\033[0m')
             else:

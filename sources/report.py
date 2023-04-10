@@ -25,10 +25,9 @@ class Reports:
         """
 
         ## Inicialização
-        if not hasattr(powerflow, 'setup'):
-            if powerflow.report:
+        if (not hasattr(powerflow, 'setup')):
+            if (powerflow.report):
                 setup.report = dict()
-                # if not setup.report:
                 self.report = {
                     'RBARRA': False, 
                     'RLINHA': False, 
@@ -57,19 +56,19 @@ class Reports:
             self.rconv(powerflow,)
 
             # Relatórios Extras - ordem de prioridade
-            if powerflow.setup.report:
+            if (powerflow.setup.report):
                 for r in powerflow.setup.report:
                     # relatório de barra
-                    if r == 'RBARRA':
+                    if (r == 'RBARRA'):
                         self.rbarra(powerflow,)
                     # relatório de linha
-                    elif r == 'RLINHA':
+                    elif (r == 'RLINHA'):
                         self.rlinha(powerflow,)
                     # relatório de geradores
-                    elif r == 'RGERA':
+                    elif (r == 'RGERA'):
                         self.rgera(powerflow,)
                     # relatório de compensadores estáticos de potência reativa
-                    elif r == 'RSVC':
+                    elif (r == 'RSVC'):
                         self.rsvc(powerflow,)
             
             # relatório de fluxo de potência continuado
@@ -95,10 +94,10 @@ class Reports:
         """
         
         ## Inicialização
-        if powerflow.report:
+        if (powerflow.report):
             print('\033[96mOpções de relatório escolhidas: ', end='')
             for k, _ in self.report.items():
-                if k in powerflow.report:
+                if (k in powerflow.report):
                     setup.report[k] = True
                     print(f'{k}', end=' ')
             print('\033[0m')
@@ -122,33 +121,33 @@ class Reports:
         self.file.write('\n\n')
         self.file.write('solução do fluxo de potência via método ')
         # Chamada específica método de Newton-Raphson Não-Linear
-        if powerflow.method == 'NEWTON':
+        if (powerflow.method == 'NEWTON'):
             self.file.write('newton-raphson')
         # Chamada específica método de Gauss-Seidel
-        elif powerflow.method == 'GAUSS':
+        elif (powerflow.method == 'GAUSS'):
             self.file.write('gauss-seidel')
         # Chamada específica método de Newton-Raphson Linearizado
-        elif powerflow.method == 'LINEAR':
+        elif (powerflow.method == 'LINEAR'):
             self.file.write('linearizado')
         # Chamada específica método Desacoplado
-        elif powerflow.method == 'DECOUP':
+        elif (powerflow.method == 'DECOUP'):
             self.file.write('desacoplado')
         # Chamada específica método Desacoplado Rápido
-        elif powerflow.method == 'fDECOUP':
+        elif (powerflow.method == 'fDECOUP'):
             self.file.write('desacoplado rápido')
         # Chamada específica método Continuado
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             self.file.write('do fluxo de potência continuado')
         self.file.write('\n\n')
         self.file.write('opções de controle ativadas: ')
-        if powerflow.setup.control:
+        if (powerflow.setup.control):
             for k in powerflow.setup.control:
                 self.file.write(f'{k} ')
         else:
             self.file.write('Nenhum controle ativo!')
         self.file.write('\n\n')
         self.file.write('opções de relatório ativadas: ')
-        if powerflow.setup.report:
+        if (powerflow.setup.report):
             for k in powerflow.setup.report:
                 self.file.write(f'{k} ')
         self.file.write('\n\n\n\n')
@@ -167,26 +166,26 @@ class Reports:
 
         ## Inicialização
         self.file.write('vv relatório de convergência vv')
-        if powerflow.method != 'LINEAR':
+        if (powerflow.method != 'LINEAR'):
             self.file.write('\n\n')
             self.file.write('       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |')
             self.file.write('\n')
             self.file.write('| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |')
             self.file.write('\n')
             self.file.write('-'*71)
-            if powerflow.method != 'CPF':
+            if (powerflow.method != 'CPF'):
                 for i in range(0, powerflow.sol['iter']):
                     self.file.write('\n')
                     self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
             
-            elif powerflow.method == 'CPF':
+            elif (powerflow.method == 'CPF'):
                 for i in range(0, powerflow.case[0]['iter']):
                     self.file.write('\n')
                     self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
             
             self.file.write('\n')
             self.file.write('-'*71)
-        if powerflow.method == 'LINEAR':
+        if (powerflow.method == 'LINEAR'):
             i = powerflow.sol['iter'] - 2
         self.file.write('\n\n')
         self.file.write(' * * * * ' + powerflow.sol['convergence'] + ' * * * * ')
@@ -230,8 +229,8 @@ class Reports:
             self.file.write('\n')
             self.file.write('-'*106)
             for i in range(0, powerflow.setup.nbus):
-                if powerflow.setup.dbarraDF['area'][i] == area:
-                    if i % 10 == 0 and i != 0:
+                if (powerflow.setup.dbarraDF['area'][i] == area):
+                    if (i % 10 == 0) and (i != 0):
                         self.file.write('\n\n')
                         self.file.write('|          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |')
                         self.file.write('\n')
@@ -240,10 +239,10 @@ class Reports:
                         self.file.write('-'*106)
 
                     self.file.write('\n')
-                    if powerflow.method != 'CPF':
+                    if (powerflow.method != 'CPF'):
                         self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^12} | {powerflow.setup.dbarraDF['tipo'][i]:^3} |  {powerflow.sol['voltage'][i]:^8.3f} | {degrees(powerflow.sol['theta'][i]):^+8.2f} | {powerflow.sol['active'][i]:^8.3f} | {powerflow.sol['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
 
-                    elif powerflow.method == 'CPF':
+                    elif (powerflow.method == 'CPF'):
                         self.file.write(f"| {powerflow.setup.dbarraDF['numero'][i]:^3d} | {powerflow.setup.dbarraDF['nome'][i]:^12} | {powerflow.setup.dbarraDF['tipo'][i]:^3} |  {powerflow.case[0]['voltage'][i]:^8.3f} | {degrees(powerflow.case[0]['theta'][i]):^+8.2f} | {powerflow.case[0]['active'][i]:^8.3f} | {powerflow.case[0]['reactive'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.setup.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.sol['voltage'][i]**2)*powerflow.setup.dbarraDF['shunt_barra'][i]:^8.3f} |")
 
                     self.file.write('\n')
@@ -271,7 +270,7 @@ class Reports:
         self.file.write('\n')
         self.file.write('-'*102)
         for i in range(0, powerflow.setup.nlin):
-            if i % 10 == 0 and i != 0:
+            if (i % 10 == 0) and (i != 0):
                 self.file.write('\n\n')
                 self.file.write('|            BARRA            |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELÉTRICAS |')
                 self.file.write('\n')
@@ -280,10 +279,10 @@ class Reports:
                 self.file.write('-'*102)
 
             self.file.write('\n')
-            if powerflow.method != 'CPF':
+            if (powerflow.method != 'CPF'):
                 self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['de'][i]][0]]:^12} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['para'][i]][0]]:^12} | {powerflow.sol['active_flow_F2'][i]:^+10.3f} | {powerflow.sol['reactive_flow_F2'][i]:^+10.3f} | {powerflow.sol['active_flow_2F'][i]:^+10.3f} | {powerflow.sol['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.sol['active_flow_F2'][i])-abs(powerflow.sol['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.sol['reactive_flow_F2'][i])-abs(powerflow.sol['reactive_flow_2F'][i])):^6.3f} |")
 
-            elif powerflow.method == 'CPF':
+            elif (powerflow.method == 'CPF'):
                 self.file.write(f"| {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['de'][i]][0]]:^12} | {powerflow.setup.dbarraDF['nome'][powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dlinhaDF['para'][i]][0]]:^12} | {powerflow.case[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_2F'][i]:^+10.3f} | {abs(abs(powerflow.case[0]['active_flow_F2'][i])-abs(powerflow.case[0]['active_flow_2F'][i])):^7.3f} | {abs(abs(powerflow.case[0]['reactive_flow_F2'][i])-abs(powerflow.case[0]['reactive_flow_2F'][i])):^6.3f} |")
 
             self.file.write('\n')
@@ -294,23 +293,23 @@ class Reports:
         self.file.write('\n')
         self.file.write('|       MW |       MW |       MW |       MW | ')
         self.file.write('\n')
-        if powerflow.method != 'LINEAR':
+        if (powerflow.method != 'LINEAR'):
             self.file.write('|     Mvar |     Mvar |     Mvar |     Mvar |')
             self.file.write('\n')
         self.file.write('-'*45)
         self.file.write('\n')
-        if powerflow.method != 'CPF':
+        if (powerflow.method != 'CPF'):
             self.file.write(f"| {sum(powerflow.sol['active']):^+8.3f} | {sum(powerflow.setup.dbarraDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(abs(abs(powerflow.sol['active_flow_F2'])-abs(powerflow.sol['active_flow_2F']))):^8.3f} |")
         
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             self.file.write(f"| {sum(powerflow.case[0]['active']):^+8.3f} | {sum(powerflow.setup.dbarraDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(abs(abs(powerflow.case[0]['active_flow_F2'])-abs(powerflow.case[0]['active_flow_2F']))):^8.3f} |")
         
         self.file.write('\n')
-        if powerflow.method != 'LINEAR':
-            if powerflow.method != 'CPF':
+        if (powerflow.method != 'LINEAR'):
+            if (powerflow.method != 'CPF'):
                 self.file.write(f"| {sum(powerflow.sol['reactive']):^+8.3f} | {sum(powerflow.setup.dbarraDF['demanda_reativa']):^+8.3f} | {sum((powerflow.sol['voltage']**2)*powerflow.setup.dbarraDF['shunt_barra'].values.T):^8.3f} | {sum(abs(abs(powerflow.sol['reactive_flow_F2'])-abs(powerflow.sol['reactive_flow_2F']))):^8.3f} |")
             
-            elif powerflow.method == 'CPF':
+            elif (powerflow.method == 'CPF'):
                 self.file.write(f"| {sum(powerflow.case[0]['reactive']):^+8.3f} | {sum(powerflow.setup.dbarraDF['demanda_reativa']):^+8.3f} | {sum((powerflow.case[0]['voltage']**2)*powerflow.setup.dbarraDF['shunt_barra'].values.T):^8.3f} | {sum(abs(abs(powerflow.case[0]['reactive_flow_F2'])-abs(powerflow.case[0]['reactive_flow_2F']))):^8.3f} |")
             
             self.file.write('\n')
@@ -362,10 +361,10 @@ class Reports:
             idxcer = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra'][i]][0]
             idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == powerflow.setup.dcerDF['barra_controlada'][i]][0]
             if (powerflow.setup.dcerDF['controle'][i] == 'P'):
-                if powerflow.sol['reactive'][idxcer] <= (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):
+                if (powerflow.sol['reactive'][idxcer] <= (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2))):
                     regiao = 'INDUTIVA'
                 
-                elif powerflow.sol['reactive'][idxcer] >= (powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2)):
+                elif (powerflow.sol['reactive'][idxcer] >= (powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer] ** 2))):
                     regiao = 'CAPACITIVA'
 
                 else:
@@ -377,10 +376,10 @@ class Reports:
                 self.file.write('-'*139)
             
             elif (powerflow.setup.dcerDF['controle'][i] == 'A'):
-                if powerflow.sol['alpha'] == pi/2:
+                if (powerflow.sol['alpha'] == pi/2):
                     regiao = 'INDUTIVA'
 
-                elif powerflow.sol['alpha'] == pi:
+                elif (powerflow.sol['alpha'] == pi):
                     regiao = 'CAPACITIVA'
                     
                 else:
@@ -398,10 +397,10 @@ class Reports:
                 self.file.write('                                                    | âNGULO DISPARO DO TIRISTOR [˚] |                                                    ')
             
             elif (powerflow.setup.dcerDF['controle'][i] == 'I'):
-                    if powerflow.sol['reactive'][idxcer] <= (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer])):
+                    if (powerflow.sol['reactive'][idxcer] <= (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer]))):
                         regiao = 'INDUTIVA'
                     
-                    elif powerflow.sol['reactive'][idxcer] >= (powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer])):
+                    elif (powerflow.sol['reactive'][idxcer] >= (powerflow.setup.dcerDF['potencia_reativa_maxima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer]))):
                         regiao = 'CAPACITIVA'
 
                     else:
@@ -439,12 +438,11 @@ class Reports:
         self.file.write('-'*82)
         for key, value in powerflow.case.items():
             self.file.write('\n')
-            if key == 0:
+            if (key == 0):
                 self.file.write(f"| {key:^4} | {value['iter']:^4} |   0.0    |   0.0    | {powerflow.setup.mw[key]:^8.3f} | {powerflow.setup.mvar[key]:^8.3f} |  lambda  | {(powerflow.setup.options['cpfLambda'] * 1E2):^9} |")
 
-            # elif (key != list(powerflow.case.keys())[-1]):
-            elif key > 0:
-                if key % 5 == 0:
+            elif (key > 0):
+                if (key % 5 == 0):
                     self.file.write('\n')
                     self.file.write('              | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |')
                     self.file.write('\n')
@@ -453,7 +451,7 @@ class Reports:
                     self.file.write('-'*82)
                     self.file.write('\n')
                 
-                if not self.var and (value['corr']['varstep'] == 'lambda'):
+                if (not self.var and (value['corr']['varstep'] == 'lambda')):
                     self.file.write(f"| {key:^4} | {value['corr']['iter']:^4} | {(value['corr']['step'] * 1E2):^8.3f} | {(value['corr']['step'] * 1E2):^8.3f} | {(powerflow.setup.mw[key]):^8.3f} | {(powerflow.setup.mvar[key]):^8.3f} | {value['corr']['varstep']:^8} | {(powerflow.setup.options['cpfLambda'] * (5E-1 ** value['corr']['div']) * 1E2):^+9.2f} |")
             
                 else:
@@ -495,14 +493,14 @@ class Reports:
         self.filevtan.write('relatório de análise da variação do vetor tangente do sistema ' + powerflow.setup.name)
         self.filevtan.write('\n\n')
         self.filevtan.write('opções de controle ativadas: ')
-        if powerflow.setup.control:
+        if (powerflow.setup.control):
             for k in powerflow.setup.control:
                 self.filevtan.write(f'{k} ')
         else:
             self.filevtan.write('Nenhum controle ativo!')
         self.filevtan.write('\n\n')
         self.filevtan.write('opções de relatório ativadas: ')
-        if powerflow.setup.report:
+        if (powerflow.setup.report):
             for k in powerflow.setup.report:
                 self.filevtan.write(f'{k} ')
         self.filevtan.write('\n\n')
@@ -513,14 +511,14 @@ class Reports:
         self.filevarv.write('relatório de análise da variação da magnitude de tensão do sistema ' + powerflow.setup.name)
         self.filevarv.write('\n\n')
         self.filevarv.write('opções de controle ativadas: ')
-        if powerflow.setup.control:
+        if (powerflow.setup.control):
             for k in powerflow.setup.control:
                 self.filevarv.write(f'{k} ')
         else:
             self.filevarv.write('Nenhum controle ativo!')
         self.filevarv.write('\n\n')
         self.filevarv.write('opções de relatório ativadas: ')
-        if powerflow.setup.report:
+        if (powerflow.setup.report):
             for k in powerflow.setup.report:
                 self.filevarv.write(f'{k} ')
         self.filevarv.write('\n\n')
@@ -531,21 +529,21 @@ class Reports:
         self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
         self.filedeteigen.write('\n\n')
         self.filedeteigen.write('opções de controle ativadas: ')
-        if powerflow.setup.control:
+        if (powerflow.setup.control):
             for k in powerflow.setup.control:
                 self.filedeteigen.write(f'{k} ')
         else:
             self.filedeteigen.write('Nenhum controle ativo!')
         self.filedeteigen.write('\n\n')
         self.filedeteigen.write('opções de relatório ativadas: ')
-        if powerflow.setup.report:
+        if (powerflow.setup.report):
             for k in powerflow.setup.report:
                 self.filedeteigen.write(f'{k} ')
         self.filedeteigen.write('\n\n')
 
         # Loop
         for key, value in powerflow.case.items():
-            if key == 0:
+            if (key == 0):
                 # Variável de variação de tensão
                 self.varv = value['voltage'] - (powerflow.setup.dbarraDF['tensao'] * 1E-3)
                 self.argsort = argsort(self.varv)
@@ -591,13 +589,12 @@ class Reports:
                     self.filedeteigen.write(f"p{b}: {powerflow.case[key]['participationfactor-QV'][:, b]}")
                 self.filedeteigen.write('\n')
             
-            # elif (key != list(powerflow.case.keys())[-1]):
-            elif key > 0:
+            elif (key > 0):
                 # Variável de variação de tensão
-                if key == 1:
+                if (key == 1):
                     self.varv = value['corr']['voltage'] - powerflow.case[0]['voltage']
 
-                elif key > 1:
+                elif (key > 1):
                     self.varv = value['corr']['voltage'] - powerflow.case[key-1]['corr']['voltage']
 
                 self.argsort = argsort(self.varv)
@@ -608,14 +605,14 @@ class Reports:
                 self.filevtan.write('\n')
                 self.filevtan.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.mvar[key]} Mvar")
                 self.filevtan.write('\n')
-                if not self.var and (value['corr']['varstep'] == 'lambda'):
+                if (not self.var and (value['corr']['varstep'] == 'lambda')):
                     self.filevtan.write(f"Variável de Passo: {value['corr']['varstep']}, {(5E-1 ** value['corr']['div']) * (powerflow.setup.options['cpfLambda']) * 1E2:.2f}% ")
                 else:
                     self.var = True
-                    if value['corr']['varstep'] == 'lambda':
+                    if (value['corr']['varstep'] == 'lambda'):
                         self.filevtan.write(f"Variável de Passo: {value['corr']['varstep']}, {(-5E-1 ** value['corr']['div']) * (powerflow.setup.options['cpfLambda']) * 1E2:.2f}% ")
                     
-                    elif value['corr']['varstep'] == 'volt':
+                    elif (value['corr']['varstep'] == 'volt'):
                         self.filevtan.write(f"Variável de Passo: {value['corr']['varstep']}, {(-5E-1 ** value['corr']['div']) * (powerflow.setup.options['cpfVolt']) * 1E2:.2f}% ")
 
                 self.filevtan.write('\n\n')
@@ -648,9 +645,9 @@ class Reports:
                     self.filevtan.write('\n')
 
                     # FILEVARV
-                    if key == 1:
+                    if (key == 1):
                         self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][self.argsort[n]]:^3d} | {powerflow.setup.dbarraDF['nome'][self.argsort[n]]:^12} | {value['corr']['voltage'][self.argsort[n]]:^8.4f} | {self.varv[self.argsort[n]]:^+8.4f} |")
-                    elif key > 1:
+                    elif (key > 1):
                         self.filevarv.write(f"| {powerflow.setup.dbarraDF['numero'][self.argsort[n]]:^3d} | {powerflow.setup.dbarraDF['nome'][self.argsort[n]]:^12} | {value['corr']['voltage'][self.argsort[n]]:^8.4f} | {self.varv[self.argsort[n]]:^+8.4f} |")
                     self.filevarv.write('\n')
                     self.filevarv.write('-'*43)
@@ -711,14 +708,14 @@ class Reports:
                 self.filesmooth.write('relatório de análise da variação da função suave referente a - ' + busname)
                 self.filesmooth.write('\n\n')
                 self.filesmooth.write('opções de controle ativadas: ')
-                if powerflow.setup.control:
+                if (powerflow.setup.control):
                     for k in powerflow.setup.control:
                         self.filesmooth.write(f'{k} ')
                 else:
                     self.filesmooth.write('Nenhum controle ativo!')
                 self.filesmooth.write('\n\n')
                 self.filesmooth.write('opções de relatório ativadas: ')
-                if powerflow.setup.report:
+                if (powerflow.setup.report):
                     for k in powerflow.setup.report:
                         self.filesmooth.write(f'{k} ')
                 self.filesmooth.write('\n\n')
@@ -731,11 +728,11 @@ class Reports:
                     self.filesmooth.write('\n')
                     self.filesmooth.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.mvar[key]} Mvar")
                     self.filesmooth.write('\n')
-                    if key == 0:
+                    if (key == 0):
                         self.filesmooth.write(f"Geração de Potência Reativa: {powerflow.case[key]['reactive'][busidx][0]} Mvar")
                         it = 0
                     
-                    elif key > 0:
+                    elif (key > 0):
                         self.filesmooth.write(f"Geração de Potência Reativa: {powerflow.case[key]['corr']['reactive'][busidx][0]} Mvar")
                         it = 1
 
@@ -773,14 +770,14 @@ class Reports:
                 self.filesmooth.write('relatório de análise da variação da função suave referente a - ' + busname)
                 self.filesmooth.write('\n\n')
                 self.filesmooth.write('opções de controle ativadas: ')
-                if powerflow.setup.control:
+                if (powerflow.setup.control):
                     for k in powerflow.setup.control:
                         self.filesmooth.write(f'{k} ')
                 else:
                     self.filesmooth.write('Nenhum controle ativo!')
                 self.filesmooth.write('\n\n')
                 self.filesmooth.write('opções de relatório ativadas: ')
-                if powerflow.setup.report:
+                if (powerflow.setup.report):
                     for k in powerflow.setup.report:
                         self.filesmooth.write(f'{k} ')
                 self.filesmooth.write('\n\n')
@@ -793,11 +790,11 @@ class Reports:
                     self.filesmooth.write('\n')
                     self.filesmooth.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.mvar[key]} Mvar")
                     self.filesmooth.write('\n')
-                    if key == 0:
+                    if (key == 0):
                         self.filesmooth.write(f"Geração de Potência Reativa: {powerflow.case[key]['reactive'][busidx][0]} Mvar")
                         it = 0
                     
-                    elif key > 0:
+                    elif (key > 0):
                         self.filesmooth.write(f"Geração de Potência Reativa: {powerflow.case[key]['corr']['reactive'][busidx][0]} Mvar")
                         it = 1
 

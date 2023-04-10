@@ -24,7 +24,7 @@ class Qlim:
         
         ## Inicialização
         # Variáveis
-        if 'reactive_generation' not in powerflow.sol:
+        if ('reactive_generation' not in powerflow.sol):
             powerflow.sol['reactive_generation'] = zeros([powerflow.setup.nbus])
             powerflow.setup.maskQ = ones(powerflow.setup.nbus, dtype=bool)
             powerflow.setup.slackqlim = False
@@ -50,7 +50,7 @@ class Qlim:
 
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 # Tratamento de limites em barras PV
                 if (value['tipo'] == 1):
                     if (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_maxima']) and (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_minima']):
@@ -193,7 +193,7 @@ class Qlim:
 
         ## Montagem Jacobiana
         # Condição
-        if powerflow.setup.controldim != 0:
+        if (powerflow.setup.controldim != 0):
             powerflow.setup.extrarow = zeros([powerflow.setup.nger, powerflow.setup.controldim])
             powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.nger])
 
@@ -203,7 +203,7 @@ class Qlim:
             # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracol, powerflow.setup.yxx), axis=0)), axis=1)
 
-        elif powerflow.setup.controldim == 0:
+        elif (powerflow.setup.controldim == 0):
             # H-N M-L + yxt-yxv
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)
 
@@ -228,7 +228,7 @@ class Qlim:
 
         # Atualização da potência reativa gerada
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
 
                 if (value['tipo'] == 1) and ((powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'])):

@@ -26,7 +26,7 @@ class Qlims:
         
         ## Inicialização
         # Variáveis
-        if 'reactive_generation' not in powerflow.sol:
+        if ('reactive_generation' not in powerflow.sol):
             powerflow.sol['reactive_generation'] = zeros([powerflow.setup.nbus])
             powerflow.setup.maskQ = ones(powerflow.setup.nbus, dtype=bool)
                 

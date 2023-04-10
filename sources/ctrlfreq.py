@@ -25,7 +25,7 @@ class Freq:
         """
 
         ## Inicialização
-        if not hasattr(powerflow.setup, 'freqjcount'):
+        if (not hasattr(powerflow.setup, 'freqjcount')):
             powerflow.setup.freqjcount = 0
         pass
 
@@ -56,7 +56,7 @@ class Freq:
             nger = 0
             for idx, value in powerflow.setup.dbarraDF.iterrows():
                 # Barra tipo VT ou PV
-                if value['tipo'] != 0:
+                if (value['tipo'] != 0):
                     powerflow.sol['active_generation'][nger] = value['potencia_ativa'] / powerflow.setup.options['sbase']
                     powerflow.sol['reactive_generation'][nger] = value['potencia_reativa'] / powerflow.setup.options['sbase']
                     nger += 1
@@ -120,7 +120,7 @@ class Freq:
         nger = 0
 
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0.:
+            if (value['tipo'] != 0):
                 # Potência ativa gerada
                 powerflow.setup.pqsch['potencia_ativa_gerada_especificada'][nger] = value['potencia_ativa']
                 # Potência reativa gerada
@@ -128,7 +128,7 @@ class Freq:
                 # Magnitude de tensão
                 powerflow.setup.pqsch['magnitude_tensao_especificada'][idx] = value['tensao'] * 1E-3
                 # Condição - slack
-                if value['tipo'] == 2:
+                if (value['tipo'] == 2):
                     # Defasagem angular
                     powerflow.setup.pqsch['defasagem_angular_especificada'][idx] = radians(value['angulo'])
                 # Incrementa contador
@@ -161,7 +161,7 @@ class Freq:
 
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
-            if value['tipo'] != 0:
+            if (value['tipo'] != 0):
                 # Cálculo do resíduo DeltaP
                 powerflow.setup.deltaP[idx] = powerflow.sol['active_generation'][nger]
                 powerflow.setup.deltaP[idx] -= value['demanda_ativa'] / powerflow.setup.options['sbase']
@@ -173,7 +173,7 @@ class Freq:
                 powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
                 # Tratamento de limite de potência ativa
-                if powerflow.sol['freq'] >= powerflow.setup.freqger['max'][nger] or powerflow.sol['freq'] <= powerflow.setup.freqger['min'][nger]:
+                if ((powerflow.sol['freq'] >= powerflow.setup.freqger['max'][nger]) or (powerflow.sol['freq'] <= powerflow.setup.freqger['min'][nger])):
                     powerflow.setup.deltaPger[nger] = 0.
                 else:
                     powerflow.setup.deltaPger[nger] += powerflow.setup.pqsch['potencia_ativa_gerada_especificada'][nger]
@@ -185,7 +185,7 @@ class Freq:
                 powerflow.setup.deltaQger[nger] -= powerflow.sol['voltage'][idx]
                 
                 # Condição - slack
-                if value['tipo'] == 2:
+                if (value['tipo'] == 2):
                     # Tratamento de limite de 
                     powerflow.setup.deltaTger += powerflow.setup.pqsch['defasagem_angular_especificada'][idx]
                     powerflow.setup.deltaTger -= powerflow.sol['theta'][idx]
@@ -225,7 +225,7 @@ class Freq:
         powerflow.setup.dimprefreq = deepcopy(powerflow.setup.jacob.shape[0])
         
         # Condição
-        if powerflow.setup.freqjcount == 0:
+        if (powerflow.setup.freqjcount == 0):
             # Variável
             powerflow.setup.freqjcount += 1
             
@@ -262,13 +262,13 @@ class Freq:
 
             # Submatrizes PXP QXP YQV YXT
             for idx, value in powerflow.setup.dbarraDF.iterrows():
-                if value['tipo'] != 0:
+                if (value['tipo'] != 0):
                     powerflow.setup.pxp[idx, nger] = -1.
                     powerflow.setup.qxq[idx, nger] = -1.
                     powerflow.setup.yqv[nger, idx] = 1.
                     nger += 1
 
-                    if value['tipo'] == 2:
+                    if (value['tipo'] == 2):
                         powerflow.setup.yxt[nare, idx] = 1.
 
             # Submatrizes YPP YPX
@@ -278,7 +278,7 @@ class Freq:
 
         ## Montagem Jacobiana
         # Condição
-        if powerflow.setup.controldim != 0:
+        if (powerflow.setup.controldim != 0):
             powerflow.setup.extrarowp = zeros([powerflow.setup.nger, powerflow.setup.controldim])
             powerflow.setup.extrarowq = zeros([powerflow.setup.nger, powerflow.setup.controldim])
             powerflow.setup.extrarowy = zeros([powerflow.setup.nger, powerflow.setup.controldim])
@@ -300,7 +300,7 @@ class Freq:
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracoly, powerflow.setup.ypx, powerflow.setup.yqx, powerflow.setup.yxx), axis=0)), axis=1)
 
 
-        elif powerflow.setup.controldim == 0:
+        elif (powerflow.setup.controldim == 0):
             # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
             powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((concatenate((powerflow.setup.ypt, powerflow.setup.ypv), axis=1), concatenate((powerflow.setup.yqt, powerflow.setup.yqv), axis=1), concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)), axis=0)
 
@@ -336,10 +336,10 @@ class Freq:
 
         # Tratamento de limite de potência ativa
         for idx, value in powerflow.setup.dgeraDF.iterrows():
-            if powerflow.sol['freq'] >= powerflow.setup.freqger['max'][idx]:
+            if (powerflow.sol['freq'] >= powerflow.setup.freqger['max'][idx]):
                 powerflow.sol['active_generation'][idx] = value['potencia_ativa_minima'] / powerflow.setup.options['sbase']
                 powerflow.setup.ypp[idx][idx] = infty
-            elif powerflow.sol['freq'] <= powerflow.setup.freqger['min'][idx]:
+            elif (powerflow.sol['freq'] <= powerflow.setup.freqger['min'][idx]):
                 powerflow.sol['active_generation'][idx] = value['potencia_ativa_maxima'] / powerflow.setup.options['sbase']
                 powerflow.setup.ypp[idx][idx] = infty
             else:

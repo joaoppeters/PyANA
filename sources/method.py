@@ -29,7 +29,7 @@ class Method():
         """
 
         ## Inicialização
-        if not hasattr(powerflow, 'sol'):
+        if (not hasattr(powerflow, 'sol')):
             # Chamada automática do método de solução selecionado
             self.method(powerflow,)
 
@@ -47,34 +47,34 @@ class Method():
 
         ## Inicialização
         # Chamada específica método de Newton-Raphson Não-Linear
-        if powerflow.method == 'NEWTON':
+        if (powerflow.method == 'NEWTON'):
             NewtonRaphson(powerflow,)
 
         # Chamada específica método de Gauss-Seidel
-        elif powerflow.method == 'GAUSS':
+        elif (powerflow.method == 'GAUSS'):
             self.gaussseidel(powerflow,)
 
         # Chamada específica método de Newton-Raphson Linearizado
-        elif powerflow.method == 'LINEAR':
+        elif (powerflow.method == 'LINEAR'):
             LinearPowerFlow(powerflow,)
 
         # Chamada específica método Desacoplado
-        elif powerflow.method == 'DECOUP':
+        elif (powerflow.method == 'DECOUP'):
             self.decoupledpowerflow(powerflow,)
 
         # Chamada específica método Desacoplado Rápido
-        elif powerflow.method == 'fDECOUP':
+        elif (powerflow.method == 'fDECOUP'):
             self.fastdecoupledpowerflow(powerflow,)
 
         # Chamada específica método Continuado
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             Continuation(powerflow,)
 
 
         # Armazenamento dos resultados
         Folder(powerflow.setup,).reports(powerflow.setup,)
         Reports(powerflow, powerflow.setup,)
-        if powerflow.method != 'CPF':
+        if (powerflow.method != 'CPF'):
             Monitor(powerflow, powerflow.setup,)
             Convergence(powerflow, powerflow.setup,)
             StateVar(powerflow, powerflow.setup,)

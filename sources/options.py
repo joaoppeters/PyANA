@@ -27,10 +27,10 @@ class Options:
         ## Inicialização
         self.standard()
         # Configuração de variáveis para processos de convergência de fluxos de potência tradicionais
-        if powerflow.method in self.stdmethods:
+        if (powerflow.method in self.stdmethods):
             self.pf(powerflow, setup,)
         # Configuração de variáveis para processo de convergência do fluxo de potência continuado
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             self.cpf(powerflow, setup,)
         # Nenhuma opção de método de solução para análise de fluxo de potência foi selecionado
         else:
@@ -77,9 +77,8 @@ class Options:
         
         setup.options = dict()
 
-        # if powerflow.options:
         for k, v in self.stdpf.items():
-            if k not in powerflow.options:
+            if (k not in powerflow.options):
                 setup.options[k] = v
             else:
                 setup.options[k] = deepcopy(powerflow.options[k])
@@ -110,12 +109,12 @@ class Options:
         }
         
         for k, v in self.stdcpf.items():
-            if k not in powerflow.options:
+            if (k not in powerflow.options):
                 setup.options[k] = v
             else:
                 setup.options[k] = deepcopy(powerflow.options[k])
 
-        if not setup.dincDF.empty:
+        if (not setup.dincDF.empty):
             setup.options['cpfLambda'] = setup.dincDF.loc[0, 'passo_incremento_potencia_ativa']
 
         

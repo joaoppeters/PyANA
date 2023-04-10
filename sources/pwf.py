@@ -260,11 +260,11 @@ class PWF:
         # Loop de leitura de linhas do `.pwf`
         while self.lines[self.linecount].strip() != self.end_archive:
             # Dados de Alteração do Nível de Carregamento
-            if self.lines[self.linecount].strip() == 'DANC':
+            if (self.lines[self.linecount].strip() == 'DANC'):
                 self.danc()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.danc['area'].append(self.lines[self.linecount][:5])
@@ -275,18 +275,18 @@ class PWF:
                 
                 # DataFrame dos Dados de Alteração do Nível de Carregamento
                 setup.dancDF = self.treatment(setup, pandas=DF(data=self.danc), data='DANC',)
-                if setup.dancDF.empty:
+                if (setup.dancDF.empty):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m')
                 else:
                     setup.codes['DANC'] = True
                 
             # Dados de Barra
-            elif self.lines[self.linecount].strip() == 'DBAR':
+            elif (self.lines[self.linecount].strip() == 'DBAR'):
                 self.dbar()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.dbar['numero'].append(self.lines[self.linecount][:5])
@@ -323,18 +323,18 @@ class PWF:
                 
                 # DataFrame dos Dados de Barra
                 setup.dbarraDF = self.treatment(setup, pandas=DF(data=self.dbar), data='DBAR',)
-                if setup.dbarraDF.empty:
+                if (setup.dbarraDF.empty):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m')
                 else:
                     setup.codes['DBAR'] = True
 
             # Dados de Compensadores Estáticos de Potência Reativa
-            elif self.lines[self.linecount].strip() == 'DCER':
+            elif (self.lines[self.linecount].strip() == 'DCER'):
                 self.dcer()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.dcer['barra'].append(self.lines[self.linecount][:5])
@@ -352,18 +352,18 @@ class PWF:
 
                 # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
                 setup.dcerDF = self.treatment(setup, pandas=DF(data=self.dcer), data='DCER',)
-                if setup.dcerDF.empty:
+                if (setup.dcerDF.empty):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m')
                 else:
                     setup.codes['DCER'] = True
                 
             # Dados de Geradores
-            elif self.lines[self.linecount].strip() == 'DGER':
+            elif (self.lines[self.linecount].strip() == 'DGER'):
                 self.dger()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.dger['numero'].append(self.lines[self.linecount][:5])
@@ -390,11 +390,11 @@ class PWF:
                     setup.codes['DGER'] = True
 
             # Dados de Incremento do Nível de Carregamento
-            elif self.lines[self.linecount].strip() == 'DINC':
+            elif (self.lines[self.linecount].strip() == 'DINC'):
                 self.dinc()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.dinc["tipo_incremento_1"].append(self.lines[self.linecount][:4])
@@ -419,18 +419,18 @@ class PWF:
 
                 # DataFrame dos dados de Incremento do Nível de Carregamento
                 setup.dincDF = self.treatment(setup, pandas=DF(data=self.dinc), data='DINC',)
-                if setup.dincDF.empty:
+                if (setup.dincDF.empty):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m')
                 else:
                     setup.codes['DINC'] = True
 
             # Dados de Linha
-            elif self.lines[self.linecount].strip() == 'DLIN':
+            elif (self.lines[self.linecount].strip() == 'DLIN'):
                 self.dlin()
                 self.linecount += 1
                 while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
+                    if (self.lines[self.linecount][0] == self.comment):
                         pass
                     else:
                         self.dlin['de'].append(self.lines[self.linecount][:5])
@@ -467,7 +467,7 @@ class PWF:
 
                 # DataFrame dos Dados de Linha
                 setup.dlinhaDF = self.treatment(setup, pandas=DF(data=self.dlin), data='DLIN',)
-                if setup.dlinhaDF.empty:
+                if (setup.dlinhaDF.empty):
                     ## ERROR - VERMELHO
                     raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m')
                 else:
@@ -508,7 +508,7 @@ class PWF:
 
         ## Tratamentos
         # Tratamento específico 'DANC'
-        if data == 'DANC':
+        if (data == 'DANC'):
             pandas = pandas.astype(
                 {
                     'area': 'int',
@@ -519,7 +519,7 @@ class PWF:
             )
 
         # Tratamento específico 'DBAR'
-        elif data == 'DBAR':
+        elif (data == 'DBAR'):
             pandas = pandas.astype(
                 {
                     'numero': 'int',
@@ -592,7 +592,7 @@ class PWF:
             setup.npq = setup.nbus - setup.nger
         
         # Tratamento específico 'DBTB'
-        elif data == 'DBTB':
+        elif (data == 'DBTB'):
             pandas = pandas.astype(
                 {
                     'numero': 'int',
@@ -602,7 +602,7 @@ class PWF:
             )
         
         # Tratamento específico 'DCER'
-        elif data == 'DCER':
+        elif (data == 'DCER'):
             pandas = pandas.astype(
                 {
                     'barra': 'int',
@@ -649,7 +649,7 @@ class PWF:
 
 
         # Tratamento específico 'DGER'
-        elif data == 'DGER':
+        elif (data == 'DGER'):
             pandas = pandas.astype(
                 {
                     'numero': 'int',
@@ -671,7 +671,7 @@ class PWF:
             pandas['fator_participacao'] = pandas['fator_participacao'].apply(lambda x: x*1E-2)
 
         # Tratamento específico 'DGLT'
-        elif data == 'DGLT':
+        elif (data == 'DGLT'):
             pandas = pandas.astype(
                 {
                     'grupo_limite_tensao': 'object',
@@ -683,7 +683,7 @@ class PWF:
             )
 
         # Tratamento específico 'DINC'
-        elif data == 'DINC':
+        elif (data == 'DINC'):
             pandas = pandas.astype(
                 {
                     'tipo_incremento_1': 'object',
@@ -707,19 +707,19 @@ class PWF:
 
             for idx, value in pandas.iterrows():
                 pandas.at[idx, 'passo_incremento_potencia_ativa'] *= 1E-2
-                if value['tratamento_incremento_potencia_ativa']:
+                if (value['tratamento_incremento_potencia_ativa']):
                     pandas.at[idx, 'maximo_incremento_potencia_ativa'] = 99.99
                 else:
                     pandas.at[idx, 'maximo_incremento_potencia_ativa'] *= 1E-2
 
                 pandas.at[idx, 'passo_incremento_potencia_reativa'] *= 1E-2                
-                if value['tratamento_incremento_potencia_reativa']:
+                if (value['tratamento_incremento_potencia_reativa']):
                     pandas.at[idx, 'maximo_incremento_potencia_reativa'] = 99.99
                 else:
                     pandas.at[idx, 'maximo_incremento_potencia_reativa'] *= 1E-2
 
         # Tratamento específico 'DLIN'
-        elif data == 'DLIN':
+        elif (data == 'DLIN'):
             pandas = pandas.astype(
                 {
                     'de': 'int',

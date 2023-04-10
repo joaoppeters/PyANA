@@ -102,13 +102,13 @@ class NewtonRaphson:
             powerflow.sol['iter'] += 1
 
             # Condição
-            if powerflow.sol['iter'] > powerflow.setup.options['itermx']:
+            if (powerflow.sol['iter'] > powerflow.setup.options['itermx']):
                 # Divergência
                 powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE'
                 break
 
         # Iteração Adicional
-        if powerflow.sol['iter'] <= powerflow.setup.options['itermx']:
+        if (powerflow.sol['iter'] <= powerflow.setup.options['itermx']):
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -167,7 +167,7 @@ class NewtonRaphson:
         powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
 
         # Variáveis especificadas de controle ativos
-        if powerflow.setup.controlcount > 0:
+        if (powerflow.setup.controlcount > 0):
             Control(powerflow, powerflow.setup).controlsch(powerflow,)
 
 
@@ -203,7 +203,7 @@ class NewtonRaphson:
         self.concatresidue(powerflow,)
 
         # Resíduos de variáveis de estado de controle
-        if powerflow.setup.controlcount > 0:
+        if (powerflow.setup.controlcount > 0):
             Control(powerflow, powerflow.setup).controlres(powerflow,)
             self.concatresidue(powerflow,)
             powerflow.setup.deltaPQY = concatenate((powerflow.setup.deltaPQY, powerflow.setup.deltaY), axis=0)
@@ -251,7 +251,7 @@ class NewtonRaphson:
         powerflow.sol['busQ'] = append(powerflow.sol['busQ'], argmax(abs(powerflow.setup.deltaQ)))
 
         # Trajetória de convergência referente a cada equação de controle adicional
-        if powerflow.setup.deltaY.size != 0:
+        if (powerflow.setup.deltaY.size != 0):
             powerflow.sol['convY'] = append(powerflow.sol['convY'], max(abs(powerflow.setup.deltaY)))
             powerflow.sol['busY'] = append(powerflow.sol['busY'], argmax(abs(powerflow.setup.deltaY)))
         else:
@@ -276,7 +276,7 @@ class NewtonRaphson:
         powerflow.sol['voltage'] += powerflow.setup.statevar[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]
 
         # Atualização das variáveis de estado adicionais para controles ativos
-        if powerflow.setup.controlcount > 0:
+        if (powerflow.setup.controlcount > 0):
             Control(powerflow, powerflow.setup).controlupdt(powerflow,)
 
 
@@ -297,7 +297,7 @@ class NewtonRaphson:
             yline = 1 / ((value['resistencia'] / 100) + 1j * (value['reatancia'] / 100))
             
             # Verifica presença de transformadores com tap != 1.
-            if value['tap'] != 0:
+            if (value['tap'] != 0):
                 yline /= value['tap']
             
             # Potência ativa k -> m
@@ -345,7 +345,7 @@ class NewtonRaphson:
             self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
             self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
 
-        elif not (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)):
+        elif (not (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control))):
             # Submatrizes Jacobianas
             self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
             self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])

@@ -28,7 +28,7 @@ class Folder:
 
         # Criação de diretório Resultados
         setup.dirResultados = dirname(dirSistemas) + '/resultados/'
-        if exists(setup.dirResultados) is False:
+        if (exists(setup.dirResultados) is False):
             mkdir(setup.dirResultados)
 
 
@@ -45,11 +45,11 @@ class Folder:
 
         ## Inicialização
         setup.dirRadmittance = setup.dirResultados + 'MatrizAdmitancia/'
-        if exists(setup.dirRadmittance) is False:
+        if (exists(setup.dirRadmittance) is False):
             mkdir(setup.dirRadmittance)
 
         setup.dirRadmittance = setup.dirRadmittance + setup.name + '/'   
-        if exists(setup.dirRadmittance) is False:
+        if (exists(setup.dirRadmittance) is False):
             mkdir(setup.dirRadmittance)
 
 
@@ -66,11 +66,11 @@ class Folder:
 
         ## Inicialização
         setup.dirRconvergence = setup.dirResultados + 'TrajetoriaConvergencia/'
-        if exists(setup.dirRconvergence) is False:
+        if (exists(setup.dirRconvergence) is False):
             mkdir(setup.dirRconvergence)
 
         setup.dirRconvergence = setup.dirRconvergence + setup.name + '/'   
-        if exists(setup.dirRconvergence) is False:
+        if (exists(setup.dirRconvergence) is False):
             mkdir(setup.dirRconvergence)
 
 
@@ -87,7 +87,7 @@ class Folder:
 
         ## Inicialização
         setup.dirRcpf = setup.dirResultados + 'Continuado/'
-        if exists(setup.dirRcpf) is False:
+        if (exists(setup.dirRcpf) is False):
             mkdir(setup.dirRcpf)
         
         self.continuationsystem(setup,)
@@ -107,15 +107,15 @@ class Folder:
 
         ## Inicialização
         setup.dircpfsys = setup.dirRcpf + setup.name + '/'
-        if exists(setup.dircpfsys) is False:
+        if (exists(setup.dircpfsys) is False):
             mkdir(setup.dircpfsys)
 
         setup.dircpfsysimag = setup.dircpfsys + 'imagens/'
-        if exists(setup.dircpfsysimag) is False:
+        if (exists(setup.dircpfsysimag) is False):
             mkdir(setup.dircpfsysimag)
 
         setup.dircpfsystxt = setup.dircpfsys + 'txt/'
-        if exists(setup.dircpfsystxt) is False:
+        if (exists(setup.dircpfsystxt) is False):
             mkdir(setup.dircpfsystxt)
 
 
@@ -132,11 +132,11 @@ class Folder:
 
         ## Inicialização
         setup.dirRjacobi = setup.dirResultados + 'MatrizJacobiana/'
-        if exists(setup.dirRjacobi) is False:
+        if (exists(setup.dirRjacobi) is False):
             mkdir(setup.dirRjacobi)
 
         setup.dirRjacobi = setup.dirRjacobi + setup.name + '/'   
-        if exists(setup.dirRjacobi) is False:
+        if (exists(setup.dirRjacobi) is False):
             mkdir(setup.dirRjacobi)
 
 
@@ -153,11 +153,11 @@ class Folder:
 
         ## Inicialização
         setup.dirRreports = setup.dirResultados + 'Relatorios/'
-        if exists(setup.dirRreports) is False:
+        if (exists(setup.dirRreports) is False):
             mkdir(setup.dirRreports)
 
         setup.dirRreports = setup.dirRreports + setup.name + '/'   
-        if exists(setup.dirRreports) is False:
+        if (exists(setup.dirRreports) is False):
             mkdir(setup.dirRreports)
 
 
@@ -176,18 +176,18 @@ class Folder:
 
         ## Inicialização
         # Condição de método
-        if powerflow.method == 'NEWTON':
+        if (powerflow.method == 'NEWTON'):
             setup.dirsmooth = setup.dirResultados + 'Smooth/'
-            if exists(setup.dirsmooth) is False:
+            if (exists(setup.dirsmooth) is False):
                 mkdir(setup.dirsmooth)
 
             setup.dirsmoothsys = setup.dirsmooth + setup.name + '/'
             if exists(setup.dirsmoothsys) is False:
                 mkdir(setup.dirsmoothsys)
 
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             setup.dirsmoothsys = setup.dircpfsys + 'smooth/'
-            if exists(setup.dirsmoothsys) is False:
+            if (exists(setup.dirsmoothsys) is False):
                 mkdir(setup.dirsmoothsys)
 
 
@@ -204,9 +204,9 @@ class Folder:
 
         ## Inicialização
         setup.dirRstatevar = setup.dirResultados + 'VariaveisEstado/'
-        if exists(setup.dirRstatevar) is False:
+        if (exists(setup.dirRstatevar) is False):
             mkdir(setup.dirRstatevar)
 
         setup.dirRstatevar = setup.dirRstatevar + setup.name + '/'   
-        if exists(setup.dirRstatevar) is False:
+        if (exists(setup.dirRstatevar) is False):
             mkdir(setup.dirRstatevar) 

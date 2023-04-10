@@ -53,7 +53,7 @@ class Jacobi:
 
         for idx in range(0, powerflow.setup.nbus):
             for idy in range(0, powerflow.setup.nbus):
-                if idx is idy:
+                if (idx is idy):
                     # Elemento Hkk
                     powerflow.setup.pt[idx, idy] += (-powerflow.sol['voltage'][idx] ** 2) * powerflow.setup.ybus[idx][idy].imag - PQCalc().qcalc(powerflow, idx,)
 
@@ -83,11 +83,11 @@ class Jacobi:
         self.assembly(powerflow,)
         
         # Submatrizes de controles ativos
-        if powerflow.setup.controlcount > 0:
+        if (powerflow.setup.controlcount > 0):
             Control(powerflow, powerflow.setup,).controljac(powerflow,)
 
         # Condição
-        if powerflow.method != 'CPF':
+        if (powerflow.method != 'CPF'):
             # Armazenamento da Matriz Jacobiana
             Folder(powerflow.setup,).jacobi(powerflow.setup,)
             self.savejacobi(powerflow,)
@@ -161,9 +161,9 @@ class Jacobi:
         file = powerflow.setup.dirRjacobi + powerflow.setup.name + '-jacobi.csv'
 
         # Check
-        if exists(file) is False:
+        if (exists(file) is False):
             open(file, 'a').close()
-        elif True and powerflow.sol['iter'] == 0:
+        elif (True and powerflow.sol['iter'] == 0):
             remove(file)
             open(file, 'a').close()
         

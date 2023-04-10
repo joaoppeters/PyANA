@@ -139,7 +139,7 @@ class Continuation:
 
             if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE') and (self.case > 0):
                 print('Aumento Sistema (%): ', powerflow.cpfsol['step'] * 1E2)
-                if powerflow.cpfsol['varstep'] == 'volt':
+                if (powerflow.cpfsol['varstep'] == 'volt'):
                     print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
                 else:
                     print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div']) * 1E2)
@@ -356,10 +356,6 @@ class Continuation:
             powerflow.cpfsol['stepsch'] = deepcopy(powerflow.case[self.case]['corr']['stepsch'])
             powerflow.cpfsol['vsch'] = deepcopy(powerflow.case[self.case]['corr']['vsch'])
 
-            # if ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
-            #     powerflow.cpfsol['pmc'] = True
-            #     powerflow.setup.pmcidx = deepcopy(self.case)
-
 
 
     def increment(
@@ -378,14 +374,14 @@ class Continuation:
         
         # Incremento de carga
         for idxinc, valueinc in powerflow.setup.dincDF.iterrows():
-            if valueinc['tipo_incremento_1'] == 'AREA':
+            if (valueinc['tipo_incremento_1'] == 'AREA'):
                 for idxbar, valuebar in powerflow.setup.dbarraDF.iterrows():
-                    if valuebar['area'] == valueinc['identificacao_incremento_1']:
+                    if (valuebar['area'] == valueinc['identificacao_incremento_1']):
                         # Incremento de Carregamento
                         powerflow.setup.dbarraDF.at[idxbar, 'demanda_ativa'] = powerflow.cpfsol['demanda_ativa'][idxbar] * (1 + powerflow.cpfsol['stepsch'])
                         powerflow.setup.dbarraDF.at[idxbar, 'demanda_reativa'] = powerflow.cpfsol['demanda_reativa'][idxbar] * (1 + powerflow.cpfsol['stepsch'])
                         
-            elif valueinc['tipo_incremento_1'] == 'BARR':
+            elif (valueinc['tipo_incremento_1'] == 'BARR'):
                 # Reconfiguração da variável de índice
                 idxinc = valueinc['identificacao_incremento_1'] - 1
                 
@@ -396,7 +392,7 @@ class Continuation:
         self.deltaincrement = sum(powerflow.setup.dbarraDF['demanda_ativa'].to_numpy()) - self.preincrement
 
         # Incremento de geração
-        if hasattr(powerflow.setup, 'dgeraDF'):
+        if (hasattr(powerflow.setup, 'dgeraDF')):
             for idxger, valueger in powerflow.setup.dgeraDF.iterrows():
                 idx = valueger['numero'] - 1
                 powerflow.setup.dbarraDF.at[idx, 'potencia_ativa'] = powerflow.setup.dbarraDF['potencia_ativa'][idx] + (self.deltaincrement * valueger['fator_participacao'])
@@ -404,7 +400,7 @@ class Continuation:
             powerflow.cpfsol['potencia_ativa'] = deepcopy(powerflow.setup.dbarraDF['potencia_ativa'])
         
         # Condição de atingimento do máximo incremento do nível de carregamento
-        if powerflow.cpfsol['stepsch'] == powerflow.setup.dincDF.loc[0, 'maximo_incremento_potencia_ativa']:
+        if (powerflow.cpfsol['stepsch'] == powerflow.setup.dincDF.loc[0, 'maximo_incremento_potencia_ativa']):
             powerflow.cpfsol['pmc'] = True
 
 
@@ -826,7 +822,6 @@ class Continuation:
         # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa 
         # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
         except:
-            # if (stage != 'prev'):
             self.active_heuristic = True 
 
             # Reconfiguração do caso

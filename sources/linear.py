@@ -69,7 +69,7 @@ class LinearPowerFlow:
         self.linearadmit(powerflow,)
         self.B = deepcopy(powerflow.setup.bbus.imag)
         for i in range(0, powerflow.setup.nbus):
-            if powerflow.setup.dbarraDF['tipo'][i] == 2:
+            if (powerflow.setup.dbarraDF['tipo'][i] == 2):
                 powerflow.setup.slackline = i
                 self.B[i, :] = 0
                 self.B[:, i] = 0
@@ -171,7 +171,7 @@ class LinearPowerFlow:
         # Linhas de transmissão e transformadores
         for _, value in powerflow.setup.dlinhaDF.iterrows():
             # Elementos fora da diagonal (elemento série)
-            if value['tap'] == 0.:
+            if (value['tap'] == 0.):
                 powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']
                 powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']
             else:

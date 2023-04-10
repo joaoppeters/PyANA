@@ -58,7 +58,7 @@ class Loading:
         powerflow.setup.eigenvalues = array([])
         powerflow.setup.eigenvaluesPT = array([])
         powerflow.setup.eigenvaluesQV = array([])
-        if 'FREQ' in powerflow.setup.control:
+        if ('FREQ' in powerflow.setup.control):
             powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = array([])
 
         
@@ -143,7 +143,7 @@ class Loading:
                 totalmw = sum(powerflow.cpfsol['demanda_ativa'])
                 totalmvar = sum(powerflow.cpfsol['demanda_reativa'])
                 for _, valueinc in powerflow.setup.dincDF.iterrows():
-                    if valueinc['tipo_incremento_1'] == 'AREA':
+                    if (valueinc['tipo_incremento_1'] == 'AREA'):
                         # MW
                         areamw = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
                         totalmw += areamw - sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
@@ -152,7 +152,7 @@ class Loading:
                         areamvar = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
                         totalmvar += areamvar - sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
 
-                    elif powerflow.setup.dincDF.loc[0, 'tipo_incremento_1'] == 'BARR':
+                    elif (powerflow.setup.dincDF.loc[0, 'tipo_incremento_1'] == 'BARR'):
                         # MW
                         barramw = (1 + item['corr']['step']) * powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
                         totalmw += barramw - powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
@@ -188,16 +188,16 @@ class Loading:
         # Geração de Gráfico
         color = 0
         for key, item in powerflow.setup.pqtv.items():
-            if key[:5] != 'Vprev' and key[:5] != 'Tprev':
+            if (key[:5] != 'Vprev') and (key[:5] != 'Tprev'):
                 fig, ax = plt.subplots(nrows=1, ncols=1)
                 
                 # Variáveis
-                if key[1:5] == 'corr':
+                if (key[1:5] == 'corr'):
                     busname = key[6:]
                 else:
                     busname = key[2:]
-                if busname != self.aux:
-                    if key[1:5] == 'corr':
+                if (busname != self.aux):
+                    if (key[1:5] == 'corr'):
                         self.aux = key[6:]
                     else:
                         self.aux = key[2:]
@@ -206,37 +206,37 @@ class Loading:
                 # Plot
                 line, = ax.plot(powerflow.setup.mw[:powerflow.setup.pmcidx+1], item[:powerflow.setup.pmcidx+1], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
                 
-                if powerflow.setup.options['full']:
+                if (powerflow.setup.options['full']):
                     dashed, = ax.plot(powerflow.setup.mw[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], item[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], color=f'C{color}', linestyle='dashed', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     dotted, = ax.plot(powerflow.setup.mw[powerflow.setup.v2lidx:], item[powerflow.setup.v2lidx:], color=f'C{color}', linestyle='dotted', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     ax.legend([(line, dashed, dotted)], [busname])
                 
-                elif not powerflow.setup.options['full']:
+                elif (not powerflow.setup.options['full']):
                     ax.legend([(line,   )], [busname])
                 
                 # Labels
                 # Condição de Potência Ativa
-                if key[0] == 'P':
+                if (key[0] == 'P'):
                     ax.set_title('Variação da Geração de Potência Ativa')
                     ax.set_ylabel('Geração de Potência Ativa [MW]')
                 
                 # Condição de Potência Reativa
-                elif key[0] == 'Q':
+                elif (key[0] == 'Q'):
                     ax.set_title('Variação da Geração de Potência Reativa')
                     ax.set_ylabel('Geração de Potência Reativa [Mvar]')
 
                 # Magnitude de Tensão Nodal
-                if key[0] == 'V':
+                if (key[0] == 'V'):
                     ax.set_title('Variação da Magnitude de Tensão do Barramento')
                     ax.set_ylabel('Magnitude de Tensão do Barramento [p.u.]')
 
                 # Defasagem Angular de Tensão Nodal
-                elif key[0] == 'T':
+                elif (key[0] == 'T'):
                     ax.set_title('Variação da Defasagem Angular do Barramento')
                     ax.set_ylabel('Defasagem Angular do Barramento [graus]')
 
                 # Frequência
-                elif key[0] == 'F':
+                elif (key[0] == 'F'):
                     ax.set_title('Variação da Frequência do SEP')
                     ax.set_ylabel('Frequência [Hz]')
 

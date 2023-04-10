@@ -24,10 +24,9 @@ class Monitor:
         """
 
         ## Inicialização
-        if not hasattr(powerflow, 'setup'):
-            if powerflow.monitor:
+        if (not hasattr(powerflow, 'setup')):
+            if (powerflow.monitor):
                 setup.monitor = dict()
-                # if not setup.monitor:
                 self.monitor = {
                     'PFLOW': False, 
                     'PGMON': False, 
@@ -52,19 +51,19 @@ class Monitor:
             self.rheader(powerflow,)
 
             # Relatórios Extras - ordem de prioridade
-            if powerflow.setup.monitor:
+            if (powerflow.setup.monitor):
                 for r in powerflow.setup.monitor:
                     # monitoramento de fluxo de potência ativa em linhas de transmissão
-                    if r == 'PFLOW':
+                    if (r == 'PFLOW'):
                         self.monitorpflow(powerflow,)
                     # monitoramento de potência ativa gerada
-                    elif r == 'PGMON':
+                    elif (r == 'PGMON'):
                         self.monitorpgmon(powerflow,)
                     # monitoramento de potência reativa gerada
-                    elif r == 'QGMON' and powerflow.method != 'LINEAR':
+                    elif (r == 'QGMON') and (powerflow.method != 'LINEAR'):
                         self.monitorqgmon(powerflow,)
                     # monitoramento de magnitude de tensão de barramentos
-                    elif r == 'VMON':
+                    elif (r == 'VMON'):
                         self.monitorvmon(powerflow,)
 
             self.file.write('fim do relatório de monitoramento do sistema ' + powerflow.setup.name)
@@ -85,10 +84,10 @@ class Monitor:
         """
         
         ## Inicialização
-        if powerflow.monitor:
+        if (powerflow.monitor):
             print('\033[96mOpções de monitoramento escolhidas: ', end='')
             for k, _ in self.monitor.items():
-                if k in powerflow.monitor:
+                if (k in powerflow.monitor):
                     setup.monitor[k] = True
                     print(f'{k}', end=' ')
             print('\033[0m')
@@ -112,22 +111,22 @@ class Monitor:
         self.file.write('\n')
         self.file.write('solução do fluxo de potência via método ')
         # Chamada específica método de Newton-Raphson Não-Linear
-        if powerflow.method == 'NEWTON':
+        if (powerflow.method == 'NEWTON'):
             self.file.write('newton-raphson')
         # Chamada específica método de Gauss-Seidel
-        elif powerflow.method == 'GAUSS':
+        elif (powerflow.method == 'GAUSS'):
             self.file.write('gauss-seidel')
         # Chamada específica método de Newton-Raphson Linearizado
-        elif powerflow.method == 'LINEAR':
+        elif (powerflow.method == 'LINEAR'):
             self.file.write('linearizado')
         # Chamada específica método Desacoplado
-        elif powerflow.method == 'DECOUP':
+        elif (powerflow.method == 'DECOUP'):
             self.file.write('desacoplado')
         # Chamada específica método Desacoplado Rápido
-        elif powerflow.method == 'fDECOUP':
+        elif (powerflow.method == 'fDECOUP'):
             self.file.write('desacoplado rápido')
         # Chamada específica método Continuado
-        elif powerflow.method == 'CPF':
+        elif (powerflow.method == 'CPF'):
             self.file.write('do fluxo de potência continuado')
         self.file.write('\n\n')
         self.file.write('opções de monitoramento ativadas: ')
@@ -182,16 +181,16 @@ class Monitor:
         self.file.write('\n\n')
         qgmon = 0
         for i in range(0, powerflow.setup.nbus):
-            if powerflow.setup.dbarraDF['tipo'][i] != 0:
-                if powerflow.sol['reactive'][i] >= powerflow.setup.dbarraDF['potencia_reativa_maxima'][i]:
+            if (powerflow.setup.dbarraDF['tipo'][i] != 0):
+                if (powerflow.sol['reactive'][i] >= powerflow.setup.dbarraDF['potencia_reativa_maxima'][i]):
                     self.file.write('A geração de potência reativa da ' + powerflow.setup.dbarraDF['nome'][i] + ' violou o limite máximo estabelecido para análise ( {:.2f} >= {} ).'.format(powerflow.sol['reactive'][i], powerflow.setup.dbarraDF['potencia_reativa_maxima'][i]))
                     self.file.write('\n')
-                elif powerflow.sol['reactive'][i] <= powerflow.setup.dbarraDF['potencia_reativa_minima'][i]:
+                elif (powerflow.sol['reactive'][i] <= powerflow.setup.dbarraDF['potencia_reativa_minima'][i]):
                     self.file.write('A geração de potência reativa da ' + powerflow.setup.dbarraDF['nome'][i] + ' violou o limite mínimo estabelecido para análise ( {:.2f} <= {} ).'.format(powerflow.sol['reactive'][i], powerflow.setup.dbarraDF['potencia_reativa_minima'][i]))
                     self.file.write('\n')
                 else:
                     qgmon += 1
-        if qgmon == (powerflow.setup.npv + 1):
+        if (qgmon == (powerflow.setup.npv + 1)):
             self.file.write('Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!')
         self.file.write('\n\n\n')
 
@@ -212,14 +211,14 @@ class Monitor:
         self.file.write('\n\n')
         vmon = 0
         for i in range(0, powerflow.setup.nbus):
-            if powerflow.sol['voltage'][i] >= powerflow.setup.options['vmax']:
+            if (powerflow.sol['voltage'][i] >= powerflow.setup.options['vmax']):
                 self.file.write('A magnitude de tensão da ' + powerflow.setup.dbarraDF['nome'][i] + ' violou o limite máximo estabelecido para análise ( {:.3f} >= {} ).'.format(powerflow.sol['voltage'][i], powerflow.setup.options['vmax']))
                 self.file.write('\n')
-            elif powerflow.sol['voltage'][i] <= powerflow.setup.options['vmin']:
+            elif (powerflow.sol['voltage'][i] <= powerflow.setup.options['vmin']):
                 self.file.write('A magnitude de tensão da ' + powerflow.setup.dbarraDF['nome'][i] + ' violou o limite mínimo estabelecido para análise ( {:.3f} <= {} ).'.format(powerflow.sol['voltage'][i], powerflow.setup.options['vmin']))
                 self.file.write('\n')
             else:
                 vmon += 1
-        if vmon == powerflow.setup.nbus:
+        if (vmon == powerflow.setup.nbus):
             self.file.write('Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!')
         self.file.write('\n\n\n')
