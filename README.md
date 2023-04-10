@@ -1,8 +1,6 @@
 # Fluxo de Potência via ANAREDE
 
-O principal objetivo deste projeto é fornecer um código Python base para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas de potência`.
-
-Esse projeto tem como base a leitura de dados de `Sistemas Elétricos de Potência via arquivos ANAREDE (.pwf)`.
+O principal objetivo deste projeto é fornecer um código Python  para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas elétricos de potência`. Para isso, toma-se como base a leitura de dados de `arquivos ANAREDE (.pwf)`.
 
 
 
@@ -180,31 +178,39 @@ PowerFlow(
 ```Python
 from powerflow import PowerFlow
 
+system='ieee14.pwf', 
+    
+method='NEWTON', 
+    
+jacobi='COMPLETA, 
+
+options={
+    'sbase': 100.,
+    'itermx': 20,
+    'tolP': 1E-4,
+    'tolQ': 1E-4,
+    'tolY': 1E-4,
+    'vmax': 1.045,
+    'vmin': 0.965,
+    'cpfLambda': 5E-2,
+    'cpfVolt': 5E-4,
+    'cpfV2L': 0.90,
+    'full': True,
+},
+
+control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
+
+monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON']
+    
+report=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
+
 PowerFlow(
-    system='ieee14.pwf', 
-    
-    method='NEWTON', 
-    
-    jacobi='COMPLETA, 
-
-    options={
-        'sbase': 100.,
-        'itermx': 20,
-        'tolP': 1E-4,
-        'tolQ': 1E-4,
-        'tolY': 1E-4,
-        'vmax': 1.045,
-        'vmin': 0.965,
-        'cpfLambda': 5E-2,
-        'cpfVolt': 5E-4,
-        'cpfV2L': 0.90,
-        'full': True,
-    },
-
-    control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL'], 
-    
-    monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON'], 
-    
-    report=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF'],
+    system=system, 
+    method=method, 
+    jacobi=jacobi, 
+    options=options, 
+    control=control, 
+    monitor=monitor, 
+    report=report,
 )
 ```
