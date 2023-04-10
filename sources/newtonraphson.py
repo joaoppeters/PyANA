@@ -312,11 +312,19 @@ class NewtonRaphson:
             # Potência reativa m -> k
             powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
+        # Active Flow
         powerflow.sol['active_flow_F2'] *= powerflow.setup.options['sbase']
         powerflow.sol['active_flow_2F'] *= powerflow.setup.options['sbase']
 
+        # Reactive Flow
         powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['sbase']
         powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['sbase']
+
+        # Active Loss
+        powerflow.sol['active_flow_loss'] = abs(abs(powerflow.sol['active_flow_F2'])-abs(powerflow.sol['active_flow_2F']))
+
+        # Reactive Loss
+        powerflow.sol['reactive_flow_loss'] = abs(abs(powerflow.sol['reactive_flow_F2'])-abs(powerflow.sol['reactive_flow_2F']))
 
 
 

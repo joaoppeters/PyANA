@@ -18,7 +18,7 @@ DBAR
    14  0  BARRA-14      1000                              14.90 5.00      1                                              
 99999
 DLIN
-(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns
+(De )d O d(Pa )NcEP ( R% )( X% )(MVAr)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns
     1         2     1.93805.91705.2800
     1         5     5.403022.3044.9200
     2         3     4.699019.7974.3800
@@ -47,10 +47,6 @@ DGER
     3   -9999  9999.    0.0                                        1.67
     6   -9999  9999.    0.0                                        1.67
     8   -9999  9999.    0.0                                        1.67
-99999
-DANC
-(Ar ( Fp ) ( Fq ) ( Fs )
-1    300.65 300.65
 99999
 DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)

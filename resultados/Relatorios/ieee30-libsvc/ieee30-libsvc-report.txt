@@ -14,7 +14,7 @@ opções de relatório ativadas: RBARRA RSVC
 vv relatório de convergência vv
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  1   | 60.000 | 92.801  |   5   | 30.335  |  21   |  0.000  |   1   |
 |  2   | 60.000 |  5.095  |   2   |  5.944  |   6   |  0.000  |   2   |
@@ -25,7 +25,7 @@ vv relatório de convergência vv
  * * * * SISTEMA CONVERGENTE * * * * 
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  4   | 60.000 |  0.000  |  21   |  0.000  |   4   |  0.000  |   1   |
 -----------------------------------------------------------------------
@@ -35,7 +35,7 @@ vv relatório de convergência vv
 vv relatório de barras vv área 1 vv
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
-| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
 |  1  | Glen-Lyn-132 |  2  |   1.060   |  +0.00   | 260.889  | -16.798  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ vv relatório de barras vv área 1 vv
 ----------------------------------------------------------------------------------------------------------
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
-| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
 | 11  | Roanoke---11 |  1  |   1.082   |  -14.12  |  0.000   |  14.921  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ vv relatório de barras vv área 1 vv
 ----------------------------------------------------------------------------------------------------------
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
-| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
 | 21  | Barra21---33 |  0  |   1.039   |  -16.19  |  -0.000  |  4.002   |  17.500  |  11.200  |  0.000   |
 ----------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ vv relatório de barras vv área 1 vv
 
 vv relatório de compensadores estáticos de potência reativa vv
 
-|              BARRA             | DROOP |    V0     |          GERACAO Mvar          |  BARRA CONTROL  |              CONTROL            |
+|              BARRA             | DROOP |    V0     |          GERACAO MVAr          |  BARRA CONTROL  |              CONTROL            |
 | NUM |     NOME     |  TENSAO   |  [%]  |  [p.u.]   |  MINIMA  |  ATUAL   |  MAXIMA  | NUM |  TENSAO   | T | UNIDADES | GRP |   REGIAO   |
 -------------------------------------------------------------------------------------------------------------------------------------------
 | 19  | Barra19---33 |   1.030   | 5.00  |   1.030   | -42.425  |  0.261   |  42.425  | 19  |   1.030   | P |    1     |  1  |   LINEAR   |

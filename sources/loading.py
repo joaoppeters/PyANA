@@ -54,7 +54,7 @@ class Loading:
         # Variável
         powerflow.setup.pqtv = {}
         powerflow.setup.mw = array([])
-        powerflow.setup.mvar = array([])
+        powerflow.setup.MVAr = array([])
         powerflow.setup.eigenvalues = array([])
         powerflow.setup.eigenvaluesPT = array([])
         powerflow.setup.eigenvaluesQV = array([])
@@ -108,7 +108,7 @@ class Loading:
 
                 # Demanda
                 powerflow.setup.mw = append(powerflow.setup.mw, sum(powerflow.cpfsol['demanda_ativa']))
-                powerflow.setup.mvar = append(powerflow.setup.mvar, sum(powerflow.cpfsol['demanda_reativa']))
+                powerflow.setup.MVAr = append(powerflow.setup.MVAr, sum(powerflow.cpfsol['demanda_reativa']))
                 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
@@ -148,7 +148,7 @@ class Loading:
                         areamw = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
                         totalmw += areamw - sum(array([powerflow.cpfsol['demanda_ativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
 
-                        # Mvar
+                        # MVAr
                         areamvar = (1 + item['corr']['step']) * sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
                         totalmvar += areamvar - sum(array([powerflow.cpfsol['demanda_reativa'][idxarea] for idxarea, valuearea in powerflow.setup.dbarraDF.iterrows() if valuearea['area'] == valueinc['identificacao_incremento_1']]))
 
@@ -157,12 +157,12 @@ class Loading:
                         barramw = (1 + item['corr']['step']) * powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
                         totalmw += barramw - powerflow.cpfsol['demanda_ativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
 
-                        # Mvar
+                        # MVAr
                         barramvar = (1 + item['corr']['step']) * powerflow.cpfsol['demanda_reativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
                         totalmvar += barramvar - powerflow.cpfsol['demanda_reativa'][powerflow.setup.dincDF.loc[0, 'identificacao_incremento_1'] - 1]
                     
                 powerflow.setup.mw = append(powerflow.setup.mw, totalmw)
-                powerflow.setup.mvar = append(powerflow.setup.mvar, totalmvar)
+                powerflow.setup.MVAr = append(powerflow.setup.MVAr, totalmvar)
 
                 # Determinante e Autovalores
                 powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
@@ -223,7 +223,7 @@ class Loading:
                 # Condição de Potência Reativa
                 elif (key[0] == 'Q'):
                     ax.set_title('Variação da Geração de Potência Reativa')
-                    ax.set_ylabel('Geração de Potência Reativa [Mvar]')
+                    ax.set_ylabel('Geração de Potência Reativa [MVAr]')
 
                 # Magnitude de Tensão Nodal
                 if (key[0] == 'V'):

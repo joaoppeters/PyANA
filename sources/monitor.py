@@ -7,6 +7,7 @@
 # ------------------------------------- #
 
 from datetime import datetime as dt
+from numpy import argsort, mean
 
 class Monitor:
     """classe para determinar a realização de monitoramento de valores"""
@@ -147,7 +148,52 @@ class Monitor:
         """
 
         ## Inicialização
-        pass
+        self.file.write('vv monitoramento de fluxo de potência ativa em linhas de transmissão vv')
+        self.file.write('\n\n')
+
+        # Rankeamento das linhas com maiores fluxos de potência ativa
+        self.rank_active_flow = [powerflow.sol['active_flow_F2'][i] if powerflow.sol['active_flow_F2'][i] > powerflow.sol['active_flow_2F'][i] else powerflow.sol['active_flow_2F'][i] for i in range(0, powerflow.setup.nlin)]
+        self.mean_active_flow = mean(self.rank_active_flow)
+        self.file.write('\n')
+        self.file.write('linhas com maiores fluxos de potência ativa:')
+        self.file.write('\n')
+        for lin in range(0, powerflow.setup.nlin):
+            if (self.rank_active_flow[lin] >= self.mean_active_flow):
+                self.file.write('A linha ' + str(powerflow.setup.dlinhaDF['de'][lin]) + ' para ' + str(powerflow.setup.dlinhaDF['para'][lin]) + ' possui fluxo de potência ativa acima da média do SEP: ' + f"{self.rank_active_flow[lin]:.3f}" + ' MW')
+                self.file.write('\n')
+
+        # Rankeamento das linhas com maiores perdas ativas
+        self.mean_active_flow_loss = mean(powerflow.sol['active_flow_loss'])
+        self.file.write('\n')
+        self.file.write('linhas com maiores perdas de potência ativa')
+        self.file.write('\n')
+        for lin in range(0, powerflow.setup.nlin):
+            if (powerflow.sol['active_flow_loss'][lin] >= self.mean_active_flow_loss):
+                self.file.write('A linha ' + str(powerflow.setup.dlinhaDF['de'][lin]) + ' para ' + str(powerflow.setup.dlinhaDF['para'][lin]) + ' possui perdas de fluxo de potência ativa acima da média do SEP: ' + f"{powerflow.sol['active_flow_loss'][lin]:.3f}" + ' MW')
+                self.file.write('\n')
+
+        # Rankeamento das linhas com maiores fluxos de potência reativa
+        self.rank_reactive_flow = [powerflow.sol['reactive_flow_F2'][i] if powerflow.sol['reactive_flow_F2'][i] > powerflow.sol['reactive_flow_2F'][i] else powerflow.sol['reactive_flow_2F'][i] for i in range(0, powerflow.setup.nlin)]
+        self.mean_reactive_flow = mean(self.rank_reactive_flow)
+        self.file.write('\n')
+        self.file.write('linhas com maiores fluxos de potência reativa')
+        self.file.write('\n')
+        for lin in range(0, powerflow.setup.nlin):
+            if (self.rank_reactive_flow[lin] >= self.mean_reactive_flow):
+                self.file.write('A linha ' + str(powerflow.setup.dlinhaDF['de'][lin]) + ' para ' + str(powerflow.setup.dlinhaDF['para'][lin]) + ' possui fluxo de potência reativa acima da média do SEP: ' + f"{self.rank_reactive_flow[lin]:.3f}" + ' MVAr')
+                self.file.write('\n')
+        
+        # Rankeamento das linhas com maiores perdas reativas
+        self.mean_reactive_flow_loss = mean(powerflow.sol['reactive_flow_loss'])
+        self.file.write('\n')
+        self.file.write('linhas com maiores perdas de potência reativa')
+        self.file.write('\n')
+        for lin in range(0, powerflow.setup.nlin):
+            if (powerflow.sol['reactive_flow_loss'][lin] >= self.mean_reactive_flow_loss):
+                self.file.write('A linha ' + str(powerflow.setup.dlinhaDF['de'][lin]) + ' para ' + str(powerflow.setup.dlinhaDF['para'][lin]) + ' possui perdas de fluxo de potência reativa acima da média do SEP: ' + f"{powerflow.sol['reactive_flow_loss'][lin]:.3f}" + ' MVAr')
+                self.file.write('\n')
+
+        self.file.write('\n\n')
 
 
 
@@ -162,7 +208,16 @@ class Monitor:
         """
 
         ## Inicialização
-        pass
+        self.file.write('vv monitoramento de potência ativa gerada vv')
+        self.file.write('\n\n')
+
+        # Loop
+        for item, value in powerflow.setup.dbarraDF.iterrows():
+            if (value['tipo'] != 0):
+                self.file.write('O gerador da ' + str(value['nome']) + ' está gerando ' + f"{(powerflow.sol['active'][item] * 1E2) / sum(powerflow.sol['active']):.2f}" + '% de toda a potência ativa fornecida ao SEP.')
+                self.file.write('\n')
+        
+        self.file.write('\n\n')
 
 
 

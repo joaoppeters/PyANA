@@ -8,16 +8,16 @@
 
 from powerflow import PowerFlow
 
-system = 'ieee30-libsvc2.pwf'
+system = 'ieee14.pwf'
 
 method = 'NEWTON'
-method = 'CPF'
+# method = 'CPF'
 
 control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVC', 'VCTRL']
-control = ['QLIMs']
-control = ['SVC']
-control = ['QLIM', 'SVC',]
-# control = []
+# control = ['QLIMs']
+# control = ['SVC']
+# control = ['QLIM', 'SVC',]
+control = []
 
 options = {
     'sbase': 100.,
@@ -39,9 +39,10 @@ options = {
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
+monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC',]
-report = ['RBARRA', 'RSVC',]
+report = ['RBARRA', 'RLINHA',]
 
 PowerFlow(
     system=system,

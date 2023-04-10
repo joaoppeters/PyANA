@@ -103,7 +103,7 @@ class Convergence:
         ax.set_title('Trajetória de Convergência de Potência Reativa')
         ax.set_xlabel('Iterações')
         ax.set_xticks(arange(0, powerflow.sol['iter'] + 1))
-        ax.set_ylabel('Resíduo de Potência Reativa [Mvar]')
+        ax.set_ylabel('Resíduo de Potência Reativa [MVAr]')
         ax.legend([(line, mark,)], [f'abs(max($\Delta$Q))'])
         ax.grid()
 

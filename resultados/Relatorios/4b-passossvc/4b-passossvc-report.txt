@@ -14,7 +14,7 @@ opções de relatório ativadas: RBARRA RSVC
 vv relatório de convergência vv
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  1   | 60.000 | 132.200 |   4   |  0.000  |   3   |  0.000  |   1   |
 |  2   | 60.000 |  1.535  |   4   | 34.751  |   2   |  0.000  |   1   |
@@ -31,7 +31,7 @@ vv relatório de convergência vv
  * * * * SISTEMA CONVERGENTE * * * * 
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  10  | 60.000 |  0.000  |   4   |  0.000  |   4   |  0.000  |   1   |
 -----------------------------------------------------------------------
@@ -41,7 +41,7 @@ vv relatório de convergência vv
 vv relatório de barras vv área 1 vv
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
-| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
 |  1  |   BARRA-VT   |  2  |   1.000   |  +0.00   | 132.200  |  25.815  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ vv relatório de barras vv área 1 vv
 
 vv relatório de compensadores estáticos de potência reativa vv
 
-|              BARRA             | DROOP |    V0     |          GERACAO Mvar          |  BARRA CONTROL  |              CONTROL            |
+|              BARRA             | DROOP |    V0     |          GERACAO MVAr          |  BARRA CONTROL  |              CONTROL            |
 | NUM |     NOME     |  TENSAO   |  [%]  |  [p.u.]   |  MINIMA  |  ATUAL   |  MAXIMA  | NUM |  TENSAO   | T | UNIDADES | GRP |   REGIAO   |
 -------------------------------------------------------------------------------------------------------------------------------------------
 |  3  |  BARRA-PQ3   |   1.010   | 3.00  |   1.000   | -50.983  |  50.983  |  50.983  |  2  |   0.985   | A |    1     | 10  | CAPACITIVA |

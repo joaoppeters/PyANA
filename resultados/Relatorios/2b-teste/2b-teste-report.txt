@@ -14,7 +14,7 @@ opções de relatório ativadas: RBARRA
 vv relatório de convergência vv
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  1   | 60.000 | 10.000  |   2   |  0.000  |   1   |  0.000  |   1   |
 |  2   | 60.000 |  0.017  |   2   |  0.500  |   2   |  0.000  |   1   |
@@ -25,7 +25,7 @@ vv relatório de convergência vv
  * * * * SISTEMA DIVERGENTE (extrapolação de número máximo de iterações) * * * * 
 
        |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
-| ITER |    Hz  |     MW  |   NUM |   Mvar  |   NUM |   CTRL  |   NUM |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
 -----------------------------------------------------------------------
 |  4   | 60.000 |  0.000  |   2   |  0.000  |   2   |  0.000  |   1   |
 -----------------------------------------------------------------------
@@ -35,7 +35,7 @@ vv relatório de convergência vv
 vv relatório de barras vv área 1 vv
 
 |          BARRA          |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
-| NUM |     NOME    |  T  |    MOD    |    ANG   |    MW    |   Mvar   |    MW    |   Mvar   |    Mvar  |
+| NUM |     NOME    |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ---------------------------------------------------------------------------------------------------------
 |  1  | BARRA-REFER |  2  |   1.000   |  +0.00   |  10.000  |  1.010   |  0.000   |  0.000   |  0.000   |
 ---------------------------------------------------------------------------------------------------------
