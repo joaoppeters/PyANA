@@ -47,7 +47,7 @@ class Continuation:
             for k, v in powerflow.setup.qlimkeys.items():
                 v.popitem()
             Smooth(powerflow,).qlimstorage(powerflow,)
-        elif ('SVC' in powerflow.setup.control):
+        elif ('SVCs' in powerflow.setup.control):
             for k, v in powerflow.setup.svckeys.items():
                 v.popitem()
             Smooth(powerflow,).svcstorage(powerflow,)
@@ -710,7 +710,7 @@ class Continuation:
         # Armazenamento das variáveis de solução do fluxo de potência
         powerflow.case[self.case][stage] = {**deepcopy(powerflow.sol), **deepcopy(powerflow.cpfsol)}
 
-        if ('SVC' in powerflow.setup.control):
+        if ('SVCs' in powerflow.setup.control):
             powerflow.case[self.case][stage]['svc_reactive_generation'] = deepcopy(powerflow.sol['svc_reactive_generation'])
 
         # Armazenamento do índice do barramento com maior variação de magnitude de tensão

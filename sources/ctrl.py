@@ -12,7 +12,7 @@ from numpy import append, array, zeros
 from ctrlfreq import Freq
 from ctrlqlim import Qlim
 from ctrlqlims import Qlims
-from ctrlsvc import SVC
+from ctrlsvc import SVCs
 
 class Control:
     """classe para determinar a realização das opções de controle escolhidas"""
@@ -42,7 +42,7 @@ class Control:
                     'FREQ': False,
                     'QLIM': False,
                     'QLIMs': False,
-                    'SVC' : False,
+                    'SVCs' : False,
                     'VCTRL': False,
                     }
                 
@@ -133,11 +133,11 @@ class Control:
                 powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIMs'
                 Qlims().qlimssol(powerflow,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
+            elif (key == 'SVCs'):
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.ncer
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'SVC'
-                SVC().svcsol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'SVCs'
+                SVCs().svcsol(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 powerflow.setup.controlcount += 1
@@ -181,8 +181,8 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimssch(powerflow,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svcsch(powerflow,)
+            elif (key == 'SVCs'):
+                SVCs().svcsch(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -230,8 +230,8 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimsres(powerflow, case,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svcres(powerflow, case,)
+            elif (key == 'SVCs'):
+                SVCs().svcres(powerflow, case,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -282,8 +282,8 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimssubjac(powerflow,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svcsubjac(powerflow,)
+            elif (key == 'SVCs'):
+                SVCs().svcsubjac(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -333,8 +333,8 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimsupdt(powerflow,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svcupdt(powerflow,)
+            elif (key == 'SVCs'):
+                SVCs().svcupdt(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -378,8 +378,8 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimscorr(powerflow, case,)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svccorr(powerflow, case,)
+            elif (key == 'SVCs'):
+                SVCs().svccorr(powerflow, case,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -430,8 +430,8 @@ class Control:
                 elif (key == 'QLIMs'):
                     Qlims().qlimsheur(powerflow,)
                 # controle de compensadores estáticos de potência reativa
-                elif (key == 'SVC'):
-                    SVC().svcheur(powerflow,)
+                elif (key == 'SVCs'):
+                    SVCs().svcheur(powerflow,)
                 # controle de magnitude de tensão de barramentos
                 elif (key == 'VCTRL'):
                     pass
@@ -475,7 +475,7 @@ class Control:
             elif (key == 'QLIMs'):
                 Qlims().qlimspop(powerflow, pop=pop)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
+            elif (key == 'SVCs'):
                 pass
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
@@ -518,8 +518,8 @@ class Control:
             elif (key == 'QLIMs'):
                 pass
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svccpf(powerflow,)
+            elif (key == 'SVCs'):
+                SVCs().svccpf(powerflow,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass
@@ -563,8 +563,8 @@ class Control:
             elif (key == 'QLIMs'):
                 pass
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVC'):
-                SVC().svcsolcpf(powerflow, case,)
+            elif (key == 'SVCs'):
+                SVCs().svcsolcpf(powerflow, case,)
             # controle de magnitude de tensão de barramentos
             elif (key == 'VCTRL'):
                 pass

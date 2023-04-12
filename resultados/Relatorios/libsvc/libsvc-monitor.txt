@@ -1,0 +1,42 @@
+April 12, 2023
+
+
+relatório de monitoramento do sistema libsvc
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: PFLOW PGMON QGMON VMON 
+
+
+vv monitoramento de fluxo de potência ativa em linhas de transmissão vv
+
+
+linhas com maiores fluxos de potência ativa:
+A linha 1 para 2 possui fluxo de potência ativa acima da média do SEP: 10.000 MW
+
+linhas com maiores perdas de potência ativa
+A linha 1 para 2 possui perdas de fluxo de potência ativa acima da média do SEP: 0.000 MW
+
+linhas com maiores fluxos de potência reativa
+A linha 1 para 2 possui fluxo de potência reativa acima da média do SEP: 10.281 MVAr
+
+linhas com maiores perdas de potência reativa
+A linha 1 para 2 possui perdas de fluxo de potência reativa acima da média do SEP: 0.933 MVAr
+
+
+vv monitoramento de potência ativa gerada vv
+
+O gerador da SLACK está gerando 100.00% de toda a potência ativa fornecida ao SEP.
+
+
+vv monitoramento de potência reativa gerada vv
+
+Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+
+
+vv monitoramento de magnitude de tensão de barramentos vv
+
+A magnitude de tensão da SLACK violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
+
+
+
+fim do relatório de monitoramento do sistema libsvc

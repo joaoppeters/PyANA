@@ -145,7 +145,7 @@ PowerFlow(
         - `'CTAPd'` - [controle automático de taps de transformadores defasadores.](docs/Controle/controle-transformador-defasador.md) -->
         - `'FREQ'` - [regulação primária de frequência.](docs/Controle/controle-regulacao-primaria-frequencia.md)
         - `'QLIM'` - [tratamento de limite de geração de potência reativa.](docs/Controle/controle-limite-potencia-reativa-geradores.md)
-        - `'SVC'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVC.md)
+        - `'SVCs'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVCs.md)
         <!-- - `'VCTRL'` - [controle de magnitude de tensão de todas as barras.](docs/Controle/controle-tensao.md) -->
 
 - `monitor: list, opcional, valor padrão list()`
@@ -166,7 +166,7 @@ PowerFlow(
 
         - `'RGERA'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/rgera.md)
 
-        - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVC) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
+        - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
         - `'RCPF'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcontinuado.md)
 
@@ -198,7 +198,7 @@ options={
     'full': True,
 },
 
-control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVC', 'VCTRL']
+control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVCs', 'VCTRL']
 
 monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON']
     

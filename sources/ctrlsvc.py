@@ -14,7 +14,7 @@ from sympy.functions import sin
 from calc import PQCalc
 from smooth import Smooth
 
-class SVC:
+class SVCs:
     """classe para tratamento de compensadores estáticos de potência reativa"""
 
     def svcsol(
@@ -306,7 +306,7 @@ class SVC:
         pop: int=1,
     ):
         """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
-                atua diretamente na variável de controle associada à opção de controle svc
+                atua diretamente na variável de controle associada à opção de controle SVCs
 
         Parâmetros
             powerflow: self do arquivo powerflow.py

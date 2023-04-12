@@ -71,7 +71,7 @@ class Loading:
                 # Variável de Armazenamento de Potência Reativa
                 powerflow.setup.pqtv['Q-' + value['nome']] = array([])
 
-            elif (value['tipo'] == 0) and (('SVC' in powerflow.setup.control) and (value['numero'] in powerflow.setup.dcerDF['barra'].to_numpy())):
+            elif (value['tipo'] == 0) and (('SVCs' in powerflow.setup.control) and (value['numero'] in powerflow.setup.dcerDF['barra'].to_numpy())):
                 # Variável de Armazenamento de Potência Reativa
                 powerflow.setup.pqtv['Q-' + value['nome']] = array([])
 
@@ -94,7 +94,7 @@ class Loading:
                         # Armazenamento de Potência Reativa
                         powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['reactive'][value])
                             
-                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVC' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
+                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVCs' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
                         busidxcer = powerflow.setup.dcerDF.index[powerflow.setup.dcerDF['barra'] == powerflow.setup.dbarraDF['numero'].iloc[value]].tolist()[0]
                         
                         # Armazenamento de Potência Reativa
@@ -127,7 +127,7 @@ class Loading:
                         # Armazenamento de Potência Reativa
                         powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]] = append(powerflow.setup.pqtv['Q-' + powerflow.setup.dbarraDF['nome'][value]], item['corr']['reactive'][value])
                     
-                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVC' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
+                    elif (powerflow.setup.dbarraDF['tipo'][value] == 0) and (('SVCs' in powerflow.setup.control) and (powerflow.setup.dbarraDF['numero'][value] in powerflow.setup.dcerDF['barra'].to_numpy())):
                         busidxcer = powerflow.setup.dcerDF.index[powerflow.setup.dcerDF['barra'] == powerflow.setup.dbarraDF['numero'].iloc[value]].tolist()[0]
 
                         # Armazenamento de Potência Reativa

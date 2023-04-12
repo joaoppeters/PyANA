@@ -5,7 +5,7 @@ relatório do sistema 4b-passossvc
 
 solução do fluxo de potência via método newton-raphson
 
-opções de controle ativadas: SVC 
+opções de controle ativadas: SVCs 
 
 opções de relatório ativadas: RBARRA RSVC 
 

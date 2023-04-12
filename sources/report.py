@@ -757,7 +757,7 @@ class Reports:
                 self.filesmooth.write('fim do relatório de análise da variação da função suave referente a - ' + busname)
                 self.filesmooth.close()
 
-        elif ('SVC' in powerflow.setup.control):
+        elif ('SVCs' in powerflow.setup.control):
             for busname, cases in powerflow.setup.svckeys.items():
                 busidx = powerflow.setup.dbarraDF[powerflow.setup.dbarraDF['nome'] == busname].index.values
 
