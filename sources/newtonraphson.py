@@ -31,9 +31,9 @@ class NewtonRaphson:
         ## Inicialização
         self.newtonraphson(powerflow,)
 
-        # Smooth
-        if ('QLIMs' in powerflow.setup.control) and (powerflow.method == 'NEWTON'):
-            Smooth(powerflow,).qlimstorage(powerflow,)
+        # # Smooth
+        # if ('QLIMs' in powerflow.setup.control) and (powerflow.method == 'NEWTON'):
+        #     Smooth(powerflow,).qlimstorage(powerflow,)
 
 
 

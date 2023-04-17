@@ -42,15 +42,15 @@ class Continuation:
         # Geração e armazenamento de gráficos de perfil de tensão e autovalores
         Loading(powerflow,)
 
-        # Smooth
-        if ('QLIMs' in powerflow.setup.control):
-            for k, v in powerflow.setup.qlimkeys.items():
-                v.popitem()
-            Smooth(powerflow,).qlimstorage(powerflow,)
-        elif ('SVCs' in powerflow.setup.control):
-            for k, v in powerflow.setup.svckeys.items():
-                v.popitem()
-            Smooth(powerflow,).svcstorage(powerflow,)
+        # # Smooth
+        # if ('QLIMs' in powerflow.setup.control):
+        #     for k, v in powerflow.setup.qlimkeys.items():
+        #         v.popitem()
+        #     Smooth(powerflow,).qlimstorage(powerflow,)
+        # elif ('SVCs' in powerflow.setup.control):
+        #     for k, v in powerflow.setup.svckeys.items():
+        #         v.popitem()
+        #     Smooth(powerflow,).svcstorage(powerflow,)
 
 
 

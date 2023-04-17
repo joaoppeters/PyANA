@@ -13,7 +13,7 @@ system = 'libsvc.pwf'
 method = 'NEWTON'
 # method = 'CPF'
 
-control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
+# control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
 # control = ['QLIMs']
 control = ['SVCs']
 # control = ['QLIM', 'SVCs',]

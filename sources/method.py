@@ -76,5 +76,5 @@ class Method():
         Reports(powerflow, powerflow.setup,)
         if (powerflow.method != 'CPF'):
             Monitor(powerflow, powerflow.setup,)
-            Convergence(powerflow, powerflow.setup,)
-            StateVar(powerflow, powerflow.setup,)
+            # Convergence(powerflow, powerflow.setup,)
+            # StateVar(powerflow, powerflow.setup,)
