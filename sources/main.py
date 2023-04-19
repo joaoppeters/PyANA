@@ -8,15 +8,15 @@
 
 from powerflow import PowerFlow
 
-system = 'libsvc.pwf'
+system = 'IEEE30-2.PWF'
 
 method = 'NEWTON'
-# method = 'CPF'
+method = 'CPF'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
 # control = ['QLIMs']
-control = ['SVCs']
-# control = ['QLIM', 'SVCs',]
+# control = ['SVCs']
+control = ['QLIM', 'SVCs',]
 # control = []
 
 options = {
@@ -27,22 +27,23 @@ options = {
     'tolY': 1E-10, #10
     'vmax': 1.05,
     'vmin': 0.95,
-    'vvar': 1E-10,
+    'vvar': 1E-8,
     'qvar': 1E-8,
     'cpfBeta': 0.,
     'cpfLambda': 1E-1,
     'cpfV2L': 0.95,
     'cpfVolt': 1E-4,
-    'icmn': 1E-14,
+    'icmn': 1E-10,
     'full': False,
 }
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
+monitor = []
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC',]
-report = ['RBARRA', 'RLINHA', 'RSVC',]
+report = ['RBARRA',]
 
 PowerFlow(
     system=system,

@@ -47,10 +47,10 @@ class Continuation:
         #     for k, v in powerflow.setup.qlimkeys.items():
         #         v.popitem()
         #     Smooth(powerflow,).qlimstorage(powerflow,)
-        # elif ('SVCs' in powerflow.setup.control):
-        #     for k, v in powerflow.setup.svckeys.items():
-        #         v.popitem()
-        #     Smooth(powerflow,).svcstorage(powerflow,)
+        if ('SVCs' in powerflow.setup.control):
+            for k, v in powerflow.setup.svckeys.items():
+                v.popitem()
+            Smooth(powerflow,).svcstorage(powerflow,)
 
 
 
@@ -225,9 +225,6 @@ class Continuation:
             'active_flow_2F': zeros(powerflow.setup.nlin),
             'reactive_flow_2F': zeros(powerflow.setup.nlin),
         }
-
-        # # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
-        # Control(powerflow, powerflow.setup,).controlsolcpf(powerflow, self.case,)
 
         # Adição de variáveis de controle na variável de armazenamento de solução
         Control(powerflow, powerflow.setup,).controlcorrsol(powerflow, self.case,)
@@ -741,10 +738,6 @@ class Continuation:
             self.jacob = self.jacob[:-1, :-1]
 
         # # Submatrizes Jacobianas
-        # self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
-        # self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol)])
-        # self.qt = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol), :][:, :(powerflow.setup.nbus)])
-        # self.qv = deepcopy(self.jacob[(powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol)])
         self.pt = deepcopy(self.jacob[:(2 * powerflow.setup.nbus), :][:, :(2 * powerflow.setup.nbus)])
         self.pv = deepcopy(self.jacob[:(2 * powerflow.setup.nbus), :][:, (2 * powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol)])
         self.qt = deepcopy(self.jacob[(2 * powerflow.setup.nbus):(2 * powerflow.setup.nbus + powerflow.setup.totaldevicescontrol), :][:, :(2 * powerflow.setup.nbus)])
@@ -762,7 +755,7 @@ class Continuation:
             powerflow.setup.PFQV = zeros([powerflow.setup.jacobQV.shape[0], powerflow.setup.jacobQV.shape[1]])
             for row in range(0, powerflow.setup.jacobQV.shape[0]):
                 for col in range(0, powerflow.setup.jacobQV.shape[1]):
-                    powerflow.setup.PFQV[col, row] = rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
+                    powerflow.setup.PFQV[col, row] = abs(rightvectorQV[col, row]) * abs(inv(rightvectorQV)[row, col])
 
             # Condição
             if (stage == None):
