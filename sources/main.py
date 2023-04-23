@@ -15,7 +15,7 @@ method = 'CPF'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
 # control = ['QLIMs']
-# control = ['SVCs']
+control = ['SVCs']
 control = ['QLIM', 'SVCs',]
 # control = []
 

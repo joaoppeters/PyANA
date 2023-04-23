@@ -8,6 +8,8 @@
 
 from datetime import datetime as dt
 from numpy import abs, absolute, argsort, around, column_stack, degrees, pi, savetxt, sum
+from os.path import exists
+from os import remove
 
 class Reports:
     """classe para geração e armazenamento automático de relatórios"""
@@ -486,7 +488,7 @@ class Reports:
         self.filevtan = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-tangent.txt', 'w')
         self.filevarv = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-voltagevar.txt', 'w')
         self.filedeteigen = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-det&eigen.txt', 'w')
-
+        
         # Cabeçalho FILEVTAN
         self.filevtan.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
         self.filevtan.write('\n\n\n')
@@ -688,6 +690,35 @@ class Reports:
         self.filedeteigen.write('\n\n\n\n')
         self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
         self.filedeteigen.close()
+
+        # FILEJACOBIAN@PMC
+        file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobi@PMC.csv'
+        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
+
+        if (exists(file) is False):
+            open(file, 'a').close()
+        elif (True and powerflow.sol['iter'] == 0):
+            remove(file)
+            open(file, 'a').close()
+        
+        with open(file, 'a') as of:
+            savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian'], delimiter=',', header=header)
+            of.close()
+            
+        # FILEJACOBIAN-QV@PMC
+        file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobiQV@PMC.csv'
+        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana Reduzida vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
+
+        if (exists(file) is False):
+            open(file, 'a').close()
+        elif (True and powerflow.sol['iter'] == 0):
+            remove(file)
+            open(file, 'a').close()
+        
+        with open(file, 'a') as of:
+            savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian-QV'], delimiter=',', header=header)
+            of.close()
+
 
         # Arquivos em Loop
         for key, value in powerflow.setup.pqtv.items():

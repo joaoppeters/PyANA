@@ -1,4 +1,4 @@
-# Fluxo de Potência via ANAREDE
+# Fluxo de Potência ANAREDE via Python
 
 O principal objetivo deste projeto é fornecer um código Python  para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas elétricos de potência`. Para isso, toma-se como base a leitura de dados de `arquivos ANAREDE (.pwf)`.
 

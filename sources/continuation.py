@@ -755,7 +755,7 @@ class Continuation:
             powerflow.setup.PFQV = zeros([powerflow.setup.jacobQV.shape[0], powerflow.setup.jacobQV.shape[1]])
             for row in range(0, powerflow.setup.jacobQV.shape[0]):
                 for col in range(0, powerflow.setup.jacobQV.shape[1]):
-                    powerflow.setup.PFQV[col, row] = abs(rightvectorQV[col, row]) * abs(inv(rightvectorQV)[row, col])
+                    powerflow.setup.PFQV[col, row] = rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
 
             # Condição
             if (stage == None):
@@ -787,7 +787,7 @@ class Continuation:
 
             elif (stage != None):
                 # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-                powerflow.case[self.case][stage]['jacobian'] = powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
+                powerflow.case[self.case][stage]['jacobian'] = powerflow.setup.jacob
 
                 # Armazenamento do determinante da matriz Jacobiana reduzida
                 powerflow.case[self.case][stage]['determinant'] = det(powerflow.setup.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask])
