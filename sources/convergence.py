@@ -3,7 +3,7 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
 from matplotlib import pyplot as plt

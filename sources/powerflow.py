@@ -3,7 +3,7 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
 from admittance import Ybus
@@ -11,8 +11,8 @@ from method import Method
 from setup import Setup
 
 class PowerFlow:
-    """classe da rotina principal"""
-
+    """powerflow class"""
+    
     def __init__(
         self,
         system: str='',
@@ -22,31 +22,31 @@ class PowerFlow:
         monitor: list=list(),
         report: list=list(),
     ):
-        """inicialização
+        """initialization
 
-        Parâmetros:
-            system: str, opcional, valor padrão ''
-            method: str, opcional, valor padrão 'NEWTON'
-            options: dict, opcional, valor padrão None
-            control: list, opcional, valor padrão None
-            monitor: list, opcional, valor padrão None
-            report: list, opcional, valor padrão None 
+        Parameters:
+            system: str, optional, default ''
+            method: str, optional, default 'NEWTON'
+            options: dict, optional, default None
+            control: list, optional, default None
+            monitor: list, optional, default None
+            report: list, optional, default None 
         """
 
-        ## Inicialização
-        # Variáveis chamadas
-        self.system = system    # SEP em estudo
-        self.method = method    # Método de solução do fluxo de potência
-        self.options = options  # Opções de convergência
-        self.control = control  # Opções de controle
-        self.monitor = monitor  # Opções de monitoramento
-        self.report = report    # Opções de relatório
+        ## Inicialization
+        # Variables
+        self.system = system    
+        self.method = method    
+        self.options = options  
+        self.control = control  
+        self.monitor = monitor  
+        self.report = report    
 
-        # Classe para configuração do SEP em estudo
+        # Data Setup
         self.setup = Setup(self)
 
-        # Classe para construção da matriz Admitância
+        # Admittance Matrix
         Ybus(self,)
 
-        # Classe para aplicação do método selecionado para análise de fluxo de potência
+        # Numerical Method
         Method(self,)

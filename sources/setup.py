@@ -3,9 +3,12 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+import time
+
+from functools import lru_cache
 from os.path import dirname, exists, realpath
 from os import mkdir
 
@@ -16,16 +19,17 @@ from pwf import PWF
 from report import Reports
 
 class Setup:
-    """classe para configuração inicial da rotina"""
+    """setup class"""
 
+    @lru_cache(maxsize=None) # Invinite cache
     def __init__(
         self,
         powerflow,
     ):
-        """inicialização
+        """initialization
         
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
+        Parameters
+            powerflow
         """
 
         ## Inicialização
@@ -34,7 +38,9 @@ class Setup:
             self.checkpath(powerflow,)
 
             # Classe para leitura de arquivo .pwf
+            t = time.process_time()
             PWF(powerflow, self,)
+            print(f'Leitura dos dados em {time.process_time() - t:2.3f}[s].')
 
             # Classe para determinação dos valores padrão das variáveis de tolerância
             Options(powerflow, self,)

@@ -3,7 +3,7 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
 from copy import deepcopy
@@ -319,12 +319,6 @@ class NewtonRaphson:
         # Reactive Flow
         powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['sbase']
         powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['sbase']
-
-        # Active Loss
-        powerflow.sol['active_flow_loss'] = abs(abs(powerflow.sol['active_flow_F2'])-abs(powerflow.sol['active_flow_2F']))
-
-        # Reactive Loss
-        powerflow.sol['reactive_flow_loss'] = abs(abs(powerflow.sol['reactive_flow_F2'])-abs(powerflow.sol['reactive_flow_2F']))
 
 
 

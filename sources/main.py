@@ -3,28 +3,28 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
 from powerflow import PowerFlow
 
-system = 'IEEE30-2.PWF'
+system = 'PD 2032-LEVE_NORTE SECO_2026.pwf'
 
 method = 'NEWTON'
-method = 'CPF'
+# method = 'CPF'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
-# control = ['QLIMs']
 control = ['SVCs']
-control = ['QLIM', 'SVCs',]
-# control = []
+# control = ['SVCs']
+# control = ['QLIM', 'SVCs',]
+control = []
 
 options = {
     'sbase': 100.,
     'itermx': 15,
-    'tolP': 1E-10, #10
-    'tolQ': 1E-10, #10
-    'tolY': 1E-10, #10
+    'tolP': 1E-8, #10
+    'tolQ': 1E-8, #10
+    'tolY': 1E-8, #10
     'vmax': 1.05,
     'vmin': 0.95,
     'vvar': 1E-8,

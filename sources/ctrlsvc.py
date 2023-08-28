@@ -3,7 +3,7 @@
 
 # ------------------------------------- #
 # Created by: Joao Pedro Peters Barbosa #
-# email: joao.peters@engenharia.ufjf.br #
+# email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
 from copy import deepcopy
@@ -57,7 +57,8 @@ class SVCs:
         powerflow.setup.alphaxl = ((powerflow.setup.options['sbase']) / (powerflow.setup.dcerDF['potencia_reativa_maxima'][0])) / (1 - (powerflow.setup.dcerDF['potencia_reativa_minima'][0]) / (powerflow.setup.dcerDF['potencia_reativa_maxima'][0]))
         powerflow.sol['alpha'] = roots([(8 / 1856156927625), 0, (-4 / 10854718875), 0, (16 / 638512875), 0, (-8 / 6081075), 0, (8 / 155925), 0, (-4 / 2835), 0, (8 / 315), 0, (-4 / 15), 0, (4 / 3), 0, 0, -(2 * pi) + ((powerflow.setup.alphaxl * pi) / powerflow.setup.alphaxc),])
         powerflow.sol['alpha'] = powerflow.sol['alpha'][isreal(powerflow.sol['alpha'])][0].real
-
+        powerflow.sol['alpha0'] = powerflow.sol['alpha'][isreal(powerflow.sol['alpha'])][0].real
+        
         # Variáveis Simbólicas
         global alpha
         alpha = Symbol('alpha')
