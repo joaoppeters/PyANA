@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import complex, ndarray, zeros
+from numpy import ndarray, zeros
 from pandas import DataFrame as DF
 
 from folder import Folder
