@@ -186,9 +186,9 @@ Thumbs.db
 *resultados/Continuado/
 *resultados/Smooth/
 
-*/107-Barras*
+*/107-Barras/*
 
-smooth.py
+stochastic.py
 chaves.py
 
 !2b-milano.pwf
