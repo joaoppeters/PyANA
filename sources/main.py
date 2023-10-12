@@ -12,9 +12,9 @@ system = 'ieee14.pwf'
 
 method = 'NEWTON'
 # method = 'CPF'
-# method = 'STOCH2'
+# method = 'STOCH'
 
-# control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
+# control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 # control = ['SVCs']
 # control = ['SVCs']
 control = ['QLIMs', 'SVCs',]
@@ -26,7 +26,7 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = []
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC',]
-report = ['RBARRA', 'RLINHA',]
+report = ['RBARRA', 'RSVC',]
 
 PowerFlow(
     system=system,

@@ -605,19 +605,24 @@ class Control:
                 pass
             # controle de regulação primária de frequência
             elif (value == 'FREQ'):
-                pass
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['TEPA'])))
+                ctrl += powerflow.setup.nger
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['TEPR'])))
+                ctrl += powerflow.setup.nger
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['ASTP'])))
+                ctrl += powerflow.setup.nger
             # controle de limite de geração de potência reativa
             elif (value == 'QLIM'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
                 ctrl += powerflow.setup.nger
             # controle suave de limite de geração de potência reativa
             elif (value == 'QLIMs'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
                 ctrl += powerflow.setup.nger
             # controle de compensadores estáticos de potência reativa
             elif (value == 'SVCs'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:powerflow.setup.ncer] > powerflow.setup.options['QLST'])))
-                ctrl += powerflow.setup.nsvc
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.ncer] > powerflow.setup.options['QLST'])))
+                ctrl += powerflow.setup.ncer
             # controle de magnitude de tensão de barramentos
             elif (value == 'VCTRL'):
                 pass

@@ -127,8 +127,8 @@ class NewtonRaphson:
             # Fluxo em linhas de transmissão
             self.line_flow(powerflow,)
 
-            # Análise de autovalores & sensibilidade
-            self.eigensens(powerflow,)
+            # # Análise de autovalores & sensibilidade
+            # self.eigensens(powerflow,)
             
             # Convergência
             powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'

@@ -35,9 +35,9 @@ class Smooth:
             powerflow.setup.qliminc = 1E10
 
         if ('SVCs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'tolsvcq')):
-            powerflow.setup.tolsvcv = 1E-6
-            powerflow.setup.tolalpha = 1E-6
-            powerflow.setup.svcinc = 1E8
+            powerflow.setup.tolsvcv = 1E-8
+            powerflow.setup.tolalpha = 1E-8
+            powerflow.setup.svcinc = 1E10
 
 
 
@@ -482,19 +482,19 @@ class Smooth:
                 
                 # flagv0 = True
 
-        if powerflow.sol['voltage'][idxctrl] >= vmmax:
-            powerflow.sol['alpha'] = pi/2
-            powerflow.sol.alpha_[-1] = alpha
+        # if powerflow.sol['voltage'][idxctrl] >= vmmax:
+        #     powerflow.sol['alpha'] = pi/2
+        #     powerflow.sol.alpha_[-1] = alpha
 
-        elif powerflow.sol['voltage'][idxctrl] <= vmmin:
-            powerflow.sol['alpha'] = pi
-            powerflow.sol.alpha_[-1] = alpha
+        # elif powerflow.sol['voltage'][idxctrl] <= vmmin:
+        #     powerflow.sol['alpha'] = pi
+        #     powerflow.sol.alpha_[-1] = alpha
 
-        if (powerflow.sol.alpha_[-2] == pi/2 and powerflow.sol.alpha_[-1] == pi) or \
-            (powerflow.sol.alpha_[-1] == pi/2 and powerflow.sol.alpha_[-2] == pi):
-            powerflow.sol.alpha_[-1] = powerflow.sol['alpha0']
-            powerflow.sol['alpha'] = deepcopy(powerflow.sol['alpha0'])
-            powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
+        # if (powerflow.sol.alpha_[-2] == pi/2 and powerflow.sol.alpha_[-1] == pi) or \
+        #     (powerflow.sol.alpha_[-1] == pi/2 and powerflow.sol.alpha_[-2] == pi):
+        #     powerflow.sol.alpha_[-1] = powerflow.sol['alpha0']
+        #     powerflow.sol['alpha'] = deepcopy(powerflow.sol['alpha0'])
+        #     powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
 
         var = {
             vk: powerflow.sol['voltage'][idxcer],

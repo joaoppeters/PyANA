@@ -396,7 +396,7 @@ class Reports:
                 self.file.write('\n')
                 self.file.write('                                                    |  MINIMO  |  ATUAL   |  MAXIMO  |                                                    ')
                 self.file.write('\n')
-                self.file.write('                                                    | âNGULO DISPARO DO TIRISTOR [˚] |                                                    ')
+                self.file.write('                                                    | âNGULO DISPARO DO TIRISTOR [C] |                                                    ')
             
             elif (powerflow.setup.dcerDF['controle'][i] == 'I'):
                     if (powerflow.sol['reactive'][idxcer] <= (powerflow.setup.dcerDF['potencia_reativa_minima'][i] * powerflow.setup.dcerDF['unidades'][i] * (powerflow.sol['voltage'][idxcer]))):
