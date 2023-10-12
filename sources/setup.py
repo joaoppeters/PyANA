@@ -17,11 +17,12 @@ from monitor import Monitor
 from options import Options
 from pwf import PWF
 from report import Reports
+from stochastic import Stochastic
 
 class Setup:
     """setup class"""
 
-    @lru_cache(maxsize=None) # Invinite cache
+    @lru_cache(maxsize=None) # Infinite cache
     def __init__(
         self,
         powerflow,
@@ -41,6 +42,9 @@ class Setup:
             t = time.process_time()
             PWF(powerflow, self,)
             print(f'Leitura dos dados em {time.process_time() - t:2.3f}[s].')
+
+            if powerflow.method == 'STOCH':
+                Stochastic(powerflow.method, self,)
 
             # Classe para determinação dos valores padrão das variáveis de tolerância
             Options(powerflow, self,)
@@ -80,10 +84,10 @@ class Setup:
         if (exists(self.maindir + '/sistemas/') is True):
             if (exists(self.maindir + '/sistemas/' + powerflow.system) is True):
                 self.dirSEP = realpath(dirname(dirname(__file__)) + '/sistemas/' + powerflow.system)
-                print(f'\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PowerFlow/sistemas/` conforme solicitado!\033[0m')
+                print(f'\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m')
             else:
-                raise ValueError(f'\033[91mERROR: Pasta `PowerFlow/sistemas/` não contém o arquivo `{powerflow.system}` do SEP informado.\nInsira o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m')
+                raise ValueError(f'\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{powerflow.system}` do SEP informado.\nInsira o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m')
 
         else:
             mkdir(self.maindir + '/sistemas/')
-            raise ValueError(f'\033[91mERROR: Pasta `PowerFlow/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m')
+            raise ValueError(f'\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m')

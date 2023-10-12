@@ -57,8 +57,8 @@ class Freq:
             for idx, value in powerflow.setup.dbarraDF.iterrows():
                 # Barra tipo VT ou PV
                 if (value['tipo'] != 0):
-                    powerflow.sol['active_generation'][nger] = value['potencia_ativa'] / powerflow.setup.options['sbase']
-                    powerflow.sol['reactive_generation'][nger] = value['potencia_reativa'] / powerflow.setup.options['sbase']
+                    powerflow.sol['active_generation'][nger] = value['potencia_ativa'] / powerflow.setup.options['BASE']
+                    powerflow.sol['reactive_generation'][nger] = value['potencia_reativa'] / powerflow.setup.options['BASE']
                     nger += 1
             # Frequências máxima e mínima por gerador
             self.freqgerlim(powerflow,)
@@ -93,9 +93,9 @@ class Freq:
             # Armazenamento da barra por ordem de entrada de dados dos geradores
             powerflow.setup.dgerorder[idx] = powerflow.setup.dbarraDF['nome'][value['numero'] - 1]
             # Frequência máxima gerador `idx`
-            powerflow.setup.freqger['max'][idx] = powerflow.setup.fesp + value['estatismo'] * 1E-2 * (powerflow.setup.dbarraDF['potencia_ativa'][value['numero'] - 1] - value['potencia_ativa_minima']) / powerflow.setup.options['sbase']
+            powerflow.setup.freqger['max'][idx] = powerflow.setup.fesp + value['estatismo'] * 1E-2 * (powerflow.setup.dbarraDF['potencia_ativa'][value['numero'] - 1] - value['potencia_ativa_minima']) / powerflow.setup.options['BASE']
             # Frequência mínima gerador `idx`
-            powerflow.setup.freqger['min'][idx] = powerflow.setup.fesp + value['estatismo'] * 1E-2 * (powerflow.setup.dbarraDF['potencia_ativa'][value['numero'] - 1] - value['potencia_ativa_maxima']) / powerflow.setup.options['sbase']
+            powerflow.setup.freqger['min'][idx] = powerflow.setup.fesp + value['estatismo'] * 1E-2 * (powerflow.setup.dbarraDF['potencia_ativa'][value['numero'] - 1] - value['potencia_ativa_maxima']) / powerflow.setup.options['BASE']
 
 
 
@@ -135,8 +135,8 @@ class Freq:
                 nger += 1
 
         # Tratamento
-        powerflow.setup.pqsch['potencia_ativa_gerada_especificada'] /= powerflow.setup.options['sbase']
-        powerflow.setup.pqsch['potencia_reativa_gerada_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_ativa_gerada_especificada'] /= powerflow.setup.options['BASE']
+        powerflow.setup.pqsch['potencia_reativa_gerada_especificada'] /= powerflow.setup.options['BASE']
 
 
     
@@ -164,12 +164,12 @@ class Freq:
             if (value['tipo'] != 0):
                 # Cálculo do resíduo DeltaP
                 powerflow.setup.deltaP[idx] = powerflow.sol['active_generation'][nger]
-                powerflow.setup.deltaP[idx] -= value['demanda_ativa'] / powerflow.setup.options['sbase']
+                powerflow.setup.deltaP[idx] -= value['demanda_ativa'] / powerflow.setup.options['BASE']
                 powerflow.setup.deltaP[idx] -= PQCalc().pcalc(powerflow, idx,)
 
                 # Cálculo do resíduo DeltaQ
                 powerflow.setup.deltaQ[idx] = powerflow.sol['reactive_generation'][nger]
-                powerflow.setup.deltaQ[idx] -= value['demanda_reativa'] / powerflow.setup.options['sbase']
+                powerflow.setup.deltaQ[idx] -= value['demanda_reativa'] / powerflow.setup.options['BASE']
                 powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
                 # Tratamento de limite de potência ativa
@@ -337,10 +337,10 @@ class Freq:
         # Tratamento de limite de potência ativa
         for idx, value in powerflow.setup.dgeraDF.iterrows():
             if (powerflow.sol['freq'] >= powerflow.setup.freqger['max'][idx]):
-                powerflow.sol['active_generation'][idx] = value['potencia_ativa_minima'] / powerflow.setup.options['sbase']
+                powerflow.sol['active_generation'][idx] = value['potencia_ativa_minima'] / powerflow.setup.options['BASE']
                 powerflow.setup.ypp[idx][idx] = infty
             elif (powerflow.sol['freq'] <= powerflow.setup.freqger['min'][idx]):
-                powerflow.sol['active_generation'][idx] = value['potencia_ativa_maxima'] / powerflow.setup.options['sbase']
+                powerflow.sol['active_generation'][idx] = value['potencia_ativa_maxima'] / powerflow.setup.options['BASE']
                 powerflow.setup.ypp[idx][idx] = infty
             else:
                 powerflow.setup.ypp[idx][idx] = 1

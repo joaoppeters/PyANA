@@ -8,34 +8,17 @@
 
 from powerflow import PowerFlow
 
-system = 'PD 2032-LEVE_NORTE SECO_2026.pwf'
+system = 'ieee14.pwf'
 
 method = 'NEWTON'
 # method = 'CPF'
+# method = 'STOCH2'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs', 'VCTRL']
-control = ['SVCs']
 # control = ['SVCs']
-# control = ['QLIM', 'SVCs',]
-control = []
-
-options = {
-    'sbase': 100.,
-    'itermx': 15,
-    'tolP': 1E-8, #10
-    'tolQ': 1E-8, #10
-    'tolY': 1E-8, #10
-    'vmax': 1.05,
-    'vmin': 0.95,
-    'vvar': 1E-8,
-    'qvar': 1E-8,
-    'cpfBeta': 0.,
-    'cpfLambda': 1E-1,
-    'cpfV2L': 0.95,
-    'cpfVolt': 1E-4,
-    'icmn': 1E-10,
-    'full': False,
-}
+# control = ['SVCs']
+control = ['QLIMs', 'SVCs',]
+# control = []
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = ['QGMON', 'VMON']
@@ -43,12 +26,11 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = []
 
 report = ['RBARRA', 'RLINHA', 'RGERA', 'RSVC',]
-report = ['RBARRA',]
+report = ['RBARRA', 'RLINHA',]
 
 PowerFlow(
     system=system,
     method=method,
-    options=options,
     control=control,
     monitor=monitor,
     report=report,

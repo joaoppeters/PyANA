@@ -57,7 +57,7 @@ class Qlim:
                         # Tratamento de limite de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
-                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['BASE']
                 
                     elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']):
                         # Tratamento de limite de potência reativa gerada máxima
@@ -77,7 +77,7 @@ class Qlim:
                         # Tratamento de backoff de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
-                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['BASE']
                         powerflow.setup.dbarraDF.loc[idx, 'tipo'] = 1
                     
                     elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] <= value['tensao'] * (1E-3)):
@@ -96,7 +96,7 @@ class Qlim:
                         # Tratamento de limite de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
-                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['BASE']
                 
                     elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']):
                         # Tratamento de limite de potência reativa gerada máxima
@@ -116,7 +116,7 @@ class Qlim:
                         # Tratamento de backoff de magnitude de tensão
                         powerflow.setup.deltaQlim[nger] += value['tensao'] * (1E-3)
                         powerflow.setup.deltaQlim[nger] -= powerflow.sol['voltage'][idx]
-                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['sbase']
+                        powerflow.setup.deltaQlim[nger] *= powerflow.setup.options['BASE']
                         powerflow.setup.slackqlim = False
                     
                     elif (powerflow.sol['reactive_generation'][idx] >= value['potencia_reativa_maxima']) and (powerflow.sol['voltage'][idx] <= value['tensao'] * (1E-3)):
@@ -134,7 +134,7 @@ class Qlim:
                 nger += 1
         
         # Resíduo de equação de controle
-        powerflow.setup.deltaQlim /= powerflow.setup.options['sbase']
+        powerflow.setup.deltaQlim /= powerflow.setup.options['BASE']
         powerflow.setup.deltaY = append(powerflow.setup.deltaY, powerflow.setup.deltaQlim)
 
 
@@ -229,7 +229,7 @@ class Qlim:
         # Atualização da potência reativa gerada
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if (value['tipo'] != 0):
-                powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
+                powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['BASE']
 
                 if (value['tipo'] == 1) and ((powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) or (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'])):
                     powerflow.setup.dbarraDF.loc[idx, 'tipo'] = -1
@@ -261,7 +261,7 @@ class Qlim:
         # Atualização da potência reativa especificada
         powerflow.setup.pqsch['potencia_reativa_especificada'] += powerflow.sol['reactive_generation']
         powerflow.setup.pqsch['potencia_reativa_especificada'] -= powerflow.setup.dbarraDF['demanda_reativa'].to_numpy()
-        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['BASE']
 
 
 

@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import concatenate, ones
+from numpy import concatenate, nan, ones
 from pandas import DataFrame as DF
 
 class PWF:
@@ -66,6 +66,7 @@ class PWF:
             'DANC': False,
             'DBAR': False,
             'DCER': False,
+            'DCTE': False,
             'DGER': False,
             'DINC': False,
             'DLIN': False,
@@ -145,6 +146,18 @@ class PWF:
         self.dcer['potencia_reativa_maxima'] = list()
         self.dcer['controle'] = list()
         self.dcer['estado'] = list()
+
+
+    
+    def dcte(
+        self,
+    ):
+        """inicialização para leitura de dados de constantes"""
+
+        ## Inicialização
+        self.dcte = dict()
+        self.dcte['constante'] = list()
+        self.dcte['valor_constante'] = list()
 
 
 
@@ -357,7 +370,37 @@ class PWF:
                     raise ValueError('\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m')
                 else:
                     setup.codes['DCER'] = True
-                
+
+            # Dados de Constantes
+            elif (self.lines[self.linecount].strip() == 'DCTE'):
+                self.dcte()
+                self.linecount += 1
+                while self.lines[self.linecount].strip() not in self.end_block:
+                    if (self.lines[self.linecount][0] == self.comment):
+                        pass
+                    else:
+                        self.dcte['constante'].append(self.lines[self.linecount][:4])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][5:11])
+                        self.dcte['constante'].append(self.lines[self.linecount][12:16])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][17:23])
+                        self.dcte['constante'].append(self.lines[self.linecount][24:28])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][29:35])
+                        self.dcte['constante'].append(self.lines[self.linecount][36:40])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][41:47])
+                        self.dcte['constante'].append(self.lines[self.linecount][48:52])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][53:59])
+                        self.dcte['constante'].append(self.lines[self.linecount][60:64])
+                        self.dcte['valor_constante'].append(self.lines[self.linecount][65:71])
+                    self.linecount += 1
+
+                # DataFrame dos Dados de Constantes
+                setup.dcteDF = self.treatment(setup, pandas=DF(data=self.dcte), data='DCTE',)
+                if (setup.dcteDF.empty):
+                    ## ERROR - VERMELHO
+                    raise ValueError('\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m')
+                else:
+                    setup.codes['DCTE'] = True
+
             # Dados de Geradores
             elif (self.lines[self.linecount].strip() == 'DGER'):
                 self.dger()
@@ -646,6 +689,18 @@ class PWF:
 
                     if (value['barra_controlada'] == 0):
                         pandas.at[idx, 'barra_controlada'] = value['barra']
+
+
+        # Tratamento específico 'DCTE'
+        elif (data == 'DCTE'):
+            pandas = pandas.astype(
+                {
+                    'valor_constante': 'float',
+                }
+            )
+            pandas['constante'] = pandas['constante'].replace('0', nan)
+            pandas = pandas.dropna(axis=0, subset=['constante'])
+            pandas = pandas.drop_duplicates(subset=['constante'], keep='last').reset_index(drop=True)
 
 
         # Tratamento específico 'DGER'

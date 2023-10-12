@@ -58,12 +58,12 @@ class Convergence:
         
         # Plots 
         if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convP'] * powerflow.setup.options['sbase']), color='C0', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convP'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convP'] * powerflow.setup.options['BASE']), color='C0', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convP'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         elif (powerflow.sol['convergence'] == 'SISTEMA DIVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convP'] * powerflow.setup.options['sbase']), color='C0', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convP'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convP'] * powerflow.setup.options['BASE']), color='C0', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convP'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         # Label
         ax.set_title('Trajetória de Convergência de Potência Ativa')
@@ -92,12 +92,12 @@ class Convergence:
         
         # Plots 
         if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color='C1', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['BASE']), color='C1', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convQ'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         elif (powerflow.sol['convergence'] == 'SISTEMA DIVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color='C1', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convQ'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convQ'] * powerflow.setup.options['BASE']), color='C1', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convQ'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         # Label
         ax.set_title('Trajetória de Convergência de Potência Reativa')
@@ -127,12 +127,12 @@ class Convergence:
         
         # Plots 
         if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convY'] * powerflow.setup.options['sbase']), color='C1', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convY'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convY'] * powerflow.setup.options['BASE']), color='C1', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter'] + 1), (powerflow.sol['convY'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         elif (powerflow.sol['convergence'] == 'SISTEMA DIVERGENTE'):
-            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convY'] * powerflow.setup.options['sbase']), color='C1', linewidth=2, alpha=0.85, zorder=2)
-            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convY'] * powerflow.setup.options['sbase']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
+            line, = ax.plot(arange(0, powerflow.sol['iter']), (powerflow.sol['convY'] * powerflow.setup.options['BASE']), color='C1', linewidth=2, alpha=0.85, zorder=2)
+            mark = ax.scatter(arange(0, powerflow.sol['iter']), (powerflow.sol['convY'] * powerflow.setup.options['BASE']), color=(1., 1., 1.), marker='*', edgecolor=(0., 0., 0.), alpha=1., s=100, zorder=3)
 
         # Label
         ax.set_title('Trajetória de Convergência de Potência Reativa')

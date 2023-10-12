@@ -182,6 +182,11 @@ Thumbs.db
 *.gif
 *.pwf
 *.lst
+*.sav
+*.plt
+*.out
+*.bak
+*.bkp
 
 *resultados/Continuado/
 *resultados/Smooth/

@@ -10,7 +10,6 @@ from matplotlib import pyplot as plt
 from numpy import append, array, degrees, sum
 
 from folder import Folder
-from smooth import Smooth
 
 class Loading:
     """classe para geração e armazenamento automático de gráficos da solução do fluxo de potência continuado"""
@@ -59,7 +58,7 @@ class Loading:
         powerflow.setup.eigenvaluesPT = array([])
         powerflow.setup.eigenvaluesQV = array([])
         if ('FREQ' in powerflow.setup.control):
-            powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = array([])
+            powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['FBASE'])] = array([])
 
         
         # Loop de Inicialização da Variável
@@ -116,7 +115,7 @@ class Loading:
                 
                 # Frequência
                 if ('FREQ' in powerflow.setup.control):
-                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])], item['freq'] * powerflow.setup.options['fbase'])
+                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['FBASE'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['FBASE'])], item['freq'] * powerflow.setup.options['FBASE'])
 
             elif (key > 0):
                 for value in range(0, item['corr']['voltage'].shape[0]):
@@ -170,7 +169,7 @@ class Loading:
                 
                 # Frequência
                 if ('FREQ' in powerflow.setup.control):
-                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['fbase'])], item['corr']['freq'] * powerflow.setup.options['fbase'])
+                    powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['FBASE'])] = append(powerflow.setup.pqtv['FREQbase' + str(powerflow.setup.options['FBASE'])], item['corr']['freq'] * powerflow.setup.options['FBASE'])
 
 
 

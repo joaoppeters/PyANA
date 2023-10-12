@@ -178,12 +178,12 @@ class Reports:
             if (powerflow.method != 'CPF'):
                 for i in range(0, powerflow.sol['iter']):
                     self.file.write('\n')
-                    self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
+                    self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i]:^6.3f} | {powerflow.sol['convP'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i]]:^5d} | {powerflow.sol['convQ'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i]]:^5d} | {powerflow.sol['convY'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i]]:^5d} |")
             
             elif (powerflow.method == 'CPF'):
                 for i in range(0, powerflow.case[0]['iter']):
                     self.file.write('\n')
-                    self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
+                    self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
             
             self.file.write('\n')
             self.file.write('-'*71)
@@ -199,10 +199,10 @@ class Reports:
         self.file.write('-'*71)
         self.file.write('\n')
         if (powerflow.method != 'CPF') and (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE'):
-            self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i+1]:^6.3f} | {powerflow.sol['convP'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i+1]]:^5d} | {powerflow.sol['convQ'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i+1]]:^5d} | {powerflow.sol['convY'][i+1]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i+1]]:^5d} |")
+            self.file.write(f"| {(i+1):^4d} | {powerflow.sol['freqiter'][i+1]:^6.3f} | {powerflow.sol['convP'][i+1]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busP'][i+1]]:^5d} | {powerflow.sol['convQ'][i+1]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busQ'][i+1]]:^5d} | {powerflow.sol['convY'][i+1]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.sol['busY'][i+1]]:^5d} |")
     
         elif (powerflow.method == 'CPF') and (powerflow.case[0]['convergence'] == 'SISTEMA CONVERGENTE'):
-            self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['sbase']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
+            self.file.write(f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.setup.options['BASE']:^7.3f} | {powerflow.setup.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |")
         
         self.file.write('\n')
         self.file.write('-'*71)

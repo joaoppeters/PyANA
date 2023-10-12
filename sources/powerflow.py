@@ -17,7 +17,6 @@ class PowerFlow:
         self,
         system: str='',
         method: str='NEWTON',
-        options: dict=dict(),
         control: list=list(),
         monitor: list=list(),
         report: list=list(),
@@ -27,7 +26,6 @@ class PowerFlow:
         Parameters:
             system: str, optional, default ''
             method: str, optional, default 'NEWTON'
-            options: dict, optional, default None
             control: list, optional, default None
             monitor: list, optional, default None
             report: list, optional, default None 
@@ -37,7 +35,6 @@ class PowerFlow:
         # Variables
         self.system = system    
         self.method = method    
-        self.options = options  
         self.control = control  
         self.monitor = monitor  
         self.report = report    

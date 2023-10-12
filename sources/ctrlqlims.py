@@ -107,8 +107,8 @@ class Qlims:
                 # powerflow.setup.yxx[nger, nger] = 1E-10
 
                 # Barras PQV
-                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.tolqlimq) or \
-                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.tolqlimq):
+                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.TEPRlimq) or \
+                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.TEPRlimq):
                     powerflow.setup.yxx[nger, nger] = powerflow.setup.diffqlim[idx][1]
 
                 # Incrementa contador
@@ -152,7 +152,7 @@ class Qlims:
         # Atualização da potência reativa gerada
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if (value['tipo'] != 0):
-                powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['sbase']
+                powerflow.sol['reactive_generation'][idx] += powerflow.setup.statevar[(powerflow.setup.dimpreqlim + nger)] * powerflow.setup.options['BASE']
 
                 # Incrementa contador
                 nger += 1
@@ -178,7 +178,7 @@ class Qlims:
         # Atualização da potência reativa especificada
         powerflow.setup.pqsch['potencia_reativa_especificada'] += powerflow.sol['reactive_generation']
         powerflow.setup.pqsch['potencia_reativa_especificada'] -= powerflow.setup.dbarraDF['demanda_reativa'].to_numpy()
-        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['BASE']
 
 
 
@@ -213,7 +213,7 @@ class Qlims:
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
         # powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy()
-        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.tolqlimq), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
+        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.TEPRlimq), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 

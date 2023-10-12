@@ -102,15 +102,15 @@ PowerFlow(
 
 - `options: dict, opcional, valor padrão dict()`
     - **Opções:**
-        - `sbase` - potência aparente base do sistema (MVA): 
+        - `BASE` - potência aparente base do sistema (MVA): 
             - **valor padrão: 100.**
-        - `fbase` - frequência base do sistema (Hz):
+        - `FBASE` - frequência base do sistema (Hz):
             - **valor padrão: 60.**
         - `itermx` - número máximo de iterações:
             - **valor padrão: 15.**
-        - `tolP` - tolerância de convergência para potência ativa (p.u.):
+        - `TEPA` - tolerância de convergência para potência ativa (p.u.):
             - **valor padrão: 1E-6.**
-        - `tolQ` - tolerância de convergência para potência reativa (p.u.):
+        - `TEPR` - tolerância de convergência para potência reativa (p.u.):
             - **valor padrão: 1E-6.**
         - `tolY` - tolerância de convergência para equações de controle adicionais (p.u.):
             - **valor padrão: 1E-6.**
@@ -185,10 +185,10 @@ method='NEWTON',
 jacobi='COMPLETA, 
 
 options={
-    'sbase': 100.,
-    'itermx': 20,
-    'tolP': 1E-4,
-    'tolQ': 1E-4,
+    'BASE': 100.,
+    'ACIT': 20,
+    'TEPA': 1E-4,
+    'TEPR': 1E-4,
     'tolY': 1E-4,
     'vmax': 1.045,
     'vmin': 0.965,

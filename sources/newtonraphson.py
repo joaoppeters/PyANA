@@ -79,9 +79,9 @@ class NewtonRaphson:
         # Resíduos
         self.residue(powerflow,)
 
-        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['tolP']) or \
-            (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['tolQ']) or \
-                (max(abs(powerflow.setup.deltaY)) > powerflow.setup.options['tolY'])):
+        while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['TEPA']) or \
+            (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['TEPR']) or \
+                Control(powerflow, powerflow.setup).controldelta(powerflow,)):
 
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
@@ -102,13 +102,13 @@ class NewtonRaphson:
             powerflow.sol['iter'] += 1
 
             # Condição
-            if (powerflow.sol['iter'] > powerflow.setup.options['itermx']):
+            if (powerflow.sol['iter'] > powerflow.setup.options['ACIT']):
                 # Divergência
                 powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE'
                 break
 
         # Iteração Adicional
-        if (powerflow.sol['iter'] <= powerflow.setup.options['itermx']):
+        if (powerflow.sol['iter'] <= powerflow.setup.options['ACIT']):
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -163,8 +163,8 @@ class NewtonRaphson:
             powerflow.setup.pqsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
 
         # Tratamento
-        powerflow.setup.pqsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
-        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_ativa_especificada'] /= powerflow.setup.options['BASE']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['BASE']
 
         # Variáveis especificadas de controle ativos
         if (powerflow.setup.controlcount > 0):
@@ -240,7 +240,7 @@ class NewtonRaphson:
 
         ## Inicialização
         # Trajetória de convergência da frequência
-        powerflow.sol['freqiter'] = append(powerflow.sol['freqiter'], powerflow.sol['freq'] * powerflow.setup.options['fbase'])
+        powerflow.sol['freqiter'] = append(powerflow.sol['freqiter'], powerflow.sol['freq'] * powerflow.setup.options['FBASE'])
 
         # Trajetória de convergência da potência ativa
         powerflow.sol['convP'] = append(powerflow.sol['convP'], max(abs(powerflow.setup.deltaP)))
@@ -304,21 +304,24 @@ class NewtonRaphson:
             powerflow.sol['active_flow_F2'][idx] = yline.real * (powerflow.sol['voltage'][k] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa k -> m
-            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['BASE'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência ativa m -> k
             powerflow.sol['active_flow_2F'][idx] = yline.real * (powerflow.sol['voltage'][m] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa m -> k
-            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2 * powerflow.setup.options['BASE'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
         # Active Flow
-        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['sbase']
-        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['sbase']
+        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['BASE']
+        powerflow.sol['active_flow_loss'] = deepcopy(powerflow.sol['active_flow_F2'] + powerflow.sol['active_flow_2F'])
+
 
         # Reactive Flow
-        powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['sbase']
-        powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['sbase']
+        powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['BASE']
+        powerflow.sol['reactive_flow_loss'] = deepcopy(powerflow.sol['reactive_flow_F2'] + powerflow.sol['reactive_flow_2F'])
 
 
 

@@ -38,7 +38,7 @@ class PQCalc:
         p *= powerflow.sol['voltage'][idx]
 
         # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['active'][idx] = (p * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
+        powerflow.sol['active'][idx] = (p * powerflow.setup.options['BASE']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
 
         return p
 
@@ -71,6 +71,6 @@ class PQCalc:
         q *= powerflow.sol['voltage'][idx]
 
         # Armazenamento da potência ativa gerada equivalente do barramento
-        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['sbase']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
+        powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['BASE']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
 
         return q

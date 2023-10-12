@@ -1,73 +1,10 @@
-April 10, 2023
+October 11, 2023
 
 
 relatório de monitoramento do sistema ieee14
 solução do fluxo de potência via método newton-raphson
 
-opções de monitoramento ativadas: PFLOW PGMON QGMON VMON 
-
-
-vv monitoramento de fluxo de potência ativa em linhas de transmissão vv
-
-
-linhas com maiores fluxos de potência ativa:
-A linha 1 para 2 possui fluxo de potência ativa acima da média do SEP: 156.833 MW
-A linha 1 para 5 possui fluxo de potência ativa acima da média do SEP: 75.553 MW
-A linha 2 para 3 possui fluxo de potência ativa acima da média do SEP: 73.188 MW
-A linha 2 para 4 possui fluxo de potência ativa acima da média do SEP: 56.138 MW
-A linha 2 para 5 possui fluxo de potência ativa acima da média do SEP: 41.512 MW
-A linha 4 para 5 possui fluxo de potência ativa acima da média do SEP: 61.736 MW
-A linha 5 para 6 possui fluxo de potência ativa acima da média do SEP: 44.063 MW
-
-linhas com maiores perdas de potência ativa
-A linha 1 para 2 possui perdas de fluxo de potência ativa acima da média do SEP: 4.295 MW
-A linha 1 para 5 possui perdas de fluxo de potência ativa acima da média do SEP: 2.764 MW
-A linha 2 para 3 possui perdas de fluxo de potência ativa acima da média do SEP: 2.320 MW
-A linha 2 para 4 possui perdas de fluxo de potência ativa acima da média do SEP: 1.677 MW
-A linha 2 para 5 possui perdas de fluxo de potência ativa acima da média do SEP: 0.902 MW
-
-linhas com maiores fluxos de potência reativa
-A linha 1 para 2 possui fluxo de potência reativa acima da média do SEP: 27.656 MVAr
-A linha 4 para 5 possui fluxo de potência reativa acima da média do SEP: 15.669 MVAr
-A linha 4 para 7 possui fluxo de potência reativa acima da média do SEP: 23.244 MVAr
-A linha 5 para 6 possui fluxo de potência reativa acima da média do SEP: 24.751 MVAr
-A linha 7 para 8 possui fluxo de potência reativa acima da média do SEP: 17.357 MVAr
-
-linhas com maiores perdas de potência reativa
-A linha 1 para 2 possui perdas de fluxo de potência reativa acima da média do SEP: 7.264 MVAr
-A linha 2 para 3 possui perdas de fluxo de potência reativa acima da média do SEP: 1.981 MVAr
-A linha 3 para 4 possui perdas de fluxo de potência reativa acima da média do SEP: 2.612 MVAr
-A linha 4 para 7 possui perdas de fluxo de potência reativa acima da média do SEP: 2.410 MVAr
-A linha 4 para 9 possui perdas de fluxo de potência reativa acima da média do SEP: 1.563 MVAr
-A linha 5 para 6 possui perdas de fluxo de potência reativa acima da média do SEP: 5.240 MVAr
-
-
-vv monitoramento de potência ativa gerada vv
-
-O gerador da BARRA-1 está gerando 85.31% de toda a potência ativa fornecida ao SEP.
-O gerador da BARRA-2 está gerando 14.69% de toda a potência ativa fornecida ao SEP.
-O gerador da BARRA-3 está gerando -0.00% de toda a potência ativa fornecida ao SEP.
-O gerador da BARRA-6 está gerando -0.00% de toda a potência ativa fornecida ao SEP.
-O gerador da BARRA-8 está gerando 0.00% de toda a potência ativa fornecida ao SEP.
-
-
-vv monitoramento de potência reativa gerada vv
-
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
-
-
-vv monitoramento de magnitude de tensão de barramentos vv
-
-A magnitude de tensão da BARRA-1 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
-A magnitude de tensão da BARRA-6 violou o limite máximo estabelecido para análise ( 1.070 >= 1.05 ).
-A magnitude de tensão da BARRA-7 violou o limite máximo estabelecido para análise ( 1.062 >= 1.05 ).
-A magnitude de tensão da BARRA-8 violou o limite máximo estabelecido para análise ( 1.090 >= 1.05 ).
-A magnitude de tensão da BARRA-9 violou o limite máximo estabelecido para análise ( 1.056 >= 1.05 ).
-A magnitude de tensão da BARRA-10 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
-A magnitude de tensão da BARRA-11 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
-A magnitude de tensão da BARRA-12 violou o limite máximo estabelecido para análise ( 1.055 >= 1.05 ).
-A magnitude de tensão da BARRA-13 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
-
+opções de monitoramento ativadas: 
 
 
 fim do relatório de monitoramento do sistema ieee14

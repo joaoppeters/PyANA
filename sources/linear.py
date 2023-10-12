@@ -115,7 +115,7 @@ class LinearPowerFlow:
             self.sch['potencia_ativa_especificada'][idx] -= float(value['demanda_ativa'])
 
         # Tratamento
-        self.sch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
+        self.sch['potencia_ativa_especificada'] /= powerflow.setup.options['BASE']
 
 
 
@@ -172,11 +172,11 @@ class LinearPowerFlow:
         for _, value in powerflow.setup.dlinhaDF.iterrows():
             # Elementos fora da diagonal (elemento série)
             if (value['tap'] == 0.):
-                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']
-                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']
+                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['BASE']
+                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= (1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['BASE']
             else:
-                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= ((1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
-                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= ((1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['sbase']) / float(value['tap'])
+                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0]] -= ((1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['BASE']) / float(value['tap'])
+                powerflow.setup.bbus[powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['para']][0], powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['de']][0]] -= ((1 / complex(real=0., imag=value['reatancia'])) * powerflow.setup.options['BASE']) / float(value['tap'])
 
         # Bancos de capacitores e reatores
         for idx, value in powerflow.setup.dbarraDF.iterrows():
@@ -224,8 +224,8 @@ class LinearPowerFlow:
             powerflow.sol['active'][k] += powerflow.sol['active_flow_F2'][idx]
             powerflow.sol['active'][m] += powerflow.sol['active_flow_2F'][idx]
 
-        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['sbase']
-        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['sbase']
+        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['BASE']
 
-        powerflow.sol['active'] *= powerflow.setup.options['sbase']
+        powerflow.sol['active'] *= powerflow.setup.options['BASE']
         powerflow.sol['active'] += powerflow.setup.dbarraDF['demanda_ativa'].values

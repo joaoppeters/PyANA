@@ -238,8 +238,8 @@ class Continuation:
         # Resíduos
         self.residue(powerflow, stage='corr',)
 
-        while ((max(abs(powerflow.setup.deltaP)) >= powerflow.setup.options['tolP']) or \
-                    (max(abs(powerflow.setup.deltaQ)) >= powerflow.setup.options['tolQ']) or \
+        while ((max(abs(powerflow.setup.deltaP)) >= powerflow.setup.options['TEPA']) or \
+                    (max(abs(powerflow.setup.deltaQ)) >= powerflow.setup.options['TEPR']) or \
                         (max(abs(powerflow.setup.deltaY)) >= powerflow.setup.options['tolY'])):
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
@@ -271,13 +271,13 @@ class Continuation:
             powerflow.sol['iter'] += 1
 
             # Condição de Divergência por iterações
-            if (powerflow.sol['iter'] > powerflow.setup.options['itermx']):
+            if (powerflow.sol['iter'] > powerflow.setup.options['ACIT']):
                 powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
                 break
 
         ## Condição
         # Iteração Adicional em Caso de Convergência
-        if (powerflow.sol['iter'] < powerflow.setup.options['itermx']):
+        if (powerflow.sol['iter'] < powerflow.setup.options['ACIT']):
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
 
@@ -312,7 +312,7 @@ class Continuation:
             self.heuristics(powerflow,)
 
         # Reconfiguração dos Dados de Solução em Caso de Divergência
-        elif (((powerflow.sol['iter'] >= powerflow.setup.options['itermx'])) and (self.case == 1)):
+        elif (((powerflow.sol['iter'] >= powerflow.setup.options['ACIT'])) and (self.case == 1)):
             self.active_heuristic = True
             powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE'
 
@@ -333,7 +333,7 @@ class Continuation:
             powerflow.cpfsol['vsch'] = deepcopy(powerflow.case[self.case]['corr']['vsch'])
 
         # Reconfiguração dos Dados de Solução em Caso de Divergência
-        elif (((powerflow.sol['iter'] >= powerflow.setup.options['itermx'])) and (self.case > 1)):
+        elif (((powerflow.sol['iter'] >= powerflow.setup.options['ACIT'])) and (self.case > 1)):
             self.active_heuristic = True
             powerflow.sol['convergence'] = 'SISTEMA DIVERGENTE'
 
@@ -430,8 +430,8 @@ class Continuation:
             powerflow.setup.pqsch['potencia_reativa_especificada'][idx] -= value['demanda_reativa']
 
         # Tratamento
-        powerflow.setup.pqsch['potencia_ativa_especificada'] /= powerflow.setup.options['sbase']
-        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['sbase']
+        powerflow.setup.pqsch['potencia_ativa_especificada'] /= powerflow.setup.options['BASE']
+        powerflow.setup.pqsch['potencia_reativa_especificada'] /= powerflow.setup.options['BASE']
 
         # Variáveis especificadas de controle ativos
         if (powerflow.setup.controlcount > 0):
@@ -554,7 +554,7 @@ class Continuation:
                 if (value['tipo'] == 0):
                     colarray[(idx + powerflow.setup.nbus), 0] = powerflow.cpfsol['demanda_reativa'][idx]
 
-        colarray /= powerflow.setup.options['sbase']
+        colarray /= powerflow.setup.options['BASE']
 
         # Expansão Inferior
         powerflow.setup.jacob = concatenate((powerflow.setup.jacob, colarray), axis=1)
@@ -576,7 +576,7 @@ class Continuation:
 
         ## Inicialização
         # Trajetória de convergência da frequência
-        powerflow.sol['freqiter'] = append(powerflow.sol['freqiter'], powerflow.sol['freq'] * powerflow.setup.options['fbase'])
+        powerflow.sol['freqiter'] = append(powerflow.sol['freqiter'], powerflow.sol['freq'] * powerflow.setup.options['FBASE'])
 
         # Trajetória de convergência da potência ativa
         powerflow.sol['convP'] = append(powerflow.sol['convP'], max(abs(powerflow.setup.deltaP)))
@@ -675,19 +675,19 @@ class Continuation:
             powerflow.sol['active_flow_F2'][idx] = yline.real * (powerflow.sol['voltage'][k] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa k -> m
-            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_F2'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['BASE'])) + yline.imag) * (powerflow.sol['voltage'][k] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência ativa m -> k
             powerflow.sol['active_flow_2F'][idx] = yline.real * (powerflow.sol['voltage'][m] ** 2) - powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.real * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) - yline.imag * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
             # Potência reativa m -> k
-            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['sbase'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
+            powerflow.sol['reactive_flow_2F'][idx] = -((value['susceptancia'] / (2*powerflow.setup.options['BASE'])) + yline.imag) * (powerflow.sol['voltage'][m] ** 2) + powerflow.sol['voltage'][k] * powerflow.sol['voltage'][m] * (yline.imag * cos(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]) + yline.real * sin(powerflow.sol['theta'][k] - powerflow.sol['theta'][m]))
 
-        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['sbase']
-        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['sbase']
+        powerflow.sol['active_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.sol['active_flow_2F'] *= powerflow.setup.options['BASE']
 
-        powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['sbase']
-        powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['sbase']
+        powerflow.sol['reactive_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.sol['reactive_flow_2F'] *= powerflow.setup.options['BASE']
     
 
 
@@ -958,7 +958,7 @@ class Continuation:
 
         if (self.case > 0):
             # Condição de divergência na etapa de previsão por excesso de iterações
-            if (powerflow.case[self.case]['prev']['iter'] > powerflow.setup.options['itermx']) and (not self.active_heuristic) and (powerflow.setup.name != 'ieee118') and (powerflow.setup.name != 'ieee118-collapse'):
+            if (powerflow.case[self.case]['prev']['iter'] > powerflow.setup.options['ACIT']) and (not self.active_heuristic) and (powerflow.setup.name != 'ieee118') and (powerflow.setup.name != 'ieee118-collapse'):
                 self.active_heuristic = True
                 
                 # Reconfiguração do caso

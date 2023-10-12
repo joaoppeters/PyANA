@@ -29,10 +29,10 @@ class Smooth:
 
         ## Inicialização
         # Variáveis
-        if ('QLIMs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'tolqlimq')):
-            powerflow.setup.tolqlimq = 1E-10
-            powerflow.setup.tolqlimv = 1E-10
-            powerflow.setup.qliminc = 1E8
+        if ('QLIMs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'TEPRlimq')):
+            powerflow.setup.TEPRlimq = 1E-8
+            powerflow.setup.TEPRlimv = 1E-8
+            powerflow.setup.qliminc = 1E10
 
         if ('SVCs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'tolsvcq')):
             powerflow.setup.tolsvcv = 1E-6
@@ -83,19 +83,19 @@ class Smooth:
            qger: powerflow.sol['reactive_generation'][idx] * 1E-2,
            vger: powerflow.sol['voltage'][idx],
            vesp: powerflow.setup.dbarraDF.loc[idx, 'tensao'] * 1E-3,
-           qmax: powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_maxima'] / powerflow.setup.options['sbase'],
-           qmin: powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima'] / powerflow.setup.options['sbase'],
+           qmax: powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_maxima'] / powerflow.setup.options['BASE'],
+           qmin: powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima'] / powerflow.setup.options['BASE'],
         }
 
 
         ## Limites
         # Limites de Tensão
-        vlimsup = vesp + powerflow.setup.tolqlimv
-        vliminf = vesp - powerflow.setup.tolqlimv
+        vlimsup = vesp + powerflow.setup.TEPRlimv
+        vliminf = vesp - powerflow.setup.TEPRlimv
 
         # Limites de Potência Reativa
-        qlimsup = qmax - powerflow.setup.tolqlimq
-        qliminf = qmin + powerflow.setup.tolqlimq
+        qlimsup = qmax - powerflow.setup.TEPRlimq
+        qliminf = qmin + powerflow.setup.TEPRlimq
 
 
         ## Chaves
@@ -195,12 +195,12 @@ class Smooth:
             vk: powerflow.sol['voltage'][idxcer],
             vm: powerflow.sol['voltage'][idxctrl],
             r: powerflow.setup.dcerDF.loc[ncer, 'droop'],
-            bmin: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_minima'] / (powerflow.setup.options['sbase'] * (powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3) ** 2),
-            bmax: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_maxima'] / (powerflow.setup.options['sbase'] * (powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3) ** 2),
+            bmin: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_minima'] / (powerflow.setup.options['BASE'] * (powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3) ** 2),
+            bmax: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_maxima'] / (powerflow.setup.options['BASE'] * (powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3) ** 2),
         }
 
         var = deepcopy(varkey)
-        var[qgk] = (powerflow.sol['svc_reactive_generation'][ncer]) / (powerflow.setup.options['sbase'])
+        var[qgk] = (powerflow.sol['svc_reactive_generation'][ncer]) / (powerflow.setup.options['BASE'])
             
 
         ## Limites
@@ -303,12 +303,12 @@ class Smooth:
             vk: powerflow.sol['voltage'][idxcer],
             vm: powerflow.sol['voltage'][idxctrl],
             r: powerflow.setup.dcerDF.loc[ncer, 'droop'],
-            bmin: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_minima'] / (powerflow.setup.options['sbase'] * powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3),
-            bmax: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_maxima'] / (powerflow.setup.options['sbase'] * powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3),
+            bmin: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_minima'] / (powerflow.setup.options['BASE'] * powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3),
+            bmax: powerflow.setup.dcerDF.loc[ncer, 'potencia_reativa_maxima'] / (powerflow.setup.options['BASE'] * powerflow.setup.dbarraDF.loc[idxcer, 'tensao_base'] * 1E-3),
         }
 
         var = deepcopy(varkey)
-        var[ik] = (powerflow.sol['svc_current_injection'][ncer]) / (powerflow.setup.options['sbase'])
+        var[ik] = (powerflow.sol['svc_current_injection'][ncer]) / (powerflow.setup.options['BASE'])
             
 
         ## Limites
@@ -504,7 +504,7 @@ class Smooth:
         }
 
         
-        powerflow.sol['svc_reactive_generation'][ncer] = (powerflow.sol['voltage'][idxcer] ** 2) * powerflow.setup.alphabeq.subs(alpha, powerflow.sol['alpha']) * powerflow.setup.options['sbase']
+        powerflow.sol['svc_reactive_generation'][ncer] = (powerflow.sol['voltage'][idxcer] ** 2) * powerflow.setup.alphabeq.subs(alpha, powerflow.sol['alpha']) * powerflow.setup.options['BASE']
 
         # Expressão Geral
         powerflow.setup.diffsvc[idxcer] = array([diffyvk.subs(var), diffyvm.subs(var), diffyalpha.subs(var),], dtype='float64')
@@ -580,15 +580,15 @@ class Smooth:
                 qmin = powerflow.setup.dbarraDF.loc[powerflow.setup.dbarraDF['nome'] == busname, 'potencia_reativa_minima'].values[0]
                 vesp = powerflow.setup.dbarraDF.loc[powerflow.setup.dbarraDF['nome'] == busname, 'tensao'].values[0] * 1E-3
                 
-                ch1space = linspace(start=(qmax - (powerflow.setup.tolqlimq * 1E1)), stop=(qmax + (powerflow.setup.tolqlimq * 1E1)), num=10000, endpoint=True)
-                ch1value = 1 / (1 + npexp(-powerflow.setup.qliminc * (ch1space - qmax + powerflow.setup.tolqlimq)))
+                ch1space = linspace(start=(qmax - (powerflow.setup.TEPRlimq * 1E1)), stop=(qmax + (powerflow.setup.TEPRlimq * 1E1)), num=10000, endpoint=True)
+                ch1value = 1 / (1 + npexp(-powerflow.setup.qliminc * (ch1space - qmax + powerflow.setup.TEPRlimq)))
 
-                ch2space = linspace(start=(qmin - (powerflow.setup.tolqlimq * 1E1)), stop=(qmin + (powerflow.setup.tolqlimq * 1E1)), num=10000, endpoint=True)
-                ch2value = 1 / (1 + npexp(powerflow.setup.qliminc * (ch2space - qmin - powerflow.setup.tolqlimq)))
+                ch2space = linspace(start=(qmin - (powerflow.setup.TEPRlimq * 1E1)), stop=(qmin + (powerflow.setup.TEPRlimq * 1E1)), num=10000, endpoint=True)
+                ch2value = 1 / (1 + npexp(powerflow.setup.qliminc * (ch2space - qmin - powerflow.setup.TEPRlimq)))
 
-                chvspace = linspace(start=(vesp - (powerflow.setup.tolqlimv * 1E1)), stop=(vesp + (powerflow.setup.tolqlimv * 1E1)), num=10000, endpoint=True)
-                ch3value = 1 / (1 + npexp(powerflow.setup.qliminc * (chvspace - vesp - powerflow.setup.tolqlimv)))
-                ch4value = 1 / (1 + npexp(-powerflow.setup.qliminc * (chvspace - vesp + powerflow.setup.tolqlimv)))
+                chvspace = linspace(start=(vesp - (powerflow.setup.TEPRlimv * 1E1)), stop=(vesp + (powerflow.setup.TEPRlimv * 1E1)), num=10000, endpoint=True)
+                ch3value = 1 / (1 + npexp(powerflow.setup.qliminc * (chvspace - vesp - powerflow.setup.TEPRlimv)))
+                ch4value = 1 / (1 + npexp(-powerflow.setup.qliminc * (chvspace - vesp + powerflow.setup.TEPRlimv)))
 
                 caseitems = powerflow.setup.qlimkeys[busname][casekeymin - 1]
                 smooth1 = [item[0] for item in caseitems][-1]
