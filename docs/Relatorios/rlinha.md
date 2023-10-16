@@ -1,4 +1,4 @@
-# Relatório de Linha - `'RLINHA'`
+# Relatório de Linha - `'RLIN'`
 
 No relatório de linhas é feito um levantamento dos resultados de potência ativa e reativa entre barras `k` e `m`, potência ativa e reativa entre barras `m` e `k`, assim como um levantamento de perdas de potência ativa e reativa para todas as linhas do SEP em estudo.
 
@@ -20,5 +20,5 @@ Mês dia, Ano
 -----------------------------------------------------------------------------------------
 ```
 
-<!-- ## Relatório de Geração (`RGERAC`)
+<!-- ## Relatório de Geração (`RGERC`)
 --- -->

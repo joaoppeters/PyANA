@@ -407,7 +407,7 @@ class Control:
         
         # Loop
         for key,_ in powerflow.setup.control.items():
-            if (powerflow.setup.controlheur) or ((powerflow.setup.bifurcation) and (not powerflow.setup.options['full'])):
+            if (powerflow.setup.controlheur) or ((powerflow.setup.bifurcation) and (not powerflow.setup.options['FULL'])):
                 break
             
             elif (not powerflow.setup.controlheur) and (not powerflow.cpfsol['pmc']):

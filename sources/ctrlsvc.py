@@ -96,15 +96,15 @@ class SVCs:
             idxctrl = powerflow.setup.dbarraDF.index[powerflow.setup.dbarraDF['numero'] == value['barra_controlada']].tolist()[0]
             
             if (value['controle'] == 'A'):
-                Smooth(powerflow,).svcalphasmooth(idxcer, idxctrl, powerflow, ncer, case,)
+                Smooth().svcalphasmooth(idxcer, idxctrl, powerflow, ncer, case,)
                 powerflow.setup.deltaQ[idxcer] = deepcopy(powerflow.sol['svc_reactive_generation'][ncer]) / powerflow.setup.options['BASE']
 
             elif (value['controle'] == 'I'):
-                Smooth(powerflow,).svccurrentsmooth(idxcer, idxctrl, powerflow, ncer, case,)
+                Smooth().svccurrentsmooth(idxcer, idxctrl, powerflow, ncer, case,)
                 powerflow.setup.deltaQ[idxcer] = deepcopy(powerflow.sol['svc_current_injection'][ncer]) * powerflow.sol['voltage'][idxcer] / powerflow.setup.options['BASE']
             
             elif (value['controle'] == 'P'):
-                Smooth(powerflow,).svcreactivesmooth(idxcer, idxctrl, powerflow, ncer, case,)
+                Smooth().svcreactivesmooth(idxcer, idxctrl, powerflow, ncer, case,)
                 powerflow.setup.deltaQ[idxcer] = deepcopy(powerflow.sol['svc_reactive_generation'][ncer]) / powerflow.setup.options['BASE']
 
             powerflow.setup.deltaQ[idxcer] -= powerflow.setup.dbarraDF['demanda_reativa'][idxcer] / powerflow.setup.options['BASE']
@@ -315,7 +315,7 @@ class SVCs:
         """
 
         ## Inicialização
-        Smooth(powerflow,).svcpop(powerflow, pop=pop,)
+        Smooth().svcpop(powerflow, pop=pop,)
 
 
 

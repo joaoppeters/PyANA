@@ -205,12 +205,12 @@ class Loading:
                 # Plot
                 line, = ax.plot(powerflow.setup.mw[:powerflow.setup.pmcidx+1], item[:powerflow.setup.pmcidx+1], color=f'C{color}', linestyle='solid', linewidth=2, alpha=0.85, label=busname, zorder=2)
                 
-                if (powerflow.setup.options['full']):
+                if (powerflow.setup.options['FULL']):
                     dashed, = ax.plot(powerflow.setup.mw[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], item[(powerflow.setup.pmcidx+1):(powerflow.setup.v2lidx)], color=f'C{color}', linestyle='dashed', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     dotted, = ax.plot(powerflow.setup.mw[powerflow.setup.v2lidx:], item[powerflow.setup.v2lidx:], color=f'C{color}', linestyle='dotted', linewidth=2, alpha=0.85, label=busname, zorder=2)
                     ax.legend([(line, dashed, dotted)], [busname])
                 
-                elif (not powerflow.setup.options['full']):
+                elif (not powerflow.setup.options['FULL']):
                     ax.legend([(line,   )], [busname])
                 
                 # Labels

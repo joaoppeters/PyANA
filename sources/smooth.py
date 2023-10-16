@@ -19,25 +19,14 @@ class Smooth:
 
     def __init__(
         self,
-        powerflow,
+        # powerflow,
     ):
         """inicialização
         
         Parâmetros
-            powerflow: self do arquivo powerflow.py
         """
 
         ## Inicialização
-        # Variáveis
-        if ('QLIMs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'TEPRlimq')):
-            powerflow.setup.TEPRlimq = 1E-8
-            powerflow.setup.TEPRlimv = 1E-8
-            powerflow.setup.qliminc = 1E10
-
-        if ('SVCs' in powerflow.setup.control) and (not hasattr(powerflow.setup, 'tolsvcq')):
-            powerflow.setup.tolsvcv = 1E-8
-            powerflow.setup.tolalpha = 1E-8
-            powerflow.setup.svcinc = 1E10
 
 
 
@@ -90,26 +79,26 @@ class Smooth:
 
         ## Limites
         # Limites de Tensão
-        vlimsup = vesp + powerflow.setup.TEPRlimv
-        vliminf = vesp - powerflow.setup.TEPRlimv
+        vlimsup = vesp + powerflow.setup.options['SIGV']
+        vliminf = vesp - powerflow.setup.options['SIGV']
 
         # Limites de Potência Reativa
-        qlimsup = qmax - powerflow.setup.TEPRlimq
-        qliminf = qmin + powerflow.setup.TEPRlimq
+        qlimsup = qmax - powerflow.setup.options['SIGQ']
+        qliminf = qmin + powerflow.setup.options['SIGV']
 
 
         ## Chaves
         # Chave Superior de Potência Reativa
-        ch1 = 1 / (1 + spexp(-powerflow.setup.qliminc * (qger - qlimsup)))
+        ch1 = 1 / (1 + spexp(-powerflow.setup.options['SIGK'] * (qger - qlimsup)))
 
         # Chave Inferior de Poência Reativa
-        ch2 = 1 / (1 + spexp(powerflow.setup.qliminc * (qger - qliminf)))
+        ch2 = 1 / (1 + spexp(powerflow.setup.options['SIGK'] * (qger - qliminf)))
 
         # Chave Superior de Tensão
-        ch3 = 1 / (1 + spexp(powerflow.setup.qliminc * (vger - vlimsup)))
+        ch3 = 1 / (1 + spexp(powerflow.setup.options['SIGK'] * (vger - vlimsup)))
 
         # Chave Inferior de Tensão
-        ch4 = 1 / (1 + spexp(-powerflow.setup.qliminc * (vger - vliminf)))
+        ch4 = 1 / (1 + spexp(-powerflow.setup.options['SIGK'] * (vger - vliminf)))
 
 
         ## Equações de Controle
@@ -205,16 +194,16 @@ class Smooth:
 
         ## Limites
         # Limites de Tensão
-        vlimsup = vmmax + powerflow.setup.tolsvcv
-        vliminf = vmmin - powerflow.setup.tolsvcv
+        vlimsup = vmmax + powerflow.setup.options['SIGV']
+        vliminf = vmmin - powerflow.setup.options['SIGV']
 
 
         ## Chaves
         # Chave Superior de Potência Reativa - Região Indutiva
-        ch1 = 1 / (1 + spexp(-powerflow.setup.svcinc * (vm - vlimsup)))
+        ch1 = 1 / (1 + spexp(-powerflow.setup.options['SIGK'] * (vm - vlimsup)))
 
         # Chave Inferior de Poência Reativa - Região Capacitiva
-        ch2 = 1 / (1 + spexp(powerflow.setup.svcinc * (vm - vliminf)))
+        ch2 = 1 / (1 + spexp(powerflow.setup.options['SIGK'] * (vm - vliminf)))
 
 
         ## Equações de Controle
@@ -313,16 +302,16 @@ class Smooth:
 
         ## Limites
         # Limites de Tensão
-        vlimsup = vmmax + powerflow.setup.tolsvcv
-        vliminf = vmmin - powerflow.setup.tolsvcv
+        vlimsup = vmmax + powerflow.setup.options['SIGV']
+        vliminf = vmmin - powerflow.setup.options['SIGV']
 
 
         ## Chaves
         # Chave Superior de Potência Reativa - Região Indutiva
-        ch1 = 1 / (1 + spexp(-powerflow.setup.svcinc * (vm - vlimsup)))
+        ch1 = 1 / (1 + spexp(-powerflow.setup.options['SIGK'] * (vm - vlimsup)))
 
         # Chave Inferior de Poência Reativa - Região Capacitiva
-        ch2 = 1 / (1 + spexp(powerflow.setup.svcinc * (vm - vliminf)))
+        ch2 = 1 / (1 + spexp(powerflow.setup.options['SIGK'] * (vm - vliminf)))
 
 
         ## Equações de Controle
@@ -415,26 +404,26 @@ class Smooth:
 
         ## Limites
         # Limites de Ângulo de disparo
-        alphalimsup = pi - powerflow.setup.tolalpha
-        alphaliminf = pi/2 + powerflow.setup.tolalpha
+        alphalimsup = pi - powerflow.setup.options['SIGA']
+        alphaliminf = pi/2 + powerflow.setup.options['SIGA']
 
         # Limites de Tensão
-        vlimsup = vmmax + powerflow.setup.tolsvcv
-        vliminf = vmmin - powerflow.setup.tolsvcv
+        vlimsup = vmmax + powerflow.setup.options['SIGV']
+        vliminf = vmmin - powerflow.setup.options['SIGV']
 
 
         ## Chaves
         # Chave Inferior de Ângulo de disparo
-        ch1 = 1 / (1 + npexp(powerflow.setup.svcinc * (powerflow.sol['alpha'] - alphaliminf)))
+        ch1 = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (powerflow.sol['alpha'] - alphaliminf)))
 
         # Chave Superior de Ângulo de disparo
-        ch2 = 1 / (1 + npexp(-powerflow.setup.svcinc * (powerflow.sol['alpha'] - alphalimsup)))
+        ch2 = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (powerflow.sol['alpha'] - alphalimsup)))
 
         # Chave Inferior de Tensão
-        ch3 = 1 / (1 + npexp(powerflow.setup.svcinc * float(powerflow.sol['voltage'][idxctrl] - vliminf)))
+        ch3 = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * float(powerflow.sol['voltage'][idxctrl] - vliminf)))
 
         # Chave Superior de Tensao
-        ch4 = 1 / (1 + npexp(-powerflow.setup.svcinc * float(powerflow.sol['voltage'][idxctrl] - vlimsup)))
+        ch4 = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * float(powerflow.sol['voltage'][idxctrl] - vlimsup)))
 
 
         # Equações de Controle
@@ -466,35 +455,18 @@ class Smooth:
 
         
 
-        if powerflow.sol['alpha'] <= pi/2 + powerflow.setup.tolalpha:
+        if powerflow.sol['alpha'] <= pi/2 + powerflow.setup.options['SIGA']:
             # powerflow.sol['alpha'] = pi/2
             if powerflow.sol['voltage'][idxctrl] <= vmmin:
                 powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
                 powerflow.sol['alpha'] = deepcopy(powerflow.sol['alpha0'])
-                
-                # flagv0 = True
 
-        elif powerflow.sol['alpha'] >= pi - powerflow.setup.tolalpha:
+        elif powerflow.sol['alpha'] >= pi - powerflow.setup.options['SIGA']:
             # powerflow.sol['alpha'] = pi
             if powerflow.sol['voltage'][idxctrl] >= vmmax:
                 powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
                 powerflow.sol['alpha'] = deepcopy(powerflow.sol['alpha0'])
-                
-                # flagv0 = True
 
-        # if powerflow.sol['voltage'][idxctrl] >= vmmax:
-        #     powerflow.sol['alpha'] = pi/2
-        #     powerflow.sol.alpha_[-1] = alpha
-
-        # elif powerflow.sol['voltage'][idxctrl] <= vmmin:
-        #     powerflow.sol['alpha'] = pi
-        #     powerflow.sol.alpha_[-1] = alpha
-
-        # if (powerflow.sol.alpha_[-2] == pi/2 and powerflow.sol.alpha_[-1] == pi) or \
-        #     (powerflow.sol.alpha_[-1] == pi/2 and powerflow.sol.alpha_[-2] == pi):
-        #     powerflow.sol.alpha_[-1] = powerflow.sol['alpha0']
-        #     powerflow.sol['alpha'] = deepcopy(powerflow.sol['alpha0'])
-        #     powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
 
         var = {
             vk: powerflow.sol['voltage'][idxcer],
@@ -511,12 +483,7 @@ class Smooth:
 
         
         ## Resíduo
-        powerflow.setup.deltaSVC[ncer] = - Yindutiva.subs({vm:powerflow.sol['voltage'][idxctrl], alpha:powerflow.sol['alpha']}) - Ylinear.subs(var) - Ycapacitiva.subs({vm:powerflow.sol['voltage'][idxctrl], alpha:powerflow.sol['alpha']})
-
-
-        # if flagv0:
-        #     powerflow.sol['voltage'][idxctrl] = deepcopy(vmsch)
-                    
+        powerflow.setup.deltaSVC[ncer] = - Yindutiva.subs({vm:powerflow.sol['voltage'][idxctrl], alpha:powerflow.sol['alpha']}) - Ylinear.subs(var) - Ycapacitiva.subs({vm:powerflow.sol['voltage'][idxctrl], alpha:powerflow.sol['alpha']})                 
 
         ## Armazenamento de valores das chaves
         powerflow.setup.svckeys[powerflow.setup.dbarraDF.loc[idxcer, 'nome']][case].append(array([ch1, ch2, ch3, ch4,], dtype='float',))
@@ -580,15 +547,15 @@ class Smooth:
                 qmin = powerflow.setup.dbarraDF.loc[powerflow.setup.dbarraDF['nome'] == busname, 'potencia_reativa_minima'].values[0]
                 vesp = powerflow.setup.dbarraDF.loc[powerflow.setup.dbarraDF['nome'] == busname, 'tensao'].values[0] * 1E-3
                 
-                ch1space = linspace(start=(qmax - (powerflow.setup.TEPRlimq * 1E1)), stop=(qmax + (powerflow.setup.TEPRlimq * 1E1)), num=10000, endpoint=True)
-                ch1value = 1 / (1 + npexp(-powerflow.setup.qliminc * (ch1space - qmax + powerflow.setup.TEPRlimq)))
+                ch1space = linspace(start=(qmax - (powerflow.setup.options['SIGQ'] * 1E1)), stop=(qmax + (powerflow.setup.options['SIGQ'] * 1E1)), num=10000, endpoint=True)
+                ch1value = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (ch1space - qmax + powerflow.setup.options['SIGQ'])))
 
-                ch2space = linspace(start=(qmin - (powerflow.setup.TEPRlimq * 1E1)), stop=(qmin + (powerflow.setup.TEPRlimq * 1E1)), num=10000, endpoint=True)
-                ch2value = 1 / (1 + npexp(powerflow.setup.qliminc * (ch2space - qmin - powerflow.setup.TEPRlimq)))
+                ch2space = linspace(start=(qmin - (powerflow.setup.options['SIGQ'] * 1E1)), stop=(qmin + (powerflow.setup.options['SIGQ'] * 1E1)), num=10000, endpoint=True)
+                ch2value = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (ch2space - qmin - powerflow.setup.options['SIGQ'])))
 
-                chvspace = linspace(start=(vesp - (powerflow.setup.TEPRlimv * 1E1)), stop=(vesp + (powerflow.setup.TEPRlimv * 1E1)), num=10000, endpoint=True)
-                ch3value = 1 / (1 + npexp(powerflow.setup.qliminc * (chvspace - vesp - powerflow.setup.TEPRlimv)))
-                ch4value = 1 / (1 + npexp(-powerflow.setup.qliminc * (chvspace - vesp + powerflow.setup.TEPRlimv)))
+                chvspace = linspace(start=(vesp - (powerflow.setup.options['SIGV'] * 1E1)), stop=(vesp + (powerflow.setup.options['SIGV'] * 1E1)), num=10000, endpoint=True)
+                ch3value = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (chvspace - vesp - powerflow.setup.options['SIGV'])))
+                ch4value = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (chvspace - vesp + powerflow.setup.options['SIGV'])))
 
                 caseitems = powerflow.setup.qlimkeys[busname][casekeymin - 1]
                 smooth1 = [item[0] for item in caseitems][-1]
@@ -681,11 +648,11 @@ class Smooth:
                 vmmax = vmref + (droop * bmin * (vk ** 2))
                 vmmin = vmref + (droop * bmax * (vk ** 2))
                 
-                ch1space = linspace(start=(vmmax - (powerflow.setup.tolsvcv * 1E1)), stop=(vmmax + (powerflow.setup.tolsvcv * 1E1)), num=10000, endpoint=True)
-                ch1value = 1 / (1 + npexp(-powerflow.setup.svcinc * (ch1space - vmmax + powerflow.setup.tolsvcv)))
+                ch1space = linspace(start=(vmmax - (powerflow.setup.options['SIGV'] * 1E1)), stop=(vmmax + (powerflow.setup.options['SIGV'] * 1E1)), num=10000, endpoint=True)
+                ch1value = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (ch1space - vmmax + powerflow.setup.options['SIGV'])))
 
-                ch2space = linspace(start=(vmmin - (powerflow.setup.tolsvcv * 1E1)), stop=(vmmin + (powerflow.setup.tolsvcv * 1E1)), num=10000, endpoint=True)
-                ch2value = 1 / (1 + npexp(powerflow.setup.svcinc * (ch2space - vmmin - powerflow.setup.tolsvcv)))
+                ch2space = linspace(start=(vmmin - (powerflow.setup.options['SIGV'] * 1E1)), stop=(vmmin + (powerflow.setup.options['SIGV'] * 1E1)), num=10000, endpoint=True)
+                ch2value = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (ch2space - vmmin - powerflow.setup.options['SIGV'])))
 
                 caseitems = powerflow.setup.svckeys[busname][casekeymin - 1]
                 smooth1 = [item[0] for item in caseitems][-1]

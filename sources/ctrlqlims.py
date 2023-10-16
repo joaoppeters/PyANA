@@ -54,7 +54,7 @@ class Qlims:
         # Loop
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if (value['tipo'] != 0):
-                Smooth(powerflow,).qlimssmooth(idx, powerflow, nger, case,)
+                Smooth().qlimssmooth(idx, powerflow, nger, case,)
                 
                 # Incrementa contador
                 nger += 1
@@ -107,8 +107,8 @@ class Qlims:
                 # powerflow.setup.yxx[nger, nger] = 1E-10
 
                 # Barras PQV
-                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.TEPRlimq) or \
-                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.TEPRlimq):
+                if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.options['SIGQ']) or \
+                    (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.options['SIGQ']):
                     powerflow.setup.yxx[nger, nger] = powerflow.setup.diffqlim[idx][1]
 
                 # Incrementa contador
@@ -213,14 +213,14 @@ class Qlims:
         ## Inicialização 
         # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
         # powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy()
-        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.TEPRlimq), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
+        if any((powerflow.sol['reactive_generation'] > powerflow.setup.dbarraDF['potencia_reativa_maxima'].to_numpy() - powerflow.setup.options['SIGQ']), where=~powerflow.setup.mask[(powerflow.setup.nbus):(2 * powerflow.setup.nbus)]):
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
-        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
+        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['ICMN']):
             powerflow.setup.bifurcation = True
             # Condição de curva completa do fluxo de potência continuado
-            if (powerflow.setup.options['full']):
+            if (powerflow.setup.options['FULL']):
                 powerflow.setup.dbarraDF['true_potencia_reativa_minima'] = powerflow.setup.dbarraDF.loc[:, 'potencia_reativa_minima']
                 for idx, value in powerflow.setup.dbarraDF.iterrows():
                     if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']) and (value['tipo'] != 0):
@@ -242,4 +242,4 @@ class Qlims:
         """
 
         ## Inicialização
-        Smooth(powerflow,).qlimspop(powerflow, pop=pop,)
+        Smooth().qlimspop(powerflow, pop=pop,)

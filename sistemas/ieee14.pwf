@@ -2,7 +2,9 @@ TITU
 ****   Sistema teste de 14 maquinas - IEEE  ****
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
-BASE   100  TEPA  1E-4  TEPR  1E-4  QLST  1E-6
+BASE   100  TEPA  1E-6  TEPR  1E-6  QLST  1E-6
+FULL     0  
+DMAX   100  ICMN  1E-9
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
@@ -30,13 +32,13 @@ DLIN
     2         5     5.695017.3883.4000
     3         4     6.701017.1033.4600
     4         5     1.33504.21101.2800     
-    4         7           20.912      0.800  0.8 1.2
-    4         9           55.618      0.800  0.8 1.2
-    5         6           25.202      0.800  0.8 1.2
+    4         7           20.912      0.978  0.8 1.2
+    4         9           55.618      0.969  0.8 1.2
+    5         6           25.202      0.932  0.8 1.2
     6        11     9.498019.890
     6        12     12.29125.581
     6        13     6.615013.027
-    7         8           17.615      1.   0.999 1.
+    7         8           17.615      
     7         9           11.001
     9        10     3.18108.4500
     9        14     12.71127.038
@@ -56,14 +58,10 @@ DMET
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
 AREA     1
 99999
-DCER
-(No ) O Gr Un (Kb ) (Incl) ( Qg)( Qn)( Qm) C E
-  14    1   1   14     2.        -100  100 A  
-99999
 DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 AREA     1                                            1.   1.
 99999
-EXLF NEWT qlim rbar
-(EXIC NEWT  
+EXLF NEWT QLIM
+EXIC NEWT QLIM 
 FIM

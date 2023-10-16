@@ -1,1 +1,1 @@
-# Relatório de Geradores - `'RGERA'`
+# Relatório de Geradores - `'RGER'`

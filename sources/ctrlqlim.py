@@ -298,10 +298,10 @@ class Qlim:
             powerflow.setup.controlheur = True
 
         # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB 
-        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['icmn']):
+        if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'lambda') and ((powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])) <= powerflow.setup.options['ICMN']):
             powerflow.setup.bifurcation = True
             # Condição de curva completa do fluxo de potência continuado
-            if (powerflow.setup.options['full']):
+            if (powerflow.setup.options['FULL']):
                 powerflow.setup.dbarraDF['true_potencia_reativa_minima'] = powerflow.setup.dbarraDF.loc[:, 'potencia_reativa_minima']
                 for idx, value in powerflow.setup.dbarraDF.iterrows():
                     if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima']):

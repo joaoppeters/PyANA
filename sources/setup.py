@@ -47,7 +47,7 @@ class Setup:
                 Stochastic(powerflow.method, self,)
 
             # Classe para determinação dos valores padrão das variáveis de tolerância
-            Options(powerflow, self,)
+            Options(self,)
 
             # Classe para determinar a realização das opções de controle escolhidas
             Control(powerflow, self,)

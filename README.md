@@ -115,11 +115,11 @@ PowerFlow(
     - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
     - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
     - **Opções:**
-        - `'RBARRA'` - [gera o relatório de Dados de Barra em caso Convergente ou Divergente.](docs/Relatorios/rbarra.md)
+        - `'RBAR'` - [gera o relatório de Dados de Barra em caso Convergente ou Divergente.](docs/Relatorios/RBAR.md)
 
-        - `'RLINHA'` - [gera o relatório de Dados de Linha em caso Convergente ou Divergente.](docs/Relatorios/rlinha.md)
+        - `'RLIN'` - [gera o relatório de Dados de Linha em caso Convergente ou Divergente.](docs/Relatorios/RLIN.md)
 
-        - `'RGERA'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/rgera.md)
+        - `'RGER'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/RGER.md)
 
         - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
@@ -141,7 +141,7 @@ control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVCs', 'VCTRL']
 
 monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON']
     
-report=['RBARRA', 'RLINHA', 'RGERA', 'RSVC', 'RCPF']
+report=['RBAR', 'RLIN', 'RGER', 'RSVC', 'RCPF']
 
 PowerFlow(
     system=system, 

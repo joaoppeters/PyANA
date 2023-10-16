@@ -7,7 +7,7 @@ solução do fluxo de potência via método newton-raphson
 
 opções de controle ativadas: QLIMs 
 
-opções de relatório ativadas: RBARRA 
+opções de relatório ativadas: RBAR 
 
 
 

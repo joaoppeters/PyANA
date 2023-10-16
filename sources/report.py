@@ -31,9 +31,9 @@ class Reports:
             if (powerflow.report):
                 setup.report = dict()
                 self.report = {
-                    'RBARRA': False, 
-                    'RLINHA': False, 
-                    'RGERA': False, 
+                    'RBAR': False, 
+                    'RLIN': False, 
+                    'RGER': False, 
                     'RSVC': False,
                     'RCPF': False,
                     }
@@ -61,16 +61,16 @@ class Reports:
             if (powerflow.setup.report):
                 for r in powerflow.setup.report:
                     # relatório de barra
-                    if (r == 'RBARRA'):
-                        self.rbarra(powerflow,)
+                    if (r == 'RBAR'):
+                        self.RBAR(powerflow,)
                     # relatório de linha
-                    elif (r == 'RLINHA'):
-                        self.rlinha(powerflow,)
+                    elif (r == 'RLIN'):
+                        self.RLIN(powerflow,)
                     # relatório de geradores
-                    elif (r == 'RGERA'):
-                        self.rgera(powerflow,)
+                    elif (r == 'RGER') and ((hasattr(setup, 'dgerDF')) and (not setup.dgerDF.empty)):
+                        self.RGER(powerflow,)
                     # relatório de compensadores estáticos de potência reativa
-                    elif (r == 'RSVC'):
+                    elif (r == 'RSVC') and ((hasattr(setup, 'dcerDF')) and (not setup.dcerDF.empty)):
                         self.rsvc(powerflow,)
             
             # relatório de fluxo de potência continuado
@@ -210,7 +210,7 @@ class Reports:
 
 
 
-    def rbarra(
+    def RBAR(
         self,
         powerflow,
     ):
@@ -253,7 +253,7 @@ class Reports:
 
 
 
-    def rlinha(
+    def RLIN(
         self,
         powerflow,
     ):
@@ -321,7 +321,7 @@ class Reports:
 
 
 
-    def rgera(
+    def RGER(
         self,
         powerflow,
     ):

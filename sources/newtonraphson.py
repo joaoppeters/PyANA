@@ -33,7 +33,7 @@ class NewtonRaphson:
 
         # # Smooth
         # if ('QLIMs' in powerflow.setup.control) and (powerflow.method == 'NEWTON'):
-        #     Smooth(powerflow,).qlimstorage(powerflow,)
+        #     Smooth().qlimstorage(powerflow,)
 
 
 
@@ -80,8 +80,8 @@ class NewtonRaphson:
         self.residue(powerflow,)
 
         while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['TEPA']) or \
-            (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['TEPR']) or \
-                Control(powerflow, powerflow.setup).controldelta(powerflow,)):
+                    (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['TEPR']) or \
+                        Control(powerflow, powerflow.setup).controldelta(powerflow,)):
 
             # Armazenamento da trajetória de convergência
             self.convergence(powerflow,)
