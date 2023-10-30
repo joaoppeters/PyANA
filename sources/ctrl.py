@@ -12,6 +12,7 @@ from numpy import abs, any, append, array, max, zeros
 from ctrlfreq import Freq
 from ctrlqlim import Qlim
 from ctrlqlims import Qlims
+from ctrlqlimn import Qlimn
 from ctrlsvc import SVCs
 
 class Control:
@@ -42,6 +43,7 @@ class Control:
                     'FREQ': False,
                     'QLIM': False,
                     'QLIMs': False,
+                    'QLIMn': False,
                     'SVCs' : False,
                     'VCTRL': False,
                     }
@@ -69,7 +71,7 @@ class Control:
         ## Inicialização
         print('\033[96mOpções de controle escolhidas: ', end='')
         for k, _ in self.control.items():
-            if ((k == 'SVCs') and not hasattr(setup, 'dcerDF')):
+            if ((k == 'SVCs') and (setup.codes['DCER'])):
                 continue
             if (k in powerflow.control):
                 setup.control[k] = True
@@ -128,13 +130,18 @@ class Control:
                 powerflow.setup.totaldevicescontrol += powerflow.setup.nger
                 powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIM'
                 Qlim().qlimsol(powerflow,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.nger
                 powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIMs'
-
                 Qlims().qlimssol(powerflow,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                powerflow.setup.controlcount += 1
+                powerflow.setup.totaldevicescontrol += powerflow.setup.nger
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIMn'
+                Qlimn().qlimnsol(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 powerflow.setup.controlcount += 1
@@ -180,9 +187,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 Qlim().qlimsch(powerflow,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimssch(powerflow,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimnsch(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 SVCs().svcsch(powerflow,)
@@ -229,9 +239,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 Qlim().qlimres(powerflow,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimsres(powerflow, case,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimnres(powerflow, case,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 SVCs().svcres(powerflow, case,)
@@ -281,9 +294,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 Qlim().qlimsubjac(powerflow,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimssubjac(powerflow,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimnsubjac(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 SVCs().svcsubjac(powerflow,)
@@ -332,9 +348,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 Qlim().qlimupdt(powerflow,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimsupdt(powerflow,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimnupdt(powerflow,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 SVCs().svcupdt(powerflow,)
@@ -377,9 +396,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 Qlim().qlimcorr(powerflow, case,)
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimscorr(powerflow, case,)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimncorr(powerflow, case,)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 SVCs().svccorr(powerflow, case,)
@@ -432,6 +454,9 @@ class Control:
                 # controle suave de limite de geração de potência reativa
                 elif (key == 'QLIMs'):
                     Qlims().qlimsheur(powerflow,)
+                # controle suave de limite de geração de potência reativa
+                elif (key == 'QLIMn'):
+                    Qlimn().qlimnheur(powerflow,)
                 # controle de compensadores estáticos de potência reativa
                 elif (key == 'SVCs'):
                     SVCs().svcheur(powerflow,)
@@ -474,9 +499,12 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 pass
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
                 Qlims().qlimspop(powerflow, pop=pop)
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
+                Qlimn().qlimnpop(powerflow, pop=pop)
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
                 pass
@@ -517,8 +545,11 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 pass
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
+                pass
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
                 pass
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
@@ -562,8 +593,11 @@ class Control:
             # controle de limite de geração de potência reativa
             elif (key == 'QLIM'):
                 pass
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (key == 'QLIMs'):
+                pass
+            # controle suave numerico de limite de geração de potência reativa
+            elif (key == 'QLIMn'):
                 pass
             # controle de compensadores estáticos de potência reativa
             elif (key == 'SVCs'):
@@ -615,8 +649,12 @@ class Control:
             elif (value == 'QLIM'):
                 boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
                 ctrl += powerflow.setup.nger
-            # controle suave de limite de geração de potência reativa
+            # controle suave simbolico de limite de geração de potência reativa
             elif (value == 'QLIMs'):
+                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+                ctrl += powerflow.setup.nger
+            # controle suave numerico de limite de geração de potência reativa
+            elif (value == 'QLIMn'):
                 boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
                 ctrl += powerflow.setup.nger
             # controle de compensadores estáticos de potência reativa

@@ -1,0 +1,10 @@
+October 22, 2023
+
+
+relatório de monitoramento do sistema ieee24-apavila
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: 
+
+
+fim do relatório de monitoramento do sistema ieee24-apavila

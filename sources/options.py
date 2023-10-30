@@ -45,12 +45,10 @@ class Options:
             else:
                 setup.options[k] = deepcopy(setup.dcteDF.loc[setup.dcteDF['constante'] == k]['valor_constante'][0])
 
-        if (not setup.dincDF.empty):
+        if (setup.codes['DINC']):
             setup.options['cpfLambda'] = setup.dincDF.loc[0, 'passo_incremento_potencia_ativa']
-
-        
-        setup.options['cpfBeta'] = zeros(setup.nbus)
-        if (hasattr(setup, 'dgeraDF')) and (not setup.dgeraDF.empty):
-            for idx, value in setup.dgeraDF.iterrows():
-                idx = value['numero'] - 1
-                setup.options['cpfBeta'][idx] = value['fator_participacao']
+            setup.options['cpfBeta'] = zeros(setup.nbus)
+            if (setup.codes['DGER']):
+                for idx, value in setup.dgeraDF.iterrows():
+                    idx = value['numero'] - 1
+                    setup.options['cpfBeta'][idx] = value['fator_participacao']

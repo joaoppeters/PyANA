@@ -11,13 +11,14 @@ from powerflow import PowerFlow
 system = 'ieee14.pwf'
 
 method = 'NEWTON'
-method = 'CPF'
+# method = 'CPF'
 # method = 'STOCH'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 # control = ['SVCs']
 # control = ['SVCs']
-control = ['QLIM',]
+control = ['QLIMn',]
+# control = ['FREQ',]
 # control = []
 
 monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']

@@ -67,10 +67,10 @@ class Reports:
                     elif (r == 'RLIN'):
                         self.RLIN(powerflow,)
                     # relatório de geradores
-                    elif (r == 'RGER') and ((hasattr(setup, 'dgerDF')) and (not setup.dgerDF.empty)):
+                    elif (r == 'RGER') and (powerflow.setup.codes['DGER']):
                         self.RGER(powerflow,)
                     # relatório de compensadores estáticos de potência reativa
-                    elif (r == 'RSVC') and ((hasattr(setup, 'dcerDF')) and (not setup.dcerDF.empty)):
+                    elif (r == 'RSVC') and (powerflow.setup.codes['DCER']):
                         self.rsvc(powerflow,)
             
             # relatório de fluxo de potência continuado
@@ -726,7 +726,7 @@ class Reports:
                  
         
         # Smooth
-        if ('QLIMs' in powerflow.setup.control):
+        if ('QLIMs' in powerflow.setup.control) or ('QLIMn' in powerflow.setup.control):
             for busname, cases in powerflow.setup.qlimkeys.items():
                 busidx = powerflow.setup.dbarraDF[powerflow.setup.dbarraDF['nome'] == busname].index.values
 

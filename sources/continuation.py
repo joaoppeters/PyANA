@@ -388,7 +388,7 @@ class Continuation:
         self.deltaincrement = sum(powerflow.setup.dbarraDF['demanda_ativa'].to_numpy()) - self.preincrement
 
         # Incremento de geração
-        if (hasattr(powerflow.setup, 'dgeraDF')):
+        if (powerflow.setup.codes['DGER']):
             for idxger, valueger in powerflow.setup.dgeraDF.iterrows():
                 idx = valueger['numero'] - 1
                 powerflow.setup.dbarraDF.at[idx, 'potencia_ativa'] = powerflow.setup.dbarraDF['potencia_ativa'][idx] + (self.deltaincrement * valueger['fator_participacao'])

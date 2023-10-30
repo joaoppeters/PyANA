@@ -8,7 +8,7 @@
 
 from copy import deepcopy
 from matplotlib import pyplot as plt
-from numpy import abs, arange, array, exp as npexp, linspace, min as mn, pi, seterr
+from numpy import abs, array, exp as npexp, linspace, min as mn, pi, seterr
 from sympy import Symbol
 from sympy.functions import exp as spexp
 
@@ -16,19 +16,6 @@ from folder import Folder
 
 class Smooth:
     """classe para aplicação da função suave sigmoide"""
-
-    def __init__(
-        self,
-        # powerflow,
-    ):
-        """inicialização
-        
-        Parâmetros
-        """
-
-        ## Inicialização
-
-
 
     def qlimssmooth(
         self,
@@ -129,6 +116,96 @@ class Smooth:
 
         ## Armazenamento de valores das chaves
         powerflow.setup.qlimkeys[powerflow.setup.dbarraDF.loc[idx, 'nome']][case].append(array([ch1.subs(var), ch2.subs(var), ch3.subs(var), ch4.subs(var)]))
+
+
+    
+    def qlimnsmooth(
+        self,
+        idx,
+        powerflow,
+        nger,
+        case,
+    ):
+        """aplicação da função suave sigmoide para tratamento de limite de geração de potência reativa
+        
+        Parâmetros
+            idx: índice da da barra geradora
+            powerflow: self do arquivo powerflow.py
+            nger: índice de geradores
+            case: caso analisado do fluxo de potência continuado (prev + corr)
+        """
+
+        ## Inicialização
+        seterr(all="ignore")
+
+        # Variáveis
+        if not hasattr(powerflow.setup, 'qlimkeys'):
+            powerflow.setup.qlimkeys = dict()
+            powerflow.setup.diffqlim = dict()
+
+        if powerflow.setup.qlimkeys.get(powerflow.setup.dbarraDF.loc[idx, 'nome']) is None:
+            powerflow.setup.qlimkeys[powerflow.setup.dbarraDF.loc[idx, 'nome']] = dict()
+
+        if case not in powerflow.setup.qlimkeys[powerflow.setup.dbarraDF.loc[idx, 'nome']]:
+            powerflow.setup.qlimkeys[powerflow.setup.dbarraDF.loc[idx, 'nome']][case] = list()
+
+        # Variáveis Simbólicas
+        qger = powerflow.sol['reactive_generation'][idx] * 1E-2
+        vger = powerflow.sol['voltage'][idx]
+        vesp = powerflow.setup.dbarraDF.loc[idx, 'tensao'] * 1E-3
+        qmax = powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_maxima'] / powerflow.setup.options['BASE']
+        qmin = powerflow.setup.dbarraDF.loc[idx, 'potencia_reativa_minima'] / powerflow.setup.options['BASE']
+
+
+        ## Limites
+        # Limites de Tensão
+        vlimsup = vesp + powerflow.setup.options['SIGV']
+        vliminf = vesp - powerflow.setup.options['SIGV']
+
+        # Limites de Potência Reativa
+        qlimsup = qmax - powerflow.setup.options['SIGQ']
+        qliminf = qmin + powerflow.setup.options['SIGV']
+
+
+        ## Chaves
+        # Chave Superior de Potência Reativa
+        ch1 = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (qger - qlimsup)))
+
+        # Chave Inferior de Poência Reativa
+        ch2 = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (qger - qliminf)))
+
+        # Chave Superior de Tensão
+        ch3 = 1 / (1 + npexp(powerflow.setup.options['SIGK'] * (vger - vlimsup)))
+
+        # Chave Inferior de Tensão
+        ch4 = 1 / (1 + npexp(-powerflow.setup.options['SIGK'] * (vger - vliminf)))
+
+
+        ## Equações de Controle
+        # Normal
+        Ynormal = (1 - ch1 * ch3) * (1 - ch2 * ch4) * (vger - vesp)
+        
+        # Superior
+        Ysuperior = (ch1 * ch3) * (1 - ch2 * ch4) * (qger - qmax)
+        
+        # Inferior 
+        Yinferior = (1 - ch1 * ch3) * (ch2 * ch4) * (qger - qmin)
+
+
+        ## Derivadas
+        # Expressão Geral
+        powerflow.setup.diffqlim[idx] = array([
+            (1 - ch1 * ch3) * (1 - ch2 * ch4), # Derivada Parcial de Y por V
+            (ch1 * ch3) * (1 - ch2 * ch4) + (ch2 * ch4) * (1 - ch1 * ch3), # Derivada Parcial de Y por Qg
+            ], dtype='float64')
+
+        
+        ## Resíduo
+        powerflow.setup.deltaQlim[nger] = - Ynormal - Ysuperior - Yinferior
+                    
+
+        ## Armazenamento de valores das chaves
+        powerflow.setup.qlimkeys[powerflow.setup.dbarraDF.loc[idx, 'nome']][case].append(array([ch1, ch2, ch3, ch4]))
 
 
     
@@ -368,7 +445,6 @@ class Smooth:
         """
 
         ## Inicialização
-        flagv0 = False
         seterr(all="ignore")
 
         # Variáveis

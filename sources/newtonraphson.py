@@ -78,6 +78,10 @@ class NewtonRaphson:
 
         # Resíduos
         self.residue(powerflow,)
+        
+        print("DeltaP", powerflow.setup.deltaP)
+        print("DeltaQ", powerflow.setup.deltaQ)
+        print("DeltaY", powerflow.setup.deltaY)
 
         while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['TEPA']) or \
                     (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['TEPR']) or \
@@ -97,6 +101,10 @@ class NewtonRaphson:
 
             # Atualização dos resíduos
             self.residue(powerflow,)
+        
+            print("DeltaP", powerflow.setup.deltaP)
+            print("DeltaQ", powerflow.setup.deltaQ)
+            print("DeltaY", powerflow.setup.deltaY)
             
             # Incremento de iteração
             powerflow.sol['iter'] += 1
@@ -195,7 +203,7 @@ class NewtonRaphson:
                 powerflow.setup.deltaP[idx] -= PQCalc().pcalc(powerflow, idx,)
 
             # Tipo PQ - Resíduo Potência Reativa
-            if ('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control) or (value['tipo'] == 0):
+            if ('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control) or ('QLIMn' in powerflow.setup.control) or (value['tipo'] == 0):
                 powerflow.setup.deltaQ[idx] += powerflow.setup.pqsch['potencia_reativa_especificada'][idx]
                 powerflow.setup.deltaQ[idx] -= PQCalc().qcalc(powerflow, idx,)
 
@@ -339,7 +347,7 @@ class NewtonRaphson:
         # Reorganização da Matriz Jacobiana Expandida
         self.jacob = deepcopy(powerflow.setup.jacob)
         
-        if (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)):
+        if (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control)) or ('QLIMn' in powerflow.setup.control):
             self.reidx = insert(arange(0, ((2 * powerflow.setup.nbus))), (powerflow.setup.nbus), (-1 * arange(1, powerflow.setup.nger + 1)))
 
             self.jacob = self.jacob[self.reidx, :][:, self.reidx]
@@ -350,7 +358,7 @@ class NewtonRaphson:
             self.qt = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, :(powerflow.setup.nbus + powerflow.setup.nger)])
             self.qv = deepcopy(self.jacob[(powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger), :][:, (powerflow.setup.nbus + powerflow.setup.nger):(2 * powerflow.setup.nbus + powerflow.setup.nger)])
 
-        elif (not (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control))):
+        elif (not (('QLIM' in powerflow.setup.control) or ('QLIMs' in powerflow.setup.control))) or ('QLIMn' in powerflow.setup.control):
             # Submatrizes Jacobianas
             self.pt = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, :(powerflow.setup.nbus)])
             self.pv = deepcopy(self.jacob[:(powerflow.setup.nbus), :][:, (powerflow.setup.nbus):(2 * powerflow.setup.nbus)])

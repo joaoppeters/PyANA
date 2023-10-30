@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import concatenate, nan, ones
+from numpy import concatenate, count_nonzero, nan, nonzero, ones
 from pandas import DataFrame as DF
 
 class PWF:
@@ -797,7 +797,7 @@ class PWF:
                     'capacidade_emergencial': 'float',
                     'numero_taps': 'int',
                     'capacidade_equipamento': 'float',
-                    'agreg1': 'object',
+                    'agreg1': 'float',
                     'agreg2': 'object',
                     'agreg3': 'object',
                     'agreg4': 'object',
@@ -812,5 +812,9 @@ class PWF:
 
             # Número de barras do sistema
             setup.nlin = len(pandas.de.values)
+
+            # Número de plim
+            setup.plim = count_nonzero(pandas.agreg1)
+            setup.plimline = nonzero(pandas.agreg1)
 
         return pandas

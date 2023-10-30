@@ -1,24 +1,10 @@
-September 27, 2022
+October 21, 2023
 
 
 relatório de monitoramento do sistema ieee24
 solução do fluxo de potência via método newton-raphson
 
-opções de monitoramento ativadas: QGMON VMON 
-
-
-vv monitoramento de potência reativa gerada vv
-
-
-
-
-vv monitoramento de magnitude de tensão de barramentos vv
-
-A magnitude de tensão da BARRA--18 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
-A magnitude de tensão da BARRA--21 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
-A magnitude de tensão da BARRA--22 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
-A magnitude de tensão da BARRA--23 violou o limite máximo estabelecido para análise ( 1.050 >= 1.05 ).
-
+opções de monitoramento ativadas: 
 
 
 fim do relatório de monitoramento do sistema ieee24

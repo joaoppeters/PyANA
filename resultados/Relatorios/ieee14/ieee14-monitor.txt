@@ -1,10 +1,10 @@
-October 16, 2023
+October 30, 2023
 
 
-relatório de monitoramento do sistema ieee14
-solução do fluxo de potência via método newton-raphson
+relatÃ³rio de monitoramento do sistema ieee14
+soluÃ§Ã£o do fluxo de potÃªncia via mÃ©todo newton-raphson
 
-opções de monitoramento ativadas: 
+opÃ§Ãµes de monitoramento ativadas: 
 
 
-fim do relatório de monitoramento do sistema ieee14
+fim do relatÃ³rio de monitoramento do sistema ieee14
