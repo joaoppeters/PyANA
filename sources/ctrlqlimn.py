@@ -8,6 +8,7 @@
 
 from copy import deepcopy
 from numpy import any, append, concatenate, ones, zeros
+from scipy.sparse import csc_matrix, hstack, vstack
 
 from smooth import Smooth
 
@@ -78,38 +79,38 @@ class Qlimn:
         # 
         # jacobiana:
         # 
-        #   H     N   pxx   
-        #   M     L   qxx   
-        # yxt   yxv   yxx   
+        #   H     N   px   
+        #   M     L   qx   
+        #  yt    yv   yx   
         # 
 
         # Dimensão da matriz Jacobiana
         powerflow.setup.dimpreqlim = deepcopy(powerflow.setup.jacob.shape[0])
             
         # Submatrizes
-        powerflow.setup.pxx = zeros([powerflow.setup.nbus, powerflow.setup.nger])        
-        powerflow.setup.qxx = zeros([powerflow.setup.nbus, powerflow.setup.nger])
-        powerflow.setup.yxx = zeros([powerflow.setup.nger, powerflow.setup.nger])
-        powerflow.setup.yxt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
-        powerflow.setup.yxv = zeros([powerflow.setup.nger, powerflow.setup.nbus])
+        powerflow.setup.px = zeros([powerflow.setup.nbus, powerflow.setup.nger])        
+        powerflow.setup.qx = zeros([powerflow.setup.nbus, powerflow.setup.nger])
+        powerflow.setup.yx = zeros([powerflow.setup.nger, powerflow.setup.nger])
+        powerflow.setup.yt = zeros([powerflow.setup.nger, powerflow.setup.nbus])
+        powerflow.setup.yv = zeros([powerflow.setup.nger, powerflow.setup.nbus])
 
         # Contador
         nger = 0
 
-        # Submatrizes PXP QXP YQV YXT
+        # Submatrizes QX YV YX
         for idx, value in powerflow.setup.dbarraDF.iterrows():
             if (value['tipo'] != 0):
                 # dQg/dx
-                powerflow.setup.qxx[idx, nger] = -1
+                powerflow.setup.qx[idx, nger] = -1
 
                 # Barras PV
-                powerflow.setup.yxv[nger, idx] = powerflow.setup.diffqlim[idx][0]
-                # powerflow.setup.yxx[nger, nger] = 1E-10
+                powerflow.setup.yv[nger, idx] = powerflow.setup.diffqlim[idx][0]
+                # powerflow.setup.yx[nger, nger] = 1E-10
 
                 # Barras PQV
                 if (powerflow.sol['reactive_generation'][idx] > value['potencia_reativa_maxima'] - powerflow.setup.options['SIGQ']) or \
                     (powerflow.sol['reactive_generation'][idx] < value['potencia_reativa_minima'] + powerflow.setup.options['SIGQ']):
-                    powerflow.setup.yxx[nger, nger] = powerflow.setup.diffqlim[idx][1]
+                    powerflow.setup.yx[nger, nger] = powerflow.setup.diffqlim[idx][1]
 
                 # Incrementa contador
                 nger += 1
@@ -120,18 +121,15 @@ class Qlimn:
             powerflow.setup.extrarow = zeros([powerflow.setup.nger, powerflow.setup.controldim])
             powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.nger])
 
-            # H-N M-L + yxt-yxv
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv, powerflow.setup.extrarow), axis=1)), axis=0)
-
-            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracol, powerflow.setup.yxx), axis=0)), axis=1)
+            ytv = csc_matrix(concatenate((powerflow.setup.yt, powerflow.setup.yv, powerflow.setup.extrarow), axis=1))
+            pqyx = csc_matrix(concatenate((powerflow.setup.px, powerflow.setup.qx, powerflow.setup.extracol, powerflow.setup.yx), axis=0))
 
         elif (powerflow.setup.controldim == 0):
-            # H-N M-L + yxt-yxv
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)
+            ytv = csc_matrix(concatenate((powerflow.setup.yt, powerflow.setup.yv), axis=1))
+            pqyx = csc_matrix(concatenate((powerflow.setup.px, powerflow.setup.qx, powerflow.setup.yx), axis=0))
 
-            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.yxx), axis=0)), axis=1)
+        powerflow.setup.jacob = vstack([powerflow.setup.jacob, ytv], format='csc')
+        powerflow.setup.jacob = hstack([powerflow.setup.jacob, pqyx], format='csc')
 
 
 

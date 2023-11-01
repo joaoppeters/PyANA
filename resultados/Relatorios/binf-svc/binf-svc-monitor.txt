@@ -1,10 +1,10 @@
 November 01, 2023
 
 
-relatório de monitoramento do sistema ieee30-libsvc
+relatório de monitoramento do sistema binf-svc
 solução do fluxo de potência via método newton-raphson
 
 opções de monitoramento ativadas: 
 
 
-fim do relatório de monitoramento do sistema ieee30-libsvc
+fim do relatório de monitoramento do sistema binf-svc

@@ -8,7 +8,8 @@
 
 from copy import deepcopy
 from numpy import abs, append, arange, argmax, array, concatenate, cos, dot, insert, max, radians, sin, zeros
-from numpy.linalg import det, eig, solve, inv
+from numpy.linalg import det, eig, inv
+from scipy.sparse.linalg import spsolve
 
 from calc import PQCalc
 from ctrl import Control
@@ -78,10 +79,6 @@ class NewtonRaphson:
 
         # Resíduos
         self.residue(powerflow,)
-        
-        print("DeltaP", powerflow.setup.deltaP)
-        print("DeltaQ", powerflow.setup.deltaQ)
-        print("DeltaY", powerflow.setup.deltaY)
 
         while ((max(abs(powerflow.setup.deltaP)) > powerflow.setup.options['TEPA']) or \
                     (max(abs(powerflow.setup.deltaQ)) > powerflow.setup.options['TEPR']) or \
@@ -91,20 +88,16 @@ class NewtonRaphson:
             self.convergence(powerflow,)
 
             # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
+            Jacobi().jacobi(powerflow,)
 
             # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+            powerflow.setup.statevar = spsolve(powerflow.setup.jacob, powerflow.setup.deltaPQY, use_umfpack=True)
             
             # Atualização das Variáveis de estado
             self.update_statevar(powerflow,)
 
             # Atualização dos resíduos
             self.residue(powerflow,)
-        
-            print("DeltaP", powerflow.setup.deltaP)
-            print("DeltaQ", powerflow.setup.deltaQ)
-            print("DeltaY", powerflow.setup.deltaY)
             
             # Incremento de iteração
             powerflow.sol['iter'] += 1
@@ -121,10 +114,10 @@ class NewtonRaphson:
             self.convergence(powerflow,)
 
             # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
+            Jacobi().jacobi(powerflow,)
 
             # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+            powerflow.setup.statevar = spsolve(powerflow.setup.jacob, powerflow.setup.deltaPQY, use_umfpack=True)
 
             # Atualização das Variáveis de estado
             self.update_statevar(powerflow,)

@@ -7,7 +7,8 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import any, append, concatenate, isreal, pi, roots, zeros
+from numpy import append, concatenate, isreal, pi, roots, zeros
+from scipy.sparse import csc_matrix, hstack, vstack
 from sympy import Symbol
 from sympy.functions import sin
 
@@ -132,20 +133,20 @@ class SVCs:
         # 
         # jacobiana:
         # 
-        #   H     N   pxx   
-        #   M     L   qxx   
-        # yxt   yxv   yxx   
+        #   H     N   px   
+        #   M     L   qx   
+        #  yt    yv   yx   
         # 
 
         # Dimensão da matriz Jacobiana
         powerflow.setup.dimpresvc = deepcopy(powerflow.setup.jacob.shape[0])
             
         # Submatrizes
-        powerflow.setup.pxx = zeros([powerflow.setup.nbus, powerflow.setup.ncer])        
-        powerflow.setup.qxx = zeros([powerflow.setup.nbus, powerflow.setup.ncer])
-        powerflow.setup.yxx = zeros([powerflow.setup.ncer, powerflow.setup.ncer])
-        powerflow.setup.yxt = zeros([powerflow.setup.ncer, powerflow.setup.nbus])
-        powerflow.setup.yxv = zeros([powerflow.setup.ncer, powerflow.setup.nbus])
+        powerflow.setup.px = zeros([powerflow.setup.nbus, powerflow.setup.ncer])        
+        powerflow.setup.qx = zeros([powerflow.setup.nbus, powerflow.setup.ncer])
+        powerflow.setup.yx = zeros([powerflow.setup.ncer, powerflow.setup.ncer])
+        powerflow.setup.yt = zeros([powerflow.setup.ncer, powerflow.setup.nbus])
+        powerflow.setup.yv = zeros([powerflow.setup.ncer, powerflow.setup.nbus])
 
         # Contador
         ncer = 0
@@ -157,29 +158,29 @@ class SVCs:
 
             if (value['barra'] != value['barra_controlada']):
                 # Derivada Vk
-                powerflow.setup.yxv[ncer, idxcer] = powerflow.setup.diffsvc[idxcer][0]
+                powerflow.setup.yv[ncer, idxcer] = powerflow.setup.diffsvc[idxcer][0]
 
                 # Derivada Vm
-                powerflow.setup.yxv[ncer, idxctrl] = powerflow.setup.diffsvc[idxcer][1]
+                powerflow.setup.yv[ncer, idxctrl] = powerflow.setup.diffsvc[idxcer][1]
 
             elif (value['barra'] == value['barra_controlada']):
                 # Derivada Vk + Vm
-                powerflow.setup.yxv[ncer, idxcer] = powerflow.setup.diffsvc[idxcer][0] + powerflow.setup.diffsvc[idxcer][1]
+                powerflow.setup.yv[ncer, idxcer] = powerflow.setup.diffsvc[idxcer][0] + powerflow.setup.diffsvc[idxcer][1]
 
             # Derivada Equação de Controle Adicional por Variável de Estado Adicional
-            powerflow.setup.yxx[ncer, ncer] = powerflow.setup.diffsvc[idxcer][2]
+            powerflow.setup.yx[ncer, ncer] = powerflow.setup.diffsvc[idxcer][2]
 
             # Derivada Qk
             if (value['controle'] == 'A'):
                 powerflow.setup.jacob[powerflow.setup.nbus + idxcer, powerflow.setup.nbus + idxcer] -= (2 * powerflow.sol['voltage'][idxcer] * float(powerflow.setup.alphabeq.subs(alpha, powerflow.sol['alpha'])))
-                powerflow.setup.qxx[idxcer, ncer] = -(powerflow.sol['voltage'][idxcer] ** 2) * float(powerflow.setup.alphabeq.diff(alpha).subs(alpha, powerflow.sol['alpha']))
+                powerflow.setup.qx[idxcer, ncer] = -(powerflow.sol['voltage'][idxcer] ** 2) * float(powerflow.setup.alphabeq.diff(alpha).subs(alpha, powerflow.sol['alpha']))
 
             elif (value['controle'] == 'I'):
                 powerflow.setup.jacob[powerflow.setup.nbus + idxcer, powerflow.setup.nbus + idxcer] -= (powerflow.sol['svc_current_injection'][ncer]) / powerflow.setup.options['BASE']
-                powerflow.setup.qxx[idxcer, ncer] = -powerflow.sol['voltage'][idxcer]
+                powerflow.setup.qx[idxcer, ncer] = -powerflow.sol['voltage'][idxcer]
 
             elif (value['controle'] == 'P'):
-                powerflow.setup.qxx[idxcer, ncer] = -1
+                powerflow.setup.qx[idxcer, ncer] = -1
         
             # Incrementa contador
             ncer += 1
@@ -188,21 +189,18 @@ class SVCs:
         ## Montagem Jacobiana
         # Condição
         if (powerflow.setup.controldim != 0):
-            powerflow.setup.extrarow = zeros([powerflow.setup.ncer, powerflow.setup.controldim])
-            powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.ncer])
+            powerflow.setup.extrarow = zeros([powerflow.setup.nger, powerflow.setup.controldim])
+            powerflow.setup.extracol = zeros([powerflow.setup.controldim, powerflow.setup.nger])
 
-            # H-N M-L + yxt-yxv
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv, powerflow.setup.extrarow), axis=1)), axis=0)
-
-            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.extracol, powerflow.setup.yxx), axis=0)), axis=1)
+            ytv = csc_matrix(concatenate((powerflow.setup.yt, powerflow.setup.yv, powerflow.setup.extrarow), axis=1))
+            pqyx = csc_matrix(concatenate((powerflow.setup.px, powerflow.setup.qx, powerflow.setup.extracol, powerflow.setup.yx), axis=0))
 
         elif (powerflow.setup.controldim == 0):
-            # H-N M-L + yxt-yxv
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.yxt, powerflow.setup.yxv), axis=1)), axis=0)
+            ytv = csc_matrix(concatenate((powerflow.setup.yt, powerflow.setup.yv), axis=1))
+            pqyx = csc_matrix(concatenate((powerflow.setup.px, powerflow.setup.qx, powerflow.setup.yx), axis=0))
 
-            # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-            powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((powerflow.setup.pxx, powerflow.setup.qxx, powerflow.setup.yxx), axis=0)), axis=1)
+        powerflow.setup.jacob = vstack([powerflow.setup.jacob, ytv], format='csc')
+        powerflow.setup.jacob = hstack([powerflow.setup.jacob, pqyx], format='csc')
 
 
 

@@ -71,7 +71,7 @@ class Control:
         ## Inicialização
         print('\033[96mOpções de controle escolhidas: ', end='')
         for k, _ in self.control.items():
-            if ((k == 'SVCs') and (setup.codes['DCER'])):
+            if ((k == 'SVCs') and (not setup.codes['DCER'])):
                 continue
             if (k in powerflow.control):
                 setup.control[k] = True

@@ -23,21 +23,26 @@ class PQCalc:
             idx: int, obrigatório, valor padrão None
                 referencia o índice da barra a qual vai ser calculada a potência ativa
 
-        Retorno
+        Repararno
             p: float
-                potência ativa calculada para o barramento `idx`
+                potência ativa calculada para o barramenpara `idx`
         """
 
         ## Inicialização
-        # Variável de potência ativa calculada para o barramento `idx`
-        p = 0
+        # Variável de potência ativa calculada para o barramenpara `idx`
+        p = powerflow.setup.gdiag[idx] * powerflow.sol['voltage'][idx]
 
-        for bus in range(0, powerflow.setup.nbus):
-            p += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.ybus[idx][bus].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
+        for lin in range(0, powerflow.setup.nlin):
+            if (idx == powerflow.setup.dlinhaDF['de'].iloc[lin] - 1):
+                bus = powerflow.setup.dlinhaDF['para'].iloc[lin] - 1
+                p -= powerflow.sol['voltage'][bus] * (powerflow.setup.admitancia[lin].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.admitancia[lin].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
+            elif (idx == powerflow.setup.dlinhaDF['para'].iloc[lin] - 1):
+                bus = powerflow.setup.dlinhaDF['de'].iloc[lin] - 1
+                p -= powerflow.sol['voltage'][bus] * (powerflow.setup.admitancia[lin].real * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) + powerflow.setup.admitancia[lin].imag * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
 
         p *= powerflow.sol['voltage'][idx]
 
-        # Armazenamento da potência ativa gerada equivalente do barramento
+        # Armazenamenpara da potência ativa gerada equivalente do barramenpara
         powerflow.sol['active'][idx] = (p * powerflow.setup.options['BASE']) + powerflow.setup.dbarraDF['demanda_ativa'][idx]
 
         return p
@@ -56,21 +61,26 @@ class PQCalc:
             idx: int, obrigatório, valor padrão None
                 referencia o índice da barra a qual vai ser calculada a potência reativa
 
-        Retorno
+        Repararno
             q: float
-                potência reativa calculada para o barramento `idx`
+                potência reativa calculada para o barramenpara `idx`
         """
 
         ## Inicialização
-        # Variável de potência reativa calculada para o barramento `idx`
-        q = 0
+        # Variável de potência reativa calculada para o barramenpara `idx`
+        q = -powerflow.setup.bdiag[idx] * powerflow.sol['voltage'][idx]
 
-        for bus in range(0, powerflow.setup.nbus):
-            q += powerflow.sol['voltage'][bus] * (powerflow.setup.ybus[idx][bus].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.ybus[idx][bus].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
+        for lin in range(0, powerflow.setup.nlin):
+            if (idx == powerflow.setup.dlinhaDF['de'].iloc[lin] - 1):
+                bus = powerflow.setup.dlinhaDF['para'].iloc[lin] - 1
+                q -= powerflow.sol['voltage'][bus] * (powerflow.setup.admitancia[lin].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.admitancia[lin].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
+            elif (idx == powerflow.setup.dlinhaDF['para'].iloc[lin] - 1):
+                bus = powerflow.setup.dlinhaDF['de'].iloc[lin] - 1
+                q -= powerflow.sol['voltage'][bus] * (powerflow.setup.admitancia[lin].real * sin(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]) - powerflow.setup.admitancia[lin].imag * cos(powerflow.sol['theta'][idx]-powerflow.sol['theta'][bus]))
 
         q *= powerflow.sol['voltage'][idx]
 
-        # Armazenamento da potência ativa gerada equivalente do barramento
+        # Armazenamenpara da potência ativa gerada equivalente do barramenpara
         powerflow.sol['reactive'][idx] = (q * powerflow.setup.options['BASE']) + powerflow.setup.dbarraDF['demanda_reativa'][idx]
 
-        return q
+        return q  

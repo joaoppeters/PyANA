@@ -810,6 +810,13 @@ class PWF:
                 }
             )
 
+            pandas['resistencia'] *= 1E-2
+            pandas['reatancia'] *= 1E-2
+            pandas['susceptancia'] /= (2 * setup.dcteDF.loc[setup.dcteDF.constante == 'BASE'].valor_constante[0])
+
+            pandas['estado'] = ((pandas['estado'] == '0') | (pandas['estado'] == 'L'))
+            pandas['transf'] = ((pandas['tap'] != 0.) & pandas['estado'])
+
             # Número de barras do sistema
             setup.nlin = len(pandas.de.values)
 

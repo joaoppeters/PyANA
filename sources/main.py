@@ -16,8 +16,9 @@ method = 'NEWTON'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 # control = ['SVCs']
-# control = ['SVCs']
-control = ['QLIMn',]
+control = ['QLIM',]
+# control = ['QLIMn',]
+# control = ['QLIMs',]
 # control = ['FREQ',]
 # control = []
 
@@ -27,7 +28,7 @@ monitor = ['PFLOW', 'PGMON', 'QGMON', 'VMON']
 monitor = []
 
 report = ['RBAR', 'RLIN', 'RGER', 'RSVC',]
-report = ['RBAR',]
+report = ['RBAR', 'RSVC']
 
 PowerFlow(
     system=system,

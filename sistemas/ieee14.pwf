@@ -2,10 +2,10 @@ TITU
 ****   Sistema teste de 14 maquinas - IEEE  ****
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
-BASE   100  TEPA  1E-6  TEPR  1E-6  QLST  1E-6
+BASE   100  TEPA  1E-8  TEPR  1E-8  QLST  1E-8
 FULL     0  
 DMAX   100  ICMN  1E-9
-SIGK  1E10  SIGV  1E-8  SIGQ  1E-8
+SIGK   1E8  SIGV 1E-10  SIGQ 1E-10
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
