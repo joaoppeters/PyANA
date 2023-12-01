@@ -487,7 +487,8 @@ class Reports:
         # Manipulação
         self.filevtan = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-tangent.txt', 'w')
         self.filevarv = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-voltagevar.txt', 'w')
-        self.filedeteigen = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-det&eigen.txt', 'w')
+        if powerflow.cpfsol['eigencalculation']:
+            self.filedeteigen = open(powerflow.setup.dircpfsys + powerflow.setup.name + '-det&eigen.txt', 'w')
         
         # Cabeçalho FILEVTAN
         self.filevtan.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
@@ -526,22 +527,23 @@ class Reports:
         self.filevarv.write('\n\n')
 
         # Cabeçalho FILEDETEIGEN
-        self.filedeteigen.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
-        self.filedeteigen.write('\n\n\n')
-        self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
-        self.filedeteigen.write('\n\n')
-        self.filedeteigen.write('opções de controle ativadas: ')
-        if (powerflow.setup.control):
-            for k in powerflow.setup.control:
-                self.filedeteigen.write(f'{k} ')
-        else:
-            self.filedeteigen.write('Nenhum controle ativo!')
-        self.filedeteigen.write('\n\n')
-        self.filedeteigen.write('opções de relatório ativadas: ')
-        if (powerflow.setup.report):
-            for k in powerflow.setup.report:
-                self.filedeteigen.write(f'{k} ')
-        self.filedeteigen.write('\n\n')
+        if powerflow.cpfsol['eigencalculation']:
+            self.filedeteigen.write('{} {}, {}'.format(dt.now().strftime('%B'), dt.now().strftime('%d'), dt.now().strftime('%Y')))
+            self.filedeteigen.write('\n\n\n')
+            self.filedeteigen.write('relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
+            self.filedeteigen.write('\n\n')
+            self.filedeteigen.write('opções de controle ativadas: ')
+            if (powerflow.setup.control):
+                for k in powerflow.setup.control:
+                    self.filedeteigen.write(f'{k} ')
+            else:
+                self.filedeteigen.write('Nenhum controle ativo!')
+            self.filedeteigen.write('\n\n')
+            self.filedeteigen.write('opções de relatório ativadas: ')
+            if (powerflow.setup.report):
+                for k in powerflow.setup.report:
+                    self.filedeteigen.write(f'{k} ')
+            self.filedeteigen.write('\n\n')
 
         # Loop
         for key, value in powerflow.case.items():
@@ -571,25 +573,26 @@ class Reports:
                     self.filevarv.write('\n')
 
                 # FILEDETEIGEN
-                self.filedeteigen.write('\n\n')
-                self.filedeteigen.write(f"Caso {key}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.MVAr[key]} MVAr")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Determinante: {powerflow.case[key]['determinant-QV']}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['eigenvalues-QV']}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write('Autovalores:')
-                for b in range(0, powerflow.setup.jacobQV.shape[0]):
+                if powerflow.cpfsol['eigencalculation']:
+                    self.filedeteigen.write('\n\n')
+                    self.filedeteigen.write(f"Caso {key}")
                     self.filedeteigen.write('\n')
-                    self.filedeteigen.write(f"right eigen vector {b}: {absolute(powerflow.case[key]['eigenvectors-QV'][:, b])}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write('Fator de Participação:')
-                for b in range(0, powerflow.setup.PFQV.shape[0]):
+                    self.filedeteigen.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.MVAr[key]} MVAr")
                     self.filedeteigen.write('\n')
-                    self.filedeteigen.write(f"p{b}: {powerflow.case[key]['participationfactor-QV'][:, b]}")
-                self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"Determinante: {powerflow.case[key]['determinant-QV']}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['eigenvalues-QV']}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write('Autovalores:')
+                    for b in range(0, powerflow.setup.jacobQV.shape[0]):
+                        self.filedeteigen.write('\n')
+                        self.filedeteigen.write(f"right eigen vector {b}: {absolute(powerflow.case[key]['eigenvectors-QV'][:, b])}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write('Fator de Participação:')
+                    for b in range(0, powerflow.setup.PFQV.shape[0]):
+                        self.filedeteigen.write('\n')
+                        self.filedeteigen.write(f"p{b}: {powerflow.case[key]['participationfactor-QV'][:, b]}")
+                    self.filedeteigen.write('\n')
             
             elif (key > 0):
                 # Variável de variação de tensão
@@ -656,25 +659,26 @@ class Reports:
                     self.filevarv.write('\n')
 
                 # FILEDETEIGEN
-                self.filedeteigen.write('\n\n')
-                self.filedeteigen.write(f"Caso {key}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.MVAr[key]} MVAr")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant-QV']}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['corr']['eigenvalues-QV']}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write('Autovalores:')
-                for b in range(0, powerflow.setup.jacobQV.shape[0]):
+                if powerflow.cpfsol['eigencalculation']:
+                    self.filedeteigen.write('\n\n')
+                    self.filedeteigen.write(f"Caso {key}")
                     self.filedeteigen.write('\n')
-                    self.filedeteigen.write(f"right eigen vector {b}: {absolute(powerflow.case[key]['corr']['eigenvectors-QV'][:, b])}")
-                self.filedeteigen.write('\n')
-                self.filedeteigen.write('Fator de Participação:')
-                for b in range(0, powerflow.setup.PFQV.shape[0]):
+                    self.filedeteigen.write(f"Carregamento do Sistema: {powerflow.setup.mw[key]} MW  | {powerflow.setup.MVAr[key]} MVAr")
                     self.filedeteigen.write('\n')
-                    self.filedeteigen.write(f"p{b}: {powerflow.case[key]['corr']['participationfactor-QV'][:, b]}")
-                self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"Determinante: {powerflow.case[key]['corr']['determinant-QV']}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write(f"Autovalores: {powerflow.case[key]['corr']['eigenvalues-QV']}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write('Autovalores:')
+                    for b in range(0, powerflow.setup.jacobQV.shape[0]):
+                        self.filedeteigen.write('\n')
+                        self.filedeteigen.write(f"right eigen vector {b}: {absolute(powerflow.case[key]['corr']['eigenvectors-QV'][:, b])}")
+                    self.filedeteigen.write('\n')
+                    self.filedeteigen.write('Fator de Participação:')
+                    for b in range(0, powerflow.setup.PFQV.shape[0]):
+                        self.filedeteigen.write('\n')
+                        self.filedeteigen.write(f"p{b}: {powerflow.case[key]['corr']['participationfactor-QV'][:, b]}")
+                    self.filedeteigen.write('\n')
 
         # FILEVTAN
         self.filevtan.write('\n\n\n\n')
@@ -687,42 +691,43 @@ class Reports:
         self.filevarv.close()
 
         # FILEDETEIGEN
-        self.filedeteigen.write('\n\n\n\n')
-        self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
-        self.filedeteigen.close()
+        if powerflow.cpfsol['eigencalculation']:
+            self.filedeteigen.write('\n\n\n\n')
+            self.filedeteigen.write('fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema ' + powerflow.setup.name)
+            self.filedeteigen.close()
 
-        # FILEJACOBIAN@PMC
-        file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobi@PMC.csv'
-        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
+            # FILEJACOBIAN@PMC
+            file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobi@PMC.csv'
+            header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
 
-        if (exists(file) is False):
-            open(file, 'a').close()
-        elif (True and powerflow.sol['iter'] == 0):
-            remove(file)
-            open(file, 'a').close()
-        
-        with open(file, 'a') as of:
-            savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian'], delimiter=',', header=header)
-            of.close()
+            if (exists(file) is False):
+                open(file, 'a').close()
+            elif (True and powerflow.sol['iter'] == 0):
+                remove(file)
+                open(file, 'a').close()
             
-        # FILEJACOBIAN-QV@PMC
-        file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobiQV@PMC.csv'
-        header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana Reduzida vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
+            with open(file, 'a') as of:
+                savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian'], delimiter=',', header=header)
+                of.close()
+                
+            # FILEJACOBIAN-QV@PMC
+            file = powerflow.setup.dircpfsys + powerflow.setup.name + '-jacobiQV@PMC.csv'
+            header = 'vv Sistema ' + powerflow.setup.name + ' vv Matriz Jacobiana Reduzida vv Formulação Completa vv Caso ' + str(powerflow.setup.casekeymin) + ' vv'
 
-        if (exists(file) is False):
-            open(file, 'a').close()
-        elif (True and powerflow.sol['iter'] == 0):
-            remove(file)
-            open(file, 'a').close()
-        
-        with open(file, 'a') as of:
-            savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian-QV'], delimiter=',', header=header)
-            of.close()
+            if (exists(file) is False):
+                open(file, 'a').close()
+            elif (True and powerflow.sol['iter'] == 0):
+                remove(file)
+                open(file, 'a').close()
+            
+            with open(file, 'a') as of:
+                savetxt(of, powerflow.case[powerflow.setup.casekeymin]['corr']['jacobian-QV'], delimiter=',', header=header)
+                of.close()
 
 
-        # Arquivos em Loop
-        for key, value in powerflow.setup.pqtv.items():
-            savetxt(powerflow.setup.dircpfsystxt + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.mw, value]))
+            # Arquivos em Loop
+            for key, value in powerflow.setup.pqtv.items():
+                savetxt(powerflow.setup.dircpfsystxt + powerflow.setup.name + '-' + key + '.txt', column_stack([powerflow.setup.mw, value]))
                  
         
         # Smooth

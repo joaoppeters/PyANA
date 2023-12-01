@@ -633,6 +633,13 @@ class PWF:
 
             # Número de barras PQ
             setup.npq = setup.nbus - setup.nger
+
+            # Tensao Base
+            pandas.loc[pandas['tensao_base'] == 0., 'tensao_base'] = 1000.
+
+            # Numero de Areas
+            setup.narea = pandas['area'].nunique()
+            setup.areas = sorted(pandas['area'].unique())
         
         # Tratamento específico 'DBTB'
         elif (data == 'DBTB'):

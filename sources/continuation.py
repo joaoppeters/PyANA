@@ -9,13 +9,15 @@
 from copy import deepcopy
 from numpy import abs, absolute, all, append, argmax, array, concatenate, cos, dot, max, sin, sum, zeros
 from numpy.linalg import det, eig, solve, inv
+from scipy.sparse import csc_matrix, hstack, vstack
+from scipy.sparse.linalg import spsolve
 
 from calc import PQCalc
 from ctrl import Control
 from jacobian import Jacobi
 from loading import Loading
 from newtonraphson import NewtonRaphson
-from smooth import Smooth
+# from smooth import Smooth
 
 class Continuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
@@ -79,9 +81,11 @@ class Continuation:
             'potencia_ativa': deepcopy(powerflow.setup.dbarraDF['potencia_ativa']),
             'demanda_ativa': deepcopy(powerflow.setup.dbarraDF['demanda_ativa']),
             'demanda_reativa': deepcopy(powerflow.setup.dbarraDF['demanda_reativa']),
+            'eigencalculation': False
         }
 
         # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
+
         Control(powerflow, powerflow.setup,).controlcpf(powerflow,)
 
         # Variável para armazenamento da solução do fluxo de potência continuado
@@ -94,6 +98,7 @@ class Continuation:
         powerflow.case[self.case] = {**deepcopy(powerflow.sol), **deepcopy(powerflow.cpfsol)}
 
         # # Armazenamento de determinante e autovalores
+        # powerflow.cpfsol['eigencalculation'] = True
         # self.eigensens(powerflow,)
 
         # Reconfiguração da Máscara - Elimina expansão da matriz Jacobiana
@@ -140,7 +145,7 @@ class Continuation:
             if (powerflow.sol['convergence'] == 'SISTEMA CONVERGENTE') and (self.case > 0):
                 print('Aumento Sistema (%): ', powerflow.cpfsol['step'] * 1E2)
                 if (powerflow.cpfsol['varstep'] == 'volt'):
-                    print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfVolt'] * ((1 / powerflow.setup.options['FDIV']) ** powerflow.cpfsol['div']) * 1E2)
+                    print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['ICMV'] * ((1 / powerflow.setup.options['FDIV']) ** powerflow.cpfsol['div']) * 1E2)
                 else:
                     print('Passo (%): ', powerflow.case[self.case]['corr']['varstep'], '  ', powerflow.setup.options['cpfLambda'] * ((1 / powerflow.setup.options['FDIV']) ** powerflow.cpfsol['div']) * 1E2)
                 print('\n')
@@ -174,13 +179,13 @@ class Continuation:
         self.residue(powerflow, stage='prev',)
 
         # Atualização da Matriz Jacobiana
-        Jacobi(powerflow,)
+        Jacobi().jacobi(powerflow,)
 
         # Expansão Jacobiana
         self.exjac(powerflow,)
 
         # Variáveis de estado
-        powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+        powerflow.setup.statevar = spsolve(powerflow.setup.jacob, powerflow.setup.deltaPQY, use_umfpack=True)
 
         # Atualização das Variáveis de estado
         self.update_statevar(powerflow, stage='prev',)
@@ -244,13 +249,13 @@ class Continuation:
             self.convergence(powerflow,)
 
             # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
+            Jacobi().jacobi(powerflow,)
 
             # Expansão Jacobiana
             self.exjac(powerflow,)
 
             # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+            powerflow.setup.statevar = spsolve(powerflow.setup.jacob, powerflow.setup.deltaPQY, use_umfpack=True)
 
             # Atualização das Variáveis de estado
             self.update_statevar(powerflow, stage='corr',)
@@ -281,13 +286,13 @@ class Continuation:
             self.convergence(powerflow,)
 
             # Atualização da Matriz Jacobiana
-            Jacobi(powerflow,)
+            Jacobi().jacobi(powerflow,)
 
             # Expansão Jacobiana
             self.exjac(powerflow,)
 
             # Variáveis de estado
-            powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
+            powerflow.setup.statevar = spsolve(powerflow.setup.jacob, powerflow.setup.deltaPQY, use_umfpack=True)
 
             # Atualização das Variáveis de estado
             self.update_statevar(powerflow, stage='corr',)
@@ -492,7 +497,7 @@ class Continuation:
                     powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfLambda'] * (5E-1 ** powerflow.cpfsol['div'])
 
             elif (powerflow.cpfsol['varstep'] == 'volt'):
-                powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div'])
+                powerflow.setup.deltaPQY[-1] = -1 * powerflow.setup.options['ICMV'] * (5E-1 ** powerflow.cpfsol['div'])
 
         # Condição de correção
         elif (stage == 'corr'):
@@ -555,11 +560,15 @@ class Continuation:
 
         colarray /= powerflow.setup.options['BASE']
 
-        # Expansão Inferior
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, colarray), axis=1)
+        # Expansão Jacobiana Continuada
+        powerflow.setup.jacob = hstack([powerflow.setup.jacob, colarray], format='csc')
+        powerflow.setup.jacob = vstack([powerflow.setup.jacob, concatenate((rowarray, [stepvar]), axis=1)], format='csc')
 
-        # Expansão Lateral
-        powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((rowarray, [stepvar]), axis=1)), axis=0)
+        # # Expansão Inferior
+        # powerflow.setup.jacob = concatenate((powerflow.setup.jacob, colarray), axis=1)
+
+        # # Expansão Lateral
+        # powerflow.setup.jacob = concatenate((powerflow.setup.jacob, concatenate((rowarray, [stepvar]), axis=1)), axis=0)
 
 
 
@@ -975,7 +984,7 @@ class Continuation:
                 powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['corr']['theta'])
 
             # Condição de atingimento do PMC para varstep volt pequeno
-            if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['cpfVolt'] * (5E-1 ** powerflow.cpfsol['div']) < powerflow.setup.options['ICMN']) and (not self.active_heuristic):
+            if (not powerflow.cpfsol['pmc']) and (powerflow.cpfsol['varstep'] == 'volt') and (powerflow.setup.options['ICMV'] * (5E-1 ** powerflow.cpfsol['div']) < powerflow.setup.options['ICMN']) and (not self.active_heuristic):
                 self.active_heuristic = True
 
                 # Reconfiguração de caso

@@ -186,7 +186,6 @@ class Jacobi:
             self.bignumber(powerflow,)
 
         # Montagem da matriz Jacobiana
-        # codeiguração completa
         powerflow.setup.jacob = concatenate((concatenate((powerflow.setup.pt, powerflow.setup.qt), axis=0), concatenate((powerflow.setup.pv, powerflow.setup.qv), axis=0)), axis=1)
 
 

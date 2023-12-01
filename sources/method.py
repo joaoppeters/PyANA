@@ -8,6 +8,7 @@
 
 from continuation import Continuation
 from convergence import Convergence
+from crossentropy import CrossEntropy
 from folder import Folder
 from linear import LinearPowerFlow
 from monitor import Monitor
@@ -69,6 +70,10 @@ class Method():
         # Chamada específica método Continuado
         elif (powerflow.method == 'CPF'):
             Continuation(powerflow,)
+
+        # Chamada especifica metodo Cross-Entropy
+        elif (powerflow.method == 'STOCH-CE'):
+            CrossEntropy(powerflow,)
 
 
         # Armazenamento dos resultados

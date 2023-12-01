@@ -110,8 +110,9 @@ class Loading:
                 powerflow.setup.MVAr = append(powerflow.setup.MVAr, sum(powerflow.cpfsol['demanda_reativa']))
                 
                 # Determinante e Autovalores
-                powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
-                powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
+                if powerflow.cpfsol['eigencalculation']:
+                    powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['eigenvalues'])
+                    powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['eigenvalues-QV'])
                 
                 # Frequência
                 if ('FREQ' in powerflow.setup.control):
@@ -164,8 +165,9 @@ class Loading:
                 powerflow.setup.MVAr = append(powerflow.setup.MVAr, totalmvar)
 
                 # Determinante e Autovalores
-                powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
-                powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['corr']['eigenvalues-QV'])
+                if powerflow.cpfsol['eigencalculation']:
+                    powerflow.setup.eigenvalues = append(powerflow.setup.eigenvalues, item['corr']['eigenvalues'])
+                    powerflow.setup.eigenvaluesQV = append(powerflow.setup.eigenvaluesQV, item['corr']['eigenvalues-QV'])
                 
                 # Frequência
                 if ('FREQ' in powerflow.setup.control):
