@@ -15,34 +15,75 @@ from numpy import (
     argmax,
     array,
     concatenate,
+    cos,
     dot,
     max,
+    sin,
     sum,
     zeros,
 )
-from numpy.linalg import det, eig, inv
-from scipy.sparse import hstack, vstack
-from scipy.sparse.linalg import spsolve
+from numpy.linalg import det, eig, solve, inv
 
 from calc import PQCalc
 from ctrl import Control
 from jacobian import Jacobi
 from loading import Loading
+from newtonraphson import NewtonRaphson
+from smooth import Smooth
 
-# from smooth import Smooth
 
-
-class Continuation:
+class FastContinuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
 
-    def cpf(
+    def __init__(
         self,
         powerflow,
+        entender,
+    ):
+        """inicialização
+
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+            outro parametro
+        """
+
+        ## Inicialização
+        # Newton-Raphson
+        NewtonRaphson(
+            powerflow,
+        )
+
+        # Continuado
+        self.fastcontinuationpowerflow(
+            powerflow,
+            entender,
+        )
+
+        del powerflow.case[len(powerflow.case) - 1]
+
+        # # Geração e armazenamento de gráficos de perfil de tensão e autovalores
+        # Loading(powerflow,)
+
+        # # Smooth
+        # if ('QLIMs' in powerflow.setup.control):
+        #     for k, v in powerflow.setup.qlimkeys.items():
+        #         v.popitem()
+        #     Smooth(powerflow,).qlimstorage(powerflow,)
+        # if ('SVCs' in powerflow.setup.control):
+        #     for k, v in powerflow.setup.svckeys.items():
+        #         v.popitem()
+        #     Smooth().svcstorage(powerflow,)
+
+    def fastcontinuationpowerflow(
+        self,
+        powerflow,
+        entender,
     ):
         """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
+            outro parametro
         """
 
         ## Inicialização
@@ -60,7 +101,6 @@ class Continuation:
             "potencia_ativa": deepcopy(powerflow.setup.dbarraDF['potencia_ativa']),
             "demanda_ativa": deepcopy(powerflow.setup.dbarraDF['demanda_ativa']),
             "demanda_reativa": deepcopy(powerflow.setup.dbarraDF['demanda_reativa']),
-            "eigencalculation": False,
         }
 
         # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
@@ -80,9 +120,8 @@ class Continuation:
             **deepcopy(powerflow.cpfsolution),
         }
 
-        # Armazenamento de determinante e autovalores
-        powerflow.cpfsolution['eigencalculation'] = True
-        self.eigensens(powerflow,)
+        # # Armazenamento de determinante e autovalores
+        # self.eigensens(powerflow,)
 
         # Reconfiguração da Máscara - Elimina expansão da matriz Jacobiana
         powerflow.setup.mask = append(powerflow.setup.mask, False)
@@ -102,23 +141,6 @@ class Continuation:
         self.cpfloop(
             powerflow,
         )
-        
-        del powerflow.case[len(powerflow.case) - 1]
-
-        # Geração e armazenamento de gráficos de perfil de tensão e autovalores
-        Loading(
-            powerflow,
-        )
-
-        # # Smooth
-        # if ('QLIMs' in powerflow.setup.control):
-        #     for k, v in powerflow.setup.qlimkeys.items():
-        #         v.popitem()
-        #     Smooth(powerflow,).qlimstorage(powerflow,)
-        # if ('SVCs' in powerflow.setup.control):
-        #     for k, v in powerflow.setup.svckeys.items():
-        #         v.popitem()
-        #     Smooth().svcstorage(powerflow,)
 
     def cpfloop(
         self,
@@ -132,7 +154,10 @@ class Continuation:
 
         ## Inicialização
         # Condição de parada do fluxo de potência continuado -> Estável & Instável
-        while powerflow.setup.options['LMBD'] * ((1 / powerflow.setup.options['FDIV']) ** powerflow.cpfsolution['div']) * 1e2 >= powerflow.setup.options['ICMN'] and powerflow.cpfsolution['div'] <= powerflow.setup.options['DMAX'] and self.case <= powerflow.setup.options['ICIT']:
+        while all((powerflow.solution['voltage'] >= 0.0)) and (
+            sum(powerflow.setup.dbarraDF['demanda_ativa'])
+            >= 0.99 * sum(powerflow.cpfsolution['demanda_ativa'])
+        ):
             self.active_heuristic = False
 
             # Incremento de Caso
@@ -160,7 +185,7 @@ class Continuation:
                         "Passo (%): ",
                         powerflow.case[self.case]['c']['varstep'],
                         "  ",
-                        powerflow.setup.options['ICMV']
+                        powerflow.setup.options['cpfVolt']
                         * (
                             (1 / powerflow.setup.options['FDIV'])
                             ** powerflow.cpfsolution['div']
@@ -215,7 +240,7 @@ class Continuation:
         )
 
         # Atualização da Matriz Jacobiana
-        Jacobi().jacobi(
+        Jacobi(
             powerflow,
         )
 
@@ -225,14 +250,19 @@ class Continuation:
         )
 
         # Variáveis de estado
-        powerflow.setup.statevar = spsolve(
-            powerflow.jacob, powerflow.deltaPQY, use_umfpack=True
+        powerflow.setup.statevar = solve(
+            powerflow.jacob, powerflow.deltaPQY
         )
 
         # Atualização das Variáveis de estado
         self.update_statevar(
             powerflow,
             stage='p',
+        )
+
+        # Fluxo em linhas de transmissão
+        self.line_flow(
+            powerflow,
         )
 
         # Armazenamento de Solução
@@ -308,7 +338,7 @@ class Continuation:
             )
 
             # Atualização da Matriz Jacobiana
-            Jacobi().jacobi(
+            Jacobi(
                 powerflow,
             )
 
@@ -318,8 +348,8 @@ class Continuation:
             )
 
             # Variáveis de estado
-            powerflow.setup.statevar = spsolve(
-                powerflow.jacob, powerflow.deltaPQY, use_umfpack=True
+            powerflow.setup.statevar = solve(
+                powerflow.jacob, powerflow.deltaPQY
             )
 
             # Atualização das Variáveis de estado
@@ -365,7 +395,7 @@ class Continuation:
             )
 
             # Atualização da Matriz Jacobiana
-            Jacobi().jacobi(
+            Jacobi(
                 powerflow,
             )
 
@@ -375,8 +405,8 @@ class Continuation:
             )
 
             # Variáveis de estado
-            powerflow.setup.statevar = spsolve(
-                powerflow.jacob, powerflow.deltaPQY, use_umfpack=True
+            powerflow.setup.statevar = solve(
+                powerflow.jacob, powerflow.deltaPQY
             )
 
             # Atualização das Variáveis de estado
@@ -389,6 +419,11 @@ class Continuation:
             self.residue(
                 powerflow,
                 stage='c',
+            )
+
+            # Fluxo em linhas de transmissão
+            self.line_flow(
+                powerflow,
             )
 
             # Armazenamento de Solução
@@ -405,10 +440,10 @@ class Continuation:
                 powerflow,
             )
 
-            # # Heurísticas
-            # self.heuristics(
-            #     powerflow,
-            # )
+            # Heurísticas
+            self.heuristics(
+                powerflow,
+            )
 
         # Reconfiguração dos Dados de Solução em Caso de Divergência
         elif ((powerflow.solution['iter'] >= powerflow.setup.options['ACIT'])) and (
@@ -496,7 +531,6 @@ class Continuation:
 
         # Incremento de carga
         for idxinc, valueinc in powerflow.setup.dincDF.iterrows():
-            # Incremento de carregamento específico por AREA
             if valueinc['tipo_incremento_1'] == "AREA":
                 for idxbar, valuebar in powerflow.setup.dbarraDF.iterrows():
                     if valuebar['area'] == valueinc['identificacao_incremento_1']:
@@ -511,11 +545,12 @@ class Continuation:
                         ] = powerflow.cpfsolution['demanda_reativa'][idxbar] * (
                             1 + powerflow.cpfsolution['stepsch']
                         )
-                        
-            # Incremento de carregamento específico por BARRA
+
             elif valueinc['tipo_incremento_1'] == "BARR":
                 # Reconfiguração da variável de índice
                 idxinc = valueinc['identificacao_incremento_1'] - 1
+
+                # Incremento de Carregamento
                 powerflow.setup.dbarraDF.at[
                     idxinc, "demanda_ativa"
                 ] = powerflow.cpfsolution['demanda_ativa'][idxinc] * (
@@ -546,10 +581,10 @@ class Continuation:
                 powerflow.setup.dbarraDF['potencia_ativa']
             )
 
-        # Condição de atingimento do máximo incremento do nível de carregamento delimitado
+        # Condição de atingimento do máximo incremento do nível de carregamento
         if (
             powerflow.cpfsolution['stepsch']
-            == powerflow.setup.dincDF.loc[0, 'maximo_incremento_potencia_ativa']
+            == powerflow.setup.dincDF.loc[0, "maximo_incremento_potencia_ativa']
         ):
             powerflow.cpfsolution['pmc'] = True
 
@@ -687,7 +722,7 @@ class Continuation:
             elif powerflow.cpfsolution['varstep'] == "volt":
                 powerflow.deltaPQY[-1] = (
                     -1
-                    * powerflow.setup.options['ICMV']
+                    * powerflow.setup.options['cpfVolt']
                     * (5e-1 ** powerflow.cpfsolution['div'])
                 )
 
@@ -764,11 +799,12 @@ class Continuation:
 
         colarray /= powerflow.setup.options['BASE']
 
-        # Expansão Jacobiana Continuada
-        powerflow.jacob = hstack([powerflow.jacob, colarray], format="csc")
-        powerflow.jacob = vstack(
-            [powerflow.jacob, concatenate((rowarray, [stepvar]), axis=1)],
-            format="csc",
+        # Expansão Inferior
+        powerflow.jacob = concatenate((powerflow.jacob, colarray), axis=1)
+
+        # Expansão Lateral
+        powerflow.jacob = concatenate(
+            (powerflow.jacob, concatenate((rowarray, [stepvar]), axis=1)), axis=0
         )
 
     def convergence(
@@ -892,6 +928,90 @@ class Continuation:
                 powerflow,
             )
 
+    def line_flow(
+        self,
+        powerflow,
+    ):
+        """cálculo do fluxo de potência nas linhas de transmissão
+
+        Parâmetros
+            powerflow: self do arquivo powerflow.py
+        """
+
+        ## Inicialização
+        for idx, value in powerflow.setup.dlinhaDF.iterrows():
+            k = powerflow.setup.dbarraDF.index[
+                powerflow.setup.dbarraDF['numero'] == value['de']
+            ][0]
+            m = powerflow.setup.dbarraDF.index[
+                powerflow.setup.dbarraDF['numero'] == value['para']
+            ][0]
+            yline = 1 / ((value['resistencia'] / 100) + 1j * (value['reatancia'] / 100))
+
+            # Verifica presença de transformadores com tap != 1.
+            if value['tap'] != 0:
+                yline /= value['tap']
+
+            # Potência ativa k -> m
+            powerflow.solution['active_flow_F2'][idx] = yline.real * (
+                powerflow.solution['voltage'][k] ** 2
+            ) - powerflow.solution['voltage'][k] * powerflow.solution['voltage'][m] * (
+                yline.real
+                * cos(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+                + yline.imag
+                * sin(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+            )
+
+            # Potência reativa k -> m
+            powerflow.solution['reactive_flow_F2'][idx] = -(
+                (value['susceptancia'] / (2 * powerflow.setup.options['BASE']))
+                + yline.imag
+            ) * (powerflow.solution['voltage'][k] ** 2) + powerflow.solution['voltage'][
+                k
+            ] * powerflow.solution[
+                'voltage'
+            ][
+                m
+            ] * (
+                yline.imag
+                * cos(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+                - yline.real
+                * sin(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+            )
+
+            # Potência ativa m -> k
+            powerflow.solution['active_flow_2F'][idx] = yline.real * (
+                powerflow.solution['voltage'][m] ** 2
+            ) - powerflow.solution['voltage'][k] * powerflow.solution['voltage'][m] * (
+                yline.real
+                * cos(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+                - yline.imag
+                * sin(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+            )
+
+            # Potência reativa m -> k
+            powerflow.solution['reactive_flow_2F'][idx] = -(
+                (value['susceptancia'] / (2 * powerflow.setup.options['BASE']))
+                + yline.imag
+            ) * (powerflow.solution['voltage'][m] ** 2) + powerflow.solution['voltage'][
+                k
+            ] * powerflow.solution[
+                'voltage'
+            ][
+                m
+            ] * (
+                yline.imag
+                * cos(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+                + yline.real
+                * sin(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+            )
+
+        powerflow.solution['active_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.solution['active_flow_2F'] *= powerflow.setup.options['BASE']
+
+        powerflow.solution['reactive_flow_F2'] *= powerflow.setup.options['BASE']
+        powerflow.solution['reactive_flow_2F'] *= powerflow.setup.options['BASE']
+
     def storage(
         self,
         powerflow,
@@ -919,8 +1039,8 @@ class Continuation:
         # Armazenamento do índice do barramento com maior variação de magnitude de tensão
         powerflow.case[self.case]['nodevarvolt'] = deepcopy(powerflow.setup.nodevarvolt)
 
-        # Análise de sensibilidade e armazenamento
-        self.eigensens(powerflow, stage=stage,)
+        # # Análise de sensibilidade e armazenamento
+        # self.eigensens(powerflow, stage=stage,)
 
     def eigensens(
         self,
@@ -936,7 +1056,7 @@ class Continuation:
 
         ## Inicialização
         # Reorganização da Matriz Jacobiana Expandida
-        self.jacob = deepcopy(powerflow.jacob.A)
+        self.jacob = deepcopy(powerflow.jacob)
 
         if self.case > 0:
             self.jacob = self.jacob[:-1, :-1]
@@ -978,14 +1098,14 @@ class Continuation:
         try:
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             rightvalues, rightvector = eig(
-                powerflow.jacob.A[powerflow.setup.mask, :][:, powerflow.setup.mask]
+                powerflow.jacob[powerflow.setup.mask, :][:, powerflow.setup.mask]
             )
             powerflow.PF = zeros(
                 [
-                    powerflow.jacob.A[powerflow.setup.mask, :][
+                    powerflow.jacob[powerflow.setup.mask, :][
                         :, powerflow.setup.mask
                     ].shape[0],
-                    powerflow.jacob.A[powerflow.setup.mask, :][
+                    powerflow.jacob[powerflow.setup.mask, :][
                         :, powerflow.setup.mask
                     ].shape[1],
                 ]
@@ -1005,12 +1125,18 @@ class Continuation:
                     )
 
             # Condição
-            if (stage == None):
+            if stage == None:
                 # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-                powerflow.case[self.case]['jacobian'] = powerflow.jacob.A[powerflow.setup.mask, :][:, powerflow.setup.mask]
+                powerflow.case[self.case]['jacobian'] = powerflow.jacob[
+                    powerflow.setup.mask, :
+                ][:, powerflow.setup.mask]
 
                 # Armazenamento do determinante da matriz Jacobiana reduzida
-                powerflow.case[self.case]['determinant'] = det(powerflow.jacob.A[powerflow.setup.mask, :][:, powerflow.setup.mask])
+                powerflow.case[self.case]['determinant'] = det(
+                    powerflow.jacob[powerflow.setup.mask, :][
+                        :, powerflow.setup.mask
+                    ]
+                )
 
                 # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
                 powerflow.case[self.case]['eigenvalues'] = rightvalues
@@ -1023,65 +1149,102 @@ class Continuation:
                 powerflow.case[self.case]['jacobian-QV'] = powerflow.jacobQV
 
                 # Armazenamento do determinante da matriz de sensibilidade QV
-                powerflow.case[self.case]['determinant-QV'] = det(powerflow.jacobQV)
+                powerflow.case[self.case]['determinant-QV'] = det(
+                    powerflow.jacobQV
+                )
 
                 # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
                 powerflow.case[self.case]['eigenvalues-QV'] = rightvaluesQV
                 powerflow.case[self.case]['eigenvectors-QV'] = rightvectorQV
 
                 # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-                powerflow.case[self.case]['participationfactor-QV'] = powerflow.PFQV
+                powerflow.case[self.case][
+                    "participationfactor-QV"
+                ] = powerflow.PFQV
 
-            elif (stage != None):
+            elif stage != None:
                 # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-                powerflow.case[self.case][stage]['jacobian'] = powerflow.jacob.A
+                powerflow.case[self.case][stage]['jacobian'] = powerflow.jacob
 
                 # Armazenamento do determinante da matriz Jacobiana reduzida
-                powerflow.case[self.case][stage]['determinant'] = det(powerflow.jacob.A[powerflow.setup.mask, :][:, powerflow.setup.mask])
+                powerflow.case[self.case][stage]['determinant'] = det(
+                    powerflow.jacob[powerflow.setup.mask, :][
+                        :, powerflow.setup.mask
+                    ]
+                )
 
                 # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
                 powerflow.case[self.case][stage]['eigenvalues'] = rightvalues
                 powerflow.case[self.case][stage]['eigenvectors'] = rightvector
 
                 # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-                powerflow.case[self.case][stage]['participationfactor'] = powerflow.PF
+                powerflow.case[self.case][stage][
+                    "participationfactor"
+                ] = powerflow.PF
 
                 # Armazenamento da matriz de sensibilidade QV
-                powerflow.case[self.case][stage]['jacobian-QV'] = powerflow.jacobQV
+                powerflow.case[self.case][stage][
+                    "jacobian-QV"
+                ] = powerflow.jacobQV
 
                 # Armazenamento do determinante da matriz de sensibilidade QV
-                powerflow.case[self.case][stage]['determinant-QV'] = det(powerflow.jacobQV)
+                powerflow.case[self.case][stage]['determinant-QV'] = det(
+                    powerflow.jacobQV
+                )
 
                 # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
                 powerflow.case[self.case][stage]['eigenvalues-QV'] = rightvaluesQV
                 powerflow.case[self.case][stage]['eigenvectors-QV'] = rightvectorQV
 
                 # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-                powerflow.case[self.case][stage]['participationfactor-QV'] = powerflow.PFQV
+                powerflow.case[self.case][stage][
+                    "participationfactor-QV"
+                ] = powerflow.PFQV
 
-        # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa 
+        # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa
         # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
         except:
-            self.active_heuristic = True 
+            self.active_heuristic = True
 
             # Reconfiguração do caso
             self.auxdiv = deepcopy(powerflow.cpfsolution['div']) + 1
             self.case -= 1
-            Control(powerflow, powerflow.setup,).controlpop(powerflow,)
+            Control(powerflow, powerflow.setup,).controlpop(
+                powerflow,
+            )
 
             # Reconfiguração das variáveis de passo
-            cpfkeys = {'system', 'pmc', 'v2l', 'div', 'beta', 'step', 'stepsch', 'vsch', 'varstep', 'potencia_ativa', 'demanda_ativa', 'demanda_reativa', 'stepmax',}
-            powerflow.cpfsolution = {key: deepcopy(powerflow.case[self.case]['c'][key]) for key in powerflow.cpfsolution.keys() & cpfkeys}
+            cpfkeys = {
+                "system",
+                "pmc",
+                "v2l",
+                "div",
+                "beta",
+                "step",
+                "stepsch",
+                "vsch",
+                "varstep",
+                "potencia_ativa",
+                "demanda_ativa",
+                "demanda_reativa",
+                "stepmax",
+            }
+            powerflow.cpfsolution = {
+                key: deepcopy(powerflow.case[self.case]['c'][key])
+                for key in powerflow.cpfsolution.keys() & cpfkeys
+            }
             powerflow.cpfsolution['div'] = self.auxdiv
 
             # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-            powerflow.sol['voltage'] = deepcopy(powerflow.case[self.case]['c']['voltage'])
-            powerflow.sol['theta'] = deepcopy(powerflow.case[self.case]['c']['theta'])
+            powerflow.solution['voltage'] = deepcopy(
+                powerflow.case[self.case]['c']['voltage']
+            )
+            powerflow.solution['theta'] = deepcopy(
+                powerflow.case[self.case]['c']['theta']
+            )
 
             # # Loop
             # pass
-
-
 
     def evaluate(
         self,
@@ -1425,7 +1588,7 @@ class Continuation:
                 (not powerflow.cpfsolution['pmc'])
                 and (powerflow.cpfsolution['varstep'] == "volt")
                 and (
-                    powerflow.setup.options['ICMV']
+                    powerflow.setup.options['cpfVolt']
                     * (5e-1 ** powerflow.cpfsolution['div'])
                     < powerflow.setup.options['ICMN']
                 )
@@ -1452,7 +1615,7 @@ class Continuation:
                 (
                     powerflow.solution['voltage'][powerflow.setup.slackidx]
                     < (
-                        powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'tensao']
+                        powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, "tensao']
                         * 1e-3
                     )
                     - 1e-8
@@ -1460,7 +1623,7 @@ class Continuation:
                 or (
                     powerflow.solution['voltage'][powerflow.setup.slackidx]
                     > (
-                        powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, 'tensao']
+                        powerflow.setup.dbarraDF.loc[powerflow.setup.slackidx, "tensao']
                         * 1e-3
                     )
                     + 1e-8

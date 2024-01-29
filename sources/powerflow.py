@@ -6,20 +6,20 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from admittance import Ybus
 from method import Method
 from setup import Setup
 
+
 class PowerFlow:
     """powerflow class"""
-    
+
     def __init__(
         self,
-        system: str='',
-        method: str='NEWTON',
-        control: list=list(),
-        monitor: list=list(),
-        report: list=list(),
+        system: str = "",
+        method: str = "NEWTON",
+        control: list = list(),
+        monitor: list = list(),
+        report: list = list(),
     ):
         """initialization
 
@@ -28,22 +28,21 @@ class PowerFlow:
             method: str, optional, default 'NEWTON'
             control: list, optional, default None
             monitor: list, optional, default None
-            report: list, optional, default None 
+            report: list, optional, default None
         """
 
         ## Inicialization
         # Variables
-        self.system = system    
-        self.method = method    
-        self.control = control  
-        self.monitor = monitor  
-        self.report = report    
+        self.system = system
+        self.method = method
+        self.control = control
+        self.monitor = monitor
+        self.report = report
 
         # Data Setup
         self.setup = Setup(self)
 
-        # Admittance Matrix
-        Ybus(self,)
-
         # Numerical Method
-        Method(self,)
+        Method().method(
+            self,
+        )

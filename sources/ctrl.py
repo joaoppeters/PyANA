@@ -15,6 +15,7 @@ from ctrlqlims import Qlims
 from ctrlqlimn import Qlimn
 from ctrlsvc import SVCs
 
+
 class Control:
     """classe para determinar a realização das opções de controle escolhidas"""
 
@@ -31,30 +32,31 @@ class Control:
         """
 
         ## Inicialização
-        if (not hasattr(powerflow, 'setup')):
-            if (powerflow.control):
+        if not hasattr(powerflow, "setup"):
+            if powerflow.control:
                 setup.maskctrlcount = 0
                 setup.control = dict()
                 self.control = {
-                    'CREM': False, 
-                    'CST': False,
-                    'CTAP': False,
-                    'CTAPd': False,
-                    'FREQ': False,
-                    'QLIM': False,
-                    'QLIMs': False,
-                    'QLIMn': False,
-                    'SVCs' : False,
-                    'VCTRL': False,
-                    }
-                
-                self.checkcontrol(powerflow, setup,)
+                    "CREM": False,
+                    "CST": False,
+                    "CTAP": False,
+                    "CTAPd": False,
+                    "FREQ": False,
+                    "QLIM": False,
+                    "QLIMs": False,
+                    "QLIMn": False,
+                    "SVCs": False,
+                    "VCTRL": False,
+                }
+
+                self.checkcontrol(
+                    powerflow,
+                    setup,
+                )
 
             else:
                 setup.control = dict()
-                print('\033[96mNenhuma opção de controle foi escolhida.\033[0m')
-
-
+                print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
 
     def checkcontrol(
         self,
@@ -62,26 +64,24 @@ class Control:
         setup,
     ):
         """verificação das opções de controle escolhidas
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
             setup: self do arquivo setup.py
         """
-        
+
         ## Inicialização
-        print('\033[96mOpções de controle escolhidas: ', end='')
+        print("\033[96mOpções de controle escolhidas: ", end="")
         for k, _ in self.control.items():
-            if ((k == 'SVCs') and (not setup.codes['DCER'])):
+            if (k == "SVCs") and (not setup.codes['DCER']):
                 continue
-            if (k in powerflow.control):
+            if k in powerflow.control:
                 setup.control[k] = True
-                print(f'{k}', end=' ')
-        print('\033[0m')
+                print(f"{k}", end=" ")
+        print("\033[0m")
 
-
-    
     def controlsol(
-        self, 
+        self,
         powerflow,
     ):
         """altera variável de armazenamento de solução do fluxo de potência em função do controle ativo
@@ -92,123 +92,139 @@ class Control:
 
         ## Inicialização
         # Variável
-        if (not hasattr(powerflow.setup, 'ctrlcount')):
+        if not hasattr(powerflow.setup, "ctrlcount"):
             powerflow.setup.controlcount = 0
             powerflow.setup.totaldevicescontrol = 0
             powerflow.setup.controlorder = dict()
 
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'CREM'
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "CREM"
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'CST'
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "CST"
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'CTAP'
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "CTAP"
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'CTAPd'
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "CTAPd"
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
+            elif key == "FREQ":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'FREQ'
-                Freq(powerflow,).freqsol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "FREQ"
+                Freq(powerflow,).freqsol(
+                    powerflow,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
+            elif key == "QLIM":
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.nger
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIM'
-                Qlim().qlimsol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "QLIM"
+                Qlim().qlimsol(
+                    powerflow,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
+            elif key == "QLIMs":
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.nger
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIMs'
-                Qlims().qlimssol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "QLIMs"
+                Qlims().qlimssol(
+                    powerflow,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
+            elif key == "QLIMn":
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.nger
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'QLIMn'
-                Qlimn().qlimnsol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "QLIMn"
+                Qlimn().qlimnsol(
+                    powerflow,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
+            elif key == "SVCs":
                 powerflow.setup.controlcount += 1
                 powerflow.setup.totaldevicescontrol += powerflow.setup.ncer
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'SVCs'
-                SVCs().svcsol(powerflow,)
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "SVCs"
+                SVCs().svcsol(
+                    powerflow,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 powerflow.setup.controlcount += 1
-                powerflow.setup.controlorder[powerflow.setup.controlcount] = 'VCTRL'
+                powerflow.setup.controlorder[powerflow.setup.controlcount] = "VCTRL"
                 pass
 
-
-    
     def controlsch(
         self,
         powerflow,
     ):
         """adiciona variáveis especificadas de controles ativos
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
-                Freq(powerflow,).freqsch(powerflow,)
+            elif key == "FREQ":
+                Freq(powerflow,).freqsch(
+                    powerflow,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
-                Qlim().qlimsch(powerflow,)
+            elif key == "QLIM":
+                Qlim().qlimsch(
+                    powerflow,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                Qlims().qlimssch(powerflow,)
+            elif key == "QLIMs":
+                Qlims().qlimssch(
+                    powerflow,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
-                Qlimn().qlimnsch(powerflow,)
+            elif key == "QLIMn":
+                Qlimn().qlimnsch(
+                    powerflow,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svcsch(powerflow,)
+            elif key == "SVCs":
+                SVCs().svcsch(
+                    powerflow,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-    
 
     def controlres(
         self,
         powerflow,
-        case: int=0,
+        case: int = 0,
     ):
         """adiciona resíduos de equações de controle de controles ativos
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
             case: caso analisado do fluxo de potência continuado (prev + corr)
@@ -217,151 +233,184 @@ class Control:
 
         ## Inicialização
         # Variável
-        powerflow.setup.deltaY = array([])
+        powerflow.deltaY = array([])
 
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
-                Freq(powerflow,).freqres(powerflow,)
+            elif key == "FREQ":
+                Freq(powerflow,).freqres(
+                    powerflow,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
-                Qlim().qlimres(powerflow,)
+            elif key == "QLIM":
+                Qlim().qlimres(
+                    powerflow,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                Qlims().qlimsres(powerflow, case,)
+            elif key == "QLIMs":
+                Qlims().qlimsres(
+                    powerflow,
+                    case,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
-                Qlimn().qlimnres(powerflow, case,)
+            elif key == "QLIMn":
+                Qlimn().qlimnres(
+                    powerflow,
+                    case,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svcres(powerflow, case,)
+            elif key == "SVCs":
+                SVCs().svcres(
+                    powerflow,
+                    case,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
 
-        if (powerflow.setup.deltaY.size == 0):
-            powerflow.setup.deltaY = array([]) 
+        if powerflow.deltaY.size == 0:
+            powerflow.deltaY = array([])
 
-
-    
     def controljac(
         self,
         powerflow,
     ):
         """submatrizes referentes aos controles ativos
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
 
         ## Inicialização
         # Variável
-        powerflow.setup.truedim = deepcopy(powerflow.setup.jacob.shape[0])
+        powerflow.setup.truedim = deepcopy(powerflow.jacob.shape[0])
 
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # Dimensão
-            powerflow.setup.controldim = powerflow.setup.jacob.shape[0] - powerflow.setup.truedim
+            powerflow.setup.controldim = (
+                powerflow.jacob.shape[0] - powerflow.setup.truedim
+            )
 
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
-                Freq(powerflow,).freqsubjac(powerflow,)
+            elif key == "FREQ":
+                Freq(powerflow,).freqsubjac(
+                    powerflow,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
-                Qlim().qlimsubjac(powerflow,)
+            elif key == "QLIM":
+                Qlim().qlimsubjac(
+                    powerflow,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                Qlims().qlimssubjac(powerflow,)
+            elif key == "QLIMs":
+                Qlims().qlimssubjac(
+                    powerflow,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
-                Qlimn().qlimnsubjac(powerflow,)
+            elif key == "QLIMn":
+                Qlimn().qlimnsubjac(
+                    powerflow,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svcsubjac(powerflow,)
+            elif key == "SVCs":
+                SVCs().svcsubjac(
+                    powerflow,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
 
         # Dimensão
-        powerflow.setup.controldim = powerflow.setup.jacob.shape[0] - powerflow.setup.truedim
-        
-        # Atualização da Máscara da Jacobiana
-        if (powerflow.setup.maskctrlcount == 0):
-            powerflow.setup.mask = append(powerflow.setup.mask, zeros(powerflow.setup.controldim, dtype=bool))
-            powerflow.setup.maskctrlcount += 1
+        powerflow.setup.controldim = (
+            powerflow.jacob.shape[0] - powerflow.setup.truedim
+        )
 
-    
+        # Atualização da Máscara da Jacobiana
+        if powerflow.setup.maskctrlcount == 0:
+            powerflow.setup.mask = append(
+                powerflow.setup.mask, zeros(powerflow.setup.controldim, dtype=bool)
+            )
+            powerflow.setup.maskctrlcount += 1
 
     def controlupdt(
         self,
         powerflow,
     ):
         """atualização das variáveis de estado adicionais por controle ativo
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
-                Freq(powerflow,).frequpdt(powerflow,)
+            elif key == "FREQ":
+                Freq(powerflow,).frequpdt(
+                    powerflow,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
-                Qlim().qlimupdt(powerflow,)
+            elif key == "QLIM":
+                Qlim().qlimupdt(
+                    powerflow,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                Qlims().qlimsupdt(powerflow,)
+            elif key == "QLIMs":
+                Qlims().qlimsupdt(
+                    powerflow,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
-                Qlimn().qlimnupdt(powerflow,)
+            elif key == "QLIMn":
+                Qlimn().qlimnupdt(
+                    powerflow,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svcupdt(powerflow,)
+            elif key == "SVCs":
+                SVCs().svcupdt(
+                    powerflow,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-
 
     def controlcorrsol(
         self,
@@ -369,7 +418,7 @@ class Control:
         case,
     ):
         """atualização das variáveis de controle para a etapa de correção do fluxo de potência continuado
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
             case: caso analisado do fluxo de potência continuado (prev + corr)
@@ -377,46 +426,59 @@ class Control:
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
-                Freq(powerflow,).freqcorr(powerflow, case,)
+            elif key == "FREQ":
+                Freq(powerflow,).freqcorr(
+                    powerflow,
+                    case,
+                )
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
-                Qlim().qlimcorr(powerflow, case,)
+            elif key == "QLIM":
+                Qlim().qlimcorr(
+                    powerflow,
+                    case,
+                )
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                Qlims().qlimscorr(powerflow, case,)
+            elif key == "QLIMs":
+                Qlims().qlimscorr(
+                    powerflow,
+                    case,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
-                Qlimn().qlimncorr(powerflow, case,)
+            elif key == "QLIMn":
+                Qlimn().qlimncorr(
+                    powerflow,
+                    case,
+                )
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svccorr(powerflow, case,)
+            elif key == "SVCs":
+                SVCs().svccorr(
+                    powerflow,
+                    case,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-
 
     def controlheuristics(
         self,
         powerflow,
     ):
         """aplicação de heurísticas das variáveis de controle para a etapa de correção do fluxo de potência continuado
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
@@ -424,55 +486,65 @@ class Control:
         ## Inicialização
         # Variável
         powerflow.setup.controlheur = False
-        if (not hasattr(powerflow.setup, 'bifurcation')):
+        if not hasattr(powerflow.setup, "bifurcation"):
             powerflow.setup.bifurcation = False
-        
+
         # Loop
-        for key,_ in powerflow.setup.control.items():
-            if (powerflow.setup.controlheur) or ((powerflow.setup.bifurcation) and (not powerflow.setup.options['FULL'])):
+        for key, _ in powerflow.setup.control.items():
+            if (powerflow.setup.controlheur) or (
+                (powerflow.setup.bifurcation) and (not powerflow.setup.options['FULL'])
+            ):
                 break
-            
-            elif (not powerflow.setup.controlheur) and (not powerflow.cpfsol['pmc']):
+
+            elif (not powerflow.setup.controlheur) and (
+                not powerflow.cpfsolution['pmc']
+            ):
                 # controle remoto de tensão
-                if (key == 'CREM'):
+                if key == "CREM":
                     pass
                 # controle secundário de tensão
-                elif (key == 'CST'):
+                elif key == "CST":
                     pass
                 # controle de tap variável de transformador
-                elif (key == 'CTAP'):
+                elif key == "CTAP":
                     pass
                 # controle de ângulo de transformador defasador
-                elif (key == 'CTAPd'):
+                elif key == "CTAPd":
                     pass
                 # controle de regulação primária de frequência
-                elif (key == 'FREQ'):
+                elif key == "FREQ":
                     pass
                 # controle de limite de geração de potência reativa
-                elif (key == 'QLIM'):
-                    Qlim().qlimheur(powerflow,)
+                elif key == "QLIM":
+                    Qlim().qlimheur(
+                        powerflow,
+                    )
                 # controle suave de limite de geração de potência reativa
-                elif (key == 'QLIMs'):
-                    Qlims().qlimsheur(powerflow,)
+                elif key == "QLIMs":
+                    Qlims().qlimsheur(
+                        powerflow,
+                    )
                 # controle suave de limite de geração de potência reativa
-                elif (key == 'QLIMn'):
-                    Qlimn().qlimnheur(powerflow,)
+                elif key == "QLIMn":
+                    Qlimn().qlimnheur(
+                        powerflow,
+                    )
                 # controle de compensadores estáticos de potência reativa
-                elif (key == 'SVCs'):
-                    SVCs().svcheur(powerflow,)
+                elif key == "SVCs":
+                    SVCs().svcheur(
+                        powerflow,
+                    )
                 # controle de magnitude de tensão de barramentos
-                elif (key == 'VCTRL'):
+                elif key == "VCTRL":
                     pass
-
-
 
     def controlpop(
         self,
         powerflow,
-        pop: int=1,
+        pop: int = 1,
     ):
         """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
             pop: quantidade de ações necessárias
@@ -480,85 +552,85 @@ class Control:
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
+            elif key == "FREQ":
                 pass
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
+            elif key == "QLIM":
                 pass
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
+            elif key == "QLIMs":
                 Qlims().qlimspop(powerflow, pop=pop)
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
+            elif key == "QLIMn":
                 Qlimn().qlimnpop(powerflow, pop=pop)
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
+            elif key == "SVCs":
                 pass
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-
 
     def controlcpf(
         self,
         powerflow,
     ):
         """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
         """
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
+            elif key == "FREQ":
                 pass
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
+            elif key == "QLIM":
                 pass
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                pass
+            elif key == "QLIMs":
+                Qlims().qlimscpf(
+                    powerflow,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
+            elif key == "QLIMn":
                 pass
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svccpf(powerflow,)
+            elif key == "SVCs":
+                SVCs().svccpf(
+                    powerflow,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-
 
     def controlsolcpf(
         self,
@@ -566,7 +638,7 @@ class Control:
         case,
     ):
         """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
-        
+
         Parâmetros
             powerflow: self do arquivo powerflow.py
             case: etapa do fluxo de potência continuado analisada
@@ -574,39 +646,43 @@ class Control:
 
         ## Inicialização
         # Loop
-        for key,_ in powerflow.setup.control.items():
+        for key, _ in powerflow.setup.control.items():
             # controle remoto de tensão
-            if (key == 'CREM'):
+            if key == "CREM":
                 pass
             # controle secundário de tensão
-            elif (key == 'CST'):
+            elif key == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (key == 'CTAP'):
+            elif key == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (key == 'CTAPd'):
+            elif key == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (key == 'FREQ'):
+            elif key == "FREQ":
                 pass
             # controle de limite de geração de potência reativa
-            elif (key == 'QLIM'):
+            elif key == "QLIM":
                 pass
             # controle suave simbolico de limite de geração de potência reativa
-            elif (key == 'QLIMs'):
-                pass
+            elif key == "QLIMs":
+                Qlims().qlimssolcpf(
+                    powerflow,
+                    case,
+                )
             # controle suave numerico de limite de geração de potência reativa
-            elif (key == 'QLIMn'):
+            elif key == "QLIMn":
                 pass
             # controle de compensadores estáticos de potência reativa
-            elif (key == 'SVCs'):
-                SVCs().svcsolcpf(powerflow, case,)
+            elif key == "SVCs":
+                SVCs().svcsolcpf(
+                    powerflow,
+                    case,
+                )
             # controle de magnitude de tensão de barramentos
-            elif (key == 'VCTRL'):
+            elif key == "VCTRL":
                 pass
-
-
 
     def controldelta(
         self,
@@ -624,46 +700,94 @@ class Control:
         ctrl = 0
 
         # Loop
-        for _,value in powerflow.setup.controlorder.items():
+        for _, value in powerflow.setup.controlorder.items():
             # controle remoto de tensão
-            if (value == 'CREM'):
+            if value == "CREM":
                 pass
             # controle secundário de tensão
-            elif (value == 'CST'):
+            elif value == "CST":
                 pass
             # controle de tap variável de transformador
-            elif (value == 'CTAP'):
+            elif value == "CTAP":
                 pass
             # controle de ângulo de transformador defasador
-            elif (value == 'CTAPd'):
+            elif value == "CTAPd":
                 pass
             # controle de regulação primária de frequência
-            elif (value == 'FREQ'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['TEPA'])))
+            elif value == "FREQ":
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['TEPA']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['TEPR'])))
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['TEPR']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['ASTP'])))
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['ASTP']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
             # controle de limite de geração de potência reativa
-            elif (value == 'QLIM'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+            elif value == "QLIM":
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['QLST']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
             # controle suave simbolico de limite de geração de potência reativa
-            elif (value == 'QLIMs'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+            elif value == "QLIMs":
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['QLST']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
             # controle suave numerico de limite de geração de potência reativa
-            elif (value == 'QLIMn'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.nger] > powerflow.setup.options['QLST'])))
+            elif value == "QLIMn":
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.nger]
+                            > powerflow.setup.options['QLST']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.nger
             # controle de compensadores estáticos de potência reativa
-            elif (value == 'SVCs'):
-                boollist.append(max(abs(powerflow.setup.deltaY[ctrl:ctrl+powerflow.setup.ncer] > powerflow.setup.options['QLST'])))
+            elif value == "SVCs":
+                boollist.append(
+                    max(
+                        abs(
+                            powerflow.deltaY[ctrl : ctrl + powerflow.setup.ncer]
+                            > powerflow.setup.options['QLST']
+                        )
+                    )
+                )
                 ctrl += powerflow.setup.ncer
             # controle de magnitude de tensão de barramentos
-            elif (value == 'VCTRL'):
+            elif value == "VCTRL":
                 pass
-
 
         return any(boollist)
