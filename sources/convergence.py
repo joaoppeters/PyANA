@@ -9,277 +9,272 @@
 from matplotlib import pyplot as plt
 from numpy import arange
 
-from folder import Folder
+from folder import convergencefolder
 
 
 class Convergence:
-    """classe para geração das trajetórias de convergência das variáveis de estado do fluxo de potência"""
+    '''classe para geração das trajetórias de convergência das variáveis de estado do fluxo de potência'''
 
-    def __init__(
-        self,
+def convergence(
+    powerflow,
+):
+    '''inicialização
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+        setup: self do arquivo setup.py
+    '''
+
+    ## Inicialização
+    # Criação de pasta
+    convergencefolder(
         powerflow,
-        setup,
-    ):
-        """inicialização
+    )
 
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            setup: self do arquivo setup.py
-        """
+    # # Convergência de Potência Ativa
+    # convP(
+    #     powerflow,
+    # )
 
-        ## Inicialização
-        # Criação de pasta
-        Folder(setup,).convergence(
-            setup,
+    # # Convergência de Potência Reativa
+    # convQ(
+    #     powerflow,
+    # )
+
+    # # Condição
+    # if powerflow.nbuscontrol:
+    #     # Convergência de Equações de Controle Adicionais
+    #     convY(
+    #         powerflow,
+    #     )
+
+def convP(
+    powerflow,
+):
+    '''trajetória de convergência de equação de potência ativa
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+
+    # Plots
+    if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            color='C0',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
+        )
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
 
-        # Convergência de Potência Ativa
-        self.convP(
-            powerflow,
+    elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            color='C0',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
+        )
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
 
-        # Convergência de Potência Reativa
-        self.convQ(
-            powerflow,
+    # Label
+    ax.set_title('Trajetória de Convergência de Potência Ativa')
+    ax.set_xlabel('Iterações')
+    ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
+    ax.set_ylabel('Resíduo de Potência Ativa [MW]')
+    ax.legend(
+        [
+            (
+                line,
+                mark,
+            )
+        ],
+        [f'abs(max($\Delta$P))'],
+    )
+    ax.grid()
+
+    # Save
+    fig.savefig(
+        powerflow.nbusdirRconvergence
+        + powerflow.nbusname
+        + '-trajconv-deltaP.png',
+        dpi=400,
+    )
+
+def convQ(
+    powerflow,
+):
+    '''trajetória de convergência de equação de potência reativa
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+
+    # Plots
+    if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            color='C1',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
+        )
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
 
-        # Condição
-        if powerflow.setup.control:
-            # Convergência de Equações de Controle Adicionais
-            self.convY(
-                powerflow,
-            )
-
-    def convP(
-        self,
-        powerflow,
-    ):
-        """trajetória de convergência de equação de potência ativa
-
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        fig, ax = plt.subplots(nrows=1, ncols=1)
-
-        # Plots
-        if powerflow.solution['convergence'] == "SISTEMA CONVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convP'] * powerflow.setup.options['BASE']),
-                color="C0",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
-            )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convP'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
-
-        elif powerflow.solution['convergence'] == "SISTEMA DIVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convP'] * powerflow.setup.options['BASE']),
-                color="C0",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
-            )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convP'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
-
-        # Label
-        ax.set_title("Trajetória de Convergência de Potência Ativa")
-        ax.set_xlabel("Iterações")
-        ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
-        ax.set_ylabel("Resíduo de Potência Ativa [MW]")
-        ax.legend(
-            [
-                (
-                    line,
-                    mark,
-                )
-            ],
-            [f"abs(max($\Delta$P))'],
+    elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            color='C1',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
         )
-        ax.grid()
-
-        # Save
-        fig.savefig(
-            powerflow.setup.dirRconvergence
-            + powerflow.setup.name
-            + "-trajconv-deltaP.png",
-            dpi=400,
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
 
-    def convQ(
-        self,
-        powerflow,
-    ):
-        """trajetória de convergência de equação de potência reativa
-
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        fig, ax = plt.subplots(nrows=1, ncols=1)
-
-        # Plots
-        if powerflow.solution['convergence'] == "SISTEMA CONVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convQ'] * powerflow.setup.options['BASE']),
-                color="C1",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
+    # Label
+    ax.set_title('Trajetória de Convergência de Potência Reativa')
+    ax.set_xlabel('Iterações')
+    ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
+    ax.set_ylabel('Resíduo de Potência Reativa [MVAr]')
+    ax.legend(
+        [
+            (
+                line,
+                mark,
             )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convQ'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
+        ],
+        [f'abs(max($\Delta$Q))'],
+    )
+    ax.grid()
 
-        elif powerflow.solution['convergence'] == "SISTEMA DIVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convQ'] * powerflow.setup.options['BASE']),
-                color="C1",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
-            )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convQ'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
+    # Save
+    fig.savefig(
+        powerflow.nbusdirRconvergence
+        + powerflow.nbusname
+        + '-trajconv-deltaQ.png',
+        dpi=400,
+    )
 
-        # Label
-        ax.set_title("Trajetória de Convergência de Potência Reativa")
-        ax.set_xlabel("Iterações")
-        ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
-        ax.set_ylabel("Resíduo de Potência Reativa [MVAr]")
-        ax.legend(
-            [
-                (
-                    line,
-                    mark,
-                )
-            ],
-            [f"abs(max($\Delta$Q))'],
+def convY(
+    powerflow,
+):
+    '''trajetória de convergência de equações de controle adicionais
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+
+    # Plots
+    if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            color='C1',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
         )
-        ax.grid()
-
-        # Save
-        fig.savefig(
-            powerflow.setup.dirRconvergence
-            + powerflow.setup.name
-            + "-trajconv-deltaQ.png",
-            dpi=400,
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter'] + 1),
+            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
 
-    def convY(
-        self,
-        powerflow,
-    ):
-        """trajetória de convergência de equações de controle adicionais
-
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        fig, ax = plt.subplots(nrows=1, ncols=1)
-
-        # Plots
-        if powerflow.solution['convergence'] == "SISTEMA CONVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convY'] * powerflow.setup.options['BASE']),
-                color="C1",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
-            )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter'] + 1),
-                (powerflow.solution['convY'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
-
-        elif powerflow.solution['convergence'] == "SISTEMA DIVERGENTE":
-            (line,) = ax.plot(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convY'] * powerflow.setup.options['BASE']),
-                color="C1",
-                linewidth=2,
-                alpha=0.85,
-                zorder=2,
-            )
-            mark = ax.scatter(
-                arange(0, powerflow.solution['iter']),
-                (powerflow.solution['convY'] * powerflow.setup.options['BASE']),
-                color=(1.0, 1.0, 1.0),
-                marker="*",
-                edgecolor=(0.0, 0.0, 0.0),
-                alpha=1.0,
-                s=100,
-                zorder=3,
-            )
-
-        # Label
-        ax.set_title("Trajetória de Convergência de Potência Reativa")
-        ax.set_xlabel("Iterações")
-        ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
-        ax.set_ylabel("Resíduo de Variável de Controle")
-        ax.legend(
-            [
-                (
-                    line,
-                    mark,
-                )
-            ],
-            [f"abs(max($\Delta$Y))'],
+    elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
+        (line,) = ax.plot(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            color='C1',
+            linewidth=2,
+            alpha=0.85,
+            zorder=2,
         )
-        ax.grid()
-
-        # Save
-        fig.savefig(
-            powerflow.setup.dirRconvergence
-            + powerflow.setup.name
-            + "-trajconv-deltaY.png",
-            dpi=400,
+        mark = ax.scatter(
+            arange(0, powerflow.solution['iter']),
+            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            color=(1.0, 1.0, 1.0),
+            marker='*',
+            edgecolor=(0.0, 0.0, 0.0),
+            alpha=1.0,
+            s=100,
+            zorder=3,
         )
+
+    # Label
+    ax.set_title('Trajetória de Convergência de Potência Reativa')
+    ax.set_xlabel('Iterações')
+    ax.set_xticks(arange(0, powerflow.solution['iter'] + 1))
+    ax.set_ylabel('Resíduo de Variável de Controle')
+    ax.legend(
+        [
+            (
+                line,
+                mark,
+            )
+        ],
+        [f'abs(max($\Delta$Y))'],
+    )
+    ax.grid()
+
+    # Save
+    fig.savefig(
+        powerflow.nbusdirRconvergence
+        + powerflow.nbusname
+        + '-trajconv-deltaY.png',
+        dpi=400,
+    )

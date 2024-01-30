@@ -9,1005 +9,1024 @@
 from numpy import concatenate, count_nonzero, nan, nonzero, ones
 from pandas import DataFrame as DF
 
+def pwf(
+    powerflow,
+):
+    '''inicialização
 
-class PWF:
-    """classe para leitura de dados PWF"""
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def __init__(
-        self,
+    ## Inicialização
+    # Variáveis
+    powerflow.linecount = 0
+
+    # Funções
+    keywords(
         powerflow,
-        setup,
-    ):
-        """inicialização
+    )
 
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            setup: self do arquivo setup.py
-        """
+    # Códigos
+    codes(
+        powerflow,
+    )
 
-        ## Inicialização
-        # Variáveis
-        self.linecount = 0
+    # Leitura
+    readfile(
+        powerflow,
+    )
 
-        # Funções
-        self.keywords()
+def keywords(
+    powerflow,
+):
+    '''palavras-chave de arquivo .pwf
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-        # Códigos
-        self.codes(
-            setup,
+    ## Inicialização
+    powerflow.end_archive = 'FIM'
+    powerflow.end_block = ('9999', '99999')
+    powerflow.comment = '('
+
+def codes(
+    powerflow,
+):
+    '''códigos de dados de execução implementados
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    # Variável
+    powerflow.codes = {
+        'DANC': False,
+        'DBAR': False,
+        'DCER': False,
+        'DCTE': False,
+        'DGER': False,
+        'DINC': False,
+        'DLIN': False,
+    }
+
+def danc(
+    powerflow,
+):
+    '''inicialização para leitura de dados de alteração do nível de carregamento
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.danc = dict()
+    powerflow.danc['area'] = list()
+    powerflow.danc['fator_carga_ativa'] = list()
+    powerflow.danc['fator_carga_reativa'] = list()
+    powerflow.danc['fator_shunt_barra'] = list()
+
+def dbar(
+    powerflow,
+):
+    '''inicialização para leitura de dados de barra
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dbar = dict()
+    powerflow.dbar['numero'] = list()
+    powerflow.dbar['operacao'] = list()
+    powerflow.dbar['estado'] = list()
+    powerflow.dbar['tipo'] = list()
+    powerflow.dbar['grupo_base_tensao'] = list()
+    powerflow.dbar['nome'] = list()
+    powerflow.dbar['grupo_limite_tensao'] = list()
+    powerflow.dbar['tensao'] = list()
+    powerflow.dbar['angulo'] = list()
+    powerflow.dbar['potencia_ativa'] = list()
+    powerflow.dbar['potencia_reativa'] = list()
+    powerflow.dbar['potencia_reativa_minima'] = list()
+    powerflow.dbar['potencia_reativa_maxima'] = list()
+    powerflow.dbar['barra_controlada'] = list()
+    powerflow.dbar['demanda_ativa'] = list()
+    powerflow.dbar['demanda_reativa'] = list()
+    powerflow.dbar['shunt_barra'] = list()
+    powerflow.dbar['area'] = list()
+    powerflow.dbar['tensao_base'] = list()
+    powerflow.dbar['modo'] = list()
+    powerflow.dbar['agreg1'] = list()
+    powerflow.dbar['agreg2'] = list()
+    powerflow.dbar['agreg3'] = list()
+    powerflow.dbar['agreg4'] = list()
+    powerflow.dbar['agreg5'] = list()
+    powerflow.dbar['agreg6'] = list()
+    powerflow.dbar['agreg7'] = list()
+    powerflow.dbar['agreg8'] = list()
+    powerflow.dbar['agreg9'] = list()
+    powerflow.dbar['agreg10'] = list()
+
+def dcer(
+    powerflow,
+):
+    '''inicialização para leitura de dados de compensadores estáticos de potência reativa
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dcer = dict()
+    powerflow.dcer['barra'] = list()
+    powerflow.dcer['operacao'] = list()
+    powerflow.dcer['grupo_base'] = list()
+    powerflow.dcer['unidades'] = list()
+    powerflow.dcer['barra_controlada'] = list()
+    powerflow.dcer['droop'] = list()
+    powerflow.dcer['potencia_reativa'] = list()
+    powerflow.dcer['potencia_reativa_minima'] = list()
+    powerflow.dcer['potencia_reativa_maxima'] = list()
+    powerflow.dcer['controle'] = list()
+    powerflow.dcer['estado'] = list()
+
+def dcte(
+    powerflow,
+):
+    '''inicialização para leitura de dados de constantes
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dcte = dict()
+    powerflow.dcte['constante'] = list()
+    powerflow.dcte['valor_constante'] = list()
+
+def dger(
+    powerflow,
+):
+    '''inicialização para leitura de dados de geradores
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dger = dict()
+    powerflow.dger['numero'] = list()
+    powerflow.dger['operacao'] = list()
+    powerflow.dger['potencia_ativa_minima'] = list()
+    powerflow.dger['potencia_ativa_maxima'] = list()
+    powerflow.dger['fator_participacao'] = list()
+    powerflow.dger['fator_participacao_controle_remoto'] = list()
+    powerflow.dger['fator_potencia_nominal'] = list()
+    powerflow.dger['fator_servico_armadura'] = list()
+    powerflow.dger['fator_servico_rotor'] = list()
+    powerflow.dger['angulo_maximo_carga'] = list()
+    powerflow.dger['reatancia_maquina'] = list()
+    powerflow.dger['potencia_aparente_nominal'] = list()
+    powerflow.dger['estatismo'] = list()
+
+def dinc(
+    powerflow,
+):
+    '''inicialização para leitura de dados de incremento do nível de carregamento
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dinc = dict()
+    powerflow.dinc['tipo_incremento_1'] = list()
+    powerflow.dinc['identificacao_incremento_1'] = list()
+    powerflow.dinc['condicao_incremento_1'] = list()
+    powerflow.dinc['tipo_incremento_2'] = list()
+    powerflow.dinc['identificacao_incremento_2'] = list()
+    powerflow.dinc['condicao_incremento_2'] = list()
+    powerflow.dinc['tipo_incremento_3'] = list()
+    powerflow.dinc['identificacao_incremento_3'] = list()
+    powerflow.dinc['condicao_incremento_3'] = list()
+    powerflow.dinc['tipo_incremento_4'] = list()
+    powerflow.dinc['identificacao_incremento_4'] = list()
+    powerflow.dinc['condicao_incremento_4'] = list()
+    powerflow.dinc['passo_incremento_potencia_ativa'] = list()
+    powerflow.dinc['passo_incremento_potencia_reativa'] = list()
+    powerflow.dinc['maximo_incremento_potencia_ativa'] = list()
+    powerflow.dinc['maximo_incremento_potencia_reativa'] = list()
+    powerflow.dinc['tratamento_incremento_potencia_ativa'] = list()
+    powerflow.dinc['tratamento_incremento_potencia_reativa'] = list()
+
+def dlin(
+    powerflow,
+):
+    '''inicialização para leitura de dados de linha
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    powerflow.dlin = dict()
+    powerflow.dlin['de'] = list()
+    powerflow.dlin['abertura_de'] = list()
+    powerflow.dlin['operacao'] = list()
+    powerflow.dlin['abertura_para'] = list()
+    powerflow.dlin['para'] = list()
+    powerflow.dlin['circuito'] = list()
+    powerflow.dlin['estado'] = list()
+    powerflow.dlin['proprietario'] = list()
+    powerflow.dlin['resistencia'] = list()
+    powerflow.dlin['reatancia'] = list()
+    powerflow.dlin['susceptancia'] = list()
+    powerflow.dlin['tap'] = list()
+    powerflow.dlin['tap_minimo'] = list()
+    powerflow.dlin['tap_maximo'] = list()
+    powerflow.dlin['tap_defasagem'] = list()
+    powerflow.dlin['barra_controlada'] = list()
+    powerflow.dlin['capacidade_normal'] = list()
+    powerflow.dlin['capacidade_emergencial'] = list()
+    powerflow.dlin['numero_taps'] = list()
+    powerflow.dlin['capacidade_equipamento'] = list()
+    powerflow.dlin['agreg1'] = list()
+    powerflow.dlin['agreg2'] = list()
+    powerflow.dlin['agreg3'] = list()
+    powerflow.dlin['agreg4'] = list()
+    powerflow.dlin['agreg5'] = list()
+    powerflow.dlin['agreg6'] = list()
+    powerflow.dlin['agreg7'] = list()
+    powerflow.dlin['agreg8'] = list()
+    powerflow.dlin['agreg9'] = list()
+    powerflow.dlin['agreg10'] = list()
+
+def readfile(
+    powerflow,
+):
+    '''leitura do arquivo .pwf
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
+
+    ## Inicialização
+    f = open(f'{powerflow.dirSEP}', 'r', encoding='latin-1')
+    powerflow.lines = f.readlines()
+    f.close()
+    powerflow.pwf2py = {}
+
+    # Loop de leitura de linhas do `.pwf`
+    while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
+        # Dados de Alteração do Nível de Carregamento
+        if powerflow.lines[powerflow.linecount].strip() == 'DANC':
+            danc(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.danc['area'].append(powerflow.lines[powerflow.linecount][:5])
+                    powerflow.danc['fator_carga_ativa'].append(
+                        powerflow.lines[powerflow.linecount][5:12]
+                    )
+                    powerflow.danc['fator_carga_reativa'].append(
+                        powerflow.lines[powerflow.linecount][12:19]
+                    )
+                    powerflow.danc['fator_shunt_barra'].append(
+                        powerflow.lines[powerflow.linecount][19:24]
+                    )
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados de Alteração do Nível de Carregamento
+            powerflow.dancDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.danc),
+                data='DANC',
+            )
+            if powerflow.dancDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m'
+                )
+            else:
+                powerflow.codes['DANC'] = True
+
+        # Dados de Barra
+        elif powerflow.lines[powerflow.linecount].strip() == 'DBAR':
+            dbar(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dbar['numero'].append(powerflow.lines[powerflow.linecount][:5])
+                    powerflow.dbar['operacao'].append(powerflow.lines[powerflow.linecount][5])
+                    powerflow.dbar['estado'].append(powerflow.lines[powerflow.linecount][6])
+                    powerflow.dbar['tipo'].append(powerflow.lines[powerflow.linecount][7])
+                    powerflow.dbar['grupo_base_tensao'].append(
+                        powerflow.lines[powerflow.linecount][8:10]
+                    )
+                    powerflow.dbar['nome'].append(
+                        powerflow.lines[powerflow.linecount][10:22].split(' ')[0]
+                    )
+                    powerflow.dbar['grupo_limite_tensao'].append(
+                        powerflow.lines[powerflow.linecount][22:24]
+                    )
+                    powerflow.dbar['tensao'].append(powerflow.lines[powerflow.linecount][24:28])
+                    powerflow.dbar['angulo'].append(powerflow.lines[powerflow.linecount][28:32])
+                    powerflow.dbar['potencia_ativa'].append(
+                        powerflow.lines[powerflow.linecount][32:37]
+                    )
+                    powerflow.dbar['potencia_reativa'].append(
+                        powerflow.lines[powerflow.linecount][37:42]
+                    )
+                    powerflow.dbar['potencia_reativa_minima'].append(
+                        powerflow.lines[powerflow.linecount][42:47]
+                    )
+                    powerflow.dbar['potencia_reativa_maxima'].append(
+                        powerflow.lines[powerflow.linecount][47:52]
+                    )
+                    powerflow.dbar['barra_controlada'].append(
+                        powerflow.lines[powerflow.linecount][52:58]
+                    )
+                    powerflow.dbar['demanda_ativa'].append(
+                        powerflow.lines[powerflow.linecount][58:63]
+                    )
+                    powerflow.dbar['demanda_reativa'].append(
+                        powerflow.lines[powerflow.linecount][63:68]
+                    )
+                    powerflow.dbar['shunt_barra'].append(
+                        powerflow.lines[powerflow.linecount][68:73]
+                    )
+                    powerflow.dbar['area'].append(powerflow.lines[powerflow.linecount][73:76])
+                    powerflow.dbar['tensao_base'].append(
+                        powerflow.lines[powerflow.linecount][76:80]
+                    )
+                    powerflow.dbar['modo'].append(powerflow.lines[powerflow.linecount][80])
+                    powerflow.dbar['agreg1'].append(powerflow.lines[powerflow.linecount][81:84])
+                    powerflow.dbar['agreg2'].append(powerflow.lines[powerflow.linecount][84:87])
+                    powerflow.dbar['agreg3'].append(powerflow.lines[powerflow.linecount][87:90])
+                    powerflow.dbar['agreg4'].append(powerflow.lines[powerflow.linecount][90:93])
+                    powerflow.dbar['agreg5'].append(powerflow.lines[powerflow.linecount][93:96])
+                    powerflow.dbar['agreg6'].append(powerflow.lines[powerflow.linecount][96:99])
+                    powerflow.dbar['agreg7'].append(powerflow.lines[powerflow.linecount][99:102])
+                    powerflow.dbar['agreg8'].append(powerflow.lines[powerflow.linecount][102:105])
+                    powerflow.dbar['agreg9'].append(powerflow.lines[powerflow.linecount][105:108])
+                    powerflow.dbar['agreg10'].append(powerflow.lines[powerflow.linecount][108:111])
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados de Barra
+            powerflow.dbarraDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dbar),
+                data='DBAR',
+            )
+            if powerflow.dbarraDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m'
+                )
+            else:
+                powerflow.codes['DBAR'] = True
+
+        # Dados de Compensadores Estáticos de Potência Reativa
+        elif powerflow.lines[powerflow.linecount].strip() == 'DCER':
+            dcer(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dcer['barra'].append(powerflow.lines[powerflow.linecount][:5])
+                    powerflow.dcer['operacao'].append(powerflow.lines[powerflow.linecount][6])
+                    powerflow.dcer['grupo_base'].append(powerflow.lines[powerflow.linecount][8:10])
+                    powerflow.dcer['unidades'].append(powerflow.lines[powerflow.linecount][11:13])
+                    powerflow.dcer['barra_controlada'].append(
+                        powerflow.lines[powerflow.linecount][14:19]
+                    )
+                    powerflow.dcer['droop'].append(powerflow.lines[powerflow.linecount][20:26])
+                    powerflow.dcer['potencia_reativa'].append(
+                        powerflow.lines[powerflow.linecount][27:32]
+                    )
+                    powerflow.dcer['potencia_reativa_minima'].append(
+                        powerflow.lines[powerflow.linecount][32:37]
+                    )
+                    powerflow.dcer['potencia_reativa_maxima'].append(
+                        powerflow.lines[powerflow.linecount][37:42]
+                    )
+                    powerflow.dcer['controle'].append(powerflow.lines[powerflow.linecount][43])
+                    powerflow.dcer['estado'].append(powerflow.lines[powerflow.linecount][45])
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
+            powerflow.dcerDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dcer),
+                data='DCER',
+            )
+            if powerflow.dcerDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m'
+                )
+            else:
+                powerflow.codes['DCER'] = True
+
+        # Dados de Constantes
+        elif powerflow.lines[powerflow.linecount].strip() == 'DCTE':
+            dcte(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][:4])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][5:11]
+                    )
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][12:16])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][17:23]
+                    )
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][24:28])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][29:35]
+                    )
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][36:40])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][41:47]
+                    )
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][48:52])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][53:59]
+                    )
+                    powerflow.dcte['constante'].append(powerflow.lines[powerflow.linecount][60:64])
+                    powerflow.dcte['valor_constante'].append(
+                        powerflow.lines[powerflow.linecount][65:71]
+                    )
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados de Constantes
+            powerflow.dcteDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dcte),
+                data='DCTE',
+            )
+            if powerflow.dcteDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m'
+                )
+            else:
+                powerflow.codes['DCTE'] = True
+
+        # Dados de Geradores
+        elif powerflow.lines[powerflow.linecount].strip() == 'DGER':
+            dger(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dger['numero'].append(powerflow.lines[powerflow.linecount][:5])
+                    powerflow.dger['operacao'].append(powerflow.lines[powerflow.linecount][6])
+                    powerflow.dger['potencia_ativa_minima'].append(
+                        powerflow.lines[powerflow.linecount][8:14]
+                    )
+                    powerflow.dger['potencia_ativa_maxima'].append(
+                        powerflow.lines[powerflow.linecount][15:21]
+                    )
+                    powerflow.dger['fator_participacao'].append(
+                        powerflow.lines[powerflow.linecount][22:27]
+                    )
+                    powerflow.dger['fator_participacao_controle_remoto'].append(
+                        powerflow.lines[powerflow.linecount][28:33]
+                    )
+                    powerflow.dger['fator_potencia_nominal'].append(
+                        powerflow.lines[powerflow.linecount][34:39]
+                    )
+                    powerflow.dger['fator_servico_armadura'].append(
+                        powerflow.lines[powerflow.linecount][40:44]
+                    )
+                    powerflow.dger['fator_servico_rotor'].append(
+                        powerflow.lines[powerflow.linecount][45:49]
+                    )
+                    powerflow.dger['angulo_maximo_carga'].append(
+                        powerflow.lines[powerflow.linecount][50:54]
+                    )
+                    powerflow.dger['reatancia_maquina'].append(
+                        powerflow.lines[powerflow.linecount][55:60]
+                    )
+                    powerflow.dger['potencia_aparente_nominal'].append(
+                        powerflow.lines[powerflow.linecount][61:66]
+                    )
+                    powerflow.dger['estatismo'].append(powerflow.lines[powerflow.linecount][66:72])
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados de Geradores
+            powerflow.dgeraDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dger),
+                data='DGER',
+            )
+            if powerflow.dgeraDF.empty:  # or (powerflow.dgeraDF.shape[0] != powerflow.nger):
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m'
+                )
+            else:
+                powerflow.codes['DGER'] = True
+
+        # Dados de Incremento do Nível de Carregamento
+        elif powerflow.lines[powerflow.linecount].strip() == 'DINC':
+            dinc(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dinc['tipo_incremento_1'].append(
+                        powerflow.lines[powerflow.linecount][:4]
+                    )
+                    powerflow.dinc['identificacao_incremento_1'].append(
+                        powerflow.lines[powerflow.linecount][5:10]
+                    )
+                    powerflow.dinc['condicao_incremento_1'].append(
+                        powerflow.lines[powerflow.linecount][11]
+                    )
+                    powerflow.dinc['tipo_incremento_2'].append(
+                        powerflow.lines[powerflow.linecount][13:17]
+                    )
+                    powerflow.dinc['identificacao_incremento_2'].append(
+                        powerflow.lines[powerflow.linecount][18:23]
+                    )
+                    powerflow.dinc['condicao_incremento_2'].append(
+                        powerflow.lines[powerflow.linecount][24]
+                    )
+                    powerflow.dinc['tipo_incremento_3'].append(
+                        powerflow.lines[powerflow.linecount][26:30]
+                    )
+                    powerflow.dinc['identificacao_incremento_3'].append(
+                        powerflow.lines[powerflow.linecount][31:36]
+                    )
+                    powerflow.dinc['condicao_incremento_3'].append(
+                        powerflow.lines[powerflow.linecount][37]
+                    )
+                    powerflow.dinc['tipo_incremento_4'].append(
+                        powerflow.lines[powerflow.linecount][39:43]
+                    )
+                    powerflow.dinc['identificacao_incremento_4'].append(
+                        powerflow.lines[powerflow.linecount][44:49]
+                    )
+                    powerflow.dinc['condicao_incremento_4'].append(
+                        powerflow.lines[powerflow.linecount][50]
+                    )
+                    powerflow.dinc['passo_incremento_potencia_ativa'].append(
+                        powerflow.lines[powerflow.linecount][52:57]
+                    )
+                    powerflow.dinc['passo_incremento_potencia_reativa'].append(
+                        powerflow.lines[powerflow.linecount][58:63]
+                    )
+                    powerflow.dinc['maximo_incremento_potencia_ativa'].append(
+                        powerflow.lines[powerflow.linecount][64:69]
+                    )
+                    powerflow.dinc['maximo_incremento_potencia_reativa'].append(
+                        powerflow.lines[powerflow.linecount][70:75]
+                    )
+                    powerflow.dinc['tratamento_incremento_potencia_ativa'].append(
+                        False if powerflow.lines[powerflow.linecount][64:69] != '' else True
+                    )
+                    powerflow.dinc['tratamento_incremento_potencia_reativa'].append(
+                        False if powerflow.lines[powerflow.linecount][70:75] != '' else True
+                    )
+                powerflow.linecount += 1
+
+            # DataFrame dos dados de Incremento do Nível de Carregamento
+            powerflow.dincDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dinc),
+                data='DINC',
+            )
+            if powerflow.dincDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m'
+                )
+            else:
+                powerflow.codes['DINC'] = True
+
+        # Dados de Linha
+        elif powerflow.lines[powerflow.linecount].strip() == 'DLIN':
+            dlin(powerflow,)
+            powerflow.linecount += 1
+            while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dlin['de'].append(powerflow.lines[powerflow.linecount][:5])
+                    powerflow.dlin['abertura_de'].append(powerflow.lines[powerflow.linecount][5])
+                    powerflow.dlin['operacao'].append(powerflow.lines[powerflow.linecount][7])
+                    powerflow.dlin['abertura_para'].append(powerflow.lines[powerflow.linecount][9])
+                    powerflow.dlin['para'].append(powerflow.lines[powerflow.linecount][10:15])
+                    powerflow.dlin['circuito'].append(powerflow.lines[powerflow.linecount][15:17])
+                    powerflow.dlin['estado'].append(powerflow.lines[powerflow.linecount][17])
+                    powerflow.dlin['proprietario'].append(powerflow.lines[powerflow.linecount][18])
+                    powerflow.dlin['resistencia'].append(
+                        powerflow.lines[powerflow.linecount][20:26]
+                    )
+                    powerflow.dlin['reatancia'].append(powerflow.lines[powerflow.linecount][26:32])
+                    powerflow.dlin['susceptancia'].append(
+                        powerflow.lines[powerflow.linecount][32:38]
+                    )
+                    powerflow.dlin['tap'].append(powerflow.lines[powerflow.linecount][38:43])
+                    powerflow.dlin['tap_minimo'].append(
+                        powerflow.lines[powerflow.linecount][43:48]
+                    )
+                    powerflow.dlin['tap_maximo'].append(
+                        powerflow.lines[powerflow.linecount][48:53]
+                    )
+                    powerflow.dlin['tap_defasagem'].append(
+                        powerflow.lines[powerflow.linecount][53:58]
+                    )
+                    powerflow.dlin['barra_controlada'].append(
+                        powerflow.lines[powerflow.linecount][58:64]
+                    )
+                    powerflow.dlin['capacidade_normal'].append(
+                        powerflow.lines[powerflow.linecount][64:68]
+                    )
+                    powerflow.dlin['capacidade_emergencial'].append(
+                        powerflow.lines[powerflow.linecount][68:72]
+                    )
+                    powerflow.dlin['numero_taps'].append(
+                        powerflow.lines[powerflow.linecount][72:74]
+                    )
+                    powerflow.dlin['capacidade_equipamento'].append(
+                        powerflow.lines[powerflow.linecount][74:78]
+                    )
+                    powerflow.dlin['agreg1'].append(powerflow.lines[powerflow.linecount][78:81])
+                    powerflow.dlin['agreg2'].append(powerflow.lines[powerflow.linecount][81:84])
+                    powerflow.dlin['agreg3'].append(powerflow.lines[powerflow.linecount][84:87])
+                    powerflow.dlin['agreg4'].append(powerflow.lines[powerflow.linecount][87:90])
+                    powerflow.dlin['agreg5'].append(powerflow.lines[powerflow.linecount][90:93])
+                    powerflow.dlin['agreg6'].append(powerflow.lines[powerflow.linecount][93:96])
+                    powerflow.dlin['agreg7'].append(powerflow.lines[powerflow.linecount][96:99])
+                    powerflow.dlin['agreg8'].append(powerflow.lines[powerflow.linecount][99:102])
+                    powerflow.dlin['agreg9'].append(powerflow.lines[powerflow.linecount][102:105])
+                    powerflow.dlin['agreg10'].append(powerflow.lines[powerflow.linecount][105:108])
+                powerflow.linecount += 1
+
+            # DataFrame dos Dados de Linha
+            powerflow.dlinhaDF = treatment(
+                powerflow,
+                pandas=DF(data=powerflow.dlin),
+                data='DLIN',
+            )
+            if powerflow.dlinhaDF.empty:
+                ## ERROR - VERMELHO
+                raise ValueError(
+                    '\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m'
+                )
+            else:
+                powerflow.codes['DLIN'] = True
+
+        powerflow.linecount += 1
+
+    ## SUCESSO NA LEITURA
+    print(f'\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m')
+
+def treatment(
+    powerflow,
+    pandas: DF = DF.empty,
+    data: str = '',
+):
+    '''tratamento dos valores padrão adotadas nas leituras de códigos de execução
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+        pandas: DataFrame, obrigatório, valor padrão DataFrame.empty
+            Arquivo que contém a leitura e armazenamento de dados de um respectivo código de execução
+        data: str, obrigatório, valor padrão 'None'
+            String que indica o código de execução lido para que haja o tratamento de dados das variáveis armazenadas no DataFrame
+
+    Retorno
+        pandas: DataFrame
+            Arquivo com os valores tratados
+    '''
+
+    ## Inicialização
+    # Tratamento inicial
+    pandas = pandas.replace(r'^\s*$', '0', regex=True)
+
+    ## Tratamentos
+    # Tratamento específico 'DANC'
+    if data == 'DANC':
+        pandas = pandas.astype(
+            {
+                'area': 'int',
+                'fator_carga_ativa': 'float',
+                'fator_carga_reativa': 'float',
+                'fator_shunt_barra': 'float',
+            }
         )
 
-        # Leitura
-        self.readfile(
-            powerflow,
-            setup,
+    # Tratamento específico 'DBAR'
+    elif data == 'DBAR':
+        pandas = pandas.astype(
+            {
+                'numero': 'int',
+                'operacao': 'object',
+                'estado': 'object',
+                'tipo': 'int',
+                'grupo_base_tensao': 'object',
+                'nome': 'str',
+                'grupo_limite_tensao': 'object',
+                'tensao': 'float',
+                'angulo': 'float',
+                'potencia_ativa': 'float',
+                'potencia_reativa': 'float',
+                'potencia_reativa_minima': 'float',
+                'potencia_reativa_maxima': 'float',
+                'barra_controlada': 'int',
+                'demanda_ativa': 'float',
+                'demanda_reativa': 'float',
+                'shunt_barra': 'float',
+                'area': 'int',
+                'tensao_base': 'float',
+                'modo': 'object',
+                'agreg1': 'object',
+                'agreg2': 'object',
+                'agreg3': 'object',
+                'agreg4': 'object',
+                'agreg5': 'object',
+                'agreg6': 'object',
+                'agreg7': 'object',
+                'agreg8': 'object',
+                'agreg9': 'object',
+                'agreg10': 'object',
+            }
         )
 
-    def keywords(
-        self,
-    ):
-        """palavras-chave de arquivo .pwf"""
+        # Número de barras do sistema
+        powerflow.nbus = len(pandas.tipo.values)
 
-        ## Inicialização
-        self.end_archive = "FIM"
-        self.end_block = ("9999", "99999")
-        self.comment = "("
+        # Barras geradoras: número & máscara
+        powerflow.nger = 0
+        powerflow.maskP = ones(powerflow.nbus, dtype=bool)
+        powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
+        for idx, value in pandas.iterrows():
+            if (value['tipo'] == 2) or (value['tipo'] == 1):
+                powerflow.nger += 1
+                powerflow.maskQ[idx] = False
 
-    def codes(
-        self,
-        setup,
-    ):
-        """códigos de dados de execução implementados
+                if value['tipo'] == 2:
+                    powerflow.maskP[idx] = False
+                    powerflow.slackidx = idx
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
-
-        ## Inicialização
-        # Variável
-        setup.codes = {
-            "DANC": False,
-            "DBAR": False,
-            "DCER": False,
-            "DCTE": False,
-            "DGER": False,
-            "DINC": False,
-            "DLIN": False,
-        }
-
-    def danc(
-        self,
-    ):
-        """inicialização para leitura de dados de alteração do nível de carregamento"""
-
-        ## Inicialização
-        self.danc = dict()
-        self.danc['area'] = list()
-        self.danc['fator_carga_ativa'] = list()
-        self.danc['fator_carga_reativa'] = list()
-        self.danc['fator_shunt_barra'] = list()
-
-    def dbar(
-        self,
-    ):
-        """inicialização para leitura de dados de barra"""
-
-        ## Inicialização
-        self.dbar = dict()
-        self.dbar['numero'] = list()
-        self.dbar['operacao'] = list()
-        self.dbar['estado'] = list()
-        self.dbar['tipo'] = list()
-        self.dbar['grupo_base_tensao'] = list()
-        self.dbar['nome'] = list()
-        self.dbar['grupo_limite_tensao'] = list()
-        self.dbar['tensao'] = list()
-        self.dbar['angulo'] = list()
-        self.dbar['potencia_ativa'] = list()
-        self.dbar['potencia_reativa'] = list()
-        self.dbar['potencia_reativa_minima'] = list()
-        self.dbar['potencia_reativa_maxima'] = list()
-        self.dbar['barra_controlada'] = list()
-        self.dbar['demanda_ativa'] = list()
-        self.dbar['demanda_reativa'] = list()
-        self.dbar['shunt_barra'] = list()
-        self.dbar['area'] = list()
-        self.dbar['tensao_base'] = list()
-        self.dbar['modo'] = list()
-        self.dbar['agreg1'] = list()
-        self.dbar['agreg2'] = list()
-        self.dbar['agreg3'] = list()
-        self.dbar['agreg4'] = list()
-        self.dbar['agreg5'] = list()
-        self.dbar['agreg6'] = list()
-        self.dbar['agreg7'] = list()
-        self.dbar['agreg8'] = list()
-        self.dbar['agreg9'] = list()
-        self.dbar['agreg10'] = list()
-
-    def dcer(
-        self,
-    ):
-        """inicialização para leitura de dados de compensadores estáticos de potência reativa"""
-
-        ## Inicialização
-        self.dcer = dict()
-        self.dcer['barra'] = list()
-        self.dcer['operacao'] = list()
-        self.dcer['grupo_base'] = list()
-        self.dcer['unidades'] = list()
-        self.dcer['barra_controlada'] = list()
-        self.dcer['droop'] = list()
-        self.dcer['potencia_reativa'] = list()
-        self.dcer['potencia_reativa_minima'] = list()
-        self.dcer['potencia_reativa_maxima'] = list()
-        self.dcer['controle'] = list()
-        self.dcer['estado'] = list()
-
-    def dcte(
-        self,
-    ):
-        """inicialização para leitura de dados de constantes"""
-
-        ## Inicialização
-        self.dcte = dict()
-        self.dcte['constante'] = list()
-        self.dcte['valor_constante'] = list()
-
-    def dger(
-        self,
-    ):
-        """inicialização para leitura de dados de geradores"""
-
-        ## Inicialização
-        self.dger = dict()
-        self.dger['numero'] = list()
-        self.dger['operacao'] = list()
-        self.dger['potencia_ativa_minima'] = list()
-        self.dger['potencia_ativa_maxima'] = list()
-        self.dger['fator_participacao'] = list()
-        self.dger['fator_participacao_controle_remoto'] = list()
-        self.dger['fator_potencia_nominal'] = list()
-        self.dger['fator_servico_armadura'] = list()
-        self.dger['fator_servico_rotor'] = list()
-        self.dger['angulo_maximo_carga'] = list()
-        self.dger['reatancia_maquina'] = list()
-        self.dger['potencia_aparente_nominal'] = list()
-        self.dger['estatismo'] = list()
-
-    def dinc(
-        self,
-    ):
-        """inicialização para leitura de dados de incremento do nível de carregamento"""
-
-        ## Inicialização
-        self.dinc = dict()
-        self.dinc['tipo_incremento_1'] = list()
-        self.dinc['identificacao_incremento_1'] = list()
-        self.dinc['condicao_incremento_1'] = list()
-        self.dinc['tipo_incremento_2'] = list()
-        self.dinc['identificacao_incremento_2'] = list()
-        self.dinc['condicao_incremento_2'] = list()
-        self.dinc['tipo_incremento_3'] = list()
-        self.dinc['identificacao_incremento_3'] = list()
-        self.dinc['condicao_incremento_3'] = list()
-        self.dinc['tipo_incremento_4'] = list()
-        self.dinc['identificacao_incremento_4'] = list()
-        self.dinc['condicao_incremento_4'] = list()
-        self.dinc['passo_incremento_potencia_ativa'] = list()
-        self.dinc['passo_incremento_potencia_reativa'] = list()
-        self.dinc['maximo_incremento_potencia_ativa'] = list()
-        self.dinc['maximo_incremento_potencia_reativa'] = list()
-        self.dinc['tratamento_incremento_potencia_ativa'] = list()
-        self.dinc['tratamento_incremento_potencia_reativa'] = list()
-
-    def dlin(
-        self,
-    ):
-        """inicialização para leitura de dados de linha"""
-
-        ## Inicialização
-        self.dlin = dict()
-        self.dlin['de'] = list()
-        self.dlin['abertura_de'] = list()
-        self.dlin['operacao'] = list()
-        self.dlin['abertura_para'] = list()
-        self.dlin['para'] = list()
-        self.dlin['circuito'] = list()
-        self.dlin['estado'] = list()
-        self.dlin['proprietario'] = list()
-        self.dlin['resistencia'] = list()
-        self.dlin['reatancia'] = list()
-        self.dlin['susceptancia'] = list()
-        self.dlin['tap'] = list()
-        self.dlin['tap_minimo'] = list()
-        self.dlin['tap_maximo'] = list()
-        self.dlin['tap_defasagem'] = list()
-        self.dlin['barra_controlada'] = list()
-        self.dlin['capacidade_normal'] = list()
-        self.dlin['capacidade_emergencial'] = list()
-        self.dlin['numero_taps'] = list()
-        self.dlin['capacidade_equipamento'] = list()
-        self.dlin['agreg1'] = list()
-        self.dlin['agreg2'] = list()
-        self.dlin['agreg3'] = list()
-        self.dlin['agreg4'] = list()
-        self.dlin['agreg5'] = list()
-        self.dlin['agreg6'] = list()
-        self.dlin['agreg7'] = list()
-        self.dlin['agreg8'] = list()
-        self.dlin['agreg9'] = list()
-        self.dlin['agreg10'] = list()
-
-    def readfile(
-        self,
-        powerflow,
-        setup,
-    ):
-        """leitura do arquivo .pwf
-
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            setup: self do arquivo setup.py
-        """
-
-        ## Inicialização
-        f = open(f"{setup.dirSEP}", "r", encoding="latin-1")
-        self.lines = f.readlines()
-        f.close()
-        self.pwf2py = {}
-
-        # Loop de leitura de linhas do `.pwf`
-        while self.lines[self.linecount].strip() != self.end_archive:
-            # Dados de Alteração do Nível de Carregamento
-            if self.lines[self.linecount].strip() == "DANC":
-                self.danc()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.danc['area'].append(self.lines[self.linecount][:5])
-                        self.danc['fator_carga_ativa'].append(
-                            self.lines[self.linecount][5:12]
-                        )
-                        self.danc['fator_carga_reativa'].append(
-                            self.lines[self.linecount][12:19]
-                        )
-                        self.danc['fator_shunt_barra'].append(
-                            self.lines[self.linecount][19:24]
-                        )
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Alteração do Nível de Carregamento
-                setup.dancDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.danc),
-                    data="DANC",
-                )
-                if setup.dancDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
-                    )
-                else:
-                    setup.codes['DANC'] = True
-
-            # Dados de Barra
-            elif self.lines[self.linecount].strip() == "DBAR":
-                self.dbar()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dbar['numero'].append(self.lines[self.linecount][:5])
-                        self.dbar['operacao'].append(self.lines[self.linecount][5])
-                        self.dbar['estado'].append(self.lines[self.linecount][6])
-                        self.dbar['tipo'].append(self.lines[self.linecount][7])
-                        self.dbar['grupo_base_tensao'].append(
-                            self.lines[self.linecount][8:10]
-                        )
-                        self.dbar['nome'].append(
-                            self.lines[self.linecount][10:22].split(" ")[0]
-                        )
-                        self.dbar['grupo_limite_tensao'].append(
-                            self.lines[self.linecount][22:24]
-                        )
-                        self.dbar['tensao'].append(self.lines[self.linecount][24:28])
-                        self.dbar['angulo'].append(self.lines[self.linecount][28:32])
-                        self.dbar['potencia_ativa'].append(
-                            self.lines[self.linecount][32:37]
-                        )
-                        self.dbar['potencia_reativa'].append(
-                            self.lines[self.linecount][37:42]
-                        )
-                        self.dbar['potencia_reativa_minima'].append(
-                            self.lines[self.linecount][42:47]
-                        )
-                        self.dbar['potencia_reativa_maxima'].append(
-                            self.lines[self.linecount][47:52]
-                        )
-                        self.dbar['barra_controlada'].append(
-                            self.lines[self.linecount][52:58]
-                        )
-                        self.dbar['demanda_ativa'].append(
-                            self.lines[self.linecount][58:63]
-                        )
-                        self.dbar['demanda_reativa'].append(
-                            self.lines[self.linecount][63:68]
-                        )
-                        self.dbar['shunt_barra'].append(
-                            self.lines[self.linecount][68:73]
-                        )
-                        self.dbar['area'].append(self.lines[self.linecount][73:76])
-                        self.dbar['tensao_base'].append(
-                            self.lines[self.linecount][76:80]
-                        )
-                        self.dbar['modo'].append(self.lines[self.linecount][80])
-                        self.dbar['agreg1'].append(self.lines[self.linecount][81:84])
-                        self.dbar['agreg2'].append(self.lines[self.linecount][84:87])
-                        self.dbar['agreg3'].append(self.lines[self.linecount][87:90])
-                        self.dbar['agreg4'].append(self.lines[self.linecount][90:93])
-                        self.dbar['agreg5'].append(self.lines[self.linecount][93:96])
-                        self.dbar['agreg6'].append(self.lines[self.linecount][96:99])
-                        self.dbar['agreg7'].append(self.lines[self.linecount][99:102])
-                        self.dbar['agreg8'].append(self.lines[self.linecount][102:105])
-                        self.dbar['agreg9'].append(self.lines[self.linecount][105:108])
-                        self.dbar['agreg10'].append(self.lines[self.linecount][108:111])
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Barra
-                setup.dbarraDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dbar),
-                    data="DBAR",
-                )
-                if setup.dbarraDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m"
-                    )
-                else:
-                    setup.codes['DBAR'] = True
-
-            # Dados de Compensadores Estáticos de Potência Reativa
-            elif self.lines[self.linecount].strip() == "DCER":
-                self.dcer()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dcer['barra'].append(self.lines[self.linecount][:5])
-                        self.dcer['operacao'].append(self.lines[self.linecount][6])
-                        self.dcer['grupo_base'].append(self.lines[self.linecount][8:10])
-                        self.dcer['unidades'].append(self.lines[self.linecount][11:13])
-                        self.dcer['barra_controlada'].append(
-                            self.lines[self.linecount][14:19]
-                        )
-                        self.dcer['droop'].append(self.lines[self.linecount][20:26])
-                        self.dcer['potencia_reativa'].append(
-                            self.lines[self.linecount][27:32]
-                        )
-                        self.dcer['potencia_reativa_minima'].append(
-                            self.lines[self.linecount][32:37]
-                        )
-                        self.dcer['potencia_reativa_maxima'].append(
-                            self.lines[self.linecount][37:42]
-                        )
-                        self.dcer['controle'].append(self.lines[self.linecount][43])
-                        self.dcer['estado'].append(self.lines[self.linecount][45])
-                    self.linecount += 1
-
-                # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
-                setup.dcerDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dcer),
-                    data="DCER",
-                )
-                if setup.dcerDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m"
-                    )
-                else:
-                    setup.codes['DCER'] = True
-
-            # Dados de Constantes
-            elif self.lines[self.linecount].strip() == "DCTE":
-                self.dcte()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dcte['constante'].append(self.lines[self.linecount][:4])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][5:11]
-                        )
-                        self.dcte['constante'].append(self.lines[self.linecount][12:16])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][17:23]
-                        )
-                        self.dcte['constante'].append(self.lines[self.linecount][24:28])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][29:35]
-                        )
-                        self.dcte['constante'].append(self.lines[self.linecount][36:40])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][41:47]
-                        )
-                        self.dcte['constante'].append(self.lines[self.linecount][48:52])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][53:59]
-                        )
-                        self.dcte['constante'].append(self.lines[self.linecount][60:64])
-                        self.dcte['valor_constante'].append(
-                            self.lines[self.linecount][65:71]
-                        )
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Constantes
-                setup.dcteDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dcte),
-                    data="DCTE",
-                )
-                if setup.dcteDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m"
-                    )
-                else:
-                    setup.codes['DCTE'] = True
-
-            # Dados de Geradores
-            elif self.lines[self.linecount].strip() == "DGER":
-                self.dger()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dger['numero'].append(self.lines[self.linecount][:5])
-                        self.dger['operacao'].append(self.lines[self.linecount][6])
-                        self.dger['potencia_ativa_minima'].append(
-                            self.lines[self.linecount][8:14]
-                        )
-                        self.dger['potencia_ativa_maxima'].append(
-                            self.lines[self.linecount][15:21]
-                        )
-                        self.dger['fator_participacao'].append(
-                            self.lines[self.linecount][22:27]
-                        )
-                        self.dger['fator_participacao_controle_remoto'].append(
-                            self.lines[self.linecount][28:33]
-                        )
-                        self.dger['fator_potencia_nominal'].append(
-                            self.lines[self.linecount][34:39]
-                        )
-                        self.dger['fator_servico_armadura'].append(
-                            self.lines[self.linecount][40:44]
-                        )
-                        self.dger['fator_servico_rotor'].append(
-                            self.lines[self.linecount][45:49]
-                        )
-                        self.dger['angulo_maximo_carga'].append(
-                            self.lines[self.linecount][50:54]
-                        )
-                        self.dger['reatancia_maquina'].append(
-                            self.lines[self.linecount][55:60]
-                        )
-                        self.dger['potencia_aparente_nominal'].append(
-                            self.lines[self.linecount][61:66]
-                        )
-                        self.dger['estatismo'].append(self.lines[self.linecount][66:72])
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Geradores
-                setup.dgeraDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dger),
-                    data="DGER",
-                )
-                if setup.dgeraDF.empty:  # or (setup.dgeraDF.shape[0] != setup.nger):
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m"
-                    )
-                else:
-                    setup.codes['DGER'] = True
-
-            # Dados de Incremento do Nível de Carregamento
-            elif self.lines[self.linecount].strip() == "DINC":
-                self.dinc()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dinc['tipo_incremento_1'].append(
-                            self.lines[self.linecount][:4]
-                        )
-                        self.dinc['identificacao_incremento_1'].append(
-                            self.lines[self.linecount][5:10]
-                        )
-                        self.dinc['condicao_incremento_1'].append(
-                            self.lines[self.linecount][11]
-                        )
-                        self.dinc['tipo_incremento_2'].append(
-                            self.lines[self.linecount][13:17]
-                        )
-                        self.dinc['identificacao_incremento_2'].append(
-                            self.lines[self.linecount][18:23]
-                        )
-                        self.dinc['condicao_incremento_2'].append(
-                            self.lines[self.linecount][24]
-                        )
-                        self.dinc['tipo_incremento_3'].append(
-                            self.lines[self.linecount][26:30]
-                        )
-                        self.dinc['identificacao_incremento_3'].append(
-                            self.lines[self.linecount][31:36]
-                        )
-                        self.dinc['condicao_incremento_3'].append(
-                            self.lines[self.linecount][37]
-                        )
-                        self.dinc['tipo_incremento_4'].append(
-                            self.lines[self.linecount][39:43]
-                        )
-                        self.dinc['identificacao_incremento_4'].append(
-                            self.lines[self.linecount][44:49]
-                        )
-                        self.dinc['condicao_incremento_4'].append(
-                            self.lines[self.linecount][50]
-                        )
-                        self.dinc['passo_incremento_potencia_ativa'].append(
-                            self.lines[self.linecount][52:57]
-                        )
-                        self.dinc['passo_incremento_potencia_reativa'].append(
-                            self.lines[self.linecount][58:63]
-                        )
-                        self.dinc['maximo_incremento_potencia_ativa'].append(
-                            self.lines[self.linecount][64:69]
-                        )
-                        self.dinc['maximo_incremento_potencia_reativa'].append(
-                            self.lines[self.linecount][70:75]
-                        )
-                        self.dinc['tratamento_incremento_potencia_ativa'].append(
-                            False if self.lines[self.linecount][64:69] != "" else True
-                        )
-                        self.dinc['tratamento_incremento_potencia_reativa'].append(
-                            False if self.lines[self.linecount][70:75] != "" else True
-                        )
-                    self.linecount += 1
-
-                # DataFrame dos dados de Incremento do Nível de Carregamento
-                setup.dincDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dinc),
-                    data="DINC",
-                )
-                if setup.dincDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m"
-                    )
-                else:
-                    setup.codes['DINC'] = True
-
-            # Dados de Linha
-            elif self.lines[self.linecount].strip() == "DLIN":
-                self.dlin()
-                self.linecount += 1
-                while self.lines[self.linecount].strip() not in self.end_block:
-                    if self.lines[self.linecount][0] == self.comment:
-                        pass
-                    else:
-                        self.dlin['de'].append(self.lines[self.linecount][:5])
-                        self.dlin['abertura_de'].append(self.lines[self.linecount][5])
-                        self.dlin['operacao'].append(self.lines[self.linecount][7])
-                        self.dlin['abertura_para'].append(self.lines[self.linecount][9])
-                        self.dlin['para'].append(self.lines[self.linecount][10:15])
-                        self.dlin['circuito'].append(self.lines[self.linecount][15:17])
-                        self.dlin['estado'].append(self.lines[self.linecount][17])
-                        self.dlin['proprietario'].append(self.lines[self.linecount][18])
-                        self.dlin['resistencia'].append(
-                            self.lines[self.linecount][20:26]
-                        )
-                        self.dlin['reatancia'].append(self.lines[self.linecount][26:32])
-                        self.dlin['susceptancia'].append(
-                            self.lines[self.linecount][32:38]
-                        )
-                        self.dlin['tap'].append(self.lines[self.linecount][38:43])
-                        self.dlin['tap_minimo'].append(
-                            self.lines[self.linecount][43:48]
-                        )
-                        self.dlin['tap_maximo'].append(
-                            self.lines[self.linecount][48:53]
-                        )
-                        self.dlin['tap_defasagem'].append(
-                            self.lines[self.linecount][53:58]
-                        )
-                        self.dlin['barra_controlada'].append(
-                            self.lines[self.linecount][58:64]
-                        )
-                        self.dlin['capacidade_normal'].append(
-                            self.lines[self.linecount][64:68]
-                        )
-                        self.dlin['capacidade_emergencial'].append(
-                            self.lines[self.linecount][68:72]
-                        )
-                        self.dlin['numero_taps'].append(
-                            self.lines[self.linecount][72:74]
-                        )
-                        self.dlin['capacidade_equipamento'].append(
-                            self.lines[self.linecount][74:78]
-                        )
-                        self.dlin['agreg1'].append(self.lines[self.linecount][78:81])
-                        self.dlin['agreg2'].append(self.lines[self.linecount][81:84])
-                        self.dlin['agreg3'].append(self.lines[self.linecount][84:87])
-                        self.dlin['agreg4'].append(self.lines[self.linecount][87:90])
-                        self.dlin['agreg5'].append(self.lines[self.linecount][90:93])
-                        self.dlin['agreg6'].append(self.lines[self.linecount][93:96])
-                        self.dlin['agreg7'].append(self.lines[self.linecount][96:99])
-                        self.dlin['agreg8'].append(self.lines[self.linecount][99:102])
-                        self.dlin['agreg9'].append(self.lines[self.linecount][102:105])
-                        self.dlin['agreg10'].append(self.lines[self.linecount][105:108])
-                    self.linecount += 1
-
-                # DataFrame dos Dados de Linha
-                setup.dlinhaDF = self.treatment(
-                    setup,
-                    pandas=DF(data=self.dlin),
-                    data="DLIN",
-                )
-                if setup.dlinhaDF.empty:
-                    ## ERROR - VERMELHO
-                    raise ValueError(
-                        "\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m"
-                    )
-                else:
-                    setup.codes['DLIN'] = True
-
-            self.linecount += 1
-
-        ## SUCESSO NA LEITURA
-        print(f"\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m")
-
-    def treatment(
-        self,
-        setup,
-        pandas: DF = DF.empty,
-        data: str = "",
-    ):
-        """tratamento dos valores padrão adotadas nas leituras de códigos de execução
-
-        Parâmetros
-            setup: self do arquivo setup.py
-
-            pandas: DataFrame, obrigatório, valor padrão DataFrame.empty
-                Arquivo que contém a leitura e armazenamento de dados de um respectivo código de execução
-
-            data: str, obrigatório, valor padrão 'None'
-                String que indica o código de execução lido para que haja o tratamento de dados das variáveis armazenadas no DataFrame
-
-        Retorno
-            pandas: DataFrame
-                Arquivo com os valores tratados
-        """
-
-        ## Inicialização
-        # Tratamento inicial
-        pandas = pandas.replace(r"^\s*$", "0", regex=True)
-
-        ## Tratamentos
-        # Tratamento específico 'DANC'
-        if data == "DANC":
-            pandas = pandas.astype(
-                {
-                    "area": "int",
-                    "fator_carga_ativa": "float",
-                    "fator_carga_reativa": "float",
-                    "fator_shunt_barra": "float",
-                }
-            )
-
-        # Tratamento específico 'DBAR'
-        elif data == "DBAR":
-            pandas = pandas.astype(
-                {
-                    'numero': "int",
-                    "operacao": "object",
-                    "estado": "object",
-                    "tipo": "int",
-                    "grupo_base_tensao": "object",
-                    "nome": "str",
-                    "grupo_limite_tensao": "object",
-                    "tensao": "float",
-                    "angulo": "float",
-                    "potencia_ativa": "float",
-                    "potencia_reativa": "float",
-                    "potencia_reativa_minima": "float",
-                    "potencia_reativa_maxima": "float",
-                    "barra_controlada": "int",
-                    "demanda_ativa": "float",
-                    "demanda_reativa": "float",
-                    "shunt_barra": "float",
-                    "area": "int",
-                    "tensao_base": "float",
-                    "modo": "object",
-                    "agreg1": "object",
-                    "agreg2": "object",
-                    "agreg3": "object",
-                    "agreg4": "object",
-                    "agreg5": "object",
-                    "agreg6": "object",
-                    "agreg7": "object",
-                    "agreg8": "object",
-                    "agreg9": "object",
-                    "agreg10": "object",
-                }
-            )
-
-            # Número de barras do sistema
-            setup.nbus = len(pandas.tipo.values)
-
-            # Barras geradoras: número & máscara
-            setup.nger = 0
-            setup.maskP = ones(setup.nbus, dtype=bool)
-            setup.maskQ = ones(setup.nbus, dtype=bool)
-            for idx, value in pandas.iterrows():
-                if (value['tipo'] == 2) or (value['tipo'] == 1):
-                    setup.nger += 1
-                    setup.maskQ[idx] = False
-
-                    if value['tipo'] == 2:
-                        setup.maskP[idx] = False
-                        setup.slackidx = idx
-
-                    elif value['tipo'] == 1:
-                        pandas.at[idx, 'angulo'] = 0.0
-
-                    if value['potencia_reativa'] > value['potencia_reativa_maxima']:
-                        pandas.at[idx, 'potencia_reativa'] = value[
-                            'potencia_reativa_maxima'
-                        ]
-
-                    elif value['potencia_reativa'] < value['potencia_reativa_minima']:
-                        pandas.at[idx, 'potencia_reativa'] = value[
-                            'potencia_reativa_minima'
-                        ]
-
-                elif value['tipo'] == 0:
+                elif value['tipo'] == 1:
                     pandas.at[idx, 'angulo'] = 0.0
 
-            setup.mask = concatenate((setup.maskP, setup.maskQ), axis=0)
+                if value['potencia_reativa'] > value['potencia_reativa_maxima']:
+                    pandas.at[idx, 'potencia_reativa'] = value[
+                        'potencia_reativa_maxima'
+                    ]
 
-            # Número de barras PV
-            setup.npv = setup.nger - 1
+                elif value['potencia_reativa'] < value['potencia_reativa_minima']:
+                    pandas.at[idx, 'potencia_reativa'] = value[
+                        'potencia_reativa_minima'
+                    ]
 
-            # Número de barras PQ
-            setup.npq = setup.nbus - setup.nger
+            elif value['tipo'] == 0:
+                pandas.at[idx, 'angulo'] = 0.0
 
-            # Tensao Base
-            pandas.loc[pandas['tensao_base'] == 0.0, 'tensao_base'] = 1000.0
+        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
-            # Numero de Areas
-            setup.narea = pandas['area'].nunique()
-            setup.areas = sorted(pandas['area'].unique())
+        # Número de barras PV
+        powerflow.npv = powerflow.nger - 1
 
-        # Tratamento específico 'DBTB'
-        elif data == "DBTB":
-            pandas = pandas.astype(
-                {
-                    'numero': "int",
-                    "tensao_minima": "float",
-                    "tensao_maxima": "float",
-                }
-            )
+        # Número de barras PQ
+        powerflow.npq = powerflow.nbus - powerflow.nger
 
-        # Tratamento específico 'DCER'
-        elif data == "DCER":
-            pandas = pandas.astype(
-                {
-                    'barra': "int",
-                    "operacao": "object",
-                    "grupo_base": "int",
-                    "unidades": "int",
-                    "barra_controlada": "int",
-                    "droop": "float",
-                    "potencia_reativa": "float",
-                    "potencia_reativa_minima": "float",
-                    "potencia_reativa_maxima": "float",
-                    "controle": "object",
-                    "estado": "object",
-                }
-            )
+        # Tensao Base
+        pandas.loc[pandas['tensao_base'] == 0.0, 'tensao_base'] = 1000.0
 
-            setup.ncer = 0
-            for idx, value in pandas.iterrows():
-                if value['estado'] == "D":
-                    pandas = pandas.drop(
-                        labels=idx,
-                        axis=0,
-                    )
+        # Numero de Areas
+        powerflow.narea = pandas['area'].nunique()
+        powerflow.areas = sorted(pandas['area'].unique())
 
-                elif ((value['estado'] == "0") or (value['estado'] == "L")) and (
-                    (value['controle'] == "0")
-                    or (value['controle'] == 'P')
-                    or (value['controle'] == 'I')
-                ):
-                    setup.ncer += 1
-                    pandas.at[idx, 'droop'] = -value['droop'] / (
-                        1e2 * value['unidades']
-                    )
+    # Tratamento específico 'DBTB'
+    elif data == 'DBTB':
+        pandas = pandas.astype(
+            {
+                'numero': 'int',
+                'tensao_minima': 'float',
+                'tensao_maxima': 'float',
+            }
+        )
 
-                    if value['barra_controlada'] == 0:
-                        pandas.at[idx, 'barra_controlada'] = value['barra']
+    # Tratamento específico 'DCER'
+    elif data == 'DCER':
+        pandas = pandas.astype(
+            {
+                'barra': 'int',
+                'operacao': 'object',
+                'grupo_base': 'int',
+                'unidades': 'int',
+                'barra_controlada': 'int',
+                'droop': 'float',
+                'potencia_reativa': 'float',
+                'potencia_reativa_minima': 'float',
+                'potencia_reativa_maxima': 'float',
+                'controle': 'object',
+                'estado': 'object',
+            }
+        )
 
-                    if value['potencia_reativa'] > value['potencia_reativa_maxima']:
-                        pandas.at[idx, 'potencia_reativa'] = value[
-                            'potencia_reativa_maxima'
-                        ]
+        powerflow.ncer = 0
+        for idx, value in pandas.iterrows():
+            if value['estado'] == 'D':
+                pandas = pandas.drop(
+                    labels=idx,
+                    axis=0,
+                )
 
-                    elif value['potencia_reativa'] < value['potencia_reativa_minima']:
-                        pandas.at[idx, 'potencia_reativa'] = value[
-                            'potencia_reativa_minima'
-                        ]
+            elif ((value['estado'] == '0') or (value['estado'] == 'L')) and (
+                (value['controle'] == '0')
+                or (value['controle'] == 'P')
+                or (value['controle'] == 'I')
+            ):
+                powerflow.ncer += 1
+                pandas.at[idx, 'droop'] = -value['droop'] / (
+                    1e2 * value['unidades']
+                )
 
-                    if value['controle'] == "0":
-                        pandas.at[idx, 'controle'] = 'P'
+                if value['barra_controlada'] == 0:
+                    pandas.at[idx, 'barra_controlada'] = value['barra']
 
-                elif ((value['estado'] == "0") or (value['estado'] == "L")) and (
-                    value['controle'] == 'A'
-                ):
-                    setup.ncer += 1
-                    pandas.at[idx, 'droop'] = -value['droop'] / (
-                        1e2 * value['unidades']
-                    )
+                if value['potencia_reativa'] > value['potencia_reativa_maxima']:
+                    pandas.at[idx, 'potencia_reativa'] = value[
+                        'potencia_reativa_maxima'
+                    ]
 
-                    if value['barra_controlada'] == 0:
-                        pandas.at[idx, 'barra_controlada'] = value['barra']
+                elif value['potencia_reativa'] < value['potencia_reativa_minima']:
+                    pandas.at[idx, 'potencia_reativa'] = value[
+                        'potencia_reativa_minima'
+                    ]
 
-        # Tratamento específico 'DCTE'
-        elif data == "DCTE":
-            pandas = pandas.astype(
-                {
-                    "valor_constante": "float",
-                }
-            )
-            pandas['constante'] = pandas['constante'].replace("0", nan)
-            pandas = pandas.dropna(axis=0, subset=['constante'])
-            pandas = pandas.drop_duplicates(
-                subset=['constante'], keep="last"
-            ).reset_index(drop=True)
+                if value['controle'] == '0':
+                    pandas.at[idx, 'controle'] = 'P'
 
-        # Tratamento específico 'DGER'
-        elif data == "DGER":
-            pandas = pandas.astype(
-                {
-                    'numero': "int",
-                    "operacao": "object",
-                    "potencia_ativa_minima": "float",
-                    "potencia_ativa_maxima": "float",
-                    "fator_participacao": "float",
-                    "fator_participacao_controle_remoto": "float",
-                    "fator_potencia_nominal": "float",
-                    "fator_servico_armadura": "float",
-                    "fator_servico_rotor": "float",
-                    "angulo_maximo_carga": "float",
-                    "reatancia_maquina": "float",
-                    "potencia_aparente_nominal": "float",
-                    "estatismo": "float",
-                }
-            )
+            elif ((value['estado'] == '0') or (value['estado'] == 'L')) and (
+                value['controle'] == 'A'
+            ):
+                powerflow.ncer += 1
+                pandas.at[idx, 'droop'] = -value['droop'] / (
+                    1e2 * value['unidades']
+                )
 
-            pandas['fator_participacao'] = pandas['fator_participacao'].apply(
-                lambda x: x * 1e-2
-            )
+                if value['barra_controlada'] == 0:
+                    pandas.at[idx, 'barra_controlada'] = value['barra']
 
-        # Tratamento específico 'DGLT'
-        elif data == "DGLT":
-            pandas = pandas.astype(
-                {
-                    "grupo_limite_tensao": "object",
-                    "tensao_minima": "float",
-                    "tensao_maxima": "float",
-                    "tensao_minima_emergencial": "float",
-                    "tensao_maxima_emergencial": "float",
-                }
-            )
+    # Tratamento específico 'DCTE'
+    elif data == 'DCTE':
+        pandas = pandas.astype(
+            {
+                'valor_constante': 'float',
+            }
+        )
+        pandas['constante'] = pandas['constante'].replace('0', nan)
+        pandas = pandas.dropna(axis=0, subset=['constante'])
+        pandas = pandas.drop_duplicates(
+            subset=['constante'], keep='last'
+        ).reset_index(drop=True)
 
-        # Tratamento específico 'DINC'
-        elif data == "DINC":
-            pandas = pandas.astype(
-                {
-                    "tipo_incremento_1": "object",
-                    "identificacao_incremento_1": "int",
-                    "condicao_incremento_1": "object",
-                    "tipo_incremento_2": "object",
-                    "identificacao_incremento_2": "int",
-                    "condicao_incremento_2": "object",
-                    "tipo_incremento_3": "object",
-                    "identificacao_incremento_3": "int",
-                    "condicao_incremento_3": "object",
-                    "tipo_incremento_4": "object",
-                    "identificacao_incremento_4": "int",
-                    "condicao_incremento_4": "object",
-                    "passo_incremento_potencia_ativa": "float",
-                    "passo_incremento_potencia_reativa": "float",
-                    "maximo_incremento_potencia_ativa": "float",
-                    "maximo_incremento_potencia_reativa": "float",
-                }
-            )
+    # Tratamento específico 'DGER'
+    elif data == 'DGER':
+        pandas = pandas.astype(
+            {
+                'numero': 'int',
+                'operacao': 'object',
+                'potencia_ativa_minima': 'float',
+                'potencia_ativa_maxima': 'float',
+                'fator_participacao': 'float',
+                'fator_participacao_controle_remoto': 'float',
+                'fator_potencia_nominal': 'float',
+                'fator_servico_armadura': 'float',
+                'fator_servico_rotor': 'float',
+                'angulo_maximo_carga': 'float',
+                'reatancia_maquina': 'float',
+                'potencia_aparente_nominal': 'float',
+                'estatismo': 'float',
+            }
+        )
 
-            for idx, value in pandas.iterrows():
-                pandas.at[idx, 'passo_incremento_potencia_ativa'] *= 1e-2
-                if value['tratamento_incremento_potencia_ativa']:
-                    pandas.at[idx, 'maximo_incremento_potencia_ativa'] = 99.99
-                else:
-                    pandas.at[idx, 'maximo_incremento_potencia_ativa'] *= 1e-2
+        pandas['fator_participacao'] = pandas['fator_participacao'].apply(
+            lambda x: x * 1e-2
+        )
 
-                pandas.at[idx, 'passo_incremento_potencia_reativa'] *= 1e-2
-                if value['tratamento_incremento_potencia_reativa']:
-                    pandas.at[idx, 'maximo_incremento_potencia_reativa'] = 99.99
-                else:
-                    pandas.at[idx, 'maximo_incremento_potencia_reativa'] *= 1e-2
+    # Tratamento específico 'DGLT'
+    elif data == 'DGLT':
+        pandas = pandas.astype(
+            {
+                'grupo_limite_tensao': 'object',
+                'tensao_minima': 'float',
+                'tensao_maxima': 'float',
+                'tensao_minima_emergencial': 'float',
+                'tensao_maxima_emergencial': 'float',
+            }
+        )
 
-        # Tratamento específico 'DLIN'
-        elif data == "DLIN":
-            pandas = pandas.astype(
-                {
-                    "de": "int",
-                    "abertura_de": "object",
-                    "operacao": "object",
-                    "abertura_para": "object",
-                    "para": "int",
-                    "circuito": "int",
-                    "estado": "object",
-                    "proprietario": "object",
-                    "resistencia": "float",
-                    "reatancia": "float",
-                    "susceptancia": "float",
-                    "tap": "float",
-                    "tap_minimo": "float",
-                    "tap_maximo": "float",
-                    "tap_defasagem": "float",
-                    "barra_controlada": "int",
-                    "capacidade_normal": "float",
-                    "capacidade_emergencial": "float",
-                    "numero_taps": "int",
-                    "capacidade_equipamento": "float",
-                    "agreg1": "float",
-                    "agreg2": "object",
-                    "agreg3": "object",
-                    "agreg4": "object",
-                    "agreg5": "object",
-                    "agreg6": "object",
-                    "agreg7": "object",
-                    "agreg8": "object",
-                    "agreg9": "object",
-                    "agreg10": "object",
-                }
-            )
+    # Tratamento específico 'DINC'
+    elif data == 'DINC':
+        pandas = pandas.astype(
+            {
+                'tipo_incremento_1': 'object',
+                'identificacao_incremento_1': 'int',
+                'condicao_incremento_1': 'object',
+                'tipo_incremento_2': 'object',
+                'identificacao_incremento_2': 'int',
+                'condicao_incremento_2': 'object',
+                'tipo_incremento_3': 'object',
+                'identificacao_incremento_3': 'int',
+                'condicao_incremento_3': 'object',
+                'tipo_incremento_4': 'object',
+                'identificacao_incremento_4': 'int',
+                'condicao_incremento_4': 'object',
+                'passo_incremento_potencia_ativa': 'float',
+                'passo_incremento_potencia_reativa': 'float',
+                'maximo_incremento_potencia_ativa': 'float',
+                'maximo_incremento_potencia_reativa': 'float',
+            }
+        )
 
-            pandas['resistencia'] *= 1e-2
-            pandas['reatancia'] *= 1e-2
-            pandas['susceptancia'] /= (
-                2
-                * setup.dcteDF.loc[setup.dcteDF.constante == 'BASE'].valor_constante[0]
-            )
+        for idx, value in pandas.iterrows():
+            pandas.at[idx, 'passo_incremento_potencia_ativa'] *= 1e-2
+            if value['tratamento_incremento_potencia_ativa']:
+                pandas.at[idx, 'maximo_incremento_potencia_ativa'] = 99.99
+            else:
+                pandas.at[idx, 'maximo_incremento_potencia_ativa'] *= 1e-2
 
-            pandas['estado'] = (pandas['estado'] == "0") | (pandas['estado'] == "L")
-            pandas['transf'] = (pandas['tap'] != 0.0) & pandas['estado']
+            pandas.at[idx, 'passo_incremento_potencia_reativa'] *= 1e-2
+            if value['tratamento_incremento_potencia_reativa']:
+                pandas.at[idx, 'maximo_incremento_potencia_reativa'] = 99.99
+            else:
+                pandas.at[idx, 'maximo_incremento_potencia_reativa'] *= 1e-2
 
-            # Número de barras do sistema
-            setup.nlin = len(pandas.de.values)
+    # Tratamento específico 'DLIN'
+    elif data == 'DLIN':
+        pandas = pandas.astype(
+            {
+                'de': 'int',
+                'abertura_de': 'object',
+                'operacao': 'object',
+                'abertura_para': 'object',
+                'para': 'int',
+                'circuito': 'int',
+                'estado': 'object',
+                'proprietario': 'object',
+                'resistencia': 'float',
+                'reatancia': 'float',
+                'susceptancia': 'float',
+                'tap': 'float',
+                'tap_minimo': 'float',
+                'tap_maximo': 'float',
+                'tap_defasagem': 'float',
+                'barra_controlada': 'int',
+                'capacidade_normal': 'float',
+                'capacidade_emergencial': 'float',
+                'numero_taps': 'int',
+                'capacidade_equipamento': 'float',
+                'agreg1': 'float',
+                'agreg2': 'object',
+                'agreg3': 'object',
+                'agreg4': 'object',
+                'agreg5': 'object',
+                'agreg6': 'object',
+                'agreg7': 'object',
+                'agreg8': 'object',
+                'agreg9': 'object',
+                'agreg10': 'object',
+            }
+        )
 
-            # Número de plim
-            setup.plim = count_nonzero(pandas.agreg1)
-            setup.plimline = nonzero(pandas.agreg1.shape[0])
+        pandas['resistencia'] *= 1e-2
+        pandas['reatancia'] *= 1e-2
+        pandas['susceptancia'] /= (
+            2
+            * powerflow.dcteDF.loc[powerflow.dcteDF.constante == 'BASE'].valor_constante[0]
+        )
 
-        return pandas
+        pandas['estado'] = (pandas['estado'] == '0') | (pandas['estado'] == 'L')
+        pandas['transf'] = (pandas['tap'] != 0.0) & pandas['estado']
+
+        # Número de barras do sistema
+        powerflow.nlin = len(pandas.de.values)
+
+        # Número de plim
+        powerflow.plim = count_nonzero(pandas.agreg1)
+        powerflow.plimline = nonzero(pandas.agreg1.shape[0])
+
+    return pandas

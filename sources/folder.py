@@ -9,191 +9,161 @@
 from os.path import dirname, exists
 from os import mkdir
 
+def folder(
+    powerflow,
+):
+    '''inicialização
 
-class Folder:
-    """classe para criação automática de diretórios para armazenar resultados"""
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def __init__(
-        self,
-        setup,
-    ):
-        """inicialização
+    ## Inicialização
+    # Diretório de Sistemas
+    dirSistemas = dirname(powerflow.dirSEP)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    # Criação de diretório Resultados
+    powerflow.dirResultados = dirname(dirSistemas) + '/resultados/'
+    if exists(powerflow.dirResultados) is False:
+        mkdir(powerflow.dirResultados)
 
-        ## Inicialização
-        # Diretório de Sistemas
-        dirSistemas = dirname(setup.dirSEP)
+def admittancefolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados de matriz admitância
 
-        # Criação de diretório Resultados
-        setup.dirResultados = dirname(dirSistemas) + "/resultados/"
-        if exists(setup.dirResultados) is False:
-            mkdir(setup.dirResultados)
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def admittance(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados de matriz admitância
+    ## Inicialização
+    powerflow.dirRadmittance = powerflow.dirResultados + 'MatrizAdmitancia/'
+    if exists(powerflow.dirRadmittance) is False:
+        mkdir(powerflow.dirRadmittance)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    powerflow.dirRadmittance = powerflow.dirRadmittance + powerflow.name + '/'
+    if exists(powerflow.dirRadmittance) is False:
+        mkdir(powerflow.dirRadmittance)
 
-        ## Inicialização
-        setup.dirRadmittance = setup.dirResultados + "MatrizAdmitancia/"
-        if exists(setup.dirRadmittance) is False:
-            mkdir(setup.dirRadmittance)
+def convergencefolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados da trajetória de convergência
 
-        setup.dirRadmittance = setup.dirRadmittance + setup.name + "/"
-        if exists(setup.dirRadmittance) is False:
-            mkdir(setup.dirRadmittance)
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def convergence(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados da trajetória de convergência
+    ## Inicialização
+    powerflow.dirRconvergence = powerflow.dirResultados + 'TrajetoriaConvergencia/'
+    if exists(powerflow.dirRconvergence) is False:
+        mkdir(powerflow.dirRconvergence)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    powerflow.dirRconvergence = powerflow.dirRconvergence + powerflow.name + '/'
+    if exists(powerflow.dirRconvergence) is False:
+        mkdir(powerflow.dirRconvergence)
 
-        ## Inicialização
-        setup.dirRconvergence = setup.dirResultados + "TrajetoriaConvergencia/"
-        if exists(setup.dirRconvergence) is False:
-            mkdir(setup.dirRconvergence)
+def continuationfolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados de fluxo de potência continuado
 
-        setup.dirRconvergence = setup.dirRconvergence + setup.name + "/"
-        if exists(setup.dirRconvergence) is False:
-            mkdir(setup.dirRconvergence)
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def continuation(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados de fluxo de potência continuado
+    ## Inicialização
+    powerflow.dirRcpf = powerflow.dirResultados + 'Continuado/'
+    if exists(powerflow.dirRcpf) is False:
+        mkdir(powerflow.dirRcpf)
+        
+    powerflow.dircpfsys = powerflow.dirRcpf + powerflow.name + '/'
+    if exists(powerflow.dircpfsys) is False:
+        mkdir(powerflow.dircpfsys)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    powerflow.dircpfsysimag = powerflow.dircpfsys + 'imagens/'
+    if exists(powerflow.dircpfsysimag) is False:
+        mkdir(powerflow.dircpfsysimag)
 
-        ## Inicialização
-        setup.dirRcpf = setup.dirResultados + "Continuado/"
-        if exists(setup.dirRcpf) is False:
-            mkdir(setup.dirRcpf)
+    powerflow.dircpfsystxt = powerflow.dircpfsys + 'txt/'
+    if exists(powerflow.dircpfsystxt) is False:
+        mkdir(powerflow.dircpfsystxt)
 
-        self.continuationsystem(
-            setup,
-        )
+def jacobifolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados de matriz jacobiana
 
-    def continuationsystem(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados de fluxo de potência continuado (arquivos e imagens)
-        específico para cada sistema analisado
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    ## Inicialização
+    powerflow.dirRjacobi = powerflow.dirResultados + 'MatrizJacobiana/'
+    if exists(powerflow.dirRjacobi) is False:
+        mkdir(powerflow.dirRjacobi)
 
-        ## Inicialização
-        setup.dircpfsys = setup.dirRcpf + setup.name + "/"
-        if exists(setup.dircpfsys) is False:
-            mkdir(setup.dircpfsys)
+    powerflow.dirRjacobi = powerflow.dirRjacobi + powerflow.name + '/'
+    if exists(powerflow.dirRjacobi) is False:
+        mkdir(powerflow.dirRjacobi)
 
-        setup.dircpfsysimag = setup.dircpfsys + "imagens/"
-        if exists(setup.dircpfsysimag) is False:
-            mkdir(setup.dircpfsysimag)
+def reportsfolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados de relatórios
 
-        setup.dircpfsystxt = setup.dircpfsys + "txt/"
-        if exists(setup.dircpfsystxt) is False:
-            mkdir(setup.dircpfsystxt)
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def jacobi(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados de matriz jacobiana
+    ## Inicialização
+    powerflow.dirRreports = powerflow.dirResultados + 'Relatorios/'
+    if exists(powerflow.dirRreports) is False:
+        mkdir(powerflow.dirRreports)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+    powerflow.dirRreports = powerflow.dirRreports + powerflow.name + '/'
+    if exists(powerflow.dirRreports) is False:
+        mkdir(powerflow.dirRreports)
 
-        ## Inicialização
-        setup.dirRjacobi = setup.dirResultados + "MatrizJacobiana/"
-        if exists(setup.dirRjacobi) is False:
-            mkdir(setup.dirRjacobi)
+def smoothfolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados suaves
 
-        setup.dirRjacobi = setup.dirRjacobi + setup.name + "/"
-        if exists(setup.dirRjacobi) is False:
-            mkdir(setup.dirRjacobi)
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-    def reports(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados de relatórios
+    ## Inicialização
+    # Condição de método
+    if powerflow.method == 'NEWTON':
+        powerflow.dirsmooth = powerflow.dirResultados + 'Smooth/'
+        if exists(powerflow.dirsmooth) is False:
+            mkdir(powerflow.dirsmooth)
 
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
+        powerflow.dirsmoothsys = powerflow.dirsmooth + powerflow.name + '/'
+        if exists(powerflow.dirsmoothsys) is False:
+            mkdir(powerflow.dirsmoothsys)
 
-        ## Inicialização
-        setup.dirRreports = setup.dirResultados + "Relatorios/"
-        if exists(setup.dirRreports) is False:
-            mkdir(setup.dirRreports)
+    elif powerflow.method == 'CPF':
+        powerflow.dirsmoothsys = powerflow.dircpfsys + 'smooth/'
+        if exists(powerflow.dirsmoothsys) is False:
+            mkdir(powerflow.dirsmoothsys)
 
-        setup.dirRreports = setup.dirRreports + setup.name + "/"
-        if exists(setup.dirRreports) is False:
-            mkdir(setup.dirRreports)
+def statevarfolder(
+    powerflow,
+):
+    '''criação de diretório para armazenar resultados finais de convergência das variáveis de estado
 
-    def smooth(
-        self,
-        powerflow,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados suaves
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    '''
 
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-            setup: self do arquivo setup.py
-        """
+    ## Inicialização
+    powerflow.dirRstatevar = powerflow.dirResultados + 'VariaveisEstado/'
+    if exists(powerflow.dirRstatevar) is False:
+        mkdir(powerflow.dirRstatevar)
 
-        ## Inicialização
-        # Condição de método
-        if powerflow.method == "NEWTON":
-            setup.dirsmooth = setup.dirResultados + "Smooth/"
-            if exists(setup.dirsmooth) is False:
-                mkdir(setup.dirsmooth)
-
-            setup.dirsmoothsys = setup.dirsmooth + setup.name + "/"
-            if exists(setup.dirsmoothsys) is False:
-                mkdir(setup.dirsmoothsys)
-
-        elif powerflow.method == "CPF":
-            setup.dirsmoothsys = setup.dircpfsys + "smooth/"
-            if exists(setup.dirsmoothsys) is False:
-                mkdir(setup.dirsmoothsys)
-
-    def statevar(
-        self,
-        setup,
-    ):
-        """criação de diretório para armazenar resultados finais de convergência das variáveis de estado
-
-        Parâmetros
-            setup: self do arquivo setup.py
-        """
-
-        ## Inicialização
-        setup.dirRstatevar = setup.dirResultados + "VariaveisEstado/"
-        if exists(setup.dirRstatevar) is False:
-            mkdir(setup.dirRstatevar)
-
-        setup.dirRstatevar = setup.dirRstatevar + setup.name + "/"
-        if exists(setup.dirRstatevar) is False:
-            mkdir(setup.dirRstatevar)
+    powerflow.dirRstatevar = powerflow.dirRstatevar + powerflow.name + '/'
+    if exists(powerflow.dirRstatevar) is False:
+        mkdir(powerflow.dirRstatevar)

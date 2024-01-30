@@ -1,10 +1,10 @@
-January 28, 2024
+January 30, 2024
 
 
-relatÃ³rio de monitoramento do sistema ieee14
-soluÃ§Ã£o do fluxo de potÃªncia via mÃ©todo newton-raphson
+relatório de monitoramento do sistema ieee14
+solução do fluxo de potência via método newton-raphson
 
-opÃ§Ãµes de monitoramento ativadas: 
+opções de monitoramento ativadas: 
 
 
-fim do relatÃ³rio de monitoramento do sistema ieee14
+fim do relatório de monitoramento do sistema ieee14

@@ -18,25 +18,25 @@ from ctrl import Control
 
 
 class Hessian:
-    """classe para construção da matriz Hessiana"""
+    '''classe para construção da matriz Hessiana'''
 
     def hessian(
         self,
         powerflow,
     ):
-        """cálculo das submatrizes da matriz Hessiana
+        '''cálculo das submatrizes da matriz Hessiana
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
 
         ## Inicialização
         # Variáveis Simbólicas
-        v = [symbols('v%d' % i) for i in range(powerflow.setup.nbus)]
-        t = [symbols('t%d' % i) for i in range(powerflow.setup.nbus)]
-        powerflow.jacosymb = empty((2*powerflow.setup.nbus, 2*powerflow.setup.nbus), dtype=Symbol)
+        v = [symbols('v%d' % i) for i in range(powerflow.nbusnbus)]
+        t = [symbols('t%d' % i) for i in range(powerflow.nbusnbus)]
+        powerflow.jacosymb = empty((2*powerflow.nbusnbus, 2*powerflow.nbusnbus), dtype=Symbol)
 
-        for idx, value in powerflow.setup.dlinhaDF.iterrows():
+        for idx, value in powerflow.nbusdlinhaDF.iterrows():
             if value['estado']:
                 de = value['de'] - 1
                 para = value['para'] - 1
@@ -46,12 +46,12 @@ class Hessian:
                     v[de]
                     * v[para]
                     * (
-                        -powerflow.setup.admitancia[idx].real
+                        -powerflow.nbusadmitancia[idx].real
                         * sin(
                             t[de]
                             - t[para]
                         )
-                        + powerflow.setup.admitancia[idx].imag
+                        + powerflow.nbusadmitancia[idx].imag
                         * cos(
                             t[de]
                             - t[para]
@@ -59,12 +59,12 @@ class Hessian:
                     )
                 )
                 n1 = -v[de] * (
-                    powerflow.setup.admitancia[idx].real
+                    powerflow.nbusadmitancia[idx].real
                     * cos(
                         t[de]
                         - t[para]
                     )
-                    + powerflow.setup.admitancia[idx].imag
+                    + powerflow.nbusadmitancia[idx].imag
                     * sin(
                         t[de]
                         - t[para]
@@ -74,12 +74,12 @@ class Hessian:
                     v[de]
                     * v[para]
                     * (
-                        powerflow.setup.admitancia[idx].real
+                        powerflow.nbusadmitancia[idx].real
                         * cos(
                             t[de]
                             - t[para]
                         )
-                        + powerflow.setup.admitancia[idx].imag
+                        + powerflow.nbusadmitancia[idx].imag
                         * sin(
                             t[de]
                             - t[para]
@@ -87,12 +87,12 @@ class Hessian:
                     )
                 )
                 l1 = v[de] * (
-                    -powerflow.setup.admitancia[idx].real
+                    -powerflow.nbusadmitancia[idx].real
                     * sin(
                         t[de]
                         - t[para]
                     )
-                    + powerflow.setup.admitancia[idx].imag
+                    + powerflow.nbusadmitancia[idx].imag
                     * cos(
                         t[de]
                         - t[para]
@@ -104,12 +104,12 @@ class Hessian:
                     v[para]
                     * v[de]
                     * (
-                        powerflow.setup.admitancia[idx].real
+                        powerflow.nbusadmitancia[idx].real
                         * sin(
                             t[de]
                             - t[para]
                         )
-                        + powerflow.setup.admitancia[idx].imag
+                        + powerflow.nbusadmitancia[idx].imag
                         * cos(
                             t[de]
                             - t[para]
@@ -117,12 +117,12 @@ class Hessian:
                     )
                 )
                 n2 = v[para] * (
-                    -powerflow.setup.admitancia[idx].real
+                    -powerflow.nbusadmitancia[idx].real
                     * cos(
                         t[de]
                         - t[para]
                     )
-                    + powerflow.setup.admitancia[idx].imag
+                    + powerflow.nbusadmitancia[idx].imag
                     * sin(
                         t[de]
                         - t[para]
@@ -132,12 +132,12 @@ class Hessian:
                     v[para]
                     * v[de]
                     * (
-                        powerflow.setup.admitancia[idx].real
+                        powerflow.nbusadmitancia[idx].real
                         * cos(
                             t[de]
                             - t[para]
                         )
-                        - powerflow.setup.admitancia[idx].imag
+                        - powerflow.nbusadmitancia[idx].imag
                         * sin(
                             t[de]
                             - t[para]
@@ -145,12 +145,12 @@ class Hessian:
                     )
                 )
                 l2 = v[para] * (
-                    powerflow.setup.admitancia[idx].real
+                    powerflow.nbusadmitancia[idx].real
                     * sin(
                         t[de]
                         - t[para]
                     )
-                    + powerflow.setup.admitancia[idx].imag
+                    + powerflow.nbusadmitancia[idx].imag
                     * cos(
                         t[de]
                         - t[para]
@@ -158,58 +158,58 @@ class Hessian:
                 )
                 
                 powerflow.jacobsymb[de][para] = h1
-                powerflow.jacobsymb[de][para + powerflow.setup.nbus] = n1
-                powerflow.jacobsymb[de + powerflow.setup.nbus][para] = m1
-                powerflow.jacobsymb[de + powerflow.setup.nbus][para + powerflow.setup.nbus] = l1  
+                powerflow.jacobsymb[de][para + powerflow.nbusnbus] = n1
+                powerflow.jacobsymb[de + powerflow.nbusnbus][para] = m1
+                powerflow.jacobsymb[de + powerflow.nbusnbus][para + powerflow.nbusnbus] = l1  
                 
                 powerflow.jacobsymb[para][de] = h2
-                powerflow.jacobsymb[para][de + powerflow.setup.nbus] = n2
-                powerflow.jacobsymb[para + powerflow.setup.nbus][de] = m2
-                powerflow.jacobsymb[para + powerflow.setup.nbus][de + powerflow.setup.nbus] = l2  
+                powerflow.jacobsymb[para][de + powerflow.nbusnbus] = n2
+                powerflow.jacobsymb[para + powerflow.nbusnbus][de] = m2
+                powerflow.jacobsymb[para + powerflow.nbusnbus][de + powerflow.nbusnbus] = l2  
 
         # Elementos da diagonal principal da matriz jacobiana
-        for idx, value in powerflow.setup.dbarraDF.iterrows():
+        for idx, value in powerflow.nbusdbarraDF.iterrows():
             # Submatriz H
             if (
-                powerflow.setup.maskP[idx] == False
+                powerflow.nbusmaskP[idx] == False
             ):  # A presença do módulo se deve ao tratamento de limites (QLIM), que pode converter barra tipo 2 em -2
                 hk = oo
 
             else:
-                hk = -(v[idx] ** 2) * powerflow.setup.bdiag[
+                hk = -(v[idx] ** 2) * powerflow.nbusbdiag[
                     idx
                 ] - PQCalc().qcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,)
 
             # Submatriz N
-            nk = (PQCalc().pcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,) + (v[idx] ** 2) * powerflow.setup.gdiag[
+            nk = (PQCalc().pcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,) + (v[idx] ** 2) * powerflow.nbusgdiag[
                     idx
                 ]) / v[idx]
 
             # Submatriz M
-            mk = -(v[idx] ** 2) * powerflow.setup.gdiag[
+            mk = -(v[idx] ** 2) * powerflow.nbusgdiag[
                     idx
                 ] + PQCalc().qcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,)
 
             # Submatriz L
-            if (powerflow.setup.maskQ[idx] == False) and (
-                ("QLIM" not in powerflow.setup.control)
-                or ("QLIMs" not in powerflow.setup.control)
-                or ("QLIMn" not in powerflow.setup.control)
+            if (powerflow.nbusmaskQ[idx] == False) and (
+                ('QLIM' not in powerflow.nbuscontrol)
+                or ('QLIMs' not in powerflow.nbuscontrol)
+                or ('QLIMn' not in powerflow.nbuscontrol)
             ):
                 lk = oo
             else:
-                lk = (PQCalc().qcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,) - (v[idx] ** 2) * powerflow.setup.bdiag[
+                lk = (PQCalc().qcalcsym(powerflow=powerflow, v=v, t=t, idx=idx,) - (v[idx] ** 2) * powerflow.nbusbdiag[
                     idx
                 ]) / v[idx]
                     
         w = Matrix(
-            ([[symbols('w%s' % i)] for i in range(2*powerflow.setup.nbus)]), 
+            ([[symbols('w%s' % i)] for i in range(2*powerflow.nbusnbus)]), 
         )
         
         powerflow.jacobsymb = powerflow.jacobsymb * w
 
         # Submatrizes de controles ativos
-        if powerflow.setup.controlcount > 0:
-            Control(powerflow, powerflow.setup,).controljac(
+        if powerflow.nbuscontrolcount > 0:
+            Control(powerflow, powerflow,).controljac(
                 powerflow,
             )

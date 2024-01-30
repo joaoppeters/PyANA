@@ -12,36 +12,36 @@ from numpy.linalg import solve
 
 
 class LinearPF:
-    """classe para cálculo do fluxo de potência não-linear via método linearizado"""
+    '''classe para cálculo do fluxo de potência não-linear via método linearizado'''
 
     def linear(
         self,
         powerflow,
     ):
-        """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+        '''análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
 
         ## Inicialização
         # Variável para armazenamento de solução
         powerflow.solution = {
-            "system": powerflow.setup.name,
-            "iter": 1,
-            'voltage': ones(powerflow.setup.nbus),
-            'theta': zeros(powerflow.setup.nbus),
-            "active": zeros(powerflow.setup.nbus),
-            "reactive": zeros(powerflow.setup.nbus),
-            "freq": array([]),
-            "convP": array([]),
-            "busP": array([]),
-            "convQ": zeros([]),
-            "busQ": zeros([]),
-            "active_flow_F2": zeros(powerflow.setup.nlin),
-            "reactive_flow_F2": zeros(powerflow.setup.nlin),
-            "active_flow_2F": zeros(powerflow.setup.nlin),
-            "reactive_flow_2F": zeros(powerflow.setup.nlin),
+            'system': powerflow.nbusname,
+            'iter': 1,
+            'voltage': ones(powerflow.nbusnbus),
+            'theta': zeros(powerflow.nbusnbus),
+            'active': zeros(powerflow.nbusnbus),
+            'reactive': zeros(powerflow.nbusnbus),
+            'freq': array([]),
+            'convP': array([]),
+            'busP': array([]),
+            'convQ': zeros([]),
+            'busQ': zeros([]),
+            'active_flow_F2': zeros(powerflow.nbusnlin),
+            'reactive_flow_F2': zeros(powerflow.nbusnlin),
+            'active_flow_2F': zeros(powerflow.nbusnlin),
+            'reactive_flow_2F': zeros(powerflow.nbusnlin),
         }
 
         # Variáveis Especificadas
@@ -63,17 +63,17 @@ class LinearPF:
         self.linearadmit(
             powerflow,
         )
-        self.B = deepcopy(powerflow.setup.bbus.imag)
-        for i in range(0, powerflow.setup.nbus):
-            if powerflow.setup.dbarraDF['tipo'][i] == 2:
-                powerflow.setup.slackline = i
+        self.B = deepcopy(powerflow.nbusbbus.imag)
+        for i in range(0, powerflow.nbusnbus):
+            if powerflow.nbusdbarraDF['tipo'][i] == 2:
+                powerflow.nbusslackline = i
                 self.B[i, :] = 0
                 self.B[:, i] = 0
                 self.B[i, i] = 1
                 break
 
         # Variáveis de estado
-        powerflow.setup.statevar = solve(
+        powerflow.nbusstatevar = solve(
             -self.B, self.sch['potencia_ativa_especificada']
         )
 
@@ -88,27 +88,27 @@ class LinearPF:
         )
 
         # Convergência
-        powerflow.solution['convergence'] = "SISTEMA CONVERGENTE"
+        powerflow.solution['convergence'] = 'SISTEMA CONVERGENTE'
 
     def scheduled(
         self,
         powerflow,
     ):
-        """método para armazenamento dos parâmetros especificados
+        '''método para armazenamento dos parâmetros especificados
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
 
         ## Inicialização
         # Variável para armazenamento das potências ativa e reativa especificadas
         self.sch = {
-            'potencia_ativa_especificada': zeros(powerflow.setup.nbus),
-            'potencia_reativa_especificada': zeros(powerflow.setup.nbus),
+            'potencia_ativa_especificada': zeros(powerflow.nbusnbus),
+            'potencia_reativa_especificada': zeros(powerflow.nbusnbus),
         }
 
         # Loop
-        for idx, value in powerflow.setup.dbarraDF.iterrows():
+        for idx, value in powerflow.nbusdbarraDF.iterrows():
             # Potência ativa especificada
             self.sch['potencia_ativa_especificada'][idx] += float(
                 value['potencia_ativa']
@@ -118,28 +118,28 @@ class LinearPF:
             )
 
         # Tratamento
-        self.sch['potencia_ativa_especificada'] /= powerflow.setup.options['BASE']
+        self.sch['potencia_ativa_especificada'] /= powerflow.nbusoptions['BASE']
 
     def residue(
         self,
         powerflow,
     ):
-        """cálculo de resíduos das equações diferenciáveis"""
+        '''cálculo de resíduos das equações diferenciáveis'''
 
         ## Inicialização
         # Vetores de resíduo
-        powerflow.deltaP = zeros(powerflow.setup.nbus)
-        powerflow.deltaQ = zeros(powerflow.setup.nbus)
+        powerflow.deltaP = zeros(powerflow.nbusnbus)
+        powerflow.deltaQ = zeros(powerflow.nbusnbus)
 
     def convergence(
         self,
         powerflow,
     ):
-        """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
+        '''armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
 
         ## Inicialização
         # Trajetória de convergência da frequência
@@ -157,124 +157,124 @@ class LinearPF:
         self,
         powerflow,
     ):
-        """cálculo da matriz admitância com considerações lineares
+        '''cálculo da matriz admitância com considerações lineares
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
         ## Inicialização
         # Matriz B
-        powerflow.setup.bbus: ndarray = zeros(
-            shape=[powerflow.setup.nbus, powerflow.setup.nbus], dtype="complex_"
+        powerflow.nbusbbus: ndarray = zeros(
+            shape=[powerflow.nbusnbus, powerflow.nbusnbus], dtype='complex_'
         )
         # Linhas de transmissão e transformadores
-        for _, value in powerflow.setup.dlinhaDF.iterrows():
+        for _, value in powerflow.nbusdlinhaDF.iterrows():
             # Elementos fora da diagonal (elemento série)
             if value['tap'] == 0.0:
-                powerflow.setup.bbus[
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['de']
+                powerflow.nbusbbus[
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['de']
                     ][0],
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['para']
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['para']
                     ][0],
                 ] -= (
                     1 / complex(real=0.0, imag=value['reatancia'])
-                ) * powerflow.setup.options[
-                    "BASE"
+                ) * powerflow.nbusoptions[
+                    'BASE'
                 ]
-                powerflow.setup.bbus[
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['para']
+                powerflow.nbusbbus[
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['para']
                     ][0],
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['de']
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['de']
                     ][0],
                 ] -= (
                     1 / complex(real=0.0, imag=value['reatancia'])
-                ) * powerflow.setup.options[
-                    "BASE"
+                ) * powerflow.nbusoptions[
+                    'BASE'
                 ]
             else:
-                powerflow.setup.bbus[
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['de']
+                powerflow.nbusbbus[
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['de']
                     ][0],
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['para']
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['para']
                     ][0],
                 ] -= (
                     (1 / complex(real=0.0, imag=value['reatancia']))
-                    * powerflow.setup.options['BASE']
+                    * powerflow.nbusoptions['BASE']
                 ) / float(
                     value['tap']
                 )
-                powerflow.setup.bbus[
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['para']
+                powerflow.nbusbbus[
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['para']
                     ][0],
-                    powerflow.setup.dbarraDF.index[
-                        powerflow.setup.dbarraDF['numero'] == value['de']
+                    powerflow.nbusdbarraDF.index[
+                        powerflow.nbusdbarraDF['numero'] == value['de']
                     ][0],
                 ] -= (
                     (1 / complex(real=0.0, imag=value['reatancia']))
-                    * powerflow.setup.options['BASE']
+                    * powerflow.nbusoptions['BASE']
                 ) / float(
                     value['tap']
                 )
 
         # Bancos de capacitores e reatores
-        for idx, value in powerflow.setup.dbarraDF.iterrows():
-            powerflow.setup.bbus[idx, idx] = sum(-powerflow.setup.bbus[:, idx])
+        for idx, value in powerflow.nbusdbarraDF.iterrows():
+            powerflow.nbusbbus[idx, idx] = sum(-powerflow.nbusbbus[:, idx])
 
     def update_statevar(
         self,
         powerflow,
     ):
-        """atualização das variáveis de estado
+        '''atualização das variáveis de estado
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
 
         ## Inicialização
         # atualização dos ângulos dos barramentos
-        powerflow.solution['theta'] = deepcopy(powerflow.setup.statevar)
+        powerflow.solution['theta'] = deepcopy(powerflow.nbusstatevar)
 
     def line_flow(
         self,
         powerflow,
     ):
-        """cálculo do fluxo de potência nas linhas de transmissão
+        '''cálculo do fluxo de potência nas linhas de transmissão
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        """
+        '''
         ## Inicialização
-        for idx, value in powerflow.setup.dlinhaDF.iterrows():
-            k = powerflow.setup.dbarraDF.index[
-                powerflow.setup.dbarraDF['numero'] == value['de']
+        for idx, value in powerflow.nbusdlinhaDF.iterrows():
+            k = powerflow.nbusdbarraDF.index[
+                powerflow.nbusdbarraDF['numero'] == value['de']
             ][0]
-            m = powerflow.setup.dbarraDF.index[
-                powerflow.setup.dbarraDF['numero'] == value['para']
+            m = powerflow.nbusdbarraDF.index[
+                powerflow.nbusdbarraDF['numero'] == value['para']
             ][0]
 
             # Potência ativa k -> m
             powerflow.solution['active_flow_F2'][idx] = abs(
-                powerflow.setup.bbus[k, m]
+                powerflow.nbusbbus[k, m]
             ) * (powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
 
             # Potência ativa m -> k
             powerflow.solution['active_flow_2F'][idx] = abs(
-                powerflow.setup.bbus[k, m]
+                powerflow.nbusbbus[k, m]
             ) * (powerflow.solution['theta'][m] - powerflow.solution['theta'][k])
 
             # Potência ativa gerada pela barra k
             powerflow.solution['active'][k] += powerflow.solution['active_flow_F2'][idx]
             powerflow.solution['active'][m] += powerflow.solution['active_flow_2F'][idx]
 
-        powerflow.solution['active_flow_F2'] *= powerflow.setup.options['BASE']
-        powerflow.solution['active_flow_2F'] *= powerflow.setup.options['BASE']
+        powerflow.solution['active_flow_F2'] *= powerflow.nbusoptions['BASE']
+        powerflow.solution['active_flow_2F'] *= powerflow.nbusoptions['BASE']
 
-        powerflow.solution['active'] *= powerflow.setup.options['BASE']
-        powerflow.solution['active'] += powerflow.setup.dbarraDF['demanda_ativa'].values
+        powerflow.solution['active'] *= powerflow.nbusoptions['BASE']
+        powerflow.solution['active'] += powerflow.nbusdbarraDF['demanda_ativa'].values

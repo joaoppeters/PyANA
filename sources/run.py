@@ -8,34 +8,34 @@
 
 from powerflow import PowerFlow
     
-system = "neves.pwf"
+system = 'ieee14.pwf'
 
-method = "NEWTON"
-method = 'CPF'
+method = 'NEWTON'
+# method = 'CPF'
 # method = 'STOCH-CE'
 # method = 'CANI'
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 control = [
-    
+    'QLIMs',
 ]
 
 # monitor = [
-#     "PFLOW",
-#     "PGMON",
-#     "QGMON",
-#     "VMON",
+#     'PFLOW',
+#     'PGMON',
+#     'QGMON',
+#     'VMON',
 # ]
 monitor = []
 
 # report = [
-#     "RBAR",
-#     "RLIN",
-#     "RGER",
-#     "RSVC",
+#     'RBAR',
+#     'RLIN',
+#     'RGER',
+#     'RSVC',
 # ]
 report = [
-    "RBAR",
+    'RBAR',
 ]
 
 PowerFlow(
