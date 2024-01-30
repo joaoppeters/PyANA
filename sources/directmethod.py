@@ -38,8 +38,8 @@ class DirectMethod:
         powerflow.solution = {
             'system': powerflow.nbusname,
             'iter': 0,
-            'voltage': array(powerflow.nbusdbarraDF['tensao'] * 1e-3),
-            'theta': array(radians(powerflow.nbusdbarraDF['angulo'])),
+            'voltage': array(powerflow.dbarraDF['tensao'] * 1e-3),
+            'theta': array(radians(powerflow.dbarraDF['angulo'])),
             'active': zeros(powerflow.nbusnbus),
             'reactive': zeros(powerflow.nbusnbus),
             'freq': 1.0,
@@ -52,9 +52,9 @@ class DirectMethod:
             'busY': array([]),
             'step': 0.0,
             'stepsch': 0.0,
-            'potencia_ativa': deepcopy(powerflow.nbusdbarraDF['potencia_ativa']),
-            'demanda_ativa': deepcopy(powerflow.nbusdbarraDF['demanda_ativa']),
-            'demanda_reativa': deepcopy(powerflow.nbusdbarraDF['demanda_reativa']),
+            'potencia_ativa': deepcopy(powerflow.dbarraDF['potencia_ativa']),
+            'demanda_ativa': deepcopy(powerflow.dbarraDF['demanda_ativa']),
+            'demanda_reativa': deepcopy(powerflow.dbarraDF['demanda_reativa']),
         }
 
         # Controles
@@ -101,20 +101,20 @@ class DirectMethod:
 
         ## Inicialização
         # Variável
-        self.preincrement = sum(powerflow.nbusdbarraDF['demanda_ativa'].to_numpy())
+        self.preincrement = sum(powerflow.dbarraDF['demanda_ativa'].to_numpy())
 
         # Incremento de carga
-        for idxinc, valueinc in powerflow.nbusdincDF.iterrows():
+        for idxinc, valueinc in powerflow.dincDF.iterrows():
             if valueinc['tipo_incremento_1'] == 'AREA':
-                for idxbar, valuebar in powerflow.nbusdbarraDF.iterrows():
+                for idxbar, valuebar in powerflow.dbarraDF.iterrows():
                     if valuebar['area'] == valueinc['identificacao_incremento_1']:
                         # Incremento de Carregamento
-                        powerflow.nbusdbarraDF.at[
+                        powerflow.dbarraDF.at[
                             idxbar, 'demanda_ativa'
                         ] = powerflow.solution['demanda_ativa'][idxbar] * (
                             1 + powerflow.solution['stepsch']
                         )
-                        powerflow.nbusdbarraDF.at[
+                        powerflow.dbarraDF.at[
                             idxbar, 'demanda_reativa'
                         ] = powerflow.solution['demanda_reativa'][idxbar] * (
                             1 + powerflow.solution['stepsch']
@@ -125,19 +125,19 @@ class DirectMethod:
                 idxinc = valueinc['identificacao_incremento_1'] - 1
 
                 # Incremento de Carregamento
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idxinc, 'demanda_ativa'
                 ] = powerflow.solution['demanda_ativa'][idxinc] * (
                     1 + powerflow.solution['stepsch']
                 )
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idxinc, 'demanda_reativa'
                 ] = powerflow.solution['demanda_reativa'][idxinc] * (
                     1 + powerflow.solution['stepsch']
                 )
 
         self.deltaincrement = (
-            sum(powerflow.nbusdbarraDF['demanda_ativa'].to_numpy())
+            sum(powerflow.dbarraDF['demanda_ativa'].to_numpy())
             - self.preincrement
         )
 
@@ -145,20 +145,20 @@ class DirectMethod:
         if powerflow.nbuscodes['DGER']:
             for idxger, valueger in powerflow.nbusdgeraDF.iterrows():
                 idx = valueger['numero'] - 1
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idx, 'potencia_ativa'
-                ] = powerflow.nbusdbarraDF['potencia_ativa'][idx] + (
+                ] = powerflow.dbarraDF['potencia_ativa'][idx] + (
                     self.deltaincrement * valueger['fator_participacao']
                 )
 
             powerflow.solution['potencia_ativa'] = deepcopy(
-                powerflow.nbusdbarraDF['potencia_ativa']
+                powerflow.dbarraDF['potencia_ativa']
             )
 
         # Condição de atingimento do máximo incremento do nível de carregamento
         if (
             powerflow.solution['stepsch']
-            == powerflow.nbusdincDF.loc[0, 'maximo_incremento_potencia_ativa']
+            == powerflow.dincDF.loc[0, 'maximo_incremento_potencia_ativa']
         ):
             powerflow.solution['pmc'] = True
 
@@ -180,7 +180,7 @@ class DirectMethod:
         }
 
         # Loop
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             # Potência ativa especificada
             powerflow.pqsch['potencia_ativa_especificada'][idx] += value[
                 'potencia_ativa'
@@ -198,12 +198,12 @@ class DirectMethod:
             ]
 
         # Tratamento
-        powerflow.pqsch['potencia_ativa_especificada'] /= powerflow.nbusoptions[
+        powerflow.pqsch['potencia_ativa_especificada'] /= powerflow.options[
             'BASE'
         ]
         powerflow.pqsch[
             'potencia_reativa_especificada'
-        ] /= powerflow.nbusoptions['BASE']
+        ] /= powerflow.options['BASE']
 
         # Variáveis especificadas de controle ativos
         if powerflow.nbuscontrolcount > 0:
@@ -227,7 +227,7 @@ class DirectMethod:
         powerflow.deltaQ = zeros(powerflow.nbusnbus)
 
         # Loop
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value['tipo'] != 2:
                 powerflow.deltaP[idx] += powerflow.pqsch[
@@ -240,9 +240,9 @@ class DirectMethod:
 
             # Tipo PQ - Resíduo Potência Reativa
             if (
-                ('QLIM' in powerflow.nbuscontrol)
-                or ('QLIMs' in powerflow.nbuscontrol)
-                or ('QLIMn' in powerflow.nbuscontrol)
+                ('QLIM' in powerflow.control)
+                or ('QLIMs' in powerflow.control)
+                or ('QLIMn' in powerflow.control)
                 or (value['tipo'] == 0)
             ):
                 powerflow.deltaQ[idx] += powerflow.pqsch[

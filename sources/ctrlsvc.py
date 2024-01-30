@@ -27,21 +27,21 @@ def svcsol(
     ## Inicialização
     # Variáveis
     if 'svc_reactive_generation' not in powerflow.solution:
-        if powerflow.nbusdcerDF['controle'][0] == 'A':
-            powerflow.solution['svc_reactive_generation'] = powerflow.nbusdcerDF[
+        if powerflow.dcerDF['controle'][0] == 'A':
+            powerflow.solution['svc_reactive_generation'] = powerflow.dcerDF[
                 'potencia_reativa'
             ].to_numpy()
             alphavar(
                 powerflow,
             )
 
-        elif powerflow.nbusdcerDF['controle'][0] == 'I':
-            powerflow.solution['svc_current_injection'] = powerflow.nbusdcerDF[
+        elif powerflow.dcerDF['controle'][0] == 'I':
+            powerflow.solution['svc_current_injection'] = powerflow.dcerDF[
                 'potencia_reativa'
             ].to_numpy()
 
-        elif powerflow.nbusdcerDF['controle'][0] == 'P':
-            powerflow.solution['svc_reactive_generation'] = powerflow.nbusdcerDF[
+        elif powerflow.dcerDF['controle'][0] == 'P':
+            powerflow.solution['svc_reactive_generation'] = powerflow.dcerDF[
                 'potencia_reativa'
             ].to_numpy()
 
@@ -55,16 +55,16 @@ def alphavar(
     '''
 
     ## Inicialização
-    powerflow.nbusalphaxc = (powerflow.nbusoptions['BASE']) / (
-        powerflow.nbusdcerDF['potencia_reativa_maxima'][0]
+    powerflow.nbusalphaxc = (powerflow.options['BASE']) / (
+        powerflow.dcerDF['potencia_reativa_maxima'][0]
     )
     powerflow.nbusalphaxl = (
-        (powerflow.nbusoptions['BASE'])
-        / (powerflow.nbusdcerDF['potencia_reativa_maxima'][0])
+        (powerflow.options['BASE'])
+        / (powerflow.dcerDF['potencia_reativa_maxima'][0])
     ) / (
         1
-        - (powerflow.nbusdcerDF['potencia_reativa_minima'][0])
-        / (powerflow.nbusdcerDF['potencia_reativa_maxima'][0])
+        - (powerflow.dcerDF['potencia_reativa_minima'][0])
+        / (powerflow.dcerDF['potencia_reativa_maxima'][0])
     )
     powerflow.solution['alpha'] = roots(
         [
@@ -104,8 +104,8 @@ def alphavar(
     ) / (powerflow.nbusalphaxc * powerflow.nbusalphaxl)
 
     # Potência Reativa
-    idxcer = powerflow.nbusdbarraDF.index[
-        powerflow.nbusdbarraDF['numero'] == powerflow.nbusdcerDF['barra'][0]
+    idxcer = powerflow.dbarraDF.index[
+        powerflow.dbarraDF['numero'] == powerflow.dcerDF['barra'][0]
     ].tolist()[0]
     powerflow.solution['svc_reactive_generation'][0] = (
         powerflow.solution['voltage'][idxcer] ** 2
@@ -130,12 +130,12 @@ def svcres(
     ncer = 0
 
     # Loop
-    for _, value in powerflow.nbusdcerDF.iterrows():
-        idxcer = powerflow.nbusdbarraDF.index[
-            powerflow.nbusdbarraDF['numero'] == value['barra']
+    for _, value in powerflow.dcerDF.iterrows():
+        idxcer = powerflow.dbarraDF.index[
+            powerflow.dbarraDF['numero'] == value['barra']
         ].tolist()[0]
-        idxctrl = powerflow.nbusdbarraDF.index[
-            powerflow.nbusdbarraDF['numero'] == value['barra_controlada']
+        idxctrl = powerflow.dbarraDF.index[
+            powerflow.dbarraDF['numero'] == value['barra_controlada']
         ].tolist()[0]
 
         if value['controle'] == 'A':
@@ -148,7 +148,7 @@ def svcres(
             )
             powerflow.deltaQ[idxcer] = (
                 deepcopy(powerflow.solution['svc_reactive_generation'][ncer])
-                / powerflow.nbusoptions['BASE']
+                / powerflow.options['BASE']
             )
 
         elif value['controle'] == 'I':
@@ -162,7 +162,7 @@ def svcres(
             powerflow.deltaQ[idxcer] = (
                 deepcopy(powerflow.solution['svc_current_injection'][ncer])
                 * powerflow.solution['voltage'][idxcer]
-                / powerflow.nbusoptions['BASE']
+                / powerflow.options['BASE']
             )
 
         elif value['controle'] == 'P':
@@ -175,12 +175,12 @@ def svcres(
             )
             powerflow.deltaQ[idxcer] = (
                 deepcopy(powerflow.solution['svc_reactive_generation'][ncer])
-                / powerflow.nbusoptions['BASE']
+                / powerflow.options['BASE']
             )
 
         powerflow.deltaQ[idxcer] -= (
-            powerflow.nbusdbarraDF['demanda_reativa'][idxcer]
-            / powerflow.nbusoptions['BASE']
+            powerflow.dbarraDF['demanda_reativa'][idxcer]
+            / powerflow.options['BASE']
         )
         powerflow.deltaQ[idxcer] -= qcalc(
             powerflow,
@@ -227,12 +227,12 @@ def svcsubjac(
     ncer = 0
 
     # Submatrizes PXP QXP YQV YXT
-    for idx, value in powerflow.nbusdcerDF.iterrows():
-        idxcer = powerflow.nbusdbarraDF.index[
-            powerflow.nbusdbarraDF['numero'] == value['barra']
+    for idx, value in powerflow.dcerDF.iterrows():
+        idxcer = powerflow.dbarraDF.index[
+            powerflow.dbarraDF['numero'] == value['barra']
         ].tolist()[0]
-        idxctrl = powerflow.nbusdbarraDF.index[
-            powerflow.nbusdbarraDF['numero'] == value['barra_controlada']
+        idxctrl = powerflow.dbarraDF.index[
+            powerflow.dbarraDF['numero'] == value['barra_controlada']
         ].tolist()[0]
 
         if value['barra'] != value['barra_controlada']:
@@ -278,7 +278,7 @@ def svcsubjac(
                 powerflow.nbusnbus + idxcer, powerflow.nbusnbus + idxcer
             ] -= (
                 powerflow.solution['svc_current_injection'][ncer]
-            ) / powerflow.nbusoptions[
+            ) / powerflow.options[
                 'BASE'
             ]
             powerflow.nbusqx[idxcer, ncer] = -powerflow.solution['voltage'][
@@ -346,7 +346,7 @@ def svcupdt(
     ncer = 0
 
     # Atualização da potência reativa gerada
-    for _, value in powerflow.nbusdcerDF.iterrows():
+    for _, value in powerflow.dcerDF.iterrows():
         if value['controle'] == 'A':
             powerflow.solution['alpha'] += powerflow.nbusstatevar[
                 (powerflow.nbusdimpresvc + ncer)
@@ -355,13 +355,13 @@ def svcupdt(
         elif value['controle'] == 'I':
             powerflow.solution['svc_current_injection'][ncer] += (
                 powerflow.nbusstatevar[(powerflow.nbusdimpresvc + ncer)]
-                * powerflow.nbusoptions['BASE']
+                * powerflow.options['BASE']
             )
 
         elif value['controle'] == 'P':
             powerflow.solution['svc_reactive_generation'][ncer] += (
                 powerflow.nbusstatevar[(powerflow.nbusdimpresvc + ncer)]
-                * powerflow.nbusoptions['BASE']
+                * powerflow.options['BASE']
             )
 
         # Incrementa contador
@@ -379,23 +379,23 @@ def svcsch(
     ## Inicialização
     # Atualização da potência reativa especificada
     ncer = 0
-    for _, value in powerflow.nbusdcerDF.iterrows():
-        idxcer = powerflow.nbusdbarraDF.index[
-            powerflow.nbusdbarraDF['numero'] == value['barra']
+    for _, value in powerflow.dcerDF.iterrows():
+        idxcer = powerflow.dbarraDF.index[
+            powerflow.dbarraDF['numero'] == value['barra']
         ].tolist()[0]
-        if (powerflow.nbusdcerDF['controle'][0] == 'A') or (
-            powerflow.nbusdcerDF['controle'][0] == 'P'
+        if (powerflow.dcerDF['controle'][0] == 'A') or (
+            powerflow.dcerDF['controle'][0] == 'P'
         ):
             powerflow.pqsch['potencia_reativa_especificada'][idxcer] += (
                 powerflow.solution['svc_reactive_generation'][ncer]
-                / powerflow.nbusoptions['BASE']
+                / powerflow.options['BASE']
             )
 
-        elif powerflow.nbusdcerDF['controle'][0] == 'I':
+        elif powerflow.dcerDF['controle'][0] == 'I':
             powerflow.pqsch['potencia_reativa_especificada'][idxcer] += (
                 powerflow.solution['svc_current_injection'][ncer]
                 * powerflow.solution['voltage'][idxcer]
-            ) / powerflow.nbusoptions['BASE']
+            ) / powerflow.options['BASE']
 
         # Incrementa contador
         ncer += 1
@@ -433,10 +433,10 @@ def svcheur(
         and (powerflow.cpfsolution['varstep'] == 'lambda')
         and (
             (
-                powerflow.nbusoptions['LMBD']
+                powerflow.options['LMBD']
                 * (5e-1 ** powerflow.cpfsolution['div'])
             )
-            <= powerflow.nbusoptions['icmn']
+            <= powerflow.options['icmn']
         )
     ):
         powerflow.nbusbifurcation = True

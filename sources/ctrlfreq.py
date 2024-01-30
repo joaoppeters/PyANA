@@ -45,7 +45,7 @@ def freqsol(
                 )
                 nger += 1
         # Frequências máxima e mínima por gerador
-        self.freqgerlim(
+        freqgerlim(
             powerflow,
         )
 
@@ -59,7 +59,6 @@ def freqsol(
         )
 
 def freqgerlim(
-    self,
     powerflow,
 ):
     '''cálculo das frequências máximas e mínimas de operação de cada gerador
@@ -106,7 +105,6 @@ def freqgerlim(
         )
 
 def freqsch(
-    self,
     powerflow,
 ):
     '''armazenamento de parâmetros especificados das equações de controle adicionais
@@ -165,7 +163,6 @@ def freqsch(
     ] /= powerflow.options['BASE']
 
 def freqres(
-    self,
     powerflow,
 ):
     '''cálculo de resíduos das equações de controle adicionais
@@ -257,7 +254,6 @@ def freqres(
     )
 
 def freqsubjac(
-    self,
     powerflow,
 ):
     '''submatrizes da matriz jacobiana
@@ -539,7 +535,6 @@ def freqsubjac(
         )
 
 def frequpdt(
-    self,
     powerflow,
 ):
     '''atualização das variáveis de estado adicionais
@@ -582,7 +577,6 @@ def frequpdt(
             powerflow.ypp[idx][idx] = 1
 
 def freqcorr(
-    self,
     powerflow,
     case,
 ):

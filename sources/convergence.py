@@ -42,7 +42,7 @@ def convergence(
     # )
 
     # # Condição
-    # if powerflow.nbuscontrol:
+    # if powerflow.control:
     #     # Convergência de Equações de Controle Adicionais
     #     convY(
     #         powerflow,
@@ -64,7 +64,7 @@ def convP(
     if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convP'] * powerflow.options['BASE']),
             color='C0',
             linewidth=2,
             alpha=0.85,
@@ -72,7 +72,7 @@ def convP(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convP'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),
@@ -84,7 +84,7 @@ def convP(
     elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convP'] * powerflow.options['BASE']),
             color='C0',
             linewidth=2,
             alpha=0.85,
@@ -92,7 +92,7 @@ def convP(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convP'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convP'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),
@@ -141,7 +141,7 @@ def convQ(
     if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convQ'] * powerflow.options['BASE']),
             color='C1',
             linewidth=2,
             alpha=0.85,
@@ -149,7 +149,7 @@ def convQ(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convQ'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),
@@ -161,7 +161,7 @@ def convQ(
     elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convQ'] * powerflow.options['BASE']),
             color='C1',
             linewidth=2,
             alpha=0.85,
@@ -169,7 +169,7 @@ def convQ(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convQ'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convQ'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),
@@ -218,7 +218,7 @@ def convY(
     if powerflow.solution['convergence'] == 'SISTEMA CONVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convY'] * powerflow.options['BASE']),
             color='C1',
             linewidth=2,
             alpha=0.85,
@@ -226,7 +226,7 @@ def convY(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter'] + 1),
-            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convY'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),
@@ -238,7 +238,7 @@ def convY(
     elif powerflow.solution['convergence'] == 'SISTEMA DIVERGENTE':
         (line,) = ax.plot(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convY'] * powerflow.options['BASE']),
             color='C1',
             linewidth=2,
             alpha=0.85,
@@ -246,7 +246,7 @@ def convY(
         )
         mark = ax.scatter(
             arange(0, powerflow.solution['iter']),
-            (powerflow.solution['convY'] * powerflow.nbusoptions['BASE']),
+            (powerflow.solution['convY'] * powerflow.options['BASE']),
             color=(1.0, 1.0, 1.0),
             marker='*',
             edgecolor=(0.0, 0.0, 0.0),

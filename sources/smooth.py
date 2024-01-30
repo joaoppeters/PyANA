@@ -60,7 +60,7 @@ def qlimssmooth(
 
     # Associação das variáveis
     var = {
-        qger: powerflow.solution['qlim_reactive_generation'][idx] * 1e-2,
+        qger: powerflow.solution['qlim_reactive_generation'][idx] / powerflow.options['BASE'],
         vger: powerflow.solution['voltage'][idx],
         vesp: powerflow.dbarraDF.loc[idx, 'tensao'] * 1e-3,
         qmax: powerflow.dbarraDF.loc[idx, 'potencia_reativa_maxima']
@@ -161,7 +161,7 @@ def qlimnsmooth(
         ] = list()
 
     # Variáveis Simbólicas
-    qger = powerflow.solution['qlim_reactive_generation'][idx] * 1e-2
+    qger = powerflow.solution['qlim_reactive_generation'][idx] / powerflow.options['BASE']
     vger = powerflow.solution['voltage'][idx]
     vesp = powerflow.dbarraDF.loc[idx, 'tensao'] * 1e-3
     qmax = (
@@ -1090,7 +1090,7 @@ def svcstorage(
             bmin = powerflow.dcerDF['potencia_reativa_minima'].iloc[busidxcer]
             vk = powerflow.solution['voltage'][busidx]
             vmref = powerflow.dbarraDF['tensao'].iloc[ctrlbusidxcer] * 1e-3
-            droop = powerflow.dcerDF['droop'].iloc[busidxcer] * 1e-2
+            droop = powerflow.dcerDF['droop'].iloc[busidxcer] / powerflow.options['BASE']
 
             vmmax = vmref + (droop * bmin * (vk**2))
             vmmin = vmref + (droop * bmax * (vk**2))

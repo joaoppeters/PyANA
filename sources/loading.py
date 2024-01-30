@@ -12,7 +12,6 @@ from numpy import append, array, degrees, sum
 from folder import continuationfolder
 
 def loading(
-    self,
     powerflow,
 ):
     '''inicialização
@@ -41,7 +40,6 @@ def loading(
     # self.ruthe(powerflow,)
 
 def var(
-    self,
     powerflow,
 ):
     '''variáveis para geração dos gráficos de fluxo de potência continuado
@@ -52,104 +50,104 @@ def var(
 
     ## Inicialização
     # Variável
-    powerflow.nbuspqtv = {}
+    powerflow.pqtv = {}
     powerflow.MW = array([])
     powerflow.MVAr = array([])
     powerflow.nbuseigenvalues = array([])
     powerflow.nbuseigenvaluesPT = array([])
     powerflow.nbuseigenvaluesQV = array([])
-    if 'FREQ' in powerflow.nbuscontrol:
-        powerflow.nbuspqtv[
-            'FREQbase' + str(powerflow.nbusoptions['FBASE'])
+    if 'FREQ' in powerflow.control:
+        powerflow.pqtv[
+            'FREQbase' + str(powerflow.options['FBASE'])
         ] = array([])
 
     # Loop de Inicialização da Variável
-    for _, value in powerflow.nbusdbarraDF.iterrows():
+    for _, value in powerflow.dbarraDF.iterrows():
         if value['tipo'] != 0:
             # Variável de Armazenamento de Potência Ativa
-            powerflow.nbuspqtv['P-' + value['nome']] = array([])
+            powerflow.pqtv['P-' + value['nome']] = array([])
 
             # Variável de Armazenamento de Potência Reativa
-            powerflow.nbuspqtv['Q-' + value['nome']] = array([])
+            powerflow.pqtv['Q-' + value['nome']] = array([])
 
         elif (value['tipo'] == 0) and (
-            ('SVCs' in powerflow.nbuscontrol)
-            and (value['numero'] in powerflow.nbusdcerDF['barra'].to_numpy())
+            ('SVCs' in powerflow.control)
+            and (value['numero'] in powerflow.dcerDF['barra'].to_numpy())
         ):
             # Variável de Armazenamento de Potência Reativa
-            powerflow.nbuspqtv['Q-' + value['nome']] = array([])
+            powerflow.pqtv['Q-' + value['nome']] = array([])
 
         # Variável de Armazenamento de Magnitude de Tensão Corrigida
-        powerflow.nbuspqtv['Vcorr-' + value['nome']] = array([])
+        powerflow.pqtv['Vcorr-' + value['nome']] = array([])
 
         # Variável de Armazenamento de Defasagem Angular Corrigida
-        powerflow.nbuspqtv['Tcorr-' + value['nome']] = array([])
+        powerflow.pqtv['Tcorr-' + value['nome']] = array([])
 
     # Loop de Armazenamento
-    for key, item in powerflow.case.items():
+    for key, item in powerflow.point.items():
         # Condição
         if key == 0:
-            self.aux = powerflow.nbusdbarraDF['nome'][0]  # usado no loop seguinte
+            aux = powerflow.dbarraDF['nome'][0]  # usado no loop seguinte
             for value in range(0, item['voltage'].shape[0]):
-                if powerflow.nbusdbarraDF['tipo'][value] != 0:
+                if powerflow.dbarraDF['tipo'][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.nbuspqtv[
-                        'P-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'P-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'P-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'P-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['active'][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.nbuspqtv[
-                        'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Q-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'Q-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['reactive'][value],
                     )
 
-                elif (powerflow.nbusdbarraDF['tipo'][value] == 0) and (
-                    ('SVCs' in powerflow.nbuscontrol)
+                elif (powerflow.dbarraDF['tipo'][value] == 0) and (
+                    ('SVCs' in powerflow.control)
                     and (
-                        powerflow.nbusdbarraDF['numero'][value]
-                        in powerflow.nbusdcerDF['barra'].to_numpy()
+                        powerflow.dbarraDF['numero'][value]
+                        in powerflow.dcerDF['barra'].to_numpy()
                     )
                 ):
-                    busidxcer = powerflow.nbusdcerDF.index[
-                        powerflow.nbusdcerDF['barra']
-                        == powerflow.nbusdbarraDF['numero'].iloc[value]
+                    busidxcer = powerflow.dcerDF.index[
+                        powerflow.dcerDF['barra']
+                        == powerflow.dbarraDF['numero'].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.nbuspqtv[
-                        'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Q-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'Q-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['svc_reactive_generation'][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão
-                powerflow.nbuspqtv[
-                    'Vcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                powerflow.pqtv[
+                    'Vcorr-' + powerflow.dbarraDF['nome'][value]
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'Vcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Vcorr-' + powerflow.dbarraDF['nome'][value]
                     ],
                     item['voltage'][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular
-                powerflow.nbuspqtv[
-                    'Tcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                powerflow.pqtv[
+                    'Tcorr-' + powerflow.dbarraDF['nome'][value]
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'Tcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Tcorr-' + powerflow.dbarraDF['nome'][value]
                     ],
                     degrees(item['theta'][value]),
                 )
@@ -172,77 +170,77 @@ def var(
                 )
 
             # Frequência
-            if 'FREQ' in powerflow.nbuscontrol:
-                powerflow.nbuspqtv[
-                    'FREQbase' + str(powerflow.nbusoptions['FBASE'])
+            if 'FREQ' in powerflow.control:
+                powerflow.pqtv[
+                    'FREQbase' + str(powerflow.options['FBASE'])
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'FREQbase' + str(powerflow.nbusoptions['FBASE'])
+                    powerflow.pqtv[
+                        'FREQbase' + str(powerflow.options['FBASE'])
                     ],
-                    item['freq'] * powerflow.nbusoptions['FBASE'],
+                    item['freq'] * powerflow.options['FBASE'],
                 )
 
         elif key > 0:
             for value in range(0, item['c']['voltage'].shape[0]):
-                if powerflow.nbusdbarraDF['tipo'][value] != 0:
+                if powerflow.dbarraDF['tipo'][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.nbuspqtv[
-                        'P-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'P-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'P-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'P-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['c']['active'][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.nbuspqtv[
-                        'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Q-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'Q-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['c']['reactive'][value],
                     )
 
-                elif (powerflow.nbusdbarraDF['tipo'][value] == 0) and (
-                    ('SVCs' in powerflow.nbuscontrol)
+                elif (powerflow.dbarraDF['tipo'][value] == 0) and (
+                    ('SVCs' in powerflow.control)
                     and (
-                        powerflow.nbusdbarraDF['numero'][value]
-                        in powerflow.nbusdcerDF['barra'].to_numpy()
+                        powerflow.dbarraDF['numero'][value]
+                        in powerflow.dcerDF['barra'].to_numpy()
                     )
                 ):
-                    busidxcer = powerflow.nbusdcerDF.index[
-                        powerflow.nbusdcerDF['barra']
-                        == powerflow.nbusdbarraDF['numero'].iloc[value]
+                    busidxcer = powerflow.dcerDF.index[
+                        powerflow.dcerDF['barra']
+                        == powerflow.dbarraDF['numero'].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.nbuspqtv[
-                        'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Q-' + powerflow.dbarraDF['nome'][value]
                     ] = append(
-                        powerflow.nbuspqtv[
-                            'Q-' + powerflow.nbusdbarraDF['nome'][value]
+                        powerflow.pqtv[
+                            'Q-' + powerflow.dbarraDF['nome'][value]
                         ],
                         item['c']['svc_reactive_generation'][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão Corrigida
-                powerflow.nbuspqtv[
-                    'Vcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                powerflow.pqtv[
+                    'Vcorr-' + powerflow.dbarraDF['nome'][value]
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'Vcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Vcorr-' + powerflow.dbarraDF['nome'][value]
                     ],
                     item['c']['voltage'][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular Corrigida
-                powerflow.nbuspqtv[
-                    'Tcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                powerflow.pqtv[
+                    'Tcorr-' + powerflow.dbarraDF['nome'][value]
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'Tcorr-' + powerflow.nbusdbarraDF['nome'][value]
+                    powerflow.pqtv[
+                        'Tcorr-' + powerflow.dbarraDF['nome'][value]
                     ],
                     degrees(item['c']['theta'][value]),
                 )
@@ -250,14 +248,14 @@ def var(
             # Demanda
             totalmw = sum(powerflow.cpfsolution['demanda_ativa'])
             totalmvar = sum(powerflow.cpfsolution['demanda_reativa'])
-            for _, valueinc in powerflow.nbusdincDF.iterrows():
+            for _, valueinc in powerflow.dincDF.iterrows():
                 if valueinc['tipo_incremento_1'] == 'AREA':
                     # MW
                     areamw = (1 + item['c']['step']) * sum(
                         array(
                             [
                                 powerflow.cpfsolution['demanda_ativa'][idxarea]
-                                for idxarea, valuearea in powerflow.nbusdbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea['area']
                                 == valueinc['identificacao_incremento_1']
                             ]
@@ -267,7 +265,7 @@ def var(
                         array(
                             [
                                 powerflow.cpfsolution['demanda_ativa'][idxarea]
-                                for idxarea, valuearea in powerflow.nbusdbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea['area']
                                 == valueinc['identificacao_incremento_1']
                             ]
@@ -279,7 +277,7 @@ def var(
                         array(
                             [
                                 powerflow.cpfsolution['demanda_reativa'][idxarea]
-                                for idxarea, valuearea in powerflow.nbusdbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea['area']
                                 == valueinc['identificacao_incremento_1']
                             ]
@@ -289,25 +287,25 @@ def var(
                         array(
                             [
                                 powerflow.cpfsolution['demanda_reativa'][idxarea]
-                                for idxarea, valuearea in powerflow.nbusdbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea['area']
                                 == valueinc['identificacao_incremento_1']
                             ]
                         )
                     )
 
-                elif powerflow.nbusdincDF.loc[0, 'tipo_incremento_1'] == 'BARR':
+                elif powerflow.dincDF.loc[0, 'tipo_incremento_1'] == 'BARR':
                     # MW
                     barramw = (1 + item['c']['step']) * powerflow.cpfsolution[
                         'demanda_ativa'
                     ][
-                        powerflow.nbusdincDF.loc[0, 'identificacao_incremento_1']
+                        powerflow.dincDF.loc[0, 'identificacao_incremento_1']
                         - 1
                     ]
                     totalmw += (
                         barramw
                         - powerflow.cpfsolution['demanda_ativa'][
-                            powerflow.nbusdincDF.loc[
+                            powerflow.dincDF.loc[
                                 0, 'identificacao_incremento_1'
                             ]
                             - 1
@@ -318,13 +316,13 @@ def var(
                     barramvar = (1 + item['c']['step']) * powerflow.cpfsolution[
                         'demanda_reativa'
                     ][
-                        powerflow.nbusdincDF.loc[0, 'identificacao_incremento_1']
+                        powerflow.dincDF.loc[0, 'identificacao_incremento_1']
                         - 1
                     ]
                     totalmvar += (
                         barramvar
                         - powerflow.cpfsolution['demanda_reativa'][
-                            powerflow.nbusdincDF.loc[
+                            powerflow.dincDF.loc[
                                 0, 'identificacao_incremento_1'
                             ]
                             - 1
@@ -344,14 +342,14 @@ def var(
                 )
 
             # Frequência
-            if 'FREQ' in powerflow.nbuscontrol:
-                powerflow.nbuspqtv[
-                    'FREQbase' + str(powerflow.nbusoptions['FBASE'])
+            if 'FREQ' in powerflow.control:
+                powerflow.pqtv[
+                    'FREQbase' + str(powerflow.options['FBASE'])
                 ] = append(
-                    powerflow.nbuspqtv[
-                        'FREQbase' + str(powerflow.nbusoptions['FBASE'])
+                    powerflow.pqtv[
+                        'FREQbase' + str(powerflow.options['FBASE'])
                     ],
-                    item['c']['freq'] * powerflow.nbusoptions['FBASE'],
+                    item['c']['freq'] * powerflow.options['FBASE'],
                 )
 
 def pqvt(
@@ -367,7 +365,7 @@ def pqvt(
     ## Inicialização
     # Geração de Gráfico
     color = 0
-    for key, item in powerflow.nbuspqtv.items():
+    for key, item in powerflow.pqtv.items():
         if (key[:5] != 'Vprev') and (key[:5] != 'Tprev'):
             fig, ax = plt.subplots(nrows=1, ncols=1)
 
@@ -376,11 +374,11 @@ def pqvt(
                 busname = key[6:]
             else:
                 busname = key[2:]
-            if busname != self.aux:
+            if busname != aux:
                 if key[1:5] == 'c':
-                    self.aux = key[6:]
+                    aux = key[6:]
                 else:
-                    self.aux = key[2:]
+                    aux = key[2:]
                 color += 1
 
             # Plot
@@ -395,7 +393,7 @@ def pqvt(
                 zorder=2,
             )
 
-            if powerflow.nbusoptions['FULL']:
+            if powerflow.options['FULL']:
                 (dashed,) = ax.plot(
                     powerflow.MW[
                         (powerflow.nbuspmcidx + 1) : (powerflow.nbusv2lidx)
@@ -420,7 +418,7 @@ def pqvt(
                 )
                 ax.legend([(line, dashed, dotted)], [busname])
 
-            elif not powerflow.nbusoptions['FULL']:
+            elif not powerflow.options['FULL']:
                 ax.legend([(line,)], [busname])
 
             # Labels

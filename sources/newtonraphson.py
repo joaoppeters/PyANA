@@ -246,9 +246,9 @@ def residue(
         controlres(
             powerflow,
         )
-        concatresidue(
-            powerflow,
-        )
+        # concatresidue(
+        #     powerflow,
+        # )
         powerflow.deltaPQY = concatenate(
             (powerflow.deltaPQY, powerflow.deltaY), axis=0
         )

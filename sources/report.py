@@ -11,6 +11,7 @@ from folder import reportsfolder
 from datetime import datetime as dt
 from numpy import (
     absolute,
+    argsort,
     degrees,
     pi,
     sum,
@@ -102,7 +103,6 @@ def reportfile(
             powerflow,
         )
         tobecontinued(
-            file,
             powerflow,
         )
 
@@ -194,10 +194,10 @@ def rconv(
                 )
 
         elif powerflow.method == "CPF":
-            for i in range(0, powerflow.case[0]['iter']):
+            for i in range(0, powerflow.point[0]['iter']):
                 file.write("\n")
                 file.write(
-                    f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |"
+                    f"| {(i+1):^4d} | {powerflow.point[0]['freqiter'][i]:^6.3f} | {powerflow.point[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busP'][i]]:^5d} | {powerflow.point[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busQ'][i]]:^5d} | {powerflow.point[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busY'][i]]:^5d} |"
                 )
 
         file.write("\n")
@@ -225,10 +225,10 @@ def rconv(
         )
 
     elif (powerflow.method == "CPF") and (
-        powerflow.case[0]['convergence'] == "SISTEMA CONVERGENTE"
+        powerflow.point[0]['convergence'] == "SISTEMA CONVERGENTE"
     ):
         file.write(
-            f"| {(i+1):^4d} | {powerflow.case[0]['freqiter'][i]:^6.3f} | {powerflow.case[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busP'][i]]:^5d} | {powerflow.case[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busQ'][i]]:^5d} | {powerflow.case[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.case[0]['busY'][i]]:^5d} |"
+            f"| {(i+1):^4d} | {powerflow.point[0]['freqiter'][i]:^6.3f} | {powerflow.point[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busP'][i]]:^5d} | {powerflow.point[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busQ'][i]]:^5d} | {powerflow.point[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busY'][i]]:^5d} |"
         )
 
     file.write("\n")
@@ -281,7 +281,7 @@ def RBAR(
 
                 elif powerflow.method == "CPF":
                     file.write(
-                        f"| {powerflow.dbarraDF['numero'][i]:^3d} | {powerflow.dbarraDF['nome'][i]:^12} | {powerflow.dbarraDF['tipo'][i]:^3} |  {powerflow.case[0]['voltage'][i]:^8.3f} | {degrees(powerflow.case[0]['theta'][i]):^+8.2f} | {powerflow.case[0]['active'][i]:^8.3f} | {powerflow.case[0]['reactive'][i]:^8.3f} | {powerflow.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarraDF['shunt_barra'][i]:^8.3f} |"
+                        f"| {powerflow.dbarraDF['numero'][i]:^3d} | {powerflow.dbarraDF['nome'][i]:^12} | {powerflow.dbarraDF['tipo'][i]:^3} |  {powerflow.point[0]['voltage'][i]:^8.3f} | {degrees(powerflow.point[0]['theta'][i]):^+8.2f} | {powerflow.point[0]['active'][i]:^8.3f} | {powerflow.point[0]['reactive'][i]:^8.3f} | {powerflow.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarraDF['shunt_barra'][i]:^8.3f} |"
                     )
 
                 file.write("\n")
@@ -331,7 +331,7 @@ def RLIN(
 
         elif powerflow.method == "CPF":
             file.write(
-                f"| {powerflow.dbarraDF['nome'][powerflow.dbarraDF.index[powerflow.dbarraDF['numero'] == powerflow.dlinhaDF['de'][i]][0]]:^12} | {powerflow.dbarraDF['nome'][powerflow.dbarraDF.index[powerflow.dbarraDF['numero'] == powerflow.dlinhaDF['para'][i]][0]]:^12} | {powerflow.case[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.case[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.case[0]['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
+                f"| {powerflow.dbarraDF['nome'][powerflow.dbarraDF.index[powerflow.dbarraDF['numero'] == powerflow.dlinhaDF['de'][i]][0]]:^12} | {powerflow.dbarraDF['nome'][powerflow.dbarraDF.index[powerflow.dbarraDF['numero'] == powerflow.dlinhaDF['para'][i]][0]]:^12} | {powerflow.point[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.point[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.point[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.point[0]['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
             )
 
         file.write("\n")
@@ -354,7 +354,7 @@ def RLIN(
 
     elif powerflow.method == "CPF":
         file.write(
-            f"| {sum(powerflow.case[0]['active']):^+8.3f} | {sum(powerflow.dbarraDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
+            f"| {sum(powerflow.point[0]['active']):^+8.3f} | {sum(powerflow.dbarraDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
         )
 
     file.write("\n")
@@ -366,7 +366,7 @@ def RLIN(
 
         elif powerflow.method == "CPF":
             file.write(
-                f"| {sum(powerflow.case[0]['reactive']):^+8.3f} | {sum(powerflow.dbarraDF['demanda_reativa']):^+8.3f} | {sum((powerflow.case[0]['voltage']**2)*powerflow.dbarraDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['arective_flow_loss']):^8.3f} |"
+                f"| {sum(powerflow.point[0]['reactive']):^+8.3f} | {sum(powerflow.dbarraDF['demanda_reativa']):^+8.3f} | {sum((powerflow.point[0]['voltage']**2)*powerflow.dbarraDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['arective_flow_loss']):^8.3f} |"
             )
 
         file.write("\n")
@@ -533,7 +533,7 @@ def RCPF(
     )
     file.write("\n")
     file.write("-" * 82)
-    for key, value in powerflow.case.items():
+    for key, value in powerflow.point.items():
         file.write("\n")
         if key == 0:
             file.write(
@@ -605,7 +605,7 @@ def RCPF(
 
                 file.write("\n")
                 file.write(
-                    f"| {powerflow.dbarraDF['numero'][i]:^3d} | {powerflow.dbarraDF['nome'][i]:^12} | {powerflow.dbarraDF['tipo'][i]:^3} |  {powerflow.case[key]['c']['voltage'][i]:^8.3f} | {degrees(powerflow.case[key]['c']['theta'][i]):^+8.2f} | {powerflow.case[key]['c']['active'][i]:^8.3f} | {powerflow.case[key]['c']['reactive'][i]:^8.3f} | {powerflow.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarraDF['shunt_barra'][i]:^8.3f} |"
+                    f"| {powerflow.dbarraDF['numero'][i]:^3d} | {powerflow.dbarraDF['nome'][i]:^12} | {powerflow.dbarraDF['tipo'][i]:^3} |  {powerflow.point[key]['c']['voltage'][i]:^8.3f} | {degrees(powerflow.point[key]['c']['theta'][i]):^+8.2f} | {powerflow.point[key]['c']['active'][i]:^8.3f} | {powerflow.point[key]['c']['reactive'][i]:^8.3f} | {powerflow.dbarraDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarraDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarraDF['shunt_barra'][i]:^8.3f} |"
                 )
 
                 file.write("\n")
@@ -613,7 +613,6 @@ def RCPF(
         file.write("\n\n\n\n")
 
 def tobecontinued(
-    self,
     powerflow,
 ):
     """armazena o resultado do fluxo de potência continuado em formato txt e formato png
@@ -720,13 +719,13 @@ def tobecontinued(
         filedeteigen.write("\n\n")
 
     # Loop
-    for key, value in powerflow.case.items():
+    for key, value in powerflow.point.items():
         if key == 0:
             # Variável de variação de tensão
             varv = value['voltage'] - (
                 powerflow.dbarraDF['tensao'] * 1e-3
             )
-            argsort = argsort(varv)
+            arg = argsort(varv)
 
             # FILEVARV
             filevarv.write("\n\n")
@@ -746,7 +745,7 @@ def tobecontinued(
             # LOOP
             for n in range(0, powerflow.nbus):
                 filevarv.write(
-                    f"| {powerflow.dbarraDF['numero'][argsort[n]]:^3d} | {powerflow.dbarraDF['nome'][argsort[n]]:^12} | {value['voltage'][argsort[n]]:^8.4f} | {varv[argsort[n]]:^+8.4f} |"
+                    f"| {powerflow.dbarraDF['numero'][arg[n]]:^3d} | {powerflow.dbarraDF['nome'][arg[n]]:^12} | {value['voltage'][arg[n]]:^8.4f} | {varv[arg[n]]:^+8.4f} |"
                 )
                 filevarv.write("\n")
                 filevarv.write("-" * 44)
@@ -762,40 +761,40 @@ def tobecontinued(
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write(
-                    f"Determinante: {powerflow.case[key]['determinant-QV']}"
+                    f"Determinante: {powerflow.point[key]['determinant-QV']}"
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write(
-                    f"Autovalores: {powerflow.case[key]['eigenvalues-QV']}"
+                    f"Autovalores: {powerflow.point[key]['eigenvalues-QV']}"
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write("Autovalores:")
                 for b in range(0, powerflow.jacobQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
-                        f"right eigen vector {b}: {absolute(powerflow.case[key]['eigenvectors-QV'][:, b])}"
+                        f"right eigen vector {b}: {absolute(powerflow.point[key]['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
                 filedeteigen.write("Fator de Participação:")
                 for b in range(0, powerflow.PFQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
-                        f"p{b}: {powerflow.case[key]['participationfactor-QV'][:, b]}"
+                        f"p{b}: {powerflow.point[key]['participationfactor-QV'][:, b]}"
                     )
                 filedeteigen.write("\n")
 
         elif key > 0:
             # Variável de variação de tensão
             if key == 1:
-                varv = value['c']['voltage'] - powerflow.case[0]['voltage']
+                varv = value['c']['voltage'] - powerflow.point[0]['voltage']
 
             elif key > 1:
                 varv = (
                     value['c']['voltage']
-                    - powerflow.case[key - 1]['c']['voltage']
+                    - powerflow.point[key - 1]['c']['voltage']
                 )
 
-            argsort = argsort(varv)
+            arg = argsort(varv)
 
             # FILEVTAN
             filevtan.write("\n\n")
@@ -861,11 +860,11 @@ def tobecontinued(
                 # FILEVARV
                 if key == 1:
                     filevarv.write(
-                        f"| {powerflow.dbarraDF['numero'][argsort[n]]:^3d} | {powerflow.dbarraDF['nome'][argsort[n]]:^12} | {value['c']['voltage'][argsort[n]]:^8.4f} | {varv[argsort[n]]:^+8.4f} |"
+                        f"| {powerflow.dbarraDF['numero'][arg[n]]:^3d} | {powerflow.dbarraDF['nome'][arg[n]]:^12} | {value['c']['voltage'][arg[n]]:^8.4f} | {varv[arg[n]]:^+8.4f} |"
                     )
                 elif key > 1:
                     filevarv.write(
-                        f"| {powerflow.dbarraDF['numero'][argsort[n]]:^3d} | {powerflow.dbarraDF['nome'][argsort[n]]:^12} | {value['c']['voltage'][argsort[n]]:^8.4f} | {varv[argsort[n]]:^+8.4f} |"
+                        f"| {powerflow.dbarraDF['numero'][arg[n]]:^3d} | {powerflow.dbarraDF['nome'][arg[n]]:^12} | {value['c']['voltage'][arg[n]]:^8.4f} | {varv[arg[n]]:^+8.4f} |"
                     )
                 filevarv.write("\n")
                 filevarv.write("-" * 43)
@@ -881,25 +880,25 @@ def tobecontinued(
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write(
-                    f"Determinante: {powerflow.case[key]['c']['determinant-QV']}"
+                    f"Determinante: {powerflow.point[key]['c']['determinant-QV']}"
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write(
-                    f"Autovalores: {powerflow.case[key]['c']['eigenvalues-QV']}"
+                    f"Autovalores: {powerflow.point[key]['c']['eigenvalues-QV']}"
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write("Autovalores:")
                 for b in range(0, powerflow.jacobQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
-                        f"right eigen vector {b}: {absolute(powerflow.case[key]['c']['eigenvectors-QV'][:, b])}"
+                        f"right eigen vector {b}: {absolute(powerflow.point[key]['c']['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
                 filedeteigen.write("Fator de Participação:")
                 for b in range(0, powerflow.PFQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
-                        f"p{b}: {powerflow.case[key]['c']['participationfactor-QV'][:, b]}"
+                        f"p{b}: {powerflow.point[key]['c']['participationfactor-QV'][:, b]}"
                     )
                 filedeteigen.write("\n")
 
@@ -947,7 +946,7 @@ def tobecontinued(
         # with open(file, "a") as of:
         #     savetxt(
         #         of,
-        #         powerflow.case[powerflow.casekeymin]['c']['jacobian'],
+        #         powerflow.point[powerflow.casekeymin]['c']['jacobian'],
         #         delimiter=",",
         #         header=header,
         #     )
@@ -974,7 +973,7 @@ def tobecontinued(
         # with open(file, "a") as of:
         #     savetxt(
         #         of,
-        #         powerflow.case[powerflow.casekeymin]['c']['jacobian-QV'],
+        #         powerflow.point[powerflow.casekeymin]['c']['jacobian-QV'],
         #         delimiter=",",
         #         header=header,
         #     )
@@ -1042,13 +1041,13 @@ def tobecontinued(
                 filesmooth.write("\n")
                 if key == 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.case[key]['reactive'][busidx][0]} MVAr"
+                        f"Geração de Potência Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
                     )
                     it = 0
 
                 elif key > 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.case[key]['c']['reactive'][busidx][0]} MVAr"
+                        f"Geração de Potência Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
                     )
                     it = 1
 
@@ -1130,13 +1129,13 @@ def tobecontinued(
                 filesmooth.write("\n")
                 if key == 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.case[key]['reactive'][busidx][0]} MVAr"
+                        f"Geração de Potência Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
                     )
                     it = 0
 
                 elif key > 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.case[key]['c']['reactive'][busidx][0]} MVAr"
+                        f"Geração de Potência Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
                     )
                     it = 1
 

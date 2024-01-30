@@ -44,12 +44,12 @@ class PowerFlow:
 
         # Data Setup
         setup(self)
-
-        # Numerical Method
-        metodo(self)
         
         # Armazenamento dos resultados
         folder(self,)
+
+        # Numerical Method
+        metodo(self)
         
         reportfile(
             self,

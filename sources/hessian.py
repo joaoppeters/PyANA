@@ -36,7 +36,7 @@ class Hessian:
         t = [symbols('t%d' % i) for i in range(powerflow.nbusnbus)]
         powerflow.jacosymb = empty((2*powerflow.nbusnbus, 2*powerflow.nbusnbus), dtype=Symbol)
 
-        for idx, value in powerflow.nbusdlinhaDF.iterrows():
+        for idx, value in powerflow.dlinhaDF.iterrows():
             if value['estado']:
                 de = value['de'] - 1
                 para = value['para'] - 1
@@ -168,7 +168,7 @@ class Hessian:
                 powerflow.jacobsymb[para + powerflow.nbusnbus][de + powerflow.nbusnbus] = l2  
 
         # Elementos da diagonal principal da matriz jacobiana
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             # Submatriz H
             if (
                 powerflow.nbusmaskP[idx] == False
@@ -192,9 +192,9 @@ class Hessian:
 
             # Submatriz L
             if (powerflow.nbusmaskQ[idx] == False) and (
-                ('QLIM' not in powerflow.nbuscontrol)
-                or ('QLIMs' not in powerflow.nbuscontrol)
-                or ('QLIMn' not in powerflow.nbuscontrol)
+                ('QLIM' not in powerflow.control)
+                or ('QLIMs' not in powerflow.control)
+                or ('QLIMn' not in powerflow.control)
             ):
                 lk = oo
             else:

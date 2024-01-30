@@ -65,11 +65,11 @@ class FastContinuation:
         # Loading(powerflow,)
 
         # # Smooth
-        # if ('QLIMs' in powerflow.nbuscontrol):
+        # if ('QLIMs' in powerflow.control):
         #     for k, v in powerflow.nbusqlimkeys.items():
         #         v.popitem()
         #     Smooth(powerflow,).qlimstorage(powerflow,)
-        # if ('SVCs' in powerflow.nbuscontrol):
+        # if ('SVCs' in powerflow.control):
         #     for k, v in powerflow.nbussvckeys.items():
         #         v.popitem()
         #     Smooth().svcstorage(powerflow,)
@@ -92,15 +92,15 @@ class FastContinuation:
             'pmc': False,
             'v2l': False,
             'div': 0,
-            'beta': deepcopy(powerflow.nbusoptions['cpfBeta']),
+            'beta': deepcopy(powerflow.options['cpfBeta']),
             'step': 0.0,
             'stepsch': 0.0,
             'vsch': 0.0,
             'stepmax': 0.0,
             'varstep': 'lambda',
-            'potencia_ativa': deepcopy(powerflow.nbusdbarraDF['potencia_ativa']),
-            'demanda_ativa': deepcopy(powerflow.nbusdbarraDF['demanda_ativa']),
-            'demanda_reativa': deepcopy(powerflow.nbusdbarraDF['demanda_reativa']),
+            'potencia_ativa': deepcopy(powerflow.dbarraDF['potencia_ativa']),
+            'demanda_ativa': deepcopy(powerflow.dbarraDF['demanda_ativa']),
+            'demanda_reativa': deepcopy(powerflow.dbarraDF['demanda_reativa']),
         }
 
         # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
@@ -133,7 +133,7 @@ class FastContinuation:
         powerflow.nbusnodevarvolt = argmax(
             abs(
                 powerflow.solution['voltage']
-                - powerflow.nbusdbarraDF['tensao'] * 1e-3
+                - powerflow.dbarraDF['tensao'] * 1e-3
             )
         )
 
@@ -155,7 +155,7 @@ class FastContinuation:
         ## Inicialização
         # Condição de parada do fluxo de potência continuado -> Estável & Instável
         while all((powerflow.solution['voltage'] >= 0.0)) and (
-            sum(powerflow.nbusdbarraDF['demanda_ativa'])
+            sum(powerflow.dbarraDF['demanda_ativa'])
             >= 0.99 * sum(powerflow.cpfsolution['demanda_ativa'])
         ):
             self.active_heuristic = False
@@ -185,9 +185,9 @@ class FastContinuation:
                         'Passo (%): ',
                         powerflow.case[self.case]['c']['varstep'],
                         '  ',
-                        powerflow.nbusoptions['cpfVolt']
+                        powerflow.options['cpfVolt']
                         * (
-                            (1 / powerflow.nbusoptions['FDIV'])
+                            (1 / powerflow.options['FDIV'])
                             ** powerflow.cpfsolution['div']
                         )
                         * 1e2,
@@ -197,9 +197,9 @@ class FastContinuation:
                         'Passo (%): ',
                         powerflow.case[self.case]['c']['varstep'],
                         '  ',
-                        powerflow.nbusoptions['LMBD']
+                        powerflow.options['LMBD']
                         * (
-                            (1 / powerflow.nbusoptions['FDIV'])
+                            (1 / powerflow.options['FDIV'])
                             ** powerflow.cpfsolution['div']
                         )
                         * 1e2,
@@ -207,7 +207,7 @@ class FastContinuation:
                 print('\n')
 
             # Break Curva de Carregamento - Parte Estável
-            if (not powerflow.nbusoptions['FULL']) and (powerflow.cpfsolution['pmc']):
+            if (not powerflow.options['FULL']) and (powerflow.cpfsolution['pmc']):
                 break
 
     def prediction(
@@ -326,8 +326,8 @@ class FastContinuation:
         )
 
         while (
-            (max(abs(powerflow.deltaP)) >= powerflow.nbusoptions['TEPA'])
-            or (max(abs(powerflow.deltaQ)) >= powerflow.nbusoptions['TEPR'])
+            (max(abs(powerflow.deltaP)) >= powerflow.options['TEPA'])
+            or (max(abs(powerflow.deltaQ)) >= powerflow.options['TEPR'])
             or Control(powerflow, powerflow).controldelta(
                 powerflow,
             )
@@ -380,7 +380,7 @@ class FastContinuation:
             powerflow.solution['iter'] += 1
 
             # Condição de Divergência por iterações
-            if powerflow.solution['iter'] > powerflow.nbusoptions['ACIT']:
+            if powerflow.solution['iter'] > powerflow.options['ACIT']:
                 powerflow.solution[
                     'convergence'
                 ] = 'SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)'
@@ -388,7 +388,7 @@ class FastContinuation:
 
         ## Condição
         # Iteração Adicional em Caso de Convergência
-        if powerflow.solution['iter'] < powerflow.nbusoptions['ACIT']:
+        if powerflow.solution['iter'] < powerflow.options['ACIT']:
             # Armazenamento da trajetória de convergência
             self.convergence(
                 powerflow,
@@ -446,7 +446,7 @@ class FastContinuation:
             )
 
         # Reconfiguração dos Dados de Solução em Caso de Divergência
-        elif ((powerflow.solution['iter'] >= powerflow.nbusoptions['ACIT'])) and (
+        elif ((powerflow.solution['iter'] >= powerflow.options['ACIT'])) and (
             self.case == 1
         ):
             self.active_heuristic = True
@@ -481,7 +481,7 @@ class FastContinuation:
             )
 
         # Reconfiguração dos Dados de Solução em Caso de Divergência
-        elif ((powerflow.solution['iter'] >= powerflow.nbusoptions['ACIT'])) and (
+        elif ((powerflow.solution['iter'] >= powerflow.options['ACIT'])) and (
             self.case > 1
         ):
             self.active_heuristic = True
@@ -527,20 +527,20 @@ class FastContinuation:
 
         ## Inicialização
         # Variável
-        self.preincrement = sum(powerflow.nbusdbarraDF['demanda_ativa'].to_numpy())
+        self.preincrement = sum(powerflow.dbarraDF['demanda_ativa'].to_numpy())
 
         # Incremento de carga
-        for idxinc, valueinc in powerflow.nbusdincDF.iterrows():
+        for idxinc, valueinc in powerflow.dincDF.iterrows():
             if valueinc['tipo_incremento_1'] == 'AREA':
-                for idxbar, valuebar in powerflow.nbusdbarraDF.iterrows():
+                for idxbar, valuebar in powerflow.dbarraDF.iterrows():
                     if valuebar['area'] == valueinc['identificacao_incremento_1']:
                         # Incremento de Carregamento
-                        powerflow.nbusdbarraDF.at[
+                        powerflow.dbarraDF.at[
                             idxbar, 'demanda_ativa'
                         ] = powerflow.cpfsolution['demanda_ativa'][idxbar] * (
                             1 + powerflow.cpfsolution['stepsch']
                         )
-                        powerflow.nbusdbarraDF.at[
+                        powerflow.dbarraDF.at[
                             idxbar, 'demanda_reativa'
                         ] = powerflow.cpfsolution['demanda_reativa'][idxbar] * (
                             1 + powerflow.cpfsolution['stepsch']
@@ -551,19 +551,19 @@ class FastContinuation:
                 idxinc = valueinc['identificacao_incremento_1'] - 1
 
                 # Incremento de Carregamento
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idxinc, 'demanda_ativa'
                 ] = powerflow.cpfsolution['demanda_ativa'][idxinc] * (
                     1 + powerflow.cpfsolution['stepsch']
                 )
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idxinc, 'demanda_reativa'
                 ] = powerflow.cpfsolution['demanda_reativa'][idxinc] * (
                     1 + powerflow.cpfsolution['stepsch']
                 )
 
         self.deltaincrement = (
-            sum(powerflow.nbusdbarraDF['demanda_ativa'].to_numpy())
+            sum(powerflow.dbarraDF['demanda_ativa'].to_numpy())
             - self.preincrement
         )
 
@@ -571,20 +571,20 @@ class FastContinuation:
         if powerflow.nbuscodes['DGER']:
             for idxger, valueger in powerflow.nbusdgeraDF.iterrows():
                 idx = valueger['numero'] - 1
-                powerflow.nbusdbarraDF.at[
+                powerflow.dbarraDF.at[
                     idx, 'potencia_ativa'
-                ] = powerflow.nbusdbarraDF['potencia_ativa'][idx] + (
+                ] = powerflow.dbarraDF['potencia_ativa'][idx] + (
                     self.deltaincrement * valueger['fator_participacao']
                 )
 
             powerflow.cpfsolution['potencia_ativa'] = deepcopy(
-                powerflow.nbusdbarraDF['potencia_ativa']
+                powerflow.dbarraDF['potencia_ativa']
             )
 
         # Condição de atingimento do máximo incremento do nível de carregamento
         if (
             powerflow.cpfsolution['stepsch']
-            == powerflow.nbusdincDF.loc[0, 'maximo_incremento_potencia_ativa']
+            == powerflow.dincDF.loc[0, 'maximo_incremento_potencia_ativa']
         ):
             powerflow.cpfsolution['pmc'] = True
 
@@ -606,7 +606,7 @@ class FastContinuation:
         }
 
         # Loop
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             # Potência ativa especificada
             powerflow.pqsch['potencia_ativa_especificada'][idx] += value[
                 'potencia_ativa'
@@ -624,12 +624,12 @@ class FastContinuation:
             ]
 
         # Tratamento
-        powerflow.pqsch['potencia_ativa_especificada'] /= powerflow.nbusoptions[
+        powerflow.pqsch['potencia_ativa_especificada'] /= powerflow.options[
             'BASE'
         ]
         powerflow.pqsch[
             'potencia_reativa_especificada'
-        ] /= powerflow.nbusoptions['BASE']
+        ] /= powerflow.options['BASE']
 
         # Variáveis especificadas de controle ativos
         if powerflow.nbuscontrolcount > 0:
@@ -658,7 +658,7 @@ class FastContinuation:
         powerflow.deltaY = array([])
 
         # Loop
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value['tipo'] != 2:
                 powerflow.deltaP[idx] += powerflow.pqsch[
@@ -671,8 +671,8 @@ class FastContinuation:
 
             # Tipo PQ - Resíduo Potência Reativa
             if (
-                ('QLIM' in powerflow.nbuscontrol)
-                or ('QLIMs' in powerflow.nbuscontrol)
+                ('QLIM' in powerflow.control)
+                or ('QLIMs' in powerflow.control)
                 or (value['tipo'] == 0)
             ):
                 powerflow.deltaQ[idx] += powerflow.pqsch[
@@ -708,21 +708,21 @@ class FastContinuation:
             # Condição de variável de passo
             if powerflow.cpfsolution['varstep'] == 'lambda':
                 if not powerflow.cpfsolution['pmc']:
-                    powerflow.deltaPQY[-1] = powerflow.nbusoptions[
+                    powerflow.deltaPQY[-1] = powerflow.options[
                         'LMBD'
                     ] * (5e-1 ** powerflow.cpfsolution['div'])
 
                 elif powerflow.cpfsolution['pmc']:
                     powerflow.deltaPQY[-1] = (
                         -1
-                        * powerflow.nbusoptions['LMBD']
+                        * powerflow.options['LMBD']
                         * (5e-1 ** powerflow.cpfsolution['div'])
                     )
 
             elif powerflow.cpfsolution['varstep'] == 'volt':
                 powerflow.deltaPQY[-1] = (
                     -1
-                    * powerflow.nbusoptions['cpfVolt']
+                    * powerflow.options['cpfVolt']
                     * (5e-1 ** powerflow.cpfsolution['div'])
                 )
 
@@ -786,7 +786,7 @@ class FastContinuation:
             rowarray[0, (powerflow.nbusnbus + powerflow.nbusnodevarvolt)] = 1
 
         # Demanda
-        for idx, value in powerflow.nbusdbarraDF.iterrows():
+        for idx, value in powerflow.dbarraDF.iterrows():
             if value['tipo'] != 2:
                 colarray[idx, 0] = (
                     powerflow.cpfsolution['demanda_ativa'][idx]
@@ -797,7 +797,7 @@ class FastContinuation:
                         'demanda_reativa'
                     ][idx]
 
-        colarray /= powerflow.nbusoptions['BASE']
+        colarray /= powerflow.options['BASE']
 
         # Expansão Inferior
         powerflow.jacob = concatenate((powerflow.jacob, colarray), axis=1)
@@ -821,7 +821,7 @@ class FastContinuation:
         # Trajetória de convergência da frequência
         powerflow.solution['freqiter'] = append(
             powerflow.solution['freqiter'],
-            powerflow.solution['freq'] * powerflow.nbusoptions['FBASE'],
+            powerflow.solution['freq'] * powerflow.options['FBASE'],
         )
 
         # Trajetória de convergência da potência ativa
@@ -939,12 +939,12 @@ class FastContinuation:
         '''
 
         ## Inicialização
-        for idx, value in powerflow.nbusdlinhaDF.iterrows():
-            k = powerflow.nbusdbarraDF.index[
-                powerflow.nbusdbarraDF['numero'] == value['de']
+        for idx, value in powerflow.dlinhaDF.iterrows():
+            k = powerflow.dbarraDF.index[
+                powerflow.dbarraDF['numero'] == value['de']
             ][0]
-            m = powerflow.nbusdbarraDF.index[
-                powerflow.nbusdbarraDF['numero'] == value['para']
+            m = powerflow.dbarraDF.index[
+                powerflow.dbarraDF['numero'] == value['para']
             ][0]
             yline = 1 / ((value['resistencia'] / 100) + 1j * (value['reatancia'] / 100))
 
@@ -964,7 +964,7 @@ class FastContinuation:
 
             # Potência reativa k -> m
             powerflow.solution['reactive_flow_F2'][idx] = -(
-                (value['susceptancia'] / (2 * powerflow.nbusoptions['BASE']))
+                (value['susceptancia'] / (2 * powerflow.options['BASE']))
                 + yline.imag
             ) * (powerflow.solution['voltage'][k] ** 2) + powerflow.solution['voltage'][
                 k
@@ -991,7 +991,7 @@ class FastContinuation:
 
             # Potência reativa m -> k
             powerflow.solution['reactive_flow_2F'][idx] = -(
-                (value['susceptancia'] / (2 * powerflow.nbusoptions['BASE']))
+                (value['susceptancia'] / (2 * powerflow.options['BASE']))
                 + yline.imag
             ) * (powerflow.solution['voltage'][m] ** 2) + powerflow.solution['voltage'][
                 k
@@ -1006,11 +1006,11 @@ class FastContinuation:
                 * sin(powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
             )
 
-        powerflow.solution['active_flow_F2'] *= powerflow.nbusoptions['BASE']
-        powerflow.solution['active_flow_2F'] *= powerflow.nbusoptions['BASE']
+        powerflow.solution['active_flow_F2'] *= powerflow.options['BASE']
+        powerflow.solution['active_flow_2F'] *= powerflow.options['BASE']
 
-        powerflow.solution['reactive_flow_F2'] *= powerflow.nbusoptions['BASE']
-        powerflow.solution['reactive_flow_2F'] *= powerflow.nbusoptions['BASE']
+        powerflow.solution['reactive_flow_F2'] *= powerflow.options['BASE']
+        powerflow.solution['reactive_flow_2F'] *= powerflow.options['BASE']
 
     def storage(
         self,
@@ -1031,7 +1031,7 @@ class FastContinuation:
             **deepcopy(powerflow.cpfsolution),
         }
 
-        if 'SVCs' in powerflow.nbuscontrol:
+        if 'SVCs' in powerflow.control:
             powerflow.case[self.case][stage]['svc_reactive_generation'] = deepcopy(
                 powerflow.solution['svc_reactive_generation']
             )
@@ -1320,7 +1320,7 @@ class FastContinuation:
                     (
                         powerflow.cpfsolution['step']
                         < (
-                            powerflow.nbusoptions['cpfV2L']
+                            powerflow.options['cpfV2L']
                             * powerflow.cpfsolution['stepmax']
                         )
                     )
@@ -1328,7 +1328,7 @@ class FastContinuation:
                     and (not powerflow.cpfsolution['v2l'])
                 ):
                     powerflow.cpfsolution['varstep'] = 'lambda'
-                    powerflow.nbusoptions['LMBD'] = deepcopy(
+                    powerflow.options['LMBD'] = deepcopy(
                         powerflow.case[1]['c']['step']
                     )
                     powerflow.cpfsolution['v2l'] = True
@@ -1343,13 +1343,13 @@ class FastContinuation:
                 and (powerflow.cpfsolution['varstep'] == 'lambda')
                 and (
                     (
-                        powerflow.nbusoptions['LMBD']
+                        powerflow.options['LMBD']
                         * (
-                            (1 / powerflow.nbusoptions['FDIV'])
+                            (1 / powerflow.options['FDIV'])
                             ** powerflow.cpfsolution['div']
                         )
                     )
-                    <= powerflow.nbusoptions['ICMN']
+                    <= powerflow.options['ICMN']
                 )
             ):
                 powerflow.cpfsolution['pmc'] = True
@@ -1381,7 +1381,7 @@ class FastContinuation:
             if not all(
                 (
                     powerflow.solution['voltage'] - powerflow.case[0]['voltage']
-                    <= powerflow.nbusoptions['VVAR']
+                    <= powerflow.options['VVAR']
                 )
             ):
                 self.active_heuristic = True
@@ -1435,7 +1435,7 @@ class FastContinuation:
                 (
                     powerflow.solution['voltage']
                     - powerflow.case[self.case - 1]['c']['voltage']
-                    <= powerflow.nbusoptions['VVAR']
+                    <= powerflow.options['VVAR']
                 )
             ):
                 self.active_heuristic = True
@@ -1490,7 +1490,7 @@ class FastContinuation:
                 (
                     powerflow.solution['voltage']
                     - powerflow.case[self.case - 1]['c']['voltage']
-                    <= powerflow.nbusoptions['VVAR']
+                    <= powerflow.options['VVAR']
                 )
             ):
                 self.active_heuristic = True
@@ -1538,7 +1538,7 @@ class FastContinuation:
             if (
                 (
                     powerflow.case[self.case]['p']['iter']
-                    > powerflow.nbusoptions['ACIT']
+                    > powerflow.options['ACIT']
                 )
                 and (not self.active_heuristic)
                 and (powerflow.nbusname != 'ieee118')
@@ -1588,9 +1588,9 @@ class FastContinuation:
                 (not powerflow.cpfsolution['pmc'])
                 and (powerflow.cpfsolution['varstep'] == 'volt')
                 and (
-                    powerflow.nbusoptions['cpfVolt']
+                    powerflow.options['cpfVolt']
                     * (5e-1 ** powerflow.cpfsolution['div'])
-                    < powerflow.nbusoptions['ICMN']
+                    < powerflow.options['ICMN']
                 )
                 and (not self.active_heuristic)
             ):
@@ -1615,7 +1615,7 @@ class FastContinuation:
                 (
                     powerflow.solution['voltage'][powerflow.nbusslackidx]
                     < (
-                        powerflow.nbusdbarraDF.loc[powerflow.nbusslackidx, 'tensao']
+                        powerflow.dbarraDF.loc[powerflow.nbusslackidx, 'tensao']
                         * 1e-3
                     )
                     - 1e-8
@@ -1623,7 +1623,7 @@ class FastContinuation:
                 or (
                     powerflow.solution['voltage'][powerflow.nbusslackidx]
                     > (
-                        powerflow.nbusdbarraDF.loc[powerflow.nbusslackidx, 'tensao']
+                        powerflow.dbarraDF.loc[powerflow.nbusslackidx, 'tensao']
                         * 1e-3
                     )
                     + 1e-8
@@ -1632,7 +1632,7 @@ class FastContinuation:
 
                 # variação de tensão da barra slack
                 if (powerflow.nbusname == 'ieee118') and (
-                    sum(powerflow.nbusdbarraDF.demanda_ativa.to_numpy()) > 5400
+                    sum(powerflow.dbarraDF.demanda_ativa.to_numpy()) > 5400
                 ):
                     pass
 

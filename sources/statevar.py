@@ -33,7 +33,7 @@ def statevar(
     # )
 
     # # Condição
-    # if powerflow.nbuscontrol:
+    # if powerflow.control:
     #     # Resultado final de convergência das variáveis de estado adicionais
     #     stateY(
     #         powerflow,
@@ -56,7 +56,7 @@ def stateVT(
 
     # Referência
     self.thetaref = powerflow.solution['theta'][
-        powerflow.nbusdbarraDF.loc[powerflow.nbusdbarraDF['tipo'] == 2].index[0]
+        powerflow.dbarraDF.loc[powerflow.dbarraDF['tipo'] == 2].index[0]
     ]
 
     # Plots
@@ -92,7 +92,7 @@ def stateVT(
             360,
             endpoint=False,
         ),
-        powerflow.nbusoptions['vmax'] * ones(360),
+        powerflow.options['vmax'] * ones(360),
         linestyle='--',
         color=(1.0, 0.8, 0.7961),
         alpha=1.0,
@@ -105,7 +105,7 @@ def stateVT(
             360,
             endpoint=False,
         ),
-        powerflow.nbusoptions['vmin'] * ones(360),
+        powerflow.options['vmin'] * ones(360),
         linestyle='--',
         color=(1.0, 0.8, 0.7961),
         alpha=1.0,
@@ -115,7 +115,7 @@ def stateVT(
     for theta, rotation, label in zip(
         powerflow.solution['theta'],
         degrees(powerflow.solution['theta']),
-        powerflow.nbusdbarraDF['nome'].values,
+        powerflow.dbarraDF['nome'].values,
     ):
         ax.text(
             theta,
@@ -140,7 +140,7 @@ def stateVT(
     ax.set_yticklabels({'1 p.u.'})
     ax.legend(
         bars,
-        powerflow.nbusdbarraDF['nome'].values.tolist(),
+        powerflow.dbarraDF['nome'].values.tolist(),
         frameon=False,
         loc='upper center',
         bbox_to_anchor=(0.5, -0.025),
