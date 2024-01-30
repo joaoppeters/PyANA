@@ -226,7 +226,7 @@ def qlimncorr(
     ## Inicialização
     # Variável
     powerflow.solution['qlim_reactive_generation'] = deepcopy(
-        powerflow.case[case]['p']['qlim_reactive_generation']
+        powerflow.point[case]['p']['qlim_reactive_generation']
     )
 
 def qlimnheur(

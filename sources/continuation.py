@@ -107,6 +107,18 @@ def cpf(
         powerflow,
     )
 
+    # Smooth storage
+    if ('QLIMs' in powerflow.control):
+        for _, v in powerflow.qlimkeys.items():
+            v.popitem()
+        from smooth import qlimstorage
+        qlimstorage(powerflow,)
+    if ('SVCs' in powerflow.control):
+        for _, v in powerflow.svckeys.items():
+            v.popitem()
+        from smooth import svcstorage
+        svcstorage(powerflow,)
+
 def cpfloop(
     case,
     powerflow,

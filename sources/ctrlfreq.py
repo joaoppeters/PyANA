@@ -588,10 +588,10 @@ def freqcorr(
 
     ## Inicialização
     # Variável
-    powerflow.solution['freq'] = deepcopy(powerflow.case[case]['p']['freq'])
+    powerflow.solution['freq'] = deepcopy(powerflow.point[case]['p']['freq'])
     powerflow.solution['active_generation'] = deepcopy(
-        powerflow.case[case]['p']['active_generation']
+        powerflow.point[case]['p']['active_generation']
     )
     powerflow.solution['qlim_reactive_generation'] = deepcopy(
-        powerflow.case[case]['p']['qlim_reactive_generation']
+        powerflow.point[case]['p']['qlim_reactive_generation']
     )

@@ -468,7 +468,7 @@ def ruthe(
 
     ## Inicialização
     # Variáveis
-    rows = list(powerflow.case.keys())[-1]
+    rows = list(powerflow.point.keys())[-1]
     cols = sum(powerflow.nbusmask)
     colsP = sum(powerflow.nbusmaskP)
     colsQ = sum(powerflow.nbusmaskQ)

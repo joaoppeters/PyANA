@@ -35,7 +35,6 @@ def control(
                 powerflow.freqjcount = 0
             else:
                 print(f'{k}', end=' ')
-                powerflow.maskctrlcount += 1
         print('\033[0m')
 
     else:

@@ -933,7 +933,7 @@ def tobecontinued(
         #     "vv Sistema "
         #     + powerflow.name
         #     + " vv Matriz Jacobiana vv Formulação Completa vv Caso "
-        #     + str(powerflow.casekeymin)
+        #     + str(powerflow.pointkeymin)
         #     + " vv"
         # )
 
@@ -946,7 +946,7 @@ def tobecontinued(
         # with open(file, "a") as of:
         #     savetxt(
         #         of,
-        #         powerflow.point[powerflow.casekeymin]['c']['jacobian'],
+        #         powerflow.point[powerflow.pointkeymin]['c']['jacobian'],
         #         delimiter=",",
         #         header=header,
         #     )
@@ -960,7 +960,7 @@ def tobecontinued(
         #     "vv Sistema "
         #     + powerflow.name
         #     + " vv Matriz Jacobiana Reduzida vv Formulação Completa vv Caso "
-        #     + str(powerflow.casekeymin)
+        #     + str(powerflow.pointkeymin)
         #     + " vv"
         # )
 
@@ -973,7 +973,7 @@ def tobecontinued(
         # with open(file, "a") as of:
         #     savetxt(
         #         of,
-        #         powerflow.point[powerflow.casekeymin]['c']['jacobian-QV'],
+        #         powerflow.point[powerflow.pointkeymin]['c']['jacobian-QV'],
         #         delimiter=",",
         #         header=header,
         #     )
