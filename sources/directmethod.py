@@ -15,11 +15,11 @@ from numpy import (
     sum,
     zeros,
 )
-from numpy.linalg import norm, solve
+from numpy.linalg import inv, norm, solve
 
 from calc import pcalc, qcalc
 from ctrl import controlupdt, controlres, controlsol, controlsch
-from hessian import hessian
+from hessian import *
 from jacobian import jacobi
 
 
@@ -76,18 +76,22 @@ def cani(
     residue(
         powerflow,
     )
-    
-    powerflow.canivalues = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], ones(2*powerflow.nbus)), axis=0)
 
-    while True:
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['stepsch']]), powerflow.solution['eigen']), axis=0)
+    keys = hessian_init2(powerflow,)
+    var = dict(zip(keys, powerflow.canistate))
+
+    while (norm(powerflow.canistate) > powerflow.options["CTOL"]):
         # Matriz Jacobiana
         jacobi(
             powerflow,
         )
 
         # Matriz Hessiana
-        hessian(
+        hessian2(
             powerflow,
+            var,
+            keys,
         )
 
         # expansao total
@@ -95,15 +99,26 @@ def cani(
             powerflow,
         )
 
-        powerflow.canistate = concatenate((powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.solution['eigen'].T*powerflow.solution['eigen']) - 1])), axis=0).astype(float)
+        powerflow.canifunctions = concatenate((powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.solution['eigen'].T*powerflow.solution['eigen']) - 1])), axis=0).astype(float)
 
         # Variáveis de estado
         powerflow.statevar = solve(
-            powerflow.jaccani, powerflow.canistate
+            powerflow.jaccani, powerflow.canifunctions
         )
 
         # Atualização das Variáveis de estado
-        update_statevar(
+        var = update_statevar(
+            powerflow,
+            keys,
+        )
+
+        # Incremento do Nível de Carregamento e Geração
+        increment(
+            powerflow,
+        )
+
+        # Variáveis Especificadas
+        scheduled(
             powerflow,
         )
 
@@ -115,7 +130,9 @@ def cani(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        if (norm(powerflow.canistate) < powerflow.options["CTOL"]) or (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+        # Condição de Divergência por iterações
+        if (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+            powerflow.solution["convergence"] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
     print()
@@ -135,31 +152,16 @@ def increment(
     preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
 
     # Incremento de carga
-    for idxinc, valueinc in powerflow.dincDF.iterrows():
-        if valueinc["tipo_incremento_1"] == "AREA":
-            for idxbar, valuebar in powerflow.dbarraDF.iterrows():
-                if valuebar["area"] == valueinc["identificacao_incremento_1"]:
-                    # Incremento de Carregamento
-                    powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
-                        "demanda_ativa"
-                    ][idxbar] * (1 + powerflow.solution["stepsch"])
-                    powerflow.dbarraDF.at[
-                        idxbar, "demanda_reativa"
-                    ] = powerflow.solution["demanda_reativa"][idxbar] * (
-                        1 + powerflow.solution["stepsch"]
-                    )
-
-        elif valueinc["tipo_incremento_1"] == "BARR":
-            # Reconfiguração da variável de índice
-            idxinc = valueinc["identificacao_incremento_1"] - 1
-
-            # Incremento de Carregamento
-            powerflow.dbarraDF.at[idxinc, "demanda_ativa"] = powerflow.solution[
-                "demanda_ativa"
-            ][idxinc] * (1 + powerflow.solution["stepsch"])
-            powerflow.dbarraDF.at[idxinc, "demanda_reativa"] = powerflow.solution[
-                "demanda_reativa"
-            ][idxinc] * (1 + powerflow.solution["stepsch"])
+    for idxbar,_ in powerflow.dbarraDF.iterrows():
+        # Incremento de Carregamento
+        powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
+            "demanda_ativa"
+        ][idxbar] * (1 + powerflow.solution["stepsch"])
+        powerflow.dbarraDF.at[
+            idxbar, "demanda_reativa"
+        ] = powerflow.solution["demanda_reativa"][idxbar] * (
+            1 + powerflow.solution["stepsch"]
+        )
 
     deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
 
@@ -174,13 +176,6 @@ def increment(
         powerflow.solution["potencia_ativa"] = deepcopy(
             powerflow.dbarraDF["potencia_ativa"]
         )
-
-    # Condição de atingimento do máximo incremento do nível de carregamento
-    if (
-        powerflow.solution["stepsch"]
-        == powerflow.dincDF.loc[0, "maximo_incremento_potencia_ativa"]
-    ):
-        powerflow.solution["pmc"] = True
 
 
 def scheduled(
@@ -297,6 +292,7 @@ def concatresidue(
 
 def update_statevar(
     powerflow,
+    keys,
 ):
     """atualização das variáveis de estado
 
@@ -312,12 +308,16 @@ def update_statevar(
     ]
     powerflow.solution["stepsch"] += powerflow.statevar[(2 * powerflow.nbus)]
     powerflow.solution["eigen"] += powerflow.statevar[(2 * powerflow.nbus)+1 : (6 * powerflow.nbus)+1]
-
+    
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['stepsch']]), powerflow.solution['eigen']), axis=0)
+    
     # Atualização das variáveis de estado adicionais para controles ativos
     if powerflow.controlcount > 0:
         controlupdt(
             powerflow,
         )
+
+    return dict(zip(keys, powerflow.canistate))
 
 
 def expansion(
@@ -330,6 +330,7 @@ def expansion(
     """
 
     ## Inicialização
+    powerflow.jacobA = deepcopy(powerflow.jacob.A)
     # Arrays adicionais
     colarray = zeros([2*powerflow.nbus, 1])
     
@@ -338,22 +339,38 @@ def expansion(
         if value["tipo"] != 2:
             colarray[idx, 0] = (
                 powerflow.solution["demanda_ativa"][idx]
-                # - powerflow.solution["potencia_ativa"][idx]
+                - powerflow.solution["potencia_ativa"][idx]
             )
             if value["tipo"] == 0:
                 colarray[(idx + powerflow.nbus), 0] = powerflow.solution[
                     "demanda_reativa"
                 ][idx]
 
+        if (powerflow.maskP[idx] == False):
+            powerflow.jacobA[idx, :] = 0
+            powerflow.jacobA[:, idx] = 0
+            powerflow.jacobA[idx, idx] = 1
+            powerflow.hessian[idx, :] = 0
+            powerflow.hessian[:, idx] = 0
+            powerflow.hessian[idx, idx] = 1
+        
+        if (powerflow.maskQ[idx] == False) and (('QLIM' not in powerflow.control) or ('QLIMs' not in powerflow.control)):
+            powerflow.jacobA[idx+powerflow.nbus, :] = 0
+            powerflow.jacobA[:, idx+powerflow.nbus] = 0
+            powerflow.jacobA[idx+powerflow.nbus, idx+powerflow.nbus] = 1
+            powerflow.hessian[idx+powerflow.nbus, :] = 0
+            powerflow.hessian[:, idx+powerflow.nbus] = 0
+            powerflow.hessian[idx+powerflow.nbus, idx+powerflow.nbus] = 1
+
     colarray /= powerflow.options["BASE"]
     
     powerflow.jaccani = concatenate(
-        (powerflow.jacob.A, colarray, zeros((2*powerflow.nbus, 2*powerflow.nbus))), axis=1,
+        (powerflow.jacobA, colarray, zeros((2*powerflow.nbus, 2*powerflow.nbus))), axis=1,
     )
 
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
-            (powerflow.hessian, zeros((2*powerflow.nbus, 1)), powerflow.jacob.A), axis=1,
+            (powerflow.hessian, zeros((2*powerflow.nbus, 1)), powerflow.jacobA), axis=1,
         )), axis=0,
     )
 

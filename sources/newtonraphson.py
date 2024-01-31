@@ -109,10 +109,9 @@ def newton(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        # Condição
+        # Condição Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            # Divergência
-            powerflow.solution["convergence"] = "SISTEMA DIVERGENTE"
+            powerflow.solution["convergence"] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
     # Iteração Adicional
