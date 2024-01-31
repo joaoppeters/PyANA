@@ -191,8 +191,8 @@ def jacobi(
             powerflow.maskP[idx] == False
         ):  # A presença do módulo se deve ao tratamento de limites (QLIM), que pode converter barra tipo 2 em -2
             hk = 1e20
-            # if 'FREQ' in comandos.exec and k not in freq.nrefrp:
-            #     hk = - (powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[idx] - qcalc(powerflow=powerflow, idx=idx)
+            if 'FREQ' in powerflow.control and value['tipo'] != 0:
+                hk = - (powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[idx] - qcalc(powerflow=powerflow, idx=idx)
 
         else:
             hk = -(powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[
@@ -222,12 +222,6 @@ def jacobi(
                 qcalc(powerflow=powerflow, idx=idx)
                 - (powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[idx]
             ) / powerflow.solution["voltage"][idx]
-
-        # # Verificar se o controle remoto de tensão está ativo
-        # if 'CREM' in comandos.exec:
-        #     # if barra.ntype[k] == 1 and gerador.busgr[k] in gerador.icb:
-        #     if barra.ntype[k] > 0 and gerador.busgr[k] in gerador.icb:
-        #         lk = (qcalc[k] - (powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[k]) / powerflow.solution['voltage'][idx]
 
         # Preencher vetor  de construção com elementos da posição [k, k]
         if idx == 0:

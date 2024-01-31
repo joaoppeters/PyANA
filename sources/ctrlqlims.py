@@ -326,3 +326,90 @@ def qlimssolcpf(
         powerflow.solution["qlim_reactive_generation"] = deepcopy(
             powerflow.point[precase]["p"]["qlim_reactive_generation"]
         )
+
+
+def qlimssubhess(
+    powerflow,
+):
+    """submatrizes da matriz hessiana
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    #
+    # hessiana:
+    #
+    #   H     N   px
+    #   M     L   qx
+    #  yt    yv   yx
+    #
+
+    # Dimensão da matriz hessiana
+    powerflow.dimpreqlim = deepcopy(powerflow.hessian.shape[0])
+
+    # Submatrizes
+    powerflow.px = zeros([powerflow.nbus, powerflow.nger])
+    powerflow.qx = zeros([powerflow.nbus, powerflow.nger])
+    powerflow.yx = zeros([powerflow.nger, powerflow.nger])
+    powerflow.yt = zeros([powerflow.nger, powerflow.nbus])
+    powerflow.yv = zeros([powerflow.nger, powerflow.nbus])
+
+    # Contador
+    nger = 0
+
+    # Submatrizes QX YV YX
+    for idx, value in powerflow.dbarraDF.iterrows():
+        if value["tipo"] != 0:
+            # dQg/dx
+            powerflow.qx[idx, nger] = -1
+
+            # Barras PV
+            powerflow.yv[nger, idx] = powerflow.diffqlim[idx][0]
+
+            # Barras PQV
+            if (
+                powerflow.solution["qlim_reactive_generation"][idx]
+                > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+            ) or (
+                powerflow.solution["qlim_reactive_generation"][idx]
+                < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+            ):
+                powerflow.yx[nger, nger] = powerflow.diffqlim[idx][1]
+
+            # Incrementa contador
+            nger += 1
+
+    ## Montagem Jacobiana
+    # Condição
+    if powerflow.controldim != 0:
+        powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
+        powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
+
+        ytv = csc_matrix(
+            concatenate(
+                (powerflow.yt, powerflow.yv, powerflow.extrarow),
+                axis=1,
+            )
+        )
+        pqyx = csc_matrix(
+            concatenate(
+                (
+                    powerflow.px,
+                    powerflow.qx,
+                    powerflow.extracol,
+                    powerflow.yx,
+                ),
+                axis=0,
+            )
+        )
+
+    elif powerflow.controldim == 0:
+        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
+        pqyx = csc_matrix(
+            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
+        )
+
+    powerflow.hessian = vstack([powerflow.hessian, ytv], format="csc")
+    powerflow.hessian = hstack([powerflow.hessian, pqyx], format="csc")

@@ -460,3 +460,120 @@ def svcsolcpf(
         powerflow.solution["svc_reactive_generation"] = deepcopy(
             powerflow.point[precase]["p"]["svc_reactive_generation"]
         )
+
+
+def svcsubhess(
+    powerflow,
+):
+    """submatrizes da matriz jacobiana
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    #
+    # jacobiana:
+    #
+    #   H     N   px
+    #   M     L   qx
+    #  yt    yv   yx
+    #
+
+    # Dimensão da matriz Jacobiana
+    powerflow.nbusdimpresvc = deepcopy(powerflow.hessian.shape[0])
+
+    # Submatrizes
+    powerflow.nbuspx = zeros([powerflow.nbus, powerflow.nbusncer])
+    powerflow.nbusqx = zeros([powerflow.nbus, powerflow.nbusncer])
+    powerflow.nbusyx = zeros([powerflow.nbusncer, powerflow.nbusncer])
+    powerflow.nbusyt = zeros([powerflow.nbusncer, powerflow.nbus])
+    powerflow.nbusyv = zeros([powerflow.nbusncer, powerflow.nbus])
+
+    # Contador
+    ncer = 0
+
+    # Submatrizes PXP QXP YQV YXT
+    for idx, value in powerflow.dcerDF.iterrows():
+        idxcer = powerflow.dbarraDF.index[
+            powerflow.dbarraDF["numero"] == value["barra"]
+        ].tolist()[0]
+        idxctrl = powerflow.dbarraDF.index[
+            powerflow.dbarraDF["numero"] == value["barra_controlada"]
+        ].tolist()[0]
+
+        if value["barra"] != value["barra_controlada"]:
+            # Derivada Vk
+            powerflow.nbusyv[ncer, idxcer] = powerflow.nbusdiffsvc[idxcer][0]
+
+            # Derivada Vm
+            powerflow.nbusyv[ncer, idxctrl] = powerflow.nbusdiffsvc[idxcer][1]
+
+        elif value["barra"] == value["barra_controlada"]:
+            # Derivada Vk + Vm
+            powerflow.nbusyv[ncer, idxcer] = (
+                powerflow.nbusdiffsvc[idxcer][0] + powerflow.nbusdiffsvc[idxcer][1]
+            )
+
+        # Derivada Equação de Controle Adicional por Variável de Estado Adicional
+        powerflow.nbusyx[ncer, ncer] = powerflow.nbusdiffsvc[idxcer][2]
+
+        # Derivada Qk
+        if value["controle"] == "A":
+            powerflow.jacob[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
+                2
+                * powerflow.solution["voltage"][idxcer]
+                * float(powerflow.nbusalphabeq.subs(alpha, powerflow.solution["alpha"]))
+            )
+            powerflow.nbusqx[idxcer, ncer] = -(
+                powerflow.solution["voltage"][idxcer] ** 2
+            ) * float(
+                powerflow.nbusalphabeq.diff(alpha).subs(
+                    alpha, powerflow.solution["alpha"]
+                )
+            )
+
+        elif value["controle"] == "I":
+            powerflow.jacob[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
+                powerflow.solution["svc_current_injection"][ncer]
+            ) / powerflow.options["BASE"]
+            powerflow.nbusqx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
+
+        elif value["controle"] == "P":
+            powerflow.nbusqx[idxcer, ncer] = -1
+
+        # Incrementa contador
+        ncer += 1
+
+    ## Montagem Jacobiana
+    # Condição
+    if powerflow.nbuscontroldim != 0:
+        powerflow.nbusextrarow = zeros([powerflow.nbusnger, powerflow.nbuscontroldim])
+        powerflow.nbusextracol = zeros([powerflow.nbuscontroldim, powerflow.nbusnger])
+
+        ytv = csc_matrix(
+            concatenate(
+                (powerflow.nbusyt, powerflow.nbusyv, powerflow.nbusextrarow),
+                axis=1,
+            )
+        )
+        pqyx = csc_matrix(
+            concatenate(
+                (
+                    powerflow.nbuspx,
+                    powerflow.nbusqx,
+                    powerflow.nbusextracol,
+                    powerflow.nbusyx,
+                ),
+                axis=0,
+            )
+        )
+
+    elif powerflow.nbuscontroldim == 0:
+        ytv = csc_matrix(concatenate((powerflow.nbusyt, powerflow.nbusyv), axis=1))
+        pqyx = csc_matrix(
+            concatenate((powerflow.nbuspx, powerflow.nbusqx, powerflow.nbusyx), axis=0)
+        )
+
+    powerflow.hessian = vstack([powerflow.hessian, ytv], format="csc")
+    powerflow.hessian = hstack([powerflow.hessian, pqyx], format="csc")

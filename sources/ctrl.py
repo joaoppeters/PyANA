@@ -745,3 +745,63 @@ def controldelta(
             pass
 
     return any(boollist)
+
+
+def controlhess(
+    powerflow,
+):
+    """submatrizes referentes aos controles ativos
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Variável
+    powerflow.truedim = deepcopy(powerflow.jacob.shape[0])
+
+    # Loop
+    for value in powerflow.control:
+        # Dimensão
+        powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
+
+        # controle remoto de tensão
+        if value == "CREM":
+            pass
+        # controle secundário de tensão
+        elif value == "CST":
+            pass
+        # controle de tap variável de transformador
+        elif value == "CTAP":
+            pass
+        # controle de ângulo de transformador defasador
+        elif value == "CTAPd":
+            pass
+        # controle de regulação primária de frequência
+        elif value == "FREQ":
+            freqsubhess(
+                powerflow,
+            )
+        # controle de limite de geração de potência reativa
+        elif value == "QLIM":
+            qlimsubhess(
+                powerflow,
+            )
+        # controle suave simbolico de limite de geração de potência reativa
+        elif value == "QLIMs":
+            qlimssubhess(
+                powerflow,
+            )
+        # controle suave numerico de limite de geração de potência reativa
+        elif value == "QLIMn":
+            qlimnsubhess(
+                powerflow,
+            )
+        # controle de compensadores estáticos de potência reativa
+        elif value == "SVCs":
+            svcsubhess(
+                powerflow,
+            )
+        # controle de magnitude de tensão de barramentos
+        elif value == "VCTRL":
+            pass

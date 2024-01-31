@@ -10,10 +10,13 @@ from copy import deepcopy
 from numpy import (
     array,
     concatenate,
+    ones,
     radians,
     sum,
     zeros,
 )
+from numpy.linalg import norm, solve
+
 from calc import pcalc, qcalc
 from ctrl import controlupdt, controlres, controlsol, controlsch
 from hessian import hessian
@@ -51,6 +54,7 @@ def cani(
         "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
         "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
         "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
+        "eigen": ones(2*powerflow.nbus),
     }
 
     # Controles
@@ -72,16 +76,49 @@ def cani(
     residue(
         powerflow,
     )
+    
+    powerflow.canivalues = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], ones(2*powerflow.nbus)), axis=0)
 
-    # Matriz Jacobiana
-    jacobi(
-        powerflow,
-    )
+    while True:
+        # Matriz Jacobiana
+        jacobi(
+            powerflow,
+        )
 
-    # Matriz Hessiana
-    hessian(
-        powerflow,
-    )
+        # Matriz Hessiana
+        hessian(
+            powerflow,
+        )
+
+        # expansao total
+        expansion(
+            powerflow,
+        )
+
+        powerflow.canistate = concatenate((powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.solution['eigen'].T*powerflow.solution['eigen']) - 1])), axis=0).astype(float)
+
+        # Variáveis de estado
+        powerflow.statevar = solve(
+            powerflow.jaccani, powerflow.canistate
+        )
+
+        # Atualização das Variáveis de estado
+        update_statevar(
+            powerflow,
+        )
+
+        # Atualização dos resíduos
+        residue(
+            powerflow,
+        )
+
+        # Incremento de iteração
+        powerflow.solution["iter"] += 1
+
+        if (norm(powerflow.canistate) < powerflow.options["CTOL"]) or (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+            break
+
+    print()
 
 
 def increment(
@@ -273,9 +310,55 @@ def update_statevar(
     powerflow.solution["voltage"] += powerflow.statevar[
         (powerflow.nbus) : (2 * powerflow.nbus)
     ]
+    powerflow.solution["stepsch"] += powerflow.statevar[(2 * powerflow.nbus)]
+    powerflow.solution["eigen"] += powerflow.statevar[(2 * powerflow.nbus)+1 : (6 * powerflow.nbus)+1]
 
     # Atualização das variáveis de estado adicionais para controles ativos
     if powerflow.controlcount > 0:
         controlupdt(
             powerflow,
         )
+
+
+def expansion(
+    powerflow,
+):
+    """expansão da matriz jacobiana para o método continuado
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Arrays adicionais
+    colarray = zeros([2*powerflow.nbus, 1])
+    
+    # Demanda
+    for idx, value in powerflow.dbarraDF.iterrows():
+        if value["tipo"] != 2:
+            colarray[idx, 0] = (
+                powerflow.solution["demanda_ativa"][idx]
+                # - powerflow.solution["potencia_ativa"][idx]
+            )
+            if value["tipo"] == 0:
+                colarray[(idx + powerflow.nbus), 0] = powerflow.solution[
+                    "demanda_reativa"
+                ][idx]
+
+    colarray /= powerflow.options["BASE"]
+    
+    powerflow.jaccani = concatenate(
+        (powerflow.jacob.A, colarray, zeros((2*powerflow.nbus, 2*powerflow.nbus))), axis=1,
+    )
+
+    powerflow.jaccani = concatenate(
+        (powerflow.jaccani, concatenate(
+            (powerflow.hessian, zeros((2*powerflow.nbus, 1)), powerflow.jacob.A), axis=1,
+        )), axis=0,
+    )
+
+    powerflow.jaccani = concatenate(
+        (powerflow.jaccani, concatenate(
+            (zeros((1, 2*powerflow.nbus)), zeros((1, 1)), 2*ones((1, 2*powerflow.nbus))), axis=1,
+        )), axis=0,
+    )
