@@ -9,43 +9,43 @@
 from datetime import datetime as dt
 from numpy import mean
 
+
 def monitor(
     powerflow,
 ):
-    '''inicialização
+    """inicialização
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
         setup: self do arquivo setup.py
-    '''
+    """
 
     ## Inicialização
     if powerflow.monitor:
-        print('\033[96mOpções de monitoramento escolhidas: ', end='')
+        print("\033[96mOpções de monitoramento escolhidas: ", end="")
         for k in powerflow.monitor:
-            print(f'{k}', end=' ')
-        print('\033[0m')
+            print(f"{k}", end=" ")
+        print("\033[0m")
 
     else:
         powerflow.monitor = dict()
-        print('\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m')
-        
+        print("\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m")
+
+
 def monitorfile(
     powerflow,
 ):
-    '''
-    
+    """
+
     Parâmetro
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
-    filedirname = (
-        powerflow.dirRreports + powerflow.name + '-monitor.txt'
-    )
+    filedirname = powerflow.dirRreports + powerflow.name + "-monitor.txt"
 
     # Manipulação
-    file = open(filedirname, 'w')
+    file = open(filedirname, "w")
 
     # Cabeçalho
     rheader(
@@ -57,308 +57,305 @@ def monitorfile(
     if powerflow.monitor:
         for r in powerflow.monitor:
             # monitoramento de fluxo de potência ativa em linhas de transmissão
-            if r == 'PFLOW':
+            if r == "PFLOW":
                 monitorpflow(
                     file,
                     powerflow,
                 )
             # monitoramento de potência ativa gerada
-            elif r == 'PGMON':
+            elif r == "PGMON":
                 monitorpgmon(
                     file,
                     powerflow,
                 )
             # monitoramento de potência reativa gerada
-            elif (r == 'QGMON') and (powerflow.method != 'LINEAR'):
+            elif (r == "QGMON") and (powerflow.method != "LINEAR"):
                 monitorqgmon(
                     file,
                     powerflow,
                 )
             # monitoramento de magnitude de tensão de barramentos
-            elif r == 'VMON':
+            elif r == "VMON":
                 monitorvmon(
                     file,
                     powerflow,
                 )
 
-    file.write(
-        'fim do relatório de monitoramento do sistema ' + powerflow.name
-    )
+    file.write("fim do relatório de monitoramento do sistema " + powerflow.name)
     file.close()
+
 
 def rheader(
     file,
     powerflow,
 ):
-    '''cabeçalho do relatório
+    """cabeçalho do relatório
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     file.write(
-        '{} {}, {}'.format(
-            dt.now().strftime('%B'),
-            dt.now().strftime('%d'),
-            dt.now().strftime('%Y'),
+        "{} {}, {}".format(
+            dt.now().strftime("%B"),
+            dt.now().strftime("%d"),
+            dt.now().strftime("%Y"),
         )
     )
-    file.write('\n\n\n')
-    file.write('relatório de monitoramento do sistema ' + powerflow.name)
-    file.write('\n')
-    file.write('solução do fluxo de potência via método ')
+    file.write("\n\n\n")
+    file.write("relatório de monitoramento do sistema " + powerflow.name)
+    file.write("\n")
+    file.write("solução do fluxo de potência via método ")
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == 'NEWTON':
-        file.write('newton-raphson')
+    if powerflow.method == "NEWTON":
+        file.write("newton-raphson")
     # Chamada específica método de Gauss-Seidel
-    elif powerflow.method == 'GAUSS':
-        file.write('gauss-seidel')
+    elif powerflow.method == "GAUSS":
+        file.write("gauss-seidel")
     # Chamada específica método de Newton-Raphson Linearizado
-    elif powerflow.method == 'LINEAR':
-        file.write('linearizado')
+    elif powerflow.method == "LINEAR":
+        file.write("linearizado")
     # Chamada específica método Desacoplado
-    elif powerflow.method == 'DECOUP':
-        file.write('desacoplado')
+    elif powerflow.method == "DECOUP":
+        file.write("desacoplado")
     # Chamada específica método Desacoplado Rápido
-    elif powerflow.method == 'fDECOUP':
-        file.write('desacoplado rápido')
+    elif powerflow.method == "fDECOUP":
+        file.write("desacoplado rápido")
     # Chamada específica método Continuado
-    elif powerflow.method == 'CPF':
-        file.write('do fluxo de potência continuado')
-    file.write('\n\n')
-    file.write('opções de monitoramento ativadas: ')
+    elif powerflow.method == "CPF":
+        file.write("do fluxo de potência continuado")
+    file.write("\n\n")
+    file.write("opções de monitoramento ativadas: ")
     for k in powerflow.monitor:
-        file.write(f'{k} ')
-    file.write('\n\n\n')
+        file.write(f"{k} ")
+    file.write("\n\n\n")
+
 
 def monitorpflow(
     file,
     powerflow,
 ):
-    '''monitoramento de fluxo de potência ativa em linhas de transmissão
+    """monitoramento de fluxo de potência ativa em linhas de transmissão
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     file.write(
-        'vv monitoramento de fluxo de potência ativa em linhas de transmissão vv'
+        "vv monitoramento de fluxo de potência ativa em linhas de transmissão vv"
     )
-    file.write('\n\n')
+    file.write("\n\n")
 
     # Rankeamento das linhas com maiores fluxos de potência ativa
     rank_active_flow = [
-        powerflow.solution['active_flow_F2'][i]
-        if powerflow.solution['active_flow_F2'][i]
-        > powerflow.solution['active_flow_2F'][i]
-        else powerflow.solution['active_flow_2F'][i]
+        powerflow.solution["active_flow_F2"][i]
+        if powerflow.solution["active_flow_F2"][i]
+        > powerflow.solution["active_flow_2F"][i]
+        else powerflow.solution["active_flow_2F"][i]
         for i in range(0, powerflow.nlin)
     ]
     mean_active_flow = mean(rank_active_flow)
-    file.write('\n')
-    file.write('linhas com maiores fluxos de potência ativa:')
-    file.write('\n')
+    file.write("\n")
+    file.write("linhas com maiores fluxos de potência ativa:")
+    file.write("\n")
     for lin in range(0, powerflow.nlin):
         if rank_active_flow[lin] >= mean_active_flow:
             file.write(
-                'A linha '
-                + str(powerflow.dlinhaDF['de'][lin])
-                + ' para '
-                + str(powerflow.dlinhaDF['para'][lin])
-                + ' possui fluxo de potência ativa acima da média do SEP: '
-                + f'{rank_active_flow[lin]:.3f}'
-                + ' MW'
+                "A linha "
+                + str(powerflow.dlinhaDF["de"][lin])
+                + " para "
+                + str(powerflow.dlinhaDF["para"][lin])
+                + " possui fluxo de potência ativa acima da média do SEP: "
+                + f"{rank_active_flow[lin]:.3f}"
+                + " MW"
             )
-            file.write('\n')
+            file.write("\n")
 
     # Rankeamento das linhas com maiores perdas ativas
-    mean_active_flow_loss = mean(powerflow.solution['active_flow_loss'])
-    file.write('\n')
-    file.write('linhas com maiores perdas de potência ativa')
-    file.write('\n')
+    mean_active_flow_loss = mean(powerflow.solution["active_flow_loss"])
+    file.write("\n")
+    file.write("linhas com maiores perdas de potência ativa")
+    file.write("\n")
     for lin in range(0, powerflow.nlin):
-        if (
-            powerflow.solution['active_flow_loss'][lin]
-            >= mean_active_flow_loss
-        ):
+        if powerflow.solution["active_flow_loss"][lin] >= mean_active_flow_loss:
             file.write(
-                'A linha '
-                + str(powerflow.dlinhaDF['de'][lin])
-                + ' para '
-                + str(powerflow.dlinhaDF['para'][lin])
-                + ' possui perdas de fluxo de potência ativa acima da média do SEP: '
+                "A linha "
+                + str(powerflow.dlinhaDF["de"][lin])
+                + " para "
+                + str(powerflow.dlinhaDF["para"][lin])
+                + " possui perdas de fluxo de potência ativa acima da média do SEP: "
                 + f'{powerflow.solution["active_flow_loss"][lin]:.3f}'
-                + ' MW'
+                + " MW"
             )
-            file.write('\n')
+            file.write("\n")
 
     # Rankeamento das linhas com maiores fluxos de potência reativa
     rank_reactive_flow = [
-        powerflow.solution['reactive_flow_F2'][i]
-        if powerflow.solution['reactive_flow_F2'][i]
-        > powerflow.solution['reactive_flow_2F'][i]
-        else powerflow.solution['reactive_flow_2F'][i]
+        powerflow.solution["reactive_flow_F2"][i]
+        if powerflow.solution["reactive_flow_F2"][i]
+        > powerflow.solution["reactive_flow_2F"][i]
+        else powerflow.solution["reactive_flow_2F"][i]
         for i in range(0, powerflow.nlin)
     ]
     mean_reactive_flow = mean(rank_reactive_flow)
-    file.write('\n')
-    file.write('linhas com maiores fluxos de potência reativa')
-    file.write('\n')
+    file.write("\n")
+    file.write("linhas com maiores fluxos de potência reativa")
+    file.write("\n")
     for lin in range(0, powerflow.nlin):
         if rank_reactive_flow[lin] >= mean_reactive_flow:
             file.write(
-                'A linha '
-                + str(powerflow.dlinhaDF['de'][lin])
-                + ' para '
-                + str(powerflow.dlinhaDF['para'][lin])
-                + ' possui fluxo de potência reativa acima da média do SEP: '
-                + f'{rank_reactive_flow[lin]:.3f}'
-                + ' MVAr'
+                "A linha "
+                + str(powerflow.dlinhaDF["de"][lin])
+                + " para "
+                + str(powerflow.dlinhaDF["para"][lin])
+                + " possui fluxo de potência reativa acima da média do SEP: "
+                + f"{rank_reactive_flow[lin]:.3f}"
+                + " MVAr"
             )
-            file.write('\n')
+            file.write("\n")
 
     # Rankeamento das linhas com maiores perdas reativas
-    mean_reactive_flow_loss = mean(powerflow.solution['reactive_flow_loss'])
-    file.write('\n')
-    file.write('linhas com maiores perdas de potência reativa')
-    file.write('\n')
+    mean_reactive_flow_loss = mean(powerflow.solution["reactive_flow_loss"])
+    file.write("\n")
+    file.write("linhas com maiores perdas de potência reativa")
+    file.write("\n")
     for lin in range(0, powerflow.nlin):
-        if (
-            powerflow.solution['reactive_flow_loss'][lin]
-            >= mean_reactive_flow_loss
-        ):
+        if powerflow.solution["reactive_flow_loss"][lin] >= mean_reactive_flow_loss:
             file.write(
-                'A linha '
-                + str(powerflow.dlinhaDF['de'][lin])
-                + ' para '
-                + str(powerflow.dlinhaDF['para'][lin])
-                + ' possui perdas de fluxo de potência reativa acima da média do SEP: '
+                "A linha "
+                + str(powerflow.dlinhaDF["de"][lin])
+                + " para "
+                + str(powerflow.dlinhaDF["para"][lin])
+                + " possui perdas de fluxo de potência reativa acima da média do SEP: "
                 + f'{powerflow.solution["reactive_flow_loss"][lin]:.3f}'
-                + ' MVAr'
+                + " MVAr"
             )
-            file.write('\n')
+            file.write("\n")
 
-    file.write('\n\n')
+    file.write("\n\n")
+
 
 def monitorpgmon(
     file,
     powerflow,
 ):
-    '''monitoramento de potência ativa gerada
+    """monitoramento de potência ativa gerada
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
-    file.write('vv monitoramento de potência ativa gerada vv')
-    file.write('\n\n')
+    file.write("vv monitoramento de potência ativa gerada vv")
+    file.write("\n\n")
 
     # Loop
     for item, value in powerflow.dbarraDF.iterrows():
-        if value['tipo'] != 0:
+        if value["tipo"] != 0:
             file.write(
-                'O gerador da '
-                + str(value['nome'])
-                + ' está gerando '
+                "O gerador da "
+                + str(value["nome"])
+                + " está gerando "
                 + f'{(powerflow.solution["active"][item] * 1E2) / sum(powerflow.solution["active"]):.2f}'
-                + '% de toda a potência ativa fornecida ao SEP.'
+                + "% de toda a potência ativa fornecida ao SEP."
             )
-            file.write('\n')
+            file.write("\n")
 
-    file.write('\n\n')
+    file.write("\n\n")
+
 
 def monitorqgmon(
     file,
     powerflow,
 ):
-    '''monitoramento de potência reativa gerada
+    """monitoramento de potência reativa gerada
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
-    file.write('vv monitoramento de potência reativa gerada vv')
-    file.write('\n\n')
+    file.write("vv monitoramento de potência reativa gerada vv")
+    file.write("\n\n")
     qgmon = 0
     for i in range(0, powerflow.nbus):
-        if powerflow.dbarraDF['tipo'][i] != 0:
+        if powerflow.dbarraDF["tipo"][i] != 0:
             if (
-                powerflow.solution['reactive'][i]
-                >= powerflow.dbarraDF['potencia_reativa_maxima'][i]
+                powerflow.solution["reactive"][i]
+                >= powerflow.dbarraDF["potencia_reativa_maxima"][i]
             ):
                 file.write(
-                    'A geração de potência reativa da '
-                    + powerflow.dbarraDF['nome'][i]
-                    + ' violou o limite máximo estabelecido para análise ( {:.2f} >= {} ).'.format(
-                        powerflow.solution['reactive'][i],
-                        powerflow.dbarraDF['potencia_reativa_maxima'][i],
+                    "A geração de potência reativa da "
+                    + powerflow.dbarraDF["nome"][i]
+                    + " violou o limite máximo estabelecido para análise ( {:.2f} >= {} ).".format(
+                        powerflow.solution["reactive"][i],
+                        powerflow.dbarraDF["potencia_reativa_maxima"][i],
                     )
                 )
-                file.write('\n')
+                file.write("\n")
             elif (
-                powerflow.solution['reactive'][i]
-                <= powerflow.dbarraDF['potencia_reativa_minima'][i]
+                powerflow.solution["reactive"][i]
+                <= powerflow.dbarraDF["potencia_reativa_minima"][i]
             ):
                 file.write(
-                    'A geração de potência reativa da '
-                    + powerflow.dbarraDF['nome'][i]
-                    + ' violou o limite mínimo estabelecido para análise ( {:.2f} <= {} ).'.format(
-                        powerflow.solution['reactive'][i],
-                        powerflow.dbarraDF['potencia_reativa_minima'][i],
+                    "A geração de potência reativa da "
+                    + powerflow.dbarraDF["nome"][i]
+                    + " violou o limite mínimo estabelecido para análise ( {:.2f} <= {} ).".format(
+                        powerflow.solution["reactive"][i],
+                        powerflow.dbarraDF["potencia_reativa_minima"][i],
                     )
                 )
-                file.write('\n')
+                file.write("\n")
             else:
                 qgmon += 1
     if qgmon == (powerflow.npv + 1):
         file.write(
-            'Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!'
+            "Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!"
         )
-    file.write('\n\n\n')
+    file.write("\n\n\n")
+
 
 def monitorvmon(
     file,
     powerflow,
 ):
-    '''monitoramento de magnitude de tensão de barramentos
+    """monitoramento de magnitude de tensão de barramentos
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
-    file.write('vv monitoramento de magnitude de tensão de barramentos vv')
-    file.write('\n\n')
+    file.write("vv monitoramento de magnitude de tensão de barramentos vv")
+    file.write("\n\n")
     vmon = 0
     for i in range(0, powerflow.nbus):
-        if powerflow.solution['voltage'][i] >= powerflow.options['vmax']:
+        if powerflow.solution["voltage"][i] >= powerflow.options["vmax"]:
             file.write(
-                'A magnitude de tensão da '
-                + powerflow.dbarraDF['nome'][i]
-                + ' violou o limite máximo estabelecido para análise ( {:.3f} >= {} ).'.format(
-                    powerflow.solution['voltage'][i],
-                    powerflow.options['vmax'],
+                "A magnitude de tensão da "
+                + powerflow.dbarraDF["nome"][i]
+                + " violou o limite máximo estabelecido para análise ( {:.3f} >= {} ).".format(
+                    powerflow.solution["voltage"][i],
+                    powerflow.options["vmax"],
                 )
             )
-            file.write('\n')
-        elif powerflow.solution['voltage'][i] <= powerflow.options['vmin']:
+            file.write("\n")
+        elif powerflow.solution["voltage"][i] <= powerflow.options["vmin"]:
             file.write(
-                'A magnitude de tensão da '
-                + powerflow.dbarraDF['nome'][i]
-                + ' violou o limite mínimo estabelecido para análise ( {:.3f} <= {} ).'.format(
-                    powerflow.solution['voltage'][i],
-                    powerflow.options['vmin'],
+                "A magnitude de tensão da "
+                + powerflow.dbarraDF["nome"][i]
+                + " violou o limite mínimo estabelecido para análise ( {:.3f} <= {} ).".format(
+                    powerflow.solution["voltage"][i],
+                    powerflow.options["vmin"],
                 )
             )
-            file.write('\n')
+            file.write("\n")
         else:
             vmon += 1
     if vmon == powerflow.nbus:
         file.write(
-            'Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!'
+            "Nenhum barramento violou os limites máximo e mínimo de magnitude de tensão!"
         )
-    file.write('\n\n\n')
+    file.write("\n\n\n")

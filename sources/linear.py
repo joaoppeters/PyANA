@@ -12,36 +12,36 @@ from numpy.linalg import solve
 
 
 class LinearPF:
-    '''classe para cálculo do fluxo de potência não-linear via método linearizado'''
+    """classe para cálculo do fluxo de potência não-linear via método linearizado"""
 
     def linear(
         self,
         powerflow,
     ):
-        '''análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+        """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
 
         ## Inicialização
         # Variável para armazenamento de solução
         powerflow.solution = {
-            'system': powerflow.nbusname,
-            'iter': 1,
-            'voltage': ones(powerflow.nbusnbus),
-            'theta': zeros(powerflow.nbusnbus),
-            'active': zeros(powerflow.nbusnbus),
-            'reactive': zeros(powerflow.nbusnbus),
-            'freq': array([]),
-            'convP': array([]),
-            'busP': array([]),
-            'convQ': zeros([]),
-            'busQ': zeros([]),
-            'active_flow_F2': zeros(powerflow.nbusnlin),
-            'reactive_flow_F2': zeros(powerflow.nbusnlin),
-            'active_flow_2F': zeros(powerflow.nbusnlin),
-            'reactive_flow_2F': zeros(powerflow.nbusnlin),
+            "system": powerflow.name,
+            "iter": 1,
+            "voltage": ones(powerflow.nbus),
+            "theta": zeros(powerflow.nbus),
+            "active": zeros(powerflow.nbus),
+            "reactive": zeros(powerflow.nbus),
+            "freq": array([]),
+            "convP": array([]),
+            "busP": array([]),
+            "convQ": zeros([]),
+            "busQ": zeros([]),
+            "active_flow_F2": zeros(powerflow.nbusnlin),
+            "reactive_flow_F2": zeros(powerflow.nbusnlin),
+            "active_flow_2F": zeros(powerflow.nbusnlin),
+            "reactive_flow_2F": zeros(powerflow.nbusnlin),
         }
 
         # Variáveis Especificadas
@@ -64,8 +64,8 @@ class LinearPF:
             powerflow,
         )
         self.B = deepcopy(powerflow.nbusbbus.imag)
-        for i in range(0, powerflow.nbusnbus):
-            if powerflow.dbarraDF['tipo'][i] == 2:
+        for i in range(0, powerflow.nbus):
+            if powerflow.dbarraDF["tipo"][i] == 2:
                 powerflow.nbusslackline = i
                 self.B[i, :] = 0
                 self.B[:, i] = 0
@@ -73,9 +73,7 @@ class LinearPF:
                 break
 
         # Variáveis de estado
-        powerflow.nbusstatevar = solve(
-            -self.B, self.sch['potencia_ativa_especificada']
-        )
+        powerflow.statevar = solve(-self.B, self.sch["potencia_ativa_especificada"])
 
         # Atualização das Variáveis de estado
         self.update_statevar(
@@ -88,139 +86,139 @@ class LinearPF:
         )
 
         # Convergência
-        powerflow.solution['convergence'] = 'SISTEMA CONVERGENTE'
+        powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
 
     def scheduled(
         self,
         powerflow,
     ):
-        '''método para armazenamento dos parâmetros especificados
+        """método para armazenamento dos parâmetros especificados
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
 
         ## Inicialização
         # Variável para armazenamento das potências ativa e reativa especificadas
         self.sch = {
-            'potencia_ativa_especificada': zeros(powerflow.nbusnbus),
-            'potencia_reativa_especificada': zeros(powerflow.nbusnbus),
+            "potencia_ativa_especificada": zeros(powerflow.nbus),
+            "potencia_reativa_especificada": zeros(powerflow.nbus),
         }
 
         # Loop
         for idx, value in powerflow.dbarraDF.iterrows():
             # Potência ativa especificada
-            self.sch['potencia_ativa_especificada'][idx] += float(
-                value['potencia_ativa']
+            self.sch["potencia_ativa_especificada"][idx] += float(
+                value["potencia_ativa"]
             )
-            self.sch['potencia_ativa_especificada'][idx] -= float(
-                value['demanda_ativa']
+            self.sch["potencia_ativa_especificada"][idx] -= float(
+                value["demanda_ativa"]
             )
 
         # Tratamento
-        self.sch['potencia_ativa_especificada'] /= powerflow.options['BASE']
+        self.sch["potencia_ativa_especificada"] /= powerflow.options["BASE"]
 
     def residue(
         self,
         powerflow,
     ):
-        '''cálculo de resíduos das equações diferenciáveis'''
+        """cálculo de resíduos das equações diferenciáveis"""
 
         ## Inicialização
         # Vetores de resíduo
-        powerflow.deltaP = zeros(powerflow.nbusnbus)
-        powerflow.deltaQ = zeros(powerflow.nbusnbus)
+        powerflow.deltaP = zeros(powerflow.nbus)
+        powerflow.deltaQ = zeros(powerflow.nbus)
 
     def convergence(
         self,
         powerflow,
     ):
-        '''armazenamento da trajetória de convergência do processo de solução do fluxo de potência
+        """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
 
         ## Inicialização
         # Trajetória de convergência da frequência
-        powerflow.solution['freq'] = append(powerflow.solution['freq'], 0.0)
+        powerflow.solution["freq"] = append(powerflow.solution["freq"], 0.0)
 
         # Trajetória de convergência da potência ativa
-        powerflow.solution['convP'] = append(powerflow.solution['convP'], 0.0)
-        powerflow.solution['busP'] = append(powerflow.solution['busP'], 0)
+        powerflow.solution["convP"] = append(powerflow.solution["convP"], 0.0)
+        powerflow.solution["busP"] = append(powerflow.solution["busP"], 0)
 
         # Trajetória de convergência da potência reativa
-        powerflow.solution['convQ'] = append(powerflow.solution['convQ'], 0.0)
-        powerflow.solution['busQ'] = append(powerflow.solution['busQ'], 0)
+        powerflow.solution["convQ"] = append(powerflow.solution["convQ"], 0.0)
+        powerflow.solution["busQ"] = append(powerflow.solution["busQ"], 0)
 
     def linearadmit(
         self,
         powerflow,
     ):
-        '''cálculo da matriz admitância com considerações lineares
+        """cálculo da matriz admitância com considerações lineares
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
         ## Inicialização
         # Matriz B
         powerflow.nbusbbus: ndarray = zeros(
-            shape=[powerflow.nbusnbus, powerflow.nbusnbus], dtype='complex_'
+            shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
         )
         # Linhas de transmissão e transformadores
         for _, value in powerflow.dlinhaDF.iterrows():
             # Elementos fora da diagonal (elemento série)
-            if value['tap'] == 0.0:
+            if value["tap"] == 0.0:
                 powerflow.nbusbbus[
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['de']
+                        powerflow.dbarraDF["numero"] == value["de"]
                     ][0],
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['para']
+                        powerflow.dbarraDF["numero"] == value["para"]
                     ][0],
                 ] -= (
-                    1 / complex(real=0.0, imag=value['reatancia'])
+                    1 / complex(real=0.0, imag=value["reatancia"])
                 ) * powerflow.options[
-                    'BASE'
+                    "BASE"
                 ]
                 powerflow.nbusbbus[
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['para']
+                        powerflow.dbarraDF["numero"] == value["para"]
                     ][0],
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['de']
+                        powerflow.dbarraDF["numero"] == value["de"]
                     ][0],
                 ] -= (
-                    1 / complex(real=0.0, imag=value['reatancia'])
+                    1 / complex(real=0.0, imag=value["reatancia"])
                 ) * powerflow.options[
-                    'BASE'
+                    "BASE"
                 ]
             else:
                 powerflow.nbusbbus[
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['de']
+                        powerflow.dbarraDF["numero"] == value["de"]
                     ][0],
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['para']
+                        powerflow.dbarraDF["numero"] == value["para"]
                     ][0],
                 ] -= (
-                    (1 / complex(real=0.0, imag=value['reatancia']))
-                    * powerflow.options['BASE']
+                    (1 / complex(real=0.0, imag=value["reatancia"]))
+                    * powerflow.options["BASE"]
                 ) / float(
-                    value['tap']
+                    value["tap"]
                 )
                 powerflow.nbusbbus[
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['para']
+                        powerflow.dbarraDF["numero"] == value["para"]
                     ][0],
                     powerflow.dbarraDF.index[
-                        powerflow.dbarraDF['numero'] == value['de']
+                        powerflow.dbarraDF["numero"] == value["de"]
                     ][0],
                 ] -= (
-                    (1 / complex(real=0.0, imag=value['reatancia']))
-                    * powerflow.options['BASE']
+                    (1 / complex(real=0.0, imag=value["reatancia"]))
+                    * powerflow.options["BASE"]
                 ) / float(
-                    value['tap']
+                    value["tap"]
                 )
 
         # Bancos de capacitores e reatores
@@ -231,50 +229,48 @@ class LinearPF:
         self,
         powerflow,
     ):
-        '''atualização das variáveis de estado
+        """atualização das variáveis de estado
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
 
         ## Inicialização
         # atualização dos ângulos dos barramentos
-        powerflow.solution['theta'] = deepcopy(powerflow.nbusstatevar)
+        powerflow.solution["theta"] = deepcopy(powerflow.statevar)
 
     def line_flow(
         self,
         powerflow,
     ):
-        '''cálculo do fluxo de potência nas linhas de transmissão
+        """cálculo do fluxo de potência nas linhas de transmissão
 
         Parâmetros
             powerflow: self do arquivo powerflow.py
-        '''
+        """
         ## Inicialização
         for idx, value in powerflow.dlinhaDF.iterrows():
-            k = powerflow.dbarraDF.index[
-                powerflow.dbarraDF['numero'] == value['de']
-            ][0]
-            m = powerflow.dbarraDF.index[
-                powerflow.dbarraDF['numero'] == value['para']
-            ][0]
+            k = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["de"]][0]
+            m = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["para"]][
+                0
+            ]
 
             # Potência ativa k -> m
-            powerflow.solution['active_flow_F2'][idx] = abs(
+            powerflow.solution["active_flow_F2"][idx] = abs(
                 powerflow.nbusbbus[k, m]
-            ) * (powerflow.solution['theta'][k] - powerflow.solution['theta'][m])
+            ) * (powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
 
             # Potência ativa m -> k
-            powerflow.solution['active_flow_2F'][idx] = abs(
+            powerflow.solution["active_flow_2F"][idx] = abs(
                 powerflow.nbusbbus[k, m]
-            ) * (powerflow.solution['theta'][m] - powerflow.solution['theta'][k])
+            ) * (powerflow.solution["theta"][m] - powerflow.solution["theta"][k])
 
             # Potência ativa gerada pela barra k
-            powerflow.solution['active'][k] += powerflow.solution['active_flow_F2'][idx]
-            powerflow.solution['active'][m] += powerflow.solution['active_flow_2F'][idx]
+            powerflow.solution["active"][k] += powerflow.solution["active_flow_F2"][idx]
+            powerflow.solution["active"][m] += powerflow.solution["active_flow_2F"][idx]
 
-        powerflow.solution['active_flow_F2'] *= powerflow.options['BASE']
-        powerflow.solution['active_flow_2F'] *= powerflow.options['BASE']
+        powerflow.solution["active_flow_F2"] *= powerflow.options["BASE"]
+        powerflow.solution["active_flow_2F"] *= powerflow.options["BASE"]
 
-        powerflow.solution['active'] *= powerflow.options['BASE']
-        powerflow.solution['active'] += powerflow.dbarraDF['demanda_ativa'].values
+        powerflow.solution["active"] *= powerflow.options["BASE"]
+        powerflow.solution["active"] += powerflow.dbarraDF["demanda_ativa"].values

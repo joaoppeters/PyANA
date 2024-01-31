@@ -20,11 +20,11 @@ from report import report
 def setup(
     powerflow,
 ):
-    '''initialization
+    """initialization
 
     Parameters
         powerflow: powerflow do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     if powerflow.system:
@@ -38,7 +38,7 @@ def setup(
         pwf(
             powerflow,
         )
-        print(f'Leitura dos dados em {time.process_time() - t:2.3f}[s].')
+        print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
 
         # Classe para determinação dos valores padrão das variáveis de tolerância
         options(
@@ -62,39 +62,40 @@ def setup(
 
     else:
         ## ERROR - VERMELHO
-        raise ValueError('\033[91mNenhum sistema foi selecionado.\033[0m')
+        raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
+
 
 def checkpath(
     powerflow,
 ):
-    '''verificação automática de diretório sistemas
+    """verificação automática de diretório sistemas
 
     Parâmetros
         powerflow: powerflow do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Variável de diretório principal
     powerflow.maindir = dirname(dirname(__file__))
 
     # Variável de nome do SEP em estudo
-    powerflow.name = powerflow.system.split('.')[0]
+    powerflow.name = powerflow.system.split(".")[0]
 
-    if exists(powerflow.maindir + '/sistemas/') is True:
-        if exists(powerflow.maindir + '/sistemas/' + powerflow.system) is True:
+    if exists(powerflow.maindir + "/sistemas/") is True:
+        if exists(powerflow.maindir + "/sistemas/" + powerflow.system) is True:
             powerflow.dirSEP = realpath(
-                dirname(dirname(__file__)) + '/sistemas/' + powerflow.system
+                dirname(dirname(__file__)) + "/sistemas/" + powerflow.system
             )
             print(
-                f'\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m'
+                f"\033[93mArquivo `{powerflow.system}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"
             )
         else:
             raise ValueError(
-                f'\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{powerflow.system}` do SEP informado.\nInsira o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m'
+                f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{powerflow.system}` do SEP informado.\nInsira o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
             )
 
     else:
-        mkdir(powerflow.maindir + '/sistemas/')
+        mkdir(powerflow.maindir + "/sistemas/")
         raise ValueError(
-            f'\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m'
+            f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.system}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
         )

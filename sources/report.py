@@ -17,6 +17,7 @@ from numpy import (
     sum,
 )
 
+
 def report(
     powerflow,
 ):
@@ -36,22 +37,23 @@ def report(
     else:
         print("\033[96mNenhuma opção de relatório foi escolhida.\033[0m")
 
+
 def reportfile(
     powerflow,
 ):
-    '''
-    
+    """
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     # Pasta resultados/Relatorios/sepname
-    reportsfolder(powerflow,)
+    reportsfolder(
+        powerflow,
+    )
 
     # Arquivo
-    filedirname = (
-        powerflow.dirRreports + powerflow.name + "-report.txt"
-    )
+    filedirname = powerflow.dirRreports + powerflow.name + "-report.txt"
 
     # Manipulação
     file = open(filedirname, "w")
@@ -84,13 +86,13 @@ def reportfile(
                     powerflow,
                 )
             # relatório de geradores
-            elif (r == "RGER") and (powerflow.codes['DGER']):
+            elif (r == "RGER") and (powerflow.codes["DGER"]):
                 RGER(
                     file,
                     powerflow,
                 )
             # relatório de compensadores estáticos de potência reativa
-            elif (r == "RSVC") and (powerflow.codes['DCER']):
+            elif (r == "RSVC") and (powerflow.codes["DCER"]):
                 RSVC(
                     file,
                     powerflow,
@@ -108,6 +110,7 @@ def reportfile(
 
     file.write("fim do relatório do sistema " + powerflow.name)
     file.close()
+
 
 def rheader(
     file,
@@ -163,6 +166,7 @@ def rheader(
             file.write(f"{k} ")
     file.write("\n\n\n\n")
 
+
 def rconv(
     file,
     powerflow,
@@ -187,14 +191,14 @@ def rconv(
         file.write("\n")
         file.write("-" * 71)
         if powerflow.method != "CPF":
-            for i in range(0, powerflow.solution['iter']):
+            for i in range(0, powerflow.solution["iter"]):
                 file.write("\n")
                 file.write(
                     f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i]:^6.3f} | {powerflow.solution['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busP'][i]]:^5d} | {powerflow.solution['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busQ'][i]]:^5d} | {powerflow.solution['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busY'][i]]:^5d} |"
                 )
 
         elif powerflow.method == "CPF":
-            for i in range(0, powerflow.point[0]['iter']):
+            for i in range(0, powerflow.point[0]["iter"]):
                 file.write("\n")
                 file.write(
                     f"| {(i+1):^4d} | {powerflow.point[0]['freqiter'][i]:^6.3f} | {powerflow.point[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busP'][i]]:^5d} | {powerflow.point[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busQ'][i]]:^5d} | {powerflow.point[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busY'][i]]:^5d} |"
@@ -203,9 +207,9 @@ def rconv(
         file.write("\n")
         file.write("-" * 71)
     if powerflow.method == "LINEAR":
-        i = powerflow.solution['iter'] - 2
+        i = powerflow.solution["iter"] - 2
     file.write("\n\n")
-    file.write(" * * * * " + powerflow.solution['convergence'] + " * * * * ")
+    file.write(" * * * * " + powerflow.solution["convergence"] + " * * * * ")
     file.write("\n\n")
     file.write(
         "       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |"
@@ -218,14 +222,14 @@ def rconv(
     file.write("-" * 71)
     file.write("\n")
     if (powerflow.method != "CPF") and (
-        powerflow.solution['convergence'] == "SISTEMA CONVERGENTE"
+        powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
             f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i+1]:^6.3f} | {powerflow.solution['convP'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busP'][i+1]]:^5d} | {powerflow.solution['convQ'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busQ'][i+1]]:^5d} | {powerflow.solution['convY'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busY'][i+1]]:^5d} |"
         )
 
     elif (powerflow.method == "CPF") and (
-        powerflow.point[0]['convergence'] == "SISTEMA CONVERGENTE"
+        powerflow.point[0]["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
             f"| {(i+1):^4d} | {powerflow.point[0]['freqiter'][i]:^6.3f} | {powerflow.point[0]['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busP'][i]]:^5d} | {powerflow.point[0]['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busQ'][i]]:^5d} | {powerflow.point[0]['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.point[0]['busY'][i]]:^5d} |"
@@ -234,6 +238,7 @@ def rconv(
     file.write("\n")
     file.write("-" * 71)
     file.write("\n\n\n\n")
+
 
 def RBAR(
     file,
@@ -247,7 +252,7 @@ def RBAR(
 
     ## Inicialização
     # Loop por área
-    for area in powerflow.dbarraDF['area'].unique():
+    for area in powerflow.dbarraDF["area"].unique():
         file.write("vv relatório de barras vv área {} vv".format(area))
         file.write("\n\n")
         file.write(
@@ -260,7 +265,7 @@ def RBAR(
         file.write("\n")
         file.write("-" * 106)
         for i in range(0, powerflow.nbus):
-            if powerflow.dbarraDF['area'][i] == area:
+            if powerflow.dbarraDF["area"][i] == area:
                 if (i % 10 == 0) and (i != 0):
                     file.write("\n\n")
                     file.write(
@@ -287,6 +292,7 @@ def RBAR(
                 file.write("\n")
                 file.write("-" * 106)
         file.write("\n\n\n\n")
+
 
 def RLIN(
     file,
@@ -374,6 +380,7 @@ def RLIN(
     file.write("\n")
     file.write("\n\n\n\n")
 
+
 def RGER(
     self,
     powerflow,
@@ -387,6 +394,7 @@ def RGER(
     ## Inicialização
     pass
 
+
 def RSVC(
     file,
     powerflow,
@@ -398,18 +406,16 @@ def RSVC(
     """
 
     ## Inicialização
-    file.write(
-        "vv relatório de compensadores estáticos de potência reativa vv"
-    )
+    file.write("vv relatório de compensadores estáticos de potência reativa vv")
     file.write("\n\n")
-    if (powerflow.dcerDF['controle'][0] == 'A') or (
-        powerflow.dcerDF['controle'][0] == 'P'
+    if (powerflow.dcerDF["controle"][0] == "A") or (
+        powerflow.dcerDF["controle"][0] == "P"
     ):
         file.write(
             "|              BARRA             | DROOP |    V0     |          GERACAO MVAr          |  BARRA CONTROL  |              CONTROL            |"
         )
 
-    elif powerflow.dcerDF['controle'][0] == 'I':
+    elif powerflow.dcerDF["controle"][0] == "I":
         file.write(
             "|              BARRA             | DROOP |    V0     |        INJECAO CORRENTE        |  BARRA CONTROL  |              CONTROL            |"
         )
@@ -422,24 +428,23 @@ def RSVC(
     file.write("-" * 139)
     for i in range(0, powerflow.ncer):
         idxcer = powerflow.dbarraDF.index[
-            powerflow.dbarraDF['numero'] == powerflow.dcerDF['barra'][i]
+            powerflow.dbarraDF["numero"] == powerflow.dcerDF["barra"][i]
         ][0]
         idxctrl = powerflow.dbarraDF.index[
-            powerflow.dbarraDF['numero']
-            == powerflow.dcerDF['barra_controlada'][i]
+            powerflow.dbarraDF["numero"] == powerflow.dcerDF["barra_controlada"][i]
         ][0]
-        if powerflow.dcerDF['controle'][i] == 'P':
-            if powerflow.solution['reactive'][idxcer] <= (
-                powerflow.dcerDF['potencia_reativa_minima'][i]
-                * powerflow.dcerDF['unidades'][i]
-                * (powerflow.solution['voltage'][idxcer] ** 2)
+        if powerflow.dcerDF["controle"][i] == "P":
+            if powerflow.solution["reactive"][idxcer] <= (
+                powerflow.dcerDF["potencia_reativa_minima"][i]
+                * powerflow.dcerDF["unidades"][i]
+                * (powerflow.solution["voltage"][idxcer] ** 2)
             ):
                 regiao = "INDUTIVA"
 
-            elif powerflow.solution['reactive'][idxcer] >= (
-                powerflow.dcerDF['potencia_reativa_maxima'][i]
-                * powerflow.dcerDF['unidades'][i]
-                * (powerflow.solution['voltage'][idxcer] ** 2)
+            elif powerflow.solution["reactive"][idxcer] >= (
+                powerflow.dcerDF["potencia_reativa_maxima"][i]
+                * powerflow.dcerDF["unidades"][i]
+                * (powerflow.solution["voltage"][idxcer] ** 2)
             ):
                 regiao = "CAPACITIVA"
 
@@ -453,11 +458,11 @@ def RSVC(
             file.write("\n")
             file.write("-" * 139)
 
-        elif powerflow.dcerDF['controle'][i] == 'A':
-            if powerflow.solution['alpha'] == pi / 2:
+        elif powerflow.dcerDF["controle"][i] == "A":
+            if powerflow.solution["alpha"] == pi / 2:
                 regiao = "INDUTIVA"
 
-            elif powerflow.solution['alpha'] == pi:
+            elif powerflow.solution["alpha"] == pi:
                 regiao = "CAPACITIVA"
 
             else:
@@ -482,18 +487,18 @@ def RSVC(
                 "                                                    | âNGULO DISPARO DO TIRISTOR [C] |                                                    "
             )
 
-        elif powerflow.dcerDF['controle'][i] == 'I':
-            if powerflow.solution['reactive'][idxcer] <= (
-                powerflow.dcerDF['potencia_reativa_minima'][i]
-                * powerflow.dcerDF['unidades'][i]
-                * (powerflow.solution['voltage'][idxcer])
+        elif powerflow.dcerDF["controle"][i] == "I":
+            if powerflow.solution["reactive"][idxcer] <= (
+                powerflow.dcerDF["potencia_reativa_minima"][i]
+                * powerflow.dcerDF["unidades"][i]
+                * (powerflow.solution["voltage"][idxcer])
             ):
                 regiao = "INDUTIVA"
 
-            elif powerflow.solution['reactive'][idxcer] >= (
-                powerflow.dcerDF['potencia_reativa_maxima'][i]
-                * powerflow.dcerDF['unidades'][i]
-                * (powerflow.solution['voltage'][idxcer])
+            elif powerflow.solution["reactive"][idxcer] >= (
+                powerflow.dcerDF["potencia_reativa_maxima"][i]
+                * powerflow.dcerDF["unidades"][i]
+                * (powerflow.solution["voltage"][idxcer])
             ):
                 regiao = "CAPACITIVA"
 
@@ -509,6 +514,7 @@ def RSVC(
 
     file.write("\n")
     file.write("\n\n\n\n")
+
 
 def RCPF(
     file,
@@ -554,19 +560,19 @@ def RCPF(
                 file.write("-" * 82)
                 file.write("\n")
 
-            if not var and (value['c']['varstep'] == "lambda"):
+            if not var and (value["c"]["varstep"] == "lambda"):
                 file.write(
                     f"| {key:^4} | {value['c']['iter']:^4} | {(value['c']['step'] * 1E2):^8.3f} | {(value['c']['step'] * 1E2):^8.3f} | {(powerflow.MW[key]):^8.3f} | {(powerflow.MVAr[key]):^8.3f} | {value['c']['varstep']:^8} | {(powerflow.options['LMBD'] * (5E-1 ** value['c']['div']) * 1E2):^+9.2f} |"
                 )
 
             else:
                 var = True
-                if value['c']['varstep'] == "volt":
+                if value["c"]["varstep"] == "volt":
                     file.write(
                         f"| {key:^4} | {value['c']['iter']:^4} | {(value['c']['step'] * 1E2):^8.3f} | {(value['c']['step'] * 1E2):^8.3f} | {(powerflow.MW[key]):^8.3f} | {(powerflow.MVAr[key]):^8.3f} | {value['c']['varstep']:^8} | {(-1 * powerflow.options['cpfVolt'] * (5E-1 ** value['c']['div']) * 1E2):^+9.2f} |"
                     )
 
-                elif value['c']['varstep'] == "lambda":
+                elif value["c"]["varstep"] == "lambda":
                     file.write(
                         f"| {key:^4} | {value['c']['iter']:^4} | {(value['c']['step'] * 1E2):^8.3f} | {(value['c']['step'] * 1E2):^8.3f} | {(powerflow.MW[key]):^8.3f} | {(powerflow.MVAr[key]):^8.3f} | {value['c']['varstep']:^8} | {(-1 * powerflow.options['LMBD'] * (5E-1 ** value['c']['div']) * 1E2):^+9.2f} |"
                     )
@@ -575,9 +581,9 @@ def RCPF(
         file.write("-" * 82)
 
     file.write("\n\n\n\n")
-    
+
     # Loop por área
-    for area in powerflow.dbarraDF['area'].unique():
+    for area in powerflow.dbarraDF["area"].unique():
         file.write("vv relatório de barras vv área {} vv".format(area))
         file.write("\n\n")
         file.write(
@@ -590,7 +596,7 @@ def RCPF(
         file.write("\n")
         file.write("-" * 106)
         for i in range(0, powerflow.nbus):
-            if powerflow.dbarraDF['area'][i] == area:
+            if powerflow.dbarraDF["area"][i] == area:
                 if (i % 10 == 0) and (i != 0):
                     file.write("\n\n")
                     file.write(
@@ -612,6 +618,7 @@ def RCPF(
                 file.write("-" * 106)
         file.write("\n\n\n\n")
 
+
 def tobecontinued(
     powerflow,
 ):
@@ -625,13 +632,9 @@ def tobecontinued(
     var = False
 
     # Manipulação
-    filevtan = open(
-        powerflow.dircpfsys + powerflow.name + "-tangent.txt", "w"
-    )
-    filevarv = open(
-        powerflow.dircpfsys + powerflow.name + "-voltagevar.txt", "w"
-    )
-    if powerflow.cpfsolution['eigencalculation']:
+    filevtan = open(powerflow.dircpfsys + powerflow.name + "-tangent.txt", "w")
+    filevarv = open(powerflow.dircpfsys + powerflow.name + "-voltagevar.txt", "w")
+    if powerflow.cpfsolution["eigencalculation"]:
         filedeteigen = open(
             powerflow.dircpfsys + powerflow.name + "-det&eigen.txt", "w"
         )
@@ -691,7 +694,7 @@ def tobecontinued(
     filevarv.write("\n\n")
 
     # Cabeçalho FILEDETEIGEN
-    if powerflow.cpfsolution['eigencalculation']:
+    if powerflow.cpfsolution["eigencalculation"]:
         filedeteigen.write(
             "{} {}, {}".format(
                 dt.now().strftime("%B"),
@@ -722,9 +725,7 @@ def tobecontinued(
     for key, value in powerflow.point.items():
         if key == 0:
             # Variável de variação de tensão
-            varv = value['voltage'] - (
-                powerflow.dbarraDF['tensao'] * 1e-3
-            )
+            varv = value["voltage"] - (powerflow.dbarraDF["tensao"] * 1e-3)
             arg = argsort(varv)
 
             # FILEVARV
@@ -752,7 +753,7 @@ def tobecontinued(
                 filevarv.write("\n")
 
             # FILEDETEIGEN
-            if powerflow.cpfsolution['eigencalculation']:
+            if powerflow.cpfsolution["eigencalculation"]:
                 filedeteigen.write("\n\n")
                 filedeteigen.write(f"Caso {key}")
                 filedeteigen.write("\n")
@@ -786,13 +787,10 @@ def tobecontinued(
         elif key > 0:
             # Variável de variação de tensão
             if key == 1:
-                varv = value['c']['voltage'] - powerflow.point[0]['voltage']
+                varv = value["c"]["voltage"] - powerflow.point[0]["voltage"]
 
             elif key > 1:
-                varv = (
-                    value['c']['voltage']
-                    - powerflow.point[key - 1]['c']['voltage']
-                )
+                varv = value["c"]["voltage"] - powerflow.point[key - 1]["c"]["voltage"]
 
             arg = argsort(varv)
 
@@ -804,18 +802,18 @@ def tobecontinued(
                 f"Carregamento do Sistema: {powerflow.MW[key]} MW  | {powerflow.MVAr[key]} MVAr"
             )
             filevtan.write("\n")
-            if not var and (value['c']['varstep'] == "lambda"):
+            if not var and (value["c"]["varstep"] == "lambda"):
                 filevtan.write(
                     f"Variável de Passo: {value['c']['varstep']}, {(5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
                 )
             else:
                 var = True
-                if value['c']['varstep'] == "lambda":
+                if value["c"]["varstep"] == "lambda":
                     filevtan.write(
                         f"Variável de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
                     )
 
-                elif value['c']['varstep'] == "volt":
+                elif value["c"]["varstep"] == "volt":
                     filevtan.write(
                         f"Variável de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['cpfVolt']) * 1E2:.2f}% "
                     )
@@ -871,7 +869,7 @@ def tobecontinued(
                 filevarv.write("\n")
 
             # FILEDETEIGEN
-            if powerflow.cpfsolution['eigencalculation']:
+            if powerflow.cpfsolution["eigencalculation"]:
                 filedeteigen.write("\n\n")
                 filedeteigen.write(f"Caso {key}")
                 filedeteigen.write("\n")
@@ -919,7 +917,7 @@ def tobecontinued(
     filevarv.close()
 
     # FILEDETEIGEN
-    if powerflow.cpfsolution['eigencalculation']:
+    if powerflow.cpfsolution["eigencalculation"]:
         filedeteigen.write("\n\n\n\n")
         filedeteigen.write(
             "fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
@@ -994,7 +992,7 @@ def tobecontinued(
     if ("QLIMs" in powerflow.control) or ("QLIMn" in powerflow.control):
         for busname, cases in powerflow.qlimkeys.items():
             busidx = powerflow.dbarraDF[
-                powerflow.dbarraDF['nome'] == busname
+                powerflow.dbarraDF["nome"] == busname
             ].index.values
 
             # Criação do arquivo
@@ -1082,7 +1080,7 @@ def tobecontinued(
     elif "SVCs" in powerflow.control:
         for busname, cases in powerflow.svckeys.items():
             busidx = powerflow.dbarraDF[
-                powerflow.dbarraDF['nome'] == busname
+                powerflow.dbarraDF["nome"] == busname
             ].index.values
 
             # Criação do arquivo

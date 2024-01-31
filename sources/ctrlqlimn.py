@@ -12,31 +12,33 @@ from scipy.sparse import csc_matrix, hstack, vstack
 
 from smooth import qlimnsmooth, qlimspop
 
+
 def qlimnsol(
     powerflow,
 ):
-    '''variável de estado adicional para o problema de fluxo de potência
+    """variável de estado adicional para o problema de fluxo de potência
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Variáveis
-    if 'qlim_reactive_generation' not in powerflow.solution:
-        powerflow.solution['qlim_reactive_generation'] = zeros([powerflow.nbus])
+    if "qlim_reactive_generation" not in powerflow.solution:
+        powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
+
 
 def qlimnres(
     powerflow,
     case,
 ):
-    '''cálculo de resíduos das equações de controle adicionais
+    """cálculo de resíduos das equações de controle adicionais
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
-    '''
+    """
 
     ## Inicialização
     # Vetor de resíduos
@@ -47,7 +49,7 @@ def qlimnres(
 
     # Loop
     for idx, value in powerflow.dbarraDF.iterrows():
-        if value['tipo'] != 0:
+        if value["tipo"] != 0:
             qlimnsmooth(
                 idx,
                 powerflow,
@@ -59,18 +61,17 @@ def qlimnres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(
-        powerflow.deltaY, powerflow.deltaQlim
-    )
+    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQlim)
+
 
 def qlimnsubjac(
     powerflow,
 ):
-    '''submatrizes da matriz jacobiana
+    """submatrizes da matriz jacobiana
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     #
@@ -96,7 +97,7 @@ def qlimnsubjac(
 
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
-        if value['tipo'] != 0:
+        if value["tipo"] != 0:
             # dQg/dx
             powerflow.qx[idx, nger] = -1
 
@@ -106,11 +107,11 @@ def qlimnsubjac(
 
             # Barras PQV
             if (
-                powerflow.solution['qlim_reactive_generation'][idx]
-                > value['potencia_reativa_maxima'] - powerflow.options['SIGQ']
+                powerflow.solution["qlim_reactive_generation"][idx]
+                > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
             ) or (
-                powerflow.solution['qlim_reactive_generation'][idx]
-                < value['potencia_reativa_minima'] + powerflow.options['SIGQ']
+                powerflow.solution["qlim_reactive_generation"][idx]
+                < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
                 powerflow.yx[nger, nger] = powerflow.diffqlim[idx][1]
 
@@ -120,12 +121,8 @@ def qlimnsubjac(
     ## Montagem Jacobiana
     # Condição
     if powerflow.controldim != 0:
-        powerflow.extrarow = zeros(
-            [powerflow.nger, powerflow.controldim]
-        )
-        powerflow.extracol = zeros(
-            [powerflow.controldim, powerflow.nger]
-        )
+        powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
+        powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
 
         ytv = csc_matrix(
             concatenate(
@@ -146,26 +143,23 @@ def qlimnsubjac(
         )
 
     elif powerflow.controldim == 0:
-        ytv = csc_matrix(
-            concatenate((powerflow.yt, powerflow.yv), axis=1)
-        )
+        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
         pqyx = csc_matrix(
-            concatenate(
-                (powerflow.px, powerflow.qx, powerflow.yx), axis=0
-            )
+            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
         )
 
-    powerflow.jacob = vstack([powerflow.jacob, ytv], format='csc')
-    powerflow.jacob = hstack([powerflow.jacob, pqyx], format='csc')
+    powerflow.jacob = vstack([powerflow.jacob, ytv], format="csc")
+    powerflow.jacob = hstack([powerflow.jacob, pqyx], format="csc")
+
 
 def qlimnupdt(
     powerflow,
 ):
-    '''atualização das variáveis de estado adicionais
+    """atualização das variáveis de estado adicionais
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Contador
@@ -173,10 +167,10 @@ def qlimnupdt(
 
     # Atualização da potência reativa gerada
     for idx, value in powerflow.dbarraDF.iterrows():
-        if value['tipo'] != 0:
-            powerflow.solution['qlim_reactive_generation'][idx] += (
+        if value["tipo"] != 0:
+            powerflow.solution["qlim_reactive_generation"][idx] += (
                 powerflow.statevar[(powerflow.dimpreqlim + nger)]
-                * powerflow.options['BASE']
+                * powerflow.options["BASE"]
             )
 
             # Incrementa contador
@@ -186,99 +180,94 @@ def qlimnupdt(
         powerflow,
     )
 
+
 def qlimnsch(
     powerflow,
 ):
-    '''atualização do valor de potência reativa especificada
+    """atualização do valor de potência reativa especificada
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Variável
-    powerflow.pqsch['potencia_reativa_especificada'] = zeros(
-        [powerflow.nbus]
-    )
+    powerflow.pqsch["potencia_reativa_especificada"] = zeros([powerflow.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.pqsch['potencia_reativa_especificada'] += powerflow.solution[
-        'qlim_reactive_generation'
+    powerflow.pqsch["potencia_reativa_especificada"] += powerflow.solution[
+        "qlim_reactive_generation"
     ]
-    powerflow.pqsch[
-        'potencia_reativa_especificada'
-    ] -= powerflow.dbarraDF['demanda_reativa'].to_numpy()
-    powerflow.pqsch[
-        'potencia_reativa_especificada'
-    ] /= powerflow.options['BASE']
+    powerflow.pqsch["potencia_reativa_especificada"] -= powerflow.dbarraDF[
+        "demanda_reativa"
+    ].to_numpy()
+    powerflow.pqsch["potencia_reativa_especificada"] /= powerflow.options["BASE"]
+
 
 def qlimncorr(
     powerflow,
     case,
 ):
-    '''atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
+    """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
-    '''
+    """
 
     ## Inicialização
     # Variável
-    powerflow.solution['qlim_reactive_generation'] = deepcopy(
-        powerflow.point[case]['p']['qlim_reactive_generation']
+    powerflow.solution["qlim_reactive_generation"] = deepcopy(
+        powerflow.point[case]["p"]["qlim_reactive_generation"]
     )
+
 
 def qlimnheur(
     powerflow,
 ):
-    '''heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
+    """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
     # powerflow.dbarraDF['potencia_reativa_maxima'].to_numpy()
     if any(
         (
-            powerflow.solution['qlim_reactive_generation']
-            > powerflow.dbarraDF['potencia_reativa_maxima'].to_numpy()
-            - powerflow.options['SIGQ']
+            powerflow.solution["qlim_reactive_generation"]
+            > powerflow.dbarraDF["potencia_reativa_maxima"].to_numpy()
+            - powerflow.options["SIGQ"]
         ),
-        where=~powerflow.mask[
-            (powerflow.nbus) : (2 * powerflow.nbus)
-        ],
+        where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
     ):
         powerflow.controlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.cpfsolution['pmc'])
-        and (powerflow.cpfsolution['varstep'] == 'lambda')
+        (not powerflow.cpfsolution["pmc"])
+        and (powerflow.cpfsolution["varstep"] == "lambda")
         and (
-            (
-                powerflow.options['LMBD']
-                * (5e-1 ** powerflow.cpfsolution['div'])
-            )
-            <= powerflow.options['ICMN']
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.cpfsolution["div"]))
+            <= powerflow.options["ICMN"]
         )
     ):
         powerflow.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
-        if powerflow.options['FULL']:
-            powerflow.dbarraDF[
-                'true_potencia_reativa_minima'
-            ] = powerflow.dbarraDF.loc[:, 'potencia_reativa_minima']
+        if powerflow.options["FULL"]:
+            powerflow.dbarraDF["true_potencia_reativa_minima"] = powerflow.dbarraDF.loc[
+                :, "potencia_reativa_minima"
+            ]
             for idx, value in powerflow.dbarraDF.iterrows():
                 if (
-                    powerflow.solution['qlim_reactive_generation'][idx]
-                    > value['potencia_reativa_maxima']
-                ) and (value['tipo'] != 0):
-                    powerflow.dbarraDF.loc[
-                        idx, 'potencia_reativa_minima'
-                    ] = deepcopy(value['potencia_reativa_maxima'])
+                    powerflow.solution["qlim_reactive_generation"][idx]
+                    > value["potencia_reativa_maxima"]
+                ) and (value["tipo"] != 0):
+                    powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                        value["potencia_reativa_maxima"]
+                    )
+
 
 def qlimnpop(
     powerflow,

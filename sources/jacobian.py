@@ -13,141 +13,132 @@ from scipy.sparse import csc_matrix
 from calc import pcalc, qcalc
 from ctrl import controljac
 
+
 def jacobi(
     powerflow,
 ):
-    '''cálculo das submatrizes da matriz Jacobiana
+    """cálculo das submatrizes da matriz Jacobiana
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     nnz = int(powerflow.apont[-1])
     data = zeros([4 * nnz], dtype=float)
     indx = zeros([4 * nnz], dtype=int)
-    indp = concatenate(
-        (deepcopy(powerflow.apont), zeros(powerflow.nbus, dtype=int))
-    )
+    indp = concatenate((deepcopy(powerflow.apont), zeros(powerflow.nbus, dtype=int)))
 
     for idx, value in powerflow.dlinhaDF.iterrows():
-        if value['estado']:
-            de = value['de'] - 1
-            para = value['para'] - 1
+        if value["estado"]:
+            de = value["de"] - 1
+            para = value["para"] - 1
 
             # elementos de,para
             h1 = (
-                powerflow.solution['voltage'][de]
-                * powerflow.solution['voltage'][para]
+                powerflow.solution["voltage"][de]
+                * powerflow.solution["voltage"][para]
                 * (
                     -powerflow.admitancia[idx].real
                     * sin(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                     + powerflow.admitancia[idx].imag
                     * cos(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                 )
             )
-            n1 = -powerflow.solution['voltage'][de] * (
+            n1 = -powerflow.solution["voltage"][de] * (
                 powerflow.admitancia[idx].real
                 * cos(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
                 + powerflow.admitancia[idx].imag
                 * sin(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
             )
             m1 = (
-                powerflow.solution['voltage'][de]
-                * powerflow.solution['voltage'][para]
+                powerflow.solution["voltage"][de]
+                * powerflow.solution["voltage"][para]
                 * (
                     powerflow.admitancia[idx].real
                     * cos(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                     + powerflow.admitancia[idx].imag
                     * sin(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                 )
             )
-            l1 = powerflow.solution['voltage'][de] * (
+            l1 = powerflow.solution["voltage"][de] * (
                 -powerflow.admitancia[idx].real
                 * sin(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
                 + powerflow.admitancia[idx].imag
                 * cos(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
             )
 
             # elementos para,de
             h2 = (
-                powerflow.solution['voltage'][para]
-                * powerflow.solution['voltage'][de]
+                powerflow.solution["voltage"][para]
+                * powerflow.solution["voltage"][de]
                 * (
                     powerflow.admitancia[idx].real
                     * sin(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                     + powerflow.admitancia[idx].imag
                     * cos(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                 )
             )
-            n2 = powerflow.solution['voltage'][para] * (
+            n2 = powerflow.solution["voltage"][para] * (
                 -powerflow.admitancia[idx].real
                 * cos(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
                 + powerflow.admitancia[idx].imag
                 * sin(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
             )
             m2 = (
-                powerflow.solution['voltage'][para]
-                * powerflow.solution['voltage'][de]
+                powerflow.solution["voltage"][para]
+                * powerflow.solution["voltage"][de]
                 * (
                     powerflow.admitancia[idx].real
                     * cos(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                     - powerflow.admitancia[idx].imag
                     * sin(
-                        powerflow.solution['theta'][de]
-                        - powerflow.solution['theta'][para]
+                        powerflow.solution["theta"][de]
+                        - powerflow.solution["theta"][para]
                     )
                 )
             )
-            l2 = powerflow.solution['voltage'][para] * (
+            l2 = powerflow.solution["voltage"][para] * (
                 powerflow.admitancia[idx].real
                 * sin(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
                 + powerflow.admitancia[idx].imag
                 * cos(
-                    powerflow.solution['theta'][de]
-                    - powerflow.solution['theta'][para]
+                    powerflow.solution["theta"][de] - powerflow.solution["theta"][para]
                 )
             )
 
@@ -156,20 +147,12 @@ def jacobi(
                 aux_h1 = int(indp[para] - 1)
                 aux_n1 = int(indp[para] - 1) + 2 * nnz
                 aux_m1 = int(indp[para] - 1) + int(powerflow.apont[para])
-                aux_l1 = (
-                    int(indp[para] - 1) + 2 * nnz + int(powerflow.apont[para])
-                )
+                aux_l1 = int(indp[para] - 1) + 2 * nnz + int(powerflow.apont[para])
             else:
                 aux_h1 = int(indp[para] - 1) + int(powerflow.apont[para - 1])
-                aux_n1 = (
-                    int(indp[para] - 1)
-                    + 2 * nnz
-                    + int(powerflow.apont[para - 1])
-                )
+                aux_n1 = int(indp[para] - 1) + 2 * nnz + int(powerflow.apont[para - 1])
                 aux_m1 = int(indp[para] - 1) + int(powerflow.apont[para])
-                aux_l1 = (
-                    int(indp[para] - 1) + 2 * nnz + int(powerflow.apont[para])
-                )
+                aux_l1 = int(indp[para] - 1) + 2 * nnz + int(powerflow.apont[para])
             data[aux_h1] = h1  # Submatriz H
             data[aux_n1] = n1  # Submatriz N
             data[aux_m1] = m1  # Submatriz M
@@ -185,18 +168,12 @@ def jacobi(
                 aux_h2 = int(indp[de] - 1)
                 aux_n2 = int(indp[de] - 1) + 2 * nnz
                 aux_m2 = int(indp[de] - 1) + int(powerflow.apont[de])
-                aux_l2 = (
-                    int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de])
-                )
+                aux_l2 = int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de])
             else:
                 aux_h2 = int(indp[de] - 1) + int(powerflow.apont[de - 1])
-                aux_n2 = (
-                    int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de - 1])
-                )
+                aux_n2 = int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de - 1])
                 aux_m2 = int(indp[de] - 1) + int(powerflow.apont[de])
-                aux_l2 = (
-                    int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de])
-                )
+                aux_l2 = int(indp[de] - 1) + 2 * nnz + int(powerflow.apont[de])
             data[aux_h2] = h2  # Submatriz H
             data[aux_n2] = n2  # Submatriz N
             data[aux_m2] = m2  # Submatriz M
@@ -218,34 +195,33 @@ def jacobi(
             #     hk = - (powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[idx] - qcalc(powerflow=powerflow, idx=idx)
 
         else:
-            hk = -(powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[
+            hk = -(powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[
                 idx
             ] - qcalc(powerflow=powerflow, idx=idx)
 
         # Submatriz N
         nk = (
             pcalc(powerflow=powerflow, idx=idx)
-            + (powerflow.solution['voltage'][idx] ** 2) * powerflow.gdiag[idx]
-        ) / powerflow.solution['voltage'][idx]
+            + (powerflow.solution["voltage"][idx] ** 2) * powerflow.gdiag[idx]
+        ) / powerflow.solution["voltage"][idx]
 
         # Submatriz M
-        mk = -(powerflow.solution['voltage'][idx] ** 2) * powerflow.gdiag[
-            idx
-        ] + qcalc(powerflow=powerflow, idx=idx)
+        mk = -(powerflow.solution["voltage"][idx] ** 2) * powerflow.gdiag[idx] + qcalc(
+            powerflow=powerflow, idx=idx
+        )
 
         # Submatriz L
         if (powerflow.maskQ[idx] == False) and (
-            ('QLIM' not in powerflow.control)
-            or ('QLIMs' not in powerflow.control)
-            or ('QLIMn' not in powerflow.control)
+            ("QLIM" not in powerflow.control)
+            or ("QLIMs" not in powerflow.control)
+            or ("QLIMn" not in powerflow.control)
         ):
             lk = 1e20
         else:
             lk = (
                 qcalc(powerflow=powerflow, idx=idx)
-                - (powerflow.solution['voltage'][idx] ** 2)
-                * powerflow.bdiag[idx]
-            ) / powerflow.solution['voltage'][idx]
+                - (powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[idx]
+            ) / powerflow.solution["voltage"][idx]
 
         # # Verificar se o controle remoto de tensão está ativo
         # if 'CREM' in comandos.exec:
@@ -261,9 +237,7 @@ def jacobi(
             aux_l = int(indp[idx] - 1) + 2 * nnz + int(powerflow.apont[idx])
         else:
             aux_h = int(indp[idx] - 1) + int(powerflow.apont[idx - 1])
-            aux_n = (
-                int(indp[idx] - 1) + 2 * nnz + int(powerflow.apont[idx - 1])
-            )
+            aux_n = int(indp[idx] - 1) + 2 * nnz + int(powerflow.apont[idx - 1])
             aux_m = int(indp[idx] - 1) + int(powerflow.apont[idx])
             aux_l = int(indp[idx] - 1) + 2 * nnz + int(powerflow.apont[idx])
         data[aux_h] = hk  # Submatriz H

@@ -14,17 +14,17 @@ from setup import setup
 
 
 class PowerFlow:
-    '''powerflow class'''
+    """powerflow class"""
 
     def __init__(
         self,
-        system: str = '',
-        method: str = 'NEWTON',
+        system: str = "",
+        method: str = "NEWTON",
         control: list = list(),
         monitor: list = list(),
         report: list = list(),
     ):
-        '''initialization
+        """initialization
 
         Parameters:
             system: str, optional, default ''
@@ -32,7 +32,7 @@ class PowerFlow:
             control: list, optional, default None
             monitor: list, optional, default None
             report: list, optional, default None
-        '''
+        """
 
         ## Inicialization
         # Variables
@@ -44,17 +44,19 @@ class PowerFlow:
 
         # Data Setup
         setup(self)
-        
+
         # Armazenamento dos resultados
-        folder(self,)
+        folder(
+            self,
+        )
 
         # Numerical Method
         metodo(self)
-        
+
         reportfile(
             self,
         )
-        if self.method != 'CPF':
+        if self.method != "CPF":
             monitorfile(
                 self,
             )

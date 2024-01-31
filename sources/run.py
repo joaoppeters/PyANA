@@ -7,18 +7,16 @@
 # ------------------------------------- #
 
 from powerflow import PowerFlow
-    
-system = 'neves.pwf'
 
-method = 'NEWTON'
-method = 'CPF'
+system = "neves.pwf"
+
+method = "NEWTON"
+method = "CPF"
 # method = 'STOCH-CE'
-# method = 'CANI'
+method = "CANI"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
-control = [
-    'QLIMs',
-]
+control = []
 
 # monitor = [
 #     'PFLOW',
@@ -35,7 +33,7 @@ monitor = []
 #     'RSVC',
 # ]
 report = [
-    'RBAR',
+    "RBAR",
 ]
 
 PowerFlow(

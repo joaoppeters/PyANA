@@ -8,45 +8,47 @@
 
 from numpy import ndarray, ones, vectorize, zeros
 
+
 def checkdanc(
     powerflow,
 ):
-    '''checa alteração no nível de carregamento
+    """checa alteração no nível de carregamento
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Variável
-    if powerflow.codes['DANC']:
-        for area in powerflow.dancDF['area'].values:
+    if powerflow.codes["DANC"]:
+        for area in powerflow.dancDF["area"].values:
             for idx, value in powerflow.dbarraDF.iterrows():
-                if value['area'] == area:
-                    powerflow.dbarraDF.loc[idx, 'demanda_ativa'] *= (
+                if value["area"] == area:
+                    powerflow.dbarraDF.loc[idx, "demanda_ativa"] *= (
                         1
-                        + powerflow.dancDF['fator_carga_ativa'][0]
-                        / powerflow.options['BASE']
+                        + powerflow.dancDF["fator_carga_ativa"][0]
+                        / powerflow.options["BASE"]
                     )
-                    powerflow.dbarraDF.loc[idx, 'demanda_reativa'] *= (
+                    powerflow.dbarraDF.loc[idx, "demanda_reativa"] *= (
                         1
-                        + powerflow.dancDF['fator_carga_reativa'][0]
-                        / powerflow.options['BASE']
+                        + powerflow.dancDF["fator_carga_reativa"][0]
+                        / powerflow.options["BASE"]
                     )
-                    powerflow.dbarraDF.loc[idx, 'shunt_barra'] *= (
+                    powerflow.dbarraDF.loc[idx, "shunt_barra"] *= (
                         1
-                        + powerflow.dancDF['fator_shunt_barra'][0]
-                        / powerflow.options['BASE']
+                        + powerflow.dancDF["fator_shunt_barra"][0]
+                        / powerflow.options["BASE"]
                     )
+
 
 def admit(
     powerflow,
 ):
-    '''Método para cálculo dos parâmetros da matriz Admitância
+    """Método para cálculo dos parâmetros da matriz Admitância
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Checa alteração no nível de carregamento
@@ -55,78 +57,72 @@ def admit(
     )
 
     # Matriz Admitância
-    powerflow.ybus: ndarray = zeros(
-        shape=[powerflow.nbus, powerflow.nbus], dtype='complex_'
-    )
+    # powerflow.ybus: ndarray = zeros(
+    #     shape=[powerflow.nbus, powerflow.nbus], dtype='complex_'
+    # )
     powerflow.gdiag = zeros(powerflow.nbus)
     powerflow.bdiag = zeros(powerflow.nbus)
     powerflow.apont = ones(powerflow.nbus, dtype=int)
     powerflow.admitancia = 1 / vectorize(complex)(
-        real=powerflow.dlinhaDF['resistencia'],
-        imag=powerflow.dlinhaDF['reatancia'],
+        real=powerflow.dlinhaDF["resistencia"],
+        imag=powerflow.dlinhaDF["reatancia"],
     )
 
     # Linhas de transmissão e transformadores
     for _, value in powerflow.dlinhaDF.iterrows():
-        if value['estado']:
-            if value['transf']:
-                value['tap'] = 1 / value['tap']
+        if value["estado"]:
+            if value["transf"]:
+                value["tap"] = 1 / value["tap"]
 
                 # Elementos da diagonal (elemento série)
-                powerflow.admitancia[_] *= value['tap']
+                powerflow.admitancia[_] *= value["tap"]
 
-                powerflow.gdiag[value['de'] - 1] += (
-                    value['tap'] - 1.0
+                powerflow.gdiag[value["de"] - 1] += (
+                    value["tap"] - 1.0
                 ) * powerflow.admitancia[_].real
-                powerflow.bdiag[value['de'] - 1] += (
-                    value['tap'] - 1.0
+                powerflow.bdiag[value["de"] - 1] += (
+                    value["tap"] - 1.0
                 ) * powerflow.admitancia[_].imag
-                powerflow.gdiag[value['para'] - 1] += (
-                    1 / value['tap'] - 1.0
+                powerflow.gdiag[value["para"] - 1] += (
+                    1 / value["tap"] - 1.0
                 ) * powerflow.admitancia[_].real
-                powerflow.bdiag[value['para'] - 1] += (
-                    1 / value['tap'] - 1.0
+                powerflow.bdiag[value["para"] - 1] += (
+                    1 / value["tap"] - 1.0
                 ) * powerflow.admitancia[_].imag
 
             # Elementos da diagonal (elemento série)
-            powerflow.gdiag[value['de'] - 1] += powerflow.admitancia[
-                _
-            ].real
-            powerflow.gdiag[value['para'] - 1] += powerflow.admitancia[
-                _
-            ].real
-            powerflow.bdiag[value['de'] - 1] += (
-                powerflow.admitancia[_].imag + value['susceptancia']
+            powerflow.gdiag[value["de"] - 1] += powerflow.admitancia[_].real
+            powerflow.gdiag[value["para"] - 1] += powerflow.admitancia[_].real
+            powerflow.bdiag[value["de"] - 1] += (
+                powerflow.admitancia[_].imag + value["susceptancia"]
             )
-            powerflow.bdiag[value['para'] - 1] += (
-                powerflow.admitancia[_].imag + value['susceptancia']
+            powerflow.bdiag[value["para"] - 1] += (
+                powerflow.admitancia[_].imag + value["susceptancia"]
             )
 
             # apontador auxiliar de conexões
-            powerflow.apont[value['de'] - 1] += 1
-            powerflow.apont[value['para'] - 1] += 1
+            powerflow.apont[value["de"] - 1] += 1
+            powerflow.apont[value["para"] - 1] += 1
 
     for idx, value in powerflow.dbarraDF.iterrows():
-        if value['shunt_barra'] != 0.0:
-            powerflow.bdiag[value['numero'] - 1] += (
-                value['shunt_barra']
-                / powerflow.options['BASE']
+        if value["shunt_barra"] != 0.0:
+            powerflow.bdiag[value["numero"] - 1] += (
+                value["shunt_barra"] / powerflow.options["BASE"]
             )
 
         if idx != 0:
-            powerflow.apont[value['numero'] - 1] += powerflow.apont[
-                value['numero'] - 2
-            ]
+            powerflow.apont[value["numero"] - 1] += powerflow.apont[value["numero"] - 2]
+
 
 def admitLinear(
     powerflow,
 ):
-    '''Método para cálculo dos parâmetros da matriz Admitância 
+    """Método para cálculo dos parâmetros da matriz Admitância
     simplificações do fluxo de potência linear
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    '''
+    """
 
     ## Inicialização
     # Checa alteração no nível de carregamento
@@ -136,64 +132,57 @@ def admitLinear(
 
     # Matriz Admitância
     powerflow.ybus: ndarray = zeros(
-        shape=[powerflow.nbus, powerflow.nbus], dtype='complex_'
+        shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
     )
     powerflow.gdiag = zeros(powerflow.nbus)
     powerflow.bdiag = zeros(powerflow.nbus)
     powerflow.apont = ones(powerflow.nbus, dtype=int)
     powerflow.admitancia = 1 / vectorize(complex)(
-        real=powerflow.dlinhaDF['resistencia'],
-        imag=powerflow.dlinhaDF['reatancia'],
+        real=powerflow.dlinhaDF["resistencia"],
+        imag=powerflow.dlinhaDF["reatancia"],
     )
 
     # Linhas de transmissão e transformadores
     for _, value in powerflow.dlinhaDF.iterrows():
-        if value['estado']:
-            if value['transf']:
-                value['tap'] = 1 / value['tap']
+        if value["estado"]:
+            if value["transf"]:
+                value["tap"] = 1 / value["tap"]
 
                 # Elementos da diagonal (elemento série)
-                powerflow.admitancia[_] *= value['tap']
+                powerflow.admitancia[_] *= value["tap"]
 
-                powerflow.gdiag[value['de'] - 1] += (
-                    value['tap'] - 1.0
+                powerflow.gdiag[value["de"] - 1] += (
+                    value["tap"] - 1.0
                 ) * powerflow.admitancia[_].real
-                powerflow.bdiag[value['de'] - 1] += (
-                    value['tap'] - 1.0
+                powerflow.bdiag[value["de"] - 1] += (
+                    value["tap"] - 1.0
                 ) * powerflow.admitancia[_].imag
-                powerflow.gdiag[value['para'] - 1] += (
-                    1 / value['tap'] - 1.0
+                powerflow.gdiag[value["para"] - 1] += (
+                    1 / value["tap"] - 1.0
                 ) * powerflow.admitancia[_].real
-                powerflow.bdiag[value['para'] - 1] += (
-                    1 / value['tap'] - 1.0
+                powerflow.bdiag[value["para"] - 1] += (
+                    1 / value["tap"] - 1.0
                 ) * powerflow.admitancia[_].imag
 
             # Elementos da diagonal (elemento série)
-            powerflow.gdiag[value['de'] - 1] += powerflow.admitancia[
-                _
-            ].real
-            powerflow.gdiag[value['para'] - 1] += powerflow.admitancia[
-                _
-            ].real
-            powerflow.bdiag[value['de'] - 1] += (
-                powerflow.admitancia[_].imag + value['susceptancia']
+            powerflow.gdiag[value["de"] - 1] += powerflow.admitancia[_].real
+            powerflow.gdiag[value["para"] - 1] += powerflow.admitancia[_].real
+            powerflow.bdiag[value["de"] - 1] += (
+                powerflow.admitancia[_].imag + value["susceptancia"]
             )
-            powerflow.bdiag[value['para'] - 1] += (
-                powerflow.admitancia[_].imag + value['susceptancia']
+            powerflow.bdiag[value["para"] - 1] += (
+                powerflow.admitancia[_].imag + value["susceptancia"]
             )
 
             # apontador auxiliar de conexões
-            powerflow.apont[value['de'] - 1] += 1
-            powerflow.apont[value['para'] - 1] += 1
+            powerflow.apont[value["de"] - 1] += 1
+            powerflow.apont[value["para"] - 1] += 1
 
     for idx, value in powerflow.dbarraDF.iterrows():
-        if value['shunt_barra'] != 0.0:
-            powerflow.bdiag[value['numero'] - 1] += (
-                value['shunt_barra']
-                / powerflow.options['BASE']
+        if value["shunt_barra"] != 0.0:
+            powerflow.bdiag[value["numero"] - 1] += (
+                value["shunt_barra"] / powerflow.options["BASE"]
             )
 
         if idx != 0:
-            powerflow.apont[value['numero'] - 1] += powerflow.apont[
-                value['numero'] - 2
-            ]
+            powerflow.apont[value["numero"] - 1] += powerflow.apont[value["numero"] - 2]
