@@ -52,7 +52,7 @@ def qlimssmooth(
     qmin = Symbol("Qmin")
 
     # Associação das variáveis
-    var = {
+    powerflow.qlimsvar =  {
         qger: powerflow.solution["qlim_reactive_generation"][idx]
         / powerflow.options["BASE"],
         vger: powerflow.solution["voltage"][idx],
@@ -97,24 +97,24 @@ def qlimssmooth(
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    diffyqg = (Ynormal + Ysuperior + Yinferior).diff(qger)
+    powerflow.diffyqg = (Ynormal + Ysuperior + Yinferior).diff(qger)
 
     # Derivada Parcial de Y por V
-    diffyv = (Ynormal + Ysuperior + Yinferior).diff(vger)
+    powerflow.diffyv = (Ynormal + Ysuperior + Yinferior).diff(vger)
 
     # Expressão Geral
     powerflow.diffqlim[idx] = array(
-        [diffyv.subs(var), diffyqg.subs(var)], dtype="float64"
+        [powerflow.diffyv.subs(powerflow.qlimsvar), powerflow.diffyqg.subs(powerflow.qlimsvar)], dtype="float64"
     )
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        -Ynormal.subs(var) - Ysuperior.subs(var) - Yinferior.subs(var)
+        -Ynormal.subs(powerflow.qlimsvar) - Ysuperior.subs(powerflow.qlimsvar) - Yinferior.subs(powerflow.qlimsvar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case].append(
-        array([ch1.subs(var), ch2.subs(var), ch3.subs(var), ch4.subs(var)])
+        array([ch1.subs(powerflow.qlimsvar), ch2.subs(powerflow.qlimsvar), ch3.subs(powerflow.qlimsvar), ch4.subs(powerflow.qlimsvar)])
     )
 
 
@@ -261,7 +261,7 @@ def svcreactivesmooth(
     vmmin = vmsch + (r * bmax * (vk**2))
 
     # Associação das variáveis
-    varkey = {
+    powerflow.svcqvarkey = {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF.loc[ncer, "droop"],
@@ -277,8 +277,8 @@ def svcreactivesmooth(
         ),
     }
 
-    var = deepcopy(varkey)
-    var[qgk] = (powerflow.solution["svc_reactive_generation"][ncer]) / (
+    powerflow.svcqvar =  deepcopy(powerflow.svcqvarkey)
+    powerflow.svcqvar[qgk] = (powerflow.solution["svc_reactive_generation"][ncer]) / (
         powerflow.options["BASE"]
     )
 
@@ -306,35 +306,35 @@ def svcreactivesmooth(
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
 
     # Derivada Parcial de Y por Qgk
-    diffyqgk = (Yindutiva + Ylinear + Ycapacitiva).diff(qgk)
+    powerflow.diffyqgk = (Yindutiva + Ylinear + Ycapacitiva).diff(qgk)
 
     # Expressão Geral
     powerflow.diffsvc[idxcer] = array(
         [
-            diffyvk.subs(var),
-            diffyvm.subs(var),
-            diffyqgk.subs(var),
+            powerflow.diffyvk.subs(powerflow.svcqvar),
+            powerflow.diffyvm.subs(powerflow.svcqvar),
+            powerflow.diffyqgk.subs(powerflow.svcqvar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(var) - Ylinear.subs(var) - Ycapacitiva.subs(var)
+        -Yindutiva.subs(powerflow.svcqvar) - Ylinear.subs(powerflow.svcqvar) - Ycapacitiva.subs(powerflow.svcqvar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
         array(
             [
-                ch1.subs(varkey),
-                ch2.subs(varkey),
+                ch1.subs(powerflow.svcqvarkey),
+                ch2.subs(powerflow.svcqvarkey),
             ],
             dtype="float",
         )
@@ -388,7 +388,7 @@ def svccurrentsmooth(
     vmmin = vmsch + (r * bmax * vk)
 
     # Associação das variáveis
-    varkey = {
+    powerflow.svcivarkey = {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF.loc[ncer, "droop"],
@@ -406,8 +406,8 @@ def svccurrentsmooth(
         ),
     }
 
-    var = deepcopy(varkey)
-    var[ik] = (powerflow.solution["svc_current_injection"][ncer]) / (
+    powerflow.svcivar =  deepcopy(powerflow.svcivarkey)
+    powerflow.svcivar[ik] = (powerflow.solution["svc_current_injection"][ncer]) / (
         powerflow.options["BASE"]
     )
 
@@ -435,35 +435,35 @@ def svccurrentsmooth(
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
 
     # Derivada Parcial de Y por Ik
-    diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
+    powerflow.diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
 
     # Expressão Geral
     powerflow.diffsvc[idxcer] = array(
         [
-            diffyvk.subs(var),
-            diffyvm.subs(var),
-            diffyik.subs(var),
+            powerflow.diffyvk.subs(powerflow.svcivar),
+            powerflow.diffyvm.subs(powerflow.svcivar),
+            powerflow.diffyik.subs(powerflow.svcivar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(var) - Ylinear.subs(var) - Ycapacitiva.subs(var)
+        -Yindutiva.subs(powerflow.svcivar) - Ylinear.subs(powerflow.svcivar) - Ycapacitiva.subs(powerflow.svcivar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
         array(
             [
-                ch1.subs(varkey),
-                ch2.subs(varkey),
+                ch1.subs(powerflow.svcivarkey),
+                ch2.subs(powerflow.svcivarkey),
             ],
             dtype="float",
         )
@@ -522,7 +522,7 @@ def svcalphasmooth(
     )
 
     # Associação das variáveis
-    var = {
+    powerflow.svcavar =  {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF.loc[ncer, "droop"],
@@ -593,13 +593,13 @@ def svcalphasmooth(
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
 
     # Derivada Parcial de Y por alpha
-    diffyalpha = (Yindutiva + Ylinear + Ycapacitiva).diff(alpha)
+    powerflow.diffyalpha = (Yindutiva + Ylinear + Ycapacitiva).diff(alpha)
 
     if powerflow.solution["alpha"] <= pi / 2 + powerflow.options["SIGA"]:
         # powerflow.solution['alpha'] = pi/2
@@ -613,7 +613,7 @@ def svcalphasmooth(
             powerflow.solution["voltage"][idxctrl] = deepcopy(vmsch)
             powerflow.solution["alpha"] = deepcopy(powerflow.solution["alpha0"])
 
-    var = {
+    powerflow.svcavar =  {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF["droop"][0],
@@ -629,9 +629,9 @@ def svcalphasmooth(
     # Expressão Geral
     powerflow.diffsvc[idxcer] = array(
         [
-            diffyvk.subs(var),
-            diffyvm.subs(var),
-            diffyalpha.subs(var),
+            powerflow.diffyvk.subs(powerflow.svcavar),
+            powerflow.diffyvm.subs(powerflow.svcavar),
+            powerflow.diffyalpha.subs(powerflow.svcavar),
         ],
         dtype="float64",
     )
@@ -644,7 +644,7 @@ def svcalphasmooth(
                 alpha: powerflow.solution["alpha"],
             }
         )
-        - Ylinear.subs(var)
+        - Ylinear.subs(powerflow.svcavar)
         - Ycapacitiva.subs(
             {
                 vm: powerflow.solution["voltage"][idxctrl],

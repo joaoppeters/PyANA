@@ -1190,5 +1190,5 @@ def RCANI(
     file.write("\n")
     file.write("Autovalores: " + str(powerflow.H))
     file.write("\n")
-    file.write("Iteracoes")
+    file.write("Iteracoes: " + str(powerflow.solution["iter"]))
     file.write("\n\n")

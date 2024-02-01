@@ -27,6 +27,7 @@ def qlimnsol(
     if "qlim_reactive_generation" not in powerflow.solution:
         powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
+        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
 
 def qlimnres(

@@ -758,12 +758,12 @@ def controlhess(
 
     ## Inicialização
     # Variável
-    powerflow.truedim = deepcopy(powerflow.jacob.shape[0])
+    powerflow.truedim = deepcopy(powerflow.hessiansym.shape[0])
 
     # Loop
     for value in powerflow.control:
         # Dimensão
-        powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
+        powerflow.controldim = powerflow.hessiansym.shape[0] - powerflow.truedim
 
         # controle remoto de tensão
         if value == "CREM":

@@ -19,7 +19,7 @@ from numpy.linalg import inv, norm, solve
 
 from calc import pcalc, qcalc
 from ctrl import controlupdt, controlres, controlsol, controlsch
-from hessian import *
+from hessian import hessiansym, hessian
 from jacobian import jacobi
 
 
@@ -55,8 +55,8 @@ def cani(
     )
 
     powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
-    keys = hessian_init2(powerflow,)
-    var = dict(zip(keys, powerflow.canistate))
+    keys = hessiansym(powerflow,)
+    powerflow.hessvar = dict(zip(keys, powerflow.canistate))
 
     while True:
         # Incremento do Nível de Carregamento e Geração
@@ -74,10 +74,14 @@ def cani(
             powerflow,
         )
 
-        # Matriz Hessiana
-        hessian2(
+        # Matriz Jacobiana
+        jacobi(
             powerflow,
-            var,
+        )
+
+        # Matriz Hessiana
+        hessian(
+            powerflow,
         )
 
         # expansao total
@@ -96,7 +100,7 @@ def cani(
         update_statevar(
             powerflow,
         )
-        var = dict(zip(keys, powerflow.canistate))
+        powerflow.hessvar = dict(zip(keys, powerflow.canistate))
 
         # Incremento de iteração
         powerflow.solution["iter"] += 1
@@ -298,7 +302,8 @@ def expansion(
     """
 
     ## Inicialização
-    # powerflow.jacobA = deepcopy(powerflow.jacob.A)
+    powerflow.jacobian = deepcopy(powerflow.jacob.A)
+    powerflow.hessian = deepcopy(powerflow.hessian)
     powerflow.dtf = zeros([2*powerflow.nbus, 1])
     
     # Demanda
@@ -313,22 +318,6 @@ def expansion(
                     "demanda_reativa"
                 ][idx]
 
-        # if (powerflow.maskP[idx] == False):
-        #     powerflow.jacobA[idx, :] = 0
-        #     powerflow.jacobA[:, idx] = 0
-        #     powerflow.jacobA[idx, idx] = 1
-        #     powerflow.hessian[idx, :] = 0
-        #     powerflow.hessian[:, idx] = 0
-        #     powerflow.hessian[idx, idx] = 1
-        
-        # if (powerflow.maskQ[idx] == False) and (('QLIM' not in powerflow.control) or ('QLIMs' not in powerflow.control)):
-        #     powerflow.jacobA[idx+powerflow.nbus, :] = 0
-        #     powerflow.jacobA[:, idx+powerflow.nbus] = 0
-        #     powerflow.jacobA[idx+powerflow.nbus, idx+powerflow.nbus] = 1
-        #     powerflow.hessian[idx+powerflow.nbus, :] = 0
-        #     powerflow.hessian[:, idx+powerflow.nbus] = 0
-        #     powerflow.hessian[idx+powerflow.nbus, idx+powerflow.nbus] = 1
-
     powerflow.dtf /= powerflow.options["BASE"]
 
     # reducao total
@@ -337,12 +326,12 @@ def expansion(
     )
     
     powerflow.jaccani = concatenate(
-        (powerflow.jacobA, powerflow.dtf, powerflow.dwf), axis=1,
+        (powerflow.jacobian, powerflow.dtf, powerflow.dwf), axis=1,
     )
 
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
-            (powerflow.hessian, powerflow.dtg, powerflow.jacobA), axis=1,
+            (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T), axis=1,
         )), axis=0,
     )
 
@@ -367,7 +356,7 @@ def reduction(
     powerflow.dxfw = powerflow.dxfw[powerflow.mask]
     powerflow.H = powerflow.solution['eigen'][powerflow.mask]
 
-    powerflow.jacobA = powerflow.jacobA[powerflow.mask, :][:, powerflow.mask]
+    powerflow.jacobian = powerflow.jacobian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtf = powerflow.dtf[powerflow.mask]
     powerflow.dwf = zeros((2*powerflow.nbus, 2*powerflow.nbus))[powerflow.mask, :][:, powerflow.mask]
     

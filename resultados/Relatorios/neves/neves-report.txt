@@ -1,35 +1,36 @@
 February 01, 2024
 
 
-relatório do sistema neves
+relatorio do sistema neves
 
-solução do fluxo de potência via método 
+solucao do fluxo de potencia via metodo 
 
-opções de controle ativadas: Nenhum controle ativo!
+opcoes de controle ativadas: Nenhum controle ativo!
 
-opções de relatório ativadas: RBAR 
+opcoes de relatorio ativadas: RBAR 
 
 
 
-vv relatório de convergência vv
+vv relatorio de convergencia vv
 
  * * * * SISTEMA CONVERGENTE * * * * 
 
-Ponto de Máximo Carregamento: 1.120114
-Autovalores: [0.59344956 0.5878705  0.54975087]
+Ponto de Maximo Carregamento: 1.120114
+Autovalores: [0.59344964 0.58787053 0.54975087]
+Iteracoes: 18
 
-vv relatório de barras vv área 1 vv
+vv relatorio de barras vv area 1 vv
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
 | NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
-|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   |  0.000   |  0.000   |  0.000   |  0.000   |  0.000   |
+|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   | 239.364  | 202.656  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  2  |  BARRA-002   |  1  |   1.000   |  -48.15  |  0.000   |  0.000   |  0.000   |  0.000   |  0.000   |
+|  2  |  BARRA-002   |  1  |   1.000   |  -48.15  |  0.000   | 200.838  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  3  |  BARRA-003   |  0  |   0.605   |  -38.55  |  0.000   |  -0.000  | 169.609  | 127.207  |  0.000   |
+|  3  |  BARRA-003   |  0  |   0.605   |  -38.55  |  -0.000  |  0.000   | 169.609  | 127.207  |  0.000   |
 ----------------------------------------------------------------------------------------------------------
 
 
 
-fim do relatório do sistema neves
+fim do relatorio do sistema neves

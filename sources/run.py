@@ -16,7 +16,9 @@ method = "NEWTON"
 method = "CANI"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
-control = []
+control = [
+    "QLIMs",
+]
 
 # monitor = [
 #     'PFLOW',

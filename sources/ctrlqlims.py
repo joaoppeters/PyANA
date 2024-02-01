@@ -27,6 +27,7 @@ def qlimssol(
     if "qlim_reactive_generation" not in powerflow.solution:
         powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
+        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
 
 def qlimsres(
@@ -338,7 +339,8 @@ def qlimssubhess(
     """
 
     ## Inicialização
-    #
+    from sympy import Symbol
+    
     # hessiana:
     #
     #   H     N   px
@@ -347,26 +349,27 @@ def qlimssubhess(
     #
 
     # Dimensão da matriz hessiana
-    powerflow.dimpreqlim = deepcopy(powerflow.hessian.shape[0])
+    powerflow.dimpreqlim = deepcopy(powerflow.jacob.A.shape[0])
 
     # Submatrizes
-    powerflow.px = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.qx = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.yx = zeros([powerflow.nger, powerflow.nger])
-    powerflow.yt = zeros([powerflow.nger, powerflow.nbus])
-    powerflow.yv = zeros([powerflow.nger, powerflow.nbus])
+    powerflow.px = zeros([powerflow.nbus, powerflow.nger], dtype=Symbol)
+    powerflow.qx = zeros([powerflow.nbus, powerflow.nger], dtype=Symbol)
+    powerflow.yx = zeros([powerflow.nger, powerflow.nger], dtype=Symbol)
+    powerflow.yt = zeros([powerflow.nger, powerflow.nbus], dtype=Symbol)
+    powerflow.yv = zeros([powerflow.nger, powerflow.nbus], dtype=Symbol)
 
     # Contador
     nger = 0
 
+    # Variáveis Simbólicas
+    qger = Symbol("Qg")
+    vger = Symbol("V")    
+
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            # dQg/dx
-            powerflow.qx[idx, nger] = -1
-
             # Barras PV
-            powerflow.yv[nger, idx] = powerflow.diffqlim[idx][0]
+            powerflow.yv[nger, idx] = powerflow.diffyv.diff(vger)
 
             # Barras PQV
             if (
@@ -376,7 +379,7 @@ def qlimssubhess(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                powerflow.yx[nger, nger] = powerflow.diffqlim[idx][1]
+                powerflow.yx[nger, nger] = powerflow.diffyqg.diff(qger)
 
             # Incrementa contador
             nger += 1
@@ -387,14 +390,12 @@ def qlimssubhess(
         powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
         powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
 
-        ytv = csc_matrix(
-            concatenate(
+        ytv = concatenate(
                 (powerflow.yt, powerflow.yv, powerflow.extrarow),
                 axis=1,
             )
-        )
-        pqyx = csc_matrix(
-            concatenate(
+        
+        pqyx = concatenate(
                 (
                     powerflow.px,
                     powerflow.qx,
@@ -403,13 +404,12 @@ def qlimssubhess(
                 ),
                 axis=0,
             )
-        )
 
     elif powerflow.controldim == 0:
-        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
-        pqyx = csc_matrix(
-            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
-        )
+        ytv = concatenate((powerflow.yt, powerflow.yv), axis=1)
+        pqyx = concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
 
-    powerflow.hessian = vstack([powerflow.hessian, ytv], format="csc")
-    powerflow.hessian = hstack([powerflow.hessian, pqyx], format="csc")
+    powerflow.hessiansym = concatenate((powerflow.hessiansym, ytv), axis=0)
+    powerflow.hessiansym = concatenate((powerflow.hessiansym, pqyx), axis=1)
+
+    powerflow.hessvar.update(powerflow.qlimsvar)
