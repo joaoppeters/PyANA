@@ -246,7 +246,7 @@ def hessian_init2(
                 v[de]
                 * v[para]
                 * (
-                    -powerflow.admitancia[idx].real
+                    - powerflow.admitancia[idx].real
                     * sin(
                         t[de]
                         - t[para]
@@ -258,12 +258,12 @@ def hessian_init2(
                     )
                 )
             )
-            n1 = -v[de] * (
-                powerflow.admitancia[idx].real
+            n1 = v[de] * (
+                - powerflow.admitancia[idx].real
                 * cos(
                     t[de] - t[para]
                 )
-                + powerflow.admitancia[idx].imag
+                - powerflow.admitancia[idx].imag
                 * sin(
                     t[de] - t[para]
                 )
@@ -272,7 +272,7 @@ def hessian_init2(
                 v[de]
                 * v[para]
                 * (
-                    powerflow.admitancia[idx].real
+                    + powerflow.admitancia[idx].real
                     * cos(
                         t[de]
                         - t[para]
@@ -285,7 +285,7 @@ def hessian_init2(
                 )
             )
             l1 = v[de] * (
-                -powerflow.admitancia[idx].real
+                - powerflow.admitancia[idx].real
                 * sin(
                     t[de] - t[para]
                 )
@@ -300,7 +300,7 @@ def hessian_init2(
                 v[para]
                 * v[de]
                 * (
-                    powerflow.admitancia[idx].real
+                    + powerflow.admitancia[idx].real
                     * sin(
                         t[de]
                         - t[para]
@@ -313,7 +313,7 @@ def hessian_init2(
                 )
             )
             n2 = v[para] * (
-                -powerflow.admitancia[idx].real
+                - powerflow.admitancia[idx].real
                 * cos(
                     t[de] - t[para]
                 )
@@ -326,7 +326,7 @@ def hessian_init2(
                 v[para]
                 * v[de]
                 * (
-                    powerflow.admitancia[idx].real
+                    + powerflow.admitancia[idx].real
                     * cos(
                         t[de]
                         - t[para]
@@ -339,7 +339,7 @@ def hessian_init2(
                 )
             )
             l2 = v[para] * (
-                powerflow.admitancia[idx].real
+                + powerflow.admitancia[idx].real
                 * sin(
                     t[de] - t[para]
                 )
@@ -369,7 +369,7 @@ def hessian_init2(
 
         nk = (
             pcalcsym(powerflow=powerflow, v=v, t=t, idx=idx)
-            + (v[idx] * 2) * powerflow.gdiag[idx]
+            + (v[idx] ** 2) * powerflow.gdiag[idx]
         ) / v[idx]
 
         mk = -(v[idx] ** 2) * powerflow.gdiag[idx] + qcalcsym(

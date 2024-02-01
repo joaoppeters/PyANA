@@ -42,7 +42,7 @@ def cani(
         "active": zeros(powerflow.nbus),
         "reactive": zeros(powerflow.nbus),
         "freq": 1.0,
-        "lambda": 10.0,
+        "lambda": 0.0,
         "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
         "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
         "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
@@ -342,7 +342,7 @@ def expansion(
 
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
-            (powerflow.hessian, powerflow.dtg, powerflow.jacobA.T), axis=1,
+            (powerflow.hessian, powerflow.dtg, powerflow.jacobA), axis=1,
         )), axis=0,
     )
 
