@@ -21,21 +21,21 @@ from numpy import (
 def report(
     powerflow,
 ):
-    """inicialização
+    """inicializacao
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicializacao
     if powerflow.report:
-        print("\033[96mOpções de relatório escolhidas: ", end="")
+        print("\033[96mOpcoes de relatorio escolhidas: ", end="")
         for k in powerflow.report:
             print(f"{k}", end=" ")
         print("\033[0m")
 
     else:
-        print("\033[96mNenhuma opção de relatório foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de relatorio foi escolhida.\033[0m")
 
 
 def reportfile(
@@ -43,7 +43,7 @@ def reportfile(
 ):
     """
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
@@ -55,17 +55,17 @@ def reportfile(
     # Arquivo
     filedirname = powerflow.dirRreports + powerflow.name + "-report.txt"
 
-    # Manipulação
+    # Manipulacao
     file = open(filedirname, "w")
 
-    # Cabeçalho
+    # Cabecalho
     rheader(
         file,
         powerflow,
     )
 
     if powerflow.method != 'CANI':
-        # Relatório de Convergência
+        # Relatorio de Convergencia
         RCONV(
             file,
             powerflow,
@@ -77,35 +77,35 @@ def reportfile(
             powerflow,
         )
 
-    # Relatórios Extras - ordem de prioridade
+    # Relatorios Extras - ordem de prioridade
     if powerflow.report:
         for r in powerflow.report:
-            # relatório de barra
+            # relatorio de barra
             if r == "RBAR":
                 RBAR(
                     file,
                     powerflow,
                 )
-            # relatório de linha
+            # relatorio de linha
             elif r == "RLIN":
                 RLIN(
                     file,
                     powerflow,
                 )
-            # relatório de geradores
+            # relatorio de geradores
             elif (r == "RGER") and (powerflow.codes["DGER"]):
                 RGER(
                     file,
                     powerflow,
                 )
-            # relatório de compensadores estáticos de potência reativa
+            # relatorio de compensadores estaticos de potencia reativa
             elif (r == "RSVC") and (powerflow.codes["DCER"]):
                 RSVC(
                     file,
                     powerflow,
                 )
 
-    # relatório de fluxo de potência continuado
+    # relatorio de fluxo de potencia continuado
     if powerflow.method == "CPF":
         RCPF(
             file,
@@ -115,7 +115,7 @@ def reportfile(
             powerflow,
         )
 
-    file.write("fim do relatório do sistema " + powerflow.name)
+    file.write("fim do relatorio do sistema " + powerflow.name)
     file.close()
 
 
@@ -123,13 +123,13 @@ def rheader(
     file,
     powerflow,
 ):
-    """cabeçalho do relatório
+    """cabecalho do relatorio
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicializacao
     file.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -138,39 +138,39 @@ def rheader(
         )
     )
     file.write("\n\n\n")
-    file.write("relatório do sistema " + powerflow.name)
+    file.write("relatorio do sistema " + powerflow.name)
     file.write("\n\n")
-    file.write("solução do fluxo de potência via método ")
-    # Chamada específica método de Newton-Raphson Não-Linear
+    file.write("solucao do fluxo de potencia via metodo ")
+    # Chamada específica metodo de Newton-Raphson Nao-Linear
     if powerflow.method == "NEWTON":
         file.write("newton-raphson")
-    # Chamada específica método de Gauss-Seidel
+    # Chamada específica metodo de Gauss-Seidel
     elif powerflow.method == "GAUSS":
         file.write("gauss-seidel")
-    # Chamada específica método de Newton-Raphson Linearizado
+    # Chamada específica metodo de Newton-Raphson Linearizado
     elif powerflow.method == "LINEAR":
         file.write("linearizado")
-    # Chamada específica método Desacoplado
+    # Chamada específica metodo Desacoplado
     elif powerflow.method == "DECOUP":
         file.write("desacoplado")
-    # Chamada específica método Desacoplado Rápido
+    # Chamada específica metodo Desacoplado Rapido
     elif powerflow.method == "fDECOUP":
-        file.write("desacoplado rápido")
-    # Chamada específica método Continuado
+        file.write("desacoplado rapido")
+    # Chamada específica metodo Continuado
     elif powerflow.method == "CPF":
-        file.write("do fluxo de potência continuado")
-    # Chamada específica método direto (Canizares, 1993)
+        file.write("do fluxo de potencia continuado")
+    # Chamada específica metodo direto (Canizares, 1993)
     elif powerflow.method == "CPF":
-        file.write("do fluxo de potência direto (Canizares, 1993)")
+        file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
-    file.write("opções de controle ativadas: ")
+    file.write("opcoes de controle ativadas: ")
     if powerflow.control:
         for k in powerflow.control:
             file.write(f"{k} ")
     else:
         file.write("Nenhum controle ativo!")
     file.write("\n\n")
-    file.write("opções de relatório ativadas: ")
+    file.write("opcoes de relatorio ativadas: ")
     if powerflow.report:
         for k in powerflow.report:
             file.write(f"{k} ")
@@ -181,14 +181,14 @@ def RCONV(
     file,
     powerflow,
 ):
-    """relatório de convergência tradicional
+    """relatorio de convergencia tradicional
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
-    file.write("vv relatório de convergência vv")
+    ## Inicializacao
+    file.write("vv relatorio de convergencia vv")
     if (powerflow.method != "LINEAR"):
         file.write("\n\n")
         file.write(
@@ -252,16 +252,16 @@ def RBAR(
     file,
     powerflow,
 ):
-    """relatório de barra
+    """relatorio de barra
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
-    # Loop por área
+    ## Inicializacao
+    # Loop por area
     for area in powerflow.dbarraDF["area"].unique():
-        file.write("vv relatório de barras vv área {} vv".format(area))
+        file.write("vv relatorio de barras vv area {} vv".format(area))
         file.write("\n\n")
         file.write(
             "|          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |"
@@ -306,17 +306,17 @@ def RLIN(
     file,
     powerflow,
 ):
-    """relatório de linha
+    """relatorio de linha
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
-    file.write("vv relatório de linhas vv")
+    ## Inicializacao
+    file.write("vv relatorio de linhas vv")
     file.write("\n\n")
     file.write(
-        "|            BARRA            |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELÉTRICAS |"
+        "|            BARRA            |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELeTRICAS |"
     )
     file.write("\n")
     file.write(
@@ -328,7 +328,7 @@ def RLIN(
         if (i % 10 == 0) and (i != 0):
             file.write("\n\n")
             file.write(
-                "|            BARRA            |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELÉTRICAS |"
+                "|            BARRA            |     SENTIDO DE->PARA    |     SENTIDO PARA->DE    | PERDAS ELeTRICAS |"
             )
             file.write("\n")
             file.write(
@@ -393,13 +393,13 @@ def RGER(
     self,
     powerflow,
 ):
-    """relatório de geradores
+    """relatorio de geradores
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicializacao
     pass
 
 
@@ -407,14 +407,14 @@ def RSVC(
     file,
     powerflow,
 ):
-    """relatório de compensadores estáticos de potência reativa
+    """relatorio de compensadores estaticos de potencia reativa
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
-    file.write("vv relatório de compensadores estáticos de potência reativa vv")
+    ## Inicializacao
+    file.write("vv relatorio de compensadores estaticos de potencia reativa vv")
     file.write("\n\n")
     if (powerflow.dcerDF["controle"][0] == "A") or (
         powerflow.dcerDF["controle"][0] == "P"
@@ -492,7 +492,7 @@ def RSVC(
             )
             file.write("\n")
             file.write(
-                "                                                    | âNGULO DISPARO DO TIRISTOR [C] |                                                    "
+                "                                                    | aNGULO DISPARO DO TIRISTOR [C] |                                                    "
             )
 
         elif powerflow.dcerDF["controle"][i] == "I":
@@ -528,22 +528,22 @@ def RCPF(
     file,
     powerflow,
 ):
-    """relatório de fluxo de potência continuado
+    """relatorio de fluxo de potencia continuado
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicializacao
     var = False
-    file.write("vv relatório de execução do fluxo de potência continuado vv")
+    file.write("vv relatorio de execucao do fluxo de potencia continuado vv")
     file.write("\n\n")
     file.write(
         "              | INCREMENTO DE CARGA |     CARGA TOTAL     |         PASSO        |"
     )
     file.write("\n")
     file.write(
-        "| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |"
+        "| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIaVEL | VALOR [%] |"
     )
     file.write("\n")
     file.write("-" * 82)
@@ -562,7 +562,7 @@ def RCPF(
                 )
                 file.write("\n")
                 file.write(
-                    "| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIÁVEL | VALOR [%] |"
+                    "| CASO | ITER |  ATIVA   |  REATIVA |  ATIVA   |  REATIVA | VARIaVEL | VALOR [%] |"
                 )
                 file.write("\n")
                 file.write("-" * 82)
@@ -590,9 +590,9 @@ def RCPF(
 
     file.write("\n\n\n\n")
 
-    # Loop por área
+    # Loop por area
     for area in powerflow.dbarraDF["area"].unique():
-        file.write("vv relatório de barras vv área {} vv".format(area))
+        file.write("vv relatorio de barras vv area {} vv".format(area))
         file.write("\n\n")
         file.write(
             "|          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |"
@@ -630,16 +630,16 @@ def RCPF(
 def tobecontinued(
     powerflow,
 ):
-    """armazena o resultado do fluxo de potência continuado em formato txt e formato png
+    """armazena o resultado do fluxo de potencia continuado em formato txt e formato png
 
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicializacao
     var = False
 
-    # Manipulação
+    # Manipulacao
     filevtan = open(powerflow.dircpfsys + powerflow.name + "-tangent.txt", "w")
     filevarv = open(powerflow.dircpfsys + powerflow.name + "-voltagevar.txt", "w")
     if powerflow.cpfsolution["eigencalculation"]:
@@ -647,7 +647,7 @@ def tobecontinued(
             powerflow.dircpfsys + powerflow.name + "-det&eigen.txt", "w"
         )
 
-    # Cabeçalho FILEVTAN
+    # Cabecalho FILEVTAN
     filevtan.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -657,24 +657,24 @@ def tobecontinued(
     )
     filevtan.write("\n\n\n")
     filevtan.write(
-        "relatório de análise da variação do vetor tangente do sistema "
+        "relatorio de analise da variacao do vetor tangente do sistema "
         + powerflow.name
     )
     filevtan.write("\n\n")
-    filevtan.write("opções de controle ativadas: ")
+    filevtan.write("opcoes de controle ativadas: ")
     if powerflow.control:
         for k in powerflow.control:
             filevtan.write(f"{k} ")
     else:
         filevtan.write("Nenhum controle ativo!")
     filevtan.write("\n\n")
-    filevtan.write("opções de relatório ativadas: ")
+    filevtan.write("opcoes de relatorio ativadas: ")
     if powerflow.report:
         for k in powerflow.report:
             filevtan.write(f"{k} ")
     filevtan.write("\n\n")
 
-    # Cabeçalho FILEVARV
+    # Cabecalho FILEVARV
     filevarv.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -684,24 +684,24 @@ def tobecontinued(
     )
     filevarv.write("\n\n\n")
     filevarv.write(
-        "relatório de análise da variação da magnitude de tensão do sistema "
+        "relatorio de analise da variacao da magnitude de tensao do sistema "
         + powerflow.name
     )
     filevarv.write("\n\n")
-    filevarv.write("opções de controle ativadas: ")
+    filevarv.write("opcoes de controle ativadas: ")
     if powerflow.control:
         for k in powerflow.control:
             filevarv.write(f"{k} ")
     else:
         filevarv.write("Nenhum controle ativo!")
     filevarv.write("\n\n")
-    filevarv.write("opções de relatório ativadas: ")
+    filevarv.write("opcoes de relatorio ativadas: ")
     if powerflow.report:
         for k in powerflow.report:
             filevarv.write(f"{k} ")
     filevarv.write("\n\n")
 
-    # Cabeçalho FILEDETEIGEN
+    # Cabecalho FILEDETEIGEN
     if powerflow.cpfsolution["eigencalculation"]:
         filedeteigen.write(
             "{} {}, {}".format(
@@ -712,18 +712,18 @@ def tobecontinued(
         )
         filedeteigen.write("\n\n\n")
         filedeteigen.write(
-            "relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
+            "relatorio de analise da variacao do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
             + powerflow.name
         )
         filedeteigen.write("\n\n")
-        filedeteigen.write("opções de controle ativadas: ")
+        filedeteigen.write("opcoes de controle ativadas: ")
         if powerflow.control:
             for k in powerflow.control:
                 filedeteigen.write(f"{k} ")
         else:
             filedeteigen.write("Nenhum controle ativo!")
         filedeteigen.write("\n\n")
-        filedeteigen.write("opções de relatório ativadas: ")
+        filedeteigen.write("opcoes de relatorio ativadas: ")
         if powerflow.report:
             for k in powerflow.report:
                 filedeteigen.write(f"{k} ")
@@ -732,7 +732,7 @@ def tobecontinued(
     # Loop
     for key, value in powerflow.point.items():
         if key == 0:
-            # Variável de variação de tensão
+            # Variavel de variacao de tensao
             varv = value["voltage"] - (powerflow.dbarraDF["tensao"] * 1e-3)
             arg = argsort(varv)
 
@@ -744,9 +744,9 @@ def tobecontinued(
                 f"Carregamento do Sistema: {powerflow.MW[key]} MW  | {powerflow.MVAr[key]} MVAr"
             )
             filevarv.write("\n\n")
-            filevarv.write("|      BARRA         |        TENSÃO       |")
+            filevarv.write("|      BARRA         |        TENSaO       |")
             filevarv.write("\n")
-            filevarv.write("| NUM |     NOME     |    MOD   | VARIAÇÃO |")
+            filevarv.write("| NUM |     NOME     |    MOD   | VARIAcaO |")
             filevarv.write("\n")
             filevarv.write("-" * 44)
             filevarv.write("\n")
@@ -784,7 +784,7 @@ def tobecontinued(
                         f"right eigen vector {b}: {absolute(powerflow.point[key]['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
-                filedeteigen.write("Fator de Participação:")
+                filedeteigen.write("Fator de Participacao:")
                 for b in range(0, powerflow.PFQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
@@ -793,7 +793,7 @@ def tobecontinued(
                 filedeteigen.write("\n")
 
         elif key > 0:
-            # Variável de variação de tensão
+            # Variavel de variacao de tensao
             if key == 1:
                 varv = value["c"]["voltage"] - powerflow.point[0]["voltage"]
 
@@ -812,23 +812,23 @@ def tobecontinued(
             filevtan.write("\n")
             if not var and (value["c"]["varstep"] == "lambda"):
                 filevtan.write(
-                    f"Variável de Passo: {value['c']['varstep']}, {(5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
+                    f"Variavel de Passo: {value['c']['varstep']}, {(5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
                 )
             else:
                 var = True
                 if value["c"]["varstep"] == "lambda":
                     filevtan.write(
-                        f"Variável de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
+                        f"Variavel de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['LMBD']) * 1E2:.2f}% "
                     )
 
                 elif value["c"]["varstep"] == "volt":
                     filevtan.write(
-                        f"Variável de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['cpfVolt']) * 1E2:.2f}% "
+                        f"Variavel de Passo: {value['c']['varstep']}, {(-5E-1 ** value['c']['div']) * (powerflow.options['cpfVolt']) * 1E2:.2f}% "
                     )
 
             filevtan.write("\n\n")
             filevtan.write(
-                "|       BARRA        |    VETOR TANGENTE   |       CORREÇÃO      |"
+                "|       BARRA        |    VETOR TANGENTE   |       CORREcaO      |"
             )
             filevtan.write("\n")
             filevtan.write(
@@ -846,9 +846,9 @@ def tobecontinued(
                 f"Carregamento do Sistema: {powerflow.MW[key]} MW  | {powerflow.MVAr[key]} MVAr"
             )
             filevarv.write("\n\n")
-            filevarv.write("|       BARRA        |        TENSÃO       |")
+            filevarv.write("|       BARRA        |        TENSaO       |")
             filevarv.write("\n")
-            filevarv.write("| NUM |     NOME     |    MOD   | VARIAÇÃO |")
+            filevarv.write("| NUM |     NOME     |    MOD   | VARIAcaO |")
             filevarv.write("\n")
             filevarv.write("-" * 44)
             filevarv.write("\n")
@@ -900,7 +900,7 @@ def tobecontinued(
                         f"right eigen vector {b}: {absolute(powerflow.point[key]['c']['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
-                filedeteigen.write("Fator de Participação:")
+                filedeteigen.write("Fator de Participacao:")
                 for b in range(0, powerflow.PFQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
@@ -911,7 +911,7 @@ def tobecontinued(
     # FILEVTAN
     filevtan.write("\n\n\n\n")
     filevtan.write(
-        "fim do relatório de análise da variação do vetor tangente do sistema "
+        "fim do relatorio de analise da variacao do vetor tangente do sistema "
         + powerflow.name
     )
     filevtan.close()
@@ -919,7 +919,7 @@ def tobecontinued(
     # FILEVARV
     filevarv.write("\n\n\n\n")
     filevarv.write(
-        "fim do relatório de análise da variação da magnitude de tensão do sistema "
+        "fim do relatorio de analise da variacao da magnitude de tensao do sistema "
         + powerflow.name
     )
     filevarv.close()
@@ -928,7 +928,7 @@ def tobecontinued(
     if powerflow.cpfsolution["eigencalculation"]:
         filedeteigen.write("\n\n\n\n")
         filedeteigen.write(
-            "fim do relatório de análise da variação do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
+            "fim do relatorio de analise da variacao do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
             + powerflow.name
         )
         filedeteigen.close()
@@ -938,7 +938,7 @@ def tobecontinued(
         # header = (
         #     "vv Sistema "
         #     + powerflow.name
-        #     + " vv Matriz Jacobiana vv Formulação Completa vv Caso "
+        #     + " vv Matriz Jacobiana vv Formulacao Completa vv Caso "
         #     + str(powerflow.pointkeymin)
         #     + " vv"
         # )
@@ -965,7 +965,7 @@ def tobecontinued(
         # header = (
         #     "vv Sistema "
         #     + powerflow.name
-        #     + " vv Matriz Jacobiana Reduzida vv Formulação Completa vv Caso "
+        #     + " vv Matriz Jacobiana Reduzida vv Formulacao Completa vv Caso "
         #     + str(powerflow.pointkeymin)
         #     + " vv"
         # )
@@ -1003,12 +1003,12 @@ def tobecontinued(
                 powerflow.dbarraDF["nome"] == busname
             ].index.values
 
-            # Criação do arquivo
+            # Criacao do arquivo
             filesmooth = open(
                 powerflow.dirsmoothsys + "smooth-" + busname + ".txt", "w"
             )
 
-            # Cabeçalho FILESMOOTH
+            # Cabecalho FILESMOOTH
             filesmooth.write(
                 "{} {}, {}".format(
                     dt.now().strftime("%B"),
@@ -1018,18 +1018,18 @@ def tobecontinued(
             )
             filesmooth.write("\n\n\n")
             filesmooth.write(
-                "relatório de análise da variação da função suave referente a - "
+                "relatorio de analise da variacao da funcao suave referente a - "
                 + busname
             )
             filesmooth.write("\n\n")
-            filesmooth.write("opções de controle ativadas: ")
+            filesmooth.write("opcoes de controle ativadas: ")
             if powerflow.control:
                 for k in powerflow.control:
                     filesmooth.write(f"{k} ")
             else:
                 filesmooth.write("Nenhum controle ativo!")
             filesmooth.write("\n\n")
-            filesmooth.write("opções de relatório ativadas: ")
+            filesmooth.write("opcoes de relatorio ativadas: ")
             if powerflow.report:
                 for k in powerflow.report:
                     filesmooth.write(f"{k} ")
@@ -1047,19 +1047,19 @@ def tobecontinued(
                 filesmooth.write("\n")
                 if key == 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
+                        f"Geracao de Potencia Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
                     )
                     it = 0
 
                 elif key > 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
+                        f"Geracao de Potencia Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
                     )
                     it = 1
 
                 filesmooth.write("\n")
                 filesmooth.write(
-                    f"Máxima Geração de Potência Reativa: {powerflow.dbarraDF.loc[busidx, 'potencia_reativa_maxima'].values[0]} MVAr"
+                    f"Maxima Geracao de Potencia Reativa: {powerflow.dbarraDF.loc[busidx, 'potencia_reativa_maxima'].values[0]} MVAr"
                 )
                 filesmooth.write("\n\n")
 
@@ -1080,7 +1080,7 @@ def tobecontinued(
 
             filesmooth.write("\n\n\n\n")
             filesmooth.write(
-                "fim do relatório de análise da variação da função suave referente a - "
+                "fim do relatorio de analise da variacao da funcao suave referente a - "
                 + busname
             )
             filesmooth.close()
@@ -1091,12 +1091,12 @@ def tobecontinued(
                 powerflow.dbarraDF["nome"] == busname
             ].index.values
 
-            # Criação do arquivo
+            # Criacao do arquivo
             filesmooth = open(
                 powerflow.dirsmoothsys + "smooth-" + busname + ".txt", "w"
             )
 
-            # Cabeçalho FILESMOOTH
+            # Cabecalho FILESMOOTH
             filesmooth.write(
                 "{} {}, {}".format(
                     dt.now().strftime("%B"),
@@ -1106,18 +1106,18 @@ def tobecontinued(
             )
             filesmooth.write("\n\n\n")
             filesmooth.write(
-                "relatório de análise da variação da função suave referente a - "
+                "relatorio de analise da variacao da funcao suave referente a - "
                 + busname
             )
             filesmooth.write("\n\n")
-            filesmooth.write("opções de controle ativadas: ")
+            filesmooth.write("opcoes de controle ativadas: ")
             if powerflow.control:
                 for k in powerflow.control:
                     filesmooth.write(f"{k} ")
             else:
                 filesmooth.write("Nenhum controle ativo!")
             filesmooth.write("\n\n")
-            filesmooth.write("opções de relatório ativadas: ")
+            filesmooth.write("opcoes de relatorio ativadas: ")
             if powerflow.report:
                 for k in powerflow.report:
                     filesmooth.write(f"{k} ")
@@ -1135,18 +1135,18 @@ def tobecontinued(
                 filesmooth.write("\n")
                 if key == 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
+                        f"Geracao de Potencia Reativa: {powerflow.point[key]['reactive'][busidx][0]} MVAr"
                     )
                     it = 0
 
                 elif key > 0:
                     filesmooth.write(
-                        f"Geração de Potência Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
+                        f"Geracao de Potencia Reativa: {powerflow.point[key]['c']['reactive'][busidx][0]} MVAr"
                     )
                     it = 1
 
                 # filesmooth.write('\n')
-                # filesmooth.write(f"Máxima Geração de Potência Reativa: {powerflow.dbarraDF.loc[busidx, 'potencia_reativa_maxima'].values[0]} MVAr")
+                # filesmooth.write(f"Maxima Geracao de Potencia Reativa: {powerflow.dbarraDF.loc[busidx, 'potencia_reativa_maxima'].values[0]} MVAr")
                 filesmooth.write("\n\n")
 
                 filesmooth.write("| ITER | CH1 | CH2 |")
@@ -1165,7 +1165,7 @@ def tobecontinued(
 
             filesmooth.write("\n\n\n\n")
             filesmooth.write(
-                "fim do relatório de análise da variação da função suave referente a - "
+                "fim do relatorio de analise da variacao da funcao suave referente a - "
                 + busname
             )
             filesmooth.close()
@@ -1177,16 +1177,18 @@ def RCANI(
 ):
     """
     
-    Parâmetros
+    Parametros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
-    file.write("vv relatório de convergência vv")
+    ## Inicializacao
+    file.write("vv relatorio de convergencia vv")
     file.write("\n\n")
     file.write(" * * * * " + powerflow.solution["convergence"] + " * * * * ")
     file.write("\n\n")
-    file.write("Ponto de Máximo Carregamento: " + f"{powerflow.solution['lambda']:^f}")
+    file.write("Ponto de Maximo Carregamento: " + f"{powerflow.solution['lambda']:^f}")
     file.write("\n")
     file.write("Autovalores: " + str(powerflow.H))
+    file.write("\n")
+    file.write("Iteracoes")
     file.write("\n\n")
