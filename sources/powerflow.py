@@ -8,8 +8,6 @@
 
 from folder import folder
 from method import metodo
-from monitor import monitorfile
-from report import reportfile
 from setup import setup
 
 
@@ -53,12 +51,5 @@ class PowerFlow:
         # Numerical Method
         metodo(self)
 
-        reportfile(
-            self,
-        )
-        if self.method != "CPF":
-            monitorfile(
-                self,
-            )
-            # Convergence(powerflow, powerflow,)
-            # StateVar(powerflow, powerflow,)
+# Convergence(powerflow, powerflow,)
+# StateVar(powerflow, powerflow,)

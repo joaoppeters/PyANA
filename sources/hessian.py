@@ -7,6 +7,7 @@
 # ------------------------------------- #
 
 from numpy import reshape, zeros
+from numpy.linalg import solve
 from sympy import Symbol, symbols
 from sympy.functions import cos, sin
 
@@ -232,7 +233,8 @@ def hessian_init2(
     t = [symbols('t%d' % i) for i in range(powerflow.nbus)]
     l = [symbols('l%d' % i) for i in range(1)]
     w = [symbols('w%s' % i) for i in range(2*powerflow.nbus)]
-    powerflow.hessiansymb = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
+    powerflow.jacobsym = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
+    powerflow.hessiansym = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
 
     for idx, value in powerflow.dlinhaDF.iterrows():
         if value['estado']:
@@ -347,17 +349,17 @@ def hessian_init2(
                 )
             )
             
-            powerflow.hessiansymb[de, para] = h1
-            powerflow.hessiansymb[para, de] = h2
+            powerflow.jacobsym[de, para] = h1
+            powerflow.jacobsym[para, de] = h2
 
-            powerflow.hessiansymb[de, para+powerflow.nbus] = n1
-            powerflow.hessiansymb[para, de+powerflow.nbus] = n2
+            powerflow.jacobsym[de, para+powerflow.nbus] = n1
+            powerflow.jacobsym[para, de+powerflow.nbus] = n2
 
-            powerflow.hessiansymb[de+powerflow.nbus, para] = m1
-            powerflow.hessiansymb[para+powerflow.nbus, de] = m2
+            powerflow.jacobsym[de+powerflow.nbus, para] = m1
+            powerflow.jacobsym[para+powerflow.nbus, de] = m2
 
-            powerflow.hessiansymb[de+powerflow.nbus, para+powerflow.nbus] = l1
-            powerflow.hessiansymb[para+powerflow.nbus, de+powerflow.nbus] = l2
+            powerflow.jacobsym[de+powerflow.nbus, para+powerflow.nbus] = l1
+            powerflow.jacobsym[para+powerflow.nbus, de+powerflow.nbus] = l2
 
     # Elementos da diagonal principal da matriz jacobiana
     for idx, value in powerflow.dbarraDF.iterrows():
@@ -367,7 +369,7 @@ def hessian_init2(
 
         nk = (
             pcalcsym(powerflow=powerflow, v=v, t=t, idx=idx)
-            + (v[idx] ** 2) * powerflow.gdiag[idx]
+            + (v[idx] * 2) * powerflow.gdiag[idx]
         ) / v[idx]
 
         mk = -(v[idx] ** 2) * powerflow.gdiag[idx] + qcalcsym(
@@ -379,40 +381,51 @@ def hessian_init2(
             - (v[idx] ** 2) * powerflow.bdiag[idx]
         ) / v[idx]
 
-        powerflow.hessiansymb[idx, idx] = hk
-        powerflow.hessiansymb[idx, idx+powerflow.nbus] = nk
-        powerflow.hessiansymb[idx+powerflow.nbus, idx] = mk
-        powerflow.hessiansymb[idx+powerflow.nbus, idx+powerflow.nbus] = lk
+        powerflow.jacobsym[idx, idx] = hk
+        powerflow.jacobsym[idx, idx+powerflow.nbus] = nk
+        powerflow.jacobsym[idx+powerflow.nbus, idx] = mk
+        powerflow.jacobsym[idx+powerflow.nbus, idx+powerflow.nbus] = lk
 
-    powerflow.dxfwsymb = powerflow.hessiansymb @ w
+    powerflow.dxfwsym = powerflow.jacobsym.T @ w
 
-    keys = t + v + l + w
+    for k,_ in powerflow.dbarraDF.iterrows():
+        for m, _ in powerflow.dbarraDF.iterrows():
+            powerflow.hessiansym[k,m] = powerflow.dxfwsym[k].diff(t[m])
+            powerflow.hessiansym[k,m+powerflow.nbus] = powerflow.dxfwsym[k].diff(v[m])
+            powerflow.hessiansym[k+powerflow.nbus,m] = powerflow.dxfwsym[k+powerflow.nbus].diff(t[m])
+            powerflow.hessiansym[k+powerflow.nbus,m+powerflow.nbus] = powerflow.dxfwsym[k+powerflow.nbus].diff(v[m])
 
-    return keys
+    return t + v + l + w
 
 def hessian2(
         powerflow,
         var,
-        keys,
 ):
     
     ## Inicialização
     powerflow.dxfw = zeros((2*powerflow.nbus, 1), dtype=Symbol)
     powerflow.hessian = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
-    t = keys[:powerflow.nbus]
-    v = keys[powerflow.nbus:2*powerflow.nbus]
+    powerflow.jacobA = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
 
-    for k,_ in powerflow.dbarraDF.iterrows():
+    for k, _ in powerflow.dbarraDF.iterrows():
         for m, _ in powerflow.dbarraDF.iterrows():
-            powerflow.hessian[k,m] = powerflow.dxfwsymb[k].diff(t[m]).subs(var)
-            powerflow.hessian[k,m+powerflow.nbus] = powerflow.dxfwsymb[k].diff(v[m]).subs(var)
-            powerflow.hessian[k+powerflow.nbus,m] = powerflow.dxfwsymb[k+powerflow.nbus].diff(t[m]).subs(var)
-            powerflow.hessian[k+powerflow.nbus,m+powerflow.nbus] = powerflow.dxfwsymb[k+powerflow.nbus].diff(v[m]).subs(var)
+            try:
+                powerflow.jacobA[k,m] = powerflow.jacobsym[k,m].subs(var)
+                powerflow.jacobA[k,m+powerflow.nbus] = powerflow.jacobsym[k,m+powerflow.nbus].subs(var) 
+                powerflow.jacobA[k+powerflow.nbus,m] = powerflow.jacobsym[k+powerflow.nbus,m].subs(var)
+                powerflow.jacobA[k+powerflow.nbus,m+powerflow.nbus] = powerflow.jacobsym[k+powerflow.nbus,m+powerflow.nbus].subs(var)
+            except:
+                pass
 
-        powerflow.dxfw[k] = powerflow.dxfwsymb[k].subs(var)
-        powerflow.dxfw[k+powerflow.nbus] = powerflow.dxfwsymb[k+powerflow.nbus].subs(var)
+            powerflow.hessian[k,m] = powerflow.hessiansym[k,m].subs(var)
+            powerflow.hessian[k,m+powerflow.nbus] = powerflow.hessiansym[k,m+powerflow.nbus].subs(var)
+            powerflow.hessian[k+powerflow.nbus,m] = powerflow.hessiansym[k+powerflow.nbus,m].subs(var)
+            powerflow.hessian[k+powerflow.nbus,m+powerflow.nbus] = powerflow.hessiansym[k+powerflow.nbus,m+powerflow.nbus].subs(var)
+        powerflow.dxfw[k] = powerflow.dxfwsym[k].subs(var)
+        powerflow.dxfw[k+powerflow.nbus] = powerflow.dxfwsym[k+powerflow.nbus].subs(var)
 
-    powerflow.dxfw = reshape(powerflow.dxfw, (2*powerflow.nbus))
+    powerflow.dxfw = reshape(powerflow.dxfw, (2*powerflow.nbus)).astype(float)
+    powerflow.jacobA = powerflow.jacobA.astype(float)
     powerflow.hessian = powerflow.hessian.astype(float)
 
     # Submatrizes de controles ativos

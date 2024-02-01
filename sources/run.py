@@ -11,7 +11,7 @@ from powerflow import PowerFlow
 system = "neves.pwf"
 
 method = "NEWTON"
-method = "CPF"
+# method = "CPF"
 # method = 'STOCH-CE'
 method = "CANI"
 

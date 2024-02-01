@@ -20,13 +20,23 @@ def metodo(
     # Chamada específica método de Newton-Raphson Não-Linear
     if powerflow.method == "NEWTON":
         from admittance import admit
+        from monitor import monitorfile
         from newtonraphson import newton
+        from report import reportfile
 
         admit(
             powerflow,
         )
 
         newton(
+            powerflow,
+        )
+
+        reportfile(
+            powerflow,
+        )
+        
+        monitorfile(
             powerflow,
         )
 
@@ -41,12 +51,22 @@ def metodo(
     elif powerflow.method == "LINEAR":
         from admittance import admitlinear
         from linear import lpf
+        from monitor import monitorfile
+        from report import reportfile
 
         admitlinear(
             powerflow,
         )
 
         lpf(
+            powerflow,
+        )
+
+        monitorfile(
+            powerflow,
+        )
+
+        reportfile(
             powerflow,
         )
 
@@ -69,6 +89,7 @@ def metodo(
         from admittance import admit
         from continuation import cpf
         from newtonraphson import newton
+        from report import reportfile
 
         admit(
             powerflow,
@@ -79,6 +100,10 @@ def metodo(
         )
 
         cpf(
+            powerflow,
+        )
+
+        reportfile(
             powerflow,
         )
 
@@ -112,11 +137,16 @@ def metodo(
     if powerflow.method == "CANI":
         from admittance import admit
         from directmethod import cani
+        from report import reportfile
 
         admit(
             powerflow,
         )
 
         cani(
+            powerflow,
+        )
+
+        reportfile(
             powerflow,
         )

@@ -1,0 +1,35 @@
+February 01, 2024
+
+
+relatório do sistema neves
+
+solução do fluxo de potência via método 
+
+opções de controle ativadas: Nenhum controle ativo!
+
+opções de relatório ativadas: RBAR 
+
+
+
+vv relatório de convergência vv
+
+ * * * * SISTEMA CONVERGENTE * * * * 
+
+Ponto de Máximo Carregamento: 0.878965
+Autovalores: [0.71632166 0.60910047 0.34081533]
+
+vv relatório de barras vv área 1 vv
+
+|          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
+----------------------------------------------------------------------------------------------------------
+|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   |  0.000   |  0.000   |  0.000   |  0.000   |  0.000   |
+----------------------------------------------------------------------------------------------------------
+|  2  |  BARRA-002   |  1  |   1.000   |  -67.18  |  0.000   |  0.000   |  0.000   |  0.000   |  0.000   |
+----------------------------------------------------------------------------------------------------------
+|  3  |  BARRA-003   |  0  |   0.485   |  -51.21  |  0.000   |  -0.000  | 150.317  | 112.738  |  0.000   |
+----------------------------------------------------------------------------------------------------------
+
+
+
+fim do relatório do sistema neves

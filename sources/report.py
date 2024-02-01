@@ -64,11 +64,18 @@ def reportfile(
         powerflow,
     )
 
-    # Relatório de Convergência
-    rconv(
-        file,
-        powerflow,
-    )
+    if powerflow.method != 'CANI':
+        # Relatório de Convergência
+        RCONV(
+            file,
+            powerflow,
+        )
+    
+    else:
+        RCANI(
+            file,
+            powerflow,
+        )
 
     # Relatórios Extras - ordem de prioridade
     if powerflow.report:
@@ -152,6 +159,9 @@ def rheader(
     # Chamada específica método Continuado
     elif powerflow.method == "CPF":
         file.write("do fluxo de potência continuado")
+    # Chamada específica método direto (Canizares, 1993)
+    elif powerflow.method == "CPF":
+        file.write("do fluxo de potência direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opções de controle ativadas: ")
     if powerflow.control:
@@ -167,11 +177,11 @@ def rheader(
     file.write("\n\n\n\n")
 
 
-def rconv(
+def RCONV(
     file,
     powerflow,
 ):
-    """relatório de convergência
+    """relatório de convergência tradicional
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
@@ -179,7 +189,7 @@ def rconv(
 
     ## Inicialização
     file.write("vv relatório de convergência vv")
-    if powerflow.method != "LINEAR":
+    if (powerflow.method != "LINEAR"):
         file.write("\n\n")
         file.write(
             "       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |"
@@ -221,9 +231,7 @@ def rconv(
     file.write("\n")
     file.write("-" * 71)
     file.write("\n")
-    if (powerflow.method != "CPF") and (
-        powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
-    ):
+    if (powerflow.method != "CPF") and (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"):
         file.write(
             f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i+1]:^6.3f} | {powerflow.solution['convP'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busP'][i+1]]:^5d} | {powerflow.solution['convQ'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busQ'][i+1]]:^5d} | {powerflow.solution['convY'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busY'][i+1]]:^5d} |"
         )
@@ -1161,3 +1169,24 @@ def tobecontinued(
                 + busname
             )
             filesmooth.close()
+
+
+def RCANI(
+    file,
+    powerflow,
+):
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write("vv relatório de convergência vv")
+    file.write("\n\n")
+    file.write(" * * * * " + powerflow.solution["convergence"] + " * * * * ")
+    file.write("\n\n")
+    file.write("Ponto de Máximo Carregamento: " + f"{powerflow.solution['lambda']:^f}")
+    file.write("\n")
+    file.write("Autovalores: " + str(powerflow.H))
+    file.write("\n\n")

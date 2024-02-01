@@ -42,19 +42,11 @@ def cani(
         "active": zeros(powerflow.nbus),
         "reactive": zeros(powerflow.nbus),
         "freq": 1.0,
-        "freqiter": array([]),
-        "convP": array([]),
-        "busP": array([]),
-        "convQ": array([]),
-        "busQ": array([]),
-        "convY": array([]),
-        "busY": array([]),
-        "step": 0.0,
-        "stepsch": 0.0,
+        "lambda": 10.0,
         "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
         "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
         "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-        "eigen": ones(2*powerflow.nbus),
+        "eigen": 1*powerflow.mask.astype(float),
     }
 
     # Controles
@@ -62,56 +54,11 @@ def cani(
         powerflow,
     )
 
-    # Incremento do Nível de Carregamento e Geração
-    increment(
-        powerflow,
-    )
-
-    # Variáveis Especificadas
-    scheduled(
-        powerflow,
-    )
-
-    # Resíduos
-    residue(
-        powerflow,
-    )
-
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['stepsch']]), powerflow.solution['eigen']), axis=0)
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
     keys = hessian_init2(powerflow,)
     var = dict(zip(keys, powerflow.canistate))
 
-    while (norm(powerflow.canistate) > powerflow.options["CTOL"]):
-        # Matriz Jacobiana
-        jacobi(
-            powerflow,
-        )
-
-        # Matriz Hessiana
-        hessian2(
-            powerflow,
-            var,
-            keys,
-        )
-
-        # expansao total
-        expansion(
-            powerflow,
-        )
-
-        powerflow.canifunctions = concatenate((powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.solution['eigen'].T*powerflow.solution['eigen']) - 1])), axis=0).astype(float)
-
-        # Variáveis de estado
-        powerflow.statevar = solve(
-            powerflow.jaccani, powerflow.canifunctions
-        )
-
-        # Atualização das Variáveis de estado
-        var = update_statevar(
-            powerflow,
-            keys,
-        )
-
+    while True:
         # Incremento do Nível de Carregamento e Geração
         increment(
             powerflow,
@@ -122,10 +69,34 @@ def cani(
             powerflow,
         )
 
-        # Atualização dos resíduos
+        # Resíduos
         residue(
             powerflow,
         )
+
+        # Matriz Hessiana
+        hessian2(
+            powerflow,
+            var,
+        )
+
+        # expansao total
+        expansion(
+            powerflow,
+        )
+
+        powerflow.funccani = concatenate((-powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.H.T*powerflow.H) - 1])), axis=0).astype(float)
+
+        # Variáveis de estado
+        powerflow.statevar = solve(
+            powerflow.jaccani, powerflow.funccani
+        )
+
+        # Atualização das Variáveis de estado
+        update_statevar(
+            powerflow,
+        )
+        var = dict(zip(keys, powerflow.canistate))
 
         # Incremento de iteração
         powerflow.solution["iter"] += 1
@@ -135,7 +106,9 @@ def cani(
             powerflow.solution["convergence"] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
-    print()
+        elif (norm(powerflow.statevar) < powerflow.options["CTOL"]) and (powerflow.solution["iter"] <= powerflow.options["ACIT"]):
+            powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+            break
 
 
 def increment(
@@ -156,11 +129,11 @@ def increment(
         # Incremento de Carregamento
         powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
             "demanda_ativa"
-        ][idxbar] * (1 + powerflow.solution["stepsch"])
+        ][idxbar] * (1 + powerflow.solution["lambda"])
         powerflow.dbarraDF.at[
             idxbar, "demanda_reativa"
         ] = powerflow.solution["demanda_reativa"][idxbar] * (
-            1 + powerflow.solution["stepsch"]
+            1 + powerflow.solution["lambda"]
         )
 
     deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
@@ -292,7 +265,6 @@ def concatresidue(
 
 def update_statevar(
     powerflow,
-    keys,
 ):
     """atualização das variáveis de estado
 
@@ -302,22 +274,18 @@ def update_statevar(
 
     ## Inicialização
     # configuração completa
-    powerflow.solution["theta"] += powerflow.statevar[0 : (powerflow.nbus)]
-    powerflow.solution["voltage"] += powerflow.statevar[
-        (powerflow.nbus) : (2 * powerflow.nbus)
-    ]
-    powerflow.solution["stepsch"] += powerflow.statevar[(2 * powerflow.nbus)]
-    powerflow.solution["eigen"] += powerflow.statevar[(2 * powerflow.nbus)+1 : (6 * powerflow.nbus)+1]
+    powerflow.solution["theta"][powerflow.maskP] -= powerflow.statevar[0 : (powerflow.nbus)][~powerflow.maskQ]
+    powerflow.solution["voltage"][powerflow.maskQ] -= powerflow.statevar[0: (powerflow.nbus)][powerflow.maskQ]
+    powerflow.solution["lambda"] -= powerflow.statevar[(powerflow.nbus)]
+    powerflow.solution["eigen"][powerflow.mask] -= powerflow.statevar[(powerflow.nbus+1):]
     
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['stepsch']]), powerflow.solution['eigen']), axis=0)
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
     
     # Atualização das variáveis de estado adicionais para controles ativos
     if powerflow.controlcount > 0:
         controlupdt(
             powerflow,
         )
-
-    return dict(zip(keys, powerflow.canistate))
 
 
 def expansion(
@@ -330,52 +298,81 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.jacobA = deepcopy(powerflow.jacob.A)
-    # Arrays adicionais
-    colarray = zeros([2*powerflow.nbus, 1])
+    # powerflow.jacobA = deepcopy(powerflow.jacob.A)
+    powerflow.dtf = zeros([2*powerflow.nbus, 1])
     
     # Demanda
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 2:
-            colarray[idx, 0] = (
+            powerflow.dtf[idx, 0] = (
                 powerflow.solution["demanda_ativa"][idx]
                 - powerflow.solution["potencia_ativa"][idx]
             )
             if value["tipo"] == 0:
-                colarray[(idx + powerflow.nbus), 0] = powerflow.solution[
+                powerflow.dtf[(idx + powerflow.nbus), 0] = powerflow.solution[
                     "demanda_reativa"
                 ][idx]
 
-        if (powerflow.maskP[idx] == False):
-            powerflow.jacobA[idx, :] = 0
-            powerflow.jacobA[:, idx] = 0
-            powerflow.jacobA[idx, idx] = 1
-            powerflow.hessian[idx, :] = 0
-            powerflow.hessian[:, idx] = 0
-            powerflow.hessian[idx, idx] = 1
+        # if (powerflow.maskP[idx] == False):
+        #     powerflow.jacobA[idx, :] = 0
+        #     powerflow.jacobA[:, idx] = 0
+        #     powerflow.jacobA[idx, idx] = 1
+        #     powerflow.hessian[idx, :] = 0
+        #     powerflow.hessian[:, idx] = 0
+        #     powerflow.hessian[idx, idx] = 1
         
-        if (powerflow.maskQ[idx] == False) and (('QLIM' not in powerflow.control) or ('QLIMs' not in powerflow.control)):
-            powerflow.jacobA[idx+powerflow.nbus, :] = 0
-            powerflow.jacobA[:, idx+powerflow.nbus] = 0
-            powerflow.jacobA[idx+powerflow.nbus, idx+powerflow.nbus] = 1
-            powerflow.hessian[idx+powerflow.nbus, :] = 0
-            powerflow.hessian[:, idx+powerflow.nbus] = 0
-            powerflow.hessian[idx+powerflow.nbus, idx+powerflow.nbus] = 1
+        # if (powerflow.maskQ[idx] == False) and (('QLIM' not in powerflow.control) or ('QLIMs' not in powerflow.control)):
+        #     powerflow.jacobA[idx+powerflow.nbus, :] = 0
+        #     powerflow.jacobA[:, idx+powerflow.nbus] = 0
+        #     powerflow.jacobA[idx+powerflow.nbus, idx+powerflow.nbus] = 1
+        #     powerflow.hessian[idx+powerflow.nbus, :] = 0
+        #     powerflow.hessian[:, idx+powerflow.nbus] = 0
+        #     powerflow.hessian[idx+powerflow.nbus, idx+powerflow.nbus] = 1
 
-    colarray /= powerflow.options["BASE"]
+    powerflow.dtf /= powerflow.options["BASE"]
+
+    # reducao total
+    reduction(
+        powerflow,
+    )
     
     powerflow.jaccani = concatenate(
-        (powerflow.jacobA, colarray, zeros((2*powerflow.nbus, 2*powerflow.nbus))), axis=1,
+        (powerflow.jacobA, powerflow.dtf, powerflow.dwf), axis=1,
     )
 
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
-            (powerflow.hessian, zeros((2*powerflow.nbus, 1)), powerflow.jacobA), axis=1,
+            (powerflow.hessian, powerflow.dtg, powerflow.jacobA.T), axis=1,
         )), axis=0,
     )
 
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
-            (zeros((1, 2*powerflow.nbus)), zeros((1, 1)), 2*ones((1, 2*powerflow.nbus))), axis=1,
-        )), axis=0,
+            (powerflow.dxh, array([0]), powerflow.dwh), axis=0,
+        ).reshape((1,powerflow.mask.shape[0]+1))), axis=0,
     )
+
+
+def reduction(
+    powerflow,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]
+    powerflow.dxfw = powerflow.dxfw[powerflow.mask]
+    powerflow.H = powerflow.solution['eigen'][powerflow.mask]
+
+    powerflow.jacobA = powerflow.jacobA[powerflow.mask, :][:, powerflow.mask]
+    powerflow.dtf = powerflow.dtf[powerflow.mask]
+    powerflow.dwf = zeros((2*powerflow.nbus, 2*powerflow.nbus))[powerflow.mask, :][:, powerflow.mask]
+    
+    powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
+    powerflow.dtg = zeros((2*powerflow.nbus, 1))[powerflow.mask]
+    
+    powerflow.dxh =  zeros((1, 2*powerflow.nbus))[0, powerflow.mask]
+    powerflow.dwh = 2*ones((1, 2*powerflow.nbus))[0, powerflow.mask]
