@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import abs, any, append, array, max, zeros
+from numpy import abs, any, append, array, max, ones, zeros
 
 from ctrlfreq import *
 from ctrlqlim import *
@@ -310,8 +310,12 @@ def controljac(
     powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
-    if powerflow.maskctrlcount == 0:
+    if (powerflow.maskctrlcount == 0) and (powerflow.method != "CANI"):
         powerflow.mask = append(powerflow.mask, zeros(powerflow.controldim, dtype=bool))
+        powerflow.maskctrlcount += 1
+
+    elif (powerflow.maskctrlcount == 0) and (powerflow.method == "CANI"):
+        powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
 
@@ -756,7 +760,7 @@ def controlhess(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização
+    ## Inicialização 
     # Variável
     powerflow.truedim = deepcopy(powerflow.hessiansym.shape[0])
 
@@ -792,6 +796,8 @@ def controlhess(
             qlimssubhess(
                 powerflow,
             )
+            
+            powerflow.hessvar.update(powerflow.qlimsvar)
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnsubhess(
@@ -800,6 +806,66 @@ def controlhess(
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcsubhess(
+                powerflow,
+            )
+        # controle de magnitude de tensão de barramentos
+        elif value == "VCTRL":
+            pass
+
+
+def controljacsym(
+    powerflow,
+):
+    """submatrizes referentes aos controles ativos
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização    
+    # Variável
+    powerflow.truedim = deepcopy(powerflow.jacobiansym.shape[0])
+
+    # Loop
+    for value in powerflow.control:
+        # Dimensão
+        powerflow.controldim = powerflow.jacobiansym.shape[0] - powerflow.truedim
+
+        # controle remoto de tensão
+        if value == "CREM":
+            pass
+        # controle secundário de tensão
+        elif value == "CST":
+            pass
+        # controle de tap variável de transformador
+        elif value == "CTAP":
+            pass
+        # controle de ângulo de transformador defasador
+        elif value == "CTAPd":
+            pass
+        # controle de regulação primária de frequência
+        elif value == "FREQ":
+            freqsubjacsym(
+                powerflow,
+            )
+        # controle de limite de geração de potência reativa
+        elif value == "QLIM":
+            qlimsubjacsym(
+                powerflow,
+            )
+        # controle suave simbolico de limite de geração de potência reativa
+        elif value == "QLIMs":
+            qlimssubjacsym(
+                powerflow,
+            )
+        # controle suave numerico de limite de geração de potência reativa
+        elif value == "QLIMn":
+            qlimnsubjacsym(
+                powerflow,
+            )
+        # controle de compensadores estáticos de potência reativa
+        elif value == "SVCs":
+            svcsubjacsym(
                 powerflow,
             )
         # controle de magnitude de tensão de barramentos

@@ -34,6 +34,7 @@ def cani(
 
     ## Inicialização
     # Variável para armazenamento de solução
+    powerflow.hessvar = dict()
     powerflow.solution = {
         "system": powerflow.name,
         "iter": 0,
@@ -46,17 +47,17 @@ def cani(
         "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
         "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
         "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-        "eigen": 1*powerflow.mask.astype(float),
     }
 
     # Controles
     controlsol(
         powerflow,
     )
-
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
     keys = hessiansym(powerflow,)
-    powerflow.hessvar = dict(zip(keys, powerflow.canistate))
+    powerflow.solution["eigen"] = ones(powerflow.hessiansym.shape[0])
+    
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
+    powerflow.hessvar.update(dict(zip(keys, powerflow.canistate)))
 
     while True:
         # Incremento do Nível de Carregamento e Geração
@@ -100,7 +101,7 @@ def cani(
         update_statevar(
             powerflow,
         )
-        powerflow.hessvar = dict(zip(keys, powerflow.canistate))
+        powerflow.hessvar.update(dict(zip(keys, powerflow.canistate)))
 
         # Incremento de iteração
         powerflow.solution["iter"] += 1
@@ -277,19 +278,24 @@ def update_statevar(
     """
 
     ## Inicialização
-    # configuração completa
-    powerflow.solution["theta"][powerflow.maskP] -= powerflow.statevar[0 : (powerflow.nbus)][~powerflow.maskQ]
-    powerflow.solution["voltage"][powerflow.maskQ] -= powerflow.statevar[0: (powerflow.nbus)][powerflow.maskQ]
-    powerflow.solution["lambda"] -= powerflow.statevar[(powerflow.nbus)]
-    powerflow.solution["eigen"][powerflow.mask] -= powerflow.statevar[(powerflow.nbus+1):]
+    powerflow.controldim = 0
+    thetavalues = sum(powerflow.maskP)
+    voltagevalues = sum(powerflow.maskQ)
     
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
+    # configuração reduzida
+    powerflow.solution["theta"][powerflow.maskP] -= powerflow.statevar[0 : (thetavalues)]
+    powerflow.solution["voltage"][powerflow.maskQ] -= powerflow.statevar[(thetavalues): (thetavalues + voltagevalues)]
     
     # Atualização das variáveis de estado adicionais para controles ativos
     if powerflow.controlcount > 0:
         controlupdt(
             powerflow,
         )
+
+    powerflow.solution["lambda"] -= powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim)]
+    powerflow.solution["eigen"][powerflow.mask] -= powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim + 1):]
+    
+    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
 
 
 def expansion(
@@ -303,8 +309,7 @@ def expansion(
 
     ## Inicialização
     powerflow.jacobian = deepcopy(powerflow.jacob.A)
-    powerflow.hessian = deepcopy(powerflow.hessian)
-    powerflow.dtf = zeros([2*powerflow.nbus, 1])
+    powerflow.dtf = zeros([powerflow.jacobian.shape[0], 1])
     
     # Demanda
     for idx, value in powerflow.dbarraDF.iterrows():
@@ -338,7 +343,7 @@ def expansion(
     powerflow.jaccani = concatenate(
         (powerflow.jaccani, concatenate(
             (powerflow.dxh, array([0]), powerflow.dwh), axis=0,
-        ).reshape((1,powerflow.mask.shape[0]+1))), axis=0,
+        ).reshape((1,powerflow.jaccani.shape[1]))), axis=0,
     )
 
 
@@ -358,10 +363,10 @@ def reduction(
 
     powerflow.jacobian = powerflow.jacobian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtf = powerflow.dtf[powerflow.mask]
-    powerflow.dwf = zeros((2*powerflow.nbus, 2*powerflow.nbus))[powerflow.mask, :][:, powerflow.mask]
+    powerflow.dwf = zeros((powerflow.mask.shape[0], powerflow.mask.shape[0]))[powerflow.mask, :][:, powerflow.mask]
     
     powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
-    powerflow.dtg = zeros((2*powerflow.nbus, 1))[powerflow.mask]
+    powerflow.dtg = zeros((powerflow.mask.shape[0], 1))[powerflow.mask]
     
-    powerflow.dxh =  zeros((1, 2*powerflow.nbus))[0, powerflow.mask]
-    powerflow.dwh = 2*ones((1, 2*powerflow.nbus))[0, powerflow.mask]
+    powerflow.dxh =  zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
+    powerflow.dwh = 2*ones((1, powerflow.mask.shape[0]))[0, powerflow.mask]

@@ -28,7 +28,6 @@ def hessiansym(
     v = [symbols('v%d' % i) for i in range(powerflow.nbus)]
     t = [symbols('t%d' % i) for i in range(powerflow.nbus)]
     l = [symbols('l%d' % i) for i in range(1)]
-    w = [symbols('w%s' % i) for i in range(2*powerflow.nbus)]
     powerflow.jacobiansym = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
     powerflow.hessiansym = zeros((2*powerflow.nbus, 2*powerflow.nbus), dtype=Symbol)
 
@@ -187,7 +186,8 @@ def hessiansym(
         controljacsym(
             powerflow,
         )
-
+    
+    w = [symbols('w%s' % i) for i in range(powerflow.jacobiansym.shape[0])]
     powerflow.dxfwsym = powerflow.jacobiansym.T @ w
 
     for k,_ in powerflow.dbarraDF.iterrows():
@@ -197,19 +197,19 @@ def hessiansym(
             powerflow.hessiansym[k+powerflow.nbus,m] = powerflow.dxfwsym[k+powerflow.nbus].diff(t[m])
             powerflow.hessiansym[k+powerflow.nbus,m+powerflow.nbus] = powerflow.dxfwsym[k+powerflow.nbus].diff(v[m])
 
-    return t + v + l + w
-
-def hessian(
-        powerflow,
-):
-    
-    ## Inicialização
     # Submatrizes de controles ativos
     if powerflow.controlcount > 0:
         controlhess(
             powerflow,
         )
 
+    return t + v + l + w 
+
+def hessian(
+        powerflow,
+):
+    
+    ## Inicialização
     powerflow.dxfw = zeros((powerflow.dxfwsym.shape[0], 1), dtype=Symbol)
     powerflow.hessian = zeros((powerflow.hessiansym.shape[0], powerflow.hessiansym.shape[0]), dtype=Symbol)
 
@@ -222,5 +222,5 @@ def hessian(
         powerflow.dxfw[k] = powerflow.dxfwsym[k].subs(powerflow.hessvar)
         powerflow.dxfw[k+powerflow.nbus] = powerflow.dxfwsym[k+powerflow.nbus].subs(powerflow.hessvar)
 
-    powerflow.dxfw = reshape(powerflow.dxfw, (2*powerflow.nbus)).astype(float)
+    powerflow.dxfw = reshape(powerflow.dxfw, (powerflow.dxfw.shape[0])).astype(float)
     powerflow.hessian = powerflow.hessian.astype(float)

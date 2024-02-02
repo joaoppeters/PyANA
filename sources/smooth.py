@@ -15,6 +15,102 @@ from sympy.functions import exp as spexp
 from folder import smoothfolder
 
 
+def qlims(
+    powerflow,
+    idx,
+    value,
+):
+    """_summary_
+
+    Parametros:
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    seterr(all="ignore")
+
+    powerflow.qlimkeys[value["nome"]] = dict()
+    powerflow.qlimkeys[value["nome"]][0] = list()
+
+    powerflow.qlimsch[idx] = dict()
+    powerflow.qlimsch[idx]["ch1"] = list()
+    powerflow.qlimsch[idx]["ch2"] = list()
+    powerflow.qlimsch[idx]["ch3"] = list()
+    powerflow.qlimsch[idx]["ch4"] = list()
+
+    # Variáveis Simbólicas
+    qg = Symbol("qg%s" % idx)
+    v = Symbol("v%s" % idx)
+    vr = Symbol("vr%s" % idx)
+    qgx = Symbol("qgx%s" % idx)
+    qgn = Symbol("qgn%s" % idx)
+
+    # Associação das variáveis
+    powerflow.qlimsvar.update({
+        qg: powerflow.solution["qlim_reactive_generation"][idx]
+        / powerflow.options["BASE"],
+        v: powerflow.solution["voltage"][idx],
+        vr: value["tensao"] * 1e-3,
+        qgx: value["potencia_reativa_maxima"]
+        / powerflow.options["BASE"],
+        qgn: value["potencia_reativa_minima"]
+        / powerflow.options["BASE"],
+    })
+
+    ## Limites
+    # Limites de Tensão
+    vlimsup = vr + powerflow.options["SIGV"]
+    vliminf = vr - powerflow.options["SIGV"]
+
+    # Limites de Potência Reativa
+    qlimsup = qgx - powerflow.options["SIGQ"]
+    qliminf = qgn + powerflow.options["SIGV"]
+
+    ## Chaves
+    # Chave Superior de Potência Reativa
+    powerflow.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup)))
+
+    # Chave Inferior de Potência Reativa
+    powerflow.qlimsch[idx]["ch2"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (qg - qliminf)))
+
+    # Chave Superior de Tensão
+    powerflow.qlimsch[idx]["ch3"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (v - vlimsup)))
+
+    # Chave Inferior de Tensão
+    powerflow.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (v - vliminf)))
+
+    ## Equações de Controle
+    # Normal
+    Ynormal = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (v - vr)
+    )
+
+    # Superior
+    Ysuperior = (
+        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgx)
+    )
+
+    # Inferior
+    Yinferior = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgn)
+    )
+
+    powerflow.Y = [Ynormal, Ysuperior, Yinferior]
+
+    ## Derivadas
+    # Derivada Parcial de Y por Qg
+    powerflow.diffyqg[idx] = (powerflow.Y[0] + powerflow.Y[1] + powerflow.Y[2]).diff(qg)
+
+    # Derivada Parcial de Y por V
+    powerflow.diffyv[idx] = (powerflow.Y[0] + powerflow.Y[1] + powerflow.Y[2]).diff(v)
+
+
 def qlimssmooth(
     idx,
     powerflow,
@@ -31,90 +127,35 @@ def qlimssmooth(
     """
 
     ## Inicialização
-    seterr(all="ignore")
-
-    # Variáveis
-    if not hasattr(powerflow, "qlimkeys"):
-        powerflow.qlimkeys = dict()
-        powerflow.diffqlim = dict()
-
-    if powerflow.qlimkeys.get(powerflow.dbarraDF.loc[idx, "nome"]) is None:
-        powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]] = dict()
-
     if case not in powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]]:
         powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
-    qger = Symbol("Qg")
-    vger = Symbol("V")
-    vesp = Symbol("Vesp")
-    qmax = Symbol("Qmax")
-    qmin = Symbol("Qmin")
-
-    # Associação das variáveis
-    powerflow.qlimsvar =  {
-        qger: powerflow.solution["qlim_reactive_generation"][idx]
-        / powerflow.options["BASE"],
-        vger: powerflow.solution["voltage"][idx],
-        vesp: powerflow.dbarraDF.loc[idx, "tensao"] * 1e-3,
-        qmax: powerflow.dbarraDF.loc[idx, "potencia_reativa_maxima"]
-        / powerflow.options["BASE"],
-        qmin: powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"]
-        / powerflow.options["BASE"],
-    }
-
-    ## Limites
-    # Limites de Tensão
-    vlimsup = vesp + powerflow.options["SIGV"]
-    vliminf = vesp - powerflow.options["SIGV"]
-
-    # Limites de Potência Reativa
-    qlimsup = qmax - powerflow.options["SIGQ"]
-    qliminf = qmin + powerflow.options["SIGV"]
-
-    ## Chaves
-    # Chave Superior de Potência Reativa
-    ch1 = 1 / (1 + spexp(-powerflow.options["SIGK"] * (qger - qlimsup)))
-
-    # Chave Inferior de Potência Reativa
-    ch2 = 1 / (1 + spexp(powerflow.options["SIGK"] * (qger - qliminf)))
-
-    # Chave Superior de Tensão
-    ch3 = 1 / (1 + spexp(powerflow.options["SIGK"] * (vger - vlimsup)))
-
-    # Chave Inferior de Tensão
-    ch4 = 1 / (1 + spexp(-powerflow.options["SIGK"] * (vger - vliminf)))
-
-    ## Equações de Controle
-    # Normal
-    Ynormal = (1 - ch1 * ch3) * (1 - ch2 * ch4) * (vger - vesp)
-
-    # Superior
-    Ysuperior = (ch1 * ch3) * (1 - ch2 * ch4) * (qger - qmax)
-
-    # Inferior
-    Yinferior = (1 - ch1 * ch3) * (ch2 * ch4) * (qger - qmin)
-
-    ## Derivadas
-    # Derivada Parcial de Y por Qg
-    powerflow.diffyqg = (Ynormal + Ysuperior + Yinferior).diff(qger)
-
-    # Derivada Parcial de Y por V
-    powerflow.diffyv = (Ynormal + Ysuperior + Yinferior).diff(vger)
-
     # Expressão Geral
     powerflow.diffqlim[idx] = array(
-        [powerflow.diffyv.subs(powerflow.qlimsvar), powerflow.diffyqg.subs(powerflow.qlimsvar)], dtype="float64"
+        [
+            powerflow.diffyv[idx].subs(powerflow.qlimsvar),
+            powerflow.diffyqg[idx].subs(powerflow.qlimsvar),
+        ],
+        dtype="float64",
     )
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        -Ynormal.subs(powerflow.qlimsvar) - Ysuperior.subs(powerflow.qlimsvar) - Yinferior.subs(powerflow.qlimsvar)
+        -powerflow.Y[0].subs(powerflow.qlimsvar)
+        - powerflow.Y[1].subs(powerflow.qlimsvar)
+        - powerflow.Y[2].subs(powerflow.qlimsvar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case].append(
-        array([ch1.subs(powerflow.qlimsvar), ch2.subs(powerflow.qlimsvar), ch3.subs(powerflow.qlimsvar), ch4.subs(powerflow.qlimsvar)])
+        array(
+            [
+                powerflow.qlimsch[idx]["ch1"].subs(powerflow.qlimsvar),
+                powerflow.qlimsch[idx]["ch2"].subs(powerflow.qlimsvar),
+                powerflow.qlimsch[idx]["ch3"].subs(powerflow.qlimsvar),
+                powerflow.qlimsch[idx]["ch4"].subs(powerflow.qlimsvar),
+            ]
+        )
     )
 
 
@@ -134,65 +175,55 @@ def qlimnsmooth(
     """
 
     ## Inicialização
-    seterr(all="ignore")
-
-    # Variáveis
-    if not hasattr(powerflow, "qlimkeys"):
-        powerflow.qlimkeys = dict()
-        powerflow.diffqlim = dict()
-
-    if powerflow.qlimkeys.get(powerflow.dbarraDF.loc[idx, "nome"]) is None:
-        powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]] = dict()
-
     if case not in powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]]:
         powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
-    qger = (
+    qg = (
         powerflow.solution["qlim_reactive_generation"][idx] / powerflow.options["BASE"]
     )
-    vger = powerflow.solution["voltage"][idx]
-    vesp = powerflow.dbarraDF.loc[idx, "tensao"] * 1e-3
-    qmax = (
+    v = powerflow.solution["voltage"][idx]
+    vr = powerflow.dbarraDF.loc[idx, "tensao"] * 1e-3
+    qgx = (
         powerflow.dbarraDF.loc[idx, "potencia_reativa_maxima"]
         / powerflow.options["BASE"]
     )
-    qmin = (
+    qgn = (
         powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"]
         / powerflow.options["BASE"]
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vesp + powerflow.options["SIGV"]
-    vliminf = vesp - powerflow.options["SIGV"]
+    vlimsup = vr + powerflow.options["SIGV"]
+    vliminf = vr - powerflow.options["SIGV"]
 
     # Limites de Potência Reativa
-    qlimsup = qmax - powerflow.options["SIGQ"]
-    qliminf = qmin + powerflow.options["SIGV"]
+    qlimsup = qgx - powerflow.options["SIGQ"]
+    qliminf = qgn + powerflow.options["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    ch1 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (qger - qlimsup)))
+    ch1 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (qg - qlimsup)))
 
     # Chave Inferior de Poência Reativa
-    ch2 = 1 / (1 + npexp(powerflow.options["SIGK"] * (qger - qliminf)))
+    ch2 = 1 / (1 + npexp(powerflow.options["SIGK"] * (qg - qliminf)))
 
     # Chave Superior de Tensão
-    ch3 = 1 / (1 + npexp(powerflow.options["SIGK"] * (vger - vlimsup)))
+    ch3 = 1 / (1 + npexp(powerflow.options["SIGK"] * (v - vlimsup)))
 
     # Chave Inferior de Tensão
-    ch4 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (vger - vliminf)))
+    ch4 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (v - vliminf)))
 
     ## Equações de Controle
     # Normal
-    Ynormal = (1 - ch1 * ch3) * (1 - ch2 * ch4) * (vger - vesp)
+    Ynormal = (1 - ch1 * ch3) * (1 - ch2 * ch4) * (v - vr)
 
     # Superior
-    Ysuperior = (ch1 * ch3) * (1 - ch2 * ch4) * (qger - qmax)
+    Ysuperior = (ch1 * ch3) * (1 - ch2 * ch4) * (qg - qgx)
 
     # Inferior
-    Yinferior = (1 - ch1 * ch3) * (ch2 * ch4) * (qger - qmin)
+    Yinferior = (1 - ch1 * ch3) * (ch2 * ch4) * (qg - qgn)
 
     ## Derivadas
     # Expressão Geral
@@ -277,7 +308,7 @@ def svcreactivesmooth(
         ),
     }
 
-    powerflow.svcqvar =  deepcopy(powerflow.svcqvarkey)
+    powerflow.svcqvar = deepcopy(powerflow.svcqvarkey)
     powerflow.svcqvar[qgk] = (powerflow.solution["svc_reactive_generation"][ncer]) / (
         powerflow.options["BASE"]
     )
@@ -326,7 +357,9 @@ def svcreactivesmooth(
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(powerflow.svcqvar) - Ylinear.subs(powerflow.svcqvar) - Ycapacitiva.subs(powerflow.svcqvar)
+        -Yindutiva.subs(powerflow.svcqvar)
+        - Ylinear.subs(powerflow.svcqvar)
+        - Ycapacitiva.subs(powerflow.svcqvar)
     )
 
     ## Armazenamento de valores das chaves
@@ -406,7 +439,7 @@ def svccurrentsmooth(
         ),
     }
 
-    powerflow.svcivar =  deepcopy(powerflow.svcivarkey)
+    powerflow.svcivar = deepcopy(powerflow.svcivarkey)
     powerflow.svcivar[ik] = (powerflow.solution["svc_current_injection"][ncer]) / (
         powerflow.options["BASE"]
     )
@@ -455,7 +488,9 @@ def svccurrentsmooth(
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(powerflow.svcivar) - Ylinear.subs(powerflow.svcivar) - Ycapacitiva.subs(powerflow.svcivar)
+        -Yindutiva.subs(powerflow.svcivar)
+        - Ylinear.subs(powerflow.svcivar)
+        - Ycapacitiva.subs(powerflow.svcivar)
     )
 
     ## Armazenamento de valores das chaves
@@ -522,7 +557,7 @@ def svcalphasmooth(
     )
 
     # Associação das variáveis
-    powerflow.svcavar =  {
+    powerflow.svcavar = {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF.loc[ncer, "droop"],
@@ -613,7 +648,7 @@ def svcalphasmooth(
             powerflow.solution["voltage"][idxctrl] = deepcopy(vmsch)
             powerflow.solution["alpha"] = deepcopy(powerflow.solution["alpha0"])
 
-    powerflow.svcavar =  {
+    powerflow.svcavar = {
         vk: powerflow.solution["voltage"][idxcer],
         vm: powerflow.solution["voltage"][idxctrl],
         r: powerflow.dcerDF["droop"][0],
@@ -725,15 +760,15 @@ def qlimstorage(
                 powerflow.dbarraDF["nome"] == busname
             ].tolist()[0]
 
-            qmax = powerflow.dbarraDF.loc[
+            qgx = powerflow.dbarraDF.loc[
                 powerflow.dbarraDF["nome"] == busname,
                 "potencia_reativa_maxima",
             ].values[0]
-            qmin = powerflow.dbarraDF.loc[
+            qgn = powerflow.dbarraDF.loc[
                 powerflow.dbarraDF["nome"] == busname,
                 "potencia_reativa_minima",
             ].values[0]
-            vesp = (
+            vr = (
                 powerflow.dbarraDF.loc[
                     powerflow.dbarraDF["nome"] == busname, "tensao"
                 ].values[0]
@@ -741,8 +776,8 @@ def qlimstorage(
             )
 
             ch1space = linspace(
-                start=(qmax - (powerflow.options["SIGQ"] * 1e1)),
-                stop=(qmax + (powerflow.options["SIGQ"] * 1e1)),
+                start=(qgx - (powerflow.options["SIGQ"] * 1e1)),
+                stop=(qgx + (powerflow.options["SIGQ"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
@@ -750,13 +785,13 @@ def qlimstorage(
                 1
                 + npexp(
                     -powerflow.options["SIGK"]
-                    * (ch1space - qmax + powerflow.options["SIGQ"])
+                    * (ch1space - qgx + powerflow.options["SIGQ"])
                 )
             )
 
             ch2space = linspace(
-                start=(qmin - (powerflow.options["SIGQ"] * 1e1)),
-                stop=(qmin + (powerflow.options["SIGQ"] * 1e1)),
+                start=(qgn - (powerflow.options["SIGQ"] * 1e1)),
+                stop=(qgn + (powerflow.options["SIGQ"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
@@ -764,13 +799,13 @@ def qlimstorage(
                 1
                 + npexp(
                     powerflow.options["SIGK"]
-                    * (ch2space - qmin - powerflow.options["SIGQ"])
+                    * (ch2space - qgn - powerflow.options["SIGQ"])
                 )
             )
 
             chvspace = linspace(
-                start=(vesp - (powerflow.options["SIGV"] * 1e1)),
-                stop=(vesp + (powerflow.options["SIGV"] * 1e1)),
+                start=(vr - (powerflow.options["SIGV"] * 1e1)),
+                stop=(vr + (powerflow.options["SIGV"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
@@ -778,14 +813,14 @@ def qlimstorage(
                 1
                 + npexp(
                     powerflow.options["SIGK"]
-                    * (chvspace - vesp - powerflow.options["SIGV"])
+                    * (chvspace - vr - powerflow.options["SIGV"])
                 )
             )
             ch4value = 1 / (
                 1
                 + npexp(
                     -powerflow.options["SIGK"]
-                    * (chvspace - vesp + powerflow.options["SIGV"])
+                    * (chvspace - vr + powerflow.options["SIGV"])
                 )
             )
 
@@ -802,8 +837,8 @@ def qlimstorage(
             # smooth1
             ax1.hlines(
                 y=0.0,
-                xmin=(qmax - 0.5),
-                xmax=(qmax + 1e-2),
+                xmin=(qgx - 0.5),
+                xmax=(qgx + 1e-2),
                 color=(
                     0.0,
                     0.0,
@@ -811,7 +846,7 @@ def qlimstorage(
                 ),
             )
             ax1.vlines(
-                x=qmax,
+                x=qgx,
                 ymin=0.0,
                 ymax=1.0,
                 color=(
@@ -822,8 +857,8 @@ def qlimstorage(
             )
             ax1.hlines(
                 y=1.0,
-                xmin=(qmax - 1e-2),
-                xmax=(qmax + 0.5),
+                xmin=(qgx - 1e-2),
+                xmax=(qgx + 0.5),
                 color=(
                     0.0,
                     0.0,
@@ -849,8 +884,8 @@ def qlimstorage(
             # smooth2
             ax2.hlines(
                 y=1.0,
-                xmin=(qmin - 0.5),
-                xmax=(qmin + 1e-2),
+                xmin=(qgn - 0.5),
+                xmax=(qgn + 1e-2),
                 color=(
                     0.0,
                     0.0,
@@ -858,7 +893,7 @@ def qlimstorage(
                 ),
             )
             ax2.vlines(
-                x=qmin,
+                x=qgn,
                 ymin=0.0,
                 ymax=1.0,
                 color=(
@@ -869,8 +904,8 @@ def qlimstorage(
             )
             ax2.hlines(
                 y=0.0,
-                xmin=(qmin - 1e-2),
-                xmax=(qmin + 0.5),
+                xmin=(qgn - 1e-2),
+                xmax=(qgn + 0.5),
                 color=(
                     0.0,
                     0.0,
@@ -896,8 +931,8 @@ def qlimstorage(
             # smooth3
             ax3.hlines(
                 y=1.0,
-                xmin=(vesp - 0.5),
-                xmax=(vesp + 1e-2),
+                xmin=(vr - 0.5),
+                xmax=(vr + 1e-2),
                 color=(
                     0.0,
                     0.0,
@@ -905,7 +940,7 @@ def qlimstorage(
                 ),
             )
             ax3.vlines(
-                x=vesp,
+                x=vr,
                 ymin=0.0,
                 ymax=1.0,
                 color=(
@@ -916,8 +951,8 @@ def qlimstorage(
             )
             ax3.hlines(
                 y=0.0,
-                xmin=(vesp - 1e-2),
-                xmax=(vesp + 0.5),
+                xmin=(vr - 1e-2),
+                xmax=(vr + 0.5),
                 color=(
                     0.0,
                     0.0,
@@ -943,8 +978,8 @@ def qlimstorage(
             # smooth4
             ax4.hlines(
                 y=0.0,
-                xmin=(vesp - 0.5),
-                xmax=(vesp + 1e-2),
+                xmin=(vr - 0.5),
+                xmax=(vr + 1e-2),
                 color=(
                     0.0,
                     0.0,
@@ -952,7 +987,7 @@ def qlimstorage(
                 ),
             )
             ax4.vlines(
-                x=vesp,
+                x=vr,
                 ymin=0.0,
                 ymax=1.0,
                 color=(
@@ -963,8 +998,8 @@ def qlimstorage(
             )
             ax4.hlines(
                 y=1.0,
-                xmin=(vesp - 1e-2),
-                xmax=(vesp + 0.5),
+                xmin=(vr - 1e-2),
+                xmax=(vr + 0.5),
                 color=(
                     0.0,
                     0.0,
