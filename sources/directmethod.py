@@ -54,7 +54,7 @@ def cani(
         powerflow,
     )
     keys = hessiansym(powerflow,)
-    powerflow.solution["eigen"] = ones(powerflow.hessiansym.shape[0])
+    powerflow.solution["eigen"] = 1.*(powerflow.mask)
     
     powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
     powerflow.hessvar.update(dict(zip(keys, powerflow.canistate)))
@@ -278,7 +278,6 @@ def update_statevar(
     """
 
     ## Inicialização
-    powerflow.controldim = 0
     thetavalues = sum(powerflow.maskP)
     voltagevalues = sum(powerflow.maskQ)
     

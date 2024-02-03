@@ -1,11 +1,11 @@
-February 02, 2024
+February 03, 2024
 
 
 relatorio do sistema neves
 
 solucao do fluxo de potencia via metodo 
 
-opcoes de controle ativadas: Nenhum controle ativo!
+opcoes de controle ativadas: QLIMs 
 
 opcoes de relatorio ativadas: RBAR 
 
@@ -15,8 +15,8 @@ vv relatorio de convergencia vv
 
  * * * * SISTEMA DIVERGENTE (extrapolação de número máximo de iterações) * * * * 
 
-Ponto de Maximo Carregamento: -4.142726
-Autovalores: [0.46739298 0.33628086 0.81759347]
+Ponto de Maximo Carregamento: nan
+Autovalores: [nan nan nan nan nan nan nan]
 Iteracoes: 31
 
 vv relatorio de barras vv area 1 vv
@@ -24,11 +24,11 @@ vv relatorio de barras vv area 1 vv
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
 | NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
-|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   | -222.662 |  10.952  |  -0.000  |  -0.000  |  0.000   |
+|  1  |  BARRA-001   |  2  |    nan    |  +0.00   |   nan    |   nan    |   nan    |   nan    |   nan    |
 ----------------------------------------------------------------------------------------------------------
-|  2  |  BARRA-002   |  1  |   1.000   |  +24.69  |  0.000   | -89.264  |  -0.000  |  -0.000  |  0.000   |
+|  2  |  BARRA-002   |  1  |    nan    |   +nan   |   nan    |   nan    |   nan    |   nan    |   nan    |
 ----------------------------------------------------------------------------------------------------------
-|  3  |  BARRA-003   |  0  |   1.177   |  +22.54  |  0.000   |  0.000   | -251.418 | -188.564 |  0.000   |
+|  3  |  BARRA-003   |  0  |    nan    |   +nan   |   nan    |   nan    |   nan    |   nan    |   nan    |
 ----------------------------------------------------------------------------------------------------------
 
 

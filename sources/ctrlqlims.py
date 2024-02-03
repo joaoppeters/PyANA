@@ -175,8 +175,10 @@ def qlimsupdt(
     ## Inicialização
     if powerflow.method == "CANI":
         powerflow.dimpreqlim = powerflow.hessiansym[powerflow.mask,:][:,powerflow.mask].shape[0] - powerflow.controldim
+        sign = -1
     else:
-        powerflow.dimpreqlim = deepcopy(powerflow.jacob.shape[0])
+        powerflow.dimpreqlim = powerflow.jacob.shape[0]
+        sign = 1
         
     # Contador
     nger = 0
@@ -184,7 +186,7 @@ def qlimsupdt(
     # Atualização da potência reativa gerada
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += (
+            powerflow.solution["qlim_reactive_generation"][idx] += sign*(
                 powerflow.statevar[(powerflow.dimpreqlim + nger)]
                 * powerflow.options["BASE"]
             )

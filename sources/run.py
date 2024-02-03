@@ -17,7 +17,7 @@ method = "CANI"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 control = [
-    
+    "QLIMs",
 ]
 
 # monitor = [
