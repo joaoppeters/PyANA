@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "neves.pwf"
+system = "ieee14.pwf"
 
 method = "NEWTON"
 # method = "CPF"
@@ -17,7 +17,7 @@ method = "CANI"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 control = [
-    "QLIMs",
+    
 ]
 
 # monitor = [
@@ -26,7 +26,9 @@ control = [
 #     'QGMON',
 #     'VMON',
 # ]
-monitor = []
+monitor = [
+    
+]
 
 # report = [
 #     'RBAR',

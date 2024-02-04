@@ -211,16 +211,27 @@ def hessian(
     
     ## Inicialização
     powerflow.dxfw = zeros((powerflow.dxfwsym.shape[0], 1), dtype=Symbol)
+    powerflow.jacobian = zeros((powerflow.jacobiansym.shape[0], powerflow.jacobiansym.shape[0]), dtype=Symbol)
     powerflow.hessian = zeros((powerflow.hessiansym.shape[0], powerflow.hessiansym.shape[0]), dtype=Symbol)
 
     for k, _ in powerflow.dbarraDF.iterrows():
         for m, _ in powerflow.dbarraDF.iterrows():
+            try:
+                powerflow.jacobian[k,m] = powerflow.jacobiansym[k,m].subs(powerflow.hessvar)
+                powerflow.jacobian[k,m+powerflow.nbus] = powerflow.jacobiansym[k,m+powerflow.nbus].subs(powerflow.hessvar)
+                powerflow.jacobian[k+powerflow.nbus,m] = powerflow.jacobiansym[k+powerflow.nbus,m].subs(powerflow.hessvar)
+                powerflow.jacobian[k+powerflow.nbus,m+powerflow.nbus] = powerflow.jacobiansym[k+powerflow.nbus,m+powerflow.nbus].subs(powerflow.hessvar)
+            except:
+                pass
+                
             powerflow.hessian[k,m] = powerflow.hessiansym[k,m].subs(powerflow.hessvar)
             powerflow.hessian[k,m+powerflow.nbus] = powerflow.hessiansym[k,m+powerflow.nbus].subs(powerflow.hessvar)
             powerflow.hessian[k+powerflow.nbus,m] = powerflow.hessiansym[k+powerflow.nbus,m].subs(powerflow.hessvar)
             powerflow.hessian[k+powerflow.nbus,m+powerflow.nbus] = powerflow.hessiansym[k+powerflow.nbus,m+powerflow.nbus].subs(powerflow.hessvar)
+
         powerflow.dxfw[k] = powerflow.dxfwsym[k].subs(powerflow.hessvar)
         powerflow.dxfw[k+powerflow.nbus] = powerflow.dxfwsym[k+powerflow.nbus].subs(powerflow.hessvar)
 
     powerflow.dxfw = reshape(powerflow.dxfw, (powerflow.dxfw.shape[0])).astype(float)
+    powerflow.jacobian = powerflow.jacobian.astype(float)
     powerflow.hessian = powerflow.hessian.astype(float)

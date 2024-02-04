@@ -5,7 +5,7 @@ DCTE
 BASE   100  TEPA  1E-8  TEPR  1E-8  QLST  1E-8
 FULL     0  
 DMAX   100  ICMN  1E-9
-SIGK   1E8  SIGV  1E-6  SIGQ 1E-6
+SIGK   1E8  SIGV  1E-6  SIGQ  1E-6  CTOL  1E-3
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10

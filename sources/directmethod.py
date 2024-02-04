@@ -75,10 +75,10 @@ def cani(
             powerflow,
         )
 
-        # Matriz Jacobiana
-        jacobi(
-            powerflow,
-        )
+        # # Matriz Jacobiana
+        # jacobi(
+        #     powerflow,
+        # )
 
         # Matriz Hessiana
         hessian(
@@ -307,7 +307,6 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.jacobian = deepcopy(powerflow.jacob.A)
     powerflow.dtf = zeros([powerflow.jacobian.shape[0], 1])
     
     # Demanda

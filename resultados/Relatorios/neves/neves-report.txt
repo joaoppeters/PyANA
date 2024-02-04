@@ -1,11 +1,11 @@
-February 03, 2024
+February 04, 2024
 
 
 relatorio do sistema neves
 
-solucao do fluxo de potencia via metodo 
+solucao do fluxo de potencia via metodo do fluxo de potencia direto (Canizares, 1993)
 
-opcoes de controle ativadas: QLIMs 
+opcoes de controle ativadas: Nenhum controle ativo!
 
 opcoes de relatorio ativadas: RBAR 
 
@@ -13,22 +13,22 @@ opcoes de relatorio ativadas: RBAR
 
 vv relatorio de convergencia vv
 
- * * * * SISTEMA DIVERGENTE (extrapolação de número máximo de iterações) * * * * 
+ * * * * SISTEMA CONVERGENTE * * * * 
 
-Ponto de Maximo Carregamento: nan
-Autovalores: [nan nan nan nan nan nan nan]
-Iteracoes: 31
+Ponto de Maximo Carregamento: 1.120236
+Autovalores: [0.59905874 0.59341601 0.55495774]
+Iteracoes: 5
 
 vv relatorio de barras vv area 1 vv
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
 | NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
-|  1  |  BARRA-001   |  2  |    nan    |  +0.00   |   nan    |   nan    |   nan    |   nan    |   nan    |
+|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   |  0.000   |  0.000   |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  2  |  BARRA-002   |  1  |    nan    |   +nan   |   nan    |   nan    |   nan    |   nan    |   nan    |
+|  2  |  BARRA-002   |  1  |   1.000   |  -48.16  |  0.002   |  0.000   |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  3  |  BARRA-003   |  0  |    nan    |   +nan   |   nan    |   nan    |   nan    |   nan    |   nan    |
+|  3  |  BARRA-003   |  0  |   0.605   |  -38.55  |  -0.001  |  -0.137  | 169.544  | 127.158  |  0.000   |
 ----------------------------------------------------------------------------------------------------------
 
 

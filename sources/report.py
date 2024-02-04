@@ -160,7 +160,7 @@ def rheader(
     elif powerflow.method == "CPF":
         file.write("do fluxo de potencia continuado")
     # Chamada específica metodo direto (Canizares, 1993)
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "CANI":
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")
