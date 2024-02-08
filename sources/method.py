@@ -121,7 +121,7 @@ def metodo(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    if powerflow.method == "STOCH":
+    elif powerflow.method == "STOCH":
         from admittance import admit
         from stochastic import stoch
 
@@ -134,7 +134,7 @@ def metodo(
         )
 
     # Chamada especifica metodo direto (Canizares, 1993)
-    if powerflow.method == "CANI":
+    elif powerflow.method == "CANI":
         from admittance import admit
         from directmethod import cani
         from report import reportfile
@@ -148,5 +148,12 @@ def metodo(
         )
 
         reportfile(
+            powerflow,
+        )
+
+    # 
+    elif powerflow.method == "PWF":
+        from seletiva import seletiva
+        seletiva(
             powerflow,
         )
