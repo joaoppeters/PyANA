@@ -35,7 +35,7 @@ def metodo(
         reportfile(
             powerflow,
         )
-        
+
         monitorfile(
             powerflow,
         )
@@ -123,13 +123,17 @@ def metodo(
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "STOCH":
         from admittance import admit
-        from stochastic import stoch
+        from stochastic import stoch1, stoch2
 
         admit(
             powerflow,
         )
 
-        stoch(
+        stoch1(
+            powerflow,
+        )
+
+        stoch2(
             powerflow,
         )
 
@@ -151,9 +155,10 @@ def metodo(
             powerflow,
         )
 
-    # 
+    #
     elif powerflow.method == "PWF":
-        from seletiva import seletiva
+        from sources.filter import seletiva
+
         seletiva(
             powerflow,
         )

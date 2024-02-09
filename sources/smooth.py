@@ -46,16 +46,16 @@ def qlims(
     qgn = Symbol("qgn%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimsvar.update({
-        qg: powerflow.solution["qlim_reactive_generation"][idx]
-        / powerflow.options["BASE"],
-        v: powerflow.solution["voltage"][idx],
-        vr: value["tensao"] * 1e-3,
-        qgx: value["potencia_reativa_maxima"]
-        / powerflow.options["BASE"],
-        qgn: value["potencia_reativa_minima"]
-        / powerflow.options["BASE"],
-    })
+    powerflow.qlimsvar.update(
+        {
+            qg: powerflow.solution["qlim_reactive_generation"][idx]
+            / powerflow.options["BASE"],
+            v: powerflow.solution["voltage"][idx],
+            vr: value["tensao"] * 1e-3,
+            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
+            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+        }
+    )
 
     ## Limites
     # Limites de Tensão
@@ -68,16 +68,24 @@ def qlims(
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    powerflow.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup)))
+    powerflow.qlimsch[idx]["ch1"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
+    )
 
     # Chave Inferior de Potência Reativa
-    powerflow.qlimsch[idx]["ch2"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (qg - qliminf)))
+    powerflow.qlimsch[idx]["ch2"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
+    )
 
     # Chave Superior de Tensão
-    powerflow.qlimsch[idx]["ch3"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (v - vlimsup)))
+    powerflow.qlimsch[idx]["ch3"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
+    )
 
     # Chave Inferior de Tensão
-    powerflow.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (v - vliminf)))
+    powerflow.qlimsch[idx]["ch4"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
+    )
 
     ## Equações de Controle
     # Normal
@@ -179,9 +187,7 @@ def qlimnsmooth(
         powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
-    qg = (
-        powerflow.solution["qlim_reactive_generation"][idx] / powerflow.options["BASE"]
-    )
+    qg = powerflow.solution["qlim_reactive_generation"][idx] / powerflow.options["BASE"]
     v = powerflow.solution["voltage"][idx]
     vr = powerflow.dbarraDF.loc[idx, "tensao"] * 1e-3
     qgx = (

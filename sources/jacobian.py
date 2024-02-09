@@ -191,8 +191,10 @@ def jacobi(
             powerflow.maskP[idx] == False
         ):  # A presença do módulo se deve ao tratamento de limites (QLIM), que pode converter barra tipo 2 em -2
             hk = 1e20
-            if 'FREQ' in powerflow.control and value['tipo'] != 0:
-                hk = - (powerflow.solution['voltage'][idx] ** 2) * powerflow.bdiag[idx] - qcalc(powerflow=powerflow, idx=idx)
+            if "FREQ" in powerflow.control and value["tipo"] != 0:
+                hk = -(powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[
+                    idx
+                ] - qcalc(powerflow=powerflow, idx=idx)
 
         else:
             hk = -(powerflow.solution["voltage"][idx] ** 2) * powerflow.bdiag[

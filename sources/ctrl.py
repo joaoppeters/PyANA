@@ -125,7 +125,7 @@ def controlsol(
             powerflow.controlcount += 1
             powerflow.controlorder[powerflow.controlcount] = "VCTRL"
             pass
-    
+
     if not powerflow.controlcount:
         powerflow.controldim = 0
 
@@ -763,7 +763,7 @@ def controlhess(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização 
+    ## Inicialização
     # Variável
     powerflow.truedim = deepcopy(powerflow.hessiansym.shape[0])
 
@@ -799,7 +799,7 @@ def controlhess(
             qlimssubhess(
                 powerflow,
             )
-            
+
             powerflow.hessvar.update(powerflow.qlimsvar)
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
@@ -825,7 +825,7 @@ def controljacsym(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização    
+    ## Inicialização
     # Variável
     powerflow.truedim = deepcopy(powerflow.jacobiansym.shape[0])
 

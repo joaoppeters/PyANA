@@ -8,19 +8,17 @@
 
 from powerflow import PowerFlow
 
-system = "ons-inverno-2025-pes.pwf"
+system = "ieee14.pwf"
 
 method = "NEWTON"
 # method = "CPF"
-# method = 'STOCH-CE'
+# method = "CE"
+method = "STOCH"
 method = "CANI"
-
-method = "PWF"
+# method = "PWF"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
-control = [
-    
-]
+control = []
 
 # monitor = [
 #     'PFLOW',
@@ -28,9 +26,7 @@ control = [
 #     'QGMON',
 #     'VMON',
 # ]
-monitor = [
-    
-]
+monitor = []
 
 # report = [
 #     'RBAR',

@@ -64,13 +64,13 @@ def reportfile(
         powerflow,
     )
 
-    if powerflow.method != 'CANI':
+    if powerflow.method != "CANI":
         # Relatorio de Convergencia
         RCONV(
             file,
             powerflow,
         )
-    
+
     else:
         RCANI(
             file,
@@ -189,7 +189,7 @@ def RCONV(
 
     ## Inicializacao
     file.write("vv relatorio de convergencia vv")
-    if (powerflow.method != "LINEAR"):
+    if powerflow.method != "LINEAR":
         file.write("\n\n")
         file.write(
             "       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |"
@@ -231,7 +231,9 @@ def RCONV(
     file.write("\n")
     file.write("-" * 71)
     file.write("\n")
-    if (powerflow.method != "CPF") and (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"):
+    if (powerflow.method != "CPF") and (
+        powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
+    ):
         file.write(
             f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i+1]:^6.3f} | {powerflow.solution['convP'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busP'][i+1]]:^5d} | {powerflow.solution['convQ'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busQ'][i+1]]:^5d} | {powerflow.solution['convY'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarraDF['numero'][powerflow.solution['busY'][i+1]]:^5d} |"
         )
@@ -1176,7 +1178,7 @@ def RCANI(
     powerflow,
 ):
     """
-    
+
     Parametros
         powerflow: self do arquivo powerflow.py
     """

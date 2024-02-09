@@ -456,14 +456,15 @@ def qlimsubhess(
 
     pass
 
+
 def qlimsubjacsym(
     powerflow,
 ):
     """
-    
+
     Parametros
-        powerflow: self do arquivo powerflow.py    
+        powerflow: self do arquivo powerflow.py
     """
-    
+
     ## Inicializacao
     pass

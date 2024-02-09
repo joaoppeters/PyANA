@@ -53,10 +53,20 @@ def cani(
     controlsol(
         powerflow,
     )
-    keys = hessiansym(powerflow,)
-    powerflow.solution["eigen"] = 1.*(powerflow.mask)
-    
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
+    keys = hessiansym(
+        powerflow,
+    )
+    powerflow.solution["eigen"] = 1.0 * (powerflow.mask)
+
+    powerflow.canistate = concatenate(
+        (
+            powerflow.solution["theta"],
+            powerflow.solution["voltage"],
+            array([powerflow.solution["lambda"]]),
+            powerflow.solution["eigen"],
+        ),
+        axis=0,
+    )
     powerflow.hessvar.update(dict(zip(keys, powerflow.canistate)))
 
     while True:
@@ -90,12 +100,17 @@ def cani(
             powerflow,
         )
 
-        powerflow.funccani = concatenate((-powerflow.deltaPQY, powerflow.dxfw, array([sum(powerflow.H.T*powerflow.H) - 1])), axis=0).astype(float)
+        powerflow.funccani = concatenate(
+            (
+                -powerflow.deltaPQY,
+                powerflow.dxfw,
+                array([sum(powerflow.H.T * powerflow.H) - 1]),
+            ),
+            axis=0,
+        ).astype(float)
 
         # Variáveis de estado
-        powerflow.statevar = solve(
-            powerflow.jaccani, powerflow.funccani
-        )
+        powerflow.statevar = solve(powerflow.jaccani, powerflow.funccani)
 
         # Atualização das Variáveis de estado
         update_statevar(
@@ -107,11 +122,15 @@ def cani(
         powerflow.solution["iter"] += 1
 
         # Condição de Divergência por iterações
-        if (powerflow.solution["iter"] > powerflow.options["ACIT"]):
-            powerflow.solution["convergence"] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
+            powerflow.solution[
+                "convergence"
+            ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
-        elif (norm(powerflow.statevar) < powerflow.options["CTOL"]) and (powerflow.solution["iter"] <= powerflow.options["ACIT"]):
+        elif (norm(powerflow.statevar) < powerflow.options["CTOL"]) and (
+            powerflow.solution["iter"] <= powerflow.options["ACIT"]
+        ):
             powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
             break
 
@@ -130,16 +149,14 @@ def increment(
     preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
 
     # Incremento de carga
-    for idxbar,_ in powerflow.dbarraDF.iterrows():
+    for idxbar, _ in powerflow.dbarraDF.iterrows():
         # Incremento de Carregamento
         powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
             "demanda_ativa"
         ][idxbar] * (1 + powerflow.solution["lambda"])
-        powerflow.dbarraDF.at[
-            idxbar, "demanda_reativa"
-        ] = powerflow.solution["demanda_reativa"][idxbar] * (
-            1 + powerflow.solution["lambda"]
-        )
+        powerflow.dbarraDF.at[idxbar, "demanda_reativa"] = powerflow.solution[
+            "demanda_reativa"
+        ][idxbar] * (1 + powerflow.solution["lambda"])
 
     deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
 
@@ -280,21 +297,35 @@ def update_statevar(
     ## Inicialização
     thetavalues = sum(powerflow.maskP)
     voltagevalues = sum(powerflow.maskQ)
-    
+
     # configuração reduzida
-    powerflow.solution["theta"][powerflow.maskP] -= powerflow.statevar[0 : (thetavalues)]
-    powerflow.solution["voltage"][powerflow.maskQ] -= powerflow.statevar[(thetavalues): (thetavalues + voltagevalues)]
-    
+    powerflow.solution["theta"][powerflow.maskP] -= powerflow.statevar[0:(thetavalues)]
+    powerflow.solution["voltage"][powerflow.maskQ] -= powerflow.statevar[
+        (thetavalues) : (thetavalues + voltagevalues)
+    ]
+
     # Atualização das variáveis de estado adicionais para controles ativos
     if powerflow.controlcount > 0:
         controlupdt(
             powerflow,
         )
 
-    powerflow.solution["lambda"] -= powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim)]
-    powerflow.solution["eigen"][powerflow.mask] -= powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim + 1):]
-    
-    powerflow.canistate = concatenate((powerflow.solution['theta'], powerflow.solution['voltage'], array([powerflow.solution['lambda']]), powerflow.solution['eigen']), axis=0)
+    powerflow.solution["lambda"] -= powerflow.statevar[
+        (thetavalues + voltagevalues + powerflow.controldim)
+    ]
+    powerflow.solution["eigen"][powerflow.mask] -= powerflow.statevar[
+        (thetavalues + voltagevalues + powerflow.controldim + 1) :
+    ]
+
+    powerflow.canistate = concatenate(
+        (
+            powerflow.solution["theta"],
+            powerflow.solution["voltage"],
+            array([powerflow.solution["lambda"]]),
+            powerflow.solution["eigen"],
+        ),
+        axis=0,
+    )
 
 
 def expansion(
@@ -308,7 +339,7 @@ def expansion(
 
     ## Inicialização
     powerflow.dtf = zeros([powerflow.jacobian.shape[0], 1])
-    
+
     # Demanda
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 2:
@@ -327,21 +358,32 @@ def expansion(
     reduction(
         powerflow,
     )
-    
+
     powerflow.jaccani = concatenate(
-        (powerflow.jacobian, powerflow.dtf, powerflow.dwf), axis=1,
+        (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
+        axis=1,
     )
 
     powerflow.jaccani = concatenate(
-        (powerflow.jaccani, concatenate(
-            (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T), axis=1,
-        )), axis=0,
+        (
+            powerflow.jaccani,
+            concatenate(
+                (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
+                axis=1,
+            ),
+        ),
+        axis=0,
     )
 
     powerflow.jaccani = concatenate(
-        (powerflow.jaccani, concatenate(
-            (powerflow.dxh, array([0]), powerflow.dwh), axis=0,
-        ).reshape((1,powerflow.jaccani.shape[1]))), axis=0,
+        (
+            powerflow.jaccani,
+            concatenate(
+                (powerflow.dxh, array([0]), powerflow.dwh),
+                axis=0,
+            ).reshape((1, powerflow.jaccani.shape[1])),
+        ),
+        axis=0,
     )
 
 
@@ -357,14 +399,16 @@ def reduction(
     ## Inicialização
     powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]
     powerflow.dxfw = powerflow.dxfw[powerflow.mask]
-    powerflow.H = powerflow.solution['eigen'][powerflow.mask]
+    powerflow.H = powerflow.solution["eigen"][powerflow.mask]
 
     powerflow.jacobian = powerflow.jacobian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtf = powerflow.dtf[powerflow.mask]
-    powerflow.dwf = zeros((powerflow.mask.shape[0], powerflow.mask.shape[0]))[powerflow.mask, :][:, powerflow.mask]
-    
+    powerflow.dwf = zeros((powerflow.mask.shape[0], powerflow.mask.shape[0]))[
+        powerflow.mask, :
+    ][:, powerflow.mask]
+
     powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtg = zeros((powerflow.mask.shape[0], 1))[powerflow.mask]
-    
-    powerflow.dxh =  zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
-    powerflow.dwh = 2*ones((1, powerflow.mask.shape[0]))[0, powerflow.mask]
+
+    powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
+    powerflow.dwh = 2 * ones((1, powerflow.mask.shape[0]))[0, powerflow.mask]

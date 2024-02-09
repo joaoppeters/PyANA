@@ -8,6 +8,7 @@
 
 from d import *
 
+
 def pwf(
     powerflow,
 ):
@@ -64,10 +65,14 @@ def codes(
     ## Inicialização
     # Variável
     powerflow.codes = {
-        "DANC": False, "DARE": False,
+        "DANC": False,
+        "DARE": False,
         "DBAR": False,
-        "DCER": False, "DCTE": False,
-        "DGBT": False, "DGER": False, "DGLT": False,
+        "DCER": False,
+        "DCTE": False,
+        "DGBT": False,
+        "DGER": False,
+        "DGLT": False,
         "DINC": False,
         "DLIN": False,
     }

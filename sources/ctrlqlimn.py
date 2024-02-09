@@ -314,11 +314,11 @@ def qlimnsubjacsym(
     powerflow,
 ):
     """
-    
+
     Parametros
         powerflow: self do arquivo powerflow.py
     """
-    
-    ## Inicializacao 
-    
+
+    ## Inicializacao
+
     pass

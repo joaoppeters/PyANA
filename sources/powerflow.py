@@ -51,5 +51,6 @@ class PowerFlow:
         # Numerical Method
         metodo(self)
 
+
 # Convergence(powerflow, powerflow,)
 # StateVar(powerflow, powerflow,)

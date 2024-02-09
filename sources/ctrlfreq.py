@@ -566,14 +566,15 @@ def freqsubhess(
 
     pass
 
+
 def freqsubjacsym(
     powerflow,
 ):
     """
-    
+
     Parametros
-        powerflow: self do arquivo powerflow.py    
+        powerflow: self do arquivo powerflow.py
     """
-    
+
     ## Inicializacao
     pass

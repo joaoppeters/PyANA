@@ -28,19 +28,22 @@ def qlimssol(
         powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
-    
+
         powerflow.qlimsch = dict()
         powerflow.qlimkeys = dict()
         powerflow.diffqlim = dict()
         powerflow.qlimsvar = dict()
         powerflow.diffyqg = dict()
         powerflow.diffyv = dict()
-        
+
         # Inicialização sigmoides
         for idx, value in powerflow.dbarraDF.iterrows():
             if value["tipo"] != 0:
-                qlims(powerflow, idx, value,)
-    
+                qlims(
+                    powerflow,
+                    idx,
+                    value,
+                )
 
 
 def qlimsres(
@@ -174,19 +177,22 @@ def qlimsupdt(
 
     ## Inicialização
     if powerflow.method == "CANI":
-        powerflow.dimpreqlim = powerflow.hessiansym[powerflow.mask,:][:,powerflow.mask].shape[0] - powerflow.controldim
+        powerflow.dimpreqlim = (
+            powerflow.hessiansym[powerflow.mask, :][:, powerflow.mask].shape[0]
+            - powerflow.controldim
+        )
         sign = -1
     else:
         powerflow.dimpreqlim = powerflow.jacob.shape[0]
         sign = 1
-        
+
     # Contador
     nger = 0
 
     # Atualização da potência reativa gerada
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += sign*(
+            powerflow.solution["qlim_reactive_generation"][idx] += sign * (
                 powerflow.statevar[(powerflow.dimpreqlim + nger)]
                 * powerflow.options["BASE"]
             )
@@ -357,7 +363,7 @@ def qlimssubhess(
 
     ## Inicialização
     from sympy import Symbol
-    
+
     # hessiana:
     #
     #   H     N   px
@@ -373,20 +379,22 @@ def qlimssubhess(
     powerflow.yv = zeros([powerflow.nger, powerflow.nbus], dtype=Symbol)
 
     # Contador
-    nger = 0  
+    nger = 0
 
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
             # Variáveis Simbólicas
             qg = Symbol("qg%s" % idx)
-            v = Symbol("v%s" % idx)  
+            v = Symbol("v%s" % idx)
 
             # powerflow.px[idx, nger] = powerflow.dxfwsym[idx].diff(qger)
-            powerflow.qx[idx, nger] = powerflow.dxfwsym[idx+powerflow.nbus].diff(qg)
-            
+            powerflow.qx[idx, nger] = powerflow.dxfwsym[idx + powerflow.nbus].diff(qg)
+
             # powerflow.yt[nger, idx] = powerflow.dxfwsym[2*powerflow.nbus + nger].diff(tger)
-            powerflow.yv[nger, idx] = powerflow.dxfwsym[2*powerflow.nbus + nger].diff(v)
+            powerflow.yv[nger, idx] = powerflow.dxfwsym[2 * powerflow.nbus + nger].diff(
+                v
+            )
 
             # Barras PQV
             if (
@@ -396,7 +404,9 @@ def qlimssubhess(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                powerflow.yx[nger, nger] = powerflow.dxfwsym[2*powerflow.nbus + nger].diff(qg)
+                powerflow.yx[nger, nger] = powerflow.dxfwsym[
+                    2 * powerflow.nbus + nger
+                ].diff(qg)
 
             # Incrementa contador
             nger += 1
@@ -408,19 +418,19 @@ def qlimssubhess(
         powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
 
         ytv = concatenate(
-                (powerflow.yt, powerflow.yv, powerflow.extrarow),
-                axis=1,
-            )
-        
+            (powerflow.yt, powerflow.yv, powerflow.extrarow),
+            axis=1,
+        )
+
         pqyx = concatenate(
-                (
-                    powerflow.px,
-                    powerflow.qx,
-                    powerflow.extracol,
-                    powerflow.yx,
-                ),
-                axis=0,
-            )
+            (
+                powerflow.px,
+                powerflow.qx,
+                powerflow.extracol,
+                powerflow.yx,
+            ),
+            axis=0,
+        )
 
     elif powerflow.controldim == 0:
         ytv = concatenate((powerflow.yt, powerflow.yv), axis=1)
@@ -428,7 +438,6 @@ def qlimssubhess(
 
     powerflow.hessiansym = concatenate((powerflow.hessiansym, ytv), axis=0)
     powerflow.hessiansym = concatenate((powerflow.hessiansym, pqyx), axis=1)
-
 
 
 def qlimssubjacsym(
@@ -442,7 +451,7 @@ def qlimssubjacsym(
 
     ## Inicialização
     from sympy import Symbol
-    
+
     # hessiana:
     #
     #   H     N   px
@@ -458,7 +467,7 @@ def qlimssubjacsym(
     powerflow.yv = zeros([powerflow.nger, powerflow.nbus], dtype=Symbol)
 
     # Contador
-    nger = 0 
+    nger = 0
 
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
@@ -486,19 +495,19 @@ def qlimssubjacsym(
         powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
 
         ytv = concatenate(
-                (powerflow.yt, powerflow.yv, powerflow.extrarow),
-                axis=1,
-            )
-        
+            (powerflow.yt, powerflow.yv, powerflow.extrarow),
+            axis=1,
+        )
+
         pqyx = concatenate(
-                (
-                    powerflow.px,
-                    powerflow.qx,
-                    powerflow.extracol,
-                    powerflow.yx,
-                ),
-                axis=0,
-            )
+            (
+                powerflow.px,
+                powerflow.qx,
+                powerflow.extracol,
+                powerflow.yx,
+            ),
+            axis=0,
+        )
 
     elif powerflow.controldim == 0:
         ytv = concatenate((powerflow.yt, powerflow.yv), axis=1)

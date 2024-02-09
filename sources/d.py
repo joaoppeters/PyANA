@@ -9,6 +9,7 @@
 from numpy import concatenate, nan, ones
 from pandas import DataFrame as DF
 
+
 def danc(
     powerflow,
 ):
@@ -25,15 +26,11 @@ def danc(
     powerflow.danc["fator_carga_reativa"] = list()
     powerflow.danc["fator_shunt_barra"] = list()
 
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.danc["area"].append(
-                powerflow.lines[powerflow.linecount][:5]
-            )
+            powerflow.danc["area"].append(powerflow.lines[powerflow.linecount][:5])
             powerflow.danc["fator_carga_ativa"].append(
                 powerflow.lines[powerflow.linecount][5:12]
             )
@@ -69,7 +66,7 @@ def dare(
     powerflow,
 ):
     """inicialização para leitura de dados de intercâmbio de potência ativa entre áreas
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
@@ -82,21 +79,15 @@ def dare(
     powerflow.dare["intercambio_minimo"] = list()
     powerflow.dare["intercambio_maximo"] = list()
 
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dare["numero"].append(
-                powerflow.lines[powerflow.linecount][:3]
-            )
+            powerflow.dare["numero"].append(powerflow.lines[powerflow.linecount][:3])
             powerflow.dare["intercambio_liquido"].append(
                 powerflow.lines[powerflow.linecount][7:13]
             )
-            powerflow.dare["nome"].append(
-                powerflow.lines[powerflow.linecount][18:54]
-            )
+            powerflow.dare["nome"].append(powerflow.lines[powerflow.linecount][18:54])
             powerflow.dare["intercambio_minimo"].append(
                 powerflow.lines[powerflow.linecount][55:61]
             )
@@ -171,25 +162,15 @@ def dbar(
     powerflow.dbar["agreg8"] = list()
     powerflow.dbar["agreg9"] = list()
     powerflow.dbar["agreg10"] = list()
-    
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dbar["numero"].append(
-                powerflow.lines[powerflow.linecount][:5]
-            )
-            powerflow.dbar["operacao"].append(
-                powerflow.lines[powerflow.linecount][5]
-            )
-            powerflow.dbar["estado"].append(
-                powerflow.lines[powerflow.linecount][6]
-            )
-            powerflow.dbar["tipo"].append(
-                powerflow.lines[powerflow.linecount][7]
-            )
+            powerflow.dbar["numero"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dbar["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dbar["estado"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dbar["tipo"].append(powerflow.lines[powerflow.linecount][7])
             powerflow.dbar["grupo_base_tensao"].append(
                 powerflow.lines[powerflow.linecount][8:10]
             )
@@ -199,12 +180,8 @@ def dbar(
             powerflow.dbar["grupo_limite_tensao"].append(
                 powerflow.lines[powerflow.linecount][22:24]
             )
-            powerflow.dbar["tensao"].append(
-                powerflow.lines[powerflow.linecount][24:28]
-            )
-            powerflow.dbar["angulo"].append(
-                powerflow.lines[powerflow.linecount][28:32]
-            )
+            powerflow.dbar["tensao"].append(powerflow.lines[powerflow.linecount][24:28])
+            powerflow.dbar["angulo"].append(powerflow.lines[powerflow.linecount][28:32])
             powerflow.dbar["potencia_ativa"].append(
                 powerflow.lines[powerflow.linecount][32:37]
             )
@@ -229,33 +206,17 @@ def dbar(
             powerflow.dbar["shunt_barra"].append(
                 powerflow.lines[powerflow.linecount][68:73]
             )
-            powerflow.dbar["area"].append(
-                powerflow.lines[powerflow.linecount][73:76]
-            )
+            powerflow.dbar["area"].append(powerflow.lines[powerflow.linecount][73:76])
             powerflow.dbar["tensao_base"].append(
                 powerflow.lines[powerflow.linecount][76:80]
             )
-            powerflow.dbar["modo"].append(
-                powerflow.lines[powerflow.linecount][80]
-            )
-            powerflow.dbar["agreg1"].append(
-                powerflow.lines[powerflow.linecount][81:84]
-            )
-            powerflow.dbar["agreg2"].append(
-                powerflow.lines[powerflow.linecount][84:87]
-            )
-            powerflow.dbar["agreg3"].append(
-                powerflow.lines[powerflow.linecount][87:90]
-            )
-            powerflow.dbar["agreg4"].append(
-                powerflow.lines[powerflow.linecount][90:93]
-            )
-            powerflow.dbar["agreg5"].append(
-                powerflow.lines[powerflow.linecount][93:96]
-            )
-            powerflow.dbar["agreg6"].append(
-                powerflow.lines[powerflow.linecount][96:99]
-            )
+            powerflow.dbar["modo"].append(powerflow.lines[powerflow.linecount][80])
+            powerflow.dbar["agreg1"].append(powerflow.lines[powerflow.linecount][81:84])
+            powerflow.dbar["agreg2"].append(powerflow.lines[powerflow.linecount][84:87])
+            powerflow.dbar["agreg3"].append(powerflow.lines[powerflow.linecount][87:90])
+            powerflow.dbar["agreg4"].append(powerflow.lines[powerflow.linecount][90:93])
+            powerflow.dbar["agreg5"].append(powerflow.lines[powerflow.linecount][93:96])
+            powerflow.dbar["agreg6"].append(powerflow.lines[powerflow.linecount][96:99])
             powerflow.dbar["agreg7"].append(
                 powerflow.lines[powerflow.linecount][99:102]
             )
@@ -274,39 +235,39 @@ def dbar(
     powerflow.dbarraDF = DF(data=powerflow.dbar)
     powerflow.dbarraDF = powerflow.dbarraDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dbarraDF = powerflow.dbarraDF.astype(
-            {
-                "numero": "int",
-                "operacao": "object",
-                "estado": "object",
-                "tipo": "int",
-                "grupo_base_tensao": "object",
-                "nome": "str",
-                "grupo_limite_tensao": "object",
-                "tensao": "float",
-                "angulo": "float",
-                "potencia_ativa": "float",
-                "potencia_reativa": "float",
-                "potencia_reativa_minima": "float",
-                "potencia_reativa_maxima": "float",
-                "barra_controlada": "int",
-                "demanda_ativa": "float",
-                "demanda_reativa": "float",
-                "shunt_barra": "float",
-                "area": "int",
-                "tensao_base": "float",
-                "modo": "object",
-                "agreg1": "object",
-                "agreg2": "object",
-                "agreg3": "object",
-                "agreg4": "object",
-                "agreg5": "object",
-                "agreg6": "object",
-                "agreg7": "object",
-                "agreg8": "object",
-                "agreg9": "object",
-                "agreg10": "object",
-            }
-        )
+        {
+            "numero": "int",
+            "operacao": "object",
+            "estado": "object",
+            "tipo": "int",
+            "grupo_base_tensao": "object",
+            "nome": "str",
+            "grupo_limite_tensao": "object",
+            "tensao": "float",
+            "angulo": "float",
+            "potencia_ativa": "float",
+            "potencia_reativa": "float",
+            "potencia_reativa_minima": "float",
+            "potencia_reativa_maxima": "float",
+            "barra_controlada": "int",
+            "demanda_ativa": "float",
+            "demanda_reativa": "float",
+            "shunt_barra": "float",
+            "area": "int",
+            "tensao_base": "float",
+            "modo": "object",
+            "agreg1": "object",
+            "agreg2": "object",
+            "agreg3": "object",
+            "agreg4": "object",
+            "agreg5": "object",
+            "agreg6": "object",
+            "agreg7": "object",
+            "agreg8": "object",
+            "agreg9": "object",
+            "agreg10": "object",
+        }
+    )
     if powerflow.dbarraDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
@@ -356,7 +317,9 @@ def dbar(
         powerflow.npq = powerflow.nbus - powerflow.nger
 
         # Tensao Base
-        powerflow.dbarraDF.loc[powerflow.dbarraDF["tensao_base"] == 0.0, "tensao_base"] = 1000.0
+        powerflow.dbarraDF.loc[
+            powerflow.dbarraDF["tensao_base"] == 0.0, "tensao_base"
+        ] = 1000.0
 
 
 def dcer(
@@ -381,19 +344,13 @@ def dcer(
     powerflow.dcer["potencia_reativa_maxima"] = list()
     powerflow.dcer["controle"] = list()
     powerflow.dcer["estado"] = list()
-    
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dcer["barra"].append(
-                powerflow.lines[powerflow.linecount][:5]
-            )
-            powerflow.dcer["operacao"].append(
-                powerflow.lines[powerflow.linecount][6]
-            )
+            powerflow.dcer["barra"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dcer["operacao"].append(powerflow.lines[powerflow.linecount][6])
             powerflow.dcer["grupo_base"].append(
                 powerflow.lines[powerflow.linecount][8:10]
             )
@@ -403,9 +360,7 @@ def dcer(
             powerflow.dcer["barra_controlada"].append(
                 powerflow.lines[powerflow.linecount][14:19]
             )
-            powerflow.dcer["droop"].append(
-                powerflow.lines[powerflow.linecount][20:26]
-            )
+            powerflow.dcer["droop"].append(powerflow.lines[powerflow.linecount][20:26])
             powerflow.dcer["potencia_reativa"].append(
                 powerflow.lines[powerflow.linecount][27:32]
             )
@@ -415,12 +370,8 @@ def dcer(
             powerflow.dcer["potencia_reativa_maxima"].append(
                 powerflow.lines[powerflow.linecount][37:42]
             )
-            powerflow.dcer["controle"].append(
-                powerflow.lines[powerflow.linecount][43]
-            )
-            powerflow.dcer["estado"].append(
-                powerflow.lines[powerflow.linecount][45]
-            )
+            powerflow.dcer["controle"].append(powerflow.lines[powerflow.linecount][43])
+            powerflow.dcer["estado"].append(powerflow.lines[powerflow.linecount][45])
         powerflow.linecount += 1
 
     # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
@@ -464,7 +415,9 @@ def dcer(
                 or (value["controle"] == "I")
             ):
                 powerflow.ncer += 1
-                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (1e2 * value["unidades"])
+                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (
+                    1e2 * value["unidades"]
+                )
 
                 if value["barra_controlada"] == 0:
                     powerflow.dcerDF.at[idx, "barra_controlada"] = value["barra"]
@@ -486,7 +439,9 @@ def dcer(
                 value["controle"] == "A"
             ):
                 powerflow.ncer += 1
-                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (1e2 * value["unidades"])
+                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (
+                    1e2 * value["unidades"]
+                )
 
                 if value["barra_controlada"] == 0:
                     powerflow.dcerDF.at[idx, "barra_controlada"] = value["barra"]
@@ -505,16 +460,12 @@ def dcte(
     powerflow.dcte = dict()
     powerflow.dcte["constante"] = list()
     powerflow.dcte["valor_constante"] = list()
-    
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][:4]
-            )
+            powerflow.dcte["constante"].append(powerflow.lines[powerflow.linecount][:4])
             powerflow.dcte["valor_constante"].append(
                 powerflow.lines[powerflow.linecount][5:11]
             )
@@ -569,7 +520,9 @@ def dcte(
 
         powerflow.dcteDF["constante"] = powerflow.dcteDF["constante"].replace("0", nan)
         powerflow.dcteDF = powerflow.dcteDF.dropna(axis=0, subset=["constante"])
-        powerflow.dcteDF = powerflow.dcteDF.drop_duplicates(subset=["constante"], keep="last").reset_index(drop=True)
+        powerflow.dcteDF = powerflow.dcteDF.drop_duplicates(
+            subset=["constante"], keep="last"
+        ).reset_index(drop=True)
 
 
 def dgbt(
@@ -580,24 +533,18 @@ def dgbt(
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
-    
+
     ## Inicialização
     powerflow.dgbt = dict()
     powerflow.dgbt["grupo"] = list()
     powerflow.dgbt["tensao"] = list()
 
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dgbt["grupo"].append(
-                powerflow.lines[powerflow.linecount][:2]
-            )
-            powerflow.dgbt["tensao"].append(
-                powerflow.lines[powerflow.linecount][3:8]
-            )
+            powerflow.dgbt["grupo"].append(powerflow.lines[powerflow.linecount][:2])
+            powerflow.dgbt["tensao"].append(powerflow.lines[powerflow.linecount][3:8])
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
@@ -618,7 +565,7 @@ def dgbt(
         powerflow.codes["DGBT"] = True
 
         for idx, value in powerflow.dgbtDF.iterrows():
-            if value["tensao"] == 0.:
+            if value["tensao"] == 0.0:
                 powerflow.dgbtDF.at[idx, "tensao"] = 1.0
 
 
@@ -646,19 +593,13 @@ def dger(
     powerflow.dger["reatancia_maquina"] = list()
     powerflow.dger["potencia_aparente_nominal"] = list()
     powerflow.dger["estatismo"] = list()
-    
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dger["numero"].append(
-                powerflow.lines[powerflow.linecount][:5]
-            )
-            powerflow.dger["operacao"].append(
-                powerflow.lines[powerflow.linecount][6]
-            )
+            powerflow.dger["numero"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dger["operacao"].append(powerflow.lines[powerflow.linecount][6])
             powerflow.dger["potencia_ativa_minima"].append(
                 powerflow.lines[powerflow.linecount][8:14]
             )
@@ -714,9 +655,7 @@ def dger(
             "estatismo": "float",
         }
     )
-    if (
-        powerflow.dgeraDF.empty
-    ):  # or (powerflow.dgeraDF.shape[0] != powerflow.nger):
+    if powerflow.dgeraDF.empty:  # or (powerflow.dgeraDF.shape[0] != powerflow.nger):
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m"
@@ -724,20 +663,20 @@ def dger(
     else:
         powerflow.codes["DGER"] = True
 
-        powerflow.dgeraDF["fator_participacao"] = powerflow.dgeraDF["fator_participacao"].apply(
-            lambda x: x * 1e-2
-        )
+        powerflow.dgeraDF["fator_participacao"] = powerflow.dgeraDF[
+            "fator_participacao"
+        ].apply(lambda x: x * 1e-2)
 
 
 def dglt(
     powerflow,
 ):
-    """inicialização para leitura de dados de grupos de limites de tensão	
+    """inicialização para leitura de dados de grupos de limites de tensão
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
-    
+
     ## Inicialização
     powerflow.dglt = dict()
     powerflow.dglt["grupo"] = list()
@@ -746,15 +685,11 @@ def dglt(
     powerflow.dglt["limite_minimo_E"] = list()
     powerflow.dglt["limite_maximo_E"] = list()
 
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dglt["grupo"].append(
-                powerflow.lines[powerflow.linecount][:2]
-            )
+            powerflow.dglt["grupo"].append(powerflow.lines[powerflow.linecount][:2])
             powerflow.dglt["limite_minimo"].append(
                 powerflow.lines[powerflow.linecount][3:8]
             )
@@ -790,15 +725,15 @@ def dglt(
         powerflow.codes["DGLT"] = True
 
         for idx, value in powerflow.dgltDF.iterrows():
-            if value["limite_minimo"] == 0.:
+            if value["limite_minimo"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo"] = 0.8
 
-            if value["limite_maximo"] == 0.:
+            if value["limite_maximo"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_maximo"] = 1.2
 
-            if value["limite_minimo_E"] == 0.:
+            if value["limite_minimo_E"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo_E"] = value["limite_minimo"]
-            elif value["limite_maximo_E"] == 0.:
+            elif value["limite_maximo_E"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_maximo_E"] = value["limite_maximo"]
 
 
@@ -832,9 +767,7 @@ def dinc(
     powerflow.dinc["tratamento_incremento_potencia_ativa"] = list()
     powerflow.dinc["tratamento_incremento_potencia_reativa"] = list()
 
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
@@ -887,14 +820,10 @@ def dinc(
                 powerflow.lines[powerflow.linecount][70:75]
             )
             powerflow.dinc["tratamento_incremento_potencia_ativa"].append(
-                False
-                if powerflow.lines[powerflow.linecount][64:69] != ""
-                else True
+                False if powerflow.lines[powerflow.linecount][64:69] != "" else True
             )
             powerflow.dinc["tratamento_incremento_potencia_reativa"].append(
-                False
-                if powerflow.lines[powerflow.linecount][70:75] != ""
-                else True
+                False if powerflow.lines[powerflow.linecount][70:75] != "" else True
             )
         powerflow.linecount += 1
 
@@ -986,34 +915,24 @@ def dlin(
     powerflow.dlin["agreg8"] = list()
     powerflow.dlin["agreg9"] = list()
     powerflow.dlin["agreg10"] = list()
-    
-    while (
-        powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block
-    ):
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dlin["de"].append(
-                powerflow.lines[powerflow.linecount][:5]
-            )
+            powerflow.dlin["de"].append(powerflow.lines[powerflow.linecount][:5])
             powerflow.dlin["abertura_de"].append(
                 powerflow.lines[powerflow.linecount][5]
             )
-            powerflow.dlin["operacao"].append(
-                powerflow.lines[powerflow.linecount][7]
-            )
+            powerflow.dlin["operacao"].append(powerflow.lines[powerflow.linecount][7])
             powerflow.dlin["abertura_para"].append(
                 powerflow.lines[powerflow.linecount][9]
             )
-            powerflow.dlin["para"].append(
-                powerflow.lines[powerflow.linecount][10:15]
-            )
+            powerflow.dlin["para"].append(powerflow.lines[powerflow.linecount][10:15])
             powerflow.dlin["circuito"].append(
                 powerflow.lines[powerflow.linecount][15:17]
             )
-            powerflow.dlin["estado"].append(
-                powerflow.lines[powerflow.linecount][17]
-            )
+            powerflow.dlin["estado"].append(powerflow.lines[powerflow.linecount][17])
             powerflow.dlin["proprietario"].append(
                 powerflow.lines[powerflow.linecount][18]
             )
@@ -1026,9 +945,7 @@ def dlin(
             powerflow.dlin["susceptancia"].append(
                 powerflow.lines[powerflow.linecount][32:38]
             )
-            powerflow.dlin["tap"].append(
-                powerflow.lines[powerflow.linecount][38:43]
-            )
+            powerflow.dlin["tap"].append(powerflow.lines[powerflow.linecount][38:43])
             powerflow.dlin["tap_minimo"].append(
                 powerflow.lines[powerflow.linecount][43:48]
             )
@@ -1053,27 +970,13 @@ def dlin(
             powerflow.dlin["capacidade_equipamento"].append(
                 powerflow.lines[powerflow.linecount][74:78]
             )
-            powerflow.dlin["agreg1"].append(
-                powerflow.lines[powerflow.linecount][78:81]
-            )
-            powerflow.dlin["agreg2"].append(
-                powerflow.lines[powerflow.linecount][81:84]
-            )
-            powerflow.dlin["agreg3"].append(
-                powerflow.lines[powerflow.linecount][84:87]
-            )
-            powerflow.dlin["agreg4"].append(
-                powerflow.lines[powerflow.linecount][87:90]
-            )
-            powerflow.dlin["agreg5"].append(
-                powerflow.lines[powerflow.linecount][90:93]
-            )
-            powerflow.dlin["agreg6"].append(
-                powerflow.lines[powerflow.linecount][93:96]
-            )
-            powerflow.dlin["agreg7"].append(
-                powerflow.lines[powerflow.linecount][96:99]
-            )
+            powerflow.dlin["agreg1"].append(powerflow.lines[powerflow.linecount][78:81])
+            powerflow.dlin["agreg2"].append(powerflow.lines[powerflow.linecount][81:84])
+            powerflow.dlin["agreg3"].append(powerflow.lines[powerflow.linecount][84:87])
+            powerflow.dlin["agreg4"].append(powerflow.lines[powerflow.linecount][87:90])
+            powerflow.dlin["agreg5"].append(powerflow.lines[powerflow.linecount][90:93])
+            powerflow.dlin["agreg6"].append(powerflow.lines[powerflow.linecount][93:96])
+            powerflow.dlin["agreg7"].append(powerflow.lines[powerflow.linecount][96:99])
             powerflow.dlin["agreg8"].append(
                 powerflow.lines[powerflow.linecount][99:102]
             )
@@ -1139,8 +1042,12 @@ def dlin(
             ].valor_constante[0]
         )
 
-        powerflow.dlinhaDF["estado"] = (powerflow.dlinhaDF["estado"] == "0") | (powerflow.dlinhaDF["estado"] == "L")
-        powerflow.dlinhaDF["transf"] = (powerflow.dlinhaDF["tap"] != 0.0) & powerflow.dlinhaDF["estado"]
+        powerflow.dlinhaDF["estado"] = (powerflow.dlinhaDF["estado"] == "0") | (
+            powerflow.dlinhaDF["estado"] == "L"
+        )
+        powerflow.dlinhaDF["transf"] = (
+            powerflow.dlinhaDF["tap"] != 0.0
+        ) & powerflow.dlinhaDF["estado"]
 
         # Número de barras do sistema
         powerflow.nlin = len(powerflow.dlinhaDF.de.values)
