@@ -24,10 +24,10 @@ def hessian(
     Gaa1, Gav1, Gva1, Gvv1 = PPd2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
     Gaa2, Gav2, Gva2, Gvv2 = PPd2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
 
-    M1 = concatenate((concatenate((Gaa1, Gav1), axis=1), concatenate((Gva1, Gvv1), axis=1)), axis=0)
-    M2 = concatenate((concatenate((Gaa2, Gav2), axis=1), concatenate((Gva2, Gvv2), axis=1)), axis=0)
-    # M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
-    # M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
+    # M1 = concatenate((concatenate((Gaa1, Gav1), axis=1), concatenate((Gva1, Gvv1), axis=1)), axis=0)
+    # M2 = concatenate((concatenate((Gaa2, Gav2), axis=1), concatenate((Gva2, Gvv2), axis=1)), axis=0)
+    M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
+    M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
     powerflow.hessian = M1.real + M2.imag
 
     # Submatrizes de controles ativos

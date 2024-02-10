@@ -398,7 +398,7 @@ def reduction(
         powerflow.mask, :
     ][:, powerflow.mask]
 
-    powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
+    # powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtg = zeros((powerflow.mask.shape[0], 1))[powerflow.mask]
 
     powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
