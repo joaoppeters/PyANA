@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "ieee14.pwf"
+system = "neves.pwf"
 
 method = "NEWTON"
 # method = "CPF"

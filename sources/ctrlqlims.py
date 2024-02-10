@@ -388,13 +388,8 @@ def qlimssubhess(
             qg = Symbol("qg%s" % idx)
             v = Symbol("v%s" % idx)
 
-            # powerflow.px[idx, nger] = powerflow.dxfwsym[idx].diff(qger)
-            powerflow.qx[idx, nger] = powerflow.dxfwsym[idx + powerflow.nbus].diff(qg)
-
-            # powerflow.yt[nger, idx] = powerflow.dxfwsym[2*powerflow.nbus + nger].diff(tger)
-            powerflow.yv[nger, idx] = powerflow.dxfwsym[2 * powerflow.nbus + nger].diff(
-                v
-            )
+            powerflow.qx[idx, nger] = 0
+            powerflow.yv[nger, idx] = powerflow.diffyv[idx].diff(v)
 
             # Barras PQV
             if (
@@ -404,9 +399,7 @@ def qlimssubhess(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                powerflow.yx[nger, nger] = powerflow.dxfwsym[
-                    2 * powerflow.nbus + nger
-                ].diff(qg)
+                powerflow.yx[nger, nger] = powerflow.diffyqg[idx].diff(qg)
 
             # Incrementa contador
             nger += 1
@@ -436,8 +429,8 @@ def qlimssubhess(
         ytv = concatenate((powerflow.yt, powerflow.yv), axis=1)
         pqyx = concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
 
-    powerflow.hessiansym = concatenate((powerflow.hessiansym, ytv), axis=0)
-    powerflow.hessiansym = concatenate((powerflow.hessiansym, pqyx), axis=1)
+    powerflow.hessian = concatenate((powerflow.hessian, ytv), axis=0)
+    powerflow.hessian = concatenate((powerflow.hessian, pqyx), axis=1)
 
 
 def qlimssubjacsym(

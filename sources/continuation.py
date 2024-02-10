@@ -1065,8 +1065,8 @@ def eigensens(
         powerflow.cpfsolution["div"] = auxdiv
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-        powerflow.sol["voltage"] = deepcopy(powerflow.point[case]["c"]["voltage"])
-        powerflow.sol["theta"] = deepcopy(powerflow.point[case]["c"]["theta"])
+        powerflow.solution["voltage"] = deepcopy(powerflow.point[case]["c"]["voltage"])
+        powerflow.solution["theta"] = deepcopy(powerflow.point[case]["c"]["theta"])
 
         # # Loop
         # pass

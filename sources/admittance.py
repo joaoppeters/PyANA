@@ -6,8 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import ndarray, ones, vectorize, zeros
-
+from numpy import diag, ndarray, ones, vectorize, zeros
 
 def checkdanc(
     powerflow,
@@ -51,15 +50,15 @@ def admit(
     """
 
     ## Inicialização
+    powerflow.ybus: ndarray = zeros(
+        shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
+    )
     # Checa alteração no nível de carregamento
     checkdanc(
         powerflow,
     )
 
     # Matriz Admitância
-    # powerflow.ybus: ndarray = zeros(
-    #     shape=[powerflow.nbus, powerflow.nbus], dtype='complex_'
-    # )
     powerflow.gdiag = zeros(powerflow.nbus)
     powerflow.bdiag = zeros(powerflow.nbus)
     powerflow.apont = ones(powerflow.nbus, dtype=int)
@@ -69,40 +68,43 @@ def admit(
     )
 
     # Linhas de transmissão e transformadores
-    for _, value in powerflow.dlinhaDF.iterrows():
+    for idx, value in powerflow.dlinhaDF.iterrows():
         if value["estado"]:
             if value["transf"]:
                 value["tap"] = 1 / value["tap"]
 
                 # Elementos da diagonal (elemento série)
-                powerflow.admitancia[_] *= value["tap"]
+                powerflow.admitancia[idx] *= value["tap"]
 
                 powerflow.gdiag[value["de"] - 1] += (
                     value["tap"] - 1.0
-                ) * powerflow.admitancia[_].real
+                ) * powerflow.admitancia[idx].real
                 powerflow.bdiag[value["de"] - 1] += (
                     value["tap"] - 1.0
-                ) * powerflow.admitancia[_].imag
+                ) * powerflow.admitancia[idx].imag
                 powerflow.gdiag[value["para"] - 1] += (
                     1 / value["tap"] - 1.0
-                ) * powerflow.admitancia[_].real
+                ) * powerflow.admitancia[idx].real
                 powerflow.bdiag[value["para"] - 1] += (
                     1 / value["tap"] - 1.0
-                ) * powerflow.admitancia[_].imag
+                ) * powerflow.admitancia[idx].imag
 
             # Elementos da diagonal (elemento série)
-            powerflow.gdiag[value["de"] - 1] += powerflow.admitancia[_].real
-            powerflow.gdiag[value["para"] - 1] += powerflow.admitancia[_].real
+            powerflow.gdiag[value["de"] - 1] += powerflow.admitancia[idx].real
+            powerflow.gdiag[value["para"] - 1] += powerflow.admitancia[idx].real
             powerflow.bdiag[value["de"] - 1] += (
-                powerflow.admitancia[_].imag + value["susceptancia"]
+                powerflow.admitancia[idx].imag + value["susceptancia"]
             )
             powerflow.bdiag[value["para"] - 1] += (
-                powerflow.admitancia[_].imag + value["susceptancia"]
+                powerflow.admitancia[idx].imag + value["susceptancia"]
             )
 
             # apontador auxiliar de conexões
             powerflow.apont[value["de"] - 1] += 1
             powerflow.apont[value["para"] - 1] += 1
+
+            powerflow.ybus[value["de"] - 1, value["para"] - 1] = -powerflow.admitancia[idx]
+            powerflow.ybus[value["para"] - 1, value["de"] - 1] = -powerflow.admitancia[idx]
 
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["shunt_barra"] != 0.0:
@@ -112,6 +114,9 @@ def admit(
 
         if idx != 0:
             powerflow.apont[value["numero"] - 1] += powerflow.apont[value["numero"] - 2]
+
+    powerflow.ybus = powerflow.ybus + diag(powerflow.gdiag + 1j*powerflow.bdiag)
+
 
 
 def admitLinear(
