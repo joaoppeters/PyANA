@@ -120,7 +120,7 @@ def cani(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        print(powerflow.solution["iter"], norm(powerflow.statevar))
+        print(norm(powerflow.statevar))
 
         # Condição de Divergência por iterações
         if  (norm(powerflow.statevar) > powerflow.options["CTOL"]) and (powerflow.solution["iter"] > powerflow.options["ACIT"]):
@@ -398,7 +398,7 @@ def reduction(
         powerflow.mask, :
     ][:, powerflow.mask]
 
-    # powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
+    powerflow.hessian = powerflow.hessian[powerflow.mask, :][:, powerflow.mask]
     powerflow.dtg = zeros((powerflow.mask.shape[0], 1))[powerflow.mask]
 
     powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]

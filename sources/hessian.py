@@ -24,11 +24,11 @@ def hessian(
     Gaa1, Gav1, Gva1, Gvv1 = PPd2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
     Gaa2, Gav2, Gva2, Gvv2 = PPd2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
 
-    # M1 = concatenate((concatenate((Gaa1, Gav1), axis=1), concatenate((Gva1, Gvv1), axis=1)), axis=0)
-    # M2 = concatenate((concatenate((Gaa2, Gav2), axis=1), concatenate((Gva2, Gvv2), axis=1)), axis=0)
-    M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
-    M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
-    powerflow.hessian = M1.real + M2.imag
+    M1 = concatenate((concatenate((Gaa1, Gav1), axis=1), concatenate((Gva1, Gvv1), axis=1)), axis=0)
+    M2 = concatenate((concatenate((Gaa2, Gav2), axis=1), concatenate((Gva2, Gvv2), axis=1)), axis=0)
+    # M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
+    # M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
+    powerflow.hessian = array(M1).real + array(M2).imag
 
     # Submatrizes de controles ativos
     if powerflow.controlcount > 0:
@@ -77,7 +77,7 @@ def PPd2Sbus_dV2(
     A = sparse((lam * V, (ib, ib)))
     B = Ybus * diagV
     C = A * conj(B)
-    D = Ybus * diagV
+    D = Ybus.T.conj() * diagV
     E = diagV.conj() * (D * diaglam - sparse((D @ lam, (ib, ib))))
     F = C - A * sparse((conj(Ibus), (ib, ib)))
     G = sparse((ones(nb) / abs(V), (ib, ib)))
