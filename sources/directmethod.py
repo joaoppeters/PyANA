@@ -12,10 +12,11 @@ from numpy import (
     concatenate,
     ones,
     radians,
+    sqrt,
     sum,
     zeros,
 )
-from numpy.linalg import inv, norm, solve
+from numpy.linalg import solve
 
 from calc import pcalc, qcalc
 from ctrl import controlupdt, controlres, controlsol, controlsch
@@ -120,16 +121,17 @@ def cani(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        print(norm(powerflow.statevar))
+        norm = sqrt(sum(powerflow.statevar ** 2))
+        print(norm)
 
         # Condição de Divergência por iterações
-        if  (norm(powerflow.statevar) > powerflow.options["CTOL"]) and (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+        if  (norm > powerflow.options["CTOL"]) and (powerflow.solution["iter"] > powerflow.options["ACIT"]):
             powerflow.solution[
                 "convergence"
             ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
-        elif (norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
+        elif (norm <= powerflow.options["CTOL"]) and (
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
