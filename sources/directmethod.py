@@ -118,22 +118,6 @@ def cani(
             powerflow,
         )
 
-        print(powerflow.funccani)
-
-        print(powerflow.jacobian)
-        print(powerflow.dtf)
-        print(powerflow.dwf)
-
-        print(powerflow.hessian)
-        print(powerflow.dtg)
-        print(powerflow.jacobian.T)
-
-        print(powerflow.dxh)
-        print(powerflow.dwh)
-
-        print(norm(powerflow.statevar))
-        print()
-
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
@@ -243,16 +227,16 @@ def residue(
     # Vetores de resíduo
     powerflow.deltaP = zeros(powerflow.nbus)
     powerflow.deltaQ = zeros(powerflow.nbus)
+    V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
+    I = powerflow.ybus @ V
+    S = diag(V) @ conj(I)
 
     # Loop
     for idx, value in powerflow.dbarraDF.iterrows():
         # Tipo PV ou PQ - Resíduo Potência Ativa
         if value["tipo"] != 2:
             powerflow.deltaP[idx] -= powerflow.pqsch["potencia_ativa_especificada"][idx]
-            powerflow.deltaP[idx] += pcalc(
-                powerflow,
-                idx,
-            )
+            powerflow.deltaP[idx] += S[idx].real
 
         # Tipo PQ - Resíduo Potência Reativa
         if (
@@ -264,10 +248,7 @@ def residue(
             powerflow.deltaQ[idx] -= powerflow.pqsch["potencia_reativa_especificada"][
                 idx
             ]
-            powerflow.deltaQ[idx] += qcalc(
-                powerflow,
-                idx,
-            )
+            powerflow.deltaQ[idx] += S[idx].imag
 
     # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
     concatresidue(
@@ -441,9 +422,7 @@ def matrices(
     # Hessiana
     Gaa1, Gav1, Gva1, Gvv1 = d2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
     Gaa2, Gav2, Gva2, Gvv2 = d2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
-
-    # M1 = concatenate((concatenate((Gaa1, Gav1), axis=1), concatenate((Gva1, Gvv1), axis=1)), axis=0)
-    # M2 = concatenate((concatenate((Gaa2, Gav2), axis=1), concatenate((Gva2, Gvv2), axis=1)), axis=0)
+    
     M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
     M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
     powerflow.hessian = array(M1).real + array(M2).imag
