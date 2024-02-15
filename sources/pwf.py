@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from d import *
+from dcode import *
 
 
 def pwf(

@@ -308,6 +308,9 @@ def dbar(
             elif value["tipo"] == 0:
                 powerflow.dbarraDF.at[idx, "angulo"] = 0.0
 
+            if value["grupo_base_tensao"] == "0":
+                powerflow.dbarraDF.at[idx, "grupo_base_tensao"] = " 0"
+
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
         # Número de barras PV

@@ -157,7 +157,7 @@ def metodo(
 
     #
     elif powerflow.method == "PWF":
-        from sources.filter import seletiva
+        from filter import seletiva
 
         seletiva(
             powerflow,
