@@ -84,7 +84,7 @@ def qcalc(
     ## Inicialização
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]
-
+    
     for lin in range(0, powerflow.nlin):
         if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
             bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
@@ -103,11 +103,11 @@ def qcalc(
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * sin(
-                    powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
+                    powerflow.solution["theta"][bus] - powerflow.solution["theta"][idx]
                 )
                 - powerflow.admitancia[lin].imag
                 * cos(
-                    powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
+                    powerflow.solution["theta"][bus] - powerflow.solution["theta"][idx]
                 )
             )
 

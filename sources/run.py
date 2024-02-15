@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "ieee118.pwf"
+system = "neves.pwf"
 
 method = "NEWTON"
 # method = "CPF"
 # method = "CE"
 method = "STOCH"
 method = "CANI"
-method = "PWF"
+# method = "PWF"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 control = []
