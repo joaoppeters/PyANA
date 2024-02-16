@@ -50,7 +50,7 @@ def admit(
     """
 
     ## Inicialização
-    powerflow.ybus: ndarray = zeros(
+    powerflow.ybus = zeros(
         shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
     )
     # Checa alteração no nível de carregamento
@@ -136,7 +136,7 @@ def admitLinear(
     )
 
     # Matriz Admitância
-    powerflow.ybus: ndarray = zeros(
+    powerflow.ybus = zeros(
         shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
     )
     powerflow.gdiag = zeros(powerflow.nbus)
