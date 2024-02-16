@@ -16,7 +16,6 @@ from options import options
 from pwf import pwf
 from report import report
 
-
 def setup(
     powerflow,
 ):

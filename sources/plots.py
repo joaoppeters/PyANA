@@ -11,7 +11,6 @@ from numpy import arange, degrees, linspace, max, min, ones, pi
 
 from folder import convergencefolder, statevarfolder
 
-
 def convergence(
     powerflow,
 ):

@@ -8,7 +8,6 @@
 
 from numpy import cos, sin
 
-
 def pcalc(
     powerflow,
     idx: int = None,

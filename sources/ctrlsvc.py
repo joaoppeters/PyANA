@@ -15,7 +15,6 @@ from sympy.functions import sin
 from calc import qcalc
 from smooth import svcalphasmooth, svccurrentsmooth, svcreactivesmooth
 
-
 def svcsol(
     powerflow,
 ):

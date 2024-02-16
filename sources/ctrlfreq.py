@@ -11,7 +11,6 @@ from numpy import append, concatenate, infty, radians, zeros
 
 from calc import pcalc, qcalc
 
-
 def freqsol(
     self,
     powerflow,

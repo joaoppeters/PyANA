@@ -6,8 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-
-def metodo(
+def methodo(
     powerflow,
 ):
     """chamada automática do método de solução selecionado

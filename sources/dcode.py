@@ -9,7 +9,6 @@
 from numpy import concatenate, nan, ones
 from pandas import DataFrame as DF
 
-
 def danc(
     powerflow,
 ):

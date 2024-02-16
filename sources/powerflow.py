@@ -7,9 +7,8 @@
 # ------------------------------------- #
 
 from folder import folder
-from method import metodo
+from method import methodo
 from setup import setup
-
 
 class PowerFlow:
     """powerflow class"""
@@ -49,7 +48,7 @@ class PowerFlow:
         )
 
         # Numerical Method
-        metodo(self)
+        methodo(self)
 
 
 # Convergence(powerflow, powerflow,)

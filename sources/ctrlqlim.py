@@ -10,7 +10,6 @@ from copy import deepcopy
 from numpy import any, append, concatenate, ones, zeros
 from scipy.sparse import csc_matrix, hstack, vstack
 
-
 def qlimsol(
     powerflow,
 ):

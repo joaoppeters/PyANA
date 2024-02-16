@@ -12,7 +12,6 @@ from scipy.sparse import csc_matrix, hstack, vstack
 
 from smooth import qlimnsmooth, qlimspop
 
-
 def qlimnsol(
     powerflow,
 ):

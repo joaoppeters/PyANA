@@ -9,7 +9,6 @@
 from datetime import datetime as dt
 from numpy import mean
 
-
 def monitor(
     powerflow,
 ):

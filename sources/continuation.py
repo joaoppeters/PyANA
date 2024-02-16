@@ -38,9 +38,6 @@ from ctrl import (
 from jacobian import jacobi
 from loading import loading
 
-# from smooth import Smooth
-
-
 def cpf(
     powerflow,
 ):

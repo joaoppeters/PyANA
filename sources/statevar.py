@@ -18,10 +18,13 @@ def update(
     """
 
     ## Inicialização
-    # configuração completa
-    powerflow.solution["theta"] += powerflow.statevar[0 : (powerflow.nbus)]
-    powerflow.solution["voltage"] += powerflow.statevar[
-        (powerflow.nbus) : (2 * powerflow.nbus)
+    thetavalues = sum(powerflow.maskP)
+    voltagevalues = sum(powerflow.maskQ)
+
+    # configuração reduzida
+    powerflow.solution["theta"][powerflow.maskP] += powerflow.solution["sign"] * powerflow.statevar[0:(thetavalues)]
+    powerflow.solution["voltage"][powerflow.maskQ] += powerflow.solution["sign"] * powerflow.statevar[
+        (thetavalues) : (thetavalues + voltagevalues)
     ]
 
     # Atualização das variáveis de estado adicionais para controles ativos
@@ -30,4 +33,10 @@ def update(
             powerflow,
         )
 
-
+    if powerflow.method == "CANI":
+        powerflow.solution["lambda"] += powerflow.solution["sign"] * powerflow.statevar[
+            (thetavalues + voltagevalues + powerflow.controldim)
+        ]
+        powerflow.solution["eigen"][powerflow.mask] += powerflow.solution["sign"] * powerflow.statevar[
+            (thetavalues + voltagevalues + powerflow.controldim + 1) :
+        ]

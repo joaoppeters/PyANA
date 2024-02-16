@@ -6,9 +6,8 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import column_stack, zeros
+from numpy import zeros
 from copy import deepcopy
-
 
 def options(
     powerflow,

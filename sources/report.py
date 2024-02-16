@@ -17,7 +17,6 @@ from numpy import (
     sum,
 )
 
-
 def report(
     powerflow,
 ):

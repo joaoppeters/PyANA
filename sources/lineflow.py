@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import cos, sin
+from numpy import cos, sin, zeros
 
 def lineflow(
     powerflow,
@@ -18,6 +18,15 @@ def lineflow(
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
+    powerflow.solution.update(
+        {
+        "active_flow_F2": zeros(powerflow.nlin),
+        "reactive_flow_F2": zeros(powerflow.nlin),
+        "active_flow_2F": zeros(powerflow.nlin),
+        "reactive_flow_2F": zeros(powerflow.nlin),
+        }
+    )
+
     for idx, value in powerflow.dlinhaDF.iterrows():
         k = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["de"]][0]
         m = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["para"]][0]

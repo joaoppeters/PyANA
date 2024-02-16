@@ -14,7 +14,6 @@ from sympy.functions import exp as spexp
 
 from folder import smoothfolder
 
-
 def qlims(
     powerflow,
     idx,

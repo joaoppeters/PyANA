@@ -11,17 +11,15 @@ from numpy import (
     radians,
     zeros,
 )
-from numpy.linalg import norm
-from scipy.sparse.linalg import spsolve
+from numpy.linalg import norm, solve
 
 from convergence import convergence
 from ctrl import controlsol, controldelta
-from jacobian import jacobi
 from lineflow import lineflow
+from matrices import matrices
 from residue import residue
 from scheduled import scheduled
 from statevar import update
-
 
 def newton(
     powerflow,
@@ -49,10 +47,7 @@ def newton(
         "busQ": array([]),
         "convY": array([]),
         "busY": array([]),
-        "active_flow_F2": zeros(powerflow.nlin),
-        "reactive_flow_F2": zeros(powerflow.nlin),
-        "active_flow_2F": zeros(powerflow.nlin),
-        "reactive_flow_2F": zeros(powerflow.nlin),
+        "sign": 1.0,
     }
 
     # Controles
@@ -71,8 +66,8 @@ def newton(
     )
 
     while (
-        norm(powerflow.deltaP) > powerflow.options["TEPA"]
-        or norm(powerflow.deltaQ) > powerflow.options["TEPR"]
+        norm(powerflow.deltaP,) > powerflow.options["TEPA"]
+        or norm(powerflow.deltaQ,) > powerflow.options["TEPR"]
         or controldelta(powerflow,)
     ):
 
@@ -82,13 +77,13 @@ def newton(
         )
 
         # Matriz Jacobiana
-        jacobi(
+        matrices(
             powerflow,
         )
 
         # Variáveis de estado
-        powerflow.statevar = spsolve(
-            powerflow.jacob, powerflow.deltaPQY, use_umfpack=True
+        powerflow.statevar = solve(
+            powerflow.jacobian, powerflow.deltaPQY,
         )
 
         # Atualização das Variáveis de estado
@@ -119,13 +114,13 @@ def newton(
         )
 
         # Matriz Jacobiana
-        jacobi(
+        matrices(
             powerflow,
         )
 
         # Variáveis de estado
-        powerflow.statevar = spsolve(
-            powerflow.jacob, powerflow.deltaPQY, use_umfpack=True
+        powerflow.statevar = solve(
+            powerflow.jacobian, powerflow.deltaPQY,
         )
 
         # Atualização das Variáveis de estado

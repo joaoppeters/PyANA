@@ -31,7 +31,6 @@ from loading import Loading
 from newtonraphson import NewtonRaphson
 from smooth import Smooth
 
-
 class FastContinuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
 

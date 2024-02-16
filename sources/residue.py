@@ -6,8 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, concatenate, zeros
-from calc import pcalc, qcalc
+from numpy import array, concatenate, conj, diag, exp, zeros
 from ctrl import controlres
 
 def residue(
@@ -23,16 +22,16 @@ def residue(
     # Vetores de resíduo
     powerflow.deltaP = zeros(powerflow.nbus)
     powerflow.deltaQ = zeros(powerflow.nbus)
+    V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
+    I = powerflow.ybus @ V
+    S = diag(V) @ conj(I)
 
     # Loop
     for idx, value in powerflow.dbarraDF.iterrows():
         # Tipo PV ou PQ - Resíduo Potência Ativa
         if value["tipo"] != 2:
             powerflow.deltaP[idx] += powerflow.pqsch["potencia_ativa_especificada"][idx]
-            powerflow.deltaP[idx] -= pcalc(
-                powerflow,
-                idx,
-            )
+            powerflow.deltaP[idx] -=  S[idx].real
 
         # Tipo PQ - Resíduo Potência Reativa
         if (
@@ -44,14 +43,11 @@ def residue(
             powerflow.deltaQ[idx] += powerflow.pqsch["potencia_reativa_especificada"][
                 idx
             ]
-            powerflow.deltaQ[idx] -= qcalc(
-                powerflow,
-                idx,
-            )
+            powerflow.deltaQ[idx] -=  S[idx].imag
 
     # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
     powerflow.deltaPQY = concatenate((powerflow.deltaP, powerflow.deltaQ), axis=0)
-
+    
     # Resíduos de variáveis de estado de controle
     if powerflow.controlcount > 0:
         controlres(
@@ -61,3 +57,5 @@ def residue(
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, powerflow.deltaY), axis=0)
     else:
         powerflow.deltaY = array([0])
+
+    powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]

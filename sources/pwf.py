@@ -8,7 +8,6 @@
 
 from dcode import *
 
-
 def pwf(
     powerflow,
 ):
