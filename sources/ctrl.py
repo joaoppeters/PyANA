@@ -7,7 +7,8 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import abs, any, append, array, max, ones, zeros
+from numpy import any, append, array, ones, zeros
+from numpy.linalg import norm
 
 from ctrlfreq import *
 from ctrlqlim import *
@@ -677,74 +678,53 @@ def controldelta(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["TEPA"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["TEPA"]
             )
             ctrl += powerflow.nger
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["TEPR"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["TEPR"]
             )
             ctrl += powerflow.nger
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["ASTP"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["ASTP"]
             )
             ctrl += powerflow.nger
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["QLST"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["QLST"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.nger]
-                        > powerflow.options["QLST"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             boollist.append(
-                max(
-                    abs(
-                        powerflow.deltaY[ctrl : ctrl + powerflow.ncer]
-                        > powerflow.options["QLST"]
-                    )
-                )
+                norm(
+                    powerflow.deltaY[ctrl : ctrl + powerflow.ncer])
+                > powerflow.options["QLST"]
             )
             ctrl += powerflow.ncer
         # controle de magnitude de tensão de barramentos
@@ -752,68 +732,6 @@ def controldelta(
             pass
 
     return any(boollist)
-
-
-def controlhess(
-    powerflow,
-):
-    """submatrizes referentes aos controles ativos
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    # Variável
-    powerflow.truedim = deepcopy(powerflow.hessiansym.shape[0])
-
-    # Loop
-    for value in powerflow.control:
-        # Dimensão
-        powerflow.controldim = powerflow.hessiansym.shape[0] - powerflow.truedim
-
-        # controle remoto de tensão
-        if value == "CREM":
-            pass
-        # controle secundário de tensão
-        elif value == "CST":
-            pass
-        # controle de tap variável de transformador
-        elif value == "CTAP":
-            pass
-        # controle de ângulo de transformador defasador
-        elif value == "CTAPd":
-            pass
-        # controle de regulação primária de frequência
-        elif value == "FREQ":
-            freqsubhess(
-                powerflow,
-            )
-        # controle de limite de geração de potência reativa
-        elif value == "QLIM":
-            qlimsubhess(
-                powerflow,
-            )
-        # controle suave simbolico de limite de geração de potência reativa
-        elif value == "QLIMs":
-            qlimssubhess(
-                powerflow,
-            )
-
-            powerflow.hessvar.update(powerflow.qlimsvar)
-        # controle suave numerico de limite de geração de potência reativa
-        elif value == "QLIMn":
-            qlimnsubhess(
-                powerflow,
-            )
-        # controle de compensadores estáticos de potência reativa
-        elif value == "SVCs":
-            svcsubhess(
-                powerflow,
-            )
-        # controle de magnitude de tensão de barramentos
-        elif value == "VCTRL":
-            pass
 
 
 def controljacsym(
@@ -827,7 +745,7 @@ def controljacsym(
 
     ## Inicialização
     # Variável
-    powerflow.truedim = deepcopy(powerflow.jacobiansym.shape[0])
+    powerflow.truedim = deepcopy(powerflow.jacobian.shape[0])
 
     # Loop
     for value in powerflow.control:
@@ -886,3 +804,63 @@ def controljacsym(
     elif (powerflow.maskctrlcount == 0) and (powerflow.method == "CANI"):
         powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
+
+
+def controlhesssym(
+    powerflow,
+):
+    """submatrizes referentes aos controles ativos
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Variável
+    powerflow.truedim = deepcopy(powerflow.hessian.shape[0])
+
+    # Loop
+    for value in powerflow.control:
+        # Dimensão
+        powerflow.controldim = powerflow.hessiansym.shape[0] - powerflow.truedim
+
+        # controle remoto de tensão
+        if value == "CREM":
+            pass
+        # controle secundário de tensão
+        elif value == "CST":
+            pass
+        # controle de tap variável de transformador
+        elif value == "CTAP":
+            pass
+        # controle de ângulo de transformador defasador
+        elif value == "CTAPd":
+            pass
+        # controle de regulação primária de frequência
+        elif value == "FREQ":
+            freqsubhess(
+                powerflow,
+            )
+        # controle de limite de geração de potência reativa
+        elif value == "QLIM":
+            qlimsubhess(
+                powerflow,
+            )
+        # controle suave simbolico de limite de geração de potência reativa
+        elif value == "QLIMs":
+            qlimssubhess(
+                powerflow,
+            )
+        # controle suave numerico de limite de geração de potência reativa
+        elif value == "QLIMn":
+            qlimnsubhess(
+                powerflow,
+            )
+        # controle de compensadores estáticos de potência reativa
+        elif value == "SVCs":
+            svcsubhess(
+                powerflow,
+            )
+        # controle de magnitude de tensão de barramentos
+        elif value == "VCTRL":
+            pass

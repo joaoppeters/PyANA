@@ -25,10 +25,7 @@ from numpy import (
 from numpy.linalg import norm, solve
 from scipy.sparse import issparse, csr_matrix as sparse
 
-from calc import pcalc, qcalc
 from ctrl import controlupdt, controlres, controlsol, controlsch
-from hessian import hessian
-from jacobian import jacobi
 
 
 def cani(
@@ -429,11 +426,11 @@ def matrices(
 
     # Submatrizes de controles ativos
     if powerflow.controlcount > 0:
-        from ctrl import controlhess, controljacsym
+        from ctrl import controlhesssym, controljacsym
         controljacsym(
             powerflow,
         )
-        controlhess(
+        controlhesssym(
             powerflow,
         )
 

@@ -29,6 +29,7 @@ def qlimssol(
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
+        powerflow.Y = dict()
         powerflow.qlimsch = dict()
         powerflow.qlimkeys = dict()
         powerflow.diffqlim = dict()

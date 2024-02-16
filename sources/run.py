@@ -8,17 +8,19 @@
 
 from powerflow import PowerFlow
 
-system = "neves.pwf"
+system = "ieee30.pwf"
 
 method = "NEWTON"
 # method = "CPF"
 # method = "CE"
-method = "STOCH"
-method = "CANI"
+# method = "STOCH"
+# method = "CANI"
 # method = "PWF"
 
 # control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
-control = []
+control = [
+    
+]
 
 # monitor = [
 #     'PFLOW',

@@ -1,25 +1,10 @@
-February 17, 2023
+February 16, 2024
 
 
-relatório de monitoramento do sistema ieee30
-solução do fluxo de potência via método newton-raphson
+relat�rio de monitoramento do sistema ieee30
+solu��o do fluxo de pot�ncia via m�todo newton-raphson
 
-opções de monitoramento ativadas: QGMON VMON 
-
-
-vv monitoramento de potência reativa gerada vv
-
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+op��es de monitoramento ativadas: 
 
 
-vv monitoramento de magnitude de tensão de barramentos vv
-
-A magnitude de tensão da Glen-Lyn-132 violou o limite máximo estabelecido para análise ( 1.060 >= 1.05 ).
-A magnitude de tensão da Roanoke--1.0 violou o limite máximo estabelecido para análise ( 1.051 >= 1.05 ).
-A magnitude de tensão da Roanoke---11 violou o limite máximo estabelecido para análise ( 1.082 >= 1.05 ).
-A magnitude de tensão da Hancock---33 violou o limite máximo estabelecido para análise ( 1.057 >= 1.05 ).
-A magnitude de tensão da Hancock---11 violou o limite máximo estabelecido para análise ( 1.071 >= 1.05 ).
-
-
-
-fim do relatório de monitoramento do sistema ieee30
+fim do relat�rio de monitoramento do sistema ieee30

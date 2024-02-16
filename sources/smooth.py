@@ -109,14 +109,14 @@ def qlims(
         * (qg - qgn)
     )
 
-    powerflow.Y = [Ynormal, Ysuperior, Yinferior]
+    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    powerflow.diffyqg[idx] = (powerflow.Y[0] + powerflow.Y[1] + powerflow.Y[2]).diff(qg)
+    powerflow.diffyqg[idx] = (powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]).diff(qg)
 
     # Derivada Parcial de Y por V
-    powerflow.diffyv[idx] = (powerflow.Y[0] + powerflow.Y[1] + powerflow.Y[2]).diff(v)
+    powerflow.diffyv[idx] = (powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]).diff(v)
 
 
 def qlimssmooth(
@@ -149,9 +149,9 @@ def qlimssmooth(
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        -powerflow.Y[0].subs(powerflow.qlimsvar)
-        - powerflow.Y[1].subs(powerflow.qlimsvar)
-        - powerflow.Y[2].subs(powerflow.qlimsvar)
+        - powerflow.Y[nger][0].subs(powerflow.qlimsvar)
+        - powerflow.Y[nger][1].subs(powerflow.qlimsvar)
+        - powerflow.Y[nger][2].subs(powerflow.qlimsvar)
     )
 
     ## Armazenamento de valores das chaves
