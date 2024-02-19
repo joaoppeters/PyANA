@@ -22,9 +22,9 @@ def matrices(
     V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
     
     # Jacobiana
-    dS_dVm, dS_dVa = dSbus_dV(powerflow.ybus, V)
-    powerflow.jacobian = concatenate((concatenate((dS_dVa[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm[powerflow.maskP,:][:,powerflow.maskQ].real), axis=1), 
-                                      concatenate((dS_dVa[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm[powerflow.maskQ,:][:,powerflow.maskQ].imag), axis=1)), 
+    dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
+    powerflow.jacobian = concatenate((concatenate((dS_dVa.A[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm.A[powerflow.maskP,:][:,powerflow.maskQ].real), axis=1), 
+                                      concatenate((dS_dVa.A[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm.A[powerflow.maskQ,:][:,powerflow.maskQ].imag), axis=1)), 
                                       axis=0)
 
     
@@ -34,8 +34,8 @@ def matrices(
         powerflow.H = powerflow.solution["eigen"][powerflow.mask]
 
         # Hessiana
-        Gaa1, Gav1, Gva1, Gvv1 = d2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
-        Gaa2, Gav2, Gva2, Gvv2 = d2Sbus_dV2(powerflow.ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
+        Gaa1, Gav1, Gva1, Gvv1 = d2Sbus_dV2(powerflow.Ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
+        Gaa2, Gav2, Gva2, Gvv2 = d2Sbus_dV2(powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
         
         M1 = concatenate((concatenate((Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
         M2 = concatenate((concatenate((Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)

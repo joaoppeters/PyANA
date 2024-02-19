@@ -19,7 +19,7 @@ from lineflow import lineflow
 from matrices import matrices
 from residue import residue
 from scheduled import scheduled
-from statevar import update
+from update import updtpwr, updtstt
 
 def newton(
     powerflow,
@@ -87,7 +87,7 @@ def newton(
         )
 
         # Atualização das Variáveis de estado
-        update(
+        updtstt(
             powerflow,
         )
 
@@ -123,8 +123,13 @@ def newton(
             powerflow.jacobian, powerflow.deltaPQY,
         )
 
-        # Atualização das Variáveis de estado
-        update(
+        # Atualização das variáveis de estado
+        updtstt(
+            powerflow,
+        )
+
+        # Atualização das potências
+        updtpwr(
             powerflow,
         )
 

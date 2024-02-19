@@ -6,7 +6,8 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import diag, ndarray, ones, vectorize, zeros
+from numpy import diag, ones, vectorize, zeros
+from scipy.sparse import csr_matrix
 
 def checkdanc(
     powerflow,
@@ -50,7 +51,7 @@ def admit(
     """
 
     ## Inicialização
-    powerflow.ybus = zeros(
+    powerflow.Ybus = zeros(
         shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
     )
     # Checa alteração no nível de carregamento
@@ -103,8 +104,8 @@ def admit(
             powerflow.apont[value["de"] - 1] += 1
             powerflow.apont[value["para"] - 1] += 1
 
-            powerflow.ybus[value["de"] - 1, value["para"] - 1] = -powerflow.admitancia[idx]
-            powerflow.ybus[value["para"] - 1, value["de"] - 1] = -powerflow.admitancia[idx]
+            powerflow.Ybus[value["de"] - 1, value["para"] - 1] = -powerflow.admitancia[idx]
+            powerflow.Ybus[value["para"] - 1, value["de"] - 1] = -powerflow.admitancia[idx]
 
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["shunt_barra"] != 0.0:
@@ -115,7 +116,9 @@ def admit(
         if idx != 0:
             powerflow.apont[value["numero"] - 1] += powerflow.apont[value["numero"] - 2]
 
-    powerflow.ybus = powerflow.ybus + diag(powerflow.gdiag + 1j*powerflow.bdiag)
+    powerflow.Ybus = powerflow.Ybus + diag(powerflow.gdiag + 1j*powerflow.bdiag)
+    powerflow.Ybus = csr_matrix(powerflow.Ybus)
+
 
 
 
@@ -136,7 +139,7 @@ def admitLinear(
     )
 
     # Matriz Admitância
-    powerflow.ybus = zeros(
+    powerflow.Ybus = zeros(
         shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
     )
     powerflow.gdiag = zeros(powerflow.nbus)

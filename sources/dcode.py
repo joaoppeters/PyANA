@@ -96,9 +96,9 @@ def dare(
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
-    powerflow.dareDF = DF(data=powerflow.dare)
-    powerflow.dareDF = powerflow.dareDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dareDF = powerflow.dareDF.astype(
+    powerflow.dareaDF = DF(data=powerflow.dare)
+    powerflow.dareaDF = powerflow.dareaDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dareaDF = powerflow.dareaDF.astype(
         {
             "numero": "int",
             "intercambio_liquido": "float",
@@ -107,7 +107,7 @@ def dare(
             "intercambio_maximo": "float",
         }
     )
-    if powerflow.dareDF.empty:
+    if powerflow.dareaDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DARE`!\033[0m"
@@ -116,8 +116,8 @@ def dare(
         powerflow.codes["DARE"] = True
 
         # Numero de Areas
-        powerflow.narea = powerflow.dareDF.shape
-        powerflow.areas = sorted(powerflow.dareDF["numero"].unique())
+        powerflow.narea = powerflow.dareaDF.shape
+        powerflow.areas = sorted(powerflow.dareaDF["numero"].unique())
 
 
 def dbar(

@@ -23,7 +23,7 @@ def residue(
     powerflow.deltaP = zeros(powerflow.nbus)
     powerflow.deltaQ = zeros(powerflow.nbus)
     V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
-    I = powerflow.ybus @ V
+    I = powerflow.Ybus @ V
     S = diag(V) @ conj(I)
 
     # Loop

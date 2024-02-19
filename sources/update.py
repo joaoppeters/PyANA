@@ -6,9 +6,11 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+from numpy import conj, diag, exp, sum
+
 from ctrl import controlupdt
 
-def update(
+def updtstt(
     powerflow,
 ):
     """atualização das variáveis de estado
@@ -40,3 +42,21 @@ def update(
         powerflow.solution["eigen"][powerflow.mask] += powerflow.solution["sign"] * powerflow.statevar[
             (thetavalues + voltagevalues + powerflow.controldim + 1) :
         ]
+
+
+def updtpwr(
+    powerflow,
+):
+    """atualização das variáveis de estado
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
+    I = powerflow.Ybus @ V
+    S = diag(V) @ conj(I)
+
+    powerflow.solution["active"] = S.real * powerflow.options["BASE"] + powerflow.dbarraDF["demanda_ativa"].tolist()
+    powerflow.solution["reactive"] = S.imag * powerflow.options["BASE"] + powerflow.dbarraDF["demanda_reativa"].tolist()

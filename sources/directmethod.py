@@ -17,11 +17,12 @@ from numpy import (
 from numpy.linalg import norm, solve
 
 from ctrl import controlsol
+from increment import increment
 from matrices import matrices
 from reduction import reduction
 from residue import residue
 from scheduled import scheduled
-from statevar import update
+from update import updtstt, updtpwr
 
 def cani(
     powerflow,
@@ -104,7 +105,7 @@ def cani(
         powerflow.statevar = solve(powerflow.jaccani, powerflow.funccani,)
 
         # Atualização das Variáveis de estado
-        update(
+        updtstt(
             powerflow,
         )
 
@@ -122,45 +123,8 @@ def cani(
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+            updtpwr(powerflow,)
             break
-
-
-def increment(
-    powerflow,
-):
-    """realiza incremento no nível de carregamento (e geração)
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    # Variável
-    preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
-
-    # Incremento de carga
-    for idxbar, _ in powerflow.dbarraDF.iterrows():
-        # Incremento de Carregamento
-        powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
-            "demanda_ativa"
-        ][idxbar] * (1 + powerflow.solution["lambda"])
-        powerflow.dbarraDF.at[idxbar, "demanda_reativa"] = powerflow.solution[
-            "demanda_reativa"
-        ][idxbar] * (1 + powerflow.solution["lambda"])
-
-    deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
-
-    # Incremento de geração
-    if powerflow.codes["DGER"]:
-        for _, valueger in powerflow.dgeraDF.iterrows():
-            idx = valueger["numero"] - 1
-            powerflow.dbarraDF.at[idx, "potencia_ativa"] = powerflow.dbarraDF[
-                "potencia_ativa"
-            ][idx] + (deltaincrement * valueger["fator_participacao"])
-
-        powerflow.solution["potencia_ativa"] = deepcopy(
-            powerflow.dbarraDF["potencia_ativa"]
-        )
 
 
 def expansion(
