@@ -11,7 +11,8 @@ from numpy import (
     radians,
     zeros,
 )
-from numpy.linalg import norm, solve
+from numpy.linalg import norm
+from scipy.sparse.linalg import spsolve
 
 from convergence import convergence
 from ctrl import controlsol, controldelta
@@ -66,8 +67,8 @@ def newton(
     )
 
     while (
-        norm(powerflow.deltaP,) > powerflow.options["TEPA"]
-        or norm(powerflow.deltaQ,) > powerflow.options["TEPR"]
+        norm(powerflow.deltaP[powerflow.maskP],) > powerflow.options["TEPA"]
+        or norm(powerflow.deltaQ[powerflow.maskQ],) > powerflow.options["TEPR"]
         or controldelta(powerflow,)
     ):
 
@@ -82,8 +83,8 @@ def newton(
         )
 
         # Variáveis de estado
-        powerflow.statevar = solve(
-            powerflow.jacobian, powerflow.deltaPQY,
+        powerflow.statevar = spsolve(
+            powerflow.jacobian, powerflow.deltaPQY, use_umfpack=True,
         )
 
         # Atualização das Variáveis de estado
@@ -119,8 +120,8 @@ def newton(
         )
 
         # Variáveis de estado
-        powerflow.statevar = solve(
-            powerflow.jacobian, powerflow.deltaPQY,
+        powerflow.statevar = spsolve(
+            powerflow.jacobian, powerflow.deltaPQY, use_umfpack=True,
         )
 
         # Atualização das variáveis de estado

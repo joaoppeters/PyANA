@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, concatenate, conj, diag, exp, zeros
+from numpy import array, asmatrix, concatenate, conj, diag, exp, zeros
 from ctrl import controlres
 
 def residue(
@@ -20,30 +20,13 @@ def residue(
 
     ## Inicialização
     # Vetores de resíduo
-    powerflow.deltaP = zeros(powerflow.nbus)
-    powerflow.deltaQ = zeros(powerflow.nbus)
     V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
     I = powerflow.Ybus @ V
     S = diag(V) @ conj(I)
 
-    # Loop
-    for idx, value in powerflow.dbarraDF.iterrows():
-        # Tipo PV ou PQ - Resíduo Potência Ativa
-        if value["tipo"] != 2:
-            powerflow.deltaP[idx] += powerflow.pqsch["potencia_ativa_especificada"][idx]
-            powerflow.deltaP[idx] -=  S[idx].real
-
-        # Tipo PQ - Resíduo Potência Reativa
-        if (
-            ("QLIM" in powerflow.control)
-            or ("QLIMs" in powerflow.control)
-            or ("QLIMn" in powerflow.control)
-            or (value["tipo"] == 0)
-        ):
-            powerflow.deltaQ[idx] += powerflow.pqsch["potencia_reativa_especificada"][
-                idx
-            ]
-            powerflow.deltaQ[idx] -=  S[idx].imag
+    # Resíduos de potência ativa e reativa
+    powerflow.deltaP = powerflow.psch - S.real
+    powerflow.deltaQ = powerflow.qsch - S.imag
 
     # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
     powerflow.deltaPQY = concatenate((powerflow.deltaP, powerflow.deltaQ), axis=0)

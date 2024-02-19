@@ -6,7 +6,8 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import append, argmax
+from numpy import abs, append, argmax
+from numpy.linalg import norm
 
 def convergence(
     powerflow,
@@ -26,24 +27,24 @@ def convergence(
 
     # Trajetória de convergência da potência ativa
     powerflow.solution["convP"] = append(
-        powerflow.solution["convP"], max(abs(powerflow.deltaP))
+        powerflow.solution["convP"], norm(powerflow.deltaP[powerflow.maskP])
     )
     powerflow.solution["busP"] = append(
-        powerflow.solution["busP"], argmax(abs(powerflow.deltaP))
+        powerflow.solution["busP"], argmax(abs(powerflow.deltaP[powerflow.maskP]))
     )
 
     # Trajetória de convergência da potência reativa
     powerflow.solution["convQ"] = append(
-        powerflow.solution["convQ"], max(abs(powerflow.deltaQ))
+        powerflow.solution["convQ"], norm(powerflow.deltaQ[powerflow.maskQ])
     )
     powerflow.solution["busQ"] = append(
-        powerflow.solution["busQ"], argmax(abs(powerflow.deltaQ))
+        powerflow.solution["busQ"], argmax(abs(powerflow.deltaQ[powerflow.maskQ]))
     )
 
     # Trajetória de convergência referente a cada equação de controle adicional
     if powerflow.deltaY.size != 0:
         powerflow.solution["convY"] = append(
-            powerflow.solution["convY"], max(abs(powerflow.deltaY))
+            powerflow.solution["convY"], norm(powerflow.deltaY)
         )
         powerflow.solution["busY"] = append(
             powerflow.solution["busY"], argmax(abs(powerflow.deltaY))

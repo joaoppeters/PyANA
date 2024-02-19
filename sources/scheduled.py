@@ -20,28 +20,24 @@ def scheduled(
 
     ## Inicialização
     # Variável para armazenamento das potências ativa e reativa especificadas
-    powerflow.pqsch = {
-        "potencia_ativa_especificada": zeros(powerflow.nbus),
-        "potencia_reativa_especificada": zeros(powerflow.nbus),
-    }
+    powerflow.psch = zeros(powerflow.nbus)
+    powerflow.qsch = zeros(powerflow.nbus)
 
-    # Loop
+    # Potências ativa e reativa especificadas
     for idx, value in powerflow.dbarraDF.iterrows():
-        # Potência ativa especificada
-        powerflow.pqsch["potencia_ativa_especificada"][idx] += value["potencia_ativa"]
-        powerflow.pqsch["potencia_ativa_especificada"][idx] -= value["demanda_ativa"]
+        powerflow.psch[idx] += value["potencia_ativa"]
+        powerflow.psch[idx] -= value["demanda_ativa"]
 
-        # Potência reativa especificada
-        powerflow.pqsch["potencia_reativa_especificada"][idx] += value[
+        powerflow.qsch[idx] += value[
             "potencia_reativa"
         ]
-        powerflow.pqsch["potencia_reativa_especificada"][idx] -= value[
+        powerflow.qsch[idx] -= value[
             "demanda_reativa"
         ]
 
     # Tratamento
-    powerflow.pqsch["potencia_ativa_especificada"] /= powerflow.options["BASE"]
-    powerflow.pqsch["potencia_reativa_especificada"] /= powerflow.options["BASE"]
+    powerflow.psch /= powerflow.options["BASE"]
+    powerflow.qsch /= powerflow.options["BASE"]
 
     # Variáveis especificadas de controle ativos
     if powerflow.controlcount > 0:

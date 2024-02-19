@@ -366,13 +366,13 @@ def svcsch(
         if (powerflow.dcerDF["controle"][0] == "A") or (
             powerflow.dcerDF["controle"][0] == "P"
         ):
-            powerflow.pqsch["potencia_reativa_especificada"][idxcer] += (
+            powerflow.qsch[idxcer] += (
                 powerflow.solution["svc_reactive_generation"][ncer]
                 / powerflow.options["BASE"]
             )
 
         elif powerflow.dcerDF["controle"][0] == "I":
-            powerflow.pqsch["potencia_reativa_especificada"][idxcer] += (
+            powerflow.qsch[idxcer] += (
                 powerflow.solution["svc_current_injection"][ncer]
                 * powerflow.solution["voltage"][idxcer]
             ) / powerflow.options["BASE"]

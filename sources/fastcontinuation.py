@@ -593,24 +593,24 @@ class FastContinuation:
         # Loop
         for idx, value in powerflow.dbarraDF.iterrows():
             # Potência ativa especificada
-            powerflow.pqsch["potencia_ativa_especificada"][idx] += value[
+            powerflow.psch[idx] += value[
                 "potencia_ativa"
             ]
-            powerflow.pqsch["potencia_ativa_especificada"][idx] -= value[
+            powerflow.psch[idx] -= value[
                 "demanda_ativa"
             ]
 
             # Potência reativa especificada
-            powerflow.pqsch["potencia_reativa_especificada"][idx] += value[
+            powerflow.qsch[idx] += value[
                 "potencia_reativa"
             ]
-            powerflow.pqsch["potencia_reativa_especificada"][idx] -= value[
+            powerflow.qsch[idx] -= value[
                 "demanda_reativa"
             ]
 
         # Tratamento
-        powerflow.pqsch["potencia_ativa_especificada"] /= powerflow.options["BASE"]
-        powerflow.pqsch["potencia_reativa_especificada"] /= powerflow.options["BASE"]
+        powerflow.psch /= powerflow.options["BASE"]
+        powerflow.qsch /= powerflow.options["BASE"]
 
         # Variáveis especificadas de controle ativos
         if powerflow.controlcount > 0:
@@ -642,7 +642,7 @@ class FastContinuation:
         for idx, value in powerflow.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value["tipo"] != 2:
-                powerflow.deltaP[idx] += powerflow.pqsch["potencia_ativa_especificada"][
+                powerflow.deltaP[idx] += powerflow.psch[
                     idx
                 ]
                 powerflow.deltaP[idx] -= PQCalc().pcalc(

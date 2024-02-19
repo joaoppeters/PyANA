@@ -8,6 +8,8 @@
 
 from copy import deepcopy
 from numpy import (
+    all,
+    any,
     array,
     concatenate,
     radians,
@@ -96,7 +98,7 @@ def cani(
             (
                 -powerflow.deltaPQY,
                 array(powerflow.G).reshape(powerflow.G.shape[0],),
-                array([sum(powerflow.H.T * powerflow.H) - 1]),
+                array([sum(powerflow.H * powerflow.H) - 1]),
             ),
             axis=0,
         ).astype(float)
@@ -113,18 +115,19 @@ def cani(
         powerflow.solution["iter"] += 1
 
         # Condição de Divergência por iterações
-        if  (norm(powerflow.statevar) > powerflow.options["CTOL"]) and (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+        if  (powerflow.solution["iter"] > powerflow.options["ACIT"]):
             powerflow.solution[
                 "convergence"
             ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
-        elif (norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
+        elif all(norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
-            updtpwr(powerflow,)
             break
+
+    updtpwr(powerflow,)
 
 
 def expansion(
@@ -159,7 +162,7 @@ def expansion(
     )
 
     powerflow.jaccani = concatenate(
-        (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
+        (powerflow.jacobian.A, powerflow.dtf, powerflow.dwf),
         axis=1,
     )
 
@@ -167,7 +170,7 @@ def expansion(
         (
             powerflow.jaccani,
             concatenate(
-                (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
+                (powerflow.hessian.A, powerflow.dtg, powerflow.jacobian.A.T),
                 axis=1,
             ),
         ),

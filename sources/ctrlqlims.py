@@ -216,16 +216,16 @@ def qlimssch(
 
     ## Inicialização
     # Variável
-    powerflow.pqsch["potencia_reativa_especificada"] = zeros([powerflow.nbus])
+    powerflow.qsch = zeros([powerflow.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.pqsch["potencia_reativa_especificada"] += powerflow.solution[
+    powerflow.qsch += powerflow.solution[
         "qlim_reactive_generation"
     ]
-    powerflow.pqsch["potencia_reativa_especificada"] -= powerflow.dbarraDF[
+    powerflow.qsch -= powerflow.dbarraDF[
         "demanda_reativa"
     ].to_numpy()
-    powerflow.pqsch["potencia_reativa_especificada"] /= powerflow.options["BASE"]
+    powerflow.qsch /= powerflow.options["BASE"]
 
 
 def qlimscorr(

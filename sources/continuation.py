@@ -565,20 +565,20 @@ def scheduled(
     # Loop
     for idx, value in powerflow.dbarraDF.iterrows():
         # Potência ativa especificada
-        powerflow.pqsch["potencia_ativa_especificada"][idx] += value["potencia_ativa"]
-        powerflow.pqsch["potencia_ativa_especificada"][idx] -= value["demanda_ativa"]
+        powerflow.psch[idx] += value["potencia_ativa"]
+        powerflow.psch[idx] -= value["demanda_ativa"]
 
         # Potência reativa especificada
-        powerflow.pqsch["potencia_reativa_especificada"][idx] += value[
+        powerflow.qsch[idx] += value[
             "potencia_reativa"
         ]
-        powerflow.pqsch["potencia_reativa_especificada"][idx] -= value[
+        powerflow.qsch[idx] -= value[
             "demanda_reativa"
         ]
 
     # Tratamento
-    powerflow.pqsch["potencia_ativa_especificada"] /= powerflow.options["BASE"]
-    powerflow.pqsch["potencia_reativa_especificada"] /= powerflow.options["BASE"]
+    powerflow.psch /= powerflow.options["BASE"]
+    powerflow.qsch /= powerflow.options["BASE"]
 
     # Variáveis especificadas de controle ativos
     if powerflow.controlcount > 0:
@@ -611,7 +611,7 @@ def residue(
     for idx, value in powerflow.dbarraDF.iterrows():
         # Tipo PV ou PQ - Resíduo Potência Ativa
         if value["tipo"] != 2:
-            powerflow.deltaP[idx] += powerflow.pqsch["potencia_ativa_especificada"][idx]
+            powerflow.deltaP[idx] += powerflow.psch[idx]
             powerflow.deltaP[idx] -= pcalc(
                 powerflow,
                 idx,
@@ -623,7 +623,7 @@ def residue(
             or ("QLIMs" in powerflow.control)
             or (value["tipo"] == 0)
         ):
-            powerflow.deltaQ[idx] += powerflow.pqsch["potencia_reativa_especificada"][
+            powerflow.deltaQ[idx] += powerflow.qsch[
                 idx
             ]
             powerflow.deltaQ[idx] -= qcalc(

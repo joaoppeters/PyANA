@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import concatenate, nan, ones
+from numpy import concatenate, exp, nan, ones, pi
 from pandas import DataFrame as DF
 
 def danc(
@@ -59,6 +59,38 @@ def danc(
         )
     else:
         powerflow.codes["DANC"] = True
+
+
+def checkdanc(
+    powerflow,
+):
+    """checa alteração no nível de carregamento
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Variável
+    if powerflow.codes["DANC"]:
+        for area in powerflow.dancDF["area"].values:
+            for idx, value in powerflow.dbarraDF.iterrows():
+                if value["area"] == area:
+                    powerflow.dbarraDF.loc[idx, "demanda_ativa"] *= (
+                        1
+                        + powerflow.dancDF["fator_carga_ativa"][0]
+                        / powerflow.options["BASE"]
+                    )
+                    powerflow.dbarraDF.loc[idx, "demanda_reativa"] *= (
+                        1
+                        + powerflow.dancDF["fator_carga_reativa"][0]
+                        / powerflow.options["BASE"]
+                    )
+                    powerflow.dbarraDF.loc[idx, "shunt_barra"] *= (
+                        1
+                        + powerflow.dancDF["fator_shunt_barra"][0]
+                        / powerflow.options["BASE"]
+                    )
 
 
 def dare(
@@ -1050,6 +1082,10 @@ def dlin(
         powerflow.dlinhaDF["transf"] = (
             powerflow.dlinhaDF["tap"] != 0.0
         ) & powerflow.dlinhaDF["estado"]
+
+        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"].tolist() + 1*(~powerflow.dlinhaDF["transf"].values)
+        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"] * exp(1j * pi / 180 * powerflow.dlinhaDF["tap_defasagem"]) ## add phase shifters
+
 
         # Número de barras do sistema
         powerflow.nlin = len(powerflow.dlinhaDF.de.values)

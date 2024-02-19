@@ -1,10 +1,10 @@
 February 19, 2024
 
 
-relatório de monitoramento do sistema ieee118
+relatório de monitoramento do sistema ieee57
 solução do fluxo de potência via método newton-raphson
 
 opções de monitoramento ativadas: 
 
 
-fim do relatório de monitoramento do sistema ieee118
+fim do relatório de monitoramento do sistema ieee57
