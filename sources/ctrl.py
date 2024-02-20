@@ -16,6 +16,7 @@ from ctrlqlims import *
 from ctrlqlimn import *
 from ctrlsvc import *
 
+
 def control(
     powerflow,
 ):
@@ -677,52 +678,45 @@ def controldelta(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["TEPA"]
             )
             ctrl += powerflow.nger
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["TEPR"]
             )
             ctrl += powerflow.nger
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["ASTP"]
             )
             ctrl += powerflow.nger
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.nger])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
                 > powerflow.options["QLST"]
             )
             ctrl += powerflow.nger
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             boollist.append(
-                norm(
-                    powerflow.deltaY[ctrl : ctrl + powerflow.ncer])
+                norm(powerflow.deltaY[ctrl : ctrl + powerflow.ncer])
                 > powerflow.options["QLST"]
             )
             ctrl += powerflow.ncer

@@ -8,6 +8,7 @@
 
 from copy import deepcopy
 
+
 def increment(
     powerflow,
 ):
@@ -33,10 +34,8 @@ def increment(
                 "demanda_reativa"
             ][idxbar] * (1 + powerflow.solution["lambda"])
 
-
     # Delta incremento de carga
     deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
-
 
     # Incremento de geração
     if powerflow.codes["DGER"]:

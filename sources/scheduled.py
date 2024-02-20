@@ -9,6 +9,7 @@
 from numpy import zeros
 from ctrl import controlsch
 
+
 def scheduled(
     powerflow,
 ):
@@ -28,12 +29,8 @@ def scheduled(
         powerflow.psch[idx] += value["potencia_ativa"]
         powerflow.psch[idx] -= value["demanda_ativa"]
 
-        powerflow.qsch[idx] += value[
-            "potencia_reativa"
-        ]
-        powerflow.qsch[idx] -= value[
-            "demanda_reativa"
-        ]
+        powerflow.qsch[idx] += value["potencia_reativa"]
+        powerflow.qsch[idx] -= value["demanda_reativa"]
 
     # Tratamento
     powerflow.psch /= powerflow.options["BASE"]

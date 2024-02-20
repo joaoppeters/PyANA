@@ -6,6 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+
 def methodo(
     powerflow,
 ):

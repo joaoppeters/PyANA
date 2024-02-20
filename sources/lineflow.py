@@ -9,6 +9,7 @@
 from copy import deepcopy
 from numpy import cos, sin, zeros
 
+
 def lineflow(
     powerflow,
 ):
@@ -20,10 +21,10 @@ def lineflow(
     ## Inicialização
     powerflow.solution.update(
         {
-        "active_flow_F2": zeros(powerflow.nlin),
-        "reactive_flow_F2": zeros(powerflow.nlin),
-        "active_flow_2F": zeros(powerflow.nlin),
-        "reactive_flow_2F": zeros(powerflow.nlin),
+            "active_flow_F2": zeros(powerflow.nlin),
+            "reactive_flow_F2": zeros(powerflow.nlin),
+            "active_flow_2F": zeros(powerflow.nlin),
+            "reactive_flow_2F": zeros(powerflow.nlin),
         }
     )
 

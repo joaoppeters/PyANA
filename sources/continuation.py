@@ -38,6 +38,7 @@ from ctrl import (
 from jacobian import jacobi
 from loading import loading
 
+
 def cpf(
     powerflow,
 ):
@@ -569,12 +570,8 @@ def scheduled(
         powerflow.psch[idx] -= value["demanda_ativa"]
 
         # Potência reativa especificada
-        powerflow.qsch[idx] += value[
-            "potencia_reativa"
-        ]
-        powerflow.qsch[idx] -= value[
-            "demanda_reativa"
-        ]
+        powerflow.qsch[idx] += value["potencia_reativa"]
+        powerflow.qsch[idx] -= value["demanda_reativa"]
 
     # Tratamento
     powerflow.psch /= powerflow.options["BASE"]
@@ -623,9 +620,7 @@ def residue(
             or ("QLIMs" in powerflow.control)
             or (value["tipo"] == 0)
         ):
-            powerflow.deltaQ[idx] += powerflow.qsch[
-                idx
-            ]
+            powerflow.deltaQ[idx] += powerflow.qsch[idx]
             powerflow.deltaQ[idx] -= qcalc(
                 powerflow,
                 idx,

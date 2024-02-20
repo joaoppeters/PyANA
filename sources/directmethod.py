@@ -8,15 +8,14 @@
 
 from copy import deepcopy
 from numpy import (
-    all,
-    any,
     array,
     concatenate,
     radians,
-    sum,
     zeros,
 )
-from numpy.linalg import norm, solve
+from numpy.linalg import LinAlgError, norm
+from scipy.sparse import csr_matrix as sparse, hstack
+from scipy.sparse.linalg import lsqr, spsolve, svds
 
 from ctrl import controlsol
 from increment import increment
@@ -25,6 +24,7 @@ from reduction import reduction
 from residue import residue
 from scheduled import scheduled
 from update import updtstt, updtpwr
+
 
 def cani(
     powerflow,
@@ -74,7 +74,7 @@ def cani(
             powerflow,
         )
 
-        # Matrizes 
+        # Matrizes
         matrices(
             powerflow,
         )
@@ -83,28 +83,26 @@ def cani(
         expansion(
             powerflow,
         )
-        
-        powerflow.canistate = concatenate(
-        (
-            powerflow.solution["theta"],
-            powerflow.solution["voltage"],
-            array([powerflow.solution["lambda"]]),
-            powerflow.solution["eigen"],
-        ),
-        axis=0,
-    )
 
-        powerflow.funccani = concatenate(
-            (
+        powerflow.funccani = hstack(
+            [
                 -powerflow.deltaPQY,
-                array(powerflow.G).reshape(powerflow.G.shape[0],),
-                array([sum(powerflow.H * powerflow.H) - 1]),
-            ),
-            axis=0,
-        ).astype(float)
+                powerflow.G,
+                array([powerflow.H @ powerflow.H - 1]),
+            ],
+            "csr",
+        )
 
-        # Variáveis de estado
-        powerflow.statevar = solve(powerflow.jaccani, powerflow.funccani,)
+        try:
+            # Your sparse matrix computation using spsolve here
+            powerflow.statevar = lsqr(
+                powerflow.jaccani,
+                powerflow.funccani.T.A,
+            )[0]
+        except LinAlgError:
+            raise ValueError(
+                "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
+            )
 
         # Atualização das Variáveis de estado
         updtstt(
@@ -115,19 +113,21 @@ def cani(
         powerflow.solution["iter"] += 1
 
         # Condição de Divergência por iterações
-        if  (powerflow.solution["iter"] > powerflow.options["ACIT"]):
+        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
             powerflow.solution[
                 "convergence"
             ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             break
 
-        elif all(norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
+        elif (norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
             break
 
-    updtpwr(powerflow,)
+    updtpwr(
+        powerflow,
+    )
 
 
 def expansion(
@@ -140,7 +140,7 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.dtf = zeros([2*powerflow.nbus, 1])
+    powerflow.dtf = zeros([2 * powerflow.nbus, 1])
 
     # Demanda
     for idx, value in powerflow.dbarraDF.iterrows():
@@ -187,3 +187,5 @@ def expansion(
         ),
         axis=0,
     )
+
+    powerflow.jaccani = sparse(powerflow.jaccani)

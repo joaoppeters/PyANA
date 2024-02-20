@@ -8,6 +8,7 @@
 
 from numpy import zeros
 
+
 def reduction(
     powerflow,
 ):

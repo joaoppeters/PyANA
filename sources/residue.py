@@ -6,8 +6,9 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, asmatrix, concatenate, conj, diag, exp, zeros
+from numpy import array, concatenate, conj, diag, exp
 from ctrl import controlres
+
 
 def residue(
     powerflow,
@@ -20,7 +21,7 @@ def residue(
 
     ## Inicialização
     # Vetores de resíduo
-    V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
+    V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
     I = powerflow.Ybus @ V
     S = diag(V) @ conj(I)
 
@@ -30,7 +31,7 @@ def residue(
 
     # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
     powerflow.deltaPQY = concatenate((powerflow.deltaP, powerflow.deltaQ), axis=0)
-    
+
     # Resíduos de variáveis de estado de controle
     if powerflow.controlcount > 0:
         controlres(

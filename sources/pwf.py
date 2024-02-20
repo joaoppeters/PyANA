@@ -8,6 +8,7 @@
 
 from dcode import *
 
+
 def pwf(
     powerflow,
 ):
@@ -170,4 +171,6 @@ def readfile(
     print(f"\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m")
 
     # Checa alteração do nível de carregamento
-    checkdanc(powerflow,)
+    checkdanc(
+        powerflow,
+    )

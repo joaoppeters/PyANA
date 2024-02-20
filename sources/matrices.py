@@ -9,51 +9,104 @@
 from numpy import arange, asarray, asmatrix, conj, diag, exp, ones, seterr
 from scipy.sparse import issparse, csr_matrix as sparse, vstack, hstack
 
-seterr(divide='ignore', invalid='ignore')
+# seterr(divide='ignore', invalid='ignore')
+
 
 def matrices(
     powerflow,
 ):
     """jacobian and hessian matrices
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
-    V = powerflow.solution["voltage"]*exp(1j*powerflow.solution["theta"])
-    
+    V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
+
     # Jacobiana
     dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
-    powerflow.jacobian = vstack([
-            hstack([dS_dVa[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm[powerflow.maskP,:][:,powerflow.maskQ].real]),
-            hstack([dS_dVa[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm[powerflow.maskQ,:][:,powerflow.maskQ].imag])
-        ], format="csr")
+    powerflow.jacobian = vstack(
+        [
+            hstack(
+                [
+                    dS_dVa[powerflow.maskP, :][:, powerflow.maskP].real,
+                    dS_dVm[powerflow.maskP, :][:, powerflow.maskQ].real,
+                ]
+            ),
+            hstack(
+                [
+                    dS_dVa[powerflow.maskQ, :][:, powerflow.maskP].imag,
+                    dS_dVm[powerflow.maskQ, :][:, powerflow.maskQ].imag,
+                ]
+            ),
+        ],
+        format="csr",
+    )
 
-    
     if powerflow.method == "CANI":
-        # Vetor Jacobiana-Lambda    
-        powerflow.G = powerflow.jacobian.T @ powerflow.solution["eigen"][powerflow.mask].reshape((powerflow.mask.sum(), 1))
+        # Vetor Jacobiana-Lambda
+        powerflow.G = (
+            powerflow.jacobian.T @ powerflow.solution["eigen"][powerflow.mask]
+        )  # .reshape((powerflow.mask.sum(), 1))
         powerflow.H = powerflow.solution["eigen"][powerflow.mask]
 
         # Hessiana
-        Gpaa, Gpav, Gpva, Gpvv = d2Sbus_dV2(powerflow.Ybus, V, powerflow.solution["eigen"][:powerflow.nbus])
-        Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus:])
-        
+        Gpaa, Gpav, Gpva, Gpvv = d2Sbus_dV2(
+            powerflow.Ybus, V, powerflow.solution["eigen"][: powerflow.nbus]
+        )
+        Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(
+            powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus :]
+        )
+
         # M1 = vstack([hstack([Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]]), hstack([Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]])], format="csr")
         # M2 = vstack([hstack([Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]]), hstack([Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]])], format="csr")
-        powerflow.hessian = vstack([
-            hstack([
-                vstack([hstack([Gpaa[powerflow.maskP,:][:, powerflow.maskP], Gpav[powerflow.maskP,:][:, powerflow.maskQ]]),
-                        hstack([Gpva[powerflow.maskQ,:][:, powerflow.maskP], Gpvv[powerflow.maskQ,:][:, powerflow.maskQ]])]).real +
-                vstack([hstack([Gqaa[powerflow.maskP,:][:, powerflow.maskP], Gqav[powerflow.maskP,:][:, powerflow.maskQ]]),
-                        hstack([Gqva[powerflow.maskQ,:][:, powerflow.maskP], Gqvv[powerflow.maskQ,:][:, powerflow.maskQ]])]).imag,
-            ])
-        ], "csr")
+        powerflow.hessian = vstack(
+            [
+                hstack(
+                    [
+                        vstack(
+                            [
+                                hstack(
+                                    [
+                                        Gpaa[powerflow.maskP, :][:, powerflow.maskP],
+                                        Gpav[powerflow.maskP, :][:, powerflow.maskQ],
+                                    ]
+                                ),
+                                hstack(
+                                    [
+                                        Gpva[powerflow.maskQ, :][:, powerflow.maskP],
+                                        Gpvv[powerflow.maskQ, :][:, powerflow.maskQ],
+                                    ]
+                                ),
+                            ]
+                        ).real
+                        + vstack(
+                            [
+                                hstack(
+                                    [
+                                        Gqaa[powerflow.maskP, :][:, powerflow.maskP],
+                                        Gqav[powerflow.maskP, :][:, powerflow.maskQ],
+                                    ]
+                                ),
+                                hstack(
+                                    [
+                                        Gqva[powerflow.maskQ, :][:, powerflow.maskP],
+                                        Gqvv[powerflow.maskQ, :][:, powerflow.maskQ],
+                                    ]
+                                ),
+                            ]
+                        ).imag,
+                    ]
+                )
+            ],
+            "csr",
+        )
 
         # Submatrizes de controles ativos
         if powerflow.controlcount > 0:
             from ctrl import controlhesssym, controljacsym
+
             controljacsym(
                 powerflow,
             )
@@ -118,7 +171,7 @@ def dSbus_dV(Ybus, V):
         Ibus = Ybus @ asmatrix(V).T
 
         diagV = asmatrix(diag(V))
-        diagIbus = asmatrix(diag( asarray(Ibus).flatten() ))
+        diagIbus = asmatrix(diag(asarray(Ibus).flatten()))
         diagVnorm = asmatrix(diag(V / abs(V)))
 
     dS_dVm = diagV * conj(Ybus * diagVnorm) + conj(diagIbus) * diagVnorm

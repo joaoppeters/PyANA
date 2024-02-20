@@ -22,6 +22,7 @@ from residue import residue
 from scheduled import scheduled
 from update import updtpwr, updtstt
 
+
 def newton(
     powerflow,
 ):
@@ -67,9 +68,17 @@ def newton(
     )
 
     while (
-        norm(powerflow.deltaP[powerflow.maskP],) > powerflow.options["TEPA"]
-        or norm(powerflow.deltaQ[powerflow.maskQ],) > powerflow.options["TEPR"]
-        or controldelta(powerflow,)
+        norm(
+            powerflow.deltaP[powerflow.maskP],
+        )
+        > powerflow.options["TEPA"]
+        or norm(
+            powerflow.deltaQ[powerflow.maskQ],
+        )
+        > powerflow.options["TEPR"]
+        or controldelta(
+            powerflow,
+        )
     ):
 
         # Armazenamento da trajetória de convergência
@@ -84,7 +93,9 @@ def newton(
 
         # Variáveis de estado
         powerflow.statevar = spsolve(
-            powerflow.jacobian, powerflow.deltaPQY, use_umfpack=True,
+            powerflow.jacobian,
+            powerflow.deltaPQY,
+            use_umfpack=True,
         )
 
         # Atualização das Variáveis de estado
@@ -121,7 +132,9 @@ def newton(
 
         # Variáveis de estado
         powerflow.statevar = spsolve(
-            powerflow.jacobian, powerflow.deltaPQY, use_umfpack=True,
+            powerflow.jacobian,
+            powerflow.deltaPQY,
+            use_umfpack=True,
         )
 
         # Atualização das variáveis de estado

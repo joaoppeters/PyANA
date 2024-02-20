@@ -14,6 +14,7 @@ from sympy.functions import exp as spexp
 
 from folder import smoothfolder
 
+
 def qlims(
     powerflow,
     idx,
@@ -112,10 +113,14 @@ def qlims(
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    powerflow.diffyqg[idx] = (powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]).diff(qg)
+    powerflow.diffyqg[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(qg)
 
     # Derivada Parcial de Y por V
-    powerflow.diffyv[idx] = (powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]).diff(v)
+    powerflow.diffyv[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(v)
 
 
 def qlimssmooth(
@@ -148,7 +153,7 @@ def qlimssmooth(
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        - powerflow.Y[nger][0].subs(powerflow.qlimsvar)
+        -powerflow.Y[nger][0].subs(powerflow.qlimsvar)
         - powerflow.Y[nger][1].subs(powerflow.qlimsvar)
         - powerflow.Y[nger][2].subs(powerflow.qlimsvar)
     )

@@ -9,6 +9,7 @@
 from numpy import concatenate, exp, nan, ones, pi
 from pandas import DataFrame as DF
 
+
 def danc(
     powerflow,
 ):
@@ -1083,9 +1084,12 @@ def dlin(
             powerflow.dlinhaDF["tap"] != 0.0
         ) & powerflow.dlinhaDF["estado"]
 
-        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"].tolist() + 1*(~powerflow.dlinhaDF["transf"].values)
-        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"] * exp(1j * pi / 180 * powerflow.dlinhaDF["tap_defasagem"]) ## add phase shifters
-
+        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"].tolist() + 1 * (
+            ~powerflow.dlinhaDF["transf"].values
+        )
+        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"] * exp(
+            1j * pi / 180 * powerflow.dlinhaDF["tap_defasagem"]
+        )  ## add phase shifters
 
         # Número de barras do sistema
         powerflow.nlin = len(powerflow.dlinhaDF.de.values)

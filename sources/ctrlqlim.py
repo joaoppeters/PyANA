@@ -10,6 +10,7 @@ from copy import deepcopy
 from numpy import any, append, concatenate, ones, zeros
 from scipy.sparse import csc_matrix, hstack, vstack
 
+
 def qlimsol(
     powerflow,
 ):
@@ -364,12 +365,8 @@ def qlimsch(
     powerflow.qsch = zeros([powerflow.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.qsch += powerflow.solution[
-        "qlim_reactive_generation"
-    ]
-    powerflow.qsch -= powerflow.dbarraDF[
-        "demanda_reativa"
-    ].to_numpy()
+    powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
+    powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
     powerflow.qsch /= powerflow.options["BASE"]
 
 

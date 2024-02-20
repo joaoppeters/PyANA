@@ -8,6 +8,7 @@
 
 from numpy import cos, sin
 
+
 def pcalc(
     powerflow,
     idx: int = None,
@@ -83,7 +84,7 @@ def qcalc(
     ## Inicialização
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]
-    
+
     for lin in range(0, powerflow.nlin):
         if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
             bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
@@ -144,7 +145,7 @@ def pcalct(
         if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
             bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
-                - powerflow.admitancia[lin].real
+                -powerflow.admitancia[lin].real
                 * sin(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
@@ -156,7 +157,7 @@ def pcalct(
         elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
             bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
-                - powerflow.admitancia[lin].real
+                -powerflow.admitancia[lin].real
                 * sin(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
@@ -284,6 +285,7 @@ def qcalct(
     ) + powerflow.dbarraDF["demanda_reativa"][idx]
 
     return q
+
 
 def qcalcv(
     powerflow,

@@ -9,6 +9,7 @@
 from numpy import abs, append, argmax
 from numpy.linalg import norm
 
+
 def convergence(
     powerflow,
 ):

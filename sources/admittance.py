@@ -9,6 +9,7 @@
 from numpy import conj, ones, r_, vectorize, zeros
 from scipy.sparse import csr_matrix as sparse
 
+
 def admit(
     powerflow,
 ):
@@ -16,7 +17,7 @@ def admit(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    """    """Builds the bus admittance matrix and branch admittance matrices.
+    """ """Builds the bus admittance matrix and branch admittance matrices.
 
     Returns the full bus admittance matrix (i.e. for all buses) and the
     matrices C{Yf} and C{Yt} which, when multiplied by a complex voltage
@@ -31,13 +32,19 @@ def admit(
     ALL RIGHTS RESERVED TO RAY ZIMMERMAN
     CODE RETRIEVED FROM: https://github.com/rwl/PYPOWER
     """
-    
+
     ## Inicialização
-    Ysr = 1 / vectorize(complex)(powerflow.dlinhaDF["resistencia"], powerflow.dlinhaDF["reatancia"])
-    Ysh = vectorize(complex)(0, powerflow.dbarraDF["shunt_barra"] / powerflow.options["BASE"])
-    
+    Ysr = 1 / vectorize(complex)(
+        powerflow.dlinhaDF["resistencia"], powerflow.dlinhaDF["reatancia"]
+    )
+    Ysh = vectorize(complex)(
+        0, powerflow.dbarraDF["shunt_barra"] / powerflow.options["BASE"]
+    )
+
     Ytt = Ysr + vectorize(complex)(0, powerflow.dlinhaDF["susceptancia"])
-    Yff = Ytt / (vectorize(complex)(powerflow.dlinhaDF["tap"] * conj(powerflow.dlinhaDF["tap"])))
+    Yff = Ytt / (
+        vectorize(complex)(powerflow.dlinhaDF["tap"] * conj(powerflow.dlinhaDF["tap"]))
+    )
     Yft = -Ysr / conj(powerflow.dlinhaDF["tap"])
     Ytf = -Ysr / powerflow.dlinhaDF["tap"]
 
@@ -45,21 +52,32 @@ def admit(
     t = (powerflow.dlinhaDF["para"] - 1).values
 
     ## connection matrix for line & from buses
-    Cf = sparse((ones(powerflow.nlin), (range(powerflow.nlin), f)), (powerflow.nlin, powerflow.nbus))
+    Cf = sparse(
+        (ones(powerflow.nlin), (range(powerflow.nlin), f)),
+        (powerflow.nlin, powerflow.nbus),
+    )
     ## connection matrix for line & to buses
-    Ct = sparse((ones(powerflow.nlin), (range(powerflow.nlin), t)), (powerflow.nlin, powerflow.nbus))
+    Ct = sparse(
+        (ones(powerflow.nlin), (range(powerflow.nlin), t)),
+        (powerflow.nlin, powerflow.nbus),
+    )
 
     ## build Yf and Yt such that Yf * V is the vector of complex branch currents injected
     ## at each branch's "from" bus, and Yt is the same for the "to" bus end
-    i = r_[range(powerflow.nlin), range(powerflow.nlin)]                   ## double set of row indices
+    i = r_[range(powerflow.nlin), range(powerflow.nlin)]  ## double set of row indices
 
     Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
     Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
 
     ## build Ybus
-    powerflow.Ybus = Cf.T @ Yf + Ct.T @ Yt + \
-        sparse((Ysh, (range(powerflow.nbus), range(powerflow.nbus))), (powerflow.nbus, powerflow.nbus))
-
+    powerflow.Ybus = (
+        Cf.T @ Yf
+        + Ct.T @ Yt
+        + sparse(
+            (Ysh, (range(powerflow.nbus), range(powerflow.nbus))),
+            (powerflow.nbus, powerflow.nbus),
+        )
+    )
 
     # Cf = sparse((powerflow.nlin, f, ones(powerflow) (powerflow.nlin, powerflow.nbus)))
     # Ct = sparse((t, (powerflow.nlin, powerflow.nbus)))
@@ -68,7 +86,6 @@ def admit(
     # Yt = sparse((powerflow.nlin, powerflow.nlin, Ytf, powerflow.nlin, powerflow.nlin)) @ Cf + sparse((powerflow.nlin, powerflow.nlin, Ytt, powerflow.nlin, powerflow.nlin)) @ Ct
 
     # powerflow.Ybus = Cf.T @ Yf + Ct.T @ Yt + sparse(powerflow.nbus, powerflow.nbus, Ysh, powerflow.nbus, powerflow.nbus)
-
 
 
 def admitLinear(
@@ -83,9 +100,7 @@ def admitLinear(
 
     ## Inicialização
     # Matriz Admitância
-    powerflow.Ybus = zeros(
-        shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
-    )
+    powerflow.Ybus = zeros(shape=[powerflow.nbus, powerflow.nbus], dtype="complex_")
     powerflow.gdiag = zeros(powerflow.nbus)
     powerflow.bdiag = zeros(powerflow.nbus)
     powerflow.apont = ones(powerflow.nbus, dtype=int)

@@ -10,6 +10,7 @@ from copy import deepcopy
 from numpy import abs, append, array, delete, insert, ndarray, ones, zeros
 from numpy.linalg import solve
 
+
 class LinearPF:
     """classe para cálculo do fluxo de potência não-linear via método linearizado"""
 

@@ -11,6 +11,7 @@ from numpy import arange, degrees, linspace, max, min, ones, pi
 
 from folder import convergencefolder, statevarfolder
 
+
 def convergence(
     powerflow,
 ):
@@ -271,8 +272,6 @@ def convY(
         powerflow.nbusdirRconvergence + powerflow.name + "-trajconv-deltaY.png",
         dpi=400,
     )
-
-
 
 
 def statevar(

@@ -31,6 +31,7 @@ from loading import Loading
 from newtonraphson import NewtonRaphson
 from smooth import Smooth
 
+
 class FastContinuation:
     """classe para cálculo do fluxo de potência não-linear via método newton-raphson"""
 
@@ -593,20 +594,12 @@ class FastContinuation:
         # Loop
         for idx, value in powerflow.dbarraDF.iterrows():
             # Potência ativa especificada
-            powerflow.psch[idx] += value[
-                "potencia_ativa"
-            ]
-            powerflow.psch[idx] -= value[
-                "demanda_ativa"
-            ]
+            powerflow.psch[idx] += value["potencia_ativa"]
+            powerflow.psch[idx] -= value["demanda_ativa"]
 
             # Potência reativa especificada
-            powerflow.qsch[idx] += value[
-                "potencia_reativa"
-            ]
-            powerflow.qsch[idx] -= value[
-                "demanda_reativa"
-            ]
+            powerflow.qsch[idx] += value["potencia_reativa"]
+            powerflow.qsch[idx] -= value["demanda_reativa"]
 
         # Tratamento
         powerflow.psch /= powerflow.options["BASE"]
@@ -642,9 +635,7 @@ class FastContinuation:
         for idx, value in powerflow.dbarraDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value["tipo"] != 2:
-                powerflow.deltaP[idx] += powerflow.psch[
-                    idx
-                ]
+                powerflow.deltaP[idx] += powerflow.psch[idx]
                 powerflow.deltaP[idx] -= PQCalc().pcalc(
                     powerflow,
                     idx,

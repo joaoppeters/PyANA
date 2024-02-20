@@ -11,6 +11,7 @@ from numpy import append, array, degrees, sum
 
 from folder import continuationfolder
 
+
 def loading(
     powerflow,
 ):
