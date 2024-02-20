@@ -183,9 +183,7 @@ def expansion(
             hstack(
                 [powerflow.dxh, array([0]), powerflow.dwh],
                 "csr",
-            )
+            ),
         ],
         "csr",
     )
-
-    # powerflow.jaccani = sparse(powerflow.jaccani)
