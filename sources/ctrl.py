@@ -314,11 +314,11 @@ def controljac(
     powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.method != "CANI"):
+    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "CANI"):
         powerflow.mask = append(powerflow.mask, zeros(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
-    elif (powerflow.maskctrlcount == 0) and (powerflow.method == "CANI"):
+    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "CANI"):
         powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
@@ -790,11 +790,11 @@ def controljacsym(
     powerflow.controldim = powerflow.jacobiansym.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.method != "CANI"):
+    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "CANI"):
         powerflow.mask = append(powerflow.mask, zeros(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
-    elif (powerflow.maskctrlcount == 0) and (powerflow.method == "CANI"):
+    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "CANI"):
         powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 

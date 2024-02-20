@@ -177,7 +177,7 @@ def qlimsupdt(
     """
 
     ## Inicialização
-    if powerflow.method == "CANI":
+    if powerflow.solution["method"] == "CANI":
         powerflow.dimpreqlim = (
             powerflow.hessiansym[powerflow.mask, :][:, powerflow.mask].shape[0]
             - powerflow.controldim

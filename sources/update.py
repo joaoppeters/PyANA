@@ -39,7 +39,7 @@ def updtstt(
             powerflow,
         )
 
-    if powerflow.method == "CANI":
+    if powerflow.solution["method"] == "CANI":
         powerflow.solution["lambda"] += (
             powerflow.solution["sign"]
             * powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim)]

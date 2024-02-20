@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import arange, asarray, asmatrix, conj, diag, exp, ones, seterr
+from numpy import arange, asarray, asmatrix, conj, diag, exp, ones
 from scipy.sparse import issparse, csr_matrix as sparse, vstack, hstack
 
 # seterr(divide='ignore', invalid='ignore')
@@ -44,7 +44,7 @@ def matrices(
         format="csr",
     )
 
-    if powerflow.method == "CANI":
+    if powerflow.solution["method"] == "CANI":
         # Vetor Jacobiana-Lambda
         powerflow.G = (
             powerflow.jacobian.T @ powerflow.solution["eigen"][powerflow.mask]
@@ -59,8 +59,6 @@ def matrices(
             powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus :]
         )
 
-        # M1 = vstack([hstack([Gaa1[powerflow.maskP,:][:, powerflow.maskP], Gav1[powerflow.maskP,:][:, powerflow.maskQ]]), hstack([Gva1[powerflow.maskQ,:][:, powerflow.maskP], Gvv1[powerflow.maskQ,:][:, powerflow.maskQ]])], format="csr")
-        # M2 = vstack([hstack([Gaa2[powerflow.maskP,:][:, powerflow.maskP], Gav2[powerflow.maskP,:][:, powerflow.maskQ]]), hstack([Gva2[powerflow.maskQ,:][:, powerflow.maskP], Gvv2[powerflow.maskQ,:][:, powerflow.maskQ]])], format="csr")
         powerflow.hessian = vstack(
             [
                 hstack(

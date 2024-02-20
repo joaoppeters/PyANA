@@ -7,18 +7,14 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import (
-    array,
-    concatenate,
-    radians,
-    zeros,
-)
+from numpy import array, zeros
 from numpy.linalg import LinAlgError, norm
 from scipy.sparse import vstack, hstack
-from scipy.sparse.linalg import lsqr
+from scipy.sparse.linalg import lsmr, lsqr
 
 from ctrl import controlsol
 from increment import increment
+from inverse import inverse
 from matrices import matrices
 from reduction import reduction
 from residue import residue
@@ -36,22 +32,22 @@ def cani(
     """
 
     ## Inicialização
+    inverse(powerflow,)
+
     # Variável para armazenamento de solução
-    powerflow.solution = {
-        "system": powerflow.name,
-        "iter": 0,
-        "voltage": array(powerflow.dbarraDF["tensao"] * 1e-3),
-        "theta": array(radians(powerflow.dbarraDF["angulo"])),
-        "active": zeros(powerflow.nbus),
-        "reactive": zeros(powerflow.nbus),
-        "freq": 1.0,
-        "lambda": 0.0,
-        "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
-        "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
-        "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-        "eigen": 1.0 * (powerflow.mask),
-        "sign": -1.0,
-    }
+    powerflow.solution.update(
+        {
+            "method": "CANI",
+            "iter": 0,
+            "freq": 1.0,
+            "lambda": 0.0,
+            "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
+            "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
+            "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
+            # "eigen": 1.0 * (powerflow.mask),
+            "sign": -1.0,
+        }
+    )
 
     # Controles
     controlsol(

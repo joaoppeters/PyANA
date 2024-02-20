@@ -141,9 +141,14 @@ def methodo(
     elif powerflow.method == "CANI":
         from admittance import admit
         from directmethod import cani
+        from newtonraphson import newton
         from report import reportfile
 
         admit(
+            powerflow,
+        )
+
+        newton(
             powerflow,
         )
 

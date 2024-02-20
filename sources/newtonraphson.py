@@ -36,6 +36,7 @@ def newton(
     # Variável para armazenamento de solução
     powerflow.solution = {
         "system": powerflow.name,
+        "method": "NEWTON",
         "iter": 0,
         "voltage": array(powerflow.dbarraDF["tensao"] * 1e-3),
         "theta": array(radians(powerflow.dbarraDF["angulo"])),

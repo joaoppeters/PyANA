@@ -355,6 +355,8 @@ def dbar(
         powerflow.dbarraDF.loc[
             powerflow.dbarraDF["tensao_base"] == 0.0, "tensao_base"
         ] = 1000.0
+        
+        powerflow.dbarraDF = powerflow.dbarraDF.reset_index()
 
 
 def dcer(
@@ -1093,3 +1095,6 @@ def dlin(
 
         # Número de barras do sistema
         powerflow.nlin = len(powerflow.dlinhaDF.de.values)
+        
+        powerflow.dlinhaDF["de-idx"] = powerflow.dlinhaDF['de'].map(powerflow.dbarraDF.set_index('numero')['index'])
+        powerflow.dlinhaDF["para-idx"] = powerflow.dlinhaDF['para'].map(powerflow.dbarraDF.set_index('numero')['index'])

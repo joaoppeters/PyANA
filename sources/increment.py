@@ -23,7 +23,7 @@ def increment(
     preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
 
     ## CANI
-    if powerflow.method == "CANI":
+    if powerflow.solution["method"] == "CANI":
         # Incremento de carga
         for idxbar, _ in powerflow.dbarraDF.iterrows():
             # Incremento de Carregamento
