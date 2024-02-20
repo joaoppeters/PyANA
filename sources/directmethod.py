@@ -14,8 +14,8 @@ from numpy import (
     zeros,
 )
 from numpy.linalg import LinAlgError, norm
-from scipy.sparse import csr_matrix as sparse, hstack
-from scipy.sparse.linalg import lsqr, spsolve, svds
+from scipy.sparse import vstack, hstack
+from scipy.sparse.linalg import lsqr
 
 from ctrl import controlsol
 from increment import increment
@@ -161,31 +161,31 @@ def expansion(
         powerflow,
     )
 
-    powerflow.jaccani = concatenate(
-        (powerflow.jacobian.A, powerflow.dtf, powerflow.dwf),
-        axis=1,
+    powerflow.jaccani = hstack(
+        [powerflow.jacobian, powerflow.dtf, powerflow.dwf],
+        "csr",
     )
 
-    powerflow.jaccani = concatenate(
-        (
+    powerflow.jaccani = vstack(
+        [
             powerflow.jaccani,
-            concatenate(
-                (powerflow.hessian.A, powerflow.dtg, powerflow.jacobian.A.T),
-                axis=1,
+            hstack(
+                [powerflow.hessian, powerflow.dtg, powerflow.jacobian.T],
+                "csr",
             ),
-        ),
-        axis=0,
+        ],
+        "csr",
     )
 
-    powerflow.jaccani = concatenate(
-        (
+    powerflow.jaccani = vstack(
+        [
             powerflow.jaccani,
-            concatenate(
-                (powerflow.dxh, array([0]), powerflow.dwh),
-                axis=0,
-            ).reshape((1, powerflow.jaccani.shape[1])),
-        ),
-        axis=0,
+            hstack(
+                [powerflow.dxh, array([0]), powerflow.dwh],
+                "csr",
+            )
+        ],
+        "csr",
     )
 
-    powerflow.jaccani = sparse(powerflow.jaccani)
+    # powerflow.jaccani = sparse(powerflow.jaccani)
