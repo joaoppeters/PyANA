@@ -45,23 +45,6 @@ def cani(
         }
     )
 
-    # powerflow.solution = {
-    #     "method": "CANI",
-    #     "system": powerflow.name,
-    #     "iter": 0,
-    #     "voltage": array(powerflow.dbarraDF["tensao"] * 1e-3),
-    #     "theta": array(radians(powerflow.dbarraDF["angulo"])),
-    #     "active": zeros(powerflow.nbus),
-    #     "reactive": zeros(powerflow.nbus),
-    #     "freq": 1.0,
-    #     "lambda": 0.0,
-    #     "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
-    #     "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
-    #     "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-    #     "eigen": 1.0 * (powerflow.mask),
-    #     "sign": -1.0,
-    # }
-
     # Controles
     controlsol(
         powerflow,
