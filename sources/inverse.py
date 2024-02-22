@@ -6,8 +6,8 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import dot, eye, inf
-from numpy.linalg import norm, solve
+from numpy import abs, max, zeros
+from numpy.linalg import eig, norm, solve
 from scipy.sparse.linalg import inv, spsolve, lsqr, lsmr
 
 def inverse(
@@ -22,16 +22,18 @@ def inverse(
     """
 
     ## Inicialização
-    x0 = 1.0 * (powerflow.mask[powerflow.mask])
-    I = eye(sum(powerflow.mask))
+    x = zeros(sum(powerflow.mask))
+    x[0] = 1
+    x /= norm(x)  # Normalize eigenvector
 
     while True:
-        x1 = solve(powerflow.jacobian.A - mu * I, x0)
-        x1 /= norm(x1, inf)  # Normalize eigenvector
-        mu = dot(x0, x1)  # Approximation of eigenvalue
-        print(norm(x1 - x0, inf))
-        if norm(x1 - x0, inf) < tol:
+        y = solve(powerflow.jacobian.A, x)
+        eigenvalue = max(abs(y))
+        x = y / eigenvalue
+
+        print(norm(powerflow.jacobian.A @ x - eigenvalue * x))
+        if norm(powerflow.jacobian.A @ x - eigenvalue * x) < tol:
             break
-        x0 = x1
     
-    powerflow.solution["eigen"] = x1
+    y = 1 / y
+    powerflow.solution["eigen"] = x

@@ -16,7 +16,6 @@ from scipy.sparse.linalg import spsolve
 
 from convergence import convergence
 from ctrl import controlsol, controldelta
-from lineflow import lineflow
 from matrices import matrices
 from residue import residue
 from scheduled import scheduled
@@ -150,11 +149,6 @@ def newton(
 
         # Atualização dos resíduos
         residue(
-            powerflow,
-        )
-
-        # Fluxo em linhas de transmissão
-        lineflow(
             powerflow,
         )
 

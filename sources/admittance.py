@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import conj, ones, r_, vectorize, zeros
+from numpy import conj, ones, r_, vectorize
 from scipy.sparse import csr_matrix as sparse
 
 
@@ -70,7 +70,7 @@ def admit(
     Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
 
     ## build Ybus
-    powerflow.Ybus = (
+    powerflow.Ybus = sparse(
         Cf.T @ Yf
         + Ct.T @ Yt
         + sparse(

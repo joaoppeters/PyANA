@@ -7,14 +7,11 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import array, zeros
-from numpy.linalg import LinAlgError, norm
-from scipy.sparse import vstack, hstack
-from scipy.sparse.linalg import lsmr, lsqr
+from numpy import array, concatenate, zeros, radians
+from numpy.linalg import LinAlgError, lstsq, norm
 
 from ctrl import controlsol
 from increment import increment
-from inverse import inverse
 from matrices import matrices
 from reduction import reduction
 from residue import residue
@@ -32,8 +29,6 @@ def cani(
     """
 
     ## Inicialização
-    inverse(powerflow,)
-
     # Variável para armazenamento de solução
     powerflow.solution.update(
         {
@@ -44,10 +39,27 @@ def cani(
             "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
             "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
             "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-            # "eigen": 1.0 * (powerflow.mask),
+            "eigen": 1.0 * (powerflow.mask),
             "sign": -1.0,
         }
     )
+
+    # powerflow.solution = {
+    #     "method": "CANI",
+    #     "system": powerflow.name,
+    #     "iter": 0,
+    #     "voltage": array(powerflow.dbarraDF["tensao"] * 1e-3),
+    #     "theta": array(radians(powerflow.dbarraDF["angulo"])),
+    #     "active": zeros(powerflow.nbus),
+    #     "reactive": zeros(powerflow.nbus),
+    #     "freq": 1.0,
+    #     "lambda": 0.0,
+    #     "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
+    #     "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
+    #     "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
+    #     "eigen": 1.0 * (powerflow.mask),
+    #     "sign": -1.0,
+    # }
 
     # Controles
     controlsol(
@@ -80,21 +92,21 @@ def cani(
             powerflow,
         )
 
-        powerflow.funccani = hstack(
-            [
+        powerflow.funccani = concatenate(
+            (
                 -powerflow.deltaPQY,
                 powerflow.G,
                 array([powerflow.H @ powerflow.H - 1]),
-            ],
-            "csr",
-        )
+            ),
+            axis=0,
+        )#.reshape((2*sum(powerflow.mask) + 1, 1))
 
         try:
             # Your sparse matrix computation using spsolve here
-            powerflow.statevar = lsqr(
+            powerflow.statevar, residuals, rank, singular = lstsq(
                 powerflow.jaccani,
-                powerflow.funccani.T.A,
-            )[0]
+                powerflow.funccani,
+            )
         except LinAlgError:
             raise ValueError(
                 "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
@@ -107,6 +119,8 @@ def cani(
 
         # Incremento de iteração
         powerflow.solution["iter"] += 1
+
+        print(norm(powerflow.statevar))
 
         # Condição de Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:
@@ -157,29 +171,29 @@ def expansion(
         powerflow,
     )
 
-    powerflow.jaccani = hstack(
-        [powerflow.jacobian, powerflow.dtf, powerflow.dwf],
-        "csr",
+    powerflow.jaccani = concatenate(
+        (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
+        axis=1,
     )
 
-    powerflow.jaccani = vstack(
-        [
+    powerflow.jaccani = concatenate(
+        (
             powerflow.jaccani,
-            hstack(
-                [powerflow.hessian, powerflow.dtg, powerflow.jacobian.T],
-                "csr",
+            concatenate(
+                (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
+                axis=1,
             ),
-        ],
-        "csr",
+        ),
+        axis=0,
     )
 
-    powerflow.jaccani = vstack(
-        [
+    powerflow.jaccani = concatenate(
+        (
             powerflow.jaccani,
-            hstack(
-                [powerflow.dxh, array([0]), powerflow.dwh],
-                "csr",
-            ),
-        ],
-        "csr",
+            concatenate(
+                (powerflow.dxh, array([0]), powerflow.dwh),
+                axis=0,
+            ).reshape((1, powerflow.jaccani.shape[1])),
+        ),
+        axis=0,
     )

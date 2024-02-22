@@ -86,7 +86,7 @@ def options(
         "SIGK": 1e8,  # variável de inclinação da chave sigmóide
         "FULL": 0,  # Curva completa do fluxo de potência continuado
         "VVAR": 1e-6,  #
-        "CTOL": 1e-2,  # tolerância para as variáveis de estado do método direto (canizares)
+        "CTOL": 1e-7,  # tolerância para as variáveis de estado do método direto (canizares)
     }
 
     powerflow.options = dict()
