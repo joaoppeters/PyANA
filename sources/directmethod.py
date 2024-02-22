@@ -7,8 +7,9 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import array, concatenate, zeros, radians
+from numpy import array, concatenate, zeros
 from numpy.linalg import LinAlgError, lstsq, norm
+from scipy.sparse import csr_matrix as sparse, vstack, hstack
 
 from ctrl import controlsol
 from increment import increment
@@ -83,12 +84,12 @@ def cani(
                 array([powerflow.H @ powerflow.H - 1]),
             ),
             axis=0,
-        )#.reshape((2*sum(powerflow.mask) + 1, 1))
+        )
 
         try:
             # Your sparse matrix computation using spsolve here
             powerflow.statevar, residuals, rank, singular = lstsq(
-                powerflow.jaccani,
+                powerflow.jaccani.A,
                 powerflow.funccani,
             )
         except LinAlgError:
@@ -155,29 +156,29 @@ def expansion(
         powerflow,
     )
 
-    powerflow.jaccani = concatenate(
+    powerflow.jaccani = hstack(
         (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
-        axis=1,
+        format='csr',
     )
 
-    powerflow.jaccani = concatenate(
+    powerflow.jaccani = vstack(
         (
             powerflow.jaccani,
-            concatenate(
+            hstack(
                 (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
-                axis=1,
+                format='csr',
             ),
         ),
-        axis=0,
+        format='csr',
     )
 
-    powerflow.jaccani = concatenate(
+    powerflow.jaccani = vstack(
         (
             powerflow.jaccani,
-            concatenate(
+            hstack(
                 (powerflow.dxh, array([0]), powerflow.dwh),
-                axis=0,
+                format='csr',
             ).reshape((1, powerflow.jaccani.shape[1])),
         ),
-        axis=0,
+        format='csr',
     )

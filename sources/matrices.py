@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from numpy import arange, array, asarray, asmatrix, concatenate, conj, diag, exp, ones
-from scipy.sparse import issparse, csr_matrix as sparse
+from scipy.sparse import issparse, csr_matrix as sparse, vstack, hstack
 
 def matrices(
     powerflow,
@@ -23,9 +23,11 @@ def matrices(
 
     # Jacobiana
     dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
-    powerflow.jacobian = concatenate((concatenate((dS_dVa.A[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm.A[powerflow.maskP,:][:,powerflow.maskQ].real), axis=1), 
-                                      concatenate((dS_dVa.A[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm.A[powerflow.maskQ,:][:,powerflow.maskQ].imag), axis=1)), 
-                                      axis=0)
+    powerflow.jacobian = vstack((
+        hstack((dS_dVa[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm[powerflow.maskP,:][:,powerflow.maskQ].real), format="csr",), 
+        hstack((dS_dVa[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm[powerflow.maskQ,:][:,powerflow.maskQ].imag), format="csr",)),
+        format="csr",
+    )
 
     if powerflow.solution["method"] == "CANI":
         # Vetor Jacobiana-Lambda
@@ -42,9 +44,10 @@ def matrices(
             powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus :]
         )
 
-        M1 = concatenate((concatenate((Gpaa.A[powerflow.maskP,:][:, powerflow.maskP], Gpav.A[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gpva.A[powerflow.maskQ,:][:, powerflow.maskP], Gpvv.A[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
-        M2 = concatenate((concatenate((Gqaa.A[powerflow.maskP,:][:, powerflow.maskP], Gqav.A[powerflow.maskP,:][:, powerflow.maskQ]), axis=1), concatenate((Gqva.A[powerflow.maskQ,:][:, powerflow.maskP], Gqvv.A[powerflow.maskQ,:][:, powerflow.maskQ]), axis=1)), axis=0)
-        powerflow.hessian = array(M1).real + array(M2).imag
+        
+        M1 = vstack((hstack((Gpaa[powerflow.maskP,:][:, powerflow.maskP], Gpav[powerflow.maskP,:][:, powerflow.maskQ]), format="csr",), hstack((Gpva[powerflow.maskQ,:][:, powerflow.maskP], Gpvv[powerflow.maskQ,:][:, powerflow.maskQ]), format="csr",)), format="csr",)
+        M2 = vstack((hstack((Gqaa[powerflow.maskP,:][:, powerflow.maskP], Gqav[powerflow.maskP,:][:, powerflow.maskQ]), format="csr",), hstack((Gqva[powerflow.maskQ,:][:, powerflow.maskP], Gqvv[powerflow.maskQ,:][:, powerflow.maskQ]), format="csr",)), format="csr",)
+        powerflow.hessian = M1.real + M2.imag
 
         # Submatrizes de controles ativos
         if powerflow.controlcount > 0:
