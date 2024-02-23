@@ -122,6 +122,12 @@ def qlims(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
+    if powerflow.method == "CANI":
+        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
+        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
+        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
+        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+
 
 def qlimssmooth(
     idx,
@@ -142,20 +148,44 @@ def qlimssmooth(
     if case not in powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]]:
         powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
 
-    # Expressão Geral
-    powerflow.diffqlim[idx] = array(
-        [
-            powerflow.diffyv[idx].subs(powerflow.qlimsvar),
-            powerflow.diffyqg[idx].subs(powerflow.qlimsvar),
-        ],
-        dtype="float64",
+    # Variáveis Simbólicas
+    qg = Symbol("qg%s" % idx)
+    v = Symbol("v%s" % idx)\
+    
+    # Associação das variáveis
+    powerflow.qlimsvar.update(
+        {
+            qg: powerflow.solution["qlim_reactive_generation"][idx]
+            / powerflow.options["BASE"],
+            v: powerflow.solution["voltage"][idx],
+        }
     )
+
+    # Expressão Geral
+    if powerflow.solution["method"] != "CANI":
+        powerflow.diffqlim[idx] = array(
+            [
+                powerflow.diffyv[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyqg[idx].subs(powerflow.qlimsvar),
+            ],
+            dtype="float64",
+        )
+    else:
+        powerflow.diffqlim[idx] = array(
+            [
+                powerflow.diffyvv[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyqgv[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyvqg[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyqgqg[idx].subs(powerflow.qlimsvar),
+            ],
+            dtype="float64",
+        )
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        -powerflow.Y[nger][0].subs(powerflow.qlimsvar)
-        - powerflow.Y[nger][1].subs(powerflow.qlimsvar)
-        - powerflow.Y[nger][2].subs(powerflow.qlimsvar)
+        -powerflow.Y[idx][0].subs(powerflow.qlimsvar)
+        - powerflow.Y[idx][1].subs(powerflow.qlimsvar)
+        - powerflow.Y[idx][2].subs(powerflow.qlimsvar)
     )
 
     ## Armazenamento de valores das chaves

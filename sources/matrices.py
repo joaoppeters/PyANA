@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import arange, array, asarray, asmatrix, concatenate, conj, diag, exp, ones
+from numpy import arange, asarray, asmatrix, conj, diag, exp, ones
 from scipy.sparse import issparse, csr_matrix as sparse, vstack, hstack
 
 def matrices(
@@ -29,6 +29,13 @@ def matrices(
         format="csr",
     )
 
+    if powerflow.controlcount > 0:
+        from ctrl import controljac
+
+        controljac(
+            powerflow,
+        )
+
     if powerflow.solution["method"] == "CANI":
         # Vetor Jacobiana-Lambda
         powerflow.G = (
@@ -41,7 +48,7 @@ def matrices(
             powerflow.Ybus, V, powerflow.solution["eigen"][: powerflow.nbus]
         )
         Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(
-            powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus :]
+            powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus : 2*powerflow.nbus]
         )
 
         
@@ -51,12 +58,9 @@ def matrices(
 
         # Submatrizes de controles ativos
         if powerflow.controlcount > 0:
-            from ctrl import controlhesssym, controljacsym
+            from ctrl import controlhess
 
-            controljacsym(
-                powerflow,
-            )
-            controlhesssym(
+            controlhess(
                 powerflow,
             )
 

@@ -9,7 +9,8 @@
 from copy import deepcopy
 from numpy import array, concatenate, zeros
 from numpy.linalg import LinAlgError, lstsq, norm
-from scipy.sparse import csr_matrix as sparse, vstack, hstack
+from scipy.sparse import vstack, hstack
+from scipy.sparse.linalg import spsolve, lsqr, lsmr
 
 from ctrl import controlsol
 from increment import increment
@@ -88,10 +89,14 @@ def cani(
 
         try:
             # Your sparse matrix computation using spsolve here
-            powerflow.statevar, residuals, rank, singular = lstsq(
-                powerflow.jaccani.A,
+            # powerflow.statevar, residuals, rank, singular = lstsq(
+            #     powerflow.jaccani.A,
+            #     powerflow.funccani,
+            # )
+            powerflow.statevar = lsmr(
+                powerflow.jaccani,
                 powerflow.funccani,
-            )
+            )[0]
         except LinAlgError:
             raise ValueError(
                 "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
@@ -135,7 +140,7 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.dtf = zeros([2 * powerflow.nbus, 1])
+    powerflow.dtf = zeros([powerflow.jacobian.shape[0]+1, 1])
 
     # Demanda
     for idx, value in powerflow.dbarraDF.iterrows():

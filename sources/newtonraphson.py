@@ -80,7 +80,6 @@ def newton(
             powerflow,
         )
     ):
-
         # Armazenamento da trajetória de convergência
         convergence(
             powerflow,
@@ -100,6 +99,11 @@ def newton(
 
         # Atualização das Variáveis de estado
         updtstt(
+            powerflow,
+        )
+        
+        # Atualização das potências
+        updtpwr(
             powerflow,
         )
 

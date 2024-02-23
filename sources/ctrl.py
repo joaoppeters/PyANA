@@ -262,12 +262,12 @@ def controljac(
 
     ## Inicialização
     # Variável
-    powerflow.truedim = deepcopy(powerflow.jacob.shape[0])
+    powerflow.truedim = deepcopy(powerflow.jacobian.shape[0])
 
     # Loop
     for value in powerflow.control:
         # Dimensão
-        powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
+        powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -311,15 +311,13 @@ def controljac(
             pass
 
     # Dimensão
-    powerflow.controldim = powerflow.jacob.shape[0] - powerflow.truedim
+    powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
     if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "CANI"):
-        powerflow.mask = append(powerflow.mask, zeros(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
     elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "CANI"):
-        powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
         powerflow.maskctrlcount += 1
 
 
@@ -727,7 +725,7 @@ def controldelta(
     return any(boollist)
 
 
-def controljacsym(
+def controlhess(
     powerflow,
 ):
     """submatrizes referentes aos controles ativos
@@ -737,85 +735,10 @@ def controljacsym(
     """
 
     ## Inicialização
-    # Variável
-    powerflow.truedim = deepcopy(powerflow.jacobian.shape[0])
-
     # Loop
     for value in powerflow.control:
         # Dimensão
-        powerflow.controldim = powerflow.jacobiansym.shape[0] - powerflow.truedim
-
-        # controle remoto de tensão
-        if value == "CREM":
-            pass
-        # controle secundário de tensão
-        elif value == "CST":
-            pass
-        # controle de tap variável de transformador
-        elif value == "CTAP":
-            pass
-        # controle de ângulo de transformador defasador
-        elif value == "CTAPd":
-            pass
-        # controle de regulação primária de frequência
-        elif value == "FREQ":
-            freqsubjacsym(
-                powerflow,
-            )
-        # controle de limite de geração de potência reativa
-        elif value == "QLIM":
-            qlimsubjacsym(
-                powerflow,
-            )
-        # controle suave simbolico de limite de geração de potência reativa
-        elif value == "QLIMs":
-            qlimssubjacsym(
-                powerflow,
-            )
-        # controle suave numerico de limite de geração de potência reativa
-        elif value == "QLIMn":
-            qlimnsubjacsym(
-                powerflow,
-            )
-        # controle de compensadores estáticos de potência reativa
-        elif value == "SVCs":
-            svcsubjacsym(
-                powerflow,
-            )
-        # controle de magnitude de tensão de barramentos
-        elif value == "VCTRL":
-            pass
-
-    # Dimensão
-    powerflow.controldim = powerflow.jacobiansym.shape[0] - powerflow.truedim
-
-    # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "CANI"):
-        powerflow.mask = append(powerflow.mask, zeros(powerflow.controldim, dtype=bool))
-        powerflow.maskctrlcount += 1
-
-    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "CANI"):
-        powerflow.mask = append(powerflow.mask, ones(powerflow.controldim, dtype=bool))
-        powerflow.maskctrlcount += 1
-
-
-def controlhesssym(
-    powerflow,
-):
-    """submatrizes referentes aos controles ativos
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    # Variável
-    powerflow.truedim = deepcopy(powerflow.hessian.shape[0])
-
-    # Loop
-    for value in powerflow.control:
-        # Dimensão
-        powerflow.controldim = powerflow.hessiansym.shape[0] - powerflow.truedim
+        powerflow.controldim = powerflow.hessian.shape[0] - powerflow.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -857,3 +780,6 @@ def controlhesssym(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
+
+    # Dimensão
+    powerflow.controldim = powerflow.hessian.shape[0] - powerflow.truedim
