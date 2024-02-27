@@ -6,8 +6,9 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import arange, asarray, asmatrix, conj, diag, exp, ones
-from scipy.sparse import issparse, csr_matrix as sparse, vstack, hstack
+from numpy import arange, asarray, asmatrix, concatenate, conj, diag, exp, ones
+from scipy.sparse import issparse, csr_matrix as sparse
+
 
 def matrices(
     powerflow,
@@ -23,11 +24,11 @@ def matrices(
 
     # Jacobiana
     dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
-    powerflow.jacobian = vstack((
-        hstack((dS_dVa[powerflow.maskP,:][:,powerflow.maskP].real, dS_dVm[powerflow.maskP,:][:,powerflow.maskQ].real), format="csr",), 
-        hstack((dS_dVa[powerflow.maskQ,:][:,powerflow.maskP].imag, dS_dVm[powerflow.maskQ,:][:,powerflow.maskQ].imag), format="csr",)),
-        format="csr",
-    )
+    A11 = (dS_dVa.A[powerflow.maskP,:][:,powerflow.maskP]).real  #dP_dAngV
+    A12 = (dS_dVm.A[powerflow.maskP,:][:,powerflow.maskQ]).real #dP_dMagV
+    A21 = (dS_dVa.A[powerflow.maskQ,:][:,powerflow.maskP]).imag #dQ_AngV
+    A22 = (dS_dVm.A[powerflow.maskQ,:][:,powerflow.maskQ]).imag #dQ_MagV
+    powerflow.jacobian = concatenate((concatenate((A11,A21),axis=0),concatenate((A12,A22),axis=0)),axis=1)
 
     if powerflow.controlcount > 0:
         from ctrl import controljac
@@ -38,9 +39,7 @@ def matrices(
 
     if powerflow.solution["method"] == "CANI":
         # Vetor Jacobiana-Lambda
-        powerflow.G = (
-            powerflow.jacobian.T @ powerflow.solution["eigen"][powerflow.mask]
-        )
+        powerflow.G = powerflow.jacobian.T@powerflow.solution["eigen"][powerflow.mask].reshape((sum(powerflow.mask),1))
         powerflow.H = powerflow.solution["eigen"][powerflow.mask]
 
         # Hessiana
@@ -48,12 +47,14 @@ def matrices(
             powerflow.Ybus, V, powerflow.solution["eigen"][: powerflow.nbus]
         )
         Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(
-            powerflow.Ybus, V, powerflow.solution["eigen"][powerflow.nbus : 2*powerflow.nbus]
+            powerflow.Ybus,
+            V,
+            powerflow.solution["eigen"][powerflow.nbus : 2 * powerflow.nbus],
         )
 
-        
-        M1 = vstack((hstack((Gpaa[powerflow.maskP,:][:, powerflow.maskP], Gpav[powerflow.maskP,:][:, powerflow.maskQ]), format="csr",), hstack((Gpva[powerflow.maskQ,:][:, powerflow.maskP], Gpvv[powerflow.maskQ,:][:, powerflow.maskQ]), format="csr",)), format="csr",)
-        M2 = vstack((hstack((Gqaa[powerflow.maskP,:][:, powerflow.maskP], Gqav[powerflow.maskP,:][:, powerflow.maskQ]), format="csr",), hstack((Gqva[powerflow.maskQ,:][:, powerflow.maskP], Gqvv[powerflow.maskQ,:][:, powerflow.maskQ]), format="csr",)), format="csr",)
+        M1 = concatenate((concatenate((Gpaa.A[powerflow.maskP,:][:,powerflow.maskP],Gpva.A[powerflow.maskQ,:][:,powerflow.maskP]),axis=0),concatenate((Gpav.A[powerflow.maskP,:][:,powerflow.maskQ],Gpvv.A[powerflow.maskQ,:][:,powerflow.maskQ]),axis=0)),axis=1)
+        M2 = concatenate((concatenate((Gqaa.A[powerflow.maskP,:][:,powerflow.maskP],Gqva.A[powerflow.maskQ,:][:,powerflow.maskP]),axis=0),concatenate((Gqav.A[powerflow.maskP,:][:,powerflow.maskQ],Gqvv.A[powerflow.maskQ,:][:,powerflow.maskQ]),axis=0)),axis=1)
+
         powerflow.hessian = M1.real + M2.imag
 
         # Submatrizes de controles ativos
@@ -112,13 +113,13 @@ def dSbus_dV(Ybus, V):
     ib = range(len(V))
 
     if issparse(Ybus):
-        Ibus = Ybus @ V
+        Ibus = Ybus * V
 
         diagV = sparse((V, (ib, ib)))
         diagIbus = sparse((Ibus, (ib, ib)))
         diagVnorm = sparse((V / abs(V), (ib, ib)))
     else:
-        Ibus = Ybus @ asmatrix(V).T
+        Ibus = Ybus * asmatrix(V).T
 
         diagV = asmatrix(diag(V))
         diagIbus = asmatrix(diag(asarray(Ibus).flatten()))
@@ -158,7 +159,7 @@ def d2Sbus_dV2(
     """
     nb = len(V)
     ib = arange(nb)
-    Ibus = Ybus @ V
+    Ibus = Ybus@V
     diaglam = sparse((lam, (ib, ib)))
     diagV = sparse((V, (ib, ib)))
 
@@ -166,7 +167,7 @@ def d2Sbus_dV2(
     B = Ybus * diagV
     C = A * conj(B)
     D = Ybus.T.conj() * diagV
-    E = diagV.conj() * (D * diaglam - sparse((D @ lam, (ib, ib))))
+    E = diagV.conj() * (D * diaglam - sparse((D@lam, (ib, ib))))
     F = C - A * sparse((conj(Ibus), (ib, ib)))
     G = sparse((ones(nb) / abs(V), (ib, ib)))
 

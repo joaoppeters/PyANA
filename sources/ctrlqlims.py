@@ -8,7 +8,6 @@
 
 from copy import deepcopy
 from numpy import any, append, concatenate, ones, zeros
-from scipy.sparse import csr_matrix as sparse, hstack, vstack
 
 from smooth import qlims, qlimssmooth, qlimspop
 
@@ -32,8 +31,8 @@ def qlimssol(
         powerflow.Y = dict()
         powerflow.qlimsch = dict()
         powerflow.qlimkeys = dict()
-        powerflow.diffqlim = dict()
-        powerflow.qlimsvar = dict()
+        powerflow.qlimdiff = dict()
+        powerflow.qlimvar = dict()
         powerflow.diffyqg = dict()
         powerflow.diffyv = dict()
 
@@ -52,7 +51,9 @@ def qlimssol(
                     value,
                 )
 
-        powerflow.mask = concatenate((powerflow.mask, ones(powerflow.nger, dtype=bool)), axis=0)
+        powerflow.mask = concatenate(
+            (powerflow.mask, ones(powerflow.nger, dtype=bool)), axis=0
+        )
 
 
 def qlimsres(
@@ -125,7 +126,7 @@ def qlimssubjac(
             qx[idx, nger] = -1
 
             # Barras PV
-            yv[nger, idx] = powerflow.diffqlim[idx][0]
+            yv[nger, idx] = powerflow.qlimdiff[idx][0]
 
             # Barras PQV
             if (
@@ -135,53 +136,73 @@ def qlimssubjac(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                yx[nger, nger] = powerflow.diffqlim[idx][1]
+                yx[nger, nger] = powerflow.qlimdiff[idx][1]
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
-    yt = sparse(yt[:,powerflow.maskP])
-    yv = sparse(yv[:,powerflow.maskQ])
-    
-    px = sparse(px[powerflow.maskP,:])
-    qx = sparse(qx[powerflow.maskQ,:])
-    yx = sparse(yx)
-    
-    # Condição
     if powerflow.controldim != 0:
-        extrarow = sparse(zeros([powerflow.nger, powerflow.controldim]))
-        extracol = sparse(zeros([powerflow.controldim, powerflow.nger]))
+        extrarow = zeros([powerflow.nger, powerflow.controldim])
+        extracol = zeros([powerflow.controldim, powerflow.nger])
 
-        powerflow.jacobian = vstack(
+        powerflow.jacobian = concatenate(
             (
                 powerflow.jacobian,
-                hstack((yt, yv, extrarow,), format="csr"),
+                concatenate(
+                    (
+                        yt[:,powerflow.maskP],
+                        yv[:,powerflow.maskQ],
+                        extrarow,
+                    ),
+                    axis=1,
+                ),
             ),
-            format="csr",
+            axis=0,
         )
-        powerflow.jacobian = hstack(
+        powerflow.jacobian = concatenate(
             (
                 powerflow.jacobian,
-                vstack((px, qx, extracol, yx,), format="csr"),
+                concatenate(
+                    (
+                        px[powerflow.maskP,:],
+                        qx[powerflow.maskQ,:],
+                        extracol,
+                        yx,
+                    ),
+                    axis=0,
+                ),
             ),
-            format="csr",
+            axis=1,
         )
 
     elif powerflow.controldim == 0:
-        powerflow.jacobian = vstack(
+        powerflow.jacobian = concatenate(
             (
                 powerflow.jacobian,
-                hstack((yt, yv,), format='csr',),
+                concatenate(
+                    (
+                        yt[:,powerflow.maskP],
+                        yv[:,powerflow.maskQ],
+                    ),
+                    axis=1,
+                ),
             ),
-            format="csr",
+            axis=0,
         )
-        powerflow.jacobian = hstack(
+        powerflow.jacobian = concatenate(
             (
                 powerflow.jacobian,
-                vstack((px, qx, yx,), format="csr"),
+                concatenate(
+                    (
+                        px[powerflow.maskP,:],
+                        qx[powerflow.maskQ,:],
+                        yx,
+                    ),
+                    axis=0,
+                ),
             ),
-            format="csr",
+            axis=1,
         )
 
 
@@ -203,7 +224,9 @@ def qlimsupdt(
     # Atualização da potência reativa gerada
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += powerflow.solution["sign"] * (
+            powerflow.solution["qlim_reactive_generation"][idx] += powerflow.solution[
+                "sign"
+            ] * (
                 powerflow.statevar[(powerflow.dimpreqlim + nger)]
                 * powerflow.options["BASE"]
             )
@@ -369,19 +392,19 @@ def qlimssubhess(
     """
 
     ## Inicialização
-    # hessiana:
+    # hessiana - LEMBRANDO QUE A MATRIZ HESSIANA É CONSTRUÍDA COM A *TRANSPOSTA* DA JACOBIANA
     #
-    #   H     N   px
-    #   M     L   qx
-    #  yt    yv   yx
+    #   H     M   yt
+    #   N     L   yv
+    #  px    qx   yx
     #
 
     # Submatrizes
-    px = zeros([powerflow.nbus, powerflow.nger])
-    qx = zeros([powerflow.nbus, powerflow.nger])
+    px = zeros([powerflow.nger, powerflow.nbus])
+    qx = zeros([powerflow.nger, powerflow.nbus])
     yx = zeros([powerflow.nger, powerflow.nger])
-    yt = zeros([powerflow.nger, powerflow.nbus])
-    yv = zeros([powerflow.nger, powerflow.nbus])
+    yt = zeros([powerflow.nbus, powerflow.nger])
+    yv = zeros([powerflow.nbus, powerflow.nger])
 
     # Contador
     nger = 0
@@ -389,9 +412,14 @@ def qlimssubhess(
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            # Barras PV
-            yv[nger, idx] = powerflow.diffqlim[idx][0] * powerflow.solution["eigen"][idx + powerflow.nbus] \
-                + powerflow.diffqlim[idx][1] * powerflow.solution["eigen"][2*powerflow.nbus + nger]	
+            powerflow.hessian[powerflow.nbus + idx, powerflow.nbus + idx] -= (
+                powerflow.qlimdiff[idx][0]
+                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+            )
+            yv[idx, nger] = (
+                powerflow.qlimdiff[idx][1]
+                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+            )
 
             # Barras PQV
             if (
@@ -401,52 +429,77 @@ def qlimssubhess(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                yx[nger, nger] = powerflow.diffqlim[idx][2] * powerflow.solution["eigen"][idx + powerflow.nbus] \
-                    + powerflow.diffqlim[idx][3] * powerflow.solution["eigen"][2*powerflow.nbus + nger]
+                qx[nger, idx] = (
+                    powerflow.qlimdiff[idx][2]
+                    * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+                )
+                yx[nger, nger] = (
+                    powerflow.qlimdiff[idx][3]
+                    * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+                )
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
-    yt = sparse(yt[:,powerflow.maskP])
-    yv = sparse(yv[:,powerflow.maskQ])
-    
-    px = sparse(px[powerflow.maskP,:])
-    qx = sparse(qx[powerflow.maskQ,:])
-    yx = sparse(yx)
-    
-    # Condição
     if powerflow.controldim != 0:
-        extrarow = sparse(zeros([powerflow.nger, powerflow.controldim]))
-        extracol = sparse(zeros([powerflow.controldim, powerflow.nger]))
-
-        powerflow.hessian = vstack(
+        extrarow = zeros([powerflow.nger, powerflow.controldim])
+        extracol = zeros([powerflow.controldim, powerflow.nger])
+        powerflow.hessian = concatenate(
             (
                 powerflow.hessian,
-                hstack((yt, yv, extrarow,), format="csr"),
+                concatenate(
+                    (
+                        px[:,powerflow.maskP],
+                        qx[:,powerflow.maskQ],
+                        extrarow,
+                    ),
+                    axis=1,
+                ),
             ),
-            format="csr",
+            axis=0,
         )
-        powerflow.hessian = hstack(
+        powerflow.hessian = concatenate(
             (
                 powerflow.hessian,
-                vstack((px, qx, extracol, yx,), format="csr"),
+                concatenate(
+                    (
+                        yt[powerflow.maskP, :],
+                        yv[powerflow.maskQ, :],
+                        extracol,
+                        yx,
+                    ),
+                    axis=0,
+                ),
             ),
-            format="csr",
+            axis=1,
         )
 
     elif powerflow.controldim == 0:
-        powerflow.hessian = vstack(
+        powerflow.hessian = concatenate(
             (
                 powerflow.hessian,
-                hstack((yt, yv,), format='csr',),
+                concatenate(
+                    (
+                        px[:,powerflow.maskP],
+                        qx[:,powerflow.maskQ],
+                    ),
+                    axis=1,
+                ),
             ),
-            format="csr",
+            axis=0,
         )
-        powerflow.hessian = hstack(
+        powerflow.hessian = concatenate(
             (
                 powerflow.hessian,
-                vstack((px, qx, yx,), format="csr"),
+                concatenate(
+                    (
+                        yt[powerflow.maskP, :],
+                        yv[powerflow.maskQ, :],
+                        yx,
+                    ),
+                    axis=0,
+                ),
             ),
-            format="csr",
+            axis=1,
         )

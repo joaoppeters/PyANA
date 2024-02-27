@@ -11,7 +11,7 @@ from numpy import (
     radians,
     zeros,
 )
-from numpy.linalg import norm
+from numpy.linalg import lstsq, norm
 from scipy.sparse.linalg import spsolve
 
 from convergence import convergence
@@ -91,17 +91,17 @@ def newton(
         )
 
         # Variáveis de estado
-        powerflow.statevar = spsolve(
+        powerflow.statevar, residuals, rank, singular = lstsq(
             powerflow.jacobian,
             powerflow.deltaPQY,
-            use_umfpack=True,
+            rcond=None,
         )
 
         # Atualização das Variáveis de estado
         updtstt(
             powerflow,
         )
-        
+
         # Atualização das potências
         updtpwr(
             powerflow,
@@ -135,10 +135,10 @@ def newton(
         )
 
         # Variáveis de estado
-        powerflow.statevar = spsolve(
+        powerflow.statevar, residuals, rank, singular = lstsq(
             powerflow.jacobian,
             powerflow.deltaPQY,
-            use_umfpack=True,
+            rcond=None,
         )
 
         # Atualização das variáveis de estado

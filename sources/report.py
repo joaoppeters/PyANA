@@ -89,10 +89,11 @@ def reportfile(
             # relatorio de linha
             elif r == "RLIN":
                 from lineflow import lineflow
+
                 lineflow(
                     powerflow,
                 )
-                
+
                 RLIN(
                     file,
                     powerflow,

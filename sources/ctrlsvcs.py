@@ -7,13 +7,13 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, isreal, pi, roots, zeros
+from numpy import append, concatenate, isreal, ones, pi, roots, zeros
 from scipy.sparse import csc_matrix, hstack, vstack
 from sympy import Symbol
 from sympy.functions import sin
 
 from calc import qcalc
-from smooth import svcalphasmooth, svccurrentsmooth, svcreactivesmooth
+from smooth import svcsA, svcsAsmooth, svcsI, svcsIsmooth, svcsQ, svcsQsmooth
 
 
 def svcsol(
@@ -28,23 +28,75 @@ def svcsol(
     ## Inicialização
     # Variáveis
     if "svc_reactive_generation" not in powerflow.solution:
-        if powerflow.dcerDF["controle"][0] == "A":
-            powerflow.solution["svc_reactive_generation"] = powerflow.dcerDF[
-                "potencia_reativa"
-            ].to_numpy()
-            alphavar(
-                powerflow,
-            )
+        powerflow.Y = dict()
+        powerflow.svcsch = dict()
+        powerflow.svckeys = dict()
+        powerflow.svcdiff = dict()
+        powerflow.svcvar = dict()
+        powerflow.diffyqgk = dict()
+        powerflow.diffyvk = dict()
+        powerflow.diffyvm = dict()
+        powerflow.diffyalpha = dict()
 
-        elif powerflow.dcerDF["controle"][0] == "I":
-            powerflow.solution["svc_current_injection"] = powerflow.dcerDF[
-                "potencia_reativa"
-            ].to_numpy()
+        for idx, value in powerflow.dcerDF.iterrows():
+            idxcer = powerflow.dbarraDF.index[
+                powerflow.dbarraDF["numero"] == value["barra"]
+            ].tolist()[0]
+            idxctrl = powerflow.dbarraDF.index[
+                powerflow.dbarraDF["numero"] == value["barra_controlada"]
+            ].tolist()[0]
 
-        elif powerflow.dcerDF["controle"][0] == "P":
-            powerflow.solution["svc_reactive_generation"] = powerflow.dcerDF[
-                "potencia_reativa"
-            ].to_numpy()
+            powerflow.svckeys[value["nome"]] = dict()
+            powerflow.svckeys[value["nome"]][0] = list()
+
+            powerflow.svcsch[idxcer] = dict()
+            powerflow.svcsch[idxcer]["ch1"] = list()
+            powerflow.svcsch[idxcer]["ch2"] = list()
+
+            if value["controle"] == "A":
+                powerflow.svcsch[idxcer]["ch3"] = list()
+                powerflow.svcsch[idxcer]["ch4"] = list()
+                powerflow.solution["svc_reactive_generation"] = value[
+                    "potencia_reativa"
+                ].to_numpy()
+                alphavar(
+                    powerflow,
+                )
+                svcsA(
+                    powerflow,
+                    idx,
+                    idxcer,
+                    idxctrl,
+                    value,
+                )
+
+            elif value["controle"] == "I":
+                powerflow.solution["svc_current_injection"] = value[
+                    "potencia_reativa"
+                ].to_numpy()
+                svcsI(
+                    powerflow,
+                    idx,
+                    idxcer,
+                    idxctrl,
+                    value,
+                )
+
+            elif value["controle"] == "P":
+                powerflow.solution["svc_reactive_generation"] = value[
+                    "potencia_reativa"
+                ].to_numpy()
+                svcsQ(
+                    powerflow,
+                    idx,
+                    idxcer,
+                    idxctrl,
+                    value,
+                )
+
+    powerflow.mask = concatenate(
+        (powerflow.mask, ones(powerflow.ncer, dtype=bool)), axis=0
+    )
 
 
 def alphavar(
@@ -126,7 +178,7 @@ def svcres(
 
     ## Inicialização
     # Vetor de resíduos
-    powerflow.nbusdeltaSVC = zeros([powerflow.nbusncer])
+    powerflow.nbusdeltaSVC = zeros([powerflow.ncer])
 
     # Contador
     ncer = 0
@@ -141,7 +193,7 @@ def svcres(
         ].tolist()[0]
 
         if value["controle"] == "A":
-            svcalphasmooth(
+            svcsAsmooth(
                 idxcer,
                 idxctrl,
                 powerflow,
@@ -154,7 +206,7 @@ def svcres(
             )
 
         elif value["controle"] == "I":
-            svccurrentsmooth(
+            svcsIsmooth(
                 idxcer,
                 idxctrl,
                 powerflow,
@@ -168,7 +220,7 @@ def svcres(
             )
 
         elif value["controle"] == "P":
-            svcreactivesmooth(
+            svcsQsmooth(
                 idxcer,
                 idxctrl,
                 powerflow,
@@ -217,11 +269,11 @@ def svcsubjac(
     powerflow.nbusdimpresvc = deepcopy(powerflow.jacob.shape[0])
 
     # Submatrizes
-    powerflow.nbuspx = zeros([powerflow.nbus, powerflow.nbusncer])
-    powerflow.nbusqx = zeros([powerflow.nbus, powerflow.nbusncer])
-    powerflow.nbusyx = zeros([powerflow.nbusncer, powerflow.nbusncer])
-    powerflow.nbusyt = zeros([powerflow.nbusncer, powerflow.nbus])
-    powerflow.nbusyv = zeros([powerflow.nbusncer, powerflow.nbus])
+    powerflow.nbuspx = zeros([powerflow.nbus, powerflow.ncer])
+    powerflow.nbusqx = zeros([powerflow.nbus, powerflow.ncer])
+    powerflow.nbusyx = zeros([powerflow.ncer, powerflow.ncer])
+    powerflow.nbusyt = zeros([powerflow.ncer, powerflow.nbus])
+    powerflow.nbusyv = zeros([powerflow.ncer, powerflow.nbus])
 
     # Contador
     ncer = 0

@@ -17,27 +17,28 @@ method = "NEWTON"
 method = "CANI"
 # method = "PWF"
 
-# control = ['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'QLIMs', 'SVCs']
 control = [
-   "QLIMs",
+    # "CREM",
+    # "CTAP",
+    # "CTAPd",
+    # "FREQ",
+    # "QLIM",
+    "QLIMs",
+    # "SVCs",
 ]
 
-# monitor = [
-#     'PFLOW',
-#     'PGMON',
-#     'QGMON',
-#     'VMON',
-# ]
-monitor = []
+monitor = [
+    # "PFLOW",
+    # "PGMON",
+    # "QGMON",
+    # "VMON",
+]
 
-# report = [
-#     'RBAR',
-#     'RLIN',
-#     'RGER',
-#     'RSVC',
-# ]
 report = [
     "RBAR",
+    # "RLIN",
+    # "RGER",
+    # "RCER",
 ]
 
 PowerFlow(

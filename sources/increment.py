@@ -36,15 +36,3 @@ def increment(
 
     # Delta incremento de carga
     deltaincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - preincrement
-
-    # Incremento de geração
-    if powerflow.codes["DGER"]:
-        for _, valueger in powerflow.dgeraDF.iterrows():
-            idx = valueger["numero"] - 1
-            powerflow.dbarraDF.at[idx, "potencia_ativa"] = powerflow.dbarraDF[
-                "potencia_ativa"
-            ][idx] + (deltaincrement * valueger["fator_participacao"])
-
-        powerflow.solution["potencia_ativa"] = deepcopy(
-            powerflow.dbarraDF["potencia_ativa"]
-        )

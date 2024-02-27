@@ -25,14 +25,20 @@ def scheduled(
     powerflow.qsch = zeros(powerflow.nbus)
 
     # Potências ativa e reativa especificadas
-    for idx, value in powerflow.dbarraDF.iterrows():
-        powerflow.psch[idx] += value["potencia_ativa"]
-        powerflow.psch[idx] -= value["demanda_ativa"]
+    if powerflow.solution["method"] != "CANI":
+        powerflow.psch += powerflow.dbarraDF["potencia_ativa"].to_numpy()
+        powerflow.psch -= powerflow.dbarraDF["demanda_ativa"].to_numpy()
 
-        powerflow.qsch[idx] += value["potencia_reativa"]
-        powerflow.qsch[idx] -= value["demanda_reativa"]
+        powerflow.qsch += powerflow.dbarraDF["potencia_reativa"].to_numpy()
+        powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
 
-    # Tratamento
+    elif powerflow.solution["method"] == "CANI":
+        powerflow.psch += powerflow.solution["potencia_ativa"]
+        powerflow.psch -= powerflow.dbarraDF["demanda_ativa"].to_numpy()
+
+        powerflow.qsch += powerflow.solution["potencia_reativa"]
+        powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
+
     powerflow.psch /= powerflow.options["BASE"]
     powerflow.qsch /= powerflow.options["BASE"]
 

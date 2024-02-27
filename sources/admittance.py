@@ -17,7 +17,8 @@ def admit(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    """ """Builds the bus admittance matrix and branch admittance matrices.
+    
+    Builds the bus admittance matrix and branch admittance matrices.
 
     Returns the full bus admittance matrix (i.e. for all buses) and the
     matrices C{Yf} and C{Yt} which, when multiplied by a complex voltage
@@ -45,8 +46,8 @@ def admit(
     Yff = Ytt / (
         vectorize(complex)(powerflow.dlinhaDF["tap"] * conj(powerflow.dlinhaDF["tap"]))
     )
-    Yft = -Ysr / conj(powerflow.dlinhaDF["tap"])
-    Ytf = -Ysr / powerflow.dlinhaDF["tap"]
+    Yft = -Ysr / vectorize(complex)(conj(powerflow.dlinhaDF["tap"]))
+    Ytf = -Ysr / vectorize(complex)(powerflow.dlinhaDF["tap"])
 
     f = (powerflow.dlinhaDF["de-idx"]).values
     t = (powerflow.dlinhaDF["para-idx"]).values
@@ -71,21 +72,13 @@ def admit(
 
     ## build Ybus
     powerflow.Ybus = sparse(
-        Cf.T @ Yf
-        + Ct.T @ Yt
+        Cf.T@Yf
+        + Ct.T@Yt
         + sparse(
             (Ysh, (range(powerflow.nbus), range(powerflow.nbus))),
             (powerflow.nbus, powerflow.nbus),
         )
     )
-
-    # Cf = sparse((powerflow.nlin, f, ones(powerflow) (powerflow.nlin, powerflow.nbus)))
-    # Ct = sparse((t, (powerflow.nlin, powerflow.nbus)))
-
-    # Yf = sparse((powerflow.nlin, powerflow.nlin, Yff, powerflow.nlin, powerflow.nlin)) @ Cf + sparse((powerflow.nlin, powerflow.nlin, Yft, powerflow.nlin, powerflow.nlin)) @ Ct
-    # Yt = sparse((powerflow.nlin, powerflow.nlin, Ytf, powerflow.nlin, powerflow.nlin)) @ Cf + sparse((powerflow.nlin, powerflow.nlin, Ytt, powerflow.nlin, powerflow.nlin)) @ Ct
-
-    # powerflow.Ybus = Cf.T @ Yf + Ct.T @ Yt + sparse(powerflow.nbus, powerflow.nbus, Ysh, powerflow.nbus, powerflow.nbus)
 
 
 def admitLinear(

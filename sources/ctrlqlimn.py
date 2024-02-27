@@ -103,7 +103,7 @@ def qlimnsubjac(
             powerflow.qx[idx, nger] = -1
 
             # Barras PV
-            powerflow.yv[nger, idx] = powerflow.diffqlim[idx][0]
+            powerflow.yv[nger, idx] = powerflow.qlimdiff[idx][0]
             # powerflow.yx[nger, nger] = 1E-10
 
             # Barras PQV
@@ -114,7 +114,7 @@ def qlimnsubjac(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                powerflow.yx[nger, nger] = powerflow.diffqlim[idx][1]
+                powerflow.yx[nger, nger] = powerflow.qlimdiff[idx][1]
 
             # Incrementa contador
             nger += 1

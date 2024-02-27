@@ -74,5 +74,5 @@ DINC
 AREA     1                                            1.   1.
 99999
 EXLF NEWT QLIM RBAR
-(EXIC NEWT QLIM 
+EXIC NEWT QLIM 
 FIM

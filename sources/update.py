@@ -21,6 +21,7 @@ def updtstt(
     """
 
     ## Inicialização
+    powerflow.statevar = powerflow.statevar.reshape(powerflow.statevar.size,)
     thetavalues = sum(powerflow.maskP)
     voltagevalues = sum(powerflow.maskQ)
 
@@ -63,8 +64,8 @@ def updtpwr(
 
     ## Inicialização
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Ybus @ V
-    S = diag(V) @ conj(I)
+    I = powerflow.Ybus@V
+    S = diag(V)@conj(I)
 
     powerflow.solution["active"] = (
         S.real * powerflow.options["BASE"]

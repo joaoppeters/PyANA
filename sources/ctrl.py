@@ -14,7 +14,7 @@ from ctrlfreq import *
 from ctrlqlim import *
 from ctrlqlims import *
 from ctrlqlimn import *
-from ctrlsvc import *
+from ctrlsvcs import *
 
 
 def control(

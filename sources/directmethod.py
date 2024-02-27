@@ -7,15 +7,12 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import array, concatenate, zeros
+from numpy import array, concatenate, vstack, zeros
 from numpy.linalg import LinAlgError, lstsq, norm
-from scipy.sparse import vstack, hstack
-from scipy.sparse.linalg import spsolve, lsqr, lsmr
 
 from ctrl import controlsol
 from increment import increment
 from matrices import matrices
-from reduction import reduction
 from residue import residue
 from scheduled import scheduled
 from update import updtstt, updtpwr
@@ -80,23 +77,20 @@ def cani(
 
         powerflow.funccani = concatenate(
             (
-                -powerflow.deltaPQY,
+                -powerflow.deltaPQY.reshape((sum(powerflow.mask), 1)),
                 powerflow.G,
-                array([powerflow.H @ powerflow.H - 1]),
+                array([[powerflow.H@powerflow.H - 1]]),
             ),
             axis=0,
         )
 
         try:
             # Your sparse matrix computation using spsolve here
-            # powerflow.statevar, residuals, rank, singular = lstsq(
-            #     powerflow.jaccani.A,
-            #     powerflow.funccani,
-            # )
-            powerflow.statevar = lsmr(
+            powerflow.statevar, residuals, rank, singular = lstsq(
                 powerflow.jaccani,
                 powerflow.funccani,
-            )[0]
+                rcond=None,
+            )
         except LinAlgError:
             raise ValueError(
                 "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
@@ -110,7 +104,7 @@ def cani(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        print(norm(powerflow.statevar))
+        print(norm(powerflow.statevar), powerflow.solution["lambda"])
 
         # Condição de Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:
@@ -140,50 +134,44 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.dtf = zeros([powerflow.jacobian.shape[0]+1, 1])
-
-    # Demanda
-    for idx, value in powerflow.dbarraDF.iterrows():
-        if value["tipo"] != 2:
-            powerflow.dtf[idx, 0] = (
-                powerflow.solution["demanda_ativa"][idx]
-                - powerflow.solution["potencia_ativa"][idx]
-            )
-            if value["tipo"] == 0:
-                powerflow.dtf[(idx + powerflow.nbus), 0] = powerflow.solution[
-                    "demanda_reativa"
-                ][idx]
-
-    powerflow.dtf /= powerflow.options["BASE"]
+    powerflow.dtf = vstack((powerflow.solution["demanda_ativa"], powerflow.solution["demanda_reativa"]))
+    powerflow.dtf = powerflow.dtf.reshape((2 * powerflow.nbus, 1)) / powerflow.options["BASE"]
+    powerflow.dtf = concatenate((powerflow.dtf, zeros((powerflow.controldim,1))), axis=0)
 
     # Reducao Total
-    reduction(
-        powerflow,
-    )
+    powerflow.dtf = powerflow.dtf[powerflow.mask]
+    powerflow.dwf = zeros((powerflow.mask.shape[0], powerflow.mask.shape[0]))[
+        powerflow.mask, :
+    ][:, powerflow.mask]
 
-    powerflow.jaccani = hstack(
+    powerflow.dtg = zeros(powerflow.dtf.shape)
+
+    powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
+    powerflow.dwh = 2 * powerflow.solution["eigen"][powerflow.mask]
+
+    powerflow.jaccani = concatenate(
         (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
-        format='csr',
+        axis=1,
     )
 
-    powerflow.jaccani = vstack(
+    powerflow.jaccani = concatenate(
         (
             powerflow.jaccani,
-            hstack(
+            concatenate(
                 (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
-                format='csr',
+                axis=1,
             ),
         ),
-        format='csr',
+        axis=0,
     )
 
-    powerflow.jaccani = vstack(
+    powerflow.jaccani = concatenate(
         (
             powerflow.jaccani,
-            hstack(
+            concatenate(
                 (powerflow.dxh, array([0]), powerflow.dwh),
-                format='csr',
+                axis=0,
             ).reshape((1, powerflow.jaccani.shape[1])),
         ),
-        format='csr',
+        axis=0,
     )

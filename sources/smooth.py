@@ -46,7 +46,7 @@ def qlims(
     qgn = Symbol("qgn%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimsvar.update(
+    powerflow.qlimvar.update(
         {
             qg: powerflow.solution["qlim_reactive_generation"][idx]
             / powerflow.options["BASE"],
@@ -150,10 +150,10 @@ def qlimssmooth(
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
-    v = Symbol("v%s" % idx)\
-    
+    v = Symbol("v%s" % idx)
+
     # Associação das variáveis
-    powerflow.qlimsvar.update(
+    powerflow.qlimvar.update(
         {
             qg: powerflow.solution["qlim_reactive_generation"][idx]
             / powerflow.options["BASE"],
@@ -163,39 +163,39 @@ def qlimssmooth(
 
     # Expressão Geral
     if powerflow.solution["method"] != "CANI":
-        powerflow.diffqlim[idx] = array(
+        powerflow.qlimdiff[idx] = array(
             [
-                powerflow.diffyv[idx].subs(powerflow.qlimsvar),
-                powerflow.diffyqg[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyv[idx].subs(powerflow.qlimvar),
+                powerflow.diffyqg[idx].subs(powerflow.qlimvar),
             ],
             dtype="float64",
         )
     else:
-        powerflow.diffqlim[idx] = array(
+        powerflow.qlimdiff[idx] = array(
             [
-                powerflow.diffyvv[idx].subs(powerflow.qlimsvar),
-                powerflow.diffyqgv[idx].subs(powerflow.qlimsvar),
-                powerflow.diffyvqg[idx].subs(powerflow.qlimsvar),
-                powerflow.diffyqgqg[idx].subs(powerflow.qlimsvar),
+                powerflow.diffyvv[idx].subs(powerflow.qlimvar),
+                powerflow.diffyvqg[idx].subs(powerflow.qlimvar),
+                powerflow.diffyqgv[idx].subs(powerflow.qlimvar),
+                powerflow.diffyqgqg[idx].subs(powerflow.qlimvar),
             ],
             dtype="float64",
         )
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        -powerflow.Y[idx][0].subs(powerflow.qlimsvar)
-        - powerflow.Y[idx][1].subs(powerflow.qlimsvar)
-        - powerflow.Y[idx][2].subs(powerflow.qlimsvar)
+        - powerflow.Y[idx][0].subs(powerflow.qlimvar)
+        - powerflow.Y[idx][1].subs(powerflow.qlimvar)
+        - powerflow.Y[idx][2].subs(powerflow.qlimvar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case].append(
         array(
             [
-                powerflow.qlimsch[idx]["ch1"].subs(powerflow.qlimsvar),
-                powerflow.qlimsch[idx]["ch2"].subs(powerflow.qlimsvar),
-                powerflow.qlimsch[idx]["ch3"].subs(powerflow.qlimsvar),
-                powerflow.qlimsch[idx]["ch4"].subs(powerflow.qlimsvar),
+                powerflow.qlimsch[idx]["ch1"].subs(powerflow.qlimvar),
+                powerflow.qlimsch[idx]["ch2"].subs(powerflow.qlimvar),
+                powerflow.qlimsch[idx]["ch3"].subs(powerflow.qlimvar),
+                powerflow.qlimsch[idx]["ch4"].subs(powerflow.qlimvar),
             ]
         )
     )
@@ -267,7 +267,7 @@ def qlimnsmooth(
 
     ## Derivadas
     # Expressão Geral
-    powerflow.diffqlim[idx] = array(
+    powerflow.qlimdiff[idx] = array(
         [
             (1 - ch1 * ch3) * (1 - ch2 * ch4),  # Derivada Parcial de Y por V
             (ch1 * ch3) * (1 - ch2 * ch4)
@@ -285,72 +285,53 @@ def qlimnsmooth(
     )
 
 
-def svcreactivesmooth(
-    idxcer,
-    idxctrl,
+def svcsQ(
     powerflow,
     ncer,
-    case,
+    idxcer,
+    idxctrl,
+    value,
+    case: int = 0,
 ):
-    """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
-        metodologia por potência reativa injetada
+    """_summary_
 
-    Parâmetros
-        idxcer: índice da barra do compensador estático de potência reativa
-        idxctrl: índice da barra controlada pelo compensador estático de potência reativa
+    Parametros:
         powerflow: self do arquivo powerflow.py
-        ncer: índice do compensador estático de potência reativa
-        case: caso analisado do fluxo de potência continuado (prev + corr)
     """
 
     ## Inicialização
     seterr(all="ignore")
 
-    # Variáveis
-    if not hasattr(powerflow, "svckeys"):
-        powerflow.svckeys = dict()
-        powerflow.diffsvc = dict()
-
-    if powerflow.svckeys.get(powerflow.dbarraDF.loc[idxcer, "nome"]) is None:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]] = dict()
-
-    if case not in powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case] = list()
-
     # Variáveis Simbólicas
-    vk = Symbol("Vk")
-    vm = Symbol("Vm")
-
-    qgk = Symbol("Qgk")
-    r = Symbol("r")
-
-    bmin = Symbol("Bmin")
-    bmax = Symbol("Bmax")
+    vk = Symbol("vk%s" % idxcer)
+    vm = Symbol("vm%s" % idxcer)
+    qgk = Symbol("qgk%s" % idxcer)
+    r = Symbol("r%s" % idxcer)
+    bmin = Symbol("bmn%s" % idxcer)
+    bmax = Symbol("bmx%s" % idxcer)
 
     vmsch = powerflow.dbarraDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (r * bmin * (vk**2))
     vmmin = vmsch + (r * bmax * (vk**2))
 
     # Associação das variáveis
-    powerflow.svcqvarkey = {
-        vk: powerflow.solution["voltage"][idxcer],
-        vm: powerflow.solution["voltage"][idxctrl],
-        r: powerflow.dcerDF.loc[ncer, "droop"],
-        bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
-        / (
-            powerflow.options["BASE"]
-            * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
-        ),
-        bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
-        / (
-            powerflow.options["BASE"]
-            * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
-        ),
-    }
-
-    powerflow.svcqvar = deepcopy(powerflow.svcqvarkey)
-    powerflow.svcqvar[qgk] = (powerflow.solution["svc_reactive_generation"][ncer]) / (
-        powerflow.options["BASE"]
+    powerflow.svcvar.update(
+        {
+            vk: powerflow.solution["voltage"][idxcer],
+            vm: powerflow.solution["voltage"][idxctrl],
+            r: value["droop"],
+            bmin: value["potencia_reativa_minima"]
+            / (
+                powerflow.options["BASE"]
+                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+            ),
+            bmax: value["potencia_reativa_maxima"]
+            / (
+                powerflow.options["BASE"]
+                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+            ),
+            qgk: powerflow.solution["svc_reactive_generation"][ncer] / powerflow.options["BASE"],
+        }
     )
 
     ## Limites
@@ -375,18 +356,73 @@ def svcreactivesmooth(
     # Região Capacitiva
     Ycapacitiva = (ch2) * (-(vk**2) * bmax + qgk)
 
+    powerflow.Y[idxcer] = [Yindutiva, Ylinear, Ycapacitiva,]
+
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    powerflow.diffyvk[idxcer] = (
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    powerflow.diffyvm[idxcer] = (
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(vm)
 
     # Derivada Parcial de Y por Qgk
-    powerflow.diffyqgk = (Yindutiva + Ylinear + Ycapacitiva).diff(qgk)
+    powerflow.diffyqgk[idxcer] = (
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(qgk)
+
+
+def svcsQsmooth(
+    idxcer,
+    idxctrl,
+    powerflow,
+    ncer,
+    case,
+):
+    """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
+        metodologia por potência reativa injetada
+
+    Parâmetros
+        idxcer: índice da barra do compensador estático de potência reativa
+        idxctrl: índice da barra controlada pelo compensador estático de potência reativa
+        powerflow: self do arquivo powerflow.py
+        ncer: índice do compensador estático de potência reativa
+        case: caso analisado do fluxo de potência continuado (prev + corr)
+    """
+
+    ## Inicialização
+    if case not in powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]]:
+        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case] = list()
+
+    # Variáveis Simbólicas
+    vk = Symbol("vk%s" % idxcer)
+    vm = Symbol("vm%s" % idxcer)
+    qgk = Symbol("qgk%s" % idxcer)
+    r = Symbol("r%s" % idxcer)
+    bmin = Symbol("bmn%s" % idxcer)
+    bmax = Symbol("bmx%s" % idxcer)
+    # Associação das variáveis
+    powerflow.svcvar.update(
+        {
+            vk: powerflow.solution["voltage"][idxcer],
+            vm: powerflow.solution["voltage"][idxctrl],
+            r: powerflow.dcerDF.loc[ncer, "droop"],
+            bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
+            / (
+                powerflow.options["BASE"]
+                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+            ),
+            bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
+            / (
+                powerflow.options["BASE"]
+                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+            ),
+            qgk: powerflow.solution["svc_reactive_generation"][ncer] / powerflow.options["BASE"],
+        }
+    )
 
     # Expressão Geral
-    powerflow.diffsvc[idxcer] = array(
+    powerflow.svcdiff[idxcer] = array(
         [
             powerflow.diffyvk.subs(powerflow.svcqvar),
             powerflow.diffyvm.subs(powerflow.svcqvar),
@@ -397,24 +433,138 @@ def svcreactivesmooth(
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(powerflow.svcqvar)
-        - Ylinear.subs(powerflow.svcqvar)
-        - Ycapacitiva.subs(powerflow.svcqvar)
+        - powerflow.Y[0].subs(powerflow.svcqvar)
+        - powerflow.Y[1].subs(powerflow.svcqvar)
+        - powerflow.Y[2].subs(powerflow.svcqvar)
     )
 
     ## Armazenamento de valores das chaves
     powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
         array(
             [
-                ch1.subs(powerflow.svcqvarkey),
-                ch2.subs(powerflow.svcqvarkey),
+                powerflow.svcsch[idxcer]["ch1"].subs(powerflow.svcvar),
+                powerflow.svcsch[idxcer]["ch2"].subs(powerflow.svcvar),
             ],
             dtype="float",
         )
     )
 
 
-def svccurrentsmooth(
+def svcsI(
+    powerflow,
+    idx,
+    value,
+):
+    """_summary_
+
+    Parametros:
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    seterr(all="ignore")
+
+    powerflow.qlimkeys[value["nome"]] = dict()
+    powerflow.qlimkeys[value["nome"]][0] = list()
+
+    powerflow.qlimsch[idx] = dict()
+    powerflow.qlimsch[idx]["ch1"] = list()
+    powerflow.qlimsch[idx]["ch2"] = list()
+    powerflow.qlimsch[idx]["ch3"] = list()
+    powerflow.qlimsch[idx]["ch4"] = list()
+
+    # Variáveis Simbólicas
+    qg = Symbol("qg%s" % idx)
+    v = Symbol("v%s" % idx)
+    vr = Symbol("vr%s" % idx)
+    qgx = Symbol("qgx%s" % idx)
+    qgn = Symbol("qgn%s" % idx)
+
+    # Associação das variáveis
+    powerflow.qlimvar.update(
+        {
+            qg: powerflow.solution["qlim_reactive_generation"][idx]
+            / powerflow.options["BASE"],
+            v: powerflow.solution["voltage"][idx],
+            vr: value["tensao"] * 1e-3,
+            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
+            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+        }
+    )
+
+    ## Limites
+    # Limites de Tensão
+    vlimsup = vr + powerflow.options["SIGV"]
+    vliminf = vr - powerflow.options["SIGV"]
+
+    # Limites de Potência Reativa
+    qlimsup = qgx - powerflow.options["SIGQ"]
+    qliminf = qgn + powerflow.options["SIGV"]
+
+    ## Chaves
+    # Chave Superior de Potência Reativa
+    powerflow.qlimsch[idx]["ch1"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
+    )
+
+    # Chave Inferior de Potência Reativa
+    powerflow.qlimsch[idx]["ch2"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
+    )
+
+    # Chave Superior de Tensão
+    powerflow.qlimsch[idx]["ch3"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
+    )
+
+    # Chave Inferior de Tensão
+    powerflow.qlimsch[idx]["ch4"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
+    )
+
+    ## Equações de Controle
+    # Normal
+    Ynormal = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (v - vr)
+    )
+
+    # Superior
+    Ysuperior = (
+        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgx)
+    )
+
+    # Inferior
+    Yinferior = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgn)
+    )
+
+    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
+
+    ## Derivadas
+    # Derivada Parcial de Y por Qg
+    powerflow.diffyqg[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(qg)
+
+    # Derivada Parcial de Y por V
+    powerflow.diffyv[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(v)
+
+    if powerflow.method == "CANI":
+        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
+        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
+        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
+        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+
+
+def svcsIsmooth(
     idxcer,
     idxctrl,
     powerflow,
@@ -438,7 +588,7 @@ def svccurrentsmooth(
     # Variáveis
     if not hasattr(powerflow, "svckeys"):
         powerflow.svckeys = dict()
-        powerflow.diffsvc = dict()
+        powerflow.svcdiff = dict()
 
     if powerflow.svckeys.get(powerflow.dbarraDF.loc[idxcer, "nome"]) is None:
         powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]] = dict()
@@ -517,7 +667,7 @@ def svccurrentsmooth(
     powerflow.diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
 
     # Expressão Geral
-    powerflow.diffsvc[idxcer] = array(
+    powerflow.svcdiff[idxcer] = array(
         [
             powerflow.diffyvk.subs(powerflow.svcivar),
             powerflow.diffyvm.subs(powerflow.svcivar),
@@ -545,7 +695,121 @@ def svccurrentsmooth(
     )
 
 
-def svcalphasmooth(
+def svcsA(
+    powerflow,
+    idx,
+    value,
+):
+    """_summary_
+
+    Parametros:
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    seterr(all="ignore")
+
+    powerflow.qlimkeys[value["nome"]] = dict()
+    powerflow.qlimkeys[value["nome"]][0] = list()
+
+    powerflow.qlimsch[idx] = dict()
+    powerflow.qlimsch[idx]["ch1"] = list()
+    powerflow.qlimsch[idx]["ch2"] = list()
+    powerflow.qlimsch[idx]["ch3"] = list()
+    powerflow.qlimsch[idx]["ch4"] = list()
+
+    # Variáveis Simbólicas
+    qg = Symbol("qg%s" % idx)
+    v = Symbol("v%s" % idx)
+    vr = Symbol("vr%s" % idx)
+    qgx = Symbol("qgx%s" % idx)
+    qgn = Symbol("qgn%s" % idx)
+
+    # Associação das variáveis
+    powerflow.qlimvar.update(
+        {
+            qg: powerflow.solution["qlim_reactive_generation"][idx]
+            / powerflow.options["BASE"],
+            v: powerflow.solution["voltage"][idx],
+            vr: value["tensao"] * 1e-3,
+            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
+            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+        }
+    )
+
+    ## Limites
+    # Limites de Tensão
+    vlimsup = vr + powerflow.options["SIGV"]
+    vliminf = vr - powerflow.options["SIGV"]
+
+    # Limites de Potência Reativa
+    qlimsup = qgx - powerflow.options["SIGQ"]
+    qliminf = qgn + powerflow.options["SIGV"]
+
+    ## Chaves
+    # Chave Superior de Potência Reativa
+    powerflow.qlimsch[idx]["ch1"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
+    )
+
+    # Chave Inferior de Potência Reativa
+    powerflow.qlimsch[idx]["ch2"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
+    )
+
+    # Chave Superior de Tensão
+    powerflow.qlimsch[idx]["ch3"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
+    )
+
+    # Chave Inferior de Tensão
+    powerflow.qlimsch[idx]["ch4"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
+    )
+
+    ## Equações de Controle
+    # Normal
+    Ynormal = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (v - vr)
+    )
+
+    # Superior
+    Ysuperior = (
+        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgx)
+    )
+
+    # Inferior
+    Yinferior = (
+        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
+        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        * (qg - qgn)
+    )
+
+    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
+
+    ## Derivadas
+    # Derivada Parcial de Y por Qg
+    powerflow.diffyqg[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(qg)
+
+    # Derivada Parcial de Y por V
+    powerflow.diffyv[idx] = (
+        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    ).diff(v)
+
+    if powerflow.method == "CANI":
+        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
+        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
+        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
+        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+
+
+def svcsAsmooth(
     idxcer,
     idxctrl,
     powerflow,
@@ -569,7 +833,7 @@ def svcalphasmooth(
     # Variáveis
     if not hasattr(powerflow, "svckeys"):
         powerflow.svckeys = dict()
-        powerflow.diffsvc = dict()
+        powerflow.svcdiff = dict()
 
     if powerflow.svckeys.get(powerflow.dbarraDF.loc[idxcer, "nome"]) is None:
         powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]] = dict()
@@ -702,7 +966,7 @@ def svcalphasmooth(
     )
 
     # Expressão Geral
-    powerflow.diffsvc[idxcer] = array(
+    powerflow.svcdiff[idxcer] = array(
         [
             powerflow.diffyvk.subs(powerflow.svcavar),
             powerflow.diffyvm.subs(powerflow.svcavar),
