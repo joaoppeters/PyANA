@@ -406,18 +406,20 @@ def qlimssubhess(
     yt = zeros([powerflow.nbus, powerflow.nger])
     yv = zeros([powerflow.nbus, powerflow.nger])
 
+    thetavalues = sum(powerflow.maskP)
+
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.hessian[powerflow.nbus + idx, powerflow.nbus + idx] -= (
-                powerflow.qlimdiff[idx][0]
+            powerflow.hessian[thetavalues + idx, thetavalues + idx] -= (
+                powerflow.qlimdiff[idx][2]
                 * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
             )
-            yv[idx, nger] = (
-                powerflow.qlimdiff[idx][1]
+            yv[idx, nger] = -(
+                powerflow.qlimdiff[idx][3]
                 * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
             )
 
@@ -429,12 +431,12 @@ def qlimssubhess(
                 powerflow.solution["qlim_reactive_generation"][idx]
                 < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
             ):
-                qx[nger, idx] = (
-                    powerflow.qlimdiff[idx][2]
+                qx[nger, idx] = -(
+                    powerflow.qlimdiff[idx][4]
                     * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
                 )
-                yx[nger, nger] = (
-                    powerflow.qlimdiff[idx][3]
+                yx[nger, nger] = -(
+                    powerflow.qlimdiff[idx][5]
                     * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
                 )
 

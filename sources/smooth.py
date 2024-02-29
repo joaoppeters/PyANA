@@ -173,6 +173,8 @@ def qlimssmooth(
     else:
         powerflow.qlimdiff[idx] = array(
             [
+                powerflow.diffyv[idx].subs(powerflow.qlimvar),
+                powerflow.diffyqg[idx].subs(powerflow.qlimvar),
                 powerflow.diffyvv[idx].subs(powerflow.qlimvar),
                 powerflow.diffyvqg[idx].subs(powerflow.qlimvar),
                 powerflow.diffyqgv[idx].subs(powerflow.qlimvar),
