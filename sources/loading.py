@@ -134,14 +134,14 @@ def var(
 
             # Demanda
             powerflow.MW = append(
-                powerflow.MW, sum(powerflow.cpfsolution["demanda_ativa"])
+                powerflow.MW, sum(powerflow.solution["demanda_ativa"])
             )
             powerflow.MVAr = append(
-                powerflow.MVAr, sum(powerflow.cpfsolution["demanda_reativa"])
+                powerflow.MVAr, sum(powerflow.solution["demanda_reativa"])
             )
 
             # Determinante e Autovalores
-            if powerflow.cpfsolution["eigencalculation"]:
+            if powerflow.solution["eigencalculation"]:
                 powerflow.nbuseigenvalues = append(
                     powerflow.nbuseigenvalues, item["eigenvalues"]
                 )
@@ -202,15 +202,15 @@ def var(
                 )
 
             # Demanda
-            totalmw = sum(powerflow.cpfsolution["demanda_ativa"])
-            totalmvar = sum(powerflow.cpfsolution["demanda_reativa"])
+            totalmw = sum(powerflow.solution["demanda_ativa"])
+            totalmvar = sum(powerflow.solution["demanda_reativa"])
             for _, valueinc in powerflow.dincDF.iterrows():
                 if valueinc["tipo_incremento_1"] == "AREA":
                     # MW
                     areamw = (1 + item["c"]["step"]) * sum(
                         array(
                             [
-                                powerflow.cpfsolution["demanda_ativa"][idxarea]
+                                powerflow.solution["demanda_ativa"][idxarea]
                                 for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
@@ -220,7 +220,7 @@ def var(
                     totalmw += areamw - sum(
                         array(
                             [
-                                powerflow.cpfsolution["demanda_ativa"][idxarea]
+                                powerflow.solution["demanda_ativa"][idxarea]
                                 for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
@@ -232,7 +232,7 @@ def var(
                     areamvar = (1 + item["c"]["step"]) * sum(
                         array(
                             [
-                                powerflow.cpfsolution["demanda_reativa"][idxarea]
+                                powerflow.solution["demanda_reativa"][idxarea]
                                 for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
@@ -242,7 +242,7 @@ def var(
                     totalmvar += areamvar - sum(
                         array(
                             [
-                                powerflow.cpfsolution["demanda_reativa"][idxarea]
+                                powerflow.solution["demanda_reativa"][idxarea]
                                 for idxarea, valuearea in powerflow.dbarraDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
@@ -252,23 +252,23 @@ def var(
 
                 elif powerflow.dincDF.loc[0, "tipo_incremento_1"] == "BARR":
                     # MW
-                    barramw = (1 + item["c"]["step"]) * powerflow.cpfsolution[
+                    barramw = (1 + item["c"]["step"]) * powerflow.solution[
                         "demanda_ativa"
                     ][powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1]
                     totalmw += (
                         barramw
-                        - powerflow.cpfsolution["demanda_ativa"][
+                        - powerflow.solution["demanda_ativa"][
                             powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1
                         ]
                     )
 
                     # MVAr
-                    barramvar = (1 + item["c"]["step"]) * powerflow.cpfsolution[
+                    barramvar = (1 + item["c"]["step"]) * powerflow.solution[
                         "demanda_reativa"
                     ][powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1]
                     totalmvar += (
                         barramvar
-                        - powerflow.cpfsolution["demanda_reativa"][
+                        - powerflow.solution["demanda_reativa"][
                             powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1
                         ]
                     )
@@ -277,7 +277,7 @@ def var(
             powerflow.MVAr = append(powerflow.MVAr, totalmvar)
 
             # Determinante e Autovalores
-            if powerflow.cpfsolution["eigencalculation"]:
+            if powerflow.solution["eigencalculation"]:
                 powerflow.nbuseigenvalues = append(
                     powerflow.nbuseigenvalues, item["c"]["eigenvalues"]
                 )

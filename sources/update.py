@@ -22,16 +22,14 @@ def updtstt(
 
     ## Inicialização
     powerflow.statevar = powerflow.statevar.reshape(powerflow.statevar.size,)
-    thetavalues = sum(powerflow.maskP)
-    voltagevalues = sum(powerflow.maskQ)
 
     # configuração reduzida
     powerflow.solution["theta"][powerflow.maskP] += (
-        powerflow.solution["sign"] * powerflow.statevar[0:(thetavalues)]
+        powerflow.solution["sign"] * powerflow.statevar[0:(powerflow.Tval)]
     )
     powerflow.solution["voltage"][powerflow.maskQ] += (
         powerflow.solution["sign"]
-        * powerflow.statevar[(thetavalues) : (thetavalues + voltagevalues)]
+        * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
     )
 
     # Atualização das variáveis de estado adicionais para controles ativos
@@ -43,12 +41,12 @@ def updtstt(
     if powerflow.solution["method"] == "CANI":
         powerflow.solution["lambda"] += (
             powerflow.solution["sign"]
-            * powerflow.statevar[(thetavalues + voltagevalues + powerflow.controldim)]
+            * powerflow.statevar[(powerflow.Tval + powerflow.Vval + powerflow.controldim)]
         )
         powerflow.solution["eigen"][powerflow.mask] += (
             powerflow.solution["sign"]
             * powerflow.statevar[
-                (thetavalues + voltagevalues + powerflow.controldim + 1) :
+                (powerflow.Tval + powerflow.Vval + powerflow.controldim + 1) :
             ]
         )
 

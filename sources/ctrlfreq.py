@@ -251,7 +251,7 @@ def freqsubjac(
     #
 
     # Variável
-    powerflow.dimprefreq = deepcopy(powerflow.jacob.shape[0])
+    powerflow.dimprefreq = deepcopy(powerflow.jacobian.shape[0])
 
     # Condição
     if powerflow.freqjcount == 0:
@@ -317,9 +317,9 @@ def freqsubjac(
         powerflow.extracoly = zeros([powerflow.controldim, powerflow.nger])
 
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         concatenate(
@@ -354,9 +354,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxp,
@@ -373,9 +373,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxq,
@@ -392,9 +392,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxx,
@@ -412,9 +412,9 @@ def freqsubjac(
 
     elif powerflow.controldim == 0:
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         concatenate((powerflow.ypt, powerflow.ypv), axis=1),
@@ -428,9 +428,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxp,
@@ -446,9 +446,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxq,
@@ -464,9 +464,9 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
-        powerflow.jacob = concatenate(
+        powerflow.jacobian = concatenate(
             (
-                powerflow.jacob,
+                powerflow.jacobian,
                 concatenate(
                     (
                         powerflow.pxx,

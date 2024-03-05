@@ -266,7 +266,7 @@ def svcsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.nbusdimpresvc = deepcopy(powerflow.jacob.shape[0])
+    powerflow.nbusdimpresvc = deepcopy(powerflow.jacobian.shape[0])
 
     # Submatrizes
     powerflow.nbuspx = zeros([powerflow.nbus, powerflow.ncer])
@@ -305,7 +305,7 @@ def svcsubjac(
 
         # Derivada Qk
         if value["controle"] == "A":
-            powerflow.jacob[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
+            powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
                 2
                 * powerflow.solution["voltage"][idxcer]
                 * float(powerflow.nbusalphabeq.subs(alpha, powerflow.solution["alpha"]))
@@ -319,7 +319,7 @@ def svcsubjac(
             )
 
         elif value["controle"] == "I":
-            powerflow.jacob[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
+            powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
                 powerflow.solution["svc_current_injection"][ncer]
             ) / powerflow.options["BASE"]
             powerflow.nbusqx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
@@ -360,8 +360,8 @@ def svcsubjac(
             concatenate((powerflow.nbuspx, powerflow.nbusqx, powerflow.nbusyx), axis=0)
         )
 
-    powerflow.jacob = vstack([powerflow.jacob, ytv], format="csc")
-    powerflow.jacob = hstack([powerflow.jacob, pqyx], format="csc")
+    powerflow.jacobian = vstack([powerflow.jacobian, ytv], format="csc")
+    powerflow.jacobian = hstack([powerflow.jacobian, pqyx], format="csc")
 
 
 def svcupdt(
@@ -464,10 +464,10 @@ def svcheur(
     ## Inicialização
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.cpfsolution["pmc"])
-        and (powerflow.cpfsolution["varstep"] == "lambda")
+        (not powerflow.solution["pmc"])
+        and (powerflow.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.cpfsolution["div"]))
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"]))
             <= powerflow.options["icmn"]
         )
     ):
@@ -484,7 +484,7 @@ def svccpf(
     """
 
     ## Inicialização
-    powerflow.cpfsolution["svc_reactive_generation"] = deepcopy(
+    powerflow.solution["svc_reactive_generation"] = deepcopy(
         powerflow.solution["svc_reactive_generation"]
     )
 

@@ -16,12 +16,12 @@ PDIT     10 LCRT     24 LPRT     60 CSTP     5. ASDC     1.
 ICIT  99999 DMAX 999999 FDIV    2.0 ICMN   1e-6 VART     5. TSTP     32
 ICMV    .01 APAS     90 CPAR  1e-6  VAVT     2. VAVF     5. VMVF    15.
 VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.    
-SIGK    1e8 SIGQ   1e-6 SIGV   1e-6 CTOL   1e-7        
+(SIGK    1e7 SIGQ   1e-5 SIGV   1e-5 CTOL   1e-7        
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
     1 L2  BARRA-001     1000  0.          -999999999                       11000                                     
-    2 L1  BARRA-002     1000      0.        20. 40.                        11000                                       
+    2 L1  BARRA-002     1000      0.        20.161.                        11000                                       
     3 L   BARRA-003     1000                                80.  60.       11000                           
 99999
 DLIN
@@ -38,5 +38,5 @@ DINC
 AREA    1                                           1.    1. 
 99999
 EXLF NEWT 
-EXIC STEP 
+(EXIC STEP 
 FIM

@@ -300,10 +300,10 @@ def qlimsheur(
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.cpfsolution["pmc"])
-        and (powerflow.cpfsolution["varstep"] == "lambda")
+        (not powerflow.solution["pmc"])
+        and (powerflow.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.cpfsolution["div"]))
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"]))
             <= powerflow.options["ICMN"]
         )
     ):
@@ -352,7 +352,7 @@ def qlimscpf(
     """
 
     ## Inicialização
-    powerflow.cpfsolution["qlim_reactive_generation"] = deepcopy(
+    powerflow.solution["qlim_reactive_generation"] = deepcopy(
         powerflow.solution["qlim_reactive_generation"]
     )
 
@@ -406,15 +406,13 @@ def qlimssubhess(
     yt = zeros([powerflow.nbus, powerflow.nger])
     yv = zeros([powerflow.nbus, powerflow.nger])
 
-    thetavalues = sum(powerflow.maskP)
-
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
     for idx, value in powerflow.dbarraDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.hessian[thetavalues + idx, thetavalues + idx] -= (
+            powerflow.hessian[powerflow.Tval + idx, powerflow.Tval + idx] -= (
                 powerflow.qlimdiff[idx][2]
                 * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
             )

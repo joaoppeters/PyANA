@@ -84,7 +84,7 @@ def qlimnsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.dimpreqlim = deepcopy(powerflow.jacob.shape[0])
+    powerflow.dimpreqlim = deepcopy(powerflow.jacobian.shape[0])
 
     # Submatrizes
     powerflow.px = zeros([powerflow.nbus, powerflow.nger])
@@ -149,8 +149,8 @@ def qlimnsubjac(
             concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
         )
 
-    powerflow.jacob = vstack([powerflow.jacob, ytv], format="csc")
-    powerflow.jacob = hstack([powerflow.jacob, pqyx], format="csc")
+    powerflow.jacobian = vstack([powerflow.jacobian, ytv], format="csc")
+    powerflow.jacobian = hstack([powerflow.jacobian, pqyx], format="csc")
 
 
 def qlimnupdt(
@@ -243,10 +243,10 @@ def qlimnheur(
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.cpfsolution["pmc"])
-        and (powerflow.cpfsolution["varstep"] == "lambda")
+        (not powerflow.solution["pmc"])
+        and (powerflow.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.cpfsolution["div"]))
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"]))
             <= powerflow.options["ICMN"]
         )
     ):

@@ -1,11 +1,11 @@
-February 27, 2024
+March 04, 2024
 
 
 relatorio do sistema neves
 
 solucao do fluxo de potencia via metodo do fluxo de potencia direto (Canizares, 1993)
 
-opcoes de controle ativadas: Nenhum controle ativo!
+opcoes de controle ativadas: QLIMs 
 
 opcoes de relatorio ativadas: RBAR 
 
@@ -15,20 +15,21 @@ vv relatorio de convergencia vv
 
  * * * * SISTEMA CONVERGENTE * * * * 
 
-Ponto de Maximo Carregamento: 1.125104
-Autovalores: [0.6115548  0.61173554 0.50177719]
-Iteracoes: 6
+Ponto de Maximo Carregamento: 1.083725
+Autovalores: [2.17117344e-01 2.02030104e-01 3.01920924e-23 7.52100928e-02
+ 1.98629252e-01 9.28050214e-01 7.52100928e-02]
+Iteracoes: 8
 
 vv relatorio de barras vv area 1 vv
 
 |          BARRA           |         TENSAO       |        GERACAO      |         CARGA       |   SHUNT  |
 | NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |    MW    |   MVAr   |    MVAr  |
 ----------------------------------------------------------------------------------------------------------
-|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   | 233.900  | 189.855  |  0.000   |  0.000   |  0.000   |
+|  1  |  BARRA-001   |  2  |   1.000   |  +0.00   | 215.677  | 157.038  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  2  |  BARRA-002   |  1  |   1.000   |  -45.42  |  -0.000  | 190.439  |  0.000   |  0.000   |  0.000   |
+|  2  |  BARRA-002   |  1  |   0.996   |  -38.37  |  -0.000  | 161.000  |  0.000   |  0.000   |  0.000   |
 ----------------------------------------------------------------------------------------------------------
-|  3  |  BARRA-003   |  0  |   0.625   |  -36.60  |  0.000   |  0.000   | 170.008  | 127.506  |  0.000   |
+|  3  |  BARRA-003   |  0  |   0.675   |  -31.45  |  0.000   |  0.000   | 166.698  | 125.023  |  0.000   |
 ----------------------------------------------------------------------------------------------------------
 
 

@@ -6,8 +6,20 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import concatenate, exp, nan, ones, pi
+from numpy import absolute, concatenate, exp, nan, ones, pi, round
 from pandas import DataFrame as DF
+
+
+def dagr(
+    powerflow,
+): 
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+    ## Inicialização
+    pass
 
 
 def danc(
@@ -20,7 +32,6 @@ def danc(
     """
 
     ## Inicialização
-    powerflow.danc = dict()
     powerflow.danc["area"] = list()
     powerflow.danc["fator_carga_ativa"] = list()
     powerflow.danc["fator_carga_reativa"] = list()
@@ -104,7 +115,6 @@ def dare(
     """
 
     ## Inicialização
-    powerflow.dare = dict()
     powerflow.dare["numero"] = list()
     powerflow.dare["intercambio_liquido"] = list()
     powerflow.dare["nome"] = list()
@@ -153,6 +163,18 @@ def dare(
         powerflow.areas = sorted(powerflow.dareaDF["numero"].unique())
 
 
+def dbsh(
+    powerflow,
+): 
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+    ## Inicialização
+    pass
+
+
 def dbar(
     powerflow,
 ):
@@ -163,7 +185,6 @@ def dbar(
     """
 
     ## Inicialização
-    powerflow.dbar = dict()
     powerflow.dbar["numero"] = list()
     powerflow.dbar["operacao"] = list()
     powerflow.dbar["estado"] = list()
@@ -369,7 +390,6 @@ def dcer(
     """
 
     ## Inicialização
-    powerflow.dcer = dict()
     powerflow.dcer["barra"] = list()
     powerflow.dcer["operacao"] = list()
     powerflow.dcer["grupo_base"] = list()
@@ -494,7 +514,6 @@ def dcte(
     """
 
     ## Inicialização
-    powerflow.dcte = dict()
     powerflow.dcte["constante"] = list()
     powerflow.dcte["valor_constante"] = list()
 
@@ -572,7 +591,6 @@ def dgbt(
     """
 
     ## Inicialização
-    powerflow.dgbt = dict()
     powerflow.dgbt["grupo"] = list()
     powerflow.dgbt["tensao"] = list()
 
@@ -616,7 +634,6 @@ def dger(
     """
 
     ## Inicialização
-    powerflow.dger = dict()
     powerflow.dger["numero"] = list()
     powerflow.dger["operacao"] = list()
     powerflow.dger["potencia_ativa_minima"] = list()
@@ -715,7 +732,6 @@ def dglt(
     """
 
     ## Inicialização
-    powerflow.dglt = dict()
     powerflow.dglt["grupo"] = list()
     powerflow.dglt["limite_minimo"] = list()
     powerflow.dglt["limite_maximo"] = list()
@@ -784,7 +800,6 @@ def dinc(
     """
 
     ## Inicialização
-    powerflow.dinc = dict()
     powerflow.dinc["tipo_incremento_1"] = list()
     powerflow.dinc["identificacao_incremento_1"] = list()
     powerflow.dinc["condicao_incremento_1"] = list()
@@ -911,6 +926,85 @@ def dinc(
                 powerflow.dincDF.at[idx, "maximo_incremento_potencia_reativa"] *= 1e-2
 
 
+def dinj(
+    powerflow,
+):
+    """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """	
+
+    ## Inicialização
+    powerflow.dinj["numero"] = list()
+    powerflow.dinj["operacao"] = list()
+    powerflow.dinj["injecao_ativa_eq"] = list()
+    powerflow.dinj["injecao_reativa_eq"] = list()
+    powerflow.dinj["shunt_eq"] = list()
+    powerflow.dinj["fator_participacao_eq"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dinj["numero"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dinj["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dinj["injecao_ativa_eq"].append(
+                powerflow.lines[powerflow.linecount][8:15]
+            )
+            powerflow.dinj["injecao_reativa_eq"].append(
+                powerflow.lines[powerflow.linecount][15:22]
+            )
+            powerflow.dinj["shunt_eq"].append(powerflow.lines[powerflow.linecount][22:29])
+            powerflow.dinj["fator_participacao_eq"].append(
+                powerflow.lines[powerflow.linecount][29:36]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Injeção de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
+    powerflow.dinjDF = DF(data=powerflow.dinj)
+    powerflow.dinjDF = powerflow.dinjDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dinjDF = powerflow.dinjDF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "injecao_ativa_eq": "float",
+            "injecao_reativa_eq": "float",
+            "shunt_eq": "float",
+            "fator_participacao_eq": "float",
+        }
+    )
+    if powerflow.dinjDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DINJ`!\033[0m"
+        )
+    else:
+        powerflow.codes["DINJ"] = True
+
+        for idx, value in powerflow.dinjDF.iterrows():
+            if value["injecao_ativa_eq"] >= 0.0:
+                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "potencia_ativa"] -= value["injecao_ativa_eq"]
+                if powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"].values[0] == 0:
+                    powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"] = 1
+                    powerflow.npv += 1
+            else:
+                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "demanda_ativa"] += absolute(value["injecao_ativa_eq"])
+
+            if value["injecao_reativa_eq"] >= 0.0:
+                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "potencia_reativa"] -= value["injecao_reativa_eq"]
+                if powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"].values[0] == 0:
+                    powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"] = 1
+                    powerflow.npv += 1
+                        
+            else:
+                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "demanda_reativa"] += absolute(value["injecao_reativa_eq"]) 
+
+            powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "shunt_barra"] += value["shunt_eq"]   
+            if powerflow.codes["DGER"]:
+                powerflow.dgeraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "fator_participacao"] += value["fator_participacao_eq"]
+
+
 def dlin(
     powerflow,
 ):
@@ -921,7 +1015,6 @@ def dlin(
     """
 
     ## Inicialização
-    powerflow.dlin = dict()
     powerflow.dlin["de"] = list()
     powerflow.dlin["abertura_de"] = list()
     powerflow.dlin["operacao"] = list()
@@ -1102,3 +1195,15 @@ def dlin(
         powerflow.dlinhaDF["para-idx"] = powerflow.dlinhaDF["para"].map(
             powerflow.dbarraDF.set_index("numero")["index"]
         )
+
+
+def dshl(
+    powerflow,
+): 
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+    ## Inicialização
+    pass

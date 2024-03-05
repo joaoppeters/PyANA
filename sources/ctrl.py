@@ -127,6 +127,9 @@ def controlsol(
             powerflow.controlorder[powerflow.controlcount] = "VCTRL"
             pass
 
+    powerflow.Tval = sum(powerflow.maskP)
+    powerflow.Vval = sum(powerflow.maskQ)
+
     if not powerflow.controlcount:
         powerflow.controldim = 0
 
@@ -458,7 +461,7 @@ def controlheuristics(
         ):
             break
 
-        elif (not powerflow.controlheur) and (not powerflow.cpfsolution["pmc"]):
+        elif (not powerflow.controlheur) and (not powerflow.solution["pmc"]):
             # controle remoto de tensão
             if value == "CREM":
                 pass
@@ -577,9 +580,7 @@ def controlcpf(
             pass
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
-            qlimscpf(
-                powerflow,
-            )
+            pass
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             pass

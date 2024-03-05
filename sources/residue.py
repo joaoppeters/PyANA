@@ -12,6 +12,7 @@ from ctrl import controlres
 
 def residue(
     powerflow,
+    case: int = 0,
 ):
     """cálculo de resíduos das equações diferenciáveis
 
@@ -36,10 +37,14 @@ def residue(
     if powerflow.controlcount > 0:
         controlres(
             powerflow,
+            case,
         )
         powerflow.deltaPQY = concatenate((powerflow.deltaP, powerflow.deltaQ), axis=0)
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, powerflow.deltaY), axis=0)
     else:
         powerflow.deltaY = array([0])
 
+    if powerflow.solution["method"] == "CPF":
+        powerflow.deltaPQY = concatenate((powerflow.deltaPQY, array([0])), axis=0)
+        
     powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]

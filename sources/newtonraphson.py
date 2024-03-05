@@ -12,7 +12,6 @@ from numpy import (
     zeros,
 )
 from numpy.linalg import lstsq, norm
-from scipy.sparse.linalg import spsolve
 
 from convergence import convergence
 from ctrl import controlsol, controldelta

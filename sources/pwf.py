@@ -65,16 +65,20 @@ def codes(
     ## Inicialização
     # Variável
     powerflow.codes = {
+        "DAGR": False, # FAZER
         "DANC": False,
         "DARE": False,
         "DBAR": False,
+        "DBSH": False, # FAZER
         "DCER": False,
         "DCTE": False,
         "DGBT": False,
         "DGER": False,
         "DGLT": False,
         "DINC": False,
+        "DINJ": False,
         "DLIN": False,
+        "DSHL": False, # FAZER
     }
 
 
@@ -95,9 +99,20 @@ def readfile(
 
     # Loop de leitura de linhas do `.pwf`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
-        # Dados de Alteração do Nível de Carregamento
-        if powerflow.lines[powerflow.linecount].strip() == "DANC":
+        # 
+        if powerflow.lines[powerflow.linecount].strip() == "DAGR":
             powerflow.linecount += 1
+            powerflow.dagr = dict()
+            powerflow.dagr["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            dagr(
+                powerflow,
+            )
+
+        # Dados de Alteração do Nível de Carregamento
+        elif powerflow.lines[powerflow.linecount].strip() == "DANC":
+            powerflow.linecount += 1
+            powerflow.danc = dict()
+            powerflow.danc["ruler"] = powerflow.lines[powerflow.linecount][:]
             danc(
                 powerflow,
             )
@@ -105,6 +120,8 @@ def readfile(
         # Dados de Intercâmbio de Potência Ativa entre Áreas
         elif powerflow.lines[powerflow.linecount].strip() == "DARE":
             powerflow.linecount += 1
+            powerflow.dare = dict()
+            powerflow.dare["ruler"] = powerflow.lines[powerflow.linecount][:]
             dare(
                 powerflow,
             )
@@ -112,13 +129,26 @@ def readfile(
         # Dados de Barra
         elif powerflow.lines[powerflow.linecount].strip() == "DBAR":
             powerflow.linecount += 1
+            powerflow.dbar = dict()
+            powerflow.dbar["ruler"] = powerflow.lines[powerflow.linecount][:]
             dbar(
+                powerflow,
+            )
+
+        # 
+        elif powerflow.lines[powerflow.linecount].strip() == "DBSH":
+            powerflow.linecount += 1
+            powerflow.dbsh = dict()
+            powerflow.dbsh["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            dbsh(
                 powerflow,
             )
 
         # Dados de Compensadores Estáticos de Potência Reativa
         elif powerflow.lines[powerflow.linecount].strip() == "DCER":
             powerflow.linecount += 1
+            powerflow.dcer = dict()
+            powerflow.dcer["ruler"] = powerflow.lines[powerflow.linecount][:]
             dcer(
                 powerflow,
             )
@@ -126,6 +156,8 @@ def readfile(
         # Dados de Constantes
         elif powerflow.lines[powerflow.linecount].strip() == "DCTE":
             powerflow.linecount += 1
+            powerflow.dcte = dict()
+            powerflow.dcte["ruler"] = powerflow.lines[powerflow.linecount][:]
             dcte(
                 powerflow,
             )
@@ -133,6 +165,8 @@ def readfile(
         # Dados de Grupo de Base de Tensão de Barras CA
         elif powerflow.lines[powerflow.linecount].strip() == "DGBT":
             powerflow.linecount += 1
+            powerflow.dgbt = dict()
+            powerflow.dgbt["ruler"] = powerflow.lines[powerflow.linecount][:]
             dgbt(
                 powerflow,
             )
@@ -140,6 +174,8 @@ def readfile(
         # Dados de Geradores
         elif powerflow.lines[powerflow.linecount].strip() == "DGER":
             powerflow.linecount += 1
+            powerflow.dger = dict()
+            powerflow.dger["ruler"] = powerflow.lines[powerflow.linecount][:]
             dger(
                 powerflow,
             )
@@ -147,6 +183,8 @@ def readfile(
         # Dados de Grupos de Limites de Tensão
         elif powerflow.lines[powerflow.linecount].strip() == "DGLT":
             powerflow.linecount += 1
+            powerflow.dglt = dict()
+            powerflow.dglt["ruler"] = powerflow.lines[powerflow.linecount][:]
             dglt(
                 powerflow,
             )
@@ -154,14 +192,36 @@ def readfile(
         # Dados de Incremento do Nível de Carregamento
         elif powerflow.lines[powerflow.linecount].strip() == "DINC":
             powerflow.linecount += 1
+            powerflow.dinc = dict()
+            powerflow.dinc["ruler"] = powerflow.lines[powerflow.linecount][:]
             dinc(
+                powerflow,
+            )
+
+        # Dados de Injeções de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
+        elif powerflow.lines[powerflow.linecount].strip() == "DINJ":
+            powerflow.linecount += 1
+            powerflow.dinj = dict()
+            powerflow.dinj["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dinj(
                 powerflow,
             )
 
         # Dados de Linha
         elif powerflow.lines[powerflow.linecount].strip() == "DLIN":
             powerflow.linecount += 1
+            powerflow.dlin = dict()
+            powerflow.dlin["ruler"] = powerflow.lines[powerflow.linecount][:]
             dlin(
+                powerflow,
+            )
+
+        # 
+        elif powerflow.lines[powerflow.linecount].strip() == "DSHL":
+            powerflow.linecount += 1
+            powerflow.dshl = dict()
+            powerflow.dshl["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            dshl(
                 powerflow,
             )
 

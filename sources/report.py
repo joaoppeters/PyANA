@@ -650,7 +650,7 @@ def tobecontinued(
     # Manipulacao
     filevtan = open(powerflow.dircpfsys + powerflow.name + "-tangent.txt", "w")
     filevarv = open(powerflow.dircpfsys + powerflow.name + "-voltagevar.txt", "w")
-    if powerflow.cpfsolution["eigencalculation"]:
+    if powerflow.solution["eigencalculation"]:
         filedeteigen = open(
             powerflow.dircpfsys + powerflow.name + "-det&eigen.txt", "w"
         )
@@ -710,7 +710,7 @@ def tobecontinued(
     filevarv.write("\n\n")
 
     # Cabecalho FILEDETEIGEN
-    if powerflow.cpfsolution["eigencalculation"]:
+    if powerflow.solution["eigencalculation"]:
         filedeteigen.write(
             "{} {}, {}".format(
                 dt.now().strftime("%B"),
@@ -769,7 +769,7 @@ def tobecontinued(
                 filevarv.write("\n")
 
             # FILEDETEIGEN
-            if powerflow.cpfsolution["eigencalculation"]:
+            if powerflow.solution["eigencalculation"]:
                 filedeteigen.write("\n\n")
                 filedeteigen.write(f"Caso {key}")
                 filedeteigen.write("\n")
@@ -786,14 +786,14 @@ def tobecontinued(
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write("Autovalores:")
-                for b in range(0, powerflow.jacobQV.shape[0]):
+                for b in range(0, powerflow.jacQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
                         f"right eigen vector {b}: {absolute(powerflow.point[key]['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
                 filedeteigen.write("Fator de Participacao:")
-                for b in range(0, powerflow.PFQV.shape[0]):
+                for b in range(0, powerflow.jacQVpfactor.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
                         f"p{b}: {powerflow.point[key]['participationfactor-QV'][:, b]}"
@@ -885,7 +885,7 @@ def tobecontinued(
                 filevarv.write("\n")
 
             # FILEDETEIGEN
-            if powerflow.cpfsolution["eigencalculation"]:
+            if powerflow.solution["eigencalculation"]:
                 filedeteigen.write("\n\n")
                 filedeteigen.write(f"Caso {key}")
                 filedeteigen.write("\n")
@@ -902,14 +902,14 @@ def tobecontinued(
                 )
                 filedeteigen.write("\n")
                 filedeteigen.write("Autovalores:")
-                for b in range(0, powerflow.jacobQV.shape[0]):
+                for b in range(0, powerflow.jacQV.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
                         f"right eigen vector {b}: {absolute(powerflow.point[key]['c']['eigenvectors-QV'][:, b])}"
                     )
                 filedeteigen.write("\n")
                 filedeteigen.write("Fator de Participacao:")
-                for b in range(0, powerflow.PFQV.shape[0]):
+                for b in range(0, powerflow.jacQVpfactor.shape[0]):
                     filedeteigen.write("\n")
                     filedeteigen.write(
                         f"p{b}: {powerflow.point[key]['c']['participationfactor-QV'][:, b]}"
@@ -933,7 +933,7 @@ def tobecontinued(
     filevarv.close()
 
     # FILEDETEIGEN
-    if powerflow.cpfsolution["eigencalculation"]:
+    if powerflow.solution["eigencalculation"]:
         filedeteigen.write("\n\n\n\n")
         filedeteigen.write(
             "fim do relatorio de analise da variacao do valor do determinante e autovalores da matriz de sensibilidade QV do sistema "
