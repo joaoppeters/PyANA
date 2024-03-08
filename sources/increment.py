@@ -23,7 +23,7 @@ def increment(
     preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
 
     ## CANI
-    if powerflow.solution["method"] == "CANI":
+    if powerflow.solution["method"] == "tPoC":
         # Incremento de carga
         for idxbar, _ in powerflow.dbarraDF.iterrows():
             # Incremento de Carregamento
@@ -58,11 +58,9 @@ def incrementx(
             for idxbar, valuebar in powerflow.dbarraDF.iterrows():
                 if valuebar["area"] == valueinc["identificacao_incremento_1"]:
                     # Incremento de Carregamento
-                    powerflow.dbarraDF.at[
-                        idxbar, "demanda_ativa"
-                    ] = powerflow.solution["demanda_ativa"][idxbar] * (
-                        1 + powerflow.solution["stepsch"]
-                    )
+                    powerflow.dbarraDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
+                        "demanda_ativa"
+                    ][idxbar] * (1 + powerflow.solution["stepsch"])
                     powerflow.dbarraDF.at[
                         idxbar, "demanda_reativa"
                     ] = powerflow.solution["demanda_reativa"][idxbar] * (

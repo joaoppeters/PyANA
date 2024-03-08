@@ -36,7 +36,7 @@ def qlimssol(
         powerflow.diffyqg = dict()
         powerflow.diffyv = dict()
 
-        if powerflow.method == "CANI":
+        if powerflow.method == "tPoC":
             powerflow.diffyqgqg = dict()
             powerflow.diffyvqg = dict()
             powerflow.diffyqgv = dict()
@@ -151,8 +151,8 @@ def qlimssubjac(
                 powerflow.jacobian,
                 concatenate(
                     (
-                        yt[:,powerflow.maskP],
-                        yv[:,powerflow.maskQ],
+                        yt[:, powerflow.maskP],
+                        yv[:, powerflow.maskQ],
                         extrarow,
                     ),
                     axis=1,
@@ -165,8 +165,8 @@ def qlimssubjac(
                 powerflow.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP,:],
-                        qx[powerflow.maskQ,:],
+                        px[powerflow.maskP, :],
+                        qx[powerflow.maskQ, :],
                         extracol,
                         yx,
                     ),
@@ -182,8 +182,8 @@ def qlimssubjac(
                 powerflow.jacobian,
                 concatenate(
                     (
-                        yt[:,powerflow.maskP],
-                        yv[:,powerflow.maskQ],
+                        yt[:, powerflow.maskP],
+                        yv[:, powerflow.maskQ],
                     ),
                     axis=1,
                 ),
@@ -195,8 +195,8 @@ def qlimssubjac(
                 powerflow.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP,:],
-                        qx[powerflow.maskQ,:],
+                        px[powerflow.maskP, :],
+                        qx[powerflow.maskQ, :],
                         yx,
                     ),
                     axis=0,
@@ -450,8 +450,8 @@ def qlimssubhess(
                 powerflow.hessian,
                 concatenate(
                     (
-                        px[:,powerflow.maskP],
-                        qx[:,powerflow.maskQ],
+                        px[:, powerflow.maskP],
+                        qx[:, powerflow.maskQ],
                         extrarow,
                     ),
                     axis=1,
@@ -481,8 +481,8 @@ def qlimssubhess(
                 powerflow.hessian,
                 concatenate(
                     (
-                        px[:,powerflow.maskP],
-                        qx[:,powerflow.maskQ],
+                        px[:, powerflow.maskP],
+                        qx[:, powerflow.maskQ],
                     ),
                     axis=1,
                 ),

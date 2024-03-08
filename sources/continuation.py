@@ -450,9 +450,7 @@ def correction(
 
         # Reconfiguração do valor da variável de passo
         powerflow.solution["step"] = deepcopy(powerflow.point[case]["c"]["step"])
-        powerflow.solution["stepsch"] = deepcopy(
-            powerflow.point[case]["c"]["stepsch"]
-        )
+        powerflow.solution["stepsch"] = deepcopy(powerflow.point[case]["c"]["stepsch"])
         powerflow.solution["vsch"] = deepcopy(powerflow.point[case]["c"]["vsch"])
 
     # Reconfiguração dos Dados de Solução em Caso de Divergência
@@ -475,9 +473,7 @@ def correction(
 
         # Reconfiguração do valor da variável de passo
         powerflow.solution["step"] = deepcopy(powerflow.point[case]["c"]["step"])
-        powerflow.solution["stepsch"] = deepcopy(
-            powerflow.point[case]["c"]["stepsch"]
-        )
+        powerflow.solution["stepsch"] = deepcopy(powerflow.point[case]["c"]["stepsch"])
         powerflow.solution["vsch"] = deepcopy(powerflow.point[case]["c"]["vsch"])
     return case
 
@@ -495,7 +491,10 @@ def cpfresidue(
     """
 
     ## Inicialização
-    residue(powerflow, case,)
+    residue(
+        powerflow,
+        case,
+    )
 
     # Resíduo de Fluxo de Potência Continuado
     # Condição de previsão
@@ -510,9 +509,7 @@ def cpfresidue(
 
             elif powerflow.solution["pmc"]:
                 powerflow.deltaPQY[-1] = (
-                    -1
-                    * powerflow.options["LMBD"]
-                    * (5e-1 ** powerflow.solution["div"])
+                    -1 * powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"])
                 )
 
         elif powerflow.solution["varstep"] == "volt":
@@ -560,11 +557,23 @@ def exjac(
         rowarray[0, (powerflow.nbus + powerflow.nodevarvolt)] = 1
 
     # Demanda
-    colarray = concatenate((powerflow.solution["demanda_ativa"] - powerflow.solution["potencia_ativa"], powerflow.solution["demanda_reativa"], zeros(powerflow.controldim + 1)), axis=0)
-    colarray = (colarray[powerflow.mask] / powerflow.options["BASE"]).reshape((sum(powerflow.mask), 1))
+    colarray = concatenate(
+        (
+            powerflow.solution["demanda_ativa"] - powerflow.solution["potencia_ativa"],
+            powerflow.solution["demanda_reativa"],
+            zeros(powerflow.controldim + 1),
+        ),
+        axis=0,
+    )
+    colarray = (colarray[powerflow.mask] / powerflow.options["BASE"]).reshape(
+        (sum(powerflow.mask), 1)
+    )
 
     # Expansão Jacobiana Continuada
-    powerflow.jacobian = concatenate((powerflow.jacobian, colarray), axis=1,)
+    powerflow.jacobian = concatenate(
+        (powerflow.jacobian, colarray),
+        axis=1,
+    )
     powerflow.jacobian = concatenate(
         (powerflow.jacobian, concatenate((rowarray, array([[stepvar]])), axis=1)),
         axis=0,
@@ -606,9 +615,7 @@ def update_statevar(
         # Verificação do Ponto de Máximo Carregamento
         if case > 0:
             if case == 1:
-                powerflow.solution["stepmax"] = deepcopy(
-                    powerflow.solution["stepsch"]
-                )
+                powerflow.solution["stepmax"] = deepcopy(powerflow.solution["stepsch"])
 
             elif case != 1:
                 if (
@@ -692,9 +699,7 @@ def evaluate(
     # Condição Inicial
     if case == 1:
         # Lambda
-        varlambda = abs(
-            (powerflow.solution["step"] - 0) / (powerflow.solution["step"])
-        )
+        varlambda = abs((powerflow.solution["step"] - 0) / (powerflow.solution["step"]))
 
         # Voltage
         powerflow.nodevarvolt = argmax(
@@ -883,7 +888,7 @@ def heuristics(
             # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
             powerflow.solution["voltage"] = deepcopy(powerflow.point[case]["voltage"])
             powerflow.solution["theta"] = deepcopy(powerflow.point[case]["theta"])
- 
+
     elif (
         (powerflow.name != "ieee24")
         and (powerflow.name != "ieee118")

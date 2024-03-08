@@ -317,10 +317,10 @@ def controljac(
     powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "CANI"):
+    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "tPoC"):
         powerflow.maskctrlcount += 1
 
-    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "CANI"):
+    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "tPoC"):
         powerflow.maskctrlcount += 1
 
 

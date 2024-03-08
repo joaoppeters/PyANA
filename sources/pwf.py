@@ -65,11 +65,12 @@ def codes(
     ## Inicialização
     # Variável
     powerflow.codes = {
-        "DAGR": False, # FAZER
+        "TITU": False,
+        "DAGR": False,  # FAZER
         "DANC": False,
         "DARE": False,
         "DBAR": False,
-        "DBSH": False, # FAZER
+        "DBSH": False,  # FAZER
         "DCER": False,
         "DCTE": False,
         "DGBT": False,
@@ -78,7 +79,8 @@ def codes(
         "DINC": False,
         "DINJ": False,
         "DLIN": False,
-        "DSHL": False, # FAZER
+        "DOPC": False,  # FAZER
+        "DSHL": False,  # FAZER
     }
 
 
@@ -99,7 +101,7 @@ def readfile(
 
     # Loop de leitura de linhas do `.pwf`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
-        # 
+        #
         if powerflow.lines[powerflow.linecount].strip() == "DAGR":
             powerflow.linecount += 1
             powerflow.dagr = dict()
@@ -135,7 +137,7 @@ def readfile(
                 powerflow,
             )
 
-        # 
+        #
         elif powerflow.lines[powerflow.linecount].strip() == "DBSH":
             powerflow.linecount += 1
             powerflow.dbsh = dict()
@@ -216,14 +218,29 @@ def readfile(
                 powerflow,
             )
 
-        # 
+        #
+        elif powerflow.lines[powerflow.linecount].strip() == "DOPC" or powerflow.lines[powerflow.linecount].strip() == "DOPC IMPR":
+            powerflow.linecount += 1
+            powerflow.dopc = dict()
+            powerflow.dopc["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dopc(
+                powerflow,
+            )
+
+        #
         elif powerflow.lines[powerflow.linecount].strip() == "DSHL":
             powerflow.linecount += 1
             powerflow.dshl = dict()
-            powerflow.dshl["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dshl["ruler"] = powerflow.lines[powerflow.linecount][:]
             dshl(
                 powerflow,
             )
+
+        #
+        elif powerflow.lines[powerflow.linecount].strip() == "TITU":
+            powerflow.linecount += 1
+            powerflow.titu = powerflow.lines[powerflow.linecount][:]
+            powerflow.codes["TITU"] = True
 
         powerflow.linecount += 1
 

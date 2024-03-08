@@ -23,8 +23,8 @@ def residue(
     ## Inicialização
     # Vetores de resíduo
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Ybus@V
-    S = diag(V)@conj(I)
+    I = powerflow.Ybus @ V
+    S = diag(V) @ conj(I)
 
     # Resíduos de potência ativa e reativa
     powerflow.deltaP = powerflow.psch - S.real
@@ -46,5 +46,5 @@ def residue(
 
     if powerflow.solution["method"] == "CPF":
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, array([0])), axis=0)
-        
+
     powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]

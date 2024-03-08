@@ -24,11 +24,13 @@ def matrices(
 
     # Jacobiana
     dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
-    A11 = (dS_dVa.A[powerflow.maskP,:][:,powerflow.maskP]).real  #dP_dAngV
-    A12 = (dS_dVm.A[powerflow.maskP,:][:,powerflow.maskQ]).real #dP_dMagV
-    A21 = (dS_dVa.A[powerflow.maskQ,:][:,powerflow.maskP]).imag #dQ_AngV
-    A22 = (dS_dVm.A[powerflow.maskQ,:][:,powerflow.maskQ]).imag #dQ_MagV
-    powerflow.jacobian = concatenate((concatenate((A11,A21),axis=0),concatenate((A12,A22),axis=0)),axis=1)
+    A11 = (dS_dVa.A[powerflow.maskP, :][:, powerflow.maskP]).real  # dP_dAngV
+    A12 = (dS_dVm.A[powerflow.maskP, :][:, powerflow.maskQ]).real  # dP_dMagV
+    A21 = (dS_dVa.A[powerflow.maskQ, :][:, powerflow.maskP]).imag  # dQ_AngV
+    A22 = (dS_dVm.A[powerflow.maskQ, :][:, powerflow.maskQ]).imag  # dQ_MagV
+    powerflow.jacobian = concatenate(
+        (concatenate((A11, A21), axis=0), concatenate((A12, A22), axis=0)), axis=1
+    )
 
     if powerflow.controlcount > 0:
         from ctrl import controljac
@@ -37,9 +39,11 @@ def matrices(
             powerflow,
         )
 
-    if powerflow.solution["method"] == "CANI":
+    if powerflow.solution["method"] == "tPoC":
         # Vetor Jacobiana-Lambda
-        powerflow.G = powerflow.jacobian.T@powerflow.solution["eigen"][powerflow.mask].reshape((sum(powerflow.mask),1))
+        powerflow.G = powerflow.jacobian.T @ powerflow.solution["eigen"][
+            powerflow.mask
+        ].reshape((sum(powerflow.mask), 1))
         powerflow.H = powerflow.solution["eigen"][powerflow.mask]
 
         # Hessiana
@@ -52,8 +56,44 @@ def matrices(
             powerflow.solution["eigen"][powerflow.nbus : 2 * powerflow.nbus],
         )
 
-        M1 = concatenate((concatenate((Gpaa.A[powerflow.maskP,:][:,powerflow.maskP],Gpva.A[powerflow.maskQ,:][:,powerflow.maskP]),axis=0),concatenate((Gpav.A[powerflow.maskP,:][:,powerflow.maskQ],Gpvv.A[powerflow.maskQ,:][:,powerflow.maskQ]),axis=0)),axis=1)
-        M2 = concatenate((concatenate((Gqaa.A[powerflow.maskP,:][:,powerflow.maskP],Gqva.A[powerflow.maskQ,:][:,powerflow.maskP]),axis=0),concatenate((Gqav.A[powerflow.maskP,:][:,powerflow.maskQ],Gqvv.A[powerflow.maskQ,:][:,powerflow.maskQ]),axis=0)),axis=1)
+        M1 = concatenate(
+            (
+                concatenate(
+                    (
+                        Gpaa.A[powerflow.maskP, :][:, powerflow.maskP],
+                        Gpva.A[powerflow.maskQ, :][:, powerflow.maskP],
+                    ),
+                    axis=0,
+                ),
+                concatenate(
+                    (
+                        Gpav.A[powerflow.maskP, :][:, powerflow.maskQ],
+                        Gpvv.A[powerflow.maskQ, :][:, powerflow.maskQ],
+                    ),
+                    axis=0,
+                ),
+            ),
+            axis=1,
+        )
+        M2 = concatenate(
+            (
+                concatenate(
+                    (
+                        Gqaa.A[powerflow.maskP, :][:, powerflow.maskP],
+                        Gqva.A[powerflow.maskQ, :][:, powerflow.maskP],
+                    ),
+                    axis=0,
+                ),
+                concatenate(
+                    (
+                        Gqav.A[powerflow.maskP, :][:, powerflow.maskQ],
+                        Gqvv.A[powerflow.maskQ, :][:, powerflow.maskQ],
+                    ),
+                    axis=0,
+                ),
+            ),
+            axis=1,
+        )
 
         powerflow.hessian = M1.real + M2.imag
 
@@ -159,7 +199,7 @@ def d2Sbus_dV2(
     """
     nb = len(V)
     ib = arange(nb)
-    Ibus = Ybus@V
+    Ibus = Ybus @ V
     diaglam = sparse((lam, (ib, ib)))
     diagV = sparse((V, (ib, ib)))
 
@@ -167,7 +207,7 @@ def d2Sbus_dV2(
     B = Ybus * diagV
     C = A * conj(B)
     D = Ybus.T.conj() * diagV
-    E = diagV.conj() * (D * diaglam - sparse((D@lam, (ib, ib))))
+    E = diagV.conj() * (D * diaglam - sparse((D @ lam, (ib, ib))))
     F = C - A * sparse((conj(Ibus), (ib, ib)))
     G = sparse((ones(nb) / abs(V), (ib, ib)))
 

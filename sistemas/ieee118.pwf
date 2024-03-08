@@ -339,6 +339,5 @@ DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 AREA    1  A AREA  9999                              .5    .5
 99999
-EXLF NEWT
-EXIC NEWT
+EXLF NEWT QLIM RBAR
 FIM

@@ -12,9 +12,9 @@ from pandas import DataFrame as DF
 
 def dagr(
     powerflow,
-): 
+):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
@@ -165,9 +165,9 @@ def dare(
 
 def dbsh(
     powerflow,
-): 
+):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
@@ -308,7 +308,7 @@ def dbar(
             "shunt_barra": "float",
             "area": "int",
             "tensao_base": "float",
-            "modo": "object",
+            "modo": "int",
             "agreg1": "object",
             "agreg2": "object",
             "agreg3": "object",
@@ -930,10 +930,10 @@ def dinj(
     powerflow,
 ):
     """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    """	
+    """
 
     ## Inicialização
     powerflow.dinj["numero"] = list()
@@ -955,7 +955,9 @@ def dinj(
             powerflow.dinj["injecao_reativa_eq"].append(
                 powerflow.lines[powerflow.linecount][15:22]
             )
-            powerflow.dinj["shunt_eq"].append(powerflow.lines[powerflow.linecount][22:29])
+            powerflow.dinj["shunt_eq"].append(
+                powerflow.lines[powerflow.linecount][22:29]
+            )
             powerflow.dinj["fator_participacao_eq"].append(
                 powerflow.lines[powerflow.linecount][29:36]
             )
@@ -983,26 +985,23 @@ def dinj(
         powerflow.codes["DINJ"] = True
 
         for idx, value in powerflow.dinjDF.iterrows():
-            if value["injecao_ativa_eq"] >= 0.0:
-                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "potencia_ativa"] -= value["injecao_ativa_eq"]
-                if powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"].values[0] == 0:
-                    powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"] = 1
-                    powerflow.npv += 1
-            else:
-                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "demanda_ativa"] += absolute(value["injecao_ativa_eq"])
+            powerflow.dbarraDF.loc[
+                powerflow.dbarraDF["numero"] == value["numero"], "demanda_ativa"
+            ] = -value["injecao_ativa_eq"]
 
-            if value["injecao_reativa_eq"] >= 0.0:
-                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "potencia_reativa"] -= value["injecao_reativa_eq"]
-                if powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"].values[0] == 0:
-                    powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "tipo"] = 1
-                    powerflow.npv += 1
-                        
-            else:
-                powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "demanda_reativa"] += absolute(value["injecao_reativa_eq"]) 
+            powerflow.dbarraDF.loc[
+                powerflow.dbarraDF["numero"] == value["numero"], "potencia_reativa"
+            ] = -value["injecao_reativa_eq"]
 
-            powerflow.dbarraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "shunt_barra"] += value["shunt_eq"]   
+            powerflow.dbarraDF.loc[
+                powerflow.dbarraDF["numero"] == value["numero"], "shunt_barra"
+            ] = -value["shunt_eq"]
+            
             if powerflow.codes["DGER"]:
-                powerflow.dgeraDF.loc[powerflow.dbarraDF["numero"] == value["numero"], "fator_participacao"] += value["fator_participacao_eq"]
+                powerflow.dgeraDF.loc[
+                    powerflow.dbarraDF["numero"] == value["numero"],
+                    "fator_participacao",
+                ] += value["fator_participacao_eq"]
 
 
 def dlin(
@@ -1197,11 +1196,115 @@ def dlin(
         )
 
 
+def dopc(
+    powerflow,
+):
+    """
+
+    Parâmetros
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.dopc["opcao"] = list()
+    powerflow.dopc["padrao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            try:
+                powerflow.dopc["opcao"].append(powerflow.lines[powerflow.linecount][:4])
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][5]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][7:11]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][12]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][14:18]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][19]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][21:25]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][26]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][28:32]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][33]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][35:39]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][40]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][42:46]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][47]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][49:53]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][54]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][56:60]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][61]
+                )
+                powerflow.dopc["opcao"].append(
+                    powerflow.lines[powerflow.linecount][63:67]
+                )
+                powerflow.dopc["padrao"].append(
+                    powerflow.lines[powerflow.linecount][68]
+                )  
+            except:
+                powerflow.dopc["opcao"] = powerflow.dopc["opcao"][:-1]
+                break 
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Constantes
+    powerflow.dopcDF = DF(data=powerflow.dopc)
+    powerflow.dopcDF = powerflow.dopcDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dopcDF = powerflow.dopcDF.astype(
+        {
+            "opcao": "object",
+            "padrao": "object",
+        }
+    )
+    if powerflow.dopcDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DOPC`!\033[0m"
+        )
+    else:
+        powerflow.codes["DOPC"] = True
+
+        powerflow.dopcDF["opcao"] = powerflow.dopcDF["opcao"].replace("0", nan)
+        powerflow.dopcDF = powerflow.dopcDF.dropna(axis=0, subset=["opcao"])
+        powerflow.dopcDF = powerflow.dopcDF.drop_duplicates(
+            subset=["opcao"], keep="last"
+        ).reset_index(drop=True)
+
+
 def dshl(
     powerflow,
-): 
+):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """

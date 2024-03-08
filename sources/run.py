@@ -8,13 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "roman-NE-reduzido-370.pwf"
+system = "neves.pwf"
 
 method = "NEWTON"
 # method = "CPF"
 # method = "CE"
-# method = "STOCH"
-# method = "CANI"
+method = "STOCH"
+# method = "tPoC"
+# method = "fDATA"
 # method = "PWF"
 
 control = [
@@ -23,7 +24,7 @@ control = [
     # "CTAPd",
     # "FREQ",
     # "QLIM",
-    # "QLIMs", 
+    "QLIMs",
     # "SVCs",
 ]
 

@@ -21,11 +21,13 @@ def updtstt(
     """
 
     ## Inicialização
-    powerflow.statevar = powerflow.statevar.reshape(powerflow.statevar.size,)
+    powerflow.statevar = powerflow.statevar.reshape(
+        powerflow.statevar.size,
+    )
 
     # configuração reduzida
     powerflow.solution["theta"][powerflow.maskP] += (
-        powerflow.solution["sign"] * powerflow.statevar[0:(powerflow.Tval)]
+        powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
     )
     powerflow.solution["voltage"][powerflow.maskQ] += (
         powerflow.solution["sign"]
@@ -38,10 +40,12 @@ def updtstt(
             powerflow,
         )
 
-    if powerflow.solution["method"] == "CANI":
+    if powerflow.solution["method"] == "tPoC":
         powerflow.solution["lambda"] += (
             powerflow.solution["sign"]
-            * powerflow.statevar[(powerflow.Tval + powerflow.Vval + powerflow.controldim)]
+            * powerflow.statevar[
+                (powerflow.Tval + powerflow.Vval + powerflow.controldim)
+            ]
         )
         powerflow.solution["eigen"][powerflow.mask] += (
             powerflow.solution["sign"]
@@ -62,8 +66,8 @@ def updtpwr(
 
     ## Inicialização
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Ybus@V
-    S = diag(V)@conj(I)
+    I = powerflow.Ybus @ V
+    S = diag(V) @ conj(I)
 
     powerflow.solution["active"] = (
         S.real * powerflow.options["BASE"]

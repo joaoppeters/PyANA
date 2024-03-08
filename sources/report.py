@@ -64,7 +64,7 @@ def reportfile(
         powerflow,
     )
 
-    if powerflow.method != "CANI":
+    if powerflow.method != "tPoC":
         # Relatorio de Convergencia
         RCONV(
             file,
@@ -166,7 +166,7 @@ def rheader(
     elif powerflow.method == "CPF":
         file.write("do fluxo de potencia continuado")
     # Chamada específica metodo direto (Canizares, 1993)
-    elif powerflow.method == "CANI":
+    elif powerflow.method == "tPoC":
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")

@@ -21,10 +21,9 @@ def options(
 
     ## Inicialização
     # Configuração de variáveis para processos de convergência de fluxos de potência tradicionais
-    stdpf = {
-        "BASE": 100.0,  # base de potência para o sistema CA
-        "DASE": 100.0,  # base de potência default para o sistema CC
-        "FBASE": 60.0,  # frequencia base do sep (criado por JP)
+    powerflow.stdcte = {
+        "BASE": 100.,  # base de potência para o sistema CA
+        "DASE": 100.,  # base de potência default para o sistema CC
         "TEPA": 1e-3,  # tolerancia de convergencia de potencia ativa
         "TEPR": 1e-3,  # tolerancia de convergencia de potencia reativa
         "TLPR": 1e-3,  # tolerância para limite de geração de potência reativa
@@ -54,7 +53,7 @@ def options(
         "ICMN": 5e-4,  # valor mínimo do incremento automático de carga (utilizado como critério de parada do método de fluxo de potência continuado)
         "BFPO": 1e-2,  # valor mínimo de injeção de potência reativa de um banco shunt alocado pelo programa flupot
         "ZMAX": 5e2,  # tensão mínima para teste de divergência do caso
-        "VDVM": 2.0,  # tensão máxima para teste de divergência do caso
+        "VDVM": 2.,  # tensão máxima para teste de divergência do caso
         "ASTP": 0.05,  # valor máximo de correção de ângulo de fase da tensão durante o processo de solução
         "VSTP": 5e-2,  # valor máximo de correção de magnitude da tensão durante o processo de solução
         "CSTP": 5e-2,  # valor máximo de correção de susceptância do CSC durante o processo de solução
@@ -80,18 +79,19 @@ def options(
         "VPVT": 2e-2,  # critério de variação de tensão para a terminação da rede de simulação - primeiro critério
         "VPVF": 5e-2,  # critério de variação de fluxo em função do carregamento nominal para a determinação da rede de simulação - primeiro critério
         "VPMF": 10e-2,  # critério de variação de fluxo para a determinação da rede de simulação - primeiro critério
-        "SIGA": 1e-6,  # tolerância da chave sigmóide SVC-A
-        "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e SVC-I, QLIM
-        "SIGV": 1e-6,  # tolerância da chave sigmóide referente à variável de tensão
-        "SIGK": 1e8,  # variável de inclinação da chave sigmóide
-        "FULL": 0,  # Curva completa do fluxo de potência continuado
-        "VVAR": 1e-6,  #
-        "CTOL": 1e-7,  # tolerância para as variáveis de estado do método direto (canizares)
+        "FBASE": 60.,  # frequencia base do sep (criado por JP)
+        "SIGA": 1e-6,  # tolerância da chave sigmóide SVC-A (criado por JP)
+        "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e SVC-I, QLIM (criado por JP)
+        "SIGV": 1e-6,  # tolerância da chave sigmóide referente à variável de tensão (criado por JP)
+        "SIGK": 1e8,  # variável de inclinação da chave sigmóide (criado por JP)
+        "FULL": 0,  # Curva completa do fluxo de potência continuado (criado por JP)
+        "VVAR": 1e-6,  # (criado por JP)
+        "CTOL": 1e-7,  # tolerância para as variáveis de estado do método direto (canizares) (criado por JP)
     }
 
     powerflow.options = dict()
 
-    for k, v in stdpf.items():
+    for k, v in powerflow.stdcte.items():
         if k not in powerflow.dcteDF["constante"].unique():
             powerflow.options[k] = v
         else:

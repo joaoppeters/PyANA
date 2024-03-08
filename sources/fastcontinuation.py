@@ -183,10 +183,7 @@ class FastContinuation:
                         powerflow.point[self.case]["c"]["varstep"],
                         "  ",
                         powerflow.options["cpfVolt"]
-                        * (
-                            (1 / powerflow.options["FDIV"])
-                            ** powerflow.solution["div"]
-                        )
+                        * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
                         * 1e2,
                     )
                 else:
@@ -195,10 +192,7 @@ class FastContinuation:
                         powerflow.point[self.case]["c"]["varstep"],
                         "  ",
                         powerflow.options["LMBD"]
-                        * (
-                            (1 / powerflow.options["FDIV"])
-                            ** powerflow.solution["div"]
-                        )
+                        * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
                         * 1e2,
                     )
                 print("\n")
@@ -545,11 +539,9 @@ class FastContinuation:
                 powerflow.dbarraDF.at[idxinc, "demanda_ativa"] = powerflow.solution[
                     "demanda_ativa"
                 ][idxinc] * (1 + powerflow.solution["stepsch"])
-                powerflow.dbarraDF.at[
-                    idxinc, "demanda_reativa"
-                ] = powerflow.solution["demanda_reativa"][idxinc] * (
-                    1 + powerflow.solution["stepsch"]
-                )
+                powerflow.dbarraDF.at[idxinc, "demanda_reativa"] = powerflow.solution[
+                    "demanda_reativa"
+                ][idxinc] * (1 + powerflow.solution["stepsch"])
 
         self.deltaincrement = (
             sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - self.preincrement
@@ -1099,7 +1091,9 @@ class FastContinuation:
                 powerflow.point[self.case]["eigenvectors"] = rightvector
 
                 # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-                powerflow.point[self.case]["participation_factor"] = powerflow.jacpfactor
+                powerflow.point[self.case][
+                    "participation_factor"
+                ] = powerflow.jacpfactor
 
                 # Armazenamento da matriz de sensibilidade QV
                 powerflow.point[self.case]["jacobian-QV"] = powerflow.jacQV
@@ -1112,7 +1106,9 @@ class FastContinuation:
                 powerflow.point[self.case]["eigenvectors-QV"] = rightvectorQV
 
                 # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-                powerflow.point[self.case]["participationfactor-QV"] = powerflow.jacQVpfactor
+                powerflow.point[self.case][
+                    "participationfactor-QV"
+                ] = powerflow.jacQVpfactor
 
             elif stage != None:
                 # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
@@ -1128,7 +1124,9 @@ class FastContinuation:
                 powerflow.point[self.case][stage]["eigenvectors"] = rightvector
 
                 # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-                powerflow.point[self.case][stage]["participationfactor"] = powerflow.jacpfactor
+                powerflow.point[self.case][stage][
+                    "participationfactor"
+                ] = powerflow.jacpfactor
 
                 # Armazenamento da matriz de sensibilidade QV
                 powerflow.point[self.case][stage]["jacobian-QV"] = powerflow.jacQV
@@ -1263,10 +1261,7 @@ class FastContinuation:
                 if (
                     (
                         powerflow.solution["step"]
-                        < (
-                            powerflow.options["cpfV2L"]
-                            * powerflow.solution["stepmax"]
-                        )
+                        < (powerflow.options["cpfV2L"] * powerflow.solution["stepmax"])
                     )
                     and (self.varlambda > self.varvolt)
                     and (not powerflow.solution["v2l"])
@@ -1288,10 +1283,7 @@ class FastContinuation:
                 and (
                     (
                         powerflow.options["LMBD"]
-                        * (
-                            (1 / powerflow.options["FDIV"])
-                            ** powerflow.solution["div"]
-                        )
+                        * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
                     )
                     <= powerflow.options["ICMN"]
                 )
@@ -1529,8 +1521,7 @@ class FastContinuation:
                 (not powerflow.solution["pmc"])
                 and (powerflow.solution["varstep"] == "volt")
                 and (
-                    powerflow.options["cpfVolt"]
-                    * (5e-1 ** powerflow.solution["div"])
+                    powerflow.options["cpfVolt"] * (5e-1 ** powerflow.solution["div"])
                     < powerflow.options["ICMN"]
                 )
                 and (not self.active_heuristic)

@@ -18,7 +18,7 @@ from scheduled import scheduled
 from update import updtstt, updtpwr
 
 
-def cani(
+def poc(
     powerflow,
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
@@ -31,10 +31,12 @@ def cani(
     # Variável para armazenamento de solução
     powerflow.solution.update(
         {
-            "method": "CANI",
+            "method": "tPoC",
             "iter": 0,
             "freq": 1.0,
             "lambda": 0.0,
+            "potencia_ativa": deepcopy(powerflow.solution["active"]),
+            "potencia_reativa": deepcopy(powerflow.solution["reactive"]),
             "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
             "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
             "eigen": 1.0 * (powerflow.mask),
@@ -77,7 +79,7 @@ def cani(
             (
                 -powerflow.deltaPQY.reshape((sum(powerflow.mask), 1)),
                 powerflow.G,
-                array([[powerflow.H@powerflow.H - 1]]),
+                array([[powerflow.H @ powerflow.H - 1]]),
             ),
             axis=0,
         )
@@ -132,9 +134,15 @@ def expansion(
     """
 
     ## Inicialização
-    powerflow.dtf = vstack((powerflow.solution["demanda_ativa"], powerflow.solution["demanda_reativa"]))
-    powerflow.dtf = powerflow.dtf.reshape((2 * powerflow.nbus, 1)) / powerflow.options["BASE"]
-    powerflow.dtf = concatenate((powerflow.dtf, zeros((powerflow.controldim,1))), axis=0)
+    powerflow.dtf = vstack(
+        (powerflow.solution["demanda_ativa"], powerflow.solution["demanda_reativa"])
+    )
+    powerflow.dtf = (
+        powerflow.dtf.reshape((2 * powerflow.nbus, 1)) / powerflow.options["BASE"]
+    )
+    powerflow.dtf = concatenate(
+        (powerflow.dtf, zeros((powerflow.controldim, 1))), axis=0
+    )
 
     # Reducao Total
     powerflow.dtf = powerflow.dtf[powerflow.mask]

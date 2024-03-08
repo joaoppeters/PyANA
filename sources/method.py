@@ -138,9 +138,9 @@ def methodo(
         )
 
     # Chamada especifica metodo direto (Canizares, 1993)
-    elif powerflow.method == "CANI":
+    elif powerflow.method == "tPoC":
         from admittance import admit
-        from directmethod import cani
+        from directmethod import poc
         from newtonraphson import newton
         from report import reportfile
 
@@ -152,7 +152,7 @@ def methodo(
             powerflow,
         )
 
-        cani(
+        poc(
             powerflow,
         )
 
@@ -161,9 +161,17 @@ def methodo(
         )
 
     #
-    elif powerflow.method == "PWF":
-        from filter import seletiva
+    elif powerflow.method == "fDATA":
+        from fdata import fdata
 
-        seletiva(
+        fdata(
+            powerflow,
+        )
+
+    #
+    elif powerflow.method == "PWF":
+        from savepwf import savepwf
+
+        savepwf(
             powerflow,
         )

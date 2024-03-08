@@ -122,7 +122,7 @@ def qlims(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "CANI":
+    if powerflow.method == "tPoC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -162,7 +162,7 @@ def qlimssmooth(
     )
 
     # Expressão Geral
-    if powerflow.solution["method"] != "CANI":
+    if powerflow.solution["method"] != "tPoC":
         powerflow.qlimdiff[idx] = array(
             [
                 powerflow.diffyv[idx].subs(powerflow.qlimvar),
@@ -185,7 +185,7 @@ def qlimssmooth(
 
     ## Resíduo
     powerflow.deltaQlim[nger] = (
-        - powerflow.Y[idx][0].subs(powerflow.qlimvar)
+        -powerflow.Y[idx][0].subs(powerflow.qlimvar)
         - powerflow.Y[idx][1].subs(powerflow.qlimvar)
         - powerflow.Y[idx][2].subs(powerflow.qlimvar)
     )
@@ -332,7 +332,8 @@ def svcsQ(
                 powerflow.options["BASE"]
                 * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_reactive_generation"][ncer] / powerflow.options["BASE"],
+            qgk: powerflow.solution["svc_reactive_generation"][ncer]
+            / powerflow.options["BASE"],
         }
     )
 
@@ -358,20 +359,27 @@ def svcsQ(
     # Região Capacitiva
     Ycapacitiva = (ch2) * (-(vk**2) * bmax + qgk)
 
-    powerflow.Y[idxcer] = [Yindutiva, Ylinear, Ycapacitiva,]
+    powerflow.Y[idxcer] = [
+        Yindutiva,
+        Ylinear,
+        Ycapacitiva,
+    ]
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
     powerflow.diffyvk[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(vk)
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    ).diff(vk)
 
     # Derivada Parcial de Y por Vm
     powerflow.diffyvm[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(vm)
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    ).diff(vm)
 
     # Derivada Parcial de Y por Qgk
     powerflow.diffyqgk[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]).diff(qgk)
+        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    ).diff(qgk)
 
 
 def svcsQsmooth(
@@ -419,7 +427,8 @@ def svcsQsmooth(
                 powerflow.options["BASE"]
                 * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_reactive_generation"][ncer] / powerflow.options["BASE"],
+            qgk: powerflow.solution["svc_reactive_generation"][ncer]
+            / powerflow.options["BASE"],
         }
     )
 
@@ -435,7 +444,7 @@ def svcsQsmooth(
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        - powerflow.Y[0].subs(powerflow.svcqvar)
+        -powerflow.Y[0].subs(powerflow.svcqvar)
         - powerflow.Y[1].subs(powerflow.svcqvar)
         - powerflow.Y[2].subs(powerflow.svcqvar)
     )
@@ -559,7 +568,7 @@ def svcsI(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "CANI":
+    if powerflow.method == "tPoC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -804,7 +813,7 @@ def svcsA(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "CANI":
+    if powerflow.method == "tPoC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)

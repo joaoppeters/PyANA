@@ -17,7 +17,7 @@ def admit(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-    
+
     Builds the bus admittance matrix and branch admittance matrices.
 
     Returns the full bus admittance matrix (i.e. for all buses) and the
@@ -72,8 +72,8 @@ def admit(
 
     ## build Ybus
     powerflow.Ybus = sparse(
-        Cf.T@Yf
-        + Ct.T@Yt
+        Cf.T @ Yf
+        + Ct.T @ Yt
         + sparse(
             (Ysh, (range(powerflow.nbus), range(powerflow.nbus))),
             (powerflow.nbus, powerflow.nbus),

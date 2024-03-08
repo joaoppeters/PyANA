@@ -12,6 +12,7 @@ from numpy.linalg import det, eig, inv
 
 from ctrl import controlpop
 
+
 def eigensens(
     case,
     powerflow,
@@ -57,12 +58,8 @@ def eigensens(
 
     try:
         # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-        rightvalues, rightvector = eig(
-            powerflow.jacobian
-        )
-        powerflow.jacpfactor = zeros(
-            powerflow.jacobian.shape
-        )
+        rightvalues, rightvector = eig(powerflow.jacobian)
+        powerflow.jacpfactor = zeros(powerflow.jacobian.shape)
 
         # Jacobiana reduzida - sensibilidade QV
         powerflow.jacQV = qv - qt @ inv(pt) @ pv
@@ -81,9 +78,7 @@ def eigensens(
             powerflow.point[case]["jacobian"] = powerflow.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.point[case]["determinant"] = det(
-                powerflow.jacobian
-            )
+            powerflow.point[case]["determinant"] = det(powerflow.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             powerflow.point[case]["eigenvalues"] = rightvalues
@@ -110,9 +105,7 @@ def eigensens(
             powerflow.point[case][stage]["jacobian"] = powerflow.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.point[case][stage]["determinant"] = det(
-                powerflow.jacobian
-            )
+            powerflow.point[case][stage]["determinant"] = det(powerflow.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             powerflow.point[case][stage]["eigenvalues"] = rightvalues
@@ -132,7 +125,9 @@ def eigensens(
             powerflow.point[case][stage]["eigenvectors-QV"] = rightvectorQV
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.point[case][stage]["participationfactor-QV"] = powerflow.jacQVpfactor
+            powerflow.point[case][stage][
+                "participationfactor-QV"
+            ] = powerflow.jacQVpfactor
 
     # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa
     # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
