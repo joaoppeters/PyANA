@@ -66,11 +66,11 @@ def codes(
     # Variável
     powerflow.codes = {
         "TITU": False,
-        "DAGR": False,  # FAZER
+        "DAGR": False,
         "DANC": False,
         "DARE": False,
         "DBAR": False,
-        "DBSH": False,  # FAZER
+        "DBSH": False,
         "DCER": False,
         "DCTE": False,
         "DGBT": False,
@@ -79,8 +79,8 @@ def codes(
         "DINC": False,
         "DINJ": False,
         "DLIN": False,
-        "DOPC": False,  # FAZER
-        "DSHL": False,  # FAZER
+        "DOPC": False,
+        "DSHL": False,
     }
 
 
@@ -101,11 +101,13 @@ def readfile(
 
     # Loop de leitura de linhas do `.pwf`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
-        #
+        # Dados de Agregadores Genericos
         if powerflow.lines[powerflow.linecount].strip() == "DAGR":
             powerflow.linecount += 1
-            powerflow.dagr = dict()
-            powerflow.dagr["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dagr1 = dict()
+            powerflow.dagr2 = dict()
+            powerflow.dagr1["ruler"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dagr2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
             dagr(
                 powerflow,
             )
@@ -137,11 +139,13 @@ def readfile(
                 powerflow,
             )
 
-        #
+        # Dados de Bancos de Capacitores e/ou Reatores Individualizados de Barras CA ou de Linhas de Transmissão
         elif powerflow.lines[powerflow.linecount].strip() == "DBSH":
             powerflow.linecount += 1
-            powerflow.dbsh = dict()
-            powerflow.dbsh["ruler-1"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dbsh1 = dict()
+            powerflow.dbsh2 = dict()
+            powerflow.dbsh1["ruler"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dbsh2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
             dbsh(
                 powerflow,
             )
@@ -218,8 +222,11 @@ def readfile(
                 powerflow,
             )
 
-        #
-        elif powerflow.lines[powerflow.linecount].strip() == "DOPC" or powerflow.lines[powerflow.linecount].strip() == "DOPC IMPR":
+        # Dados de Opções de Controle e Execução Padrão
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DOPC"
+            or powerflow.lines[powerflow.linecount].strip() == "DOPC IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dopc = dict()
             powerflow.dopc["ruler"] = powerflow.lines[powerflow.linecount][:]
@@ -227,7 +234,7 @@ def readfile(
                 powerflow,
             )
 
-        #
+        # Dados de Dispositivos Shunt de Circuito CA
         elif powerflow.lines[powerflow.linecount].strip() == "DSHL":
             powerflow.linecount += 1
             powerflow.dshl = dict()
@@ -236,7 +243,7 @@ def readfile(
                 powerflow,
             )
 
-        #
+        # Título do Sistema/Caso em Estudo
         elif powerflow.lines[powerflow.linecount].strip() == "TITU":
             powerflow.linecount += 1
             powerflow.titu = powerflow.lines[powerflow.linecount][:]

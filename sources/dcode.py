@@ -13,13 +13,74 @@ from pandas import DataFrame as DF
 def dagr(
     powerflow,
 ):
-    """
+    """inicialização para leitura de dados de agregadores genéricos
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
-    pass
+    powerflow.dagr1["numero"] = list()
+    powerflow.dagr1["descricao"] = list()
+    powerflow.dagr1["ndagr2"] = list()
+    powerflow.dagr2["numero"] = list()
+    powerflow.dagr2["operacao"] = list()
+    powerflow.dagr2["descricao"] = list()
+    idx = 0
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dagr1["ruler"]:
+            powerflow.dagr1["numero"].append(powerflow.lines[powerflow.linecount][:3])
+            powerflow.dagr1["descricao"].append(
+                powerflow.lines[powerflow.linecount][4:40]
+            )
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dagr2["ruler"]:
+            powerflow.dagr1["ndagr2"].append(0)
+            while powerflow.lines[powerflow.linecount].strip() != "FAGR":
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dagr2["numero"].append(
+                        powerflow.lines[powerflow.linecount][:3]
+                    )
+                    powerflow.dagr2["operacao"].append(
+                        powerflow.lines[powerflow.linecount][4]
+                    )
+                    powerflow.dagr2["descricao"].append(
+                        powerflow.lines[powerflow.linecount][6:42]
+                    )
+                powerflow.dagr1["ndagr2"][idx] += 1
+                powerflow.linecount += 1
+            idx += 1
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Agregadores Genericos
+    powerflow.dagr1DF = DF(data=powerflow.dagr1)
+    powerflow.dagr1DF = powerflow.dagr1DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dagr1DF = powerflow.dagr1DF.astype(
+        {
+            "numero": "int",
+            "descricao": "str",
+        }
+    )
+
+    powerflow.dagr2DF = DF(data=powerflow.dagr2)
+    powerflow.dagr2DF = powerflow.dagr2DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dagr2DF = powerflow.dagr2DF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "descricao": "str",
+        }
+    )
+    if powerflow.dagr1DF.empty or powerflow.dagr2DF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DAGR`!\033[0m"
+        )
+    else:
+        powerflow.codes["DAGR"] = True
 
 
 def danc(
@@ -166,13 +227,143 @@ def dare(
 def dbsh(
     powerflow,
 ):
-    """
+    """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
-    pass
+    powerflow.dbsh1["from"] = list()
+    powerflow.dbsh1["operacao"] = list()
+    powerflow.dbsh1["to"] = list()
+    powerflow.dbsh1["circuito"] = list()
+    powerflow.dbsh1["modo_controle"] = list()
+    powerflow.dbsh1["tensao_minima"] = list()
+    powerflow.dbsh1["tensao_maxima"] = list()
+    powerflow.dbsh1["barra_controlada"] = list()
+    powerflow.dbsh1["injecao_reativa_inicial"] = list()
+    powerflow.dbsh1["tipo_controle"] = list()
+    powerflow.dbsh1["apagar"] = list()
+    powerflow.dbsh1["extremidade"] = list()
+    powerflow.dbsh1["ndbsh2"] = list()
+    powerflow.dbsh2["grupo_banco"] = list()
+    powerflow.dbsh2["operacao"] = list()
+    powerflow.dbsh2["estado"] = list()
+    powerflow.dbsh2["unidades"] = list()
+    powerflow.dbsh2["unidades_operacao"] = list()
+    powerflow.dbsh2["capacitor_reator"] = list()
+    idx = 0
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh1["ruler"]:
+            powerflow.dbsh1["from"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dbsh1["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dbsh1["to"].append(powerflow.lines[powerflow.linecount][8:13])
+            powerflow.dbsh1["circuito"].append(
+                powerflow.lines[powerflow.linecount][14:16]
+            )
+            powerflow.dbsh1["modo_controle"].append(
+                powerflow.lines[powerflow.linecount][17]
+            )
+            powerflow.dbsh1["tensao_minima"].append(
+                powerflow.lines[powerflow.linecount][19:23]
+            )
+            powerflow.dbsh1["tensao_maxima"].append(
+                powerflow.lines[powerflow.linecount][24:28]
+            )
+            powerflow.dbsh1["barra_controlada"].append(
+                powerflow.lines[powerflow.linecount][29:34]
+            )
+            powerflow.dbsh1["injecao_reativa_inicial"].append(
+                powerflow.lines[powerflow.linecount][35:41]
+            )
+            powerflow.dbsh1["tipo_controle"].append(
+                powerflow.lines[powerflow.linecount][42]
+            )
+            powerflow.dbsh1["apagar"].append(powerflow.lines[powerflow.linecount][44])
+            powerflow.dbsh1["extremidade"].append(
+                powerflow.lines[powerflow.linecount][46:51]
+            )
+
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh2["ruler"]:
+            powerflow.dbsh1["ndbsh2"].append(0)
+            while powerflow.lines[powerflow.linecount].strip() != "FBAN":
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dbsh2["grupo_banco"].append(
+                        powerflow.lines[powerflow.linecount][:2]
+                    )
+                    powerflow.dbsh2["operacao"].append(
+                        powerflow.lines[powerflow.linecount][4]
+                    )
+                    powerflow.dbsh2["estado"].append(
+                        powerflow.lines[powerflow.linecount][6]
+                    )
+                    powerflow.dbsh2["unidades"].append(
+                        powerflow.lines[powerflow.linecount][8:11]
+                    )
+                    powerflow.dbsh2["unidades_operacao"].append(
+                        powerflow.lines[powerflow.linecount][12:15]
+                    )
+                    powerflow.dbsh2["capacitor_reator"].append(
+                        powerflow.lines[powerflow.linecount][16:22]
+                    )
+                powerflow.dbsh1["ndbsh2"][idx] += 1
+                powerflow.linecount += 1
+            idx += 1
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Agregadores Genericos
+    powerflow.dbsh1DF = DF(data=powerflow.dbsh1)
+    powerflow.dbsh1DF = powerflow.dbsh1DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dbsh1DF = powerflow.dbsh1DF.astype(
+        {
+            "from": "int",
+            "operacao": "object",
+            "to": "int",
+            "circuito": "int",
+            "modo_controle": "object",
+            "tensao_minima": "int",
+            "tensao_maxima": "int",
+            "barra_controlada": "int",
+            "injecao_reativa_inicial": "float",
+            "tipo_controle": "object",
+            "apagar": "object",
+            "extremidade": "int",
+        }
+    )
+
+    powerflow.dbsh2DF = DF(data=powerflow.dbsh2)
+    powerflow.dbsh2DF = powerflow.dbsh2DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dbsh2DF = powerflow.dbsh2DF.astype(
+        {
+            "grupo_banco": "int",
+            "operacao": "object",
+            "estado": "object",
+            "unidades": "int",
+            "unidades_operacao": "int",
+            "capacitor_reator": "float",
+        }
+    )
+    if powerflow.dbsh1DF.empty or powerflow.dbsh2DF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DBSH`!\033[0m"
+        )
+    else:
+        powerflow.codes["DBSH"] = True
+
+        for idx, value in powerflow.dbsh1DF.iterrows():
+            if value["circuito"] == 0:
+                powerflow.dbsh1DF.at[idx, "circuito"] = 1
+            if value["apagar"] == "0":
+                powerflow.dbsh1DF.at[idx, "apagar"] = " "
+
+        # for idx, value in powerflow.dbsh2DF.iterrows():
+        #     if value['to'] ==
 
 
 def dbar(
@@ -987,16 +1178,16 @@ def dinj(
         for idx, value in powerflow.dinjDF.iterrows():
             powerflow.dbarraDF.loc[
                 powerflow.dbarraDF["numero"] == value["numero"], "demanda_ativa"
-            ] = -value["injecao_ativa_eq"]
+            ] += -value["injecao_ativa_eq"]
 
             powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["numero"] == value["numero"], "potencia_reativa"
-            ] = -value["injecao_reativa_eq"]
+                powerflow.dbarraDF["numero"] == value["numero"], "demanda_reativa"
+            ] += -value["injecao_reativa_eq"]
 
             powerflow.dbarraDF.loc[
                 powerflow.dbarraDF["numero"] == value["numero"], "shunt_barra"
-            ] = -value["shunt_eq"]
-            
+            ] += value["shunt_eq"]
+
             if powerflow.codes["DGER"]:
                 powerflow.dgeraDF.loc[
                     powerflow.dbarraDF["numero"] == value["numero"],
@@ -1199,7 +1390,7 @@ def dlin(
 def dopc(
     powerflow,
 ):
-    """
+    """inicialização para leitura de dados de código de opções de controle e execução padrão
 
     Parâmetros
         powerflow:
@@ -1214,9 +1405,7 @@ def dopc(
         else:
             try:
                 powerflow.dopc["opcao"].append(powerflow.lines[powerflow.linecount][:4])
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][5]
-                )
+                powerflow.dopc["padrao"].append(powerflow.lines[powerflow.linecount][5])
                 powerflow.dopc["opcao"].append(
                     powerflow.lines[powerflow.linecount][7:11]
                 )
@@ -1270,10 +1459,10 @@ def dopc(
                 )
                 powerflow.dopc["padrao"].append(
                     powerflow.lines[powerflow.linecount][68]
-                )  
+                )
             except:
                 powerflow.dopc["opcao"] = powerflow.dopc["opcao"][:-1]
-                break 
+                break
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Constantes
@@ -1303,10 +1492,64 @@ def dopc(
 def dshl(
     powerflow,
 ):
-    """
+    """inicialização para leitura de dados de dispositivos shunt de circuito CA
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
-    pass
+    powerflow.dshl["from"] = list()
+    powerflow.dshl["operacao"] = list()
+    powerflow.dshl["to"] = list()
+    powerflow.dshl["circuito"] = list()
+    powerflow.dshl["shunt_from"] = list()
+    powerflow.dshl["shunt_to"] = list()
+    powerflow.dshl["estado_shunt_from"] = list()
+    powerflow.dshl["estado_shunt_to"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dshl["from"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dshl["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dshl["to"].append(powerflow.lines[powerflow.linecount][9:14])
+            powerflow.dshl["circuito"].append(
+                powerflow.lines[powerflow.linecount][14:16]
+            )
+            powerflow.dshl["shunt_from"].append(
+                powerflow.lines[powerflow.linecount][17:23]
+            )
+            powerflow.dshl["shunt_to"].append(
+                powerflow.lines[powerflow.linecount][23:29]
+            )
+            powerflow.dshl["estado_shunt_from"].append(
+                powerflow.lines[powerflow.linecount][30:32]
+            )
+            powerflow.dshl["estado_shunt_to"].append(
+                powerflow.lines[powerflow.linecount][33:35]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Constantes
+    powerflow.dshlDF = DF(data=powerflow.dshl)
+    powerflow.dshlDF = powerflow.dshlDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dshlDF = powerflow.dshlDF.astype(
+        {
+            "from": "int",
+            "operacao": "object",
+            "to": "int",
+            "circuito": "object",
+            "shunt_from": "float",
+            "shunt_to": "float",
+            "estado_shunt_from": "object",
+            "estado_shunt_to": "object",
+        }
+    )
+    if powerflow.dshlDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DSHL`!\033[0m"
+        )
+    else:
+        powerflow.codes["DSHL"] = True

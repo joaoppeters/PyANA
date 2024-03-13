@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "neves.pwf"
+system = "roman-NE-reduzido-370.pwf"
 
 method = "NEWTON"
 # method = "CPF"
@@ -16,7 +16,7 @@ method = "NEWTON"
 method = "STOCH"
 # method = "tPoC"
 # method = "fDATA"
-# method = "PWF"
+method = "PWF"
 
 control = [
     # "CREM",
