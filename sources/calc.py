@@ -30,8 +30,8 @@ def pcalc(
     p = powerflow.gdiag[idx] * powerflow.solution["voltage"][idx]
 
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -42,8 +42,8 @@ def pcalc(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -60,7 +60,7 @@ def pcalc(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["active"][idx] = (
         p * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_ativa"][idx]
+    ) + powerflow.dbarDF["demanda_ativa"][idx]
 
     return p
 
@@ -86,8 +86,8 @@ def qcalc(
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]
 
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * sin(
@@ -98,8 +98,8 @@ def qcalc(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * sin(
@@ -116,7 +116,7 @@ def qcalc(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["reactive"][idx] = (
         q * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_reativa"][idx]
+    ) + powerflow.dbarDF["demanda_reativa"][idx]
 
     return q
 
@@ -142,8 +142,8 @@ def pcalct(
     p = powerflow.gdiag[idx] * powerflow.solution["voltage"][idx]
 
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 -powerflow.admitancia[lin].real
                 * sin(
@@ -154,8 +154,8 @@ def pcalct(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 -powerflow.admitancia[lin].real
                 * sin(
@@ -172,7 +172,7 @@ def pcalct(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["active"][idx] = (
         p * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_ativa"][idx]
+    ) + powerflow.dbarDF["demanda_ativa"][idx]
 
     return p
 
@@ -198,8 +198,8 @@ def pcalcv(
     p = powerflow.gdiag[idx]
 
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -210,8 +210,8 @@ def pcalcv(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             p -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -226,7 +226,7 @@ def pcalcv(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["active"][idx] = (
         p * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_ativa"][idx]
+    ) + powerflow.dbarDF["demanda_ativa"][idx]
 
     return p
 
@@ -252,8 +252,8 @@ def qcalct(
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]
 
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -264,8 +264,8 @@ def qcalct(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * cos(
@@ -282,7 +282,7 @@ def qcalct(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["reactive"][idx] = (
         q * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_reativa"][idx]
+    ) + powerflow.dbarDF["demanda_reativa"][idx]
 
     return q
 
@@ -307,8 +307,8 @@ def qcalcv(
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -powerflow.bdiag[idx]
     for lin in range(0, powerflow.nlin):
-        if idx == powerflow.dlinhaDF["de"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["para"].iloc[lin] - 1
+        if idx == powerflow.dlinDF["de"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["para"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * sin(
@@ -319,8 +319,8 @@ def qcalcv(
                     powerflow.solution["theta"][idx] - powerflow.solution["theta"][bus]
                 )
             )
-        elif idx == powerflow.dlinhaDF["para"].iloc[lin] - 1:
-            bus = powerflow.dlinhaDF["de"].iloc[lin] - 1
+        elif idx == powerflow.dlinDF["para"].iloc[lin] - 1:
+            bus = powerflow.dlinDF["de"].iloc[lin] - 1
             q -= powerflow.solution["voltage"][bus] * (
                 powerflow.admitancia[lin].real
                 * sin(
@@ -335,6 +335,6 @@ def qcalcv(
     # Armazenamenpara da potência ativa gerada equivalente do barramento para
     powerflow.solution["reactive"][idx] = (
         q * powerflow.options["BASE"]
-    ) + powerflow.dbarraDF["demanda_reativa"][idx]
+    ) + powerflow.dbarDF["demanda_reativa"][idx]
 
     return q

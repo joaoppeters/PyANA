@@ -26,18 +26,18 @@ def scheduled(
 
     # Potências ativa e reativa especificadas
     if powerflow.solution["method"] != "tPoC":
-        powerflow.psch += powerflow.dbarraDF["potencia_ativa"].to_numpy()
-        powerflow.psch -= powerflow.dbarraDF["demanda_ativa"].to_numpy()
+        powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
+        powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 
-        powerflow.qsch += powerflow.dbarraDF["potencia_reativa"].to_numpy()
-        powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
+        powerflow.qsch += powerflow.dbarDF["potencia_reativa"].to_numpy()
+        powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
 
     elif powerflow.solution["method"] == "tPoC":
         powerflow.psch += powerflow.solution["potencia_ativa"]
-        powerflow.psch -= powerflow.dbarraDF["demanda_ativa"].to_numpy()
+        powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 
         powerflow.qsch += powerflow.solution["potencia_reativa"]
-        powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
+        powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
 
     powerflow.psch /= powerflow.options["BASE"]
     powerflow.qsch /= powerflow.options["BASE"]

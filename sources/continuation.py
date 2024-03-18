@@ -52,10 +52,10 @@ def cpf(
     powerflow.solution.update(
         {
             "method": "CPF",
-            "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
-            "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
-            "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
-            "potencia_reativa": deepcopy(powerflow.dbarraDF["potencia_reativa"]),
+            "demanda_ativa": deepcopy(powerflow.dbarDF["demanda_ativa"]),
+            "demanda_reativa": deepcopy(powerflow.dbarDF["demanda_reativa"]),
+            "potencia_ativa": deepcopy(powerflow.dbarDF["potencia_ativa"]),
+            "potencia_reativa": deepcopy(powerflow.dbarDF["potencia_reativa"]),
             "pmc": False,
             "v2l": False,
             "div": 0,
@@ -91,7 +91,7 @@ def cpf(
 
     # Barra com maior variação de magnitude de tensão - CASO BASE
     powerflow.nodevarvolt = argmax(
-        norm(powerflow.solution["voltage"] - powerflow.dbarraDF["tensao"] * 1e-3)
+        norm(powerflow.solution["voltage"] - powerflow.dbarDF["tensao"] * 1e-3)
     )
 
     # Loop de Previsão - Correção
@@ -1014,17 +1014,17 @@ def heuristics(
         if (
             (
                 powerflow.solution["voltage"][powerflow.slackidx]
-                < (powerflow.dbarraDF.loc[powerflow.slackidx, "tensao"] * 1e-3) - 1e-8
+                < (powerflow.dbarDF.loc[powerflow.slackidx, "tensao"] * 1e-3) - 1e-8
             )
             or (
                 powerflow.solution["voltage"][powerflow.slackidx]
-                > (powerflow.dbarraDF.loc[powerflow.slackidx, "tensao"] * 1e-3) + 1e-8
+                > (powerflow.dbarDF.loc[powerflow.slackidx, "tensao"] * 1e-3) + 1e-8
             )
         ) and (not self.active_heuristic):
 
             # variação de tensão da barra slack
             if (powerflow.name == "ieee118") and (
-                sum(powerflow.dbarraDF.demanda_ativa.to_numpy()) > 5400
+                sum(powerflow.dbarDF.demanda_ativa.to_numpy()) > 5400
             ):
                 pass
 

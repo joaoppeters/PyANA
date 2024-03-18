@@ -52,14 +52,14 @@ class CrossEntropy:
         self.stdd = zeros(powerflow.setup.narea)
         a = 0
         for area in powerflow.setup.areas:
-            self.PA[a] = powerflow.setup.dbarraDF.loc[
-                powerflow.setup.dbarraDF["area"] == area, "demanda_ativa"
+            self.PA[a] = powerflow.setup.dbarDF.loc[
+                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
             ].sum()
-            self.mean[a] = powerflow.setup.dbarraDF.loc[
-                powerflow.setup.dbarraDF["area"] == area, "demanda_ativa"
+            self.mean[a] = powerflow.setup.dbarDF.loc[
+                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
             ].mean()
-            self.stdd[a] = powerflow.setup.dbarraDF.loc[
-                powerflow.setup.dbarraDF["area"] == area, "demanda_ativa"
+            self.stdd[a] = powerflow.setup.dbarDF.loc[
+                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
             ].std()
             a += 1
 

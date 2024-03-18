@@ -37,8 +37,8 @@ def poc(
             "lambda": 0.0,
             "potencia_ativa": deepcopy(powerflow.solution["active"]),
             "potencia_reativa": deepcopy(powerflow.solution["reactive"]),
-            "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
-            "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
+            "demanda_ativa": deepcopy(powerflow.dbarDF["demanda_ativa"]),
+            "demanda_reativa": deepcopy(powerflow.dbarDF["demanda_reativa"]),
             "eigen": 1.0 * (powerflow.mask),
             "sign": -1.0,
         }

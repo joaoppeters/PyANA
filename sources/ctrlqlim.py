@@ -46,7 +46,7 @@ def qlimres(
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Tratamento de limites em barras PV
             if value["tipo"] == 1:
@@ -71,7 +71,7 @@ def qlimres(
                     powerflow.deltaQlim[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.dbarraDF.loc[idx, "tipo"] = -1
+                    powerflow.dbarDF.loc[idx, "tipo"] = -1
 
                 elif (
                     powerflow.solution["qlim_reactive_generation"][idx]
@@ -82,7 +82,7 @@ def qlimres(
                     powerflow.deltaQlim[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.dbarraDF.loc[idx, "tipo"] = -1
+                    powerflow.dbarDF.loc[idx, "tipo"] = -1
 
             # Tratamento de backoff em barras PQV
             elif value["tipo"] == -1:
@@ -103,7 +103,7 @@ def qlimres(
                     powerflow.deltaQlim[nger] += value["tensao"] * (1e-3)
                     powerflow.deltaQlim[nger] -= powerflow.solution["voltage"][idx]
                     powerflow.deltaQlim[nger] *= powerflow.options["BASE"]
-                    powerflow.dbarraDF.loc[idx, "tipo"] = 1
+                    powerflow.dbarDF.loc[idx, "tipo"] = 1
 
                 elif (
                     powerflow.solution["qlim_reactive_generation"][idx]
@@ -242,7 +242,7 @@ def qlimsubjac(
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # dQg/dx
             powerflow.qx[idx, nger] = -1
@@ -312,7 +312,7 @@ def qlimupdt(
     nger = 0
 
     # Atualização da potência reativa gerada
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             powerflow.solution["qlim_reactive_generation"][idx] += (
                 powerflow.statevar[(powerflow.dimpreqlim + nger)]
@@ -329,7 +329,7 @@ def qlimupdt(
                     < value["potencia_reativa_minima"]
                 )
             ):
-                powerflow.dbarraDF.loc[idx, "tipo"] = -1
+                powerflow.dbarDF.loc[idx, "tipo"] = -1
 
             if (value["tipo"] == 2) and (
                 (
@@ -366,7 +366,7 @@ def qlimsch(
 
     # Atualização da potência reativa especificada
     powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
-    powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
+    powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
     powerflow.qsch /= powerflow.options["BASE"]
 
 
@@ -401,7 +401,7 @@ def qlimheur(
     if any(
         (
             powerflow.solution["qlim_reactive_generation"]
-            > powerflow.dbarraDF["potencia_reativa_maxima"].to_numpy()
+            > powerflow.dbarDF["potencia_reativa_maxima"].to_numpy()
         ),
         where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
     ):
@@ -419,15 +419,15 @@ def qlimheur(
         powerflow.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
         if powerflow.options["FULL"]:
-            powerflow.dbarraDF["true_potencia_reativa_minima"] = powerflow.dbarraDF.loc[
+            powerflow.dbarDF["true_potencia_reativa_minima"] = powerflow.dbarDF.loc[
                 :, "potencia_reativa_minima"
             ]
-            for idx, value in powerflow.dbarraDF.iterrows():
+            for idx, value in powerflow.dbarDF.iterrows():
                 if (
                     powerflow.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 ):
-                    powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                    powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
                         value["potencia_reativa_maxima"]
                     )
 

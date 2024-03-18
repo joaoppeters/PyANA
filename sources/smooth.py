@@ -145,8 +145,8 @@ def qlimssmooth(
     """
 
     ## Inicialização
-    if case not in powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]]:
-        powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
+    if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
+        powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
@@ -191,7 +191,7 @@ def qlimssmooth(
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case].append(
+    powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case].append(
         array(
             [
                 powerflow.qlimsch[idx]["ch1"].subs(powerflow.qlimvar),
@@ -219,20 +219,18 @@ def qlimnsmooth(
     """
 
     ## Inicialização
-    if case not in powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]]:
-        powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case] = list()
+    if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
+        powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     qg = powerflow.solution["qlim_reactive_generation"][idx] / powerflow.options["BASE"]
     v = powerflow.solution["voltage"][idx]
-    vr = powerflow.dbarraDF.loc[idx, "tensao"] * 1e-3
+    vr = powerflow.dbarDF.loc[idx, "tensao"] * 1e-3
     qgx = (
-        powerflow.dbarraDF.loc[idx, "potencia_reativa_maxima"]
-        / powerflow.options["BASE"]
+        powerflow.dbarDF.loc[idx, "potencia_reativa_maxima"] / powerflow.options["BASE"]
     )
     qgn = (
-        powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"]
-        / powerflow.options["BASE"]
+        powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] / powerflow.options["BASE"]
     )
 
     ## Limites
@@ -282,7 +280,7 @@ def qlimnsmooth(
     powerflow.deltaQlim[nger] = -Ynormal - Ysuperior - Yinferior
 
     ## Armazenamento de valores das chaves
-    powerflow.qlimkeys[powerflow.dbarraDF.loc[idx, "nome"]][case].append(
+    powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case].append(
         array([ch1, ch2, ch3, ch4])
     )
 
@@ -312,7 +310,7 @@ def svcsQ(
     bmin = Symbol("bmn%s" % idxcer)
     bmax = Symbol("bmx%s" % idxcer)
 
-    vmsch = powerflow.dbarraDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (r * bmin * (vk**2))
     vmmin = vmsch + (r * bmax * (vk**2))
 
@@ -325,12 +323,12 @@ def svcsQ(
             bmin: value["potencia_reativa_minima"]
             / (
                 powerflow.options["BASE"]
-                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             bmax: value["potencia_reativa_maxima"]
             / (
                 powerflow.options["BASE"]
-                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             qgk: powerflow.solution["svc_reactive_generation"][ncer]
             / powerflow.options["BASE"],
@@ -401,8 +399,8 @@ def svcsQsmooth(
     """
 
     ## Inicialização
-    if case not in powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case] = list()
+    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
+        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("vk%s" % idxcer)
@@ -420,12 +418,12 @@ def svcsQsmooth(
             bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
             / (
                 powerflow.options["BASE"]
-                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
             / (
                 powerflow.options["BASE"]
-                * (powerflow.dbarraDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             qgk: powerflow.solution["svc_reactive_generation"][ncer]
             / powerflow.options["BASE"],
@@ -450,7 +448,7 @@ def svcsQsmooth(
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
+    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
                 powerflow.svcsch[idxcer]["ch1"].subs(powerflow.svcvar),
@@ -601,11 +599,11 @@ def svcsIsmooth(
         powerflow.svckeys = dict()
         powerflow.svcdiff = dict()
 
-    if powerflow.svckeys.get(powerflow.dbarraDF.loc[idxcer, "nome"]) is None:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]] = dict()
+    if powerflow.svckeys.get(powerflow.dbarDF.loc[idxcer, "nome"]) is None:
+        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
 
-    if case not in powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case] = list()
+    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
+        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("Vk")
@@ -617,7 +615,7 @@ def svcsIsmooth(
     bmin = Symbol("Bmin")
     bmax = Symbol("Bmax")
 
-    vmsch = powerflow.dbarraDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (r * bmin * vk)
     vmmin = vmsch + (r * bmax * vk)
 
@@ -629,13 +627,13 @@ def svcsIsmooth(
         bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
         / (
             powerflow.options["BASE"]
-            * powerflow.dbarraDF.loc[idxcer, "tensao_base"]
+            * powerflow.dbarDF.loc[idxcer, "tensao_base"]
             * 1e-3
         ),
         bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
         / (
             powerflow.options["BASE"]
-            * powerflow.dbarraDF.loc[idxcer, "tensao_base"]
+            * powerflow.dbarDF.loc[idxcer, "tensao_base"]
             * 1e-3
         ),
     }
@@ -695,7 +693,7 @@ def svcsIsmooth(
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
+    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
                 ch1.subs(powerflow.svcivarkey),
@@ -846,11 +844,11 @@ def svcsAsmooth(
         powerflow.svckeys = dict()
         powerflow.svcdiff = dict()
 
-    if powerflow.svckeys.get(powerflow.dbarraDF.loc[idxcer, "nome"]) is None:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]] = dict()
+    if powerflow.svckeys.get(powerflow.dbarDF.loc[idxcer, "nome"]) is None:
+        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
 
-    if case not in powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case] = list()
+    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
+        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("Vk")
@@ -859,7 +857,7 @@ def svcsAsmooth(
     r = Symbol("r")
     alpha = Symbol("alpha")
 
-    vmsch = powerflow.dbarraDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (
         powerflow.dcerDF.loc[ncer, "droop"]
         * powerflow.alphabeq.subs(alpha, pi / 2)
@@ -1004,7 +1002,7 @@ def svcsAsmooth(
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarraDF.loc[idxcer, "nome"]][case].append(
+    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
                 ch1,
@@ -1029,7 +1027,7 @@ def qlimspop(
     """
 
     ## Inicialização
-    for _, value in powerflow.dbarraDF.iterrows():
+    for _, value in powerflow.dbarDF.iterrows():
         popped = 0
         if value["tipo"] != 0:
             while popped < pop:
@@ -1071,21 +1069,21 @@ def qlimstorage(
         # Loop
         for busname, _ in powerflow.qlimkeys.items():
             # Variáveis
-            busidx = powerflow.dbarraDF.index[
-                powerflow.dbarraDF["nome"] == busname
+            busidx = powerflow.dbarDF.index[
+                powerflow.dbarDF["nome"] == busname
             ].tolist()[0]
 
-            qgx = powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["nome"] == busname,
+            qgx = powerflow.dbarDF.loc[
+                powerflow.dbarDF["nome"] == busname,
                 "potencia_reativa_maxima",
             ].values[0]
-            qgn = powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["nome"] == busname,
+            qgn = powerflow.dbarDF.loc[
+                powerflow.dbarDF["nome"] == busname,
                 "potencia_reativa_minima",
             ].values[0]
             vr = (
-                powerflow.dbarraDF.loc[
-                    powerflow.dbarraDF["nome"] == busname, "tensao"
+                powerflow.dbarDF.loc[
+                    powerflow.dbarDF["nome"] == busname, "tensao"
                 ].values[0]
                 * 1e-3
             )
@@ -1377,21 +1375,21 @@ def svcstorage(
         # Loop
         for busname, _ in powerflow.svckeys.items():
             # Variáveis
-            busidx = powerflow.dbarraDF.index[
-                powerflow.dbarraDF["nome"] == busname
+            busidx = powerflow.dbarDF.index[
+                powerflow.dbarDF["nome"] == busname
             ].tolist()[0]
             busidxcer = powerflow.dcerDF.index[
-                powerflow.dcerDF["barra"] == powerflow.dbarraDF["numero"].iloc[busidx]
+                powerflow.dcerDF["barra"] == powerflow.dbarDF["numero"].iloc[busidx]
             ].tolist()[0]
-            ctrlbusidxcer = powerflow.dbarraDF.index[
-                powerflow.dbarraDF["numero"]
+            ctrlbusidxcer = powerflow.dbarDF.index[
+                powerflow.dbarDF["numero"]
                 == powerflow.dcerDF["barra_controlada"].iloc[busidxcer]
             ].tolist()[0]
 
             bmax = powerflow.dcerDF["potencia_reativa_maxima"].iloc[busidxcer]
             bmin = powerflow.dcerDF["potencia_reativa_minima"].iloc[busidxcer]
             vk = powerflow.solution["voltage"][busidx]
-            vmref = powerflow.dbarraDF["tensao"].iloc[ctrlbusidxcer] * 1e-3
+            vmref = powerflow.dbarDF["tensao"].iloc[ctrlbusidxcer] * 1e-3
             droop = (
                 powerflow.dcerDF["droop"].iloc[busidxcer] / powerflow.options["BASE"]
             )

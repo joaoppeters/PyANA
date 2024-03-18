@@ -70,10 +70,9 @@ def updtpwr(
     S = diag(V) @ conj(I)
 
     powerflow.solution["active"] = (
-        S.real * powerflow.options["BASE"]
-        + powerflow.dbarraDF["demanda_ativa"].tolist()
+        S.real * powerflow.options["BASE"] + powerflow.dbarDF["demanda_ativa"].tolist()
     )
     powerflow.solution["reactive"] = (
         S.imag * powerflow.options["BASE"]
-        + powerflow.dbarraDF["demanda_reativa"].tolist()
+        + powerflow.dbarDF["demanda_reativa"].tolist()
     )

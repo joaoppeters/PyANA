@@ -35,7 +35,7 @@ def freqsol(
 
         # Loop
         nger = 0
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             # Barra tipo VT ou PV
             if value["tipo"] != 0:
                 powerflow.solution["active_generation"][nger] = (
@@ -80,14 +80,14 @@ def freqgerlim(
     # Loop
     for idx, value in powerflow.dgeraDF.iterrows():
         # Armazenamento da barra por ordem de entrada de dados dos geradores
-        powerflow.dgerorder[idx] = powerflow.dbarraDF["nome"][value["numero"] - 1]
+        powerflow.dgerorder[idx] = powerflow.dbarDF["nome"][value["numero"] - 1]
         # Frequência máxima gerador `idx`
         powerflow.freqger["max"][idx] = (
             powerflow.fesp
             + value["estatismo"]
             * 1e-2
             * (
-                powerflow.dbarraDF["potencia_ativa"][value["numero"] - 1]
+                powerflow.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_minima"]
             )
             / powerflow.options["BASE"]
@@ -98,7 +98,7 @@ def freqgerlim(
             + value["estatismo"]
             * 1e-2
             * (
-                powerflow.dbarraDF["potencia_ativa"][value["numero"] - 1]
+                powerflow.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_maxima"]
             )
             / powerflow.options["BASE"]
@@ -124,7 +124,7 @@ def freqsch(
     # Contador de geradores
     nger = 0
 
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Potência ativa gerada
             powerflow.pqsch["potencia_ativa_gerada_especificada"][nger] = value[
@@ -171,7 +171,7 @@ def freqres(
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Cálculo do resíduo DeltaP
             powerflow.deltaP[idx] = powerflow.solution["active_generation"][nger]
@@ -290,7 +290,7 @@ def freqsubjac(
         nare = 0
 
         # Submatrizes PXP QXP YQV YXT
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             if value["tipo"] != 0:
                 powerflow.pxp[idx, nger] = -1.0
                 powerflow.qxq[idx, nger] = -1.0

@@ -24,10 +24,10 @@ def fdata(
     ## ESTADOS SUL DO BRASIL: PR, RS, SC
 
     # SLACKS
-    slack = powerflow.dbarraDF.loc[powerflow.dbarraDF["tipo"] == 2]
+    slack = powerflow.dbarDF.loc[powerflow.dbarDF["tipo"] == 2]
 
     # UHEs
-    uhe = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("UHE")]
+    uhe = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("UHE")]
     uhegbt = uhe["grupo_base_tensao"].unique()
     uhegbtvalue = powerflow.dgbtDF.loc[
         powerflow.dgbtDF["grupo"].isin(uhegbt)
@@ -35,7 +35,7 @@ def fdata(
     uhegbtvalue["quantidade"] = uhe["grupo_base_tensao"].value_counts().to_list()
 
     # UTEs
-    ute = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("UTE")]
+    ute = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("UTE")]
     utegbt = ute["grupo_base_tensao"].unique()
     utegbtvalue = powerflow.dgbtDF.loc[
         powerflow.dgbtDF["grupo"].isin(utegbt)
@@ -43,7 +43,7 @@ def fdata(
     utegbtvalue["quantidade"] = ute["grupo_base_tensao"].value_counts().to_list()
 
     # EOLs
-    eol = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("EOL")]
+    eol = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("EOL")]
     eolgbt = eol["grupo_base_tensao"].unique()
     eolgbtvalue = powerflow.dgbtDF.loc[
         powerflow.dgbtDF["grupo"].isin(eolgbt)
@@ -51,7 +51,7 @@ def fdata(
     eolgbtvalue["quantidade"] = eol["grupo_base_tensao"].value_counts().to_list()
 
     # PCHs
-    pch = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("PCH")]
+    pch = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("PCH")]
     pchgbt = pch["grupo_base_tensao"].unique()
     pchgbtvalue = powerflow.dgbtDF.loc[
         powerflow.dgbtDF["grupo"].isin(pchgbt)
@@ -59,7 +59,7 @@ def fdata(
     pchgbtvalue["quantidade"] = pch["grupo_base_tensao"].value_counts().to_list()
 
     # UFVs
-    ufv = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("UFV")]
+    ufv = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("UFV")]
     ufvgbt = ufv["grupo_base_tensao"].unique()
     ufvgbtvalue = powerflow.dgbtDF.loc[
         powerflow.dgbtDF["grupo"].isin(ufvgbt)
@@ -67,7 +67,7 @@ def fdata(
     ufvgbtvalue["quantidade"] = ufv["grupo_base_tensao"].value_counts().to_list()
 
     # BIOs
-    # bio = powerflow.dbarraDF.loc[powerflow.dbarraDF["nome"].str.contains("BIO")]
+    # bio = powerflow.dbarDF.loc[powerflow.dbarDF["nome"].str.contains("BIO")]
     # biogbt = ufv["grupo_base_tensao"].unique()
     # biogbtvalue = powerflow.dgbtDF.loc[
     #     powerflow.dgbtDF["grupo"].isin(biogbt)
@@ -75,20 +75,20 @@ def fdata(
     # biogbtvalue["quantidade"] = bio["grupo_base_tensao"].value_counts().to_list()
 
     # DGBTs
-    gbt = powerflow.dbarraDF["grupo_base_tensao"].unique()
+    gbt = powerflow.dbarDF["grupo_base_tensao"].unique()
     gbtvalue = powerflow.dgbtDF.loc[powerflow.dgbtDF["grupo"].isin(gbt)].reset_index(
         drop=True
     )
     gbtvalue["quantidade"] = (
-        powerflow.dbarraDF["grupo_base_tensao"].value_counts().to_list()
+        powerflow.dbarDF["grupo_base_tensao"].value_counts().to_list()
     )
 
     # DAREs
-    area = powerflow.dbarraDF["area"].unique()
-    areavalue = powerflow.dareaDF.loc[
-        powerflow.dareaDF["numero"].isin(area)
-    ].reset_index(drop=True)
-    areavalue["quantidade"] = powerflow.dbarraDF["area"].value_counts().to_list()
+    area = powerflow.dbarDF["area"].unique()
+    areavalue = powerflow.dareDF.loc[powerflow.dareDF["numero"].isin(area)].reset_index(
+        drop=True
+    )
+    areavalue["quantidade"] = powerflow.dbarDF["area"].value_counts().to_list()
 
     # 500 kV, 230 kV, 138 kV, 69 kV,ßß
     trans = sorted(
@@ -100,7 +100,7 @@ def fdata(
             "grupo",
         ]
     )
-    transmissao = powerflow.dbarraDF.query("grupo_base_tensao in @trans").reset_index(
+    transmissao = powerflow.dbarDF.query("grupo_base_tensao in @trans").reset_index(
         drop=True
     )
 
@@ -114,7 +114,7 @@ def fdata(
             "grupo",
         ]
     )
-    distribuicao = powerflow.dbarraDF.query("grupo_base_tensao in @dist").reset_index(
+    distribuicao = powerflow.dbarDF.query("grupo_base_tensao in @dist").reset_index(
         drop=True
     )
 
@@ -125,7 +125,7 @@ def fdata(
             "grupo",
         ]
     )
-    ficticia = powerflow.dbarraDF.query("grupo_base_tensao in @fic").reset_index(
+    ficticia = powerflow.dbarDF.query("grupo_base_tensao in @fic").reset_index(
         drop=True
     )
 

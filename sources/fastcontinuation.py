@@ -98,9 +98,9 @@ class FastContinuation:
             "vsch": 0.0,
             "stepmax": 0.0,
             "varstep": "lambda",
-            "potencia_ativa": deepcopy(powerflow.dbarraDF["potencia_ativa"]),
-            "demanda_ativa": deepcopy(powerflow.dbarraDF["demanda_ativa"]),
-            "demanda_reativa": deepcopy(powerflow.dbarraDF["demanda_reativa"]),
+            "potencia_ativa": deepcopy(powerflow.dbarDF["potencia_ativa"]),
+            "demanda_ativa": deepcopy(powerflow.dbarDF["demanda_ativa"]),
+            "demanda_reativa": deepcopy(powerflow.dbarDF["demanda_reativa"]),
         }
 
         # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
@@ -131,7 +131,7 @@ class FastContinuation:
 
         # Barra com maior variação de magnitude de tensão - CASO BASE
         powerflow.nbusnodevarvolt = argmax(
-            abs(powerflow.solution["voltage"] - powerflow.dbarraDF["tensao"] * 1e-3)
+            abs(powerflow.solution["voltage"] - powerflow.dbarDF["tensao"] * 1e-3)
         )
 
         # Loop de Previsão - Correção
@@ -152,7 +152,7 @@ class FastContinuation:
         ## Inicialização
         # Condição de parada do fluxo de potência continuado -> Estável & Instável
         while all((powerflow.solution["voltage"] >= 0.0)) and (
-            sum(powerflow.dbarraDF["demanda_ativa"])
+            sum(powerflow.dbarDF["demanda_ativa"])
             >= 0.99 * sum(powerflow.solution["demanda_ativa"])
         ):
             self.active_heuristic = False
@@ -512,20 +512,20 @@ class FastContinuation:
 
         ## Inicialização
         # Variável
-        self.preincrement = sum(powerflow.dbarraDF["demanda_ativa"].to_numpy())
+        self.preincrement = sum(powerflow.dbarDF["demanda_ativa"].to_numpy())
 
         # Incremento de carga
         for idxinc, valueinc in powerflow.dincDF.iterrows():
             if valueinc["tipo_incremento_1"] == "AREA":
-                for idxbar, valuebar in powerflow.dbarraDF.iterrows():
+                for idxbar, valuebar in powerflow.dbarDF.iterrows():
                     if valuebar["area"] == valueinc["identificacao_incremento_1"]:
                         # Incremento de Carregamento
-                        powerflow.dbarraDF.at[
+                        powerflow.dbarDF.at[
                             idxbar, "demanda_ativa"
                         ] = powerflow.solution["demanda_ativa"][idxbar] * (
                             1 + powerflow.solution["stepsch"]
                         )
-                        powerflow.dbarraDF.at[
+                        powerflow.dbarDF.at[
                             idxbar, "demanda_reativa"
                         ] = powerflow.solution["demanda_reativa"][idxbar] * (
                             1 + powerflow.solution["stepsch"]
@@ -536,27 +536,27 @@ class FastContinuation:
                 idxinc = valueinc["identificacao_incremento_1"] - 1
 
                 # Incremento de Carregamento
-                powerflow.dbarraDF.at[idxinc, "demanda_ativa"] = powerflow.solution[
+                powerflow.dbarDF.at[idxinc, "demanda_ativa"] = powerflow.solution[
                     "demanda_ativa"
                 ][idxinc] * (1 + powerflow.solution["stepsch"])
-                powerflow.dbarraDF.at[idxinc, "demanda_reativa"] = powerflow.solution[
+                powerflow.dbarDF.at[idxinc, "demanda_reativa"] = powerflow.solution[
                     "demanda_reativa"
                 ][idxinc] * (1 + powerflow.solution["stepsch"])
 
         self.deltaincrement = (
-            sum(powerflow.dbarraDF["demanda_ativa"].to_numpy()) - self.preincrement
+            sum(powerflow.dbarDF["demanda_ativa"].to_numpy()) - self.preincrement
         )
 
         # Incremento de geração
         if powerflow.codes["DGER"]:
             for idxger, valueger in powerflow.dgeraDF.iterrows():
                 idx = valueger["numero"] - 1
-                powerflow.dbarraDF.at[idx, "potencia_ativa"] = powerflow.dbarraDF[
+                powerflow.dbarDF.at[idx, "potencia_ativa"] = powerflow.dbarDF[
                     "potencia_ativa"
                 ][idx] + (self.deltaincrement * valueger["fator_participacao"])
 
             powerflow.solution["potencia_ativa"] = deepcopy(
-                powerflow.dbarraDF["potencia_ativa"]
+                powerflow.dbarDF["potencia_ativa"]
             )
 
         # Condição de atingimento do máximo incremento do nível de carregamento
@@ -584,7 +584,7 @@ class FastContinuation:
         }
 
         # Loop
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             # Potência ativa especificada
             powerflow.psch[idx] += value["potencia_ativa"]
             powerflow.psch[idx] -= value["demanda_ativa"]
@@ -624,7 +624,7 @@ class FastContinuation:
         powerflow.deltaY = array([])
 
         # Loop
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             # Tipo PV ou PQ - Resíduo Potência Ativa
             if value["tipo"] != 2:
                 powerflow.deltaP[idx] += powerflow.psch[idx]
@@ -748,7 +748,7 @@ class FastContinuation:
             rowarray[0, (powerflow.nbus + powerflow.nbusnodevarvolt)] = 1
 
         # Demanda
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             if value["tipo"] != 2:
                 colarray[idx, 0] = (
                     powerflow.solution["demanda_ativa"][idx]
@@ -897,11 +897,9 @@ class FastContinuation:
         """
 
         ## Inicialização
-        for idx, value in powerflow.dlinhaDF.iterrows():
-            k = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["de"]][0]
-            m = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["para"]][
-                0
-            ]
+        for idx, value in powerflow.dlinDF.iterrows():
+            k = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][0]
+            m = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][0]
             yline = 1 / ((value["resistencia"] / 100) + 1j * (value["reatancia"] / 100))
 
             # Verifica presença de transformadores com tap != 1.
@@ -1546,19 +1544,19 @@ class FastContinuation:
             if (
                 (
                     powerflow.solution["voltage"][powerflow.nbusslackidx]
-                    < (powerflow.dbarraDF.loc[powerflow.nbusslackidx, "tensao"] * 1e-3)
+                    < (powerflow.dbarDF.loc[powerflow.nbusslackidx, "tensao"] * 1e-3)
                     - 1e-8
                 )
                 or (
                     powerflow.solution["voltage"][powerflow.nbusslackidx]
-                    > (powerflow.dbarraDF.loc[powerflow.nbusslackidx, "tensao"] * 1e-3)
+                    > (powerflow.dbarDF.loc[powerflow.nbusslackidx, "tensao"] * 1e-3)
                     + 1e-8
                 )
             ) and (not self.active_heuristic):
 
                 # variação de tensão da barra slack
                 if (powerflow.name == "ieee118") and (
-                    sum(powerflow.dbarraDF.demanda_ativa.to_numpy()) > 5400
+                    sum(powerflow.dbarDF.demanda_ativa.to_numpy()) > 5400
                 ):
                     pass
 

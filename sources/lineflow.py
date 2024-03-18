@@ -28,9 +28,9 @@ def lineflow(
         }
     )
 
-    for idx, value in powerflow.dlinhaDF.iterrows():
-        k = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["de"]][0]
-        m = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["para"]][0]
+    for idx, value in powerflow.dlinDF.iterrows():
+        k = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][0]
+        m = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][0]
         yline = 1 / ((value["resistencia"] / 100) + 1j * (value["reatancia"] / 100))
 
         # Verifica presença de transformadores com tap != 1.

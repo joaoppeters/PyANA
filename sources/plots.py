@@ -320,7 +320,7 @@ def stateVT(
 
     # Referência
     self.thetaref = powerflow.solution["theta"][
-        powerflow.dbarraDF.loc[powerflow.dbarraDF["tipo"] == 2].index[0]
+        powerflow.dbarDF.loc[powerflow.dbarDF["tipo"] == 2].index[0]
     ]
 
     # Plots
@@ -379,7 +379,7 @@ def stateVT(
     for theta, rotation, label in zip(
         powerflow.solution["theta"],
         degrees(powerflow.solution["theta"]),
-        powerflow.dbarraDF["nome"].values,
+        powerflow.dbarDF["nome"].values,
     ):
         ax.text(
             theta,
@@ -404,7 +404,7 @@ def stateVT(
     ax.set_yticklabels({"1 p.u."})
     ax.legend(
         bars,
-        powerflow.dbarraDF["nome"].values.tolist(),
+        powerflow.dbarDF["nome"].values.tolist(),
         frameon=False,
         loc="upper center",
         bbox_to_anchor=(0.5, -0.025),

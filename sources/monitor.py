@@ -164,9 +164,9 @@ def monitorpflow(
         if rank_active_flow[lin] >= mean_active_flow:
             file.write(
                 "A linha "
-                + str(powerflow.dlinhaDF["de"][lin])
+                + str(powerflow.dlinDF["de"][lin])
                 + " para "
-                + str(powerflow.dlinhaDF["para"][lin])
+                + str(powerflow.dlinDF["para"][lin])
                 + " possui fluxo de potência ativa acima da média do SEP: "
                 + f"{rank_active_flow[lin]:.3f}"
                 + " MW"
@@ -182,9 +182,9 @@ def monitorpflow(
         if powerflow.solution["active_flow_loss"][lin] >= mean_active_flow_loss:
             file.write(
                 "A linha "
-                + str(powerflow.dlinhaDF["de"][lin])
+                + str(powerflow.dlinDF["de"][lin])
                 + " para "
-                + str(powerflow.dlinhaDF["para"][lin])
+                + str(powerflow.dlinDF["para"][lin])
                 + " possui perdas de fluxo de potência ativa acima da média do SEP: "
                 + f'{powerflow.solution["active_flow_loss"][lin]:.3f}'
                 + " MW"
@@ -207,9 +207,9 @@ def monitorpflow(
         if rank_reactive_flow[lin] >= mean_reactive_flow:
             file.write(
                 "A linha "
-                + str(powerflow.dlinhaDF["de"][lin])
+                + str(powerflow.dlinDF["de"][lin])
                 + " para "
-                + str(powerflow.dlinhaDF["para"][lin])
+                + str(powerflow.dlinDF["para"][lin])
                 + " possui fluxo de potência reativa acima da média do SEP: "
                 + f"{rank_reactive_flow[lin]:.3f}"
                 + " MVAr"
@@ -225,9 +225,9 @@ def monitorpflow(
         if powerflow.solution["reactive_flow_loss"][lin] >= mean_reactive_flow_loss:
             file.write(
                 "A linha "
-                + str(powerflow.dlinhaDF["de"][lin])
+                + str(powerflow.dlinDF["de"][lin])
                 + " para "
-                + str(powerflow.dlinhaDF["para"][lin])
+                + str(powerflow.dlinDF["para"][lin])
                 + " possui perdas de fluxo de potência reativa acima da média do SEP: "
                 + f'{powerflow.solution["reactive_flow_loss"][lin]:.3f}'
                 + " MVAr"
@@ -252,7 +252,7 @@ def monitorpgmon(
     file.write("\n\n")
 
     # Loop
-    for item, value in powerflow.dbarraDF.iterrows():
+    for item, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             file.write(
                 "O gerador da "
@@ -281,30 +281,30 @@ def monitorqgmon(
     file.write("\n\n")
     qgmon = 0
     for i in range(0, powerflow.nbus):
-        if powerflow.dbarraDF["tipo"][i] != 0:
+        if powerflow.dbarDF["tipo"][i] != 0:
             if (
                 powerflow.solution["reactive"][i]
-                >= powerflow.dbarraDF["potencia_reativa_maxima"][i]
+                >= powerflow.dbarDF["potencia_reativa_maxima"][i]
             ):
                 file.write(
                     "A geração de potência reativa da "
-                    + powerflow.dbarraDF["nome"][i]
+                    + powerflow.dbarDF["nome"][i]
                     + " violou o limite máximo estabelecido para análise ( {:.2f} >= {} ).".format(
                         powerflow.solution["reactive"][i],
-                        powerflow.dbarraDF["potencia_reativa_maxima"][i],
+                        powerflow.dbarDF["potencia_reativa_maxima"][i],
                     )
                 )
                 file.write("\n")
             elif (
                 powerflow.solution["reactive"][i]
-                <= powerflow.dbarraDF["potencia_reativa_minima"][i]
+                <= powerflow.dbarDF["potencia_reativa_minima"][i]
             ):
                 file.write(
                     "A geração de potência reativa da "
-                    + powerflow.dbarraDF["nome"][i]
+                    + powerflow.dbarDF["nome"][i]
                     + " violou o limite mínimo estabelecido para análise ( {:.2f} <= {} ).".format(
                         powerflow.solution["reactive"][i],
-                        powerflow.dbarraDF["potencia_reativa_minima"][i],
+                        powerflow.dbarDF["potencia_reativa_minima"][i],
                     )
                 )
                 file.write("\n")
@@ -335,7 +335,7 @@ def monitorvmon(
         if powerflow.solution["voltage"][i] >= powerflow.options["vmax"]:
             file.write(
                 "A magnitude de tensão da "
-                + powerflow.dbarraDF["nome"][i]
+                + powerflow.dbarDF["nome"][i]
                 + " violou o limite máximo estabelecido para análise ( {:.3f} >= {} ).".format(
                     powerflow.solution["voltage"][i],
                     powerflow.options["vmax"],
@@ -345,7 +345,7 @@ def monitorvmon(
         elif powerflow.solution["voltage"][i] <= powerflow.options["vmin"]:
             file.write(
                 "A magnitude de tensão da "
-                + powerflow.dbarraDF["nome"][i]
+                + powerflow.dbarDF["nome"][i]
                 + " violou o limite mínimo estabelecido para análise ( {:.3f} <= {} ).".format(
                     powerflow.solution["voltage"][i],
                     powerflow.options["vmin"],

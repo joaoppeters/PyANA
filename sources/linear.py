@@ -65,7 +65,7 @@ class LinearPF:
         )
         self.B = deepcopy(powerflow.nbusbbus.imag)
         for i in range(0, powerflow.nbus):
-            if powerflow.dbarraDF["tipo"][i] == 2:
+            if powerflow.dbarDF["tipo"][i] == 2:
                 powerflow.nbusslackline = i
                 self.B[i, :] = 0
                 self.B[:, i] = 0
@@ -106,7 +106,7 @@ class LinearPF:
         }
 
         # Loop
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             # Potência ativa especificada
             self.sch["potencia_ativa_especificada"][idx] += float(
                 value["potencia_ativa"]
@@ -166,28 +166,28 @@ class LinearPF:
             shape=[powerflow.nbus, powerflow.nbus], dtype="complex_"
         )
         # Linhas de transmissão e transformadores
-        for _, value in powerflow.dlinhaDF.iterrows():
+        for _, value in powerflow.dlinDF.iterrows():
             # Elementos fora da diagonal (elemento série)
             if value["tap"] == 0.0:
                 powerflow.nbusbbus[
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["de"]
-                    ][0],
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["para"]
-                    ][0],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][
+                        0
+                    ],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][
+                        0
+                    ],
                 ] -= (
                     1 / complex(real=0.0, imag=value["reatancia"])
                 ) * powerflow.options[
                     "BASE"
                 ]
                 powerflow.nbusbbus[
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["para"]
-                    ][0],
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["de"]
-                    ][0],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][
+                        0
+                    ],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][
+                        0
+                    ],
                 ] -= (
                     1 / complex(real=0.0, imag=value["reatancia"])
                 ) * powerflow.options[
@@ -195,12 +195,12 @@ class LinearPF:
                 ]
             else:
                 powerflow.nbusbbus[
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["de"]
-                    ][0],
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["para"]
-                    ][0],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][
+                        0
+                    ],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][
+                        0
+                    ],
                 ] -= (
                     (1 / complex(real=0.0, imag=value["reatancia"]))
                     * powerflow.options["BASE"]
@@ -208,12 +208,12 @@ class LinearPF:
                     value["tap"]
                 )
                 powerflow.nbusbbus[
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["para"]
-                    ][0],
-                    powerflow.dbarraDF.index[
-                        powerflow.dbarraDF["numero"] == value["de"]
-                    ][0],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][
+                        0
+                    ],
+                    powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][
+                        0
+                    ],
                 ] -= (
                     (1 / complex(real=0.0, imag=value["reatancia"]))
                     * powerflow.options["BASE"]
@@ -222,7 +222,7 @@ class LinearPF:
                 )
 
         # Bancos de capacitores e reatores
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             powerflow.nbusbbus[idx, idx] = sum(-powerflow.nbusbbus[:, idx])
 
     def update_statevar(
@@ -249,11 +249,9 @@ class LinearPF:
             powerflow: self do arquivo powerflow.py
         """
         ## Inicialização
-        for idx, value in powerflow.dlinhaDF.iterrows():
-            k = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["de"]][0]
-            m = powerflow.dbarraDF.index[powerflow.dbarraDF["numero"] == value["para"]][
-                0
-            ]
+        for idx, value in powerflow.dlinDF.iterrows():
+            k = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][0]
+            m = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][0]
 
             # Potência ativa k -> m
             powerflow.solution["active_flow_F2"][idx] = abs(
@@ -273,4 +271,4 @@ class LinearPF:
         powerflow.solution["active_flow_2F"] *= powerflow.options["BASE"]
 
         powerflow.solution["active"] *= powerflow.options["BASE"]
-        powerflow.solution["active"] += powerflow.dbarraDF["demanda_ativa"].values
+        powerflow.solution["active"] += powerflow.dbarDF["demanda_ativa"].values

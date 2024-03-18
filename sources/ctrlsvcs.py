@@ -39,11 +39,11 @@ def svcsol(
         powerflow.diffyalpha = dict()
 
         for idx, value in powerflow.dcerDF.iterrows():
-            idxcer = powerflow.dbarraDF.index[
-                powerflow.dbarraDF["numero"] == value["barra"]
+            idxcer = powerflow.dbarDF.index[
+                powerflow.dbarDF["numero"] == value["barra"]
             ].tolist()[0]
-            idxctrl = powerflow.dbarraDF.index[
-                powerflow.dbarraDF["numero"] == value["barra_controlada"]
+            idxctrl = powerflow.dbarDF.index[
+                powerflow.dbarDF["numero"] == value["barra_controlada"]
             ].tolist()[0]
 
             powerflow.svckeys[value["nome"]] = dict()
@@ -157,8 +157,8 @@ def alphavar(
     ) / (powerflow.nbusalphaxc * powerflow.nbusalphaxl)
 
     # Potência Reativa
-    idxcer = powerflow.dbarraDF.index[
-        powerflow.dbarraDF["numero"] == powerflow.dcerDF["barra"][0]
+    idxcer = powerflow.dbarDF.index[
+        powerflow.dbarDF["numero"] == powerflow.dcerDF["barra"][0]
     ].tolist()[0]
     powerflow.solution["svc_reactive_generation"][0] = (
         powerflow.solution["voltage"][idxcer] ** 2
@@ -185,11 +185,11 @@ def svcres(
 
     # Loop
     for _, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarraDF.index[
-            powerflow.dbarraDF["numero"] == value["barra"]
+        idxcer = powerflow.dbarDF.index[
+            powerflow.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
-        idxctrl = powerflow.dbarraDF.index[
-            powerflow.dbarraDF["numero"] == value["barra_controlada"]
+        idxctrl = powerflow.dbarDF.index[
+            powerflow.dbarDF["numero"] == value["barra_controlada"]
         ].tolist()[0]
 
         if value["controle"] == "A":
@@ -233,7 +233,7 @@ def svcres(
             )
 
         powerflow.deltaQ[idxcer] -= (
-            powerflow.dbarraDF["demanda_reativa"][idxcer] / powerflow.options["BASE"]
+            powerflow.dbarDF["demanda_reativa"][idxcer] / powerflow.options["BASE"]
         )
         powerflow.deltaQ[idxcer] -= qcalc(
             powerflow,
@@ -280,11 +280,11 @@ def svcsubjac(
 
     # Submatrizes PXP QXP YQV YXT
     for idx, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarraDF.index[
-            powerflow.dbarraDF["numero"] == value["barra"]
+        idxcer = powerflow.dbarDF.index[
+            powerflow.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
-        idxctrl = powerflow.dbarraDF.index[
-            powerflow.dbarraDF["numero"] == value["barra_controlada"]
+        idxctrl = powerflow.dbarDF.index[
+            powerflow.dbarDF["numero"] == value["barra_controlada"]
         ].tolist()[0]
 
         if value["barra"] != value["barra_controlada"]:
@@ -413,8 +413,8 @@ def svcsch(
     # Atualização da potência reativa especificada
     ncer = 0
     for _, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarraDF.index[
-            powerflow.dbarraDF["numero"] == value["barra"]
+        idxcer = powerflow.dbarDF.index[
+            powerflow.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
         if (powerflow.dcerDF["controle"][0] == "A") or (
             powerflow.dcerDF["controle"][0] == "P"

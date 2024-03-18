@@ -6,7 +6,8 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import absolute, concatenate, exp, nan, ones, pi, round
+from copy import deepcopy
+from numpy import concatenate, exp, nan, ones, pi
 from pandas import DataFrame as DF
 
 
@@ -57,6 +58,7 @@ def dagr(
 
     # DataFrame dos Dados de Agregadores Genericos
     powerflow.dagr1DF = DF(data=powerflow.dagr1)
+    powerflow.dagr1 = deepcopy(powerflow.dagr1DF)
     powerflow.dagr1DF = powerflow.dagr1DF.replace(r"^\s*$", "0", regex=True)
     powerflow.dagr1DF = powerflow.dagr1DF.astype(
         {
@@ -66,6 +68,7 @@ def dagr(
     )
 
     powerflow.dagr2DF = DF(data=powerflow.dagr2)
+    powerflow.dagr2 = deepcopy(powerflow.dagr2DF)
     powerflow.dagr2DF = powerflow.dagr2DF.replace(r"^\s*$", "0", regex=True)
     powerflow.dagr2DF = powerflow.dagr2DF.astype(
         {
@@ -116,6 +119,7 @@ def danc(
 
     # DataFrame dos Dados de Alteração do Nível de Carregamento
     powerflow.dancDF = DF(data=powerflow.danc)
+    powerflow.danc = deepcopy(powerflow.dancDF)
     powerflow.dancDF = powerflow.dancDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dancDF = powerflow.dancDF.astype(
         {
@@ -147,19 +151,19 @@ def checkdanc(
     # Variável
     if powerflow.codes["DANC"]:
         for area in powerflow.dancDF["area"].values:
-            for idx, value in powerflow.dbarraDF.iterrows():
+            for idx, value in powerflow.dbarDF.iterrows():
                 if value["area"] == area:
-                    powerflow.dbarraDF.loc[idx, "demanda_ativa"] *= (
+                    powerflow.dbarDF.loc[idx, "demanda_ativa"] *= (
                         1
                         + powerflow.dancDF["fator_carga_ativa"][0]
                         / powerflow.options["BASE"]
                     )
-                    powerflow.dbarraDF.loc[idx, "demanda_reativa"] *= (
+                    powerflow.dbarDF.loc[idx, "demanda_reativa"] *= (
                         1
                         + powerflow.dancDF["fator_carga_reativa"][0]
                         / powerflow.options["BASE"]
                     )
-                    powerflow.dbarraDF.loc[idx, "shunt_barra"] *= (
+                    powerflow.dbarDF.loc[idx, "shunt_barra"] *= (
                         1
                         + powerflow.dancDF["fator_shunt_barra"][0]
                         / powerflow.options["BASE"]
@@ -200,9 +204,10 @@ def dare(
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
-    powerflow.dareaDF = DF(data=powerflow.dare)
-    powerflow.dareaDF = powerflow.dareaDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dareaDF = powerflow.dareaDF.astype(
+    powerflow.dareDF = DF(data=powerflow.dare)
+    powerflow.dare = deepcopy(powerflow.dareDF)
+    powerflow.dareDF = powerflow.dareDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dareDF = powerflow.dareDF.astype(
         {
             "numero": "int",
             "intercambio_liquido": "float",
@@ -211,7 +216,7 @@ def dare(
             "intercambio_maximo": "float",
         }
     )
-    if powerflow.dareaDF.empty:
+    if powerflow.dareDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DARE`!\033[0m"
@@ -220,8 +225,8 @@ def dare(
         powerflow.codes["DARE"] = True
 
         # Numero de Areas
-        powerflow.narea = powerflow.dareaDF.shape
-        powerflow.areas = sorted(powerflow.dareaDF["numero"].unique())
+        powerflow.narea = powerflow.dareDF.shape
+        powerflow.areas = sorted(powerflow.dareDF["numero"].unique())
 
 
 def dbsh(
@@ -318,6 +323,7 @@ def dbsh(
 
     # DataFrame dos Dados de Agregadores Genericos
     powerflow.dbsh1DF = DF(data=powerflow.dbsh1)
+    powerflow.dbsh1 = deepcopy(powerflow.dbsh1DF)
     powerflow.dbsh1DF = powerflow.dbsh1DF.replace(r"^\s*$", "0", regex=True)
     powerflow.dbsh1DF = powerflow.dbsh1DF.astype(
         {
@@ -337,6 +343,7 @@ def dbsh(
     )
 
     powerflow.dbsh2DF = DF(data=powerflow.dbsh2)
+    powerflow.dbsh2 = deepcopy(powerflow.dbsh2DF)
     powerflow.dbsh2DF = powerflow.dbsh2DF.replace(r"^\s*$", "0", regex=True)
     powerflow.dbsh2DF = powerflow.dbsh2DF.astype(
         {
@@ -476,9 +483,10 @@ def dbar(
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Barra
-    powerflow.dbarraDF = DF(data=powerflow.dbar)
-    powerflow.dbarraDF = powerflow.dbarraDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbarraDF = powerflow.dbarraDF.astype(
+    powerflow.dbarDF = DF(data=powerflow.dbar)
+    powerflow.dbar = deepcopy(powerflow.dbarDF)
+    powerflow.dbarDF = powerflow.dbarDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dbarDF = powerflow.dbarDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -512,7 +520,7 @@ def dbar(
             "agreg10": "object",
         }
     )
-    if powerflow.dbarraDF.empty:
+    if powerflow.dbarDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m"
@@ -521,13 +529,13 @@ def dbar(
         powerflow.codes["DBAR"] = True
 
         # Número de barras do sistema
-        powerflow.nbus = len(powerflow.dbarraDF.tipo.values)
+        powerflow.nbus = len(powerflow.dbarDF.tipo.values)
 
         # Barras geradoras: número & máscara
         powerflow.nger = 0
         powerflow.maskP = ones(powerflow.nbus, dtype=bool)
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             if (value["tipo"] == 2) or (value["tipo"] == 1):
                 powerflow.nger += 1
                 powerflow.maskQ[idx] = False
@@ -537,23 +545,23 @@ def dbar(
                     powerflow.slackidx = idx
 
                 elif value["tipo"] == 1:
-                    powerflow.dbarraDF.at[idx, "angulo"] = 0.0
+                    powerflow.dbarDF.at[idx, "angulo"] = 0.0
 
                 if value["potencia_reativa"] > value["potencia_reativa_maxima"]:
-                    powerflow.dbarraDF.at[idx, "potencia_reativa"] = value[
+                    powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_maxima"
                     ]
 
                 elif value["potencia_reativa"] < value["potencia_reativa_minima"]:
-                    powerflow.dbarraDF.at[idx, "potencia_reativa"] = value[
+                    powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_minima"
                     ]
 
             elif value["tipo"] == 0:
-                powerflow.dbarraDF.at[idx, "angulo"] = 0.0
+                powerflow.dbarDF.at[idx, "angulo"] = 0.0
 
             if value["grupo_base_tensao"] == "0":
-                powerflow.dbarraDF.at[idx, "grupo_base_tensao"] = " 0"
+                powerflow.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
 
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
@@ -564,11 +572,11 @@ def dbar(
         powerflow.npq = powerflow.nbus - powerflow.nger
 
         # Tensao Base
-        powerflow.dbarraDF.loc[
-            powerflow.dbarraDF["tensao_base"] == 0.0, "tensao_base"
+        powerflow.dbarDF.loc[
+            powerflow.dbarDF["tensao_base"] == 0.0, "tensao_base"
         ] = 1000.0
 
-        powerflow.dbarraDF = powerflow.dbarraDF.reset_index()
+        powerflow.dbarDF = powerflow.dbarDF.reset_index()
 
 
 def dcer(
@@ -624,6 +632,7 @@ def dcer(
 
     # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
     powerflow.dcerDF = DF(data=powerflow.dcer)
+    powerflow.dcer = deepcopy(powerflow.dcerDF)
     powerflow.dcerDF = powerflow.dcerDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dcerDF = powerflow.dcerDF.astype(
         {
@@ -750,6 +759,7 @@ def dcte(
 
     # DataFrame dos Dados de Constantes
     powerflow.dcteDF = DF(data=powerflow.dcte)
+    powerflow.dcte = deepcopy(powerflow.dcteDF)
     powerflow.dcteDF = powerflow.dcteDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dcteDF = powerflow.dcteDF.astype(
         {
@@ -795,6 +805,7 @@ def dgbt(
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
     powerflow.dgbtDF = DF(data=powerflow.dgbt)
+    powerflow.dgbt = deepcopy(powerflow.dgbtDF)
     powerflow.dgbtDF = powerflow.dgbtDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dgbtDF = powerflow.dgbtDF.astype(
         {
@@ -882,6 +893,7 @@ def dger(
 
     # DataFrame dos Dados de Geradores
     powerflow.dgeraDF = DF(data=powerflow.dger)
+    powerflow.dger = deepcopy(powerflow.dgerDF)
     powerflow.dgeraDF = powerflow.dgeraDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dgeraDF = powerflow.dgeraDF.astype(
         {
@@ -950,6 +962,7 @@ def dglt(
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
     powerflow.dgltDF = DF(data=powerflow.dglt)
+    powerflow.dglt = deepcopy(powerflow.dgltDF)
     powerflow.dgltDF = powerflow.dgltDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dgltDF = powerflow.dgltDF.astype(
         {
@@ -1072,6 +1085,7 @@ def dinc(
 
     # DataFrame dos dados de Incremento do Nível de Carregamento
     powerflow.dincDF = DF(data=powerflow.dinc)
+    powerflow.dincDF = deepcopy(powerflow.dincDF)
     powerflow.dincDF = powerflow.dincDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dincDF = powerflow.dincDF.astype(
         {
@@ -1156,6 +1170,7 @@ def dinj(
 
     # DataFrame dos Dados de Injeção de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
     powerflow.dinjDF = DF(data=powerflow.dinj)
+    powerflow.dinj = deepcopy(powerflow.dinjDF)
     powerflow.dinjDF = powerflow.dinjDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dinjDF = powerflow.dinjDF.astype(
         {
@@ -1176,23 +1191,27 @@ def dinj(
         powerflow.codes["DINJ"] = True
 
         for idx, value in powerflow.dinjDF.iterrows():
-            powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["numero"] == value["numero"], "demanda_ativa"
+            powerflow.dbarDF.loc[
+                powerflow.dbarDF["numero"] == value["numero"], "demanda_ativa"
             ] += -value["injecao_ativa_eq"]
 
-            powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["numero"] == value["numero"], "demanda_reativa"
+            powerflow.dbarDF.loc[
+                powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
             ] += -value["injecao_reativa_eq"]
 
-            powerflow.dbarraDF.loc[
-                powerflow.dbarraDF["numero"] == value["numero"], "shunt_barra"
-            ] += value["shunt_eq"]
+            powerflow.dbarDF.loc[
+                powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
+            ] += round(value["shunt_eq"])
 
             if powerflow.codes["DGER"]:
                 powerflow.dgeraDF.loc[
-                    powerflow.dbarraDF["numero"] == value["numero"],
+                    powerflow.dbarDF["numero"] == value["numero"],
                     "fator_participacao",
                 ] += value["fator_participacao_eq"]
+
+        powerflow.dbar.demanda_ativa = powerflow.dbarDF.demanda_ativa.values
+        powerflow.dbar.demanda_reativa = powerflow.dbarDF.demanda_reativa.values
+        powerflow.dbar.shunt_barra = powerflow.dbarDF.shunt_barra.values
 
 
 def dlin(
@@ -1213,6 +1232,7 @@ def dlin(
     powerflow.dlin["circuito"] = list()
     powerflow.dlin["estado"] = list()
     powerflow.dlin["proprietario"] = list()
+    powerflow.dlin["manobravel"] = list()
     powerflow.dlin["resistencia"] = list()
     powerflow.dlin["reatancia"] = list()
     powerflow.dlin["susceptancia"] = list()
@@ -1255,6 +1275,9 @@ def dlin(
             powerflow.dlin["estado"].append(powerflow.lines[powerflow.linecount][17])
             powerflow.dlin["proprietario"].append(
                 powerflow.lines[powerflow.linecount][18]
+            )
+            powerflow.dlin["manobravel"].append(
+                powerflow.lines[powerflow.linecount][19]
             )
             powerflow.dlin["resistencia"].append(
                 powerflow.lines[powerflow.linecount][20:26]
@@ -1309,9 +1332,10 @@ def dlin(
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Linha
-    powerflow.dlinhaDF = DF(data=powerflow.dlin)
-    powerflow.dlinhaDF = powerflow.dlinhaDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dlinhaDF = powerflow.dlinhaDF.astype(
+    powerflow.dlinDF = DF(data=powerflow.dlin)
+    powerflow.dlin = deepcopy(powerflow.dlinDF)
+    powerflow.dlinDF = powerflow.dlinDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dlinDF = powerflow.dlinDF.astype(
         {
             "de": "int",
             "abertura_de": "object",
@@ -1321,6 +1345,7 @@ def dlin(
             "circuito": "object",
             "estado": "object",
             "proprietario": "object",
+            "manobravel": "object",
             "resistencia": "float",
             "reatancia": "float",
             "susceptancia": "float",
@@ -1345,7 +1370,7 @@ def dlin(
             "agreg10": "object",
         }
     )
-    if powerflow.dlinhaDF.empty:
+    if powerflow.dlinDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m"
@@ -1353,37 +1378,38 @@ def dlin(
     else:
         powerflow.codes["DLIN"] = True
 
-        powerflow.dlinhaDF["resistencia"] *= 1e-2
-        powerflow.dlinhaDF["reatancia"] *= 1e-2
-        powerflow.dlinhaDF["susceptancia"] /= (
+        powerflow.dlinDF["resistencia"] *= 1e-2
+        powerflow.dlinDF["reatancia"] *= 1e-2
+        powerflow.dlinDF["susceptancia"] /= (
             2
             * powerflow.dcteDF.loc[
                 powerflow.dcteDF.constante == "BASE"
             ].valor_constante[0]
         )
 
-        powerflow.dlinhaDF["estado"] = (powerflow.dlinhaDF["estado"] == "0") | (
-            powerflow.dlinhaDF["estado"] == "L"
+        powerflow.dlinDF["estado"] = (powerflow.dlinDF["estado"] == "0") | (
+            powerflow.dlinDF["estado"] == "L"
         )
-        powerflow.dlinhaDF["transf"] = (
-            powerflow.dlinhaDF["tap"] != 0.0
-        ) & powerflow.dlinhaDF["estado"]
+        powerflow.dlinDF["transf"] = (
+            powerflow.dlinDF["tap"] != 0.0
+        ) & powerflow.dlinDF["estado"]
 
-        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"].tolist() + 1 * (
-            ~powerflow.dlinhaDF["transf"].values
+        powerflow.dlinDF["tap"] = powerflow.dlinDF["tap"].tolist() + 1 * (
+            ~powerflow.dlinDF["transf"].values
         )
-        powerflow.dlinhaDF["tap"] = powerflow.dlinhaDF["tap"] * exp(
-            1j * pi / 180 * powerflow.dlinhaDF["tap_defasagem"]
+        powerflow.dlinDF["tapp"] = deepcopy(powerflow.dlinDF["tap"])
+        powerflow.dlinDF["tap"] = powerflow.dlinDF["tap"] * exp(
+            1j * pi / 180 * powerflow.dlinDF["tap_defasagem"]
         )  ## add phase shifters
 
         # Número de barras do sistema
-        powerflow.nlin = len(powerflow.dlinhaDF.de.values)
+        powerflow.nlin = len(powerflow.dlinDF.de.values)
 
-        powerflow.dlinhaDF["de-idx"] = powerflow.dlinhaDF["de"].map(
-            powerflow.dbarraDF.set_index("numero")["index"]
+        powerflow.dlinDF["de-idx"] = powerflow.dlinDF["de"].map(
+            powerflow.dbarDF.set_index("numero")["index"]
         )
-        powerflow.dlinhaDF["para-idx"] = powerflow.dlinhaDF["para"].map(
-            powerflow.dbarraDF.set_index("numero")["index"]
+        powerflow.dlinDF["para-idx"] = powerflow.dlinDF["para"].map(
+            powerflow.dbarDF.set_index("numero")["index"]
         )
 
 
@@ -1467,6 +1493,7 @@ def dopc(
 
     # DataFrame dos Dados de Constantes
     powerflow.dopcDF = DF(data=powerflow.dopc)
+    powerflow.dopc = deepcopy(powerflow.dopcDF)
     powerflow.dopcDF = powerflow.dopcDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dopcDF = powerflow.dopcDF.astype(
         {
@@ -1533,6 +1560,7 @@ def dshl(
 
     # DataFrame dos Dados de Constantes
     powerflow.dshlDF = DF(data=powerflow.dshl)
+    powerflow.dshl = deepcopy(powerflow.dshlDF)
     powerflow.dshlDF = powerflow.dshlDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dshlDF = powerflow.dshlDF.astype(
         {

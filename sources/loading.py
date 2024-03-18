@@ -62,7 +62,7 @@ def var(
         powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])] = array([])
 
     # Loop de Inicialização da Variável
-    for _, value in powerflow.dbarraDF.iterrows():
+    for _, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Variável de Armazenamento de Potência Ativa
             powerflow.pqtv["P-" + value["nome"]] = array([])
@@ -87,48 +87,48 @@ def var(
     for key, item in powerflow.point.items():
         # Condição
         if key == 0:
-            aux = powerflow.dbarraDF["nome"][0]  # usado no loop seguinte
+            aux = powerflow.dbarDF["nome"][0]  # usado no loop seguinte
             for value in range(0, item["voltage"].shape[0]):
-                if powerflow.dbarraDF["tipo"][value] != 0:
+                if powerflow.dbarDF["tipo"][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.pqtv["P-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["P-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]],
                         item["active"][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
                         item["reactive"][value],
                     )
 
-                elif (powerflow.dbarraDF["tipo"][value] == 0) and (
+                elif (powerflow.dbarDF["tipo"][value] == 0) and (
                     ("SVCs" in powerflow.control)
                     and (
-                        powerflow.dbarraDF["numero"][value]
+                        powerflow.dbarDF["numero"][value]
                         in powerflow.dcerDF["barra"].to_numpy()
                     )
                 ):
                     busidxcer = powerflow.dcerDF.index[
                         powerflow.dcerDF["barra"]
-                        == powerflow.dbarraDF["numero"].iloc[value]
+                        == powerflow.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
                         item["svc_reactive_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão
-                powerflow.pqtv["Vcorr-" + powerflow.dbarraDF["nome"][value]] = append(
-                    powerflow.pqtv["Vcorr-" + powerflow.dbarraDF["nome"][value]],
+                powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]] = append(
+                    powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]],
                     item["voltage"][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular
-                powerflow.pqtv["Tcorr-" + powerflow.dbarraDF["nome"][value]] = append(
-                    powerflow.pqtv["Tcorr-" + powerflow.dbarraDF["nome"][value]],
+                powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]] = append(
+                    powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]],
                     degrees(item["theta"][value]),
                 )
 
@@ -158,46 +158,46 @@ def var(
 
         elif key > 0:
             for value in range(0, item["c"]["voltage"].shape[0]):
-                if powerflow.dbarraDF["tipo"][value] != 0:
+                if powerflow.dbarDF["tipo"][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.pqtv["P-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["P-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]],
                         item["c"]["active"][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
                         item["c"]["reactive"][value],
                     )
 
-                elif (powerflow.dbarraDF["tipo"][value] == 0) and (
+                elif (powerflow.dbarDF["tipo"][value] == 0) and (
                     ("SVCs" in powerflow.control)
                     and (
-                        powerflow.dbarraDF["numero"][value]
+                        powerflow.dbarDF["numero"][value]
                         in powerflow.dcerDF["barra"].to_numpy()
                     )
                 ):
                     busidxcer = powerflow.dcerDF.index[
                         powerflow.dcerDF["barra"]
-                        == powerflow.dbarraDF["numero"].iloc[value]
+                        == powerflow.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarraDF["nome"][value]],
+                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
+                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
                         item["c"]["svc_reactive_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão Corrigida
-                powerflow.pqtv["Vcorr-" + powerflow.dbarraDF["nome"][value]] = append(
-                    powerflow.pqtv["Vcorr-" + powerflow.dbarraDF["nome"][value]],
+                powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]] = append(
+                    powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]],
                     item["c"]["voltage"][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular Corrigida
-                powerflow.pqtv["Tcorr-" + powerflow.dbarraDF["nome"][value]] = append(
-                    powerflow.pqtv["Tcorr-" + powerflow.dbarraDF["nome"][value]],
+                powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]] = append(
+                    powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]],
                     degrees(item["c"]["theta"][value]),
                 )
 
@@ -211,7 +211,7 @@ def var(
                         array(
                             [
                                 powerflow.solution["demanda_ativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -221,7 +221,7 @@ def var(
                         array(
                             [
                                 powerflow.solution["demanda_ativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -233,7 +233,7 @@ def var(
                         array(
                             [
                                 powerflow.solution["demanda_reativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -243,7 +243,7 @@ def var(
                         array(
                             [
                                 powerflow.solution["demanda_reativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarraDF.iterrows()
+                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]

@@ -36,21 +36,21 @@ def admit(
 
     ## Inicialização
     Ysr = 1 / vectorize(complex)(
-        powerflow.dlinhaDF["resistencia"], powerflow.dlinhaDF["reatancia"]
+        powerflow.dlinDF["resistencia"], powerflow.dlinDF["reatancia"]
     )
     Ysh = vectorize(complex)(
-        0, powerflow.dbarraDF["shunt_barra"] / powerflow.options["BASE"]
+        0, powerflow.dbarDF["shunt_barra"] / powerflow.options["BASE"]
     )
 
-    Ytt = Ysr + vectorize(complex)(0, powerflow.dlinhaDF["susceptancia"])
+    Ytt = Ysr + vectorize(complex)(0, powerflow.dlinDF["susceptancia"])
     Yff = Ytt / (
-        vectorize(complex)(powerflow.dlinhaDF["tap"] * conj(powerflow.dlinhaDF["tap"]))
+        vectorize(complex)(powerflow.dlinDF["tap"] * conj(powerflow.dlinDF["tap"]))
     )
-    Yft = -Ysr / vectorize(complex)(conj(powerflow.dlinhaDF["tap"]))
-    Ytf = -Ysr / vectorize(complex)(powerflow.dlinhaDF["tap"])
+    Yft = -Ysr / vectorize(complex)(conj(powerflow.dlinDF["tap"]))
+    Ytf = -Ysr / vectorize(complex)(powerflow.dlinDF["tap"])
 
-    f = (powerflow.dlinhaDF["de-idx"]).values
-    t = (powerflow.dlinhaDF["para-idx"]).values
+    f = (powerflow.dlinDF["de-idx"]).values
+    t = (powerflow.dlinDF["para-idx"]).values
 
     ## connection matrix for line & from buses
     Cf = sparse(

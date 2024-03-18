@@ -43,7 +43,7 @@ def qlimssol(
             powerflow.diffyvv = dict()
 
         # Inicialização sigmoides
-        for idx, value in powerflow.dbarraDF.iterrows():
+        for idx, value in powerflow.dbarDF.iterrows():
             if value["tipo"] != 0:
                 qlims(
                     powerflow,
@@ -75,7 +75,7 @@ def qlimsres(
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             qlimssmooth(
                 idx,
@@ -120,7 +120,7 @@ def qlimssubjac(
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             # dQg/dx
             qx[idx, nger] = -1
@@ -222,7 +222,7 @@ def qlimsupdt(
     nger = 0
 
     # Atualização da potência reativa gerada
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             powerflow.solution["qlim_reactive_generation"][idx] += powerflow.solution[
                 "sign"
@@ -254,7 +254,7 @@ def qlimssch(
 
     # Atualização da potência reativa especificada
     powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
-    powerflow.qsch -= powerflow.dbarraDF["demanda_reativa"].to_numpy()
+    powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
     powerflow.qsch /= powerflow.options["BASE"]
 
 
@@ -287,11 +287,11 @@ def qlimsheur(
 
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-    # powerflow.dbarraDF['potencia_reativa_maxima'].to_numpy()
+    # powerflow.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
         (
             powerflow.solution["qlim_reactive_generation"]
-            > powerflow.dbarraDF["potencia_reativa_maxima"].to_numpy()
+            > powerflow.dbarDF["potencia_reativa_maxima"].to_numpy()
             - powerflow.options["SIGQ"]
         ),
         where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
@@ -310,15 +310,15 @@ def qlimsheur(
         powerflow.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
         if powerflow.options["FULL"]:
-            powerflow.dbarraDF["true_potencia_reativa_minima"] = powerflow.dbarraDF.loc[
+            powerflow.dbarDF["true_potencia_reativa_minima"] = powerflow.dbarDF.loc[
                 :, "potencia_reativa_minima"
             ]
-            for idx, value in powerflow.dbarraDF.iterrows():
+            for idx, value in powerflow.dbarDF.iterrows():
                 if (
                     powerflow.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 ) and (value["tipo"] != 0):
-                    powerflow.dbarraDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                    powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
                         value["potencia_reativa_maxima"]
                     )
 
@@ -410,7 +410,7 @@ def qlimssubhess(
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarraDF.iterrows():
+    for idx, value in powerflow.dbarDF.iterrows():
         if value["tipo"] != 0:
             powerflow.hessian[powerflow.Tval + idx, powerflow.Tval + idx] -= (
                 powerflow.qlimdiff[idx][2]

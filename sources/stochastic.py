@@ -22,16 +22,16 @@ def stoch1(
     ## Inicialização
     # random.seed(1)
 
-    ptload0 = sum(array(powerflow.dbarraDF["demanda_ativa"].to_list()) * 1e-2)
-    qtload0 = sum(array(powerflow.dbarraDF["demanda_reativa"].to_list()) * 1e-2)
+    ptload0 = sum(array(powerflow.dbarDF["demanda_ativa"].to_list()) * 1e-2)
+    qtload0 = sum(array(powerflow.dbarDF["demanda_reativa"].to_list()) * 1e-2)
 
-    idx_pload_bus = nonzero(array(powerflow.dbarraDF["demanda_ativa"].to_list()))
-    mup = array(powerflow.dbarraDF["demanda_ativa"].to_list()) * 1e-2
+    idx_pload_bus = nonzero(array(powerflow.dbarDF["demanda_ativa"].to_list()))
+    mup = array(powerflow.dbarDF["demanda_ativa"].to_list()) * 1e-2
     mup = mup[where(mup != 0)]
     sigmap = [10e-2 if all(mup - 0.5 > 0) else (mup * 0.2)]
 
-    idx_qload_bus = nonzero(array(powerflow.dbarraDF["demanda_reativa"].to_list()))
-    muq = array(powerflow.dbarraDF["demanda_reativa"].to_list()) * 1e-2
+    idx_qload_bus = nonzero(array(powerflow.dbarDF["demanda_reativa"].to_list()))
+    muq = array(powerflow.dbarDF["demanda_reativa"].to_list()) * 1e-2
     muq = muq[where(muq != 0)]
     sigmaq = [10e-2 if (all(muq - 0.5 > 0) or all(muq + 0.5 < 0)) else abs(muq * 0.2)]
 
@@ -47,9 +47,7 @@ def stoch1(
 
         ptload = (
             ptload0
-            - array(powerflow.dbarraDF["demanda_ativa"].to_list())[
-                idx_pload_bus[0][idx]
-            ]
+            - array(powerflow.dbarDF["demanda_ativa"].to_list())[idx_pload_bus[0][idx]]
             * 1e-2
             + bins
         )
@@ -66,7 +64,7 @@ def stoch1(
 
         qtload = (
             qtload0
-            - array(powerflow.dbarraDF["demanda_reativa"].to_list())[
+            - array(powerflow.dbarDF["demanda_reativa"].to_list())[
                 idx_qload_bus[0][idx]
             ]
             * 1e-2
@@ -97,8 +95,8 @@ def stoch2(
     ## Inicialização
     random.seed(1)
 
-    ptload0 = sum(array(powerflow.dbarraDF["demanda_ativa"].to_list()) * 1e-2)
-    qtload0 = sum(array(powerflow.dbarraDF["demanda_reativa"].to_list()) * 1e-2)
+    ptload0 = sum(array(powerflow.dbarDF["demanda_ativa"].to_list()) * 1e-2)
+    qtload0 = sum(array(powerflow.dbarDF["demanda_reativa"].to_list()) * 1e-2)
 
     mean = [ptload0, qtload0]
     cov = [[0.1, 0], [0, 0.1]]
