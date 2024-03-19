@@ -78,7 +78,7 @@ def freqgerlim(
     powerflow.dgerorder = dict()
 
     # Loop
-    for idx, value in powerflow.dgeraDF.iterrows():
+    for idx, value in powerflow.dgerDF.iterrows():
         # Armazenamento da barra por ordem de entrada de dados dos geradores
         powerflow.dgerorder[idx] = powerflow.dbarDF["nome"][value["numero"] - 1]
         # Frequência máxima gerador `idx`
@@ -204,7 +204,7 @@ def freqres(
                     nger
                 ]
                 powerflow.deltaPger[nger] -= (
-                    1 / (powerflow.dgeraDF["estatismo"][nger] * 1e-2)
+                    1 / (powerflow.dgerDF["estatismo"][nger] * 1e-2)
                 ) * (powerflow.solution["freq"] - powerflow.fesp)
 
             # Tratamento de limite de magnitude de tensão
@@ -301,7 +301,7 @@ def freqsubjac(
                     powerflow.yxt[nare, idx] = 1.0
 
         # Submatrizes YPP YPX
-        for idx, value in powerflow.dgeraDF.iterrows():
+        for idx, value in powerflow.dgerDF.iterrows():
             powerflow.ypp[idx, idx] = 1.0
             powerflow.ypx[idx, nare] = 1.0 / (value["estatismo"] * 1e-2)
 
@@ -508,7 +508,7 @@ def frequpdt(
     ]
 
     # Tratamento de limite de potência ativa
-    for idx, value in powerflow.dgeraDF.iterrows():
+    for idx, value in powerflow.dgerDF.iterrows():
         if powerflow.solution["freq"] >= powerflow.freqger["max"][idx]:
             powerflow.solution["active_generation"][idx] = (
                 value["potencia_ativa_minima"] / powerflow.options["BASE"]

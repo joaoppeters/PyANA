@@ -549,7 +549,7 @@ class FastContinuation:
 
         # Incremento de geração
         if powerflow.codes["DGER"]:
-            for idxger, valueger in powerflow.dgeraDF.iterrows():
+            for idxger, valueger in powerflow.dgerDF.iterrows():
                 idx = valueger["numero"] - 1
                 powerflow.dbarDF.at[idx, "potencia_ativa"] = powerflow.dbarDF[
                     "potencia_ativa"

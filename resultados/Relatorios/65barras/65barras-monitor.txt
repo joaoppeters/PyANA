@@ -1,0 +1,10 @@
+March 18, 2024
+
+
+relatório de monitoramento do sistema 65barras
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: 
+
+
+fim do relatório de monitoramento do sistema 65barras

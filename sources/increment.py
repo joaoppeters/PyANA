@@ -34,9 +34,6 @@ def increment(
                 "demanda_reativa"
             ][idxbar] * (1 + powerflow.solution["lambda"])
 
-    # Delta incremento de carga
-    deltaincrement = sum(powerflow.dbarDF["demanda_ativa"].to_numpy()) - preincrement
-
 
 def incrementx(
     powerflow,
@@ -80,7 +77,7 @@ def incrementx(
 
     # Incremento de geração
     if powerflow.codes["DGER"]:
-        for _, valueger in powerflow.dgeraDF.iterrows():
+        for _, valueger in powerflow.dgerDF.iterrows():
             idx = valueger["numero"] - 1
             powerflow.dbarDF.at[idx, "potencia_ativa"] = powerflow.dbarDF[
                 "potencia_ativa"

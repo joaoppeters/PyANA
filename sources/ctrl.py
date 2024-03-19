@@ -379,8 +379,8 @@ def controlupdt(
 
 
 def controlcorrsol(
-    case,
     powerflow,
+    case,
 ):
     """atualização das variáveis de controle para a etapa de correção do fluxo de potência continuado
 

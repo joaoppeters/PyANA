@@ -14,7 +14,6 @@ from numpy import (
     argmax,
     array,
     concatenate,
-    hstack,
     max,
     sum,
     zeros,
@@ -23,7 +22,6 @@ from numpy.linalg import lstsq, norm
 
 from convergence import convergence
 from ctrl import (
-    controlcpf,
     controlcorrsol,
     controlupdt,
     controlpop,
@@ -31,11 +29,12 @@ from ctrl import (
     controlheuristics,
 )
 from eigen import eigensens
-from increment import increment
+from increment import incrementx
 from loading import loading
 from matrices import matrices
 from residue import residue
 from scheduled import scheduled
+from update import updtpwr
 
 
 def cpf(
@@ -80,11 +79,11 @@ def cpf(
         **deepcopy(powerflow.solution),
     }
 
-    # Armazenamento de determinante e autovalores
-    eigensens(
-        case,
-        powerflow,
-    )
+    # # Armazenamento de determinante e autovalores
+    # eigensens(
+    #     powerflow,
+    #     case,
+    # )
 
     # Reconfiguração da Máscara - Elimina expansão da matriz Jacobiana
     powerflow.mask = append(powerflow.mask, False)
@@ -166,27 +165,27 @@ def cpfloop(
             case,
         )
 
-        # if (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE") and (case > 0):
-        #     print("Aumento Sistema (%): ", powerflow.solution["step"] * 1e2)
-        #     if powerflow.solution["varstep"] == "volt":
-        #         print(
-        #             "Passo (%): ",
-        #             powerflow.point[case]["c"]["varstep"],
-        #             "  ",
-        #             powerflow.options["ICMV"]
-        #             * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
-        #             * 1e2,
-        #         )
-        #     else:
-        #         print(
-        #             "Passo (%): ",
-        #             powerflow.point[case]["c"]["varstep"],
-        #             "  ",
-        #             powerflow.options["LMBD"]
-        #             * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
-        #             * 1e2,
-        #         )
-        #     print("\n")
+        if (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE") and (case > 0):
+            print("Aumento Sistema (%): ", powerflow.solution["step"] * 1e2)
+            if powerflow.solution["varstep"] == "volt":
+                print(
+                    "Passo (%): ",
+                    powerflow.point[case]["c"]["varstep"],
+                    "  ",
+                    powerflow.options["ICMV"]
+                    * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
+                    * 1e2,
+                )
+            else:
+                print(
+                    "Passo (%): ",
+                    powerflow.point[case]["c"]["varstep"],
+                    "  ",
+                    powerflow.options["LMBD"]
+                    * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["div"])
+                    * 1e2,
+                )
+            print("\n")
 
         # Break Curva de Carregamento - Parte Estável
         if (not powerflow.options["FULL"]) and (powerflow.solution["pmc"]):
@@ -207,7 +206,7 @@ def prediction(
     powerflow.solution["iter"] = 0
 
     # Incremento do Nível de Carregamento e Geração
-    increment(
+    incrementx(
         powerflow,
     )
 
@@ -242,15 +241,15 @@ def prediction(
 
     # Atualização das Variáveis de estado
     update_statevar(
-        case,
         powerflow,
+        case,
         stage="p",
     )
 
     # Armazenamento de Solução
     storage(
-        case,
         powerflow,
+        case,
         stage="p",
     )
 
@@ -267,34 +266,36 @@ def correction(
 
     ## Inicialização
     # Variável para armazenamento de solução
-    powerflow.solution = {
-        "iter": 0,
-        "voltage": deepcopy(powerflow.point[case]["p"]["voltage"]),
-        "theta": deepcopy(powerflow.point[case]["p"]["theta"]),
-        "active": deepcopy(powerflow.point[case]["p"]["active"]),
-        "reactive": deepcopy(powerflow.point[case]["p"]["reactive"]),
-        "freq": deepcopy(powerflow.point[case]["p"]["freq"]),
-        "freqiter": array([]),
-        "convP": array([]),
-        "busP": array([]),
-        "convQ": array([]),
-        "busQ": array([]),
-        "convY": array([]),
-        "busY": array([]),
-        "active_flow_F2": zeros(powerflow.nlin),
-        "reactive_flow_F2": zeros(powerflow.nlin),
-        "active_flow_2F": zeros(powerflow.nlin),
-        "reactive_flow_2F": zeros(powerflow.nlin),
-    }
+    powerflow.solution.update(
+        {
+            "iter": 0,
+            "voltage": deepcopy(powerflow.point[case]["p"]["voltage"]),
+            "theta": deepcopy(powerflow.point[case]["p"]["theta"]),
+            "active": deepcopy(powerflow.point[case]["p"]["active"]),
+            "reactive": deepcopy(powerflow.point[case]["p"]["reactive"]),
+            "freq": deepcopy(powerflow.point[case]["p"]["freq"]),
+            "freqiter": array([]),
+            "convP": array([]),
+            "busP": array([]),
+            "convQ": array([]),
+            "busQ": array([]),
+            "convY": array([]),
+            "busY": array([]),
+            "active_flow_F2": zeros(powerflow.nlin),
+            "reactive_flow_F2": zeros(powerflow.nlin),
+            "active_flow_2F": zeros(powerflow.nlin),
+            "reactive_flow_2F": zeros(powerflow.nlin),
+        }
+    )
 
     # Adição de variáveis de controle na variável de armazenamento de solução
     controlcorrsol(
-        case,
         powerflow,
+        case,
     )
 
     # Incremento do Nível de Carregamento e Geração
-    increment(
+    incrementx(
         powerflow,
     )
 
@@ -305,14 +306,20 @@ def correction(
 
     # Resíduos
     cpfresidue(
-        case,
         powerflow,
+        case,
         stage="c",
     )
 
     while (
-        (max(abs(powerflow.deltaP)) >= powerflow.options["TEPA"])
-        or (max(abs(powerflow.deltaQ)) >= powerflow.options["TEPR"])
+        norm(
+            powerflow.deltaP[powerflow.maskP],
+        )
+        > powerflow.options["TEPA"]
+        or norm(
+            powerflow.deltaQ[powerflow.maskQ],
+        )
+        > powerflow.options["TEPR"]
         or controldelta(
             powerflow,
         )
@@ -341,15 +348,15 @@ def correction(
 
         # Atualização das Variáveis de estado
         update_statevar(
-            case,
             powerflow,
+            case,
             stage="c",
         )
 
         # Condição de variável de passo
         if powerflow.solution["varstep"] == "volt":
             # Incremento do Nível de Carregamento e Geração
-            increment(
+            incrementx(
                 powerflow,
             )
 
@@ -360,8 +367,8 @@ def correction(
 
         # Atualização dos resíduos
         cpfresidue(
-            case,
             powerflow,
+            case,
             stage="c",
         )
 
@@ -402,22 +409,22 @@ def correction(
 
         # Atualização das Variáveis de estado
         update_statevar(
-            case,
             powerflow,
+            case,
             stage="c",
         )
 
         # Atualização dos resíduos
         cpfresidue(
-            case,
             powerflow,
+            case,
             stage="c",
         )
 
         # Armazenamento de Solução
         storage(
-            case,
             powerflow,
+            case,
             stage="c",
         )
 
@@ -426,8 +433,8 @@ def correction(
 
         # Avaliação
         evaluate(
-            case,
             powerflow,
+            case,
         )
 
     # Reconfiguração dos Dados de Solução em Caso de Divergência
@@ -581,8 +588,8 @@ def exjac(
 
 
 def update_statevar(
-    case,
     powerflow,
+    case,
     stage: str = None,
 ):
     """atualização das variáveis de estado
@@ -593,15 +600,17 @@ def update_statevar(
     """
 
     ## Inicialização
-    # configuração completa
-    powerflow.solution["theta"] += powerflow.statevar[0 : (powerflow.nbus)]
+    powerflow.solution["theta"][powerflow.maskP] += (
+        powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
+    )
     # Condição de previsão
     if stage == "p":
         # Condição de variável de passo
         if powerflow.solution["varstep"] == "lambda":
-            powerflow.solution["voltage"] += powerflow.statevar[
-                (powerflow.nbus) : (2 * powerflow.nbus)
-            ]
+            powerflow.solution["voltage"][powerflow.maskQ] += (
+                powerflow.solution["sign"]
+                * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+            )
             powerflow.solution["stepsch"] += powerflow.statevar[-1]
 
         elif powerflow.solution["varstep"] == "volt":
@@ -635,9 +644,10 @@ def update_statevar(
 
     # Condição de correção
     elif stage == "c":
-        powerflow.solution["voltage"] += powerflow.statevar[
-            (powerflow.nbus) : (2 * powerflow.nbus)
-        ]
+        powerflow.solution["voltage"][powerflow.maskQ] += (
+            powerflow.solution["sign"]
+            * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+        )
         powerflow.solution["step"] += powerflow.statevar[-1]
 
         if powerflow.solution["varstep"] == "volt":
@@ -648,11 +658,13 @@ def update_statevar(
         controlupdt(
             powerflow,
         )
+        
+    updtpwr(powerflow,)
 
 
 def storage(
-    case,
     powerflow,
+    case,
     stage: str = None,
 ):
     """armazenamento dos resultados de fluxo de potência continuado
@@ -666,28 +678,22 @@ def storage(
     # Armazenamento das variáveis de solução do fluxo de potência
     powerflow.point[case][stage] = {
         **deepcopy(powerflow.solution),
-        **deepcopy(powerflow.solution),
     }
-
-    if "SVCs" in powerflow.control:
-        powerflow.point[case][stage]["svc_reactive_generation"] = deepcopy(
-            powerflow.solution["svc_reactive_generation"]
-        )
 
     # Armazenamento do índice do barramento com maior variação de magnitude de tensão
     powerflow.point[case]["nodevarvolt"] = deepcopy(powerflow.nodevarvolt)
 
-    # Análise de sensibilidade e armazenamento
-    eigensens(
-        case,
-        powerflow,
-        stage=stage,
-    )
+    # # Análise de sensibilidade e armazenamento
+    # eigensens(
+    #     powerflow,
+    #     case,
+    #     stage=stage,
+    # )
 
 
 def evaluate(
-    case,
     powerflow,
+    case,
 ):
     """avaliação para determinação do passo do fluxo de potência continuado
 

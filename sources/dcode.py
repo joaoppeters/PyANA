@@ -892,10 +892,10 @@ def dger(
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Geradores
-    powerflow.dgeraDF = DF(data=powerflow.dger)
+    powerflow.dgerDF = DF(data=powerflow.dger)
     powerflow.dger = deepcopy(powerflow.dgerDF)
-    powerflow.dgeraDF = powerflow.dgeraDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dgeraDF = powerflow.dgeraDF.astype(
+    powerflow.dgerDF = powerflow.dgerDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dgerDF = powerflow.dgerDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -912,7 +912,7 @@ def dger(
             "estatismo": "float",
         }
     )
-    if powerflow.dgeraDF.empty:  # or (powerflow.dgeraDF.shape[0] != powerflow.nger):
+    if powerflow.dgerDF.empty:  # or (powerflow.dgerDF.shape[0] != powerflow.nger):
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m"
@@ -920,7 +920,7 @@ def dger(
     else:
         powerflow.codes["DGER"] = True
 
-        powerflow.dgeraDF["fator_participacao"] = powerflow.dgeraDF[
+        powerflow.dgerDF["fator_participacao"] = powerflow.dgerDF[
             "fator_participacao"
         ].apply(lambda x: x * 1e-2)
 
@@ -1204,7 +1204,7 @@ def dinj(
             ] += round(value["shunt_eq"])
 
             if powerflow.codes["DGER"]:
-                powerflow.dgeraDF.loc[
+                powerflow.dgerDF.loc[
                     powerflow.dbarDF["numero"] == value["numero"],
                     "fator_participacao",
                 ] += value["fator_participacao_eq"]
