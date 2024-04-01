@@ -1,0 +1,109 @@
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   1
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE PADRAO PARA OPCOES DE EXECUCAO
+
+ X------X------X------X------X------X------X------X------X------X------X
+  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO
+  NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E
+ X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X
+
+  CREM L CTAP L STEP L NEWT L RCVG L RMON L FILE L SUBS L CONT L NOVO L
+  CELO L MFCT L ATCR L INDC L AREG L STPO L VLCR L CPHS L
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   2
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE BARRA CA
+
+ X------------------------X------X---------------X-----X-----------------X-----------X-----X----X-X---------------------------------------X
+            BARRA          BARRA    TENSAO  GRUPO GERMW     GER Mvar         CARGA    SHUNT V CF M     A  G  R  E  G  A  D  O  R  E  S
+  NUM.      NOME     T ARE CONTR.  MOD  ANG B  L  ESPEC  MIN  ESPEC  MAX    MW   Mvar  Mvar  MOD P AG1 AG2 AG3 AG4 AG5 AG6 AG7 AG8 AG9 A10 
+ X-----X------------X-X---X------X----X----X--X--X-----X-----X-----X-----X-----X-----X-----X----X-X---X---X---X---X---X---X---X---X---X---X
+
+  56731 JERUSA-RN034 1 200        1000 28.3  H  0 118.9  -50.   50.   50.                   1000 0  20       2   2   2                     ADIC 
+ *** AVISO INPBUS-0900 ***
+ Geracao de potencia reativa superior ao limite maximo. Modificada para este valor.
+
+  56749 RIOVT2-RN034 1 200        1000 27.1  H  0  332.  -90.   90.   90.                   1000 0  20       2   2   2                     ADIC 
+ *** AVISO INPBUS-0900 ***
+ Geracao de potencia reativa superior ao limite maximo. Modificada para este valor.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   3
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE CIRCUITO CA
+
+ X-----------X------X-------------X------X-----------------------------------X--------------X-------------------------X-----------X---------------------------------------X
+     BARRA     CIRC  RESIST REATAN SUSCEP        TAP            ANG  BARRA        (MVA)            IDENTIFICACAO         ESTADO        A  G  R  E  G  A  D  O  R  E  S
+   DE   PARA  NC E P   (%)    (%)  (Mvar) ESPEC  MIN   MAX  NS DEFAS CONTR. M NORM EMER EQPT    DA BARRA   PARA BARRA   DE   PARA  AG1 AG2 AG3 AG4 AG5 AG6 AG7 AG8 AG9 A10
+ X-----X-----X--X-X-X------X------X------X-----X-----X-----X--X-----X------X-X----X----X----X------------X------------X-----X-----X---X---X---X---X---X---X---X---X---X---X
+    523 56606  1 L F   .404 8.3051                                            8888 8888 8888 JCMR3--RN500 ASABRA-RN034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+    537 58197  1 L F  1.403 21.484                                            8888 8888 8888 S.J.PI-PI500 LGVN-C-PI034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+  12321 56574  1 L F 1.2885 14.832                                            8888 8888 8888 JCMR3--RN230 SCLARA-RN034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   4
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: CREM CTAP STEP NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO VLCR CPHS
+
+ X-----------X------X------X---------------X---------------X---------------X--X-----------------------------------------------------------X
+    ITERACAO          FREQ.  ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV                                                                
+  FC  P  Q  V  M.O.   (Hz)       MW    NUM.     Mvar   NUM.  TENSAO %  NUM. FM  BARRA(B), CIRCUITO(C) E CONVERSOR COM LIMITE VIOLADO       
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X--X-----------------------------------------------------------X
+
+      1  1    0.9933 60.000    564.10   407    165.28   537
+      2  2    1.0000 60.000    587.26   500    183.84   537
+      3  3    1.0000 60.000   1133.78   500    186.97   537
+      4  4    1.0000 60.000    548.53   407    188.19   537
+      5  5    1.0000 60.000     16.31 13008      2.67   564
+ ................................................................
+
+
+
+
+ CONVERGENCIA FINAL
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+      5  5  0 1.0000 60.000      0.00   564      0.04   564     0.000     0
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   5
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE TOTAIS DE AREA
+
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+  AREA  GERACAO  INJ EQV   CARGA   ELO CC    SHUNT   EXPORT   IMPORT   PERDAS
+  NUM.    MW/      MW/      MW/      MW/     Mvar/     MW/      MW/      MW/
+         Mvar     Mvar     Mvar     Mvar     EQUIV    Mvar     Mvar     Mvar
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+
+   200  10167.5  -8844.6    130.9      0.0    -19.9      0.0      0.0   1192.1
+         3320.9-274160.0     59.6      0.0 280680.2      0.0      0.0   2993.0
+
+ TOTAL  10167.5  -8844.6    130.9      0.0    -19.9      0.0      0.0   1192.1
+         3320.9-274160.0     59.6      0.0 280680.2      0.0      0.0   2993.0
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   6
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE BARRAS DE REFERENCIA
+
+ X------------------------X------------X-------X---------------------------X---------------------------X-----------X-----X---X
+            BARRA             TENSAO     GER MW         GER  MW                    GER  Mvar            FATOR PART. BARRA
+  NUM.      NOME     TP ARE  MOD   ANG    BASE    MIN     MAX    ATUAL        MIN     MAX    ATUAL      GER   EQV % CONT. EST
+ X-----X------------X--X---X-----X-----X-------X-------X-------X-----------X-------X-------X-----------X-----X-----X-----X---X
+
+     14 PAF4-1UHE013  2 200 0.972  -0.0   871.6     0.0 99999.0   878.5      -690.0   615.0  -268.8       0.0   0.0    14 LIG

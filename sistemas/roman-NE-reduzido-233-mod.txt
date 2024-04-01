@@ -1,0 +1,245 @@
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   1
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE PADRAO PARA OPCOES DE EXECUCAO
+
+ X------X------X------X------X------X------X------X------X------X------X
+  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO
+  NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E
+ X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X
+
+  CREM L CTAP L STEP L NEWT L RCVG L RMON L FILE L SUBS L CONT L NOVO L
+  CELO L MFCT L ATCR L INDC L AREG L STPO L VLCR L CPHS L
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   2
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE BARRA CA
+
+ X------------------------X------X---------------X-----X-----------------X-----------X-----X----X-X---------------------------------------X
+            BARRA          BARRA    TENSAO  GRUPO GERMW     GER Mvar         CARGA    SHUNT V CF M     A  G  R  E  G  A  D  O  R  E  S
+  NUM.      NOME     T ARE CONTR.  MOD  ANG B  L  ESPEC  MIN  ESPEC  MAX    MW   Mvar  Mvar  MOD P AG1 AG2 AG3 AG4 AG5 AG6 AG7 AG8 AG9 A10 
+ X-----X------------X-X---X------X----X----X--X--X-----X-----X-----X-----X-----X-----X-----X----X-X---X---X---X---X---X---X---X---X---X---X
+
+  56731 JERUSA-RN034 1 200        1000 28.3  H  0 118.9  -50.   50.   50.  -9.3 36.54       1000 0  20       2   2   2                     ADIC 
+ *** AVISO INPBUS-0900 ***
+ Geracao de potencia reativa superior ao limite maximo. Modificada para este valor.
+
+  56749 RIOVT2-RN034 1 200        1000 27.1  H  0  332.  -90.   90.   90.  4.47 41.47       1000 0  20       2   2   2                     ADIC 
+ *** AVISO INPBUS-0900 ***
+ Geracao de potencia reativa superior ao limite maximo. Modificada para este valor.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   3
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ DADOS DE CIRCUITO CA
+
+ X-----------X------X-------------X------X-----------------------------------X--------------X-------------------------X-----------X---------------------------------------X
+     BARRA     CIRC  RESIST REATAN SUSCEP        TAP            ANG  BARRA        (MVA)            IDENTIFICACAO         ESTADO        A  G  R  E  G  A  D  O  R  E  S
+   DE   PARA  NC E P   (%)    (%)  (Mvar) ESPEC  MIN   MAX  NS DEFAS CONTR. M NORM EMER EQPT    DA BARRA   PARA BARRA   DE   PARA  AG1 AG2 AG3 AG4 AG5 AG6 AG7 AG8 AG9 A10
+ X-----X-----X--X-X-X------X------X------X-----X-----X-----X--X-----X------X-X----X----X----X------------X------------X-----X-----X---X---X---X---X---X---X---X---X---X---X
+    523 56606  1 L F   .404 8.3051                                            8888 8888 8888 JCMR3--RN500 ASABRA-RN034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+    537 58197  1 L F  1.403 21.484                                            8888 8888 8888 S.J.PI-PI500 LGVN-C-PI034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+  12321 56574  1 L F 1.2885 14.832                                            8888 8888 8888 JCMR3--RN230 SCLARA-RN034  LIG.  LIG.                                         ADIC 
+ *** AVISO INPLIN-0436 ***
+ Capacidade de emergencia ou de equipamento de carregamento inferior ao permitido e sera fixada no valor da capacidade normal.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   4
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: CREM CTAP STEP NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO VLCR CPHS
+
+ X-----------X------X------X---------------X---------------X---------------X--X-----------------------------------------------------------X
+    ITERACAO          FREQ.  ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV                                                                
+  FC  P  Q  V  M.O.   (Hz)       MW    NUM.     Mvar   NUM.  TENSAO %  NUM. FM  BARRA(B), CIRCUITO(C) E CONVERSOR COM LIMITE VIOLADO       
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X--X-----------------------------------------------------------X
+
+      1  1    1.0000 60.000    563.97   407   1882.44 11582
+      2  2    1.0000 60.000    595.87   537   1609.75 11582
+      3  3    1.0000 60.000   1111.72   500   2111.37 11525
+      4  4    1.0000 60.000    688.00   537   1892.97   537
+      5  5    1.0000 60.000    691.77   537   1907.19   537
+      6  6    1.0000 60.000    698.81   537   1937.57   537
+      7  7    1.0000 60.000    573.57   453   2212.68   537
+      8  8    0.3174 60.000    437.29   539    233.56 12901
+                                                                                326C  326C
+      9  9    0.7273 60.000    462.83   539    331.10   326
+                                                                                238C  329C  565C  565C11225C11225C11225C11561C11561C11561C
+                                                                              12998C
+     10 10    0.9996 60.000    550.01   539   1384.86 11225
+                                                                                584C  584C12201C12201C12201C
+     11 11    0.9962 60.000    568.64   539    851.11   537
+     12 12    0.4169 60.000    607.61   539    139.46 12905
+     13 13    1.0000 60.000    474.13   526    952.14 11525
+                                                                                238C  329C
+     14 14    0.8019 60.000    576.17   539    199.48   538
+                                                                                325C  325C  325C  325C
+     15 15    0.9396 60.000    702.98   539    672.76 11525
+     16 16    0.2631 60.000    560.70   539    240.52 11525
+     17 17    1.0000 60.000    605.79 12905   1246.65 11525
+                                                                                238C  329C
+     18 18    0.3581 60.000    615.43   539    406.97   538
+     19 19    1.0000 60.000    571.28   538   1351.72 11525
+                                                                                238C  329C
+     20 20    0.3783 60.000    625.58   539    509.69   538
+     21 21    1.0000 60.000    573.35 12905   1321.64 11525
+                                                                                238C  329C
+     22 22    0.3772 60.000    624.15   539    497.99   538
+     23 23    1.0000 60.000    571.78   538   1323.82 11525
+                                                                                238C  329C
+     24 24    0.3780 60.000    624.59   539    501.57   538
+     25 25    1.0000 60.000    571.72   538   1322.90 11525
+                                                                                238C  329C
+     26 26    0.3778 60.000    624.51   539    500.91   538
+     27 27    1.0000 60.000    571.73   538   1323.06 11525
+                                                                                238C  329C
+     28 28    0.3778 60.000    624.52   539    501.04   538
+     29 29    1.0000 60.000    571.73   538   1323.03 11525
+                                                                                238C  329C
+     30 30    0.3778 60.000    624.52   539    501.01   538
+     31 31    1.0000 60.000    574.40   538   1323.03 11525
+                                                                                238C  329C
+     32 32    0.3798 60.000    624.81   539    503.61   538
+     33 33    1.0000 60.000    574.38   538   1321.43 11525
+                                                                                238C  329C
+     34 34    0.3990 60.000    634.10   539    493.27 11525
+     35 35    1.0000 60.000    577.05   538   1350.06 11525
+     36 36    0.3949 60.000    634.74   539    474.61 11525
+     37 37    1.0000 60.000    578.57   538   1345.99 11525
+                                                                                238C  329C
+     38 38    0.3957 60.000    636.39   539    477.63 11525
+     39 39    1.0000 60.000    579.40   538   1343.14 11525
+                                                                                238C  329C
+     40 40    0.3955 60.000    636.72   539    475.83 11525
+     41 41    1.0000 60.000    579.61   538   1341.62 11525
+                                                                                238C  329C
+     42 42    0.3955 60.000    636.88   539    475.83 11525
+     43 43    1.0000 60.000    579.76   538   1341.53 11525
+                                                                                238C  329C
+     44 44    0.3955 60.000    636.96   539    475.74 11525
+     45 45    1.0000 60.000    579.78   538   1341.16 11525
+                                                                                238C  329C
+     46 46    0.3955 60.000    636.97   539    475.66 11525
+     47 47    1.0000 60.000    579.80   538   1341.21 11525
+                                                                                238C  329C
+     48 48    0.3955 60.000    636.98   539    475.68 11525
+     49 49    1.0000 60.000    579.80   538   1341.13 11525
+                                                                                238C  329C
+     50 50    0.3955 60.000    636.98   539    475.66 11525
+     51 51    1.0000 60.000    579.81   538   1341.15 11525
+                                                                                238C  329C
+     52 52    0.3955 60.000    636.99   539    475.67 11525
+     53 53    1.0000 60.000    579.81   538   1341.13 11525
+                                                                                238C  329C
+     54 54    0.3955 60.000    636.99   539    475.66 11525
+     55 55    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     56 56    0.3955 60.000    636.99   539    475.66 11525
+     57 57    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     58 58    0.3955 60.000    636.99   539    475.66 11525
+     59 59    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     60 60    0.3955 60.000    636.99   539    475.66 11525
+     61 61    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     62 62    0.3955 60.000    636.99   539    475.66 11525
+     63 63    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     64 64    0.3955 60.000    636.99   539    475.66 11525
+     65 65    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     66 66    0.3955 60.000    636.99   539    475.66 11525
+     67 67    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     68 68    0.3955 60.000    636.99   539    475.66 11525
+     69 69    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     70 70    0.3955 60.000    636.99   539    475.66 11525
+     71 71    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     72 72    0.3955 60.000    636.99   539    475.66 11525
+     73 73    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     74 74    0.3955 60.000    636.99   539    475.66 11525
+     75 75    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     76 76    0.3955 60.000    636.99   539    475.66 11525
+     77 77    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     78 78    0.3955 60.000    636.99   539    475.66 11525
+     79 79    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     80 80    0.3955 60.000    636.99   539    475.66 11525
+     81 81    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     82 82    0.3955 60.000    636.99   539    475.66 11525
+     83 83    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     84 84    0.3955 60.000    636.99   539    475.66 11525
+     85 85    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     86 86    0.3955 60.000    636.99   539    475.66 11525
+     87 87    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     88 88    0.3955 60.000    636.99   539    475.66 11525
+     89 89    1.0000 60.000    579.81   538   1341.14 11525
+                                                                                238C  329C
+     90 90    0.3955 60.000    636.99   539    475.66 11525
+ ................................................................
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   5
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: CREM CTAP STEP NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO VLCR CPHS
+
+
+
+
+
+ ****** SISTEMA CA NAO CONVERGENTE ******
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+     91 91  0 0.3955 60.000    579.81   538   1341.14 11525     0.000     0
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   6
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ *** CASO NAO CONVERGENTE ***
+
+ RELATORIO DE TOTAIS DE AREA
+
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+  AREA  GERACAO  INJ EQV   CARGA   ELO CC    SHUNT   EXPORT   IMPORT   PERDAS
+  NUM.    MW/      MW/      MW/      MW/     Mvar/     MW/      MW/      MW/
+         Mvar     Mvar     Mvar     Mvar     EQUIV    Mvar     Mvar     Mvar
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+
+   200  10781.1      0.0   8976.3      0.0    -19.1      0.0      0.0   1930.9
+        21904.3      0.0   5996.3      0.0      0.0      0.0      0.0  11992.5
+
+ TOTAL  10781.1      0.0   8976.3      0.0    -19.1      0.0      0.0   1930.9
+        21904.3      0.0   5996.3      0.0      0.0      0.0      0.0  11992.5
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   7
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE BARRAS DE REFERENCIA
+
+ X------------------------X------------X-------X---------------------------X---------------------------X-----------X-----X---X
+            BARRA             TENSAO     GER MW         GER  MW                    GER  Mvar            FATOR PART. BARRA
+  NUM.      NOME     TP ARE  MOD   ANG    BASE    MIN     MAX    ATUAL        MIN     MAX    ATUAL      GER   EQV % CONT. EST
+ X-----X------------X--X---X-----X-----X-------X-------X-------X-----------X-------X-------X-----------X-----X-----X-----X---X
+
+     14 PAF4-1UHE013  2 200 0.972  -0.0   871.6     0.0 99999.0  1492.0      -690.0   615.0   271.9       0.0   0.0    14 LIG

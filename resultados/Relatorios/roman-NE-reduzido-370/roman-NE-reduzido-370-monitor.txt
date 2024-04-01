@@ -1,0 +1,10 @@
+March 21, 2024
+
+
+relatório de monitoramento do sistema roman-NE-reduzido-370
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: 
+
+
+fim do relatório de monitoramento do sistema roman-NE-reduzido-370

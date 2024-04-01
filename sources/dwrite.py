@@ -437,6 +437,26 @@ def writedshl(
     file.write("\n")
 
 
+def writedinj(
+    powerflow,
+    file,
+):
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+    ## Inicialização
+    file.write("DINJ")
+    file.write("\n")
+    file.write(format(powerflow.dinj.ruler.iloc[0]))
+    for idx, value in powerflow.dinj.iterrows():
+        file.write(
+            f"{value['numero']:>3} {value['injecao_ativa']:>6} {value['injecao_reativa']:>6} {value['barra']:>5}"
+        )
+        file.write("\n")
+
+
 def writedcer(
     powerflow,
     file,

@@ -1189,19 +1189,23 @@ def dinj(
         )
     else:
         powerflow.codes["DINJ"] = True
+        precision = lambda x: tuple(len(p) for p in str(x).split('.'))
 
         for idx, value in powerflow.dinjDF.iterrows():
+            precision(powerflow.dinj.injecao_ativa_eq[idx])
+            precision(powerflow.dinj.injecao_reativa_eq[idx])
+            precision(powerflow.dinj.shunt_eq[idx])
             powerflow.dbarDF.loc[
                 powerflow.dbarDF["numero"] == value["numero"], "demanda_ativa"
             ] += -value["injecao_ativa_eq"]
 
             powerflow.dbarDF.loc[
                 powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
-            ] += -value["injecao_reativa_eq"]
+            ] += -value["injecao_reativa_eq"] + value["shunt_eq"]
 
-            powerflow.dbarDF.loc[
-                powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
-            ] += round(value["shunt_eq"])
+            # powerflow.dbarDF.loc[
+            #     powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
+            # ] += round(value["shunt_eq"])
 
             if powerflow.codes["DGER"]:
                 powerflow.dgerDF.loc[

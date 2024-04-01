@@ -8,15 +8,15 @@
 
 from powerflow import PowerFlow
 
-system = "ieee14.pwf"
+system = "roman-NE-reduzido-233.pwf"
 
 method = "NEWTON"
-method = "CPF"
+# method = "CPF"
 # method = "CE"
 # method = "STOCH"
 # method = "tPoC"
 # method = "fDATA"
-# method = "PWF"
+method = "PWF"
 
 control = [
     # "CREM",

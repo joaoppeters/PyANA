@@ -17,6 +17,24 @@ def fdata(
     """
 
     ## Inicialização
+    barra500 = powerflow.dbarDF.loc[powerflow.dbarDF["grupo_base_tensao"] == 'B ']
+    lt500 = powerflow.dlinDF.loc[(powerflow.dlinDF["de"].isin(barra500.numero.values)) & (powerflow.dlinDF["para"].isin(barra500.numero.values))]
+
+    print()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ## ESTADOS NORTE DO BRASIL: AC, AP, AM, PA, TO, RO, RR
     ## ESTADOS NORDESTE DO BRASIL: AL, BA, CE, MA, PB, PE, PI, RN, SE
     ## ESTADOS CENTRO-OESTE DO BRASIL: DF, GO, MS, MT
