@@ -1,0 +1,23 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: PyANA
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: João Pedro
+    family-names: Peters Barbosa
+    email: joao.peters@ieee.org
+    orcid: 'https://orcid.org/0000-0002-8777-5866'
+repository-code: 'https://github.com/joaoppeters/PyANA'
+abstract: >-
+  Análise de Sistemas Elétricos de Potência em Regime
+  Permanente - Aplicação de ferramentas de Fluxo de Potência
+  por meio de leitura de dados via arquivos ANAREDE
+license: MIT
+commit: c295f3ff5126624a1d061745d7dbbfa2b14ece63
+version: 1.0.0
+date-released: '2024-04-01'
