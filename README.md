@@ -81,15 +81,15 @@ PowerFlow(
     - **Variável que indica o nome do arquivo do SEP em estudo.**
     - **Utilize arquivos `.pwf` presentes dentro da pasta [sistemas](sistemas).**
 
-- `method: str, obrigatório, valor padrão 'NEWTON'`
+- `method: str, obrigatório, valor padrão 'EXLF'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
-        - `'NEWTON'` - [soluciona o SEP através do método de Newton-Raphson.](docs/Metodos/newton-raphson.md)
+        - `'EXLF'` - [soluciona o SEP através do método de Newton-Raphson.](docs/Metodos/newton-raphson.md)
         <!-- - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md) -->
         - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md)
         <!-- - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
         - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md) -->
-        - `'CPF'` - [soluciona o SEP através do método de Fluxo de Potência Continuado.](docs/Metodos/continuation.md)
+        - `'EXIC'` - [soluciona o SEP através do método de Fluxo de Potência Continuado.](docs/Metodos/continuation.md)
 
 - `control: list, opcional, valor padrão list()`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
@@ -123,7 +123,7 @@ PowerFlow(
 
         - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
-        - `'RCPF'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcontinuado.md)
+        - `'RXIC'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcontinuado.md)
 
 
 > **PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
@@ -135,13 +135,13 @@ from powerflow import PowerFlow
 
 system='ieee14.pwf', 
     
-method='NEWTON', 
+method='EXLF', 
 
 control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVCs', 'VCTRL']
 
 monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON']
     
-report=['RBAR', 'RLIN', 'RGER', 'RSVC', 'RCPF']
+report=['RBAR', 'RLIN', 'RGER', 'RSVC', 'RXIC']
 
 PowerFlow(
     system=system, 

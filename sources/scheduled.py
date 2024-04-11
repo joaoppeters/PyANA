@@ -25,14 +25,14 @@ def scheduled(
     powerflow.qsch = zeros(powerflow.nbus)
 
     # Potências ativa e reativa especificadas
-    if powerflow.solution["method"] != "tPoC":
+    if powerflow.solution["method"] != "EXPC":
         powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 
         powerflow.qsch += powerflow.dbarDF["potencia_reativa"].to_numpy()
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
 
-    elif powerflow.solution["method"] == "tPoC":
+    elif powerflow.solution["method"] == "EXPC":
         powerflow.psch += powerflow.solution["potencia_ativa"]
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 

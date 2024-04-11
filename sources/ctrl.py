@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import any, append, array, ones, zeros
+from numpy import any, array
 from numpy.linalg import norm
 
 from ctrlfreq import *
@@ -317,10 +317,10 @@ def controljac(
     powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
 
     # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "tPoC"):
+    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "EXPC"):
         powerflow.maskctrlcount += 1
 
-    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "tPoC"):
+    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "EXPC"):
         powerflow.maskctrlcount += 1
 
 

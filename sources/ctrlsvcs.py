@@ -467,7 +467,7 @@ def svcheur(
         (not powerflow.solution["pmc"])
         and (powerflow.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"]))
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
             <= powerflow.options["icmn"]
         )
     ):

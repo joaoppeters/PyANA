@@ -17,7 +17,7 @@ class PowerFlow:
     def __init__(
         self,
         system: str = "",
-        method: str = "NEWTON",
+        method: str = "EXLF",
         control: list = list(),
         monitor: list = list(),
         report: list = list(),
@@ -26,7 +26,7 @@ class PowerFlow:
 
         Parameters:
             system: str, optional, default ''
-            method: str, optional, default 'NEWTON'
+            method: str, optional, default 'EXLF'
             control: list, optional, default None
             monitor: list, optional, default None
             report: list, optional, default None

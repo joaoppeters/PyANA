@@ -108,7 +108,7 @@ def rheader(
     file.write("\n")
     file.write("solução do fluxo de potência via método ")
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == "NEWTON":
+    if powerflow.method == "EXLF":
         file.write("newton-raphson")
     # Chamada específica método de Gauss-Seidel
     elif powerflow.method == "GAUSS":
@@ -123,7 +123,7 @@ def rheader(
     elif powerflow.method == "fDECOUP":
         file.write("desacoplado rápido")
     # Chamada específica método Continuado
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "EXIC":
         file.write("do fluxo de potência continuado")
     file.write("\n\n")
     file.write("opções de monitoramento ativadas: ")

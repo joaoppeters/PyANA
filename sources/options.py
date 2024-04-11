@@ -79,6 +79,7 @@ def options(
         "VPVT": 2e-2,  # critério de variação de tensão para a terminação da rede de simulação - primeiro critério
         "VPVF": 5e-2,  # critério de variação de fluxo em função do carregamento nominal para a determinação da rede de simulação - primeiro critério
         "VPMF": 10e-2,  # critério de variação de fluxo para a determinação da rede de simulação - primeiro critério
+        # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
         "FBASE": 60.0,  # frequencia base do sep (criado por JP)
         "SIGA": 1e-6,  # tolerância da chave sigmóide SVC-A (criado por JP)
         "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e SVC-I, QLIM (criado por JP)

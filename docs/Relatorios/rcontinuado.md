@@ -1,1 +1,1 @@
-# Relatório de Fluxo de Potência Continuado - `'RCPF'`
+# Relatório de Fluxo de Potência Continuado - `'RXIC'`

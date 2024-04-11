@@ -36,7 +36,7 @@ def qlimssol(
         powerflow.diffyqg = dict()
         powerflow.diffyv = dict()
 
-        if powerflow.method == "tPoC":
+        if powerflow.method == "EXPC":
             powerflow.diffyqgqg = dict()
             powerflow.diffyvqg = dict()
             powerflow.diffyqgv = dict()
@@ -303,7 +303,7 @@ def qlimsheur(
         (not powerflow.solution["pmc"])
         and (powerflow.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["div"]))
+            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
             <= powerflow.options["ICMN"]
         )
     ):

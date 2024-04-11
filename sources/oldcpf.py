@@ -178,7 +178,7 @@ class Continuation:
         Jacobi(powerflow,)
 
         # Expansão Jacobiana
-        self.exjac(powerflow,)
+        self.exicjacobian(powerflow,)
 
         # Variáveis de estado
         powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
@@ -248,7 +248,7 @@ class Continuation:
             Jacobi(powerflow,)
 
             # Expansão Jacobiana
-            self.exjac(powerflow,)
+            self.exicjacobian(powerflow,)
 
             # Variáveis de estado
             powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
@@ -285,7 +285,7 @@ class Continuation:
             Jacobi(powerflow,)
 
             # Expansão Jacobiana
-            self.exjac(powerflow,)
+            self.exicjacobian(powerflow,)
 
             # Variáveis de estado
             powerflow.setup.statevar = solve(powerflow.setup.jacob, powerflow.setup.deltaPQY)
@@ -306,7 +306,7 @@ class Continuation:
             powerflow.sol['convergence'] = 'SISTEMA CONVERGENTE'
 
             # Avaliação
-            self.evaluate(powerflow,)
+            self.exicevaluate(powerflow,)
 
             # Heurísticas
             self.heuristics(powerflow,)
@@ -524,7 +524,7 @@ class Continuation:
 
 
 
-    def exjac(
+    def exicjacobian(
         self,
         powerflow,
     ):
@@ -836,7 +836,7 @@ class Continuation:
 
 
 
-    def evaluate(
+    def exicevaluate(
         self,
         powerflow,
     ):

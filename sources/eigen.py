@@ -135,7 +135,7 @@ def eigensens(
         # self.active_heuristic = True
 
         # Reconfiguração do caso
-        auxdiv = deepcopy(powerflow.solution["div"]) + 1
+        auxdiv = deepcopy(powerflow.solution["ndiv"]) + 1
         case -= 1
         controlpop(
             powerflow,
@@ -161,7 +161,7 @@ def eigensens(
             key: deepcopy(powerflow.point[case]["c"][key])
             for key in powerflow.solution.keys() & cpfkeys
         }
-        powerflow.solution["div"] = auxdiv
+        powerflow.solution["ndiv"] = auxdiv
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
         powerflow.solution["voltage"] = deepcopy(powerflow.point[case]["c"]["voltage"])

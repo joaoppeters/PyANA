@@ -143,7 +143,7 @@ def smoothfolder(
 
     ## Inicialização
     # Condição de método
-    if powerflow.method == "NEWTON":
+    if powerflow.method == "EXLF":
         powerflow.dirsmooth = powerflow.dirResultados + "Smooth/"
         if exists(powerflow.dirsmooth) is False:
             mkdir(powerflow.dirsmooth)
@@ -152,7 +152,7 @@ def smoothfolder(
         if exists(powerflow.dirsmoothsys) is False:
             mkdir(powerflow.dirsmoothsys)
 
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "EXIC":
         powerflow.dirsmoothsys = powerflow.dircpfsys + "smooth/"
         if exists(powerflow.dirsmoothsys) is False:
             mkdir(powerflow.dirsmoothsys)

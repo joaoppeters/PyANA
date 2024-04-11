@@ -6,7 +6,6 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-import time
 from os.path import dirname, exists, realpath
 from os import mkdir
 
@@ -34,11 +33,9 @@ def setup(
         )
 
         # Classe para leitura de arquivo .pwf
-        t = time.process_time()
         pwf(
             powerflow,
         )
-        print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
 
         # Classe para determinação dos valores padrão das variáveis de tolerância
         options(

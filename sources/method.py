@@ -18,7 +18,7 @@ def methodo(
 
     ## Inicialização
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == "NEWTON":
+    if powerflow.method == "EXLF":
         from admittance import admit
         from monitor import monitorfile
         from newtonraphson import newton
@@ -85,9 +85,9 @@ def methodo(
         pass
 
     # Chamada específica método Continuado
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "EXIC":
         from admittance import admit
-        from continuation import cpf
+        from continuation import prediction_correction
         from newtonraphson import newton
         from report import reportfile
 
@@ -99,7 +99,7 @@ def methodo(
             powerflow,
         )
 
-        cpf(
+        prediction_correction(
             powerflow,
         )
 
@@ -121,7 +121,7 @@ def methodo(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.method == "STOCH":
+    elif powerflow.method == "EXSC":
         from admittance import admit
         from stochastic import stoch1, stoch2
 
@@ -138,7 +138,7 @@ def methodo(
         )
 
     # Chamada especifica metodo direto (Canizares, 1993)
-    elif powerflow.method == "tPoC":
+    elif powerflow.method == "EXPC":
         from admittance import admit
         from directmethod import poc
         from newtonraphson import newton
@@ -161,7 +161,7 @@ def methodo(
         )
 
     #
-    elif powerflow.method == "fDATA":
+    elif powerflow.method == "EXDT":
         from fdata import fdata
 
         fdata(

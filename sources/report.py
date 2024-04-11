@@ -64,7 +64,7 @@ def reportfile(
         powerflow,
     )
 
-    if powerflow.method != "tPoC":
+    if powerflow.method != "EXPC":
         # Relatorio de Convergencia
         RCONV(
             file,
@@ -112,8 +112,8 @@ def reportfile(
                 )
 
     # relatorio de fluxo de potencia continuado
-    if powerflow.method == "CPF":
-        RCPF(
+    if powerflow.method == "EXIC":
+        RXIC(
             file,
             powerflow,
         )
@@ -148,7 +148,7 @@ def rheader(
     file.write("\n\n")
     file.write("solucao do fluxo de potencia via metodo ")
     # Chamada específica metodo de Newton-Raphson Nao-Linear
-    if powerflow.method == "NEWTON":
+    if powerflow.method == "EXLF":
         file.write("newton-raphson")
     # Chamada específica metodo de Gauss-Seidel
     elif powerflow.method == "GAUSS":
@@ -163,10 +163,10 @@ def rheader(
     elif powerflow.method == "fDECOUP":
         file.write("desacoplado rapido")
     # Chamada específica metodo Continuado
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "EXIC":
         file.write("do fluxo de potencia continuado")
     # Chamada específica metodo direto (Canizares, 1993)
-    elif powerflow.method == "tPoC":
+    elif powerflow.method == "EXPC":
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")
@@ -206,14 +206,14 @@ def RCONV(
         )
         file.write("\n")
         file.write("-" * 71)
-        if powerflow.method != "CPF":
+        if powerflow.method != "EXIC":
             for i in range(0, powerflow.solution["iter"]):
                 file.write("\n")
                 file.write(
                     f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i]:^6.3f} | {powerflow.solution['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busP'][i]]:^5d} | {powerflow.solution['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busQ'][i]]:^5d} | {powerflow.solution['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busY'][i]]:^5d} |"
                 )
 
-        elif powerflow.method == "CPF":
+        elif powerflow.method == "EXIC":
             for i in range(0, powerflow.point[0]["iter"]):
                 file.write("\n")
                 file.write(
@@ -237,14 +237,14 @@ def RCONV(
     file.write("\n")
     file.write("-" * 71)
     file.write("\n")
-    if (powerflow.method != "CPF") and (
+    if (powerflow.method != "EXIC") and (
         powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
             f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i+1]:^6.3f} | {powerflow.solution['convP'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busP'][i+1]]:^5d} | {powerflow.solution['convQ'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busQ'][i+1]]:^5d} | {powerflow.solution['convY'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busY'][i+1]]:^5d} |"
         )
 
-    elif (powerflow.method == "CPF") and (
+    elif (powerflow.method == "EXIC") and (
         powerflow.point[0]["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
@@ -295,12 +295,12 @@ def RBAR(
                     file.write("-" * 106)
 
                 file.write("\n")
-                if powerflow.method != "CPF":
+                if powerflow.method != "EXIC":
                     file.write(
                         f"| {powerflow.dbarDF['numero'][i]:^3d} | {powerflow.dbarDF['nome'][i]:^12} | {powerflow.dbarDF['tipo'][i]:^3} |  {powerflow.solution['voltage'][i]:^8.3f} | {degrees(powerflow.solution['theta'][i]):^+8.2f} | {powerflow.solution['active'][i]:^8.3f} | {powerflow.solution['reactive'][i]:^8.3f} | {powerflow.dbarDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarDF['shunt_barra'][i]:^8.3f} |"
                     )
 
-                elif powerflow.method == "CPF":
+                elif powerflow.method == "EXIC":
                     file.write(
                         f"| {powerflow.dbarDF['numero'][i]:^3d} | {powerflow.dbarDF['nome'][i]:^12} | {powerflow.dbarDF['tipo'][i]:^3} |  {powerflow.point[0]['voltage'][i]:^8.3f} | {degrees(powerflow.point[0]['theta'][i]):^+8.2f} | {powerflow.point[0]['active'][i]:^8.3f} | {powerflow.point[0]['reactive'][i]:^8.3f} | {powerflow.dbarDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarDF['shunt_barra'][i]:^8.3f} |"
                     )
@@ -346,12 +346,12 @@ def RLIN(
             file.write("-" * 102)
 
         file.write("\n")
-        if powerflow.method != "CPF":
+        if powerflow.method != "EXIC":
             file.write(
                 f"| {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['de'][i]][0]]:^12} | {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['para'][i]][0]]:^12} | {powerflow.solution['active_flow_F2'][i]:^+10.3f} | {powerflow.solution['reactive_flow_F2'][i]:^+10.3f} | {powerflow.solution['active_flow_2F'][i]:^+10.3f} | {powerflow.solution['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
             )
 
-        elif powerflow.method == "CPF":
+        elif powerflow.method == "EXIC":
             file.write(
                 f"| {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['de'][i]][0]]:^12} | {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['para'][i]][0]]:^12} | {powerflow.point[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.point[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.point[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.point[0]['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
             )
@@ -369,24 +369,24 @@ def RLIN(
         file.write("\n")
     file.write("-" * 45)
     file.write("\n")
-    if powerflow.method != "CPF":
+    if powerflow.method != "EXIC":
         file.write(
             f"| {sum(powerflow.solution['active']):^+8.3f} | {sum(powerflow.dbarDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
         )
 
-    elif powerflow.method == "CPF":
+    elif powerflow.method == "EXIC":
         file.write(
             f"| {sum(powerflow.point[0]['active']):^+8.3f} | {sum(powerflow.dbarDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
         )
 
     file.write("\n")
     if powerflow.method != "LINEAR":
-        if powerflow.method != "CPF":
+        if powerflow.method != "EXIC":
             file.write(
                 f"| {sum(powerflow.solution['reactive']):^+8.3f} | {sum(powerflow.dbarDF['demanda_reativa']):^+8.3f} | {sum((powerflow.solution['voltage']**2)*powerflow.dbarDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['reactive_flow_loss']):^8.3f} |"
             )
 
-        elif powerflow.method == "CPF":
+        elif powerflow.method == "EXIC":
             file.write(
                 f"| {sum(powerflow.point[0]['reactive']):^+8.3f} | {sum(powerflow.dbarDF['demanda_reativa']):^+8.3f} | {sum((powerflow.point[0]['voltage']**2)*powerflow.dbarDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['arective_flow_loss']):^8.3f} |"
             )
@@ -532,7 +532,7 @@ def RSVC(
     file.write("\n\n\n\n")
 
 
-def RCPF(
+def RXIC(
     file,
     powerflow,
 ):

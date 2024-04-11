@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "ieee57.pwf"
+system = "ieee14.pwf"
 
-method = "NEWTON"
-# method = "CPF"
-# method = "CE"
-# method = "STOCH"
-method = "tPoC"
-# method = "fDATA"
+method = "EXLF"
+method = "EXIC"
+# method = "EXCE"
+# method = "EXSC"
+# method = "EXPC"
+# method = "EXDT"
 # method = "PWF"
 
 control = [
@@ -24,7 +24,7 @@ control = [
     # "CTAPd",
     # "FREQ",
     # "QLIM",
-    "QLIMs",
+    # "QLIMs",
     # "SVCs",
 ]
 

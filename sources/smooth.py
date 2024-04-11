@@ -122,7 +122,7 @@ def qlims(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "tPoC":
+    if powerflow.method == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -162,7 +162,7 @@ def qlimssmooth(
     )
 
     # Expressão Geral
-    if powerflow.solution["method"] != "tPoC":
+    if powerflow.solution["method"] != "EXPC":
         powerflow.qlimdiff[idx] = array(
             [
                 powerflow.diffyv[idx].subs(powerflow.qlimvar),
@@ -566,7 +566,7 @@ def svcsI(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "tPoC":
+    if powerflow.method == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -811,7 +811,7 @@ def svcsA(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "tPoC":
+    if powerflow.method == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -1051,7 +1051,7 @@ def qlimstorage(
     )
 
     # Condição de método
-    if powerflow.method == "CPF":
+    if powerflow.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
         for key, value in powerflow.point.items():
             if key == 0:
@@ -1355,7 +1355,7 @@ def svcstorage(
     )
 
     # Condição de método
-    if powerflow.method == "CPF":
+    if powerflow.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
         for key, value in powerflow.point.items():
             if key == 0:

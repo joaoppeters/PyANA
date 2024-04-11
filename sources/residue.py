@@ -44,7 +44,7 @@ def residue(
     else:
         powerflow.deltaY = array([0])
 
-    if powerflow.solution["method"] == "CPF":
+    if powerflow.solution["method"] == "EXIC":
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, array([0])), axis=0)
 
     powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]

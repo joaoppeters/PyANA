@@ -31,7 +31,7 @@ def poc(
     # Variável para armazenamento de solução
     powerflow.solution.update(
         {
-            "method": "tPoC",
+            "method": "EXPC",
             "iter": 0,
             "freq": 1.0,
             "lambda": 0.0,

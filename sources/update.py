@@ -40,7 +40,7 @@ def updtstt(
             powerflow,
         )
 
-    if powerflow.solution["method"] == "tPoC":
+    if powerflow.solution["method"] == "EXPC":
         powerflow.solution["lambda"] += (
             powerflow.solution["sign"]
             * powerflow.statevar[

@@ -39,7 +39,7 @@ def matrices(
             powerflow,
         )
 
-    if powerflow.solution["method"] == "tPoC":
+    if powerflow.solution["method"] == "EXPC":
         # Vetor Jacobiana-Lambda
         powerflow.G = powerflow.jacobian.T @ powerflow.solution["eigen"][
             powerflow.mask
