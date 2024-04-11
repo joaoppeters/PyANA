@@ -1,0 +1,780 @@
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   1
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+      1 Riversde--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      6 Kankakee--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      8 Olive-----V1
+   -9999   -28.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     10 Breed-----V1
+   -9999   450.  99999 10.2                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   2
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     12 TwinBrch--V2
+   -9999    85.  99999 1.94                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     15 FtWayne---V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     18 McKinley--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     19 Lincoln---V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   3
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     25 TannrsCk--V2
+   -9999   220.  99999 5.02                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     26 TannrsCk--V1
+   -9999   314.  99999 7.17                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     31 DeerCrk---V1
+   -9999     7.  99999 0.16                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     32 Delaware--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   4
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     34 Rockhill--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     36 Sterling--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     46 W.Lancst--V2
+   -9999    19.  99999 0.43                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     49 Philo-----V2
+   -9999   204.  99999 4.66                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   5
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     54 Torrey----V2
+   -9999    48.  99999 1.09                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     55 Wagenhls--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     56 Sunnysde--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     59 Tidd------V2
+   -9999   155.  99999 3.54                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   6
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     61 W.Kammer--V2
+   -9999   160.  99999 3.65                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     62 Natrium---V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     65 Muskngum--V1
+   -9999   391.  99999 8.93                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     66 Muskngum--V2
+   -9999   392.  99999 8.95                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   7
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     69 Sporn-----V2
+   -9999  516.4  99999 11.8                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     70 Portsmth--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     74 Bellefnt--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     76 Darrah----V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   8
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     77 Turner----V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     80 CabinCrk--V2
+   -9999   477.  99999 10.9                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     85 BeaverCk--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     87 Pinevlle--V3
+   -9999     4.  99999 0.09                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.   9
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+     89 ClinchRv--V2
+   -9999   607.  99999 13.8                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+     92 Saltvlle--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+    100 GlenLyn---V2
+   -9999   252.  99999 5.75                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+    103 Claytor---V2
+   -9999    40.  99999 0.91                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  10
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+    104 Hancock---V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+    105 Roanoke---V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+    110 Fieldale--V2
+   -9999     0.  99999 0.00                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+    111 DanRiver--V2
+   -9999    36.  99999 0.82                                           
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  11
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: QLIM BPSI NEWT RCVG RMON
+
+ X-----------X------X------X---------------X---------------X---------------X--X-----------------------------------------------------------X
+    ITERACAO          FREQ.  ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV                                                                
+  FC  P  Q  V  M.O.   (Hz)       MW    NUM.     Mvar   NUM.  TENSAO %  NUM. FM  BARRA(B), CIRCUITO(C) E CONVERSOR COM LIMITE VIOLADO       
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X--X-----------------------------------------------------------X
+
+      1  1    1.0000 60.000    211.46   116    129.54    30
+      2  2    1.0000 60.000      1.05    38**********   105
+                                                                                 19B  105B
+      3  3    1.0000 60.000      0.00   104      0.00    68
+      4  4    1.0000 60.000      0.00   100      0.00    68
+ ................................................................
+
+
+
+
+ CONVERGENCIA FINAL
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+      4  4  0 1.0000 60.000      0.00   116      0.00    37     0.000     0
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  12
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+      1 Riversde--V2  1 0.955   7.6     0.0    -3.0     0.0     0.0    51.0    27.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      2 Pokagon---V2  0 0.971   8.2     0.0     0.0     0.0     0.0    20.0     9.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      3 HickryCk--V2  0 0.968   8.5     0.0     0.0     0.0     0.0    39.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      4 NwCarlsl--V2  1 0.998  12.2     0.0   -15.8     0.0     0.0    30.0    12.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      5 Olive-----V2  0 1.002  12.6     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0   -40.2     0.0     0.0     0.0 LIG
+      6 Kankakee--V2  1 0.990   9.9     0.0    16.0     0.0     0.0    52.0    22.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      7 JacksnRd--V2  0 0.989   9.5     0.0     0.0     0.0     0.0    19.0     2.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      8 Olive-----V1  1 1.015  17.4   -28.0    43.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+      9 Bequine---V1  0 1.045  23.7     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     10 Breed-----V1  1 1.050  30.3   393.6   -60.4     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     11 SouthBnd--V2  0 0.985   9.7     0.0     0.0     0.0     0.0    70.0    23.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     12 TwinBrch--V2  1 0.990   9.2    74.3    94.1     0.0     0.0    47.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     13 Concord---V2  0 0.968   8.6     0.0     0.0     0.0     0.0    34.0    16.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     14 GoshenJt--V2  0 0.984   8.8     0.0     0.0     0.0     0.0    14.0     1.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     15 FtWayne---V2  1 0.970   9.3     0.0     2.8     0.0     0.0    90.0    30.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     16 N.E.------V2  0 0.984   9.2     0.0     0.0     0.0     0.0    25.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     17 Sorenson--V2  0 0.995  11.7     0.0     0.0     0.0     0.0    11.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     18 McKinley--V2  1 0.973   9.6     0.0    25.1     0.0     0.0    60.0    34.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     19 Lincoln---V2 -1 0.963   9.3     0.0    -8.0     0.0     0.0    45.0    25.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     20 Adams-----V2  0 0.958  10.1     0.0     0.0     0.0     0.0    18.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     21 Jay-------V2  0 0.959  11.7     0.0     0.0     0.0     0.0    14.0     8.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  13
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+     22 Randolph--V2  0 0.970  14.2     0.0     0.0     0.0     0.0    10.0     5.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     23 CollCrnr--V2  0 1.000  19.1     0.0     0.0     0.0     0.0     7.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     24 Trenton---V2  1 0.992  19.9     0.0   -20.6     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     25 TannrsCk--V2  1 1.050  24.7   192.4    51.4     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     26 TannrsCk--V1  1 1.015  26.2   274.7     5.6     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     27 Madison---V2  1 0.968  13.2     0.0    -2.1     0.0     0.0    62.0    13.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     28 Mullin----V2  0 0.962  11.5     0.0     0.0     0.0     0.0    17.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     29 Grant-----V2  0 0.963  10.5     0.0     0.0     0.0     0.0    24.0     4.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     30 Sorenson--V1  0 0.987  16.5     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     31 DeerCrk---V1  1 0.967  10.7     6.1    31.8     0.0     0.0    43.0    27.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     32 Delaware--V2  1 0.964  12.7     0.0   -12.2     0.0     0.0    59.0    23.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     33 Haviland--V2  0 0.971   9.7     0.0     0.0     0.0     0.0    23.0     9.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     34 Rockhill--V2  1 0.986  11.3     0.0    -4.4     0.0     0.0    59.0    26.0     0.0     0.0    13.6     0.0     0.0     0.0 LIG
+     35 WestLima--V2  0 0.981  10.9     0.0     0.0     0.0     0.0    33.0     9.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     36 Sterling--V2  1 0.980  10.9     0.0    -1.6     0.0     0.0    31.0    17.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     37 EastLima--V2  0 0.992  11.9     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0   -24.6     0.0     0.0     0.0 LIG
+     38 EastLima--V1  0 0.963  16.2     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     39 NwLibrty--V2  0 0.971  10.6     0.0     0.0     0.0     0.0    27.0    11.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     40 WestEnd---V2  1 0.970  10.8     0.0     9.0     0.0     0.0    20.0    23.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     41 S.Tiffin--V2  0 0.967  10.6     0.0     0.0     0.0     0.0    37.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     42 Howard----V2  1 0.985  12.8     0.0    18.6     0.0     0.0    37.0    23.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  14
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+     43 S.Kenton--V2  0 0.979  11.2     0.0     0.0     0.0     0.0    18.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     44 WMVernon--V2  0 0.985  13.6     0.0     0.0     0.0     0.0    16.0     8.0     0.0     0.0     9.7     0.0     0.0     0.0 LIG
+     45 N.Newark--V2  0 0.987  15.3     0.0     0.0     0.0     0.0    53.0    22.0     0.0     0.0     9.7     0.0     0.0     0.0 LIG
+     46 W.Lancst--V2  1 1.005  18.1    16.6    -4.5     0.0     0.0    28.0    10.0     0.0     0.0    10.1     0.0     0.0     0.0 LIG
+     47 Crooksvl--V2  0 1.017  20.4     0.0     0.0     0.0     0.0    34.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     48 Zanesvll--V2  0 1.021  19.6     0.0     0.0     0.0     0.0    20.0    11.0     0.0     0.0    15.6     0.0     0.0     0.0 LIG
+     49 Philo-----V2  1 1.025  20.6   178.4   112.6     0.0     0.0    87.0    30.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     50 WCambrdg--V2  0 1.001  18.4     0.0     0.0     0.0     0.0    17.0     4.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     51 Newcmrst--V2  0 0.967  15.7     0.0     0.0     0.0     0.0    17.0     8.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     52 SCoshoct--V2  0 0.956  14.7     0.0     0.0     0.0     0.0    18.0     5.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     53 Wooster---V2  0 0.946  13.6     0.0     0.0     0.0     0.0    23.0    11.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     54 Torrey----V2  1 0.955  14.4    42.0     6.2     0.0     0.0   113.0    32.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     55 Wagenhls--V2  1 0.952  14.1     0.0     4.7     0.0     0.0    63.0    22.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     56 Sunnysde--V2  1 0.954  14.3     0.0    -1.8     0.0     0.0    84.0    18.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     57 WNwPhil1--V2  0 0.970  15.7     0.0     0.0     0.0     0.0    12.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     58 WNwPhil2--V2  0 0.959  14.8     0.0     0.0     0.0     0.0    12.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     59 Tidd------V2  1 0.985  18.3   135.6    81.2     0.0     0.0   277.0   113.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     60 SWKammer--V2  0 0.993  22.2     0.0     0.0     0.0     0.0    78.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     61 W.Kammer--V2  1 0.995  23.1   140.0   -37.5     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     62 Natrium---V2  1 0.998  22.5     0.0     1.4     0.0     0.0    77.0    14.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     63 Tidd------V1  0 0.968  22.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  15
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+     64 Kammer----V1  0 0.983  23.9     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     65 Muskngum--V1  1 1.005  27.6   342.0    95.5     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     66 Muskngum--V2  1 1.050  26.7   342.9    -0.7     0.0     0.0    39.0    18.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     67 Summerfl--V2  0 1.020  24.0     0.0     0.0     0.0     0.0    28.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     68 Sporn-----V1  0 1.003  28.7     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     69 Sporn-----V2  2 1.035  30.0   434.3   -78.5     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     70 Portsmth--V2  1 0.984  22.9     0.0    10.8     0.0     0.0    66.0    20.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     71 NPortsmt--V2  0 0.987  22.6     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     72 Hillsbro--V2  1 0.980  21.4     0.0   -14.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     73 Sargents--V2  1 0.991  22.5     0.0     8.3     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     74 Bellefnt--V2  1 0.958  22.1     0.0    -5.9     0.0     0.0    68.0    27.0     0.0     0.0    11.0     0.0     0.0     0.0 LIG
+     75 SthPoint--V2  0 0.967  23.4     0.0     0.0     0.0     0.0    47.0    11.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     76 Darrah----V2  1 0.943  22.5     0.0     5.5     0.0     0.0    68.0    36.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     77 Turner----V2  1 1.006  27.9     0.0    14.6     0.0     0.0    61.0    28.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     78 Chemical--V2  0 1.003  27.6     0.0     0.0     0.0     0.0    71.0    26.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     79 CapitlHl--V2  0 1.009  27.9     0.0     0.0     0.0     0.0    39.0    32.0     0.0     0.0    20.4     0.0     0.0     0.0 LIG
+     80 CabinCrk--V2  1 1.040  30.2   417.2   119.3     0.0     0.0   130.0    26.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     81 Kanawha---V1  0 0.997  29.3     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     82 Logan-----V2  0 0.988  29.5     0.0     0.0     0.0     0.0    54.0    27.0     0.0     0.0    19.5     0.0     0.0     0.0 LIG
+     83 Sprigg----V2  0 0.983  30.9     0.0     0.0     0.0     0.0    20.0    10.0     0.0     0.0     9.7     0.0     0.0     0.0 LIG
+     84 BetsyLne--V2  0 0.979  33.9     0.0     0.0     0.0     0.0    11.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  16
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+     85 BeaverCk--V2  1 0.985  35.6     0.0    -4.1     0.0     0.0    24.0    15.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     86 Hazard----V2  0 0.987  34.2     0.0     0.0     0.0     0.0    21.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     87 Pinevlle--V3  1 1.015  34.4     3.5    11.1     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     88 Fremont---V2  0 0.987  39.1     0.0     0.0     0.0     0.0    48.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     89 ClinchRv--V2  1 1.005  43.4   530.9    -0.4     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     90 Holston---V2  1 0.985  40.0     0.0    30.6     0.0     0.0    78.0    42.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     91 HolstonT--V2  1 0.980  39.3     0.0   -18.2     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     92 Saltvlle--V2  1 0.993  37.9     0.0     2.7     0.0     0.0    65.0    10.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     93 Tazewell--V2  0 0.987  34.6     0.0     0.0     0.0     0.0    12.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     94 Switchbk--V2  0 0.990  32.1     0.0     0.0     0.0     0.0    30.0    16.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     95 Caldwell--V2  0 0.980  30.7     0.0     0.0     0.0     0.0    42.0    31.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     96 Baileysv--V2  0 0.991  30.0     0.0     0.0     0.0     0.0    38.0    15.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     97 Sundial---V2  0 1.011  29.8     0.0     0.0     0.0     0.0    15.0     9.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     98 Bradley---V2  0 1.023  29.8     0.0     0.0     0.0     0.0    34.0     8.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+     99 Hinton----V2  1 1.010  31.9     0.0   -27.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    100 GlenLyn---V2  1 1.017  32.3   220.4   113.9     0.0     0.0    37.0    18.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    101 Wythe-----V2  0 0.993  33.8     0.0     0.0     0.0     0.0    22.0    15.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    102 Smythe----V2  0 0.992  36.4     0.0     0.0     0.0     0.0     5.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    103 Claytor---V2  1 1.001  29.8    35.0    35.2     0.0     0.0    23.0    16.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    104 Hancock---V2  1 0.971  27.5     0.0     3.0     0.0     0.0    38.0    25.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    105 Roanoke---V2 -1 0.966  26.8     0.0    -8.0     0.0     0.0    31.0    26.0     0.0     0.0    18.7     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  17
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
+
+ X---------------------X-----------X---------------X---------------X---------------X---------------X---------------X---------------X---X
+          BARRA            TENSAO        GERACAO     INJECAO EQUIV        CARGA          ELO CC          SHUNT           MOTOR
+  NUM.      NOME     TP  MOD   ANG      MW    Mvar\     MW    Mvar      MW    Mvar      MW    Mvar    Mvar   EQUIV      MW    Mvar
+                                            CE Mvar                                                 SHUNT L                         EST
+ X-----X------------X--X-----X-----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X---X
+
+    106 Cloverdl--V2  0 0.963  26.5     0.0     0.0     0.0     0.0    43.0    16.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    107 Reusens---V2  1 0.952  25.2     0.0    -2.3     0.0     0.0    28.0    12.0     0.0     0.0     5.4     0.0     0.0     0.0 LIG
+    108 Blaine----V2  0 0.967  26.4     0.0     0.0     0.0     0.0     2.0     1.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    109 Franklin--V2  0 0.968  26.3     0.0     0.0     0.0     0.0     8.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    110 Fieldale--V2  1 0.973  26.2     0.0     4.7     0.0     0.0    39.0    30.0     0.0     0.0     5.7     0.0     0.0     0.0 LIG
+    111 DanRiver--V2  1 0.980  27.7    31.5    -0.7     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    112 Danville--V2  1 0.975  25.1     0.0    23.1     0.0     0.0    25.0    13.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    113 DeerCrk---V2  1 0.993  11.8     0.0     3.8     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    114 WMedford--V2  0 0.961  12.4     0.0     0.0     0.0     0.0     8.0     3.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    115 Medford---V2  0 0.961  12.4     0.0     0.0     0.0     0.0    22.0     7.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    116 KygerCrk--V2  1 1.005  28.7     0.0    37.2     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    117 Corey-----V2  0 0.974   7.6     0.0     0.0     0.0     0.0    20.0     8.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+    118 WHuntngd--V2  0 0.950  22.5     0.0     0.0     0.0     0.0    33.0    15.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  18
+
+ IEEE/RTS-SISTEMA TESTE  DO IEEE-118 BARRAS                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     0 Convergente    0    0.000    0.000    0.000  3668.00 MW      5.0000
+                      0    0.000    0.000    0.000  1438.00 Mvar    5.0000
+     1 Convergente    4    5.000    5.000    5.000  3851.40 MW      5.0000
+                      4    5.000    5.000    5.000  1509.90 Mvar    5.0000
+     2 Convergente    3   10.000   10.000   10.000  4034.80 MW      5.0000
+                      3   10.000   10.000   10.000  1581.80 Mvar    5.0000
+     3 Convergente    4   15.000   15.000   15.000  4218.20 MW      5.0000
+                      4   15.000   15.000   15.000  1653.70 Mvar    5.0000
+     4 Convergente    4   20.000   20.000   20.000  4401.60 MW      5.0000
+                      4   20.000   20.000   20.000  1725.60 Mvar    5.0000
+     5 Convergente    3   25.000   25.000   25.000  4585.00 MW      5.0000
+                      3   25.000   25.000   25.000  1797.50 Mvar    5.0000
+     6 Convergente    4   30.000   30.000   30.000  4768.40 MW      5.0000
+                      4   30.000   30.000   30.000  1869.40 Mvar    5.0000
+     7 Convergente    3   35.000   35.000   35.000  4951.80 MW      5.0000
+                      3   35.000   35.000   35.000  1941.30 Mvar    5.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  19
+
+    40.0000                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     8 Convergente    4   40.000   40.000   40.000  5135.20 MW      5.0000
+                      4   40.000   40.000   40.000  2013.20 Mvar    5.0000
+     9 Convergente    4   45.000   45.000   45.000  5318.60 MW      5.0000
+                      4   45.000   45.000   45.000  2085.10 Mvar    5.0000
+    10 Convergente    4   50.000   50.000   50.000  5502.00 MW      5.0000
+                      4   50.000   50.000   50.000  2157.00 Mvar    5.0000
+    11 Convergente    4   55.000   55.000   55.000  5685.40 MW      5.0000
+                      4   55.000   55.000   55.000  2228.90 Mvar    5.0000
+    12 Convergente    3   60.000   60.000   60.000  5868.80 MW      5.0000
+                      3   60.000   60.000   60.000  2300.80 Mvar    5.0000
+    13 Convergente    3   65.000   65.000   65.000  6052.20 MW      5.0000
+                      3   65.000   65.000   65.000  2372.70 Mvar    5.0000
+    14 Convergente    4   70.000   70.000   70.000  6235.60 MW      5.0000
+                      4   70.000   70.000   70.000  2444.60 Mvar    5.0000
+    15 Convergente    3   75.000   75.000   75.000  6419.00 MW      5.0000
+                      3   75.000   75.000   75.000  2516.50 Mvar    5.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  20
+
+    80.0000                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    16 Convergente    3   80.000   80.000   80.000  6602.40 MW      5.0000
+                      3   80.000   80.000   80.000  2588.40 Mvar    5.0000
+    17 Convergente    3   85.000   85.000   85.000  6785.80 MW      5.0000
+                      3   85.000   85.000   85.000  2660.30 Mvar    5.0000
+    18 Convergente    4   90.000   90.000   90.000  6969.20 MW      5.0000
+                      4   90.000   90.000   90.000  2732.20 Mvar    5.0000
+    19 Convergente    4   95.000   95.000   95.000  7152.60 MW      5.0000
+                      4   95.000   95.000   95.000  2804.10 Mvar    5.0000
+    20 Convergente    3  100.000  100.000  100.000  7336.00 MW      5.0000
+                      3  100.000  100.000  100.000  2876.00 Mvar    5.0000
+    21 Convergente    3  105.000  105.000  105.000  7519.40 MW      5.0000
+                      3  105.000  105.000  105.000  2947.90 Mvar    5.0000
+    22 Convergente    4  110.000  110.000  110.000  7702.80 MW      5.0000
+                      4  110.000  110.000  110.000  3019.80 Mvar    5.0000
+    23 Convergente    4  115.000  115.000  115.000  7886.20 MW      5.0000
+                      4  115.000  115.000  115.000  3091.70 Mvar    5.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  21
+
+   115.0000                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    24 Nao Converg.  91                                             5.0000
+                     91                                             5.0000
+    25 Convergente    5  117.500  117.500  117.500  7977.90 MW      2.5000
+                      5  117.500  117.500  117.500  3127.65 Mvar    2.5000
+    26 Nao Converg.  91                                             2.5000
+                     91                                             2.5000
+    27 Convergente    4  118.750  118.750  118.750  8023.75 MW      1.2500
+                      4  118.750  118.750  118.750  3145.63 Mvar    1.2500
+    28 Nao Converg.  91                                             1.2500
+                     91                                             1.2500
+    29 Nao Converg.  91                                             0.6250
+                     91                                             0.6250
+    30 Convergente    4  119.063  119.063  119.063  8035.21 MW      0.3125
+                      4  119.063  119.063  119.063  3150.12 Mvar    0.3125
+    31 Nao Converg.  91                                             0.3125
+                     91                                             0.3125
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  22
+
+   119.2188                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    32 Convergente    4  119.219  119.219  119.219  8040.94 MW      0.1562
+                      4  119.219  119.219  119.219  3152.37 Mvar    0.1562
+    33 Nao Converg.  91                                             0.1562
+                     91                                             0.1562
+    34 Convergente    4  119.297  119.297  119.297  8043.81 MW      0.0781
+                      4  119.297  119.297  119.297  3153.49 Mvar    0.0781
+    35 Nao Converg.  91                                             0.0781
+                     91                                             0.0781
+    36 Nao Converg.  91                                             0.0391
+                     91                                             0.0391
+    37 Nao Converg.  91                                             0.0195
+                     91                                             0.0195
+    38 Convergente    3  119.307  119.307  119.307  8044.17 MW      0.0098
+                      3  119.307  119.307  119.307  3153.63 Mvar    0.0098
+    39 Nao Converg.  91                                             0.0098
+                     91                                             0.0098
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  23
+
+   119.3115                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    40 Convergente    3  119.312  119.312  119.312  8044.35 MW      0.0049
+                      3  119.312  119.312  119.312  3153.70 Mvar    0.0049
+    41 Nao Converg.  91                                             0.0049
+                     91                                             0.0049
+    42 Convergente    3  119.314  119.314  119.314  8044.44 MW      0.0024
+                      3  119.314  119.314  119.314  3153.73 Mvar    0.0024
+    43 Nao Converg.  91                                             0.0024
+                     91                                             0.0024
+    44 Convergente    2  119.315  119.315  119.315  8044.48 MW      0.0012
+                      2  119.315  119.315  119.315  3153.75 Mvar    0.0012
+    45 Nao Converg.  91                                             0.0012
+                     91                                             0.0012
+    46 Nao Converg.  91                                             0.0006
+                     91                                             0.0006
+    47 Nao Converg.  91                                             0.0003
+                     91                                             0.0003
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  24
+
+   119.3152                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    48 Nao Converg.  91                                             0.0002
+                     91                                             0.0002
+    49 Nao Converg.  91                                             0.0001
+                     91                                             0.0001
+    50 Convergente    2  119.315  119.315  119.315  8044.48 MW      0.0000
+                      2  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    51 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    52 Convergente    2  119.315  119.315  119.315  8044.48 MW      0.0000
+                      2  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    53 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    54 Convergente    2  119.315  119.315  119.315  8044.48 MW      0.0000
+                      2  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    55 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  25
+
+   119.3153                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    56 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    57 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    58 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    59 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    60 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    61 Convergente    1  119.315  119.315  119.315  8044.48 MW      0.0000
+                      1  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    62 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    63 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  26
+
+   119.3153                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM BPSI NEWT RCVG RMON
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    64 Convergente    1  119.315  119.315  119.315  8044.48 MW      0.0000
+                      1  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    65 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+    66 Convergente    1  119.315  119.315  119.315  8044.48 MW      0.0000
+                      1  119.315  119.315  119.315  3153.75 Mvar    0.0000
+    67 Nao Converg.  91                                             0.0000
+                     91                                             0.0000
+ 
+ Atingido incremento minimo

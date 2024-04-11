@@ -17,8 +17,16 @@ def fdata(
     """
 
     ## Inicialização
-    barra500 = powerflow.dbarDF.loc[powerflow.dbarDF["grupo_base_tensao"] == 'B ']
-    lt500 = powerflow.dlinDF.loc[(powerflow.dlinDF["de"].isin(barra500.numero.values)) & (powerflow.dlinDF["para"].isin(barra500.numero.values))]
+    # barra500 = powerflow.dbarDF.loc[powerflow.dbarDF["grupo_base_tensao"] == 'B ']
+    # lt500 = powerflow.dlinDF.loc[(powerflow.dlinDF["de"].isin(barra500.numero.values)) & (powerflow.dlinDF["para"].isin(barra500.numero.values))]
+
+
+    print("Pl", powerflow.dbarDF.demanda_ativa.sum())
+    print("Ql", powerflow.dbarDF.demanda_reativa.sum())
+    print("Pg", powerflow.dbarDF.potencia_ativa.sum())
+    print("Qg", powerflow.dbarDF.potencia_reativa.sum())
+
+    gen = powerflow.dbarDF.loc[(powerflow.dbarDF["tipo"] != 0) & (powerflow.dbarDF["potencia_ativa"] > 0.)]
 
     print()
 
@@ -147,45 +155,45 @@ def fdata(
         drop=True
     )
 
-    print("Total de barramentos: ", powerflow.nbus)
-    print("Transmissao: ", transmissao.shape[0])
-    print("Distribuicao: ", distribuicao.shape[0])
-    print("Ficticia: ", ficticia.shape[0])
-
-    print()
-
-    print("UHEs: ", uhe.shape[0])
-    print("UHEs GBTs: ", uhegbtvalue)
-
-    print()
-
-    print("UTEs: ", ute.shape[0])
-    print("UTEs GBTs: ", utegbtvalue)
-
-    print()
-
-    print("EOLs: ", eol.shape[0])
-    print("EOLs GBTs: ", eolgbtvalue)
-
-    print()
-
-    print("PCHs: ", pch.shape[0])
-    print("PCHs GBTs: ", pchgbtvalue)
-
-    print()
-
-    print("UFVs: ", ufv.shape[0])
-    print("UFVs GBTs: ", ufvgbtvalue)
+    # print("Total de barramentos: ", powerflow.nbus)
+    # print("Transmissao: ", transmissao.shape[0])
+    # print("Distribuicao: ", distribuicao.shape[0])
+    # print("Ficticia: ", ficticia.shape[0])
 
     # print()
 
-    # print("BIOs: ", bio.shape[0])
-    # print("BIOs GBTs: ", biogbtvalue)
+    # print("UHEs: ", uhe.shape[0])
+    # print("UHEs GBTs: ", uhegbtvalue)
 
-    print()
+    # print()
 
-    print("GBTs: ", gbtvalue)
+    # print("UTEs: ", ute.shape[0])
+    # print("UTEs GBTs: ", utegbtvalue)
 
-    print()
+    # print()
 
-    print("Areas: ", areavalue)
+    # print("EOLs: ", eol.shape[0])
+    # print("EOLs GBTs: ", eolgbtvalue)
+
+    # print()
+
+    # print("PCHs: ", pch.shape[0])
+    # print("PCHs GBTs: ", pchgbtvalue)
+
+    # print()
+
+    # print("UFVs: ", ufv.shape[0])
+    # print("UFVs GBTs: ", ufvgbtvalue)
+
+    # # print()
+
+    # # print("BIOs: ", bio.shape[0])
+    # # print("BIOs GBTs: ", biogbtvalue)
+
+    # print()
+
+    # print("GBTs: ", gbtvalue)
+
+    # print()
+
+    # print("Areas: ", areavalue)

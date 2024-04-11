@@ -1,5 +1,9 @@
 TITU
 IEEE 57 Bus Test Case - Winter 1961
+DOPC IMPR
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+NEWT L QLIM L
+99999
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
 BASE   100. DASE   100. TEPA  .1E-9 EXST  .4E-9 TETP     5. TBPA  .1E-5
@@ -13,11 +17,11 @@ ICIT    900 DMAX   9999 FDIV    1.5 ICMN  .0001 VART     5. TSTP     32
 ICMV    .01 APAS   99.5 CPAR    90. VAVT     2. VAVF     5. VMVF    15.
 VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
 (FULL     0  
-SIGK   1E5  SIGV  1E-4  SIGQ  1E-4  CTOL  1E-4
+(SIGK   1E6  SIGV  1E-4  SIGQ  1E-4  CTOL  1E-4
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
-    1  2  Kanawha---V1  1040  0.128.9-16.1              1  55.0 17.0       1                                                      
+    1  2  Kanawha---V1  1040  0.128.9-16.1-999999999    1  55.0 17.0       1                                                      
     2  1  Turner----V1  1010-1.1   0. -0.8 -17. 50.0    2   3.0 88.0       1                                                      
     3  1  Logan-----V1  0985-5.9  40. -1.0 -10. 60.0    3  41.0 21.0       1                                                      
     4  0  Sprigg----V1  0981-7.3                                           1                                                      
@@ -166,6 +170,8 @@ DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 AREA    1  A AREA  9999                              .5    .5
 99999
-EXLF NEWT QLIM
-EXIC NEWT QLIM
+
+EXLF RBAR
+(EXIC  
+
 FIM

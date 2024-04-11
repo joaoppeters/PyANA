@@ -128,15 +128,15 @@ def qlimssubjac(
             # Barras PV
             yv[nger, idx] = powerflow.qlimdiff[idx][0]
 
-            # Barras PQV
-            if (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
-            ) or (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
-            ):
-                yx[nger, nger] = powerflow.qlimdiff[idx][1]
+            # # Barras PQV
+            # if (
+            #     powerflow.solution["qlim_reactive_generation"][idx]
+            #     > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+            # ) or (
+            #     powerflow.solution["qlim_reactive_generation"][idx]
+            #     < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+            # ):
+            yx[nger, nger] = powerflow.qlimdiff[idx][1]
 
             # Incrementa contador
             nger += 1
@@ -421,22 +421,22 @@ def qlimssubhess(
                 * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
             )
 
-            # Barras PQV
-            if (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
-            ) or (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
-            ):
-                qx[nger, idx] = -(
-                    powerflow.qlimdiff[idx][4]
-                    * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
-                )
-                yx[nger, nger] = -(
-                    powerflow.qlimdiff[idx][5]
-                    * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
-                )
+            # # Barras PQV
+            # if (
+            #     powerflow.solution["qlim_reactive_generation"][idx]
+            #     > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+            # ) or (
+            #     powerflow.solution["qlim_reactive_generation"][idx]
+            #     < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+            # ):
+            qx[nger, idx] = -(
+                powerflow.qlimdiff[idx][4]
+                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+            )
+            yx[nger, nger] = -(
+                powerflow.qlimdiff[idx][5]
+                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+            )
 
             # Incrementa contador
             nger += 1

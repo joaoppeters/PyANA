@@ -72,7 +72,7 @@ def reportfile(
         )
 
     else:
-        RCANI(
+        RPoC(
             file,
             powerflow,
         )
@@ -1175,7 +1175,7 @@ def tobecontinued(
             filesmooth.close()
 
 
-def RCANI(
+def RPoC(
     file,
     powerflow,
 ):
@@ -1192,7 +1192,7 @@ def RCANI(
     file.write("\n\n")
     file.write("Ponto de Maximo Carregamento: " + f"{powerflow.solution['lambda']:^f}")
     file.write("\n")
-    file.write("Autovalores: " + str(powerflow.H))
-    file.write("\n")
+    # file.write("Autovalores: " + str(powerflow.H))
+    # file.write("\n")
     file.write("Iteracoes: " + str(powerflow.solution["iter"]))
     file.write("\n\n")
