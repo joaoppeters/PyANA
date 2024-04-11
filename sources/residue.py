@@ -6,13 +6,14 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, concatenate, conj, diag, exp
+from numpy import array, concatenate, conj, diag, exp, zeros
 from ctrl import controlres
 
 
 def residue(
     powerflow,
     case: int = 0,
+    stage: str = None,
 ):
     """cálculo de resíduos das equações diferenciáveis
 
@@ -48,3 +49,42 @@ def residue(
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, array([0])), axis=0)
 
     powerflow.deltaPQY = powerflow.deltaPQY[powerflow.mask]
+
+    # Resíduo de Fluxo de Potência Continuado
+    # Condição de previsão
+    if stage == "p":
+        powerflow.deltaPQY = zeros(powerflow.deltaPQY.shape[0] + 1)
+        # Condição de variável de passo
+        if powerflow.solution["varstep"] == "lambda":
+            if not powerflow.solution["pmc"]:
+                powerflow.deltaPQY[-1] = powerflow.options["LMBD"] * (
+                    5e-1 ** powerflow.solution["ndiv"]
+                )
+
+            elif powerflow.solution["pmc"]:
+                powerflow.deltaPQY[-1] = (
+                    -1 * powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"])
+                )
+
+        elif powerflow.solution["varstep"] == "volt":
+            powerflow.deltaPQY[-1] = (
+                -1 * powerflow.options["ICMV"] * (5e-1 ** powerflow.solution["ndiv"])
+            )
+
+    # Condição de correção
+    elif stage == "c":
+        # Condição de variável de passo
+        if powerflow.solution["varstep"] == "lambda":
+            powerflow.deltaY = array(
+                [powerflow.solution["stepsch"] - powerflow.solution["step"]]
+            )
+
+        elif powerflow.solution["varstep"] == "volt":
+            powerflow.deltaY = array(
+                [
+                    powerflow.solution["vsch"]
+                    - powerflow.solution["voltage"][powerflow.nodevarvolt]
+                ]
+            )
+
+        powerflow.deltaPQY = concatenate((powerflow.deltaPQY, powerflow.deltaY), axis=0)

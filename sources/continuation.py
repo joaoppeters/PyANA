@@ -33,7 +33,7 @@ from loading import loading
 from matrices import matrices
 from residue import residue
 from scheduled import scheduled
-from update import updtpwr
+from update import updtstt, updtpwr
 
 
 def prediction_correction(
@@ -214,7 +214,7 @@ def prediction(
     )
 
     # Resíduos
-    exicresidue(
+    residue(
         powerflow,
         case,
         stage="p",
@@ -238,10 +238,14 @@ def prediction(
     )
 
     # Atualização das Variáveis de estado
-    update_statevar(
+    updtstt(
         powerflow,
         case,
         stage="p",
+    )
+
+    updtpwr(
+        powerflow,
     )
 
     # Armazenamento de Solução
@@ -303,7 +307,7 @@ def correction(
     )
 
     # Resíduos
-    exicresidue(
+    residue(
         powerflow,
         case,
         stage="c",
@@ -345,10 +349,14 @@ def correction(
         )
 
         # Atualização das Variáveis de estado
-        update_statevar(
+        updtstt(
             powerflow,
             case,
             stage="c",
+        )
+
+        updtpwr(
+            powerflow,
         )
 
         # Condição de variável de passo
@@ -364,7 +372,7 @@ def correction(
             )
 
         # Atualização dos resíduos
-        exicresidue(
+        residue(
             powerflow,
             case,
             stage="c",
@@ -406,14 +414,18 @@ def correction(
         )
 
         # Atualização das Variáveis de estado
-        update_statevar(
+        updtstt(
             powerflow,
             case,
             stage="c",
         )
 
+        updtpwr(
+            powerflow,
+        )
+
         # Atualização dos resíduos
-        exicresidue(
+        residue(
             powerflow,
             case,
             stage="c",
