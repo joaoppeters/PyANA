@@ -75,57 +75,57 @@ def eigensens(
         # Condição
         if stage == None:
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.point[case]["jacobian"] = powerflow.jacobian
+            powerflow.operationpoint[case]["jacobian"] = powerflow.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.point[case]["determinant"] = det(powerflow.jacobian)
+            powerflow.operationpoint[case]["determinant"] = det(powerflow.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.point[case]["eigenvalues"] = rightvalues
-            powerflow.point[case]["eigenvectors"] = rightvector
+            powerflow.operationpoint[case]["eigenvalues"] = rightvalues
+            powerflow.operationpoint[case]["eigenvectors"] = rightvector
 
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.point[case]["participation_factor"] = powerflow.jacpfactor
+            powerflow.operationpoint[case]["participation_factor"] = powerflow.jacpfactor
 
             # Armazenamento da matriz de sensibilidade QV
-            powerflow.point[case]["jacobian-QV"] = powerflow.jacQV
+            powerflow.operationpoint[case]["jacobian-QV"] = powerflow.jacQV
 
             # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.point[case]["determinant-QV"] = det(powerflow.jacQV)
+            powerflow.operationpoint[case]["determinant-QV"] = det(powerflow.jacQV)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.point[case]["eigenvalues-QV"] = rightvaluesQV
-            powerflow.point[case]["eigenvectors-QV"] = rightvectorQV
+            powerflow.operationpoint[case]["eigenvalues-QV"] = rightvaluesQV
+            powerflow.operationpoint[case]["eigenvectors-QV"] = rightvectorQV
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.point[case]["participationfactor-QV"] = powerflow.jacQVpfactor
+            powerflow.operationpoint[case]["participationfactor-QV"] = powerflow.jacQVpfactor
 
         elif stage != None:
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.point[case][stage]["jacobian"] = powerflow.jacobian
+            powerflow.operationpoint[case][stage]["jacobian"] = powerflow.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.point[case][stage]["determinant"] = det(powerflow.jacobian)
+            powerflow.operationpoint[case][stage]["determinant"] = det(powerflow.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.point[case][stage]["eigenvalues"] = rightvalues
-            powerflow.point[case][stage]["eigenvectors"] = rightvector
+            powerflow.operationpoint[case][stage]["eigenvalues"] = rightvalues
+            powerflow.operationpoint[case][stage]["eigenvectors"] = rightvector
 
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.point[case][stage]["participationfactor"] = powerflow.jacpfactor
+            powerflow.operationpoint[case][stage]["participationfactor"] = powerflow.jacpfactor
 
             # Armazenamento da matriz de sensibilidade QV
-            powerflow.point[case][stage]["jacobian-QV"] = powerflow.jacQV
+            powerflow.operationpoint[case][stage]["jacobian-QV"] = powerflow.jacQV
 
             # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.point[case][stage]["determinant-QV"] = det(powerflow.jacQV)
+            powerflow.operationpoint[case][stage]["determinant-QV"] = det(powerflow.jacQV)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.point[case][stage]["eigenvalues-QV"] = rightvaluesQV
-            powerflow.point[case][stage]["eigenvectors-QV"] = rightvectorQV
+            powerflow.operationpoint[case][stage]["eigenvalues-QV"] = rightvaluesQV
+            powerflow.operationpoint[case][stage]["eigenvectors-QV"] = rightvectorQV
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.point[case][stage][
+            powerflow.operationpoint[case][stage][
                 "participationfactor-QV"
             ] = powerflow.jacQVpfactor
 
@@ -158,11 +158,11 @@ def eigensens(
             "stepmax",
         }
         powerflow.solution = {
-            key: deepcopy(powerflow.point[case]["c"][key])
+            key: deepcopy(powerflow.operationpoint[case]["c"][key])
             for key in powerflow.solution.keys() & cpfkeys
         }
         powerflow.solution["ndiv"] = auxdiv
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-        powerflow.solution["voltage"] = deepcopy(powerflow.point[case]["c"]["voltage"])
-        powerflow.solution["theta"] = deepcopy(powerflow.point[case]["c"]["theta"])
+        powerflow.solution["voltage"] = deepcopy(powerflow.operationpoint[case]["c"]["voltage"])
+        powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["c"]["theta"])

@@ -272,7 +272,7 @@ def qlimscorr(
     ## Inicialização
     # Variável
     powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.point[case]["p"]["qlim_reactive_generation"]
+        powerflow.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
 
 
@@ -373,12 +373,12 @@ def qlimssolcpf(
     precase = case - 1
     if case == 1:
         powerflow.solution["qlim_reactive_generation"] = deepcopy(
-            powerflow.point[precase]["qlim_reactive_generation"]
+            powerflow.operationpoint[precase]["qlim_reactive_generation"]
         )
 
     elif case > 1:
         powerflow.solution["qlim_reactive_generation"] = deepcopy(
-            powerflow.point[precase]["p"]["qlim_reactive_generation"]
+            powerflow.operationpoint[precase]["p"]["qlim_reactive_generation"]
         )
 
 

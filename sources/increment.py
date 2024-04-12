@@ -35,7 +35,7 @@ def increment(
             ][idxbar] * (1 + powerflow.solution["lambda"])
             
     # Prediction-Correction Method (Ajjarapu & Christy, 1992)
-    if powerflow.solution["method"] == "EXIC":
+    elif powerflow.solution["method"] == "EXIC":
         for idxinc, valueinc in powerflow.dincDF.iterrows():
             # Incremento de carregamento específico por AREA
             if valueinc["tipo_incremento_1"] == "AREA":

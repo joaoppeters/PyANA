@@ -448,7 +448,7 @@ def svccorr(
     ## Inicialização
     # Variável
     powerflow.solution["svc_reactive_generation"] = deepcopy(
-        powerflow.point[case]["p"]["svc_reactive_generation"]
+        powerflow.operationpoint[case]["p"]["svc_reactive_generation"]
     )
 
 
@@ -505,12 +505,12 @@ def svcsolcpf(
     precase = case - 1
     if case == 1:
         powerflow.solution["svc_reactive_generation"] = deepcopy(
-            powerflow.point[precase]["svc_reactive_generation"]
+            powerflow.operationpoint[precase]["svc_reactive_generation"]
         )
 
     elif case > 1:
         powerflow.solution["svc_reactive_generation"] = deepcopy(
-            powerflow.point[precase]["p"]["svc_reactive_generation"]
+            powerflow.operationpoint[precase]["p"]["svc_reactive_generation"]
         )
 
 

@@ -140,7 +140,7 @@ def methodo(
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
         from admittance import admit
-        from directmethod import poc
+        from direct import poc
         from newtonraphson import newton
         from report import reportfile
 

@@ -84,7 +84,7 @@ def var(
         powerflow.pqtv["Tcorr-" + value["nome"]] = array([])
 
     # Loop de Armazenamento
-    for key, item in powerflow.point.items():
+    for key, item in powerflow.operationpoint.items():
         # Condição
         if key == 0:
             aux = powerflow.dbarDF["nome"][0]  # usado no loop seguinte
@@ -408,7 +408,7 @@ def ruthe(
 
     ## Inicialização
     # Variáveis
-    rows = list(powerflow.point.keys())[-1]
+    rows = list(powerflow.operationpoint.keys())[-1]
     cols = sum(powerflow.mask)
     colsP = sum(powerflow.maskP)
     colsQ = sum(powerflow.maskQ)

@@ -1053,7 +1053,7 @@ def qlimstorage(
     # Condição de método
     if powerflow.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
-        for key, value in powerflow.point.items():
+        for key, value in powerflow.operationpoint.items():
             if key == 0:
                 casekeymin = key
                 casevalmin = mn(abs(value["eigenvalues-QV"]))
@@ -1185,7 +1185,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax1.scatter(
-                powerflow.point[casekeymin]["c"]["reactive"][busidx],
+                powerflow.operationpoint[casekeymin]["c"]["reactive"][busidx],
                 smooth1,
                 color="tab:blue",
                 marker="o",
@@ -1232,7 +1232,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax2.scatter(
-                powerflow.point[casekeymin]["c"]["reactive"][busidx],
+                powerflow.operationpoint[casekeymin]["c"]["reactive"][busidx],
                 smooth2,
                 color="tab:orange",
                 marker="o",
@@ -1279,7 +1279,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax3.scatter(
-                powerflow.point[casekeymin]["c"]["voltage"][busidx],
+                powerflow.operationpoint[casekeymin]["c"]["voltage"][busidx],
                 smooth3,
                 color="tab:green",
                 marker="o",
@@ -1326,7 +1326,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax4.scatter(
-                powerflow.point[casekeymin]["c"]["voltage"][busidx],
+                powerflow.operationpoint[casekeymin]["c"]["voltage"][busidx],
                 smooth4,
                 color="tab:red",
                 marker="o",
@@ -1357,7 +1357,7 @@ def svcstorage(
     # Condição de método
     if powerflow.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
-        for key, value in powerflow.point.items():
+        for key, value in powerflow.operationpoint.items():
             if key == 0:
                 casekeymin = key
                 casevalmin = mn(abs(value["eigenvalues-QV"]))
@@ -1470,7 +1470,7 @@ def svcstorage(
                 alpha=0.75,
             )
             ax1.scatter(
-                powerflow.point[casekeymin]["c"]["voltage"][ctrlbusidxcer],
+                powerflow.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
                 smooth1,
                 color="tab:blue",
                 marker="o",
@@ -1517,7 +1517,7 @@ def svcstorage(
                 alpha=0.75,
             )
             ax2.scatter(
-                powerflow.point[casekeymin]["c"]["voltage"][ctrlbusidxcer],
+                powerflow.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
                 smooth2,
                 color="tab:orange",
                 marker="o",
