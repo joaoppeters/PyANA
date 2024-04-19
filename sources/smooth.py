@@ -14,7 +14,6 @@ from sympy.functions import exp as spexp
 
 from folder import smoothfolder
 
-
 def qlims(
     powerflow,
     idx,
@@ -184,7 +183,7 @@ def qlimssmooth(
         )
 
     ## Resíduo
-    powerflow.deltaQlim[nger] = (
+    powerflow.deltaQLIM[nger] = (
         -powerflow.Y[idx][0].subs(powerflow.qlimvar)
         - powerflow.Y[idx][1].subs(powerflow.qlimvar)
         - powerflow.Y[idx][2].subs(powerflow.qlimvar)
@@ -277,7 +276,7 @@ def qlimnsmooth(
     )
 
     ## Resíduo
-    powerflow.deltaQlim[nger] = -Ynormal - Ysuperior - Yinferior
+    powerflow.deltaQLIM[nger] = -Ynormal - Ysuperior - Yinferior
 
     ## Armazenamento de valores das chaves
     powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case].append(
@@ -330,7 +329,7 @@ def svcsQ(
                 powerflow.options["BASE"]
                 * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_reactive_generation"][ncer]
+            qgk: powerflow.solution["svc_generation"][ncer]
             / powerflow.options["BASE"],
         }
     )
@@ -342,20 +341,20 @@ def svcsQ(
 
     ## Chaves
     # Chave Superior de Potência Reativa - Região Indutiva
-    ch1 = 1 / (1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup)))
+    powerflow.svcsch[idxcer]["ch1"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup)))
 
     # Chave Inferior de Poência Reativa - Região Capacitiva
-    ch2 = 1 / (1 + spexp(powerflow.options["SIGK"] * (vm - vliminf)))
+    powerflow.svcsch[idxcer]["ch2"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (vm - vliminf)))
 
     ## Equações de Controle
     # Região Indutiva
-    Yindutiva = (ch1) * (-(vk**2) * bmin + qgk)
+    Yindutiva = (powerflow.svcsch[idxcer]["ch1"]) * (-(vk**2) * bmin + qgk)
 
     # Região Linear
-    Ylinear = (1 - ch1) * (1 - ch2) * (-vmsch - (r * qgk) + vm)
+    Ylinear = (1 - powerflow.svcsch[idxcer]["ch1"]) * (1 - powerflow.svcsch[idxcer]["ch2"]) * (-vmsch - (r * qgk) + vm)
 
     # Região Capacitiva
-    Ycapacitiva = (ch2) * (-(vk**2) * bmax + qgk)
+    Ycapacitiva = (powerflow.svcsch[idxcer]["ch2"]) * (-(vk**2) * bmax + qgk)
 
     powerflow.Y[idxcer] = [
         Yindutiva,
@@ -425,7 +424,7 @@ def svcsQsmooth(
                 powerflow.options["BASE"]
                 * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_reactive_generation"][ncer]
+            qgk: powerflow.solution["svc_generation"][ncer]
             / powerflow.options["BASE"],
         }
     )
@@ -433,18 +432,18 @@ def svcsQsmooth(
     # Expressão Geral
     powerflow.svcdiff[idxcer] = array(
         [
-            powerflow.diffyvk.subs(powerflow.svcqvar),
-            powerflow.diffyvm.subs(powerflow.svcqvar),
-            powerflow.diffyqgk.subs(powerflow.svcqvar),
+            powerflow.diffyvk[idxcer].subs(powerflow.svcvar),
+            powerflow.diffyvm[idxcer].subs(powerflow.svcvar),
+            powerflow.diffyqgk[idxcer].subs(powerflow.svcvar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
     powerflow.deltaSVC[ncer] = (
-        -powerflow.Y[0].subs(powerflow.svcqvar)
-        - powerflow.Y[1].subs(powerflow.svcqvar)
-        - powerflow.Y[2].subs(powerflow.svcqvar)
+        -powerflow.Y[idxcer][0].subs(powerflow.svcvar)
+        - powerflow.Y[idxcer][1].subs(powerflow.svcvar)
+        - powerflow.Y[idxcer][2].subs(powerflow.svcvar)
     )
 
     ## Armazenamento de valores das chaves
@@ -639,7 +638,7 @@ def svcsIsmooth(
     }
 
     powerflow.svcivar = deepcopy(powerflow.svcivarkey)
-    powerflow.svcivar[ik] = (powerflow.solution["svc_current_injection"][ncer]) / (
+    powerflow.svcivar[ik] = (powerflow.solution["svc_generation"][ncer]) / (
         powerflow.options["BASE"]
     )
 
@@ -968,7 +967,7 @@ def svcsAsmooth(
         alpha: powerflow.solution["alpha"],
     }
 
-    powerflow.solution["svc_reactive_generation"][ncer] = (
+    powerflow.solution["svc_generation"][ncer] = (
         (powerflow.solution["voltage"][idxcer] ** 2)
         * powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"])
         * powerflow.options["BASE"]

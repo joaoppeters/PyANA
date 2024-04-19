@@ -708,7 +708,7 @@ class Continuation:
         powerflow.case[self.case][stage] = {**deepcopy(powerflow.sol), **deepcopy(powerflow.cpfsol)}
 
         if ('SVCs' in powerflow.setup.control):
-            powerflow.case[self.case][stage]['svc_reactive_generation'] = deepcopy(powerflow.sol['svc_reactive_generation'])
+            powerflow.case[self.case][stage]['svc_generation'] = deepcopy(powerflow.sol['svc_generation'])
 
         # Armazenamento do índice do barramento com maior variação de magnitude de tensão
         powerflow.case[self.case]['nodevarvolt'] = deepcopy(powerflow.setup.nodevarvolt)

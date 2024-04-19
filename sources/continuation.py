@@ -1133,45 +1133,45 @@ def exiccvgprint(
 
         ## Inicialização
         # Impressão de convergência
-        print(
-            f"Convergência: {powerflow.solution['convergence']} - Caso: {len(powerflow.operationpoint)} - Iteração: {powerflow.solution['iter']}"
-        )
-        print(
-            f"Variação de Magnitude de Tensão: {norm(powerflow.solution['voltage'] - powerflow.operationpoint[0]['voltage'])}"
-        )
-        print(
-            f"Variação de Defasagem Angular: {norm(powerflow.solution['theta'] - powerflow.operationpoint[0]['theta'])}"
-        )
-        print(
-            f"Variação de Potência Ativa: {norm(powerflow.solution['active'] - powerflow.operationpoint[0]['active'])}"
-        )
-        print(
-            f"Variação de Potência Reativa: {norm(powerflow.solution['reactive'] - powerflow.operationpoint[0]['reactive'])}"
-        )
-        print(
-            f"Variação de Frequência: {norm(powerflow.solution['freq'] - powerflow.operationpoint[0]['freq'])}"
-        )
-        print(
-            f"Variação de Passo: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
-        )
-        print(
-            f"Variação de Passo Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
-        )
-        print(
-            f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
-        )
-        print(
-            f"Variação de Lambda: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
-        )
-        print(
-            f"Variação de Lambda Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
-        )
-        print(
-            f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
-        )
-        print(
-            f"Variação de Passo Máximo: {powerflow.solution['stepmax'] - powerflow.operationpoint[0]['stepmax']}"
-        )
+        # print(
+        #     f"Convergência: {powerflow.solution['convergence']} - Caso: {len(powerflow.operationpoint)} - Iteração: {powerflow.solution['iter']}"
+        # )
+        # print(
+        #     f"Variação de Magnitude de Tensão: {norm(powerflow.solution['voltage'] - powerflow.operationpoint[0]['voltage'])}"
+        # )
+        # print(
+        #     f"Variação de Defasagem Angular: {norm(powerflow.solution['theta'] - powerflow.operationpoint[0]['theta'])}"
+        # )
+        # print(
+        #     f"Variação de Potência Ativa: {norm(powerflow.solution['active'] - powerflow.operationpoint[0]['active'])}"
+        # )
+        # print(
+        #     f"Variação de Potência Reativa: {norm(powerflow.solution['reactive'] - powerflow.operationpoint[0]['reactive'])}"
+        # )
+        # print(
+        #     f"Variação de Frequência: {norm(powerflow.solution['freq'] - powerflow.operationpoint[0]['freq'])}"
+        # )
+        # print(
+        #     f"Variação de Passo: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
+        # )
+        # print(
+        #     f"Variação de Passo Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
+        # )
+        # print(
+        #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
+        # )
+        # print(
+        #     f"Variação de Lambda: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
+        # )
+        # print(
+        #     f"Variação de Lambda Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
+        # )
+        # print(
+        #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
+        # )
+        # print(
+        #     f"Variação de Passo Máximo: {powerflow.solution['stepmax'] - powerflow.operationpoint[0]['stepmax']}"
+        # )
 
         
 

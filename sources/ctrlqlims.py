@@ -69,7 +69,7 @@ def qlimsres(
 
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaQlim = zeros([powerflow.nger])
+    powerflow.deltaQLIM = zeros([powerflow.nger])
 
     # Contador
     nger = 0
@@ -88,7 +88,7 @@ def qlimsres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQlim)
+    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQLIM)
 
 
 def qlimssubjac(

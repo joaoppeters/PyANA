@@ -469,7 +469,7 @@ def RSVC(
 
             file.write("\n")
             file.write(
-                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.solution['svc_reactive_generation'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
+                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.solution['svc_generation'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
             )
             file.write("\n")
             file.write("-" * 139)
@@ -486,7 +486,7 @@ def RSVC(
 
             file.write("\n")
             file.write(
-                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.solution['svc_reactive_generation'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
+                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.solution['svc_generation'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer] ** 2)):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
             )
             file.write("\n")
             file.write(
@@ -523,7 +523,7 @@ def RSVC(
 
             file.write("\n")
             file.write(
-                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer])):^8.3f} | {powerflow.solution['svc_current_injection'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer])):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
+                f"| {powerflow.dcerDF['barra'][i]:^3d} | {powerflow.dbarDF['nome'][idxcer]:^12} | {powerflow.solution['voltage'][idxcer]:^9.3f} | {(-powerflow.dcerDF['droop'][i] * 1E2):^5.2f} | {(powerflow.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(powerflow.dcerDF['potencia_reativa_minima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer])):^8.3f} | {powerflow.solution['svc_generation'][i]:^8.3f} | {(powerflow.dcerDF['potencia_reativa_maxima'][i] * powerflow.dcerDF['unidades'][i] * (powerflow.solution['voltage'][idxcer])):^8.3f} | {powerflow.dcerDF['barra_controlada'][i]:^3d} | {powerflow.solution['voltage'][idxctrl]:^9.3f} | {powerflow.dcerDF['controle'][i]:1} | {powerflow.dcerDF['unidades'][i]:^8d} | {powerflow.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
             )
             file.write("\n")
             file.write("-" * 139)

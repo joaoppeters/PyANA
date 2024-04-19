@@ -40,7 +40,7 @@ def qlimres(
 
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaQlim = zeros([powerflow.nger])
+    powerflow.deltaQLIM = zeros([powerflow.nger])
 
     # Contador
     nger = 0
@@ -58,17 +58,17 @@ def qlimres(
                     > value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de magnitude de tensão
-                    powerflow.deltaQlim[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQlim[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQlim[nger] *= powerflow.options["BASE"]
+                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
+                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
 
                 elif (
                     powerflow.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
                     powerflow.dbarDF.loc[idx, "tipo"] = -1
@@ -78,8 +78,8 @@ def qlimres(
                     <= value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
                     powerflow.dbarDF.loc[idx, "tipo"] = -1
@@ -100,9 +100,9 @@ def qlimres(
                     and (powerflow.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
                     # Tratamento de backoff de magnitude de tensão
-                    powerflow.deltaQlim[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQlim[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQlim[nger] *= powerflow.options["BASE"]
+                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
+                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
                     powerflow.dbarDF.loc[idx, "tipo"] = 1
 
                 elif (
@@ -110,8 +110,8 @@ def qlimres(
                     >= value["potencia_reativa_maxima"]
                 ) and (powerflow.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
@@ -120,8 +120,8 @@ def qlimres(
                     <= value["potencia_reativa_minima"]
                 ) and (powerflow.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
@@ -135,17 +135,17 @@ def qlimres(
                     > value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de magnitude de tensão
-                    powerflow.deltaQlim[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQlim[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQlim[nger] *= powerflow.options["BASE"]
+                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
+                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
 
                 elif (
                     powerflow.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
                     powerflow.slackqlim = True
@@ -155,8 +155,8 @@ def qlimres(
                     <= value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
                     powerflow.slackqlim = True
@@ -177,9 +177,9 @@ def qlimres(
                     and (powerflow.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
                     # Tratamento de backoff de magnitude de tensão
-                    powerflow.deltaQlim[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQlim[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQlim[nger] *= powerflow.options["BASE"]
+                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
+                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
                     powerflow.slackqlim = False
 
                 elif (
@@ -187,8 +187,8 @@ def qlimres(
                     >= value["potencia_reativa_maxima"]
                 ) and (powerflow.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
@@ -197,8 +197,8 @@ def qlimres(
                     <= value["potencia_reativa_minima"]
                 ) and (powerflow.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQlim[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQlim[nger] -= powerflow.solution[
+                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    powerflow.deltaQLIM[nger] -= powerflow.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
@@ -206,8 +206,8 @@ def qlimres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaQlim /= powerflow.options["BASE"]
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQlim)
+    powerflow.deltaQLIM /= powerflow.options["BASE"]
+    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQLIM)
 
 
 def qlimsubjac(

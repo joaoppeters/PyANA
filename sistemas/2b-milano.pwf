@@ -31,6 +31,6 @@ DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 BARR    2                                            10.
 99999
-EXLF NEWT ejac
-(EXIC NEWT QLIM
+EXLF NEWT QLIM
+EXIC NEWT QLIM
 FIM

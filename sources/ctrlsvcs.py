@@ -16,7 +16,7 @@ from calc import qcalc
 from smooth import svcsA, svcsAsmooth, svcsI, svcsIsmooth, svcsQ, svcsQsmooth
 
 
-def svcsol(
+def svcssol(
     powerflow,
 ):
     """variável de estado adicional para o problema de fluxo de potência
@@ -27,7 +27,9 @@ def svcsol(
 
     ## Inicialização
     # Variáveis
-    if "svc_reactive_generation" not in powerflow.solution:
+    if "svc_generation" not in powerflow.solution:
+        powerflow.solution["svc_generation"] = zeros([powerflow.ncer])
+        
         powerflow.Y = dict()
         powerflow.svcsch = dict()
         powerflow.svckeys = dict()
@@ -46,8 +48,8 @@ def svcsol(
                 powerflow.dbarDF["numero"] == value["barra_controlada"]
             ].tolist()[0]
 
-            powerflow.svckeys[value["nome"]] = dict()
-            powerflow.svckeys[value["nome"]][0] = list()
+            powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
+            powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][0] = list()
 
             powerflow.svcsch[idxcer] = dict()
             powerflow.svcsch[idxcer]["ch1"] = list()
@@ -56,9 +58,9 @@ def svcsol(
             if value["controle"] == "A":
                 powerflow.svcsch[idxcer]["ch3"] = list()
                 powerflow.svcsch[idxcer]["ch4"] = list()
-                powerflow.solution["svc_reactive_generation"] = value[
+                powerflow.solution["svc_generation"][idx] = value[
                     "potencia_reativa"
-                ].to_numpy()
+                ]
                 alphavar(
                     powerflow,
                 )
@@ -71,9 +73,9 @@ def svcsol(
                 )
 
             elif value["controle"] == "I":
-                powerflow.solution["svc_current_injection"] = value[
+                powerflow.solution["svc_generation"][idx] = value[
                     "potencia_reativa"
-                ].to_numpy()
+                ]
                 svcsI(
                     powerflow,
                     idx,
@@ -83,9 +85,9 @@ def svcsol(
                 )
 
             elif value["controle"] == "P":
-                powerflow.solution["svc_reactive_generation"] = value[
+                powerflow.solution["svc_generation"][idx] = value[
                     "potencia_reativa"
-                ].to_numpy()
+                ]
                 svcsQ(
                     powerflow,
                     idx,
@@ -109,10 +111,10 @@ def alphavar(
     """
 
     ## Inicialização
-    powerflow.nbusalphaxc = (powerflow.options["BASE"]) / (
+    powerflow.alphaxc = (powerflow.options["BASE"]) / (
         powerflow.dcerDF["potencia_reativa_maxima"][0]
     )
-    powerflow.nbusalphaxl = (
+    powerflow.alphaxl = (
         (powerflow.options["BASE"]) / (powerflow.dcerDF["potencia_reativa_maxima"][0])
     ) / (
         1
@@ -140,7 +142,7 @@ def alphavar(
             (4 / 3),
             0,
             0,
-            -(2 * pi) + ((powerflow.nbusalphaxl * pi) / powerflow.nbusalphaxc),
+            -(2 * pi) + ((powerflow.alphaxl * pi) / powerflow.alphaxc),
         ]
     )
     powerflow.solution["alpha"] = powerflow.solution["alpha"][
@@ -151,18 +153,18 @@ def alphavar(
     # Variáveis Simbólicas
     global alpha
     alpha = Symbol("alpha")
-    powerflow.nbusalphabeq = -(
-        (powerflow.nbusalphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha))
-        - powerflow.nbusalphaxl
-    ) / (powerflow.nbusalphaxc * powerflow.nbusalphaxl)
+    powerflow.alphabeq = -(
+        (powerflow.alphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha))
+        - powerflow.alphaxl
+    ) / (powerflow.alphaxc * powerflow.alphaxl)
 
     # Potência Reativa
     idxcer = powerflow.dbarDF.index[
         powerflow.dbarDF["numero"] == powerflow.dcerDF["barra"][0]
     ].tolist()[0]
-    powerflow.solution["svc_reactive_generation"][0] = (
+    powerflow.solution["svc_generation"][0] = (
         powerflow.solution["voltage"][idxcer] ** 2
-    ) * powerflow.nbusalphabeq.subs(alpha, powerflow.solution["alpha"])
+    ) * powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"])
 
 
 def svcres(
@@ -178,7 +180,7 @@ def svcres(
 
     ## Inicialização
     # Vetor de resíduos
-    powerflow.nbusdeltaSVC = zeros([powerflow.ncer])
+    powerflow.deltaSVC = zeros([powerflow.ncer])
 
     # Contador
     ncer = 0
@@ -201,7 +203,7 @@ def svcres(
                 case,
             )
             powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_reactive_generation"][ncer])
+                deepcopy(powerflow.solution["svc_generation"][ncer])
                 / powerflow.options["BASE"]
             )
 
@@ -214,7 +216,7 @@ def svcres(
                 case,
             )
             powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_current_injection"][ncer])
+                deepcopy(powerflow.solution["svc_generation"][ncer])
                 * powerflow.solution["voltage"][idxcer]
                 / powerflow.options["BASE"]
             )
@@ -228,7 +230,7 @@ def svcres(
                 case,
             )
             powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_reactive_generation"][ncer])
+                deepcopy(powerflow.solution["svc_generation"][ncer])
                 / powerflow.options["BASE"]
             )
 
@@ -244,7 +246,7 @@ def svcres(
         ncer += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.nbusdeltaSVC)
+    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaSVC)
 
 
 def svcsubjac(
@@ -308,19 +310,19 @@ def svcsubjac(
             powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
                 2
                 * powerflow.solution["voltage"][idxcer]
-                * float(powerflow.nbusalphabeq.subs(alpha, powerflow.solution["alpha"]))
+                * float(powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"]))
             )
             powerflow.nbusqx[idxcer, ncer] = -(
                 powerflow.solution["voltage"][idxcer] ** 2
             ) * float(
-                powerflow.nbusalphabeq.diff(alpha).subs(
+                powerflow.alphabeq.diff(alpha).subs(
                     alpha, powerflow.solution["alpha"]
                 )
             )
 
         elif value["controle"] == "I":
             powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
-                powerflow.solution["svc_current_injection"][ncer]
+                powerflow.solution["svc_generation"][ncer]
             ) / powerflow.options["BASE"]
             powerflow.nbusqx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
 
@@ -385,13 +387,13 @@ def svcupdt(
             ]
 
         elif value["controle"] == "I":
-            powerflow.solution["svc_current_injection"][ncer] += (
+            powerflow.solution["svc_generation"][ncer] += (
                 powerflow.statevar[(powerflow.nbusdimpresvc + ncer)]
                 * powerflow.options["BASE"]
             )
 
         elif value["controle"] == "P":
-            powerflow.solution["svc_reactive_generation"][ncer] += (
+            powerflow.solution["svc_generation"][ncer] += (
                 powerflow.statevar[(powerflow.nbusdimpresvc + ncer)]
                 * powerflow.options["BASE"]
             )
@@ -420,13 +422,13 @@ def svcsch(
             powerflow.dcerDF["controle"][0] == "P"
         ):
             powerflow.qsch[idxcer] += (
-                powerflow.solution["svc_reactive_generation"][ncer]
+                powerflow.solution["svc_generation"][ncer]
                 / powerflow.options["BASE"]
             )
 
         elif powerflow.dcerDF["controle"][0] == "I":
             powerflow.qsch[idxcer] += (
-                powerflow.solution["svc_current_injection"][ncer]
+                powerflow.solution["svc_generation"][ncer]
                 * powerflow.solution["voltage"][idxcer]
             ) / powerflow.options["BASE"]
 
@@ -447,8 +449,8 @@ def svccorr(
 
     ## Inicialização
     # Variável
-    powerflow.solution["svc_reactive_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["svc_reactive_generation"]
+    powerflow.solution["svc_generation"] = deepcopy(
+        powerflow.operationpoint[case]["p"]["svc_generation"]
     )
 
 
@@ -484,8 +486,8 @@ def svccpf(
     """
 
     ## Inicialização
-    powerflow.solution["svc_reactive_generation"] = deepcopy(
-        powerflow.solution["svc_reactive_generation"]
+    powerflow.solution["svc_generation"] = deepcopy(
+        powerflow.solution["svc_generation"]
     )
 
 
@@ -504,13 +506,13 @@ def svcsolcpf(
     # Condição
     precase = case - 1
     if case == 1:
-        powerflow.solution["svc_reactive_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["svc_reactive_generation"]
+        powerflow.solution["svc_generation"] = deepcopy(
+            powerflow.operationpoint[precase]["svc_generation"]
         )
 
     elif case > 1:
-        powerflow.solution["svc_reactive_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["p"]["svc_reactive_generation"]
+        powerflow.solution["svc_generation"] = deepcopy(
+            powerflow.operationpoint[precase]["p"]["svc_generation"]
         )
 
 

@@ -117,7 +117,7 @@ def var(
                     # Armazenamento de Potência Reativa
                     powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
                         powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
-                        item["svc_reactive_generation"][busidxcer],
+                        item["svc_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão
@@ -186,7 +186,7 @@ def var(
                     # Armazenamento de Potência Reativa
                     powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
                         powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
-                        item["c"]["svc_reactive_generation"][busidxcer],
+                        item["c"]["svc_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão Corrigida

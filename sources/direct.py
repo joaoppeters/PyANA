@@ -41,6 +41,7 @@ def poc(
             "demanda_reativa": deepcopy(powerflow.dbarDF["demanda_reativa"]),
             "eigen": 1.0 * (powerflow.mask),
             "sign": -1.0,
+            "cvgprint": False,
         }
     )
 
@@ -104,7 +105,8 @@ def poc(
         # Incremento de iteração
         powerflow.solution["iter"] += 1
 
-        print(norm(powerflow.statevar), powerflow.solution["lambda"])
+        if powerflow.solution["cvgprint"]:
+            print(norm(powerflow.statevar), powerflow.solution["lambda"])
 
         # Condição de Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:

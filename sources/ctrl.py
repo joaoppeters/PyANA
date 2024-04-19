@@ -118,7 +118,7 @@ def controlsol(
             powerflow.controlcount += 1
             powerflow.totaldevicescontrol += powerflow.ncer
             powerflow.controlorder[powerflow.controlcount] = "SVCs"
-            svcsol(
+            svcssol(
                 powerflow,
             )
         # controle de magnitude de tensão de barramentos
