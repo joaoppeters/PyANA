@@ -1,0 +1,45 @@
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ONS - MENSAL - NOVEMBRO 2020 - Pesada                                           
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM VLIM CREM CTAP STEP BPSI NEWT RCVG RMON FILE 80CO CONT CELO STPO CTAF CTAF IANG
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     0 Convergente    4    0.000    0.000    0.000 11477.14 MW      0.5000
+                      4    0.000    0.000    0.000  3348.70 Mvar    0.5000
+     1 Nao Converg. 101                                             0.5000
+                    101                                             0.5000
+     2 Convergente    9    0.250    0.250    0.034 11505.83 MW      0.2500
+                      9    0.250    0.250    0.039  3357.07 Mvar    0.2500
+     3 Nao Converg. 101                                             0.2500
+                    101                                             0.2500
+     4 Nao Converg. 101                                             0.1250
+                    101                                             0.1250
+     5 Nao Converg. 101                                             0.0625
+                    101                                             0.0625
+     6 Convergente    9    0.281    0.281    0.038 11509.42 MW      0.0312
+                      9    0.281    0.281    0.044  3358.12 Mvar    0.0312
+     7 Convergente    7    0.313    0.312    0.042 11513.01 MW      0.0312
+                      7    0.313    0.313    0.049  3359.16 Mvar    0.0312
+     8 Nao Converg. 101                                             0.0312
+                    101                                             0.0312
+     9 Convergente    7    0.328    0.328    0.044 11514.80 MW      0.0156
+                      7    0.328    0.328    0.051  3359.69 Mvar    0.0156
+    10 Nao Converg. 101                                             0.0156
+                    101                                             0.0156
+    11 Convergente    6    0.336    0.336    0.045 11515.70 MW      0.0078
+                      6    0.336    0.336    0.053  3359.95 Mvar    0.0078
+    12 Nao Converg. 101                                             0.0078
+                    101                                             0.0078
+    13 Convergente    6    0.340    0.340    0.046 11516.14 MW      0.0039
+                      6    0.340    0.340    0.053  3360.08 Mvar    0.0039
+    14 Nao Converg. 101                                             0.0039
+                    101                                             0.0039
+ 
+ Atingido incremento minimo

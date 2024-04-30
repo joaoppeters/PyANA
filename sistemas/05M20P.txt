@@ -1,0 +1,61 @@
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ONS - MENSAL - MAIO 2020 - Pesada                                               
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM VLIM CREM CTAP STEP BPSI NEWT RCVG RMON FILE 80CO CONT CELO STPO CTAF CTAF IANG
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     0 Convergente    4    0.000    0.000    0.000 81413.97 MW      0.5000
+                      4    0.000    0.000    0.000 19441.58 Mvar    0.5000
+     1 Convergente   15    0.500    0.500    0.500 81820.94 MW      0.5000
+                     15    0.500    0.500    0.500 19538.77 Mvar    0.5000
+     2 Convergente   13    1.000    1.000    1.000 82227.91 MW      0.5000
+                     13    1.000    1.000    1.000 19635.95 Mvar    0.5000
+     3 Convergente   13    1.500    1.500    1.500 82634.88 MW      0.5000
+                     13    1.500    1.500    1.500 19733.14 Mvar    0.5000
+     4 Convergente   13    2.000    2.000    2.000 83041.85 MW      0.5000
+                     13    2.000    2.000    2.000 19830.33 Mvar    0.5000
+     5 Convergente   14    2.500    2.499    2.499 83448.82 MW      0.5000
+                     14    2.500    2.499    2.499 19927.52 Mvar    0.5000
+     6 Convergente   14    3.000    2.999    2.999 83855.79 MW      0.5000
+                     14    3.000    2.999    2.999 20024.70 Mvar    0.5000
+     7 Convergente   13    3.500    3.499    3.499 84262.76 MW      0.5000
+                     13    3.500    3.499    3.499 20121.89 Mvar    0.5000
+     8 Convergente   14    4.000    3.999    3.999 84669.73 MW      0.5000
+                     14    4.000    3.999    3.999 20219.08 Mvar    0.5000
+     9 Convergente   16    4.500    4.499    4.499 85076.70 MW      0.5000
+                     16    4.500    4.499    4.499 20316.27 Mvar    0.5000
+    10 ControlCCnao   0                                             0.5000
+                      0                                             0.5000
+    11 Convergente   19    4.750    4.749    4.749 85280.18 MW      0.2500
+                     19    4.750    4.749    4.749 20364.86 Mvar    0.2500
+    12 ControlCCnao   0                                             0.2500
+                      0                                             0.2500
+    13 Convergente   17    4.875    4.874    4.874 85381.93 MW      0.1250
+                     17    4.875    4.874    4.874 20389.16 Mvar    0.1250
+    14 Convergente   23    5.000    4.999    4.999 85483.67 MW      0.1250
+                     23    5.000    4.999    4.999 20413.45 Mvar    0.1250
+    15 ControlCCnao   0                                             0.1250
+                      0                                             0.1250
+    16 Nao Converg. 101                                             0.0625
+                    101                                             0.0625
+    17 Convergente   13    5.031    5.030    5.030 85509.10 MW      0.0312
+                     13    5.031    5.030    5.030 20419.53 Mvar    0.0312
+    18 ControlCCnao   0                                             0.0312
+                      0                                             0.0312
+    19 ControlCCnao   0                                             0.0156
+                      0                                             0.0156
+    20 Convergente   11    5.039    5.038    5.038 85515.46 MW      0.0078
+                     11    5.039    5.038    5.038 20421.05 Mvar    0.0078
+    21 ControlCCnao   0                                             0.0078
+                      0                                             0.0078
+    22 Nao Converg. 101                                             0.0039
+                    101                                             0.0039
+ 
+ Atingido incremento minimo

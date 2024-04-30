@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "4b-passossvc.pwf"
+system = "12 - ONS - MENSAL - DEZEMBRO 2020 - PESADA - R2.pwf"
 
 method = "EXLF"
 # method = "EXIC"
 # method = "EXCE"
 # method = "EXSC"
 # method = "EXPC"
-# method = "EXDT"
+method = "EXDT"
 # method = "PWF"
 
 control = [
@@ -25,7 +25,7 @@ control = [
     # "FREQ",
     # "QLIM",
     # "QLIMs",
-    "SVCs",
+    # "SVCs",
 ]
 
 monitor = [
@@ -39,7 +39,7 @@ report = [
     "RBAR",
     # "RLIN",
     # "RGER",
-    "RCER",
+    # "RCER",
 ]
 
 PowerFlow(

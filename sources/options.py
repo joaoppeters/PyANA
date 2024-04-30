@@ -109,5 +109,5 @@ def options(
         powerflow.options["cpfBeta"] = zeros(powerflow.nbus)
         if powerflow.codes["DGER"]:
             for idx, value in powerflow.dgerDF.iterrows():
-                idx = value["numero"] - 1
+                # idx = value["numero"] - 1
                 powerflow.options["cpfBeta"][idx] = value["fator_participacao"]

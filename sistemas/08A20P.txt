@@ -1,0 +1,59 @@
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ONS - MENSAL - AGOSTO 2020 - Pesada                                             
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: QLIM VLIM CREM CTAP STEP BPSI NEWT RCVG RMON FILE 80CO CONT CELO STPO CTAF CTAF IANG
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     0 Convergente    3    0.000    0.000    0.000 79301.57 MW      0.5000
+                      3    0.000    0.000    0.000 18378.08 Mvar    0.5000
+     1 Convergente   17    0.500    0.500    0.500 79697.98 MW      0.5000
+                     17    0.500    0.500    0.500 18469.95 Mvar    0.5000
+     2 Convergente   13    1.000    1.000    1.000 80094.39 MW      0.5000
+                     13    1.000    1.000    1.000 18561.82 Mvar    0.5000
+     3 Convergente   13    1.500    1.500    1.500 80490.79 MW      0.5000
+                     13    1.500    1.500    1.500 18653.69 Mvar    0.5000
+     4 Convergente   14    2.000    1.999    1.999 80887.20 MW      0.5000
+                     14    2.000    2.000    2.000 18745.56 Mvar    0.5000
+     5 Convergente   12    2.500    2.499    2.499 81283.61 MW      0.5000
+                     12    2.500    2.499    2.499 18837.43 Mvar    0.5000
+     6 Convergente   13    3.000    2.999    2.999 81680.02 MW      0.5000
+                     13    3.000    2.999    2.999 18929.30 Mvar    0.5000
+     7 Convergente   17    3.500    3.499    3.499 82076.42 MW      0.5000
+                     17    3.500    3.499    3.499 19021.17 Mvar    0.5000
+     8 Convergente   12    4.000    3.999    3.999 82472.83 MW      0.5000
+                     12    4.000    3.999    3.999 19113.04 Mvar    0.5000
+     9 Convergente   11    4.500    4.499    4.499 82869.24 MW      0.5000
+                     11    4.500    4.499    4.499 19204.91 Mvar    0.5000
+    10 Convergente   12    5.000    4.999    4.999 83265.65 MW      0.5000
+                     12    5.000    4.999    4.999 19296.78 Mvar    0.5000
+    11 Convergente   11    5.500    5.499    5.499 83662.06 MW      0.5000
+                     11    5.500    5.499    5.499 19388.65 Mvar    0.5000
+    12 Convergente   12    6.000    5.998    5.998 84058.46 MW      0.5000
+                     12    6.000    5.999    5.999 19480.52 Mvar    0.5000
+    13 Nao Converg. 101                                             0.5000
+                    101                                             0.5000
+    14 ControlCCnao   0                                             0.2500
+                      0                                             0.2500
+    15 Convergente   13    6.125    6.123    6.123 84157.57 MW      0.1250
+                     13    6.125    6.124    6.124 19503.49 Mvar    0.1250
+    16 Nao Converg. 101                                             0.1250
+                    101                                             0.1250
+    17 ControlCCnao   0                                             0.0625
+                      0                                             0.0625
+    18 Divergente    47                                             0.0312
+                     47                                             0.0312
+    19 Nao Converg. 101                                             0.0156
+                    101                                             0.0156
+    20 ControlCCnao   0                                             0.0078
+                      0                                             0.0078
+    21 Nao Converg. 101                                             0.0039
+                    101                                             0.0039
+ 
+ Atingido incremento minimo

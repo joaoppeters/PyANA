@@ -17,10 +17,80 @@ def fdata(
     """
 
     ## Inicialização
+
+    bus = list()
+    for idx, value in powerflow.dgerDF.iterrows():
+        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
+        area = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "area"].values[0]
+        if "UHE" in nome:
+            bus.append((nome, value["numero"], area))
+            # print(value["numero"], nome, area)
+
+    bus.sort()
+    for i in bus:
+        print(i)
+
+
+    i = 1
+    pgtotal = 0
+    bus = ['3IRMAOUHE', 'CAPIVAUHE', 'ESTREIUHE', 'FURNASUHE', 'I.SOLTUHE', 'ITUMBIUHE', 'JUPI--UHE', 'JUPI--UHE', 'MARIMBUHE', 'PCOLOMUHE', 'TAQUARUHE', 'V.GRD-UHE']
+    for idx, value in powerflow.dgerDF.iterrows():
+        pg = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"].values[0]
+        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
+        for n in bus:
+            if n in nome:
+                pgtotal += pg
+                # print(value["numero"], pg, value["potencia_ativa_maxima"], pg*100/value["potencia_ativa_maxima"])
+                i += 1
+
+    i = 0
+    for idx, value in powerflow.dgerDF.iterrows():
+        flag = False
+        pg = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"].values[0]
+        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
+        for n in bus:
+            if n in nome:
+                flag = True
+                break
+        if flag:    
+            print(pg/pgtotal*100)
+            i += 1
+        else:
+            print(0)
+
+    print(i)
+
+    print(powerflow.dgerDF.shape[0])
+
+
+
+
+
     # barra500 = powerflow.dbarDF.loc[powerflow.dbarDF["grupo_base_tensao"] == 'B ']
     # lt500 = powerflow.dlinDF.loc[(powerflow.dlinDF["de"].isin(barra500.numero.values)) & (powerflow.dlinDF["para"].isin(barra500.numero.values))]
 
+    # area = powerflow.dbarDF["area"].value_counts()
+    # for value, count in area.items():
+    #     print(f"{value}: {count}")
 
+    # areatype = powerflow.dbarDF.groupby("area")["tipo"].value_counts()
+    # for (value1, value2), count in areatype.items():
+    #     print(f"AREA: {value1}, TYPE: {value2}, Count: {count}")
+
+    area = powerflow.dbarDF.loc[powerflow.dbarDF.area==1, "numero"].tolist()
+    # print(area, len(area))
+
+    for idx, value in powerflow.dlinDF.iterrows():
+        if (value.de in area and value.para not in area) or\
+            (value.de not in area and value.para in area):
+            if value.de in area or value.para in area:
+                # print(value.de, value.para)
+                try:
+                    area.remove(value.de)
+                except:
+                    area.remove(value.para)
+
+    print(area, len(area))
     print("Pl", powerflow.dbarDF.demanda_ativa.sum())
     print("Ql", powerflow.dbarDF.demanda_reativa.sum())
     print("Pg", powerflow.dbarDF.potencia_ativa.sum())

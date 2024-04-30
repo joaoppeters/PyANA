@@ -225,7 +225,7 @@ def dare(
         powerflow.codes["DARE"] = True
 
         # Numero de Areas
-        powerflow.narea = powerflow.dareDF.shape
+        powerflow.narea = powerflow.dareDF.shape[0]
         powerflow.areas = sorted(powerflow.dareDF["numero"].unique())
 
 
@@ -532,12 +532,12 @@ def dbar(
         powerflow.nbus = len(powerflow.dbarDF.tipo.values)
 
         # Barras geradoras: número & máscara
-        powerflow.nger = 0
+        powerflow.npv = 0
         powerflow.maskP = ones(powerflow.nbus, dtype=bool)
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
         for idx, value in powerflow.dbarDF.iterrows():
             if (value["tipo"] == 2) or (value["tipo"] == 1):
-                powerflow.nger += 1
+                powerflow.npv += 1
                 powerflow.maskQ[idx] = False
 
                 if value["tipo"] == 2:
@@ -565,11 +565,11 @@ def dbar(
 
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
-        # Número de barras PV
-        powerflow.npv = powerflow.nger - 1
+        # # Número de barras PV
+        # powerflow.npv = powerflow.nger - 1
 
         # Número de barras PQ
-        powerflow.npq = powerflow.nbus - powerflow.nger
+        powerflow.npq = powerflow.nbus - powerflow.npv
 
         # Tensao Base
         powerflow.dbarDF.loc[
@@ -923,6 +923,8 @@ def dger(
         powerflow.dgerDF["fator_participacao"] = powerflow.dgerDF[
             "fator_participacao"
         ].apply(lambda x: x * 1e-2)
+
+        powerflow.nger = powerflow.dgerDF.shape[0]
 
 
 def dglt(
