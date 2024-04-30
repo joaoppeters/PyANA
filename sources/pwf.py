@@ -152,9 +152,9 @@ def readfile(
             powerflow.dbsh2 = dict()
             powerflow.dbsh1["ruler"] = powerflow.lines[powerflow.linecount][:]
             powerflow.dbsh2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
-            # dbsh(
-            #     powerflow,
-            # )
+            dbsh(
+                powerflow,
+            )
 
         # Dados de Compensadores Estáticos de Potência Reativa
         elif powerflow.lines[powerflow.linecount].strip() == "DCER":
@@ -206,9 +206,9 @@ def readfile(
             powerflow.linecount += 1
             powerflow.dinc = dict()
             powerflow.dinc["ruler"] = powerflow.lines[powerflow.linecount][:]
-            # dinc(
-            #     powerflow,
-            # )
+            dinc(
+                powerflow,
+            )
 
         # Dados de Injeções de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
         elif powerflow.lines[powerflow.linecount].strip() == "DINJ":

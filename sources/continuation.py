@@ -164,7 +164,7 @@ def exicloop(
             case,
         )
 
-        if powerflow.solution["cvgprint"]:
+        if powerflow.solution["cvgprint"] and powerflow.solution["convergence"] == "SISTEMA CONVERGENTE":
             exiccvgprint(powerflow, case,)
 
         # Break Curva de Carregamento - Parte Estável
@@ -1196,3 +1196,6 @@ def exiccvgprint(
                     * 1e2,
                 )
             print("\n")
+
+        if powerflow.options["LMBD"] * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"]) * 1e2 < 2e-07:
+            print()

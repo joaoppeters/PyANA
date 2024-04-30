@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "12 - ONS - MENSAL - DEZEMBRO 2020 - PESADA - R2.pwf"
+system = "ieee14.pwf"
 
 method = "EXLF"
-# method = "EXIC"
+method = "EXIC"
 # method = "EXCE"
 # method = "EXSC"
 # method = "EXPC"
-method = "EXDT"
+# method = "EXDT"
 # method = "PWF"
 
 control = [
