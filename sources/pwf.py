@@ -40,7 +40,7 @@ def pwf(
     readfile(
         powerflow,
     )
-    
+
     print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
 
 

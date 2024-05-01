@@ -33,7 +33,7 @@ def increment(
             powerflow.dbarDF.at[idxbar, "demanda_reativa"] = powerflow.solution[
                 "demanda_reativa"
             ][idxbar] * (1 + powerflow.solution["lambda"])
-            
+
     # Prediction-Correction Method (Ajjarapu & Christy, 1992)
     elif powerflow.solution["method"] == "EXIC":
         for idxinc, valueinc in powerflow.dincDF.iterrows():
@@ -42,12 +42,16 @@ def increment(
                 for idxbar, valuebar in powerflow.dbarDF.iterrows():
                     if valuebar["area"] == valueinc["identificacao_incremento_1"]:
                         # Incremento de Carregamento
-                        powerflow.dbarDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
-                            "demanda_ativa"
-                        ][idxbar] * (1 + powerflow.solution["stepsch"])
-                        powerflow.dbarDF.at[idxbar, "demanda_reativa"] = powerflow.solution[
-                            "demanda_reativa"
-                        ][idxbar] * (1 + powerflow.solution["stepsch"])
+                        powerflow.dbarDF.at[
+                            idxbar, "demanda_ativa"
+                        ] = powerflow.solution["demanda_ativa"][idxbar] * (
+                            1 + powerflow.solution["stepsch"]
+                        )
+                        powerflow.dbarDF.at[
+                            idxbar, "demanda_reativa"
+                        ] = powerflow.solution["demanda_reativa"][idxbar] * (
+                            1 + powerflow.solution["stepsch"]
+                        )
 
             # Incremento de carregamento específico por BARRA
             elif valueinc["tipo_incremento_1"] == "BARR":
@@ -60,7 +64,9 @@ def increment(
                     "demanda_reativa"
                 ][idxinc] * (1 + powerflow.solution["stepsch"])
 
-        deltaincrement = sum(powerflow.dbarDF["demanda_ativa"].to_numpy()) - preincrement
+        deltaincrement = (
+            sum(powerflow.dbarDF["demanda_ativa"].to_numpy()) - preincrement
+        )
 
         # Incremento de geração
         if powerflow.codes["DGER"]:

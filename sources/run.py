@@ -10,10 +10,10 @@ from powerflow import PowerFlow
 
 system = "ieee14.pwf"
 
-method = "EXLF"
-method = "EXIC"
+# method = "EXLF"
+# method = "EXIC"
 # method = "EXCE"
-# method = "EXSC"
+method = "EXSC"
 # method = "EXPC"
 # method = "EXDT"
 # method = "PWF"

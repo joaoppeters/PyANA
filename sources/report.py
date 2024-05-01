@@ -806,7 +806,10 @@ def tobecontinued(
                 varv = value["c"]["voltage"] - powerflow.operationpoint[0]["voltage"]
 
             elif key > 1:
-                varv = value["c"]["voltage"] - powerflow.operationpoint[key - 1]["c"]["voltage"]
+                varv = (
+                    value["c"]["voltage"]
+                    - powerflow.operationpoint[key - 1]["c"]["voltage"]
+                )
 
             arg = argsort(varv)
 

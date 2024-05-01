@@ -7,10 +7,23 @@
 # ------------------------------------- #
 
 from matplotlib.pyplot import axis, close, figure, hist, plot, scatter, show, title
-from numpy import abs, array, exp, mean, nonzero, pi, sqrt, std, sum, random, where
+from numpy import (
+    abs,
+    array,
+    exp,
+    linspace,
+    mean,
+    nonzero,
+    pi,
+    sqrt,
+    std,
+    sum,
+    random,
+    where,
+)
 
 
-def stoch1(
+def stoch_individualized(
     powerflow,
 ):
     """inicialização
@@ -20,70 +33,64 @@ def stoch1(
     """
 
     ## Inicialização
-    # random.seed(1)
+    random.seed(1)
 
-    ptload0 = sum(array(powerflow.dbarDF["demanda_ativa"].to_list()) * 1e-2)
-    qtload0 = sum(array(powerflow.dbarDF["demanda_reativa"].to_list()) * 1e-2)
+    ptload0 = 1e-2 * powerflow.dbarDF.demanda_ativa.sum()
+    qtload0 = 1e-2 * powerflow.dbarDF.demanda_reativa.sum()
 
-    idx_pload_bus = nonzero(array(powerflow.dbarDF["demanda_ativa"].to_list()))
-    mup = array(powerflow.dbarDF["demanda_ativa"].to_list()) * 1e-2
-    mup = mup[where(mup != 0)]
-    sigmap = [10e-2 if all(mup - 0.5 > 0) else (mup * 0.2)]
+    mean_active = 1e-2 * powerflow.dbarDF["demanda_ativa"].values
+    var_active = mean_active * 0.2
+    mean_reactive = 1e-2 * powerflow.dbarDF["demanda_reativa"].values
+    var_reactive = mean_reactive * 0.2
 
-    idx_qload_bus = nonzero(array(powerflow.dbarDF["demanda_reativa"].to_list()))
-    muq = array(powerflow.dbarDF["demanda_reativa"].to_list()) * 1e-2
-    muq = muq[where(muq != 0)]
-    sigmaq = [10e-2 if (all(muq - 0.5 > 0) or all(muq + 0.5 < 0)) else abs(muq * 0.2)]
+    points = 50
+    pop = []
+    qop = []
 
-    operative_points = {}
-    idx_op = 1
-    points = 1000
+    for idx, value in enumerate(powerflow.maskpL):
+        if value:
+            x = linspace(
+                mean_active[idx] - 5 * var_active[idx],
+                mean_active[idx] + 5 * var_active[idx],
+                points,
+            )
+            y = (1 / (sqrt(2 * pi) * var_active[idx])) * exp(
+                -((x - mean_active[idx]) ** 2) / (2 * var_active[idx] ** 2)
+            )
 
-    for idx, value in enumerate(mup):
-        figure(1)
-        count, bins, ignored = hist(
-            random.normal(mup[idx - 1], sigmap[idx - 1], points), 100, density=True
-        )
+            ptload = ptload0 - powerflow.dbarDF["demanda_ativa"].values[idx] * 1e-2 + x
 
-        ptload = (
-            ptload0
-            - array(powerflow.dbarDF["demanda_ativa"].to_list())[idx_pload_bus[0][idx]]
-            * 1e-2
-            + bins
-        )
+            for p in ptload:
+                pop.append(p)
 
-        for valueptl in ptload:
-            operative_points[idx_op] = (valueptl, qtload0)
-            idx_op += 1
+    for idx, value in enumerate(powerflow.maskqL):
+        if value:
+            x = linspace(
+                mean_reactive[idx] - 5 * var_reactive[idx],
+                mean_reactive[idx] + 5 * var_reactive[idx],
+                points,
+            )
+            y = (1 / (sqrt(2 * pi) * var_reactive[idx])) * exp(
+                -((x - mean_reactive[idx]) ** 2) / (2 * var_reactive[idx] ** 2)
+            )
 
-    for idx, value in enumerate(muq):
-        figure(2)
-        count, bins, ignored = hist(
-            random.normal(muq[idx - 1], sigmaq[idx - 1], points), 100, density=True
-        )
+            qtload = (
+                qtload0 - powerflow.dbarDF["demanda_reativa"].values[idx] * 1e-2 + x
+            )
 
-        qtload = (
-            qtload0
-            - array(powerflow.dbarDF["demanda_reativa"].to_list())[
-                idx_qload_bus[0][idx]
-            ]
-            * 1e-2
-            + bins
-        )
+            for q in qtload:
+                qop.append(q)
 
-        for valueqtl in qtload:
-            operative_points[idx_op] = (ptload0, valueqtl)
-            idx_op += 1
-
-    figure(3)
-    for i in operative_points:
-        (x, y) = operative_points.get(i)
+    figure(1)
+    op = convolution(pop, qop)
+    for (x, y) in op:
         scatter(x, y)
 
+    show()
     print()
 
 
-def stoch2(
+def stoch_generalized(
     powerflow,
 ):
     """inicialização
@@ -109,3 +116,21 @@ def stoch2(
     show()
 
     print()
+
+
+def convolution(list1, list2):
+    """
+    Convolute two lists of floats into a single list of tuples.
+
+    Args:
+    list1: First list containing floats.
+    list2: Second list containing floats.
+
+    Returns:
+    List of tuples representing all possible combinations of floats from input lists.
+    """
+    result = []
+    for item1 in list1:
+        for item2 in list2:
+            result.append((item1, item2))
+    return result

@@ -14,6 +14,7 @@ from sympy.functions import exp as spexp
 
 from folder import smoothfolder
 
+
 def qlims(
     powerflow,
     idx,
@@ -329,8 +330,7 @@ def svcsQ(
                 powerflow.options["BASE"]
                 * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_generation"][ncer]
-            / powerflow.options["BASE"],
+            qgk: powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"],
         }
     )
 
@@ -341,17 +341,25 @@ def svcsQ(
 
     ## Chaves
     # Chave Superior de Potência Reativa - Região Indutiva
-    powerflow.svcsch[idxcer]["ch1"] = 1 / (1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup)))
+    powerflow.svcsch[idxcer]["ch1"] = 1 / (
+        1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup))
+    )
 
     # Chave Inferior de Poência Reativa - Região Capacitiva
-    powerflow.svcsch[idxcer]["ch2"] = 1 / (1 + spexp(powerflow.options["SIGK"] * (vm - vliminf)))
+    powerflow.svcsch[idxcer]["ch2"] = 1 / (
+        1 + spexp(powerflow.options["SIGK"] * (vm - vliminf))
+    )
 
     ## Equações de Controle
     # Região Indutiva
     Yindutiva = (powerflow.svcsch[idxcer]["ch1"]) * (-(vk**2) * bmin + qgk)
 
     # Região Linear
-    Ylinear = (1 - powerflow.svcsch[idxcer]["ch1"]) * (1 - powerflow.svcsch[idxcer]["ch2"]) * (-vmsch - (r * qgk) + vm)
+    Ylinear = (
+        (1 - powerflow.svcsch[idxcer]["ch1"])
+        * (1 - powerflow.svcsch[idxcer]["ch2"])
+        * (-vmsch - (r * qgk) + vm)
+    )
 
     # Região Capacitiva
     Ycapacitiva = (powerflow.svcsch[idxcer]["ch2"]) * (-(vk**2) * bmax + qgk)
@@ -424,8 +432,7 @@ def svcsQsmooth(
                 powerflow.options["BASE"]
                 * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_generation"][ncer]
-            / powerflow.options["BASE"],
+            qgk: powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"],
         }
     )
 

@@ -67,7 +67,9 @@ def updtstt(
         if powerflow.solution["varstep"] == "lambda":
             powerflow.solution["voltage"][powerflow.maskQ] += (
                 powerflow.solution["sign"]
-                * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+                * powerflow.statevar[
+                    (powerflow.Tval) : (powerflow.Tval + powerflow.Vval)
+                ]
             )
             powerflow.solution["stepsch"] += powerflow.statevar[-1]
 
@@ -120,7 +122,6 @@ def updtstt(
             powerflow,
         )
 
-    
 
 def updtpwr(
     powerflow,

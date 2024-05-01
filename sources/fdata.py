@@ -20,8 +20,12 @@ def fdata(
 
     bus = list()
     for idx, value in powerflow.dgerDF.iterrows():
-        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
-        area = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "area"].values[0]
+        nome = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "nome"
+        ].values[0]
+        area = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "area"
+        ].values[0]
         if "UHE" in nome:
             bus.append((nome, value["numero"], area))
             # print(value["numero"], nome, area)
@@ -30,13 +34,29 @@ def fdata(
     for i in bus:
         print(i)
 
-
     i = 1
     pgtotal = 0
-    bus = ['3IRMAOUHE', 'CAPIVAUHE', 'ESTREIUHE', 'FURNASUHE', 'I.SOLTUHE', 'ITUMBIUHE', 'JUPI--UHE', 'JUPI--UHE', 'MARIMBUHE', 'PCOLOMUHE', 'TAQUARUHE', 'V.GRD-UHE']
+    bus = [
+        "3IRMAOUHE",
+        "CAPIVAUHE",
+        "ESTREIUHE",
+        "FURNASUHE",
+        "I.SOLTUHE",
+        "ITUMBIUHE",
+        "JUPI--UHE",
+        "JUPI--UHE",
+        "MARIMBUHE",
+        "PCOLOMUHE",
+        "TAQUARUHE",
+        "V.GRD-UHE",
+    ]
     for idx, value in powerflow.dgerDF.iterrows():
-        pg = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"].values[0]
-        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
+        pg = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"
+        ].values[0]
+        nome = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "nome"
+        ].values[0]
         for n in bus:
             if n in nome:
                 pgtotal += pg
@@ -46,14 +66,18 @@ def fdata(
     i = 0
     for idx, value in powerflow.dgerDF.iterrows():
         flag = False
-        pg = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"].values[0]
-        nome = powerflow.dbarDF.loc[powerflow.dbarDF["numero"] == value["numero"], "nome"].values[0]
+        pg = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "potencia_ativa"
+        ].values[0]
+        nome = powerflow.dbarDF.loc[
+            powerflow.dbarDF["numero"] == value["numero"], "nome"
+        ].values[0]
         for n in bus:
             if n in nome:
                 flag = True
                 break
-        if flag:    
-            print(pg/pgtotal*100)
+        if flag:
+            print(pg / pgtotal * 100)
             i += 1
         else:
             print(0)
@@ -61,10 +85,6 @@ def fdata(
     print(i)
 
     print(powerflow.dgerDF.shape[0])
-
-
-
-
 
     # barra500 = powerflow.dbarDF.loc[powerflow.dbarDF["grupo_base_tensao"] == 'B ']
     # lt500 = powerflow.dlinDF.loc[(powerflow.dlinDF["de"].isin(barra500.numero.values)) & (powerflow.dlinDF["para"].isin(barra500.numero.values))]
@@ -77,12 +97,13 @@ def fdata(
     # for (value1, value2), count in areatype.items():
     #     print(f"AREA: {value1}, TYPE: {value2}, Count: {count}")
 
-    area = powerflow.dbarDF.loc[powerflow.dbarDF.area==1, "numero"].tolist()
+    area = powerflow.dbarDF.loc[powerflow.dbarDF.area == 1, "numero"].tolist()
     # print(area, len(area))
 
     for idx, value in powerflow.dlinDF.iterrows():
-        if (value.de in area and value.para not in area) or\
-            (value.de not in area and value.para in area):
+        if (value.de in area and value.para not in area) or (
+            value.de not in area and value.para in area
+        ):
             if value.de in area or value.para in area:
                 # print(value.de, value.para)
                 try:
@@ -96,22 +117,11 @@ def fdata(
     print("Pg", powerflow.dbarDF.potencia_ativa.sum())
     print("Qg", powerflow.dbarDF.potencia_reativa.sum())
 
-    gen = powerflow.dbarDF.loc[(powerflow.dbarDF["tipo"] != 0) & (powerflow.dbarDF["potencia_ativa"] > 0.)]
+    gen = powerflow.dbarDF.loc[
+        (powerflow.dbarDF["tipo"] != 0) & (powerflow.dbarDF["potencia_ativa"] > 0.0)
+    ]
 
     print()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     ## ESTADOS NORTE DO BRASIL: AC, AP, AM, PA, TO, RO, RR
     ## ESTADOS NORDESTE DO BRASIL: AL, BA, CE, MA, PB, PE, PI, RN, SE

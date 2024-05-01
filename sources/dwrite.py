@@ -442,7 +442,7 @@ def writedinj(
     file,
 ):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """

@@ -63,7 +63,9 @@ def residue(
 
             elif powerflow.solution["pmc"]:
                 powerflow.deltaPQY[-1] = (
-                    -1 * powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"])
+                    -1
+                    * powerflow.options["LMBD"]
+                    * (5e-1 ** powerflow.solution["ndiv"])
                 )
 
         elif powerflow.solution["varstep"] == "volt":

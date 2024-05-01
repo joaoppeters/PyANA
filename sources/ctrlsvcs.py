@@ -29,7 +29,7 @@ def svcssol(
     # Variáveis
     if "svc_generation" not in powerflow.solution:
         powerflow.solution["svc_generation"] = zeros([powerflow.ncer])
-        
+
         powerflow.Y = dict()
         powerflow.svcsch = dict()
         powerflow.svckeys = dict()
@@ -58,9 +58,7 @@ def svcssol(
             if value["controle"] == "A":
                 powerflow.svcsch[idxcer]["ch3"] = list()
                 powerflow.svcsch[idxcer]["ch4"] = list()
-                powerflow.solution["svc_generation"][idx] = value[
-                    "potencia_reativa"
-                ]
+                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
                 alphavar(
                     powerflow,
                 )
@@ -73,9 +71,7 @@ def svcssol(
                 )
 
             elif value["controle"] == "I":
-                powerflow.solution["svc_generation"][idx] = value[
-                    "potencia_reativa"
-                ]
+                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
                 svcsI(
                     powerflow,
                     idx,
@@ -85,9 +81,7 @@ def svcssol(
                 )
 
             elif value["controle"] == "P":
-                powerflow.solution["svc_generation"][idx] = value[
-                    "potencia_reativa"
-                ]
+                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
                 svcsQ(
                     powerflow,
                     idx,
@@ -315,9 +309,7 @@ def svcsubjac(
             powerflow.nbusqx[idxcer, ncer] = -(
                 powerflow.solution["voltage"][idxcer] ** 2
             ) * float(
-                powerflow.alphabeq.diff(alpha).subs(
-                    alpha, powerflow.solution["alpha"]
-                )
+                powerflow.alphabeq.diff(alpha).subs(alpha, powerflow.solution["alpha"])
             )
 
         elif value["controle"] == "I":
@@ -422,8 +414,7 @@ def svcsch(
             powerflow.dcerDF["controle"][0] == "P"
         ):
             powerflow.qsch[idxcer] += (
-                powerflow.solution["svc_generation"][ncer]
-                / powerflow.options["BASE"]
+                powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"]
             )
 
         elif powerflow.dcerDF["controle"][0] == "I":

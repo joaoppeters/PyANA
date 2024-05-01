@@ -123,17 +123,17 @@ def methodo(
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
         from admittance import admit
-        from stochastic import stoch1, stoch2
+        from stochastic import stoch_individualized, stoch_generalized
 
         admit(
             powerflow,
         )
 
-        stoch1(
+        stoch_individualized(
             powerflow,
         )
 
-        stoch2(
+        stoch_generalized(
             powerflow,
         )
 

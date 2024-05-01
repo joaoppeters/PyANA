@@ -534,7 +534,9 @@ def dbar(
         # Barras geradoras: número & máscara
         powerflow.npv = 0
         powerflow.maskP = ones(powerflow.nbus, dtype=bool)
+        powerflow.maskpL = ones(powerflow.nbus, dtype=bool)
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
+        powerflow.maskqL = ones(powerflow.nbus, dtype=bool)
         for idx, value in powerflow.dbarDF.iterrows():
             if (value["tipo"] == 2) or (value["tipo"] == 1):
                 powerflow.npv += 1
@@ -559,6 +561,12 @@ def dbar(
 
             elif value["tipo"] == 0:
                 powerflow.dbarDF.at[idx, "angulo"] = 0.0
+
+            if value["demanda_ativa"] == 0.0:
+                powerflow.maskpL[idx] = False
+
+            if value["demanda_reativa"] == 0.0:
+                powerflow.maskqL[idx] = False
 
             if value["grupo_base_tensao"] == "0":
                 powerflow.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
@@ -1191,7 +1199,7 @@ def dinj(
         )
     else:
         powerflow.codes["DINJ"] = True
-        precision = lambda x: tuple(len(p) for p in str(x).split('.'))
+        precision = lambda x: tuple(len(p) for p in str(x).split("."))
 
         for idx, value in powerflow.dinjDF.iterrows():
             precision(powerflow.dinj.injecao_ativa_eq[idx])
@@ -1203,7 +1211,7 @@ def dinj(
 
             powerflow.dbarDF.loc[
                 powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
-            ] += -value["injecao_reativa_eq"] + value["shunt_eq"]
+            ] += (-value["injecao_reativa_eq"] + value["shunt_eq"])
 
             # powerflow.dbarDF.loc[
             #     powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"

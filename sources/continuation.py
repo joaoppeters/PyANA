@@ -164,8 +164,14 @@ def exicloop(
             case,
         )
 
-        if powerflow.solution["cvgprint"] and powerflow.solution["convergence"] == "SISTEMA CONVERGENTE":
-            exiccvgprint(powerflow, case,)
+        if (
+            powerflow.solution["cvgprint"]
+            and powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
+        ):
+            exiccvgprint(
+                powerflow,
+                case,
+            )
 
         # Break Curva de Carregamento - Parte Estável
         if (not powerflow.options["FULL"]) and (powerflow.solution["pmc"]):
@@ -441,16 +447,26 @@ def correction(
         )
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-        powerflow.solution["voltage"] = deepcopy(powerflow.operationpoint[case]["c"]["voltage"])
-        powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["c"]["theta"])
+        powerflow.solution["voltage"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["voltage"]
+        )
+        powerflow.solution["theta"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["theta"]
+        )
 
         # Reconfiguração da variável de passo
         powerflow.solution["ndiv"] += 1
 
         # Reconfiguração do valor da variável de passo
-        powerflow.solution["step"] = deepcopy(powerflow.operationpoint[case]["c"]["step"])
-        powerflow.solution["stepsch"] = deepcopy(powerflow.operationpoint[case]["c"]["stepsch"])
-        powerflow.solution["vsch"] = deepcopy(powerflow.operationpoint[case]["c"]["vsch"])
+        powerflow.solution["step"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["step"]
+        )
+        powerflow.solution["stepsch"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["stepsch"]
+        )
+        powerflow.solution["vsch"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["vsch"]
+        )
 
     # Reconfiguração dos Dados de Solução em Caso de Divergência
     elif ((powerflow.solution["iter"] >= powerflow.options["ACIT"])) and (case > 1):
@@ -464,16 +480,26 @@ def correction(
         )
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-        powerflow.solution["voltage"] = deepcopy(powerflow.operationpoint[case]["c"]["voltage"])
-        powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["c"]["theta"])
+        powerflow.solution["voltage"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["voltage"]
+        )
+        powerflow.solution["theta"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["theta"]
+        )
 
         # Reconfiguração da variável de passo
         powerflow.solution["ndiv"] += 1
 
         # Reconfiguração do valor da variável de passo
-        powerflow.solution["step"] = deepcopy(powerflow.operationpoint[case]["c"]["step"])
-        powerflow.solution["stepsch"] = deepcopy(powerflow.operationpoint[case]["c"]["stepsch"])
-        powerflow.solution["vsch"] = deepcopy(powerflow.operationpoint[case]["c"]["vsch"])
+        powerflow.solution["step"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["step"]
+        )
+        powerflow.solution["stepsch"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["stepsch"]
+        )
+        powerflow.solution["vsch"] = deepcopy(
+            powerflow.operationpoint[case]["c"]["vsch"]
+        )
     return case
 
 
@@ -508,7 +534,9 @@ def exicresidue(
 
             elif powerflow.solution["pmc"]:
                 powerflow.deltaPQY[-1] = (
-                    -1 * powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"])
+                    -1
+                    * powerflow.options["LMBD"]
+                    * (5e-1 ** powerflow.solution["ndiv"])
                 )
 
         elif powerflow.solution["varstep"] == "volt":
@@ -601,7 +629,9 @@ def update_statevar(
         if powerflow.solution["varstep"] == "lambda":
             powerflow.solution["voltage"][powerflow.maskQ] += (
                 powerflow.solution["sign"]
-                * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+                * powerflow.statevar[
+                    (powerflow.Tval) : (powerflow.Tval + powerflow.Vval)
+                ]
             )
             powerflow.solution["stepsch"] += powerflow.statevar[-1]
 
@@ -650,8 +680,10 @@ def update_statevar(
         controlupdt(
             powerflow,
         )
-        
-    updtpwr(powerflow,)
+
+    updtpwr(
+        powerflow,
+    )
 
 
 def exicstorage(
@@ -732,7 +764,9 @@ def exicevaluate(
         varvolt = abs(
             (
                 powerflow.operationpoint[case]["c"]["voltage"][powerflow.nodevarvolt]
-                - powerflow.operationpoint[case - 1]["c"]["voltage"][powerflow.nodevarvolt]
+                - powerflow.operationpoint[case - 1]["c"]["voltage"][
+                    powerflow.nodevarvolt
+                ]
             )
             / powerflow.operationpoint[case]["c"]["voltage"][powerflow.nodevarvolt]
         )
@@ -752,7 +786,9 @@ def exicevaluate(
                 and (not powerflow.solution["v2l"])
             ):
                 powerflow.solution["varstep"] = "lambda"
-                powerflow.options["LMBD"] = deepcopy(powerflow.operationpoint[1]["c"]["step"])
+                powerflow.options["LMBD"] = deepcopy(
+                    powerflow.operationpoint[1]["c"]["step"]
+                )
                 powerflow.solution["v2l"] = True
                 powerflow.solution["ndiv"] = 0
                 powerflow.v2lidx = deepcopy(case)
@@ -836,8 +872,12 @@ def exicheuristics(
             powerflow.solution["ndiv"] = self.auxdiv
 
             # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-            powerflow.solution["voltage"] = deepcopy(powerflow.operationpoint[case]["voltage"])
-            powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["theta"])
+            powerflow.solution["voltage"] = deepcopy(
+                powerflow.operationpoint[case]["voltage"]
+            )
+            powerflow.solution["theta"] = deepcopy(
+                powerflow.operationpoint[case]["theta"]
+            )
 
     elif (
         (powerflow.name != "ieee24")
@@ -884,8 +924,12 @@ def exicheuristics(
             powerflow.solution["ndiv"] = self.auxdiv
 
             # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-            powerflow.solution["voltage"] = deepcopy(powerflow.operationpoint[case]["voltage"])
-            powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["theta"])
+            powerflow.solution["voltage"] = deepcopy(
+                powerflow.operationpoint[case]["voltage"]
+            )
+            powerflow.solution["theta"] = deepcopy(
+                powerflow.operationpoint[case]["theta"]
+            )
 
     elif (
         (powerflow.name != "ieee24")
@@ -935,7 +979,9 @@ def exicheuristics(
             powerflow.solution["voltage"] = deepcopy(
                 powerflow.operationpoint[case]["c"]["voltage"]
             )
-            powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["c"]["theta"])
+            powerflow.solution["theta"] = deepcopy(
+                powerflow.operationpoint[case]["c"]["theta"]
+            )
 
     if case > 0:
         # Condição de divergência na etapa de previsão por excesso de iterações
@@ -980,7 +1026,9 @@ def exicheuristics(
             powerflow.solution["voltage"] = deepcopy(
                 powerflow.operationpoint[case]["c"]["voltage"]
             )
-            powerflow.solution["theta"] = deepcopy(powerflow.operationpoint[case]["c"]["theta"])
+            powerflow.solution["theta"] = deepcopy(
+                powerflow.operationpoint[case]["c"]["theta"]
+            )
 
         # Condição de atingimento do PMC para varstep volt pequeno
         if (
@@ -1122,80 +1170,83 @@ def exicheuristics(
 
 
 def exiccvgprint(
-        powerflow,
-        case,
+    powerflow,
+    case,
+):
+    """impressão de convergência do fluxo de potência continuado
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Impressão de convergência
+    # print(
+    #     f"Convergência: {powerflow.solution['convergence']} - Caso: {len(powerflow.operationpoint)} - Iteração: {powerflow.solution['iter']}"
+    # )
+    # print(
+    #     f"Variação de Magnitude de Tensão: {norm(powerflow.solution['voltage'] - powerflow.operationpoint[0]['voltage'])}"
+    # )
+    # print(
+    #     f"Variação de Defasagem Angular: {norm(powerflow.solution['theta'] - powerflow.operationpoint[0]['theta'])}"
+    # )
+    # print(
+    #     f"Variação de Potência Ativa: {norm(powerflow.solution['active'] - powerflow.operationpoint[0]['active'])}"
+    # )
+    # print(
+    #     f"Variação de Potência Reativa: {norm(powerflow.solution['reactive'] - powerflow.operationpoint[0]['reactive'])}"
+    # )
+    # print(
+    #     f"Variação de Frequência: {norm(powerflow.solution['freq'] - powerflow.operationpoint[0]['freq'])}"
+    # )
+    # print(
+    #     f"Variação de Passo: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
+    # )
+    # print(
+    #     f"Variação de Passo Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
+    # )
+    # print(
+    #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
+    # )
+    # print(
+    #     f"Variação de Lambda: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
+    # )
+    # print(
+    #     f"Variação de Lambda Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
+    # )
+    # print(
+    #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
+    # )
+    # print(
+    #     f"Variação de Passo Máximo: {powerflow.solution['stepmax'] - powerflow.operationpoint[0]['stepmax']}"
+    # )
+
+    if (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE") and (case > 0):
+        print("Aumento Sistema (%): ", powerflow.solution["step"] * 1e2)
+        if powerflow.solution["varstep"] == "volt":
+            print(
+                "Passo (%): ",
+                powerflow.operationpoint[case]["c"]["varstep"],
+                "  ",
+                powerflow.options["ICMV"]
+                * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"])
+                * 1e2,
+            )
+        else:
+            print(
+                "Passo (%): ",
+                powerflow.operationpoint[case]["c"]["varstep"],
+                "  ",
+                powerflow.options["LMBD"]
+                * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"])
+                * 1e2,
+            )
+        print("\n")
+
+    if (
+        powerflow.options["LMBD"]
+        * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"])
+        * 1e2
+        < 2e-07
     ):
-        """impressão de convergência do fluxo de potência continuado
-
-        Parâmetros
-            powerflow: self do arquivo powerflow.py
-        """
-
-        ## Inicialização
-        # Impressão de convergência
-        # print(
-        #     f"Convergência: {powerflow.solution['convergence']} - Caso: {len(powerflow.operationpoint)} - Iteração: {powerflow.solution['iter']}"
-        # )
-        # print(
-        #     f"Variação de Magnitude de Tensão: {norm(powerflow.solution['voltage'] - powerflow.operationpoint[0]['voltage'])}"
-        # )
-        # print(
-        #     f"Variação de Defasagem Angular: {norm(powerflow.solution['theta'] - powerflow.operationpoint[0]['theta'])}"
-        # )
-        # print(
-        #     f"Variação de Potência Ativa: {norm(powerflow.solution['active'] - powerflow.operationpoint[0]['active'])}"
-        # )
-        # print(
-        #     f"Variação de Potência Reativa: {norm(powerflow.solution['reactive'] - powerflow.operationpoint[0]['reactive'])}"
-        # )
-        # print(
-        #     f"Variação de Frequência: {norm(powerflow.solution['freq'] - powerflow.operationpoint[0]['freq'])}"
-        # )
-        # print(
-        #     f"Variação de Passo: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
-        # )
-        # print(
-        #     f"Variação de Passo Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
-        # )
-        # print(
-        #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
-        # )
-        # print(
-        #     f"Variação de Lambda: {powerflow.solution['step'] - powerflow.operationpoint[0]['step']}"
-        # )
-        # print(
-        #     f"Variação de Lambda Programado: {powerflow.solution['stepsch'] - powerflow.operationpoint[0]['stepsch']}"
-        # )
-        # print(
-        #     f"Variação de Magnitude de Tensão Programada: {powerflow.solution['vsch'] - powerflow.operationpoint[0]['vsch']}"
-        # )
-        # print(
-        #     f"Variação de Passo Máximo: {powerflow.solution['stepmax'] - powerflow.operationpoint[0]['stepmax']}"
-        # )
-
-        
-
-        if (powerflow.solution["convergence"] == "SISTEMA CONVERGENTE") and (case > 0):
-            print("Aumento Sistema (%): ", powerflow.solution["step"] * 1e2)
-            if powerflow.solution["varstep"] == "volt":
-                print(
-                    "Passo (%): ",
-                    powerflow.operationpoint[case]["c"]["varstep"],
-                    "  ",
-                    powerflow.options["ICMV"]
-                    * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"])
-                    * 1e2,
-                )
-            else:
-                print(
-                    "Passo (%): ",
-                    powerflow.operationpoint[case]["c"]["varstep"],
-                    "  ",
-                    powerflow.options["LMBD"]
-                    * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"])
-                    * 1e2,
-                )
-            print("\n")
-
-        if powerflow.options["LMBD"] * ((1 / powerflow.options["FDIV"]) ** powerflow.solution["ndiv"]) * 1e2 < 2e-07:
-            print()
+        print()
