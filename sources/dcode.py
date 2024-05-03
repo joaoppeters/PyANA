@@ -534,9 +534,9 @@ def dbar(
         # Barras geradoras: número & máscara
         powerflow.npv = 0
         powerflow.maskP = ones(powerflow.nbus, dtype=bool)
-        powerflow.maskpL = ones(powerflow.nbus, dtype=bool)
+        powerflow.maskLp = ones(powerflow.nbus, dtype=bool)
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        powerflow.maskqL = ones(powerflow.nbus, dtype=bool)
+        powerflow.maskLq = ones(powerflow.nbus, dtype=bool)
         for idx, value in powerflow.dbarDF.iterrows():
             if (value["tipo"] == 2) or (value["tipo"] == 1):
                 powerflow.npv += 1
@@ -563,10 +563,10 @@ def dbar(
                 powerflow.dbarDF.at[idx, "angulo"] = 0.0
 
             if value["demanda_ativa"] == 0.0:
-                powerflow.maskpL[idx] = False
+                powerflow.maskLp[idx] = False
 
             if value["demanda_reativa"] == 0.0:
-                powerflow.maskqL[idx] = False
+                powerflow.maskLq[idx] = False
 
             if value["grupo_base_tensao"] == "0":
                 powerflow.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
