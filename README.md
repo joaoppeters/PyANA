@@ -1,40 +1,32 @@
 # Fluxo de Potência ANAREDE via Python
 
-O principal objetivo deste projeto é fornecer um código Python  para `apoiar estudantes e pesquisadores` em estudos de `análise de regime permanente de sistemas elétricos de potência`. Para isso, toma-se como base a leitura de dados de `arquivos ANAREDE (.pwf)`.
+O objetivo deste projeto é fornecer um código Python Open-Source para `auxiliar estudantes e pesquisadores` em estudos de `análise de regime permanente de Sistemas Elétricos de Potência`. As simulações aqui realizadas dependem da leitura de dados de `arquivos ANAREDE (.pwf)`.
 
-
+> **ESTE É UM REPOSITÓRIO EM DESENVOLVIMENTO.**
 
 ## Requisitos Mínimos
 `Bibliotecas de Python` empregadas no projeto e necessárias para o correto funcionamento das ferramentas:
 ```
+matplotlib
 numpy
 pandas
+scipy
+sympy
+```
+
+> **AO BAIXAR ESSE REPOSITÓRIO, RODAR O SEGUINTE COMANDO ABAIXO**
+```cmd
+pip install requirements.txt
 ```
 
 
-
-## Métodos de Solução
-Serão desenvolvidos aqui `diferentes ferramentas para análise de SEPs em regime permanente`, como por exemplo:
-- [Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newton-raphson.md)
-
-<!-- - [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md) -->
-
-- [Solução do Fluxo de Potência Linearizado](docs/Metodos/linear.md)
-
-<!-- - [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
-
-- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md) -->
-
-- [Solução do Fluxo de Potência Continuado (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
-
-> **Para todos os efeitos, considere que este é um projeto em desenvolvimento e que tais ferramentas serão integradas em partes.**
+A estrutura desse repositório está dividida em 5 etapas
 
 
-
-## Leitura de Dados
+## I. Leitura de Dados
 Os dados do Sistema Elétrico de Potência em estudo devem estar organizados em um arquivo `.pwf`.
 
-Utilize a pasta entitulada [sistemas](sistemas) para armazenar os arquivos `.pwf` que contém os `dados de SEP` que pretende de estudar/analisar.
+Utilize a pasta entitulada [sistemas](sistemas) para armazenar os arquivos `.pwf` que contém os `dados de SEPs` que pretende de estudar/analisar.
 
 Um exemplo de inicialização de variável para leitura de dados do arquivo `.pwf` é mostrado abaixo:
 
@@ -42,28 +34,44 @@ Um exemplo de inicialização de variável para leitura de dados do arquivo `.pw
 system = 'ieee14.pwf'
 ```
 
-> **Ao inicializar a variável com o nome do sistema que gostaria de analisar, certifique-se que o arquivo `.pwf` deste sistema está contido na pasta [sistemas](sistemas/).**
+> **AO INICIALIZAR A VARIÁVEL COM O NOME DO SISTEMA QUE GOSTARIA DE ANALISAR, CERTIFIQUE-SE QUE O ARQUIVO `.pwf` DESTE SISTEMA ESTÁ CONTIDO NA PASTA [sistemas](sistemas/).**
 
 
 
-## Matriz Admitância
-A matriz Admitância (Y<sub>BARRA</sub>) é calculada antes da inicialização de `qualquer uma das opções de metodologias` para solução do fluxo de potência.
+## II. Métodos de Solução
+- [EXLF: Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newtonraphson.md)
 
+<!-- - [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md) -->
+
+<!-- - [Solução do Fluxo de Potência Linearizado](docs/Metodos/linear.md) -->
+
+<!-- - [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
+
+- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md) -->
+
+- [EXIC: Solução do Fluxo de Potência Continuado - Previsão x Correção (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
+
+- [EXPC: Solução do Fluxo de Potência pelo Método Direto do cálculo do Ponto de Colapso (CANIZARES, 1992)](docs/Metodos/pointofcollapse.md)
+
+> **OUTRAS METODOLOGIAS AINDA SERÃO IMPLEMENTADAS NESSE PROGRAMA**
+
+
+### Matriz Admitância
 Para mais detalhes sobre o cálculo e montagem dessa matriz, [clique aqui](docs/Admitancia/admitancia.md).
 
 
-
-## Formulação da Matriz Jacobiana
-A Matriz Jacobiana é modelada de uma única maneira:
-
-- `'Completa':` Vetor coluna de resíduos das `equações diferenciáveis ∆P-∆Q` associado ao vetor coluna de resíduos das `variáveis de estado ∆θ-∆V` ([Ver formulação](docs/Jacobiana/completa.md)).
-    - Para `equações de controle y` adicionais, associadas a `variáveis de estado x`, essa formulação é reestruturada para associar o vetor coluna de resíduos de `equações diferenciáveis ∆P-∆Q-∆y` ao vetor coluna de resíduos de `variáveis de estado ∆θ-∆V-∆x`.
-
-> No entanto a Matriz Jacobiana pode ser configurada nas formulações [`Alternada`](docs/Jacobiana/alternada.md) ou mesmo [`Reduzida`](docs/Jacobiana/reduzida.md) (**essas formulações não foram implementadas**).
+### Matriz Jacobiana
+A construção da matriz jacobiana é feita de forma diferente nesse [programa](docs/Jacobiana/reduzida.md), em comparação com a do [ANAREDE](docs/Jacobiana/alternada.md). Essa última formulação não foi implementada nesse programa.
 
 
+## III. Opções de Controle
 
-## Fluxo de Potência
+## IV. Opções de Monitoração
+
+## V. Opções de Relatório
+
+
+## Conclusão
 Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()` e passe os `parâmetros da classe` que gostaria de analisar.
 
 ```Python
@@ -79,17 +87,18 @@ PowerFlow(
 ```
 - `system: str, obrigatório, valor padrão ''`
     - **Variável que indica o nome do arquivo do SEP em estudo.**
-    - **Utilize arquivos `.pwf` presentes dentro da pasta [sistemas](sistemas).**
+    - **Utilize e adicione arquivos `.pwf` dentro da pasta [sistemas](sistemas).**
 
 - `method: str, obrigatório, valor padrão 'EXLF'`
     - **Apenas uma opção poder ser escolhida por vez.**
     - **Opções:**
-        - `'EXLF'` - [soluciona o SEP através do método de Newton-Raphson.](docs/Metodos/newton-raphson.md)
+        - `'EXLF'` - [Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newtonraphson.md)
         <!-- - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md) -->
-        - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md)
+        <!-- - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md) -->
         <!-- - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
         - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md) -->
-        - `'EXIC'` - [soluciona o SEP através do método de Fluxo de Potência Continuado.](docs/Metodos/continuation.md)
+        - `'EXIC'` - [Solução do Fluxo de Potência Continuado - Previsão x Correção (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
+        - `'EXPC'` - [Solução do Fluxo de Potência pelo Método Direto do cálculo do Ponto de Colapso (CANIZARES, 1992)](docs/Metodos/pointofcollapse.md)
 
 - `control: list, opcional, valor padrão list()`
     - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
@@ -122,8 +131,6 @@ PowerFlow(
         - `'RGER'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/RGER.md)
 
         - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
-
-        - `'RXIC'` - [gera o relatório do processo iterativo do Fluxo de Potência Continuado em caso Convergente ou Divergente.](docs/Relatorios/rcontinuado.md)
 
 
 > **PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 

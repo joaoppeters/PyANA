@@ -1,1 +1,0 @@
-# Relatório de Fluxo de Potência Continuado - `'RXIC'`

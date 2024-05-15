@@ -123,7 +123,7 @@ def methodo(
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
         from admittance import admit
-        from stochastic import stoch_apparent_1, stoch_apparent_2, stoch_apparent_3, multivariate_normal
+        from stochastic import stoch_apparent_1, stoch_apparent_2, stoch_apparent_3, multivariate_normal, rand0m
 
         admit(
             powerflow,
@@ -143,7 +143,11 @@ def methodo(
 
         multivariate_normal(
             powerflow,
-        ) 
+        )
+
+        rand0m(
+            powerflow,
+        )
 
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":

@@ -8,12 +8,12 @@
 
 from powerflow import PowerFlow
 
-system = "ieee14.pwf"
+system = "4b-passossvc.pwf"
 
-# method = "EXLF"
+method = "EXLF"
 # method = "EXIC"
 # method = "EXCE"
-method = "EXSC"
+# method = "EXSC"
 # method = "EXPC"
 # method = "EXDT"
 # method = "PWF"
@@ -25,7 +25,7 @@ control = [
     # "FREQ",
     # "QLIM",
     # "QLIMs",
-    # "SVCs",
+    "SVCs",
 ]
 
 monitor = [
@@ -39,7 +39,7 @@ report = [
     "RBAR",
     # "RLIN",
     # "RGER",
-    # "RCER",
+    "RCER",
 ]
 
 PowerFlow(

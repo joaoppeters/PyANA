@@ -2,8 +2,7 @@
 ## Configuração Reduzida
 ---
 
-Características da Configuração Reduzida para Matrizes Jacobianas:
-
+- `utiliza o número mínimo de equações algébricas não-lineares para solução do sistema linear de equações de potência`
 - `dimensão NPV+2NPQ x NPV+2NPQ`
     - `NPV equivale ao número de barras tipo 'PV' no sistema elétrico em estudo`
     - `NPQ equivale ao número de barras tipo 'PQ' no sistema elétrico em estudo`

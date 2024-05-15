@@ -2,8 +2,6 @@
 ## Configuração Alternada
 ---
 
-Características da Configuração Alternada para Matrizes Jacobianas:
-
 - `dimensão 2NBUS x 2NBUS`
 	- `NBUS equivale ao número de barras do sistema elétrico em estudo`
 - `resíduos de potência ativa e reativa alternando em função do número de barramentos do sistema`

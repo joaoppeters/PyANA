@@ -231,10 +231,10 @@ def svcres(
         powerflow.deltaQ[idxcer] -= (
             powerflow.dbarDF["demanda_reativa"][idxcer] / powerflow.options["BASE"]
         )
-        powerflow.deltaQ[idxcer] -= qcalc(
-            powerflow,
-            idxcer,
-        )
+        # powerflow.deltaQ[idxcer] -= qcalc(
+        #     powerflow,
+        #     idxcer,
+        # )
 
         # Incrementa contador
         ncer += 1
@@ -262,14 +262,14 @@ def svcsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.nbusdimpresvc = deepcopy(powerflow.jacobian.shape[0])
+    powerflow.dimpresvc = deepcopy(powerflow.jacobian.shape[0])
 
     # Submatrizes
-    powerflow.nbuspx = zeros([powerflow.nbus, powerflow.ncer])
-    powerflow.nbusqx = zeros([powerflow.nbus, powerflow.ncer])
-    powerflow.nbusyx = zeros([powerflow.ncer, powerflow.ncer])
-    powerflow.nbusyt = zeros([powerflow.ncer, powerflow.nbus])
-    powerflow.nbusyv = zeros([powerflow.ncer, powerflow.nbus])
+    powerflow.px = zeros([powerflow.nbus, powerflow.ncer])
+    powerflow.qx = zeros([powerflow.nbus, powerflow.ncer])
+    powerflow.yx = zeros([powerflow.ncer, powerflow.ncer])
+    powerflow.yt = zeros([powerflow.ncer, powerflow.nbus])
+    powerflow.yv = zeros([powerflow.ncer, powerflow.nbus])
 
     # Contador
     ncer = 0
@@ -285,19 +285,19 @@ def svcsubjac(
 
         if value["barra"] != value["barra_controlada"]:
             # Derivada Vk
-            powerflow.nbusyv[ncer, idxcer] = powerflow.nbusdiffsvc[idxcer][0]
+            powerflow.yv[ncer, idxcer] = powerflow.diffsvc[idxcer][0]
 
             # Derivada Vm
-            powerflow.nbusyv[ncer, idxctrl] = powerflow.nbusdiffsvc[idxcer][1]
+            powerflow.yv[ncer, idxctrl] = powerflow.diffsvc[idxcer][1]
 
         elif value["barra"] == value["barra_controlada"]:
             # Derivada Vk + Vm
-            powerflow.nbusyv[ncer, idxcer] = (
-                powerflow.nbusdiffsvc[idxcer][0] + powerflow.nbusdiffsvc[idxcer][1]
+            powerflow.yv[ncer, idxcer] = (
+                powerflow.diffsvc[idxcer][0] + powerflow.diffsvc[idxcer][1]
             )
 
         # Derivada Equação de Controle Adicional por Variável de Estado Adicional
-        powerflow.nbusyx[ncer, ncer] = powerflow.nbusdiffsvc[idxcer][2]
+        powerflow.yx[ncer, ncer] = powerflow.diffsvc[idxcer][2]
 
         # Derivada Qk
         if value["controle"] == "A":
@@ -306,7 +306,7 @@ def svcsubjac(
                 * powerflow.solution["voltage"][idxcer]
                 * float(powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"]))
             )
-            powerflow.nbusqx[idxcer, ncer] = -(
+            powerflow.qx[idxcer, ncer] = -(
                 powerflow.solution["voltage"][idxcer] ** 2
             ) * float(
                 powerflow.alphabeq.diff(alpha).subs(alpha, powerflow.solution["alpha"])
@@ -316,42 +316,42 @@ def svcsubjac(
             powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
                 powerflow.solution["svc_generation"][ncer]
             ) / powerflow.options["BASE"]
-            powerflow.nbusqx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
+            powerflow.qx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
 
         elif value["controle"] == "P":
-            powerflow.nbusqx[idxcer, ncer] = -1
+            powerflow.qx[idxcer, ncer] = -1
 
         # Incrementa contador
         ncer += 1
 
     ## Montagem Jacobiana
     # Condição
-    if powerflow.nbuscontroldim != 0:
-        powerflow.nbusextrarow = zeros([powerflow.nbusnger, powerflow.nbuscontroldim])
-        powerflow.nbusextracol = zeros([powerflow.nbuscontroldim, powerflow.nbusnger])
+    if powerflow.controldim != 0:
+        powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
+        powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
 
         ytv = csc_matrix(
             concatenate(
-                (powerflow.nbusyt, powerflow.nbusyv, powerflow.nbusextrarow),
+                (powerflow.yt, powerflow.yv, powerflow.extrarow),
                 axis=1,
             )
         )
         pqyx = csc_matrix(
             concatenate(
                 (
-                    powerflow.nbuspx,
-                    powerflow.nbusqx,
-                    powerflow.nbusextracol,
-                    powerflow.nbusyx,
+                    powerflow.px,
+                    powerflow.qx,
+                    powerflow.extracol,
+                    powerflow.yx,
                 ),
                 axis=0,
             )
         )
 
-    elif powerflow.nbuscontroldim == 0:
-        ytv = csc_matrix(concatenate((powerflow.nbusyt, powerflow.nbusyv), axis=1))
+    elif powerflow.controldim == 0:
+        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
         pqyx = csc_matrix(
-            concatenate((powerflow.nbuspx, powerflow.nbusqx, powerflow.nbusyx), axis=0)
+            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
         )
 
     powerflow.jacobian = vstack([powerflow.jacobian, ytv], format="csc")
@@ -375,18 +375,18 @@ def svcupdt(
     for _, value in powerflow.dcerDF.iterrows():
         if value["controle"] == "A":
             powerflow.solution["alpha"] += powerflow.statevar[
-                (powerflow.nbusdimpresvc + ncer)
+                (powerflow.dimpresvc + ncer)
             ]
 
         elif value["controle"] == "I":
             powerflow.solution["svc_generation"][ncer] += (
-                powerflow.statevar[(powerflow.nbusdimpresvc + ncer)]
+                powerflow.statevar[(powerflow.dimpresvc + ncer)]
                 * powerflow.options["BASE"]
             )
 
         elif value["controle"] == "P":
             powerflow.solution["svc_generation"][ncer] += (
-                powerflow.statevar[(powerflow.nbusdimpresvc + ncer)]
+                powerflow.statevar[(powerflow.dimpresvc + ncer)]
                 * powerflow.options["BASE"]
             )
 
