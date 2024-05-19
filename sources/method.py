@@ -20,11 +20,16 @@ def methodo(
     # Chamada específica método de Newton-Raphson Não-Linear
     if powerflow.method == "EXLF":
         from admittance import admit
+        from linear import linear
         from monitor import monitorfile
         from newtonraphson import newton
         from report import reportfile
 
         admit(
+            powerflow,
+        )
+
+        linear(
             powerflow,
         )
 
@@ -40,25 +45,19 @@ def methodo(
             powerflow,
         )
 
-    # Chamada específica método de Gauss-Seidel
-    elif powerflow.method == "GAUSS":
-        # self.gaussseidel(
-        #     powerflow,
-        # )
-        pass
-
     # Chamada específica método de Newton-Raphson Linearizado
-    elif powerflow.method == "LINEAR":
-        from admittance import admitlinear
-        from linear import lpf
+    elif powerflow.method == "LFDC":
+        from admittance import admit
+        from linear import linear
         from monitor import monitorfile
         from report import reportfile
+        powerflow.controlcount = 0
 
-        admitlinear(
+        admit(
             powerflow,
         )
 
-        lpf(
+        linear(
             powerflow,
         )
 
@@ -73,13 +72,6 @@ def methodo(
     # Chamada específica método Desacoplado
     elif powerflow.method == "DECOUP":
         # self.decoupledpowerflow(
-        #     powerflow,
-        # )
-        pass
-
-    # Chamada específica método Desacoplado Rápido
-    elif powerflow.method == "fDECOUP":
-        # self.fastdecoupledpowerflow(
         #     powerflow,
         # )
         pass
@@ -152,7 +144,7 @@ def methodo(
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
         from admittance import admit
-        from direct import poc
+        from poc import poc
         from newtonraphson import newton
         from report import reportfile
 
@@ -173,14 +165,14 @@ def methodo(
         )
 
     #
-    elif powerflow.method == "EXDT":
+    elif powerflow.method == "DATA":
         from fdata import fdata
 
         fdata(
             powerflow,
         )
 
-    #
+    # ROMAN KUIAVA
     elif powerflow.method == "PWF":
         from dwrite import savepwf
 

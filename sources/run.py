@@ -8,15 +8,17 @@
 
 from powerflow import PowerFlow
 
-system = "4b-passossvc.pwf"
+system = "ieee14.pwf"
 
-method = "EXLF"
-# method = "EXIC"
-# method = "EXCE"
-# method = "EXSC"
-# method = "EXPC"
-# method = "EXDT"
-# method = "PWF"
+method = "EXLF" # NEWTON-RAPHSON
+method = "LFDC" # LINEARIZED NEWTON-RAPHSON
+# method = "EXIC" # CONTINUATION POWER FLOW
+# method = "EXCE" # CROSS-ENTROPY
+# method = "EXSC" # STOCHASTIC
+# method = "EXPC" # POINT OF COLLAPSE
+# method = "DATA" # DATA MANIPULATION
+# method = "BATCH" # ANAREDE BATCH RUNNING
+# method = "PWF" # FILE MODIFYING AND SAVING AS REQUESTED BY ROMAN KUIAVA
 
 control = [
     # "CREM",

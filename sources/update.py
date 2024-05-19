@@ -144,3 +144,17 @@ def updtpwr(
         S.imag * powerflow.options["BASE"]
         + powerflow.dbarDF["demanda_reativa"].tolist()
     )
+
+
+def updtlinear(
+    powerflow,
+):
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização    
+    # Atualização dos ângulos dos barramentos
+    powerflow.solution["theta"] = deepcopy(powerflow.statevar)

@@ -1,5 +1,10 @@
 TITU
 ****   Sistema teste de 14 maquinas - IEEE  ****
+DOPC
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+IMPR L FILE L 80CO L
+RBAR L RGER L
+99999
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
 BASE   100. DASE   100. TEPA   1e-8 EXST    .04 TETP     5. TBPA     5.
@@ -19,20 +24,20 @@ LFPO     .1 TLMT     0. TLMF     0. TLMG     0. PARS    10.
 99999
 DBAR
 (Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
-    1  2  BARRA-1       1060   0          -999999999         .0   .0       11000                                       
-    2  1  BARRA-2       1045    40.00     -40.0 50.0      21.70 12.7       11000                                       
-    3  1  BARRA-3       1010    0.0   0.0   0.0 40.0      94.20 19.0       11000                                          
-    4  0  BARRA-4       1000                              47.80 -3.9       11000                                                       
-    5  0  BARRA-5       1000                              7.60  1.60       11000                                           
-    6  1  BARRA-6       1070    0.0   0.0 -6.0  24.0      11.20 7.50       11000                                        
-    7  0  BARRA-7       1000                               0.0  0.0        11000                                              
-    8  1  BARRA-8       1090    0.0   0.0 -6.0  24.0       0.0  0.0        11000                                            
-    9  0  BARRA-9       1000                              29.50 16.6 19.0  11000                                                        
-   10  0  BARRA-10      1000                              9.00  5.80       11000                                                            
-   11  0  BARRA-11      1000                              3.50  1.80       11000                                               
-   12  0  BARRA-12      1000                              6.10  1.60       11000                                                
-   13  0  BARRA-13      1000                              13.50 5.80       11000                                                
-   14  0  BARRA-14      1000                              14.90 5.00       11000                                              
+    1  2  BARRA-1       1060   0          -999999999         .0   .0       11000                               
+    2  1  BARRA-2       1045    40.00     -40.0 50.0      21.70 12.7       11000                               
+    3  1  BARRA-3       1010    0.0   0.0   0.0 40.0      94.20 19.0       11000                               
+    4  0  BARRA-4       1000                              47.80 -3.9       11000                               
+    5  0  BARRA-5       1000                              7.60  1.60       11000                               
+    6  1  BARRA-6       1070    0.0   0.0 -6.0  24.0      11.20 7.50       11000                               
+    7  0  BARRA-7       1000                               0.0  0.0        11000                               
+    8  1  BARRA-8       1090    0.0   0.0 -6.0  24.0       0.0  0.0        11000                               
+    9  0  BARRA-9       1000                              29.50 16.6 19.0  11000                               
+   10  0  BARRA-10      1000                              9.00  5.80       11000                               
+   11  0  BARRA-11      1000                              3.50  1.80       11000                               
+   12  0  BARRA-12      1000                              6.10  1.60       11000                               
+   13  0  BARRA-13      1000                              13.50 5.80       11000                               
+   14  0  BARRA-14      1000                              14.90 5.00       11000                               
 99999
 DLIN
 (De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
@@ -74,6 +79,19 @@ DINC
 AREA     1                                            1.   1.
 99999
 
-EXLF NEWT QLIM
-EXIC NEWT QLIM 
+EXLF NEWT QLIM 
+(EXIC NEWT QLIM 
+ULOG
+(N
+2
+IEEE14.SAV
+ARQV INIC IMPR
+SIM
+ARQV GRAV IMPR NOVO
+01
+ULOG
+(N
+4
+IEEE14.REL
+RELA FILE 80CO
 FIM

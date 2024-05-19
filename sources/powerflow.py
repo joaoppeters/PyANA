@@ -41,7 +41,9 @@ class PowerFlow:
         self.report = report
 
         # Data Setup
-        setup(self)
+        setup(
+            self,
+        )
 
         # Armazenamento dos resultados
         folder(
@@ -49,8 +51,6 @@ class PowerFlow:
         )
 
         # Numerical Method
-        methodo(self)
-
-
-# Convergence(powerflow, powerflow,)
-# StateVar(powerflow, powerflow,)
+        methodo(
+            self,
+        )

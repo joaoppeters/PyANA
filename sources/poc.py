@@ -76,7 +76,7 @@ def poc(
             powerflow,
         )
 
-        powerflow.funccani = concatenate(
+        powerflow.deltapoc = concatenate(
             (
                 -powerflow.deltaPQY.reshape((sum(powerflow.mask), 1)),
                 powerflow.G,
@@ -88,8 +88,8 @@ def poc(
         try:
             # Your sparse matrix computation using spsolve here
             powerflow.statevar, residuals, rank, singular = lstsq(
-                powerflow.jaccani,
-                powerflow.funccani,
+                powerflow.jacobianpoc,
+                powerflow.deltapoc,
                 rcond=None,
             )
         except LinAlgError:
@@ -157,14 +157,14 @@ def expansion(
     powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
     powerflow.dwh = 2 * powerflow.solution["eigen"][powerflow.mask]
 
-    powerflow.jaccani = concatenate(
+    powerflow.jacobianpoc = concatenate(
         (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
         axis=1,
     )
 
-    powerflow.jaccani = concatenate(
+    powerflow.jacobianpoc = concatenate(
         (
-            powerflow.jaccani,
+            powerflow.jacobianpoc,
             concatenate(
                 (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
                 axis=1,
@@ -173,13 +173,13 @@ def expansion(
         axis=0,
     )
 
-    powerflow.jaccani = concatenate(
+    powerflow.jacobianpoc = concatenate(
         (
-            powerflow.jaccani,
+            powerflow.jacobianpoc,
             concatenate(
                 (powerflow.dxh, array([0]), powerflow.dwh),
                 axis=0,
-            ).reshape((1, powerflow.jaccani.shape[1])),
+            ).reshape((1, powerflow.jacobianpoc.shape[1])),
         ),
         axis=0,
     )
