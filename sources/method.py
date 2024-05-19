@@ -164,7 +164,7 @@ def methodo(
             powerflow,
         )
 
-    #
+    # DATA MANIPULATION - CASE BY CASE DEMAND
     elif powerflow.method == "DATA":
         from fdata import fdata
 
@@ -172,10 +172,18 @@ def methodo(
             powerflow,
         )
 
-    # ROMAN KUIAVA
+    # ROMAN KUIAVA REQUIREMENTS
     elif powerflow.method == "PWF":
-        from dwrite import savepwf
+        from rewrite import rewrite
 
-        savepwf(
+        rewrite(
             powerflow,
         )
+
+    # BATCH
+    elif powerflow.method == "BATCH":
+        from batch import batch
+
+        batch(
+            powerflow,
+        )	

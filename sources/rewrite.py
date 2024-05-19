@@ -10,8 +10,9 @@ from os.path import dirname, realpath
 from datetime import datetime as dt
 
 
-def savepwf(
+def rewrite(
     powerflow,
+    case,
 ):
     """inicializacao
 
@@ -22,7 +23,7 @@ def savepwf(
     ## Inicializacao
     # Arquivo
     filedir = realpath(
-        dirname(dirname(__file__)) + "/sistemas/" + powerflow.name + "-mod.pwf"
+        dirname(dirname(__file__)) + "/sistemas/" + powerflow.name + "-" + case + ".pwf"
     )
 
     # Manipulacao
@@ -123,8 +124,6 @@ def savepwf(
             file,
         )
 
-    file.write("\n")
-    file.write("FIM")
     file.close()
 
 
@@ -590,3 +589,67 @@ def writedinc(
         file.write("\n")
     file.write("99999")
     file.write("\n")
+
+
+def writetail(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        file
+        powerflow
+    """
+
+    ## Inicialização
+    file.write("(")
+    file.write("\n")
+    
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("2")
+    file.write("\n")
+    file.write(powerflow.namecase + ".SAV")
+    
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
+    
+    file.write("ARQV INIC IMPR")
+    file.write("\n")
+    file.write("SIM")
+    
+    file.write("\n")    
+    file.write("(")
+    file.write("\n")
+    
+    file.write("ARQV GRAV IMPR NOVO")
+    file.write("\n")
+    file.write("01")
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
+    
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("4")
+    file.write("\n")
+    file.write(powerflow.namecase + ".REL")
+    
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("RELA FILE 80CO")
+    
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+    
+    file.write("FIM")
+    
