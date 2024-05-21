@@ -8,7 +8,7 @@
 
 import time
 
-from dcode import *
+from drede import *
 
 
 def pwf(
@@ -55,7 +55,7 @@ def keywords(
 
     ## Inicialização
     powerflow.end_archive = "FIM"
-    powerflow.end_block = ("9999", "99999")
+    powerflow.end_block = ("9999", "99999", "999999")
     powerflow.comment = "("
 
 
@@ -100,10 +100,9 @@ def readfile(
     """
 
     ## Inicialização
-    f = open(f"{powerflow.dirSEP}", "r", encoding="latin-1")
+    f = open(f"{powerflow.dirPWF}", "r", encoding="latin-1")
     powerflow.lines = f.readlines()
     f.close()
-    powerflow.pwf2py = {}
 
     # Loop de leitura de linhas do `.pwf`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
@@ -258,7 +257,7 @@ def readfile(
         powerflow.linecount += 1
 
     ## SUCESSO NA LEITURA
-    print(f"\033[32mSucesso na leitura de arquivo `{powerflow.system}`!\033[0m")
+    print(f"\033[32mSucesso na leitura de arquivo `{powerflow.anarede}`!\033[0m")
 
     # Checa alteração do nível de carregamento
     checkdanc(

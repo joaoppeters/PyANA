@@ -21,7 +21,7 @@ def folder(
 
     ## Inicialização
     # Diretório de Sistemas
-    dirSistemas = dirname(powerflow.dirSEP)
+    dirSistemas = dirname(powerflow.dirPWF)
 
     # Criação de diretório Resultados
     powerflow.dirResultados = dirname(dirSistemas) + "/resultados/"

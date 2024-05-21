@@ -55,7 +55,7 @@ def freqsol(
         powerflow.control["FREQ"] = False
         print(
             "\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{}`!\033[0m".format(
-                powerflow.system
+                powerflow.anarede
             )
         )
 

@@ -1,0 +1,10 @@
+May 21, 2024
+
+
+relatório de monitoramento do sistema 3bus3gen
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: 
+
+
+fim do relatório de monitoramento do sistema 3bus3gen

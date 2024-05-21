@@ -6,8 +6,79 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import arange, asarray, asmatrix, concatenate, conj, diag, exp, ones
+from numpy import arange, asarray, asmatrix, concatenate, conj, diag, exp, ones, r_, vectorize
 from scipy.sparse import issparse, csr_matrix as sparse
+
+
+def admittance(
+    powerflow,
+):
+    """Método para cálculo dos parâmetros da matriz Admitância
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+
+    Builds the bus admittance matrix and branch admittance matrices.
+
+    Returns the full bus admittance matrix (i.e. for all buses) and the
+    matrices C{Yf} and C{Yt} which, when multiplied by a complex voltage
+    vector, yield the vector currents injected into each line from the
+    "from" and "to" buses respectively of each line. Does appropriate
+    conversions to p.u.
+
+    @see: L{makeSbus}
+
+    @author: Ray Zimmerman (PSERC Cornell)
+
+    ALL RIGHTS RESERVED TO RAY ZIMMERMAN
+    CODE RETRIEVED FROM: https://github.com/rwl/PYPOWER
+    """
+
+    ## Inicialização
+    Ysr = 1 / vectorize(complex)(
+        powerflow.dlinDF["resistencia"], powerflow.dlinDF["reatancia"]
+    )
+    Ysh = vectorize(complex)(
+        0, powerflow.dbarDF["shunt_barra"] / powerflow.options["BASE"]
+    )
+
+    Ytt = Ysr + vectorize(complex)(0, powerflow.dlinDF["susceptancia"])
+    Yff = Ytt / (
+        vectorize(complex)(powerflow.dlinDF["tap"] * conj(powerflow.dlinDF["tap"]))
+    )
+    Yft = -Ysr / vectorize(complex)(conj(powerflow.dlinDF["tap"]))
+    Ytf = -Ysr / vectorize(complex)(powerflow.dlinDF["tap"])
+
+    f = (powerflow.dlinDF["de-idx"]).values
+    t = (powerflow.dlinDF["para-idx"]).values
+
+    ## connection matrix for line & from buses
+    Cf = sparse(
+        (ones(powerflow.nlin), (range(powerflow.nlin), f)),
+        (powerflow.nlin, powerflow.nbus),
+    )
+    ## connection matrix for line & to buses
+    Ct = sparse(
+        (ones(powerflow.nlin), (range(powerflow.nlin), t)),
+        (powerflow.nlin, powerflow.nbus),
+    )
+
+    ## build Yf and Yt such that Yf * V is the vector of complex branch currents injected
+    ## at each branch's "from" bus, and Yt is the same for the "to" bus end
+    i = r_[range(powerflow.nlin), range(powerflow.nlin)]  ## double set of row indices
+
+    Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
+    Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
+
+    ## build Ybus
+    powerflow.Ybus = sparse(
+        Cf.T @ Yf
+        + Ct.T @ Yt
+        + sparse(
+            (Ysh, (range(powerflow.nbus), range(powerflow.nbus))),
+            (powerflow.nbus, powerflow.nbus),
+        )
+    )
 
 
 def matrices(

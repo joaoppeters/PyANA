@@ -19,13 +19,13 @@ def methodo(
     ## Inicialização
     # Chamada específica método de Newton-Raphson Não-Linear
     if powerflow.method == "EXLF":
-        from admittance import admit
+        from matrices import admittance
         from linear import linear
         from monitor import monitorfile
         from newton import newton
         from report import reportfile
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -47,12 +47,12 @@ def methodo(
 
     # Chamada específica método de Newton-Raphson Linearizado
     elif powerflow.method == "LFDC":
-        from admittance import admit
+        from matrices import admittance
         from linear import linear
         from monitor import monitorfile
         from report import reportfile
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -77,13 +77,13 @@ def methodo(
 
     # Chamada específica método Continuado
     elif powerflow.method == "EXIC":
-        from admittance import admit
+        from matrices import admittance
         from continuation import prediction_correction
         from linear import linear
         from newton import newton
         from report import reportfile
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -105,10 +105,10 @@ def methodo(
 
     # Chamada especifica metodo Cross-Entropy
     elif powerflow.method == "CENT":
-        from admittance import admit
+        from matrices import admittance
         from crossentropy import cent
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -118,10 +118,10 @@ def methodo(
 
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
-        from admittance import admit
+        from matrices import admittance
         from stochastic import stoch_apparent_1, stoch_apparent_2, stoch_apparent_3, multivariate_normal, rand0m
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -147,13 +147,13 @@ def methodo(
 
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
-        from admittance import admit
+        from matrices import admittance
         from linear import linear
         from newton import newton
         from poc import poc
         from report import reportfile
 
-        admit(
+        admittance(
             powerflow,
         )
 
@@ -195,4 +195,32 @@ def methodo(
 
         batch(
             powerflow,
-        )	
+        )
+
+    # Simulação Dinâmica
+    elif powerflow.method == "EXSI":
+        from matrices import admittance
+        from dynamic import dynamic
+        from newton import newton
+        from setup import pathtem
+        from stb import stb
+
+        pathtem(
+            powerflow,
+        )
+
+        stb(
+            powerflow,
+        )
+
+        admittance(
+            powerflow,
+        )
+
+        newton(
+            powerflow,
+        )
+
+        dynamic(
+            powerflow,
+        )

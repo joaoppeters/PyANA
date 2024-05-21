@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "4b-passossvc.pwf"
+system = "ieee14.pwf"
 
 method = "EXLF" # NEWTON-RAPHSON
 # method = "LFDC" # LINEARIZED NEWTON-RAPHSON
@@ -16,6 +16,7 @@ method = "EXLF" # NEWTON-RAPHSON
 # method = "EXCE" # CROSS-ENTROPY
 # method = "EXSC" # STOCHASTIC
 # method = "EXPC" # POINT OF COLLAPSE
+method = "EXSI" # DYNAMIC SIMULATION
 # method = "DATA" # DATA MANIPULATION
 # method = "BATCH" # ANAREDE BATCH RUNNING
 # method = "PWF" # FILE MODIFYING AND SAVING AS REQUESTED BY PROF. RKUIAVA
@@ -27,7 +28,7 @@ control = [
     # "FREQ",
     # "QLIM",
     # "QLIMs",
-    "SVCs",
+    # "SVCs",
 ]
 
 monitor = [

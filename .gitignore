@@ -187,6 +187,16 @@ Thumbs.db
 *.out
 *.bak
 *.bkp
+*.stb
+*.cdu
+*.blt
+*.dat
+*.log
+
+*OUT/
+*LOG/
+*PLT/
+*BDADOS/
 
 *resultados/Continuado/
 *resultados/Smooth/
