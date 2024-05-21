@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from fastcontinuation import FastContinuation
-from newtonraphson import NewtonRaphson
+from newton import newton
 
 from numpy import array, random, sqrt, zeros
 
@@ -27,7 +27,7 @@ class CrossEntropy:
 
         ## Inicialização
         # Newton-Raphson
-        NewtonRaphson(
+        newton(
             powerflow,
         )
 

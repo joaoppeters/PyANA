@@ -1,21 +1,10 @@
-March 28, 2023
+May 21, 2024
 
 
-relatório de monitoramento do sistema 4b-passossvc
-solução do fluxo de potência via método newton-raphson
+relat�rio de monitoramento do sistema 4b-passossvc
+solu��o do fluxo de pot�ncia via m�todo newton-raphson
 
-opções de monitoramento ativadas: QGMON VMON 
-
-
-vv monitoramento de potência reativa gerada vv
-
-Nenhuma barra de geração violou os limites máximo e mínimo de geração de potência reativa!
+op��es de monitoramento ativadas: 
 
 
-vv monitoramento de magnitude de tensão de barramentos vv
-
-A magnitude de tensão da BARRA-PQ4 violou o limite mínimo estabelecido para análise ( 0.944 <= 0.95 ).
-
-
-
-fim do relatório de monitoramento do sistema 4b-passossvc
+fim do relat�rio de monitoramento do sistema 4b-passossvc

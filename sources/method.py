@@ -22,7 +22,7 @@ def methodo(
         from admittance import admit
         from linear import linear
         from monitor import monitorfile
-        from newtonraphson import newton
+        from newton import newton
         from report import reportfile
 
         admit(
@@ -51,7 +51,6 @@ def methodo(
         from linear import linear
         from monitor import monitorfile
         from report import reportfile
-        powerflow.controlcount = 0
 
         admit(
             powerflow,
@@ -80,10 +79,15 @@ def methodo(
     elif powerflow.method == "EXIC":
         from admittance import admit
         from continuation import prediction_correction
-        from newtonraphson import newton
+        from linear import linear
+        from newton import newton
         from report import reportfile
 
         admit(
+            powerflow,
+        )
+
+        linear(
             powerflow,
         )
 
@@ -144,11 +148,16 @@ def methodo(
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
         from admittance import admit
+        from linear import linear
+        from newton import newton
         from poc import poc
-        from newtonraphson import newton
         from report import reportfile
 
         admit(
+            powerflow,
+        )
+
+        linear(
             powerflow,
         )
 

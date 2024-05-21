@@ -30,7 +30,7 @@ from calc import PQCalc
 from ctrl import Control
 from jacobian import Jacobi
 from loading import Loading
-from newtonraphson import NewtonRaphson
+from newton import newton
 from smooth import Smooth
 
 
@@ -49,7 +49,7 @@ class Continuation:
 
         ## Inicialização
         # Newton-Raphson
-        NewtonRaphson(
+        newton(
             powerflow,
         )
 

@@ -601,13 +601,6 @@ def svcsIsmooth(
     seterr(all="ignore")
 
     # Variáveis
-    if not hasattr(powerflow, "svckeys"):
-        powerflow.svckeys = dict()
-        powerflow.svcdiff = dict()
-
-    if powerflow.svckeys.get(powerflow.dbarDF.loc[idxcer, "nome"]) is None:
-        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
-
     if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
         powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
 
@@ -846,13 +839,6 @@ def svcsAsmooth(
     seterr(all="ignore")
 
     # Variáveis
-    if not hasattr(powerflow, "svckeys"):
-        powerflow.svckeys = dict()
-        powerflow.svcdiff = dict()
-
-    if powerflow.svckeys.get(powerflow.dbarDF.loc[idxcer, "nome"]) is None:
-        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
-
     if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
         powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
 

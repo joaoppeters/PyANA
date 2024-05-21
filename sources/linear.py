@@ -24,6 +24,7 @@ def linear(
 
     ## Inicialização
     # Variável para armazenamento de solução
+    powerflow.controlcount = 0
     powerflow.solution = {
         "method": "LFDC",
         "system": powerflow.name,
