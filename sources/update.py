@@ -134,7 +134,7 @@ def updtpwr(
 
     ## Inicialização
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Ybus @ V
+    I = powerflow.Yb @ V
     S = diag(V) @ conj(I)
 
     powerflow.solution["active"] = (
@@ -150,11 +150,11 @@ def updtlinear(
     powerflow,
 ):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicialização    
+    ## Inicialização
     # Atualização dos ângulos dos barramentos
     powerflow.solution["theta"] = deepcopy(powerflow.statevar)

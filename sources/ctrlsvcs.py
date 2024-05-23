@@ -306,9 +306,7 @@ def svcsubjac(
                 * powerflow.solution["voltage"][idxcer]
                 * float(powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"]))
             )
-            qx[idxcer, ncer] = -(
-                powerflow.solution["voltage"][idxcer] ** 2
-            ) * float(
+            qx[idxcer, ncer] = -(powerflow.solution["voltage"][idxcer] ** 2) * float(
                 powerflow.alphabeq.diff(alpha).subs(alpha, powerflow.solution["alpha"])
             )
 

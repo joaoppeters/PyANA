@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import absolute, dot, zeros
+from numpy import absolute, zeros
 from numpy.linalg import det, eig, inv
 
 from ctrl import controlpop

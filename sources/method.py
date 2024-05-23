@@ -20,7 +20,8 @@ def methodo(
     # Chamada específica método de Newton-Raphson Não-Linear
     if powerflow.method == "EXLF":
         from matrices import admittance
-        from linear import linear
+
+        # from linear import linear
         from monitor import monitorfile
         from newton import newton
         from report import reportfile
@@ -29,9 +30,9 @@ def methodo(
             powerflow,
         )
 
-        linear(
-            powerflow,
-        )
+        # linear(
+        #     powerflow,
+        # )
 
         newton(
             powerflow,
@@ -79,7 +80,8 @@ def methodo(
     elif powerflow.method == "EXIC":
         from matrices import admittance
         from continuation import prediction_correction
-        from linear import linear
+
+        # from linear import linear
         from newton import newton
         from report import reportfile
 
@@ -87,9 +89,9 @@ def methodo(
             powerflow,
         )
 
-        linear(
-            powerflow,
-        )
+        # linear(
+        #     powerflow,
+        # )
 
         newton(
             powerflow,
@@ -119,7 +121,13 @@ def methodo(
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
         from matrices import admittance
-        from stochastic import stoch_apparent_1, stoch_apparent_2, stoch_apparent_3, multivariate_normal, rand0m
+        from stochastic import (
+            stoch_apparent_1,
+            stoch_apparent_2,
+            stoch_apparent_3,
+            multivariate_normal,
+            rand0m,
+        )
 
         admittance(
             powerflow,
@@ -148,7 +156,8 @@ def methodo(
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
         from matrices import admittance
-        from linear import linear
+
+        # from linear import linear
         from newton import newton
         from poc import poc
         from report import reportfile
@@ -157,9 +166,9 @@ def methodo(
             powerflow,
         )
 
-        linear(
-            powerflow,
-        )
+        # linear(
+        #     powerflow,
+        # )
 
         newton(
             powerflow,

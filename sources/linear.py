@@ -56,7 +56,7 @@ def linear(
     )
 
     # Matriz B
-    Ybus = powerflow.Ybus.A.imag
+    Ybus = powerflow.Yb.A.imag
     Ybus[powerflow.slackidx, :] = 0
     Ybus[:, powerflow.slackidx] = 0
     Ybus[powerflow.slackidx, powerflow.slackidx] = 1

@@ -8,14 +8,15 @@
 
 import time
 
-from dtem import *
+from dstb import *
 from pwf import keywords
+
 
 def stb(
     powerflow,
 ):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
@@ -60,6 +61,7 @@ def codes(
             "DARQ": False,
             "DEVT": False,
             "DMAQ": False,
+            "DMDG MD01": False,
             "DSIM": False,
         }
     )
@@ -80,7 +82,7 @@ def readfile(
     powerflow.lines = f.readlines()
     f.close()
 
-    # Loop de leitura de linhas do `.pwf`
+    # Loop de leitura de linhas do `.stb`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
         # Dados de Arquivos de Entrada e Saida
         if powerflow.lines[powerflow.linecount].strip() == "DARQ":
@@ -90,9 +92,12 @@ def readfile(
             darq(
                 powerflow,
             )
-        
+
         # Dados de Eventos
-        elif powerflow.lines[powerflow.linecount].strip() == "DEVT" or powerflow.lines[powerflow.linecount].strip() == "DEVT IMPR":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DEVT"
+            or powerflow.lines[powerflow.linecount].strip() == "DEVT IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.devt = dict()
             powerflow.devt["ruler"] = powerflow.lines[powerflow.linecount][:]
@@ -119,42 +124,28 @@ def readfile2(
     powerflow,
 ):
     """
-    
+
     Parâmetros
-        powerflow.py: self do arquivo powerflow
+        powerflow: self do arquivo powerflow.py
     """
 
     for idx, value in powerflow.darqDF.iterrows():
-        print(value["tipo"])
         if value["tipo"].split()[0] == "DAT":
-            checkfile(
-                powerflow,
-                value["nome"]
-            )
-            if value["nome"].split("-")[1] == "DMAQ.dat\n":
+            arquivo, arquivoname = checktem(powerflow, value["nome"])
+            if value["nome"].split("-")[1].strip().lower() == "dmaq.dat":
                 dmaq(
                     powerflow,
+                    arquivo,
+                    arquivoname,
                 )
         if value["tipo"].split()[0] == "BLT":
-            checkfile(
+            arquivo, arquivoname = checktem(
                 powerflow,
                 value["nome"],
             )
-            if value["nome"].split("-")[1] == "UHEUTE.blt\n":
+            if value["nome"].split("-")[1].strip().lower() == "uheute.blt":
                 blt(
                     powerflow,
+                    arquivo,
+                    arquivoname,
                 )
-
-
-def checkfile(
-    powerflow,
-    arquivo,
-):
-    """
-    
-    Parametros
-        powerflow.py: self do arquivo powerflow
-    """
-
-    ## Inicialização
-    pass

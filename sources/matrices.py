@@ -6,7 +6,18 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import arange, asarray, asmatrix, concatenate, conj, diag, exp, ones, r_, vectorize
+from numpy import (
+    arange,
+    asarray,
+    asmatrix,
+    concatenate,
+    conj,
+    diag,
+    exp,
+    ones,
+    r_,
+    vectorize,
+)
 from scipy.sparse import issparse, csr_matrix as sparse
 
 
@@ -71,7 +82,7 @@ def admittance(
     Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
 
     ## build Ybus
-    powerflow.Ybus = sparse(
+    powerflow.Yb = sparse(
         Cf.T @ Yf
         + Ct.T @ Yt
         + sparse(
@@ -94,7 +105,7 @@ def matrices(
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
 
     # Jacobiana
-    dS_dVm, dS_dVa = dSbus_dV(powerflow.Ybus, V)
+    dS_dVm, dS_dVa = dSbus_dV(powerflow.Yb, V)
     A11 = (dS_dVa.A[powerflow.maskP, :][:, powerflow.maskP]).real  # dP_dAngV
     A12 = (dS_dVm.A[powerflow.maskP, :][:, powerflow.maskQ]).real  # dP_dMagV
     A21 = (dS_dVa.A[powerflow.maskQ, :][:, powerflow.maskP]).imag  # dQ_AngV
@@ -119,10 +130,10 @@ def matrices(
 
         # Hessiana
         Gpaa, Gpav, Gpva, Gpvv = d2Sbus_dV2(
-            powerflow.Ybus, V, powerflow.solution["eigen"][: powerflow.nbus]
+            powerflow.Yb, V, powerflow.solution["eigen"][: powerflow.nbus]
         )
         Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(
-            powerflow.Ybus,
+            powerflow.Yb,
             V,
             powerflow.solution["eigen"][powerflow.nbus : 2 * powerflow.nbus],
         )

@@ -36,7 +36,9 @@ def scheduled(
         powerflow.qsch += powerflow.solution["potencia_reativa"]
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
 
-    elif (powerflow.solution["method"] != "EXPC") and (powerflow.solution["method"] != "LFDC"):
+    elif (powerflow.solution["method"] != "EXPC") and (
+        powerflow.solution["method"] != "LFDC"
+    ):
         powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 

@@ -24,7 +24,7 @@ def residue(
     ## Inicialização
     # Vetores de resíduo
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Ybus @ V
+    I = powerflow.Yb @ V
     S = diag(V) @ conj(I)
 
     # Resíduos de potência ativa e reativa

@@ -605,7 +605,7 @@ def writetail(
     ## Inicialização
     file.write("(")
     file.write("\n")
-    
+
     file.write("ULOG")
     file.write("\n")
     file.write("(N")
@@ -613,26 +613,26 @@ def writetail(
     file.write("2")
     file.write("\n")
     file.write(powerflow.namecase + ".SAV")
-    
+
     file.write("\n")
     file.write("(")
     file.write("\n")
-    
+
     file.write("ARQV INIC IMPR")
     file.write("\n")
     file.write("SIM")
-    
-    file.write("\n")    
+
+    file.write("\n")
     file.write("(")
     file.write("\n")
-    
+
     file.write("ARQV GRAV IMPR NOVO")
     file.write("\n")
     file.write("01")
     file.write("\n")
     file.write("(")
     file.write("\n")
-    
+
     file.write("ULOG")
     file.write("\n")
     file.write("(N")
@@ -640,16 +640,15 @@ def writetail(
     file.write("4")
     file.write("\n")
     file.write(powerflow.namecase + ".REL")
-    
+
     file.write("\n")
     file.write("( ")
     file.write("\n")
 
     file.write("RELA FILE 80CO")
-    
+
     file.write("\n")
     file.write("( ")
     file.write("\n")
-    
+
     file.write("FIM")
-    

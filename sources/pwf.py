@@ -8,7 +8,7 @@
 
 import time
 
-from drede import *
+from dpwf import *
 
 
 def pwf(

@@ -98,7 +98,8 @@ def pathrede(
         raise ValueError(
             f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.anarede}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
         )
-    
+
+
 def pathtem(
     powerflow,
 ):
