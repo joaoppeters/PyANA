@@ -88,16 +88,19 @@ def dynamic(
             if powerflow.devtDF.iloc[event]["tipo"] == "APCB":
                 Yr = apcb(
                     powerflow,
+                    event,
                     Yblt,
                 )
             elif powerflow.devtDF.iloc[event]["tipo"] == "RMCB":
                 Yr = rmcb(
                     powerflow,
+                    event,
                     Yblt,
                 )
             elif powerflow.devtDF.iloc[event]["tipo"] == "RMGR":
                 Yr = rmgr(
                     powerflow,
+                    event,
                     Yblt,
                 )
             event += 1
@@ -115,11 +118,11 @@ def dynamic(
             )
             x0 = append(w, d, peu.real)
 
-        else:
+        elif value > powerflow.devtDF.iloc[event]["tempo"]:
             Ig = Yr @ Eg
             peu = Eg @ conj(Ig)
             w = (
-                pi * powerflow.dsimDF.step.values[0] / (2 * powerflow.dsimDF.inercia)
+                pi * powerflow.dsimDF.step.values[0] / (2 * powerflow.dsimDF.inercia?)
             ) * (
                 (powerflow.solution["active"] * 1e-2 - peu.real)
                 + x0[: powerflow.nger]
@@ -136,6 +139,7 @@ def dynamic(
 
 def apcb(
     powerflow,
+    event,
     Yblt,
 ):
     """
@@ -145,7 +149,17 @@ def apcb(
     """
 
     ## Inicialização
-    pass
+    busidx = powerflow.devtDF.iloc[event].elemento - 1
+    Yblt[powerflow.nger + busidx, :] = 0
+    Yblt[:, powerflow.nger + busidx] = 0
+    Yblt[powerflow.nger + busidx, powerflow.nger + busidx] = 1
+    
+    Ya = Yblt[:, powerflow.nger][powerflow.nger, :]
+    Yb = Yblt[:, powerflow.nger][powerflow.nger:, :]
+    Ybl = Yblt[:, powerflow.nger:][powerflow.nger:, :]
+    
+    return Ya - Yb.T @ inv(Ybl) @ Yb
+    
 
 
 def rmcb(
@@ -159,11 +173,16 @@ def rmcb(
     """
 
     ## Inicialização
-    pass
+    Ya = Yblt[:, powerflow.nger][powerflow.nger, :]
+    Yb = Yblt[:, powerflow.nger][powerflow.nger:, :]
+    Ybl = Yblt[:, powerflow.nger:][powerflow.nger:, :]
+    
+    return Ya - Yb.T @ inv(Ybl) @ Yb
 
 
 def rmgr(
     powerflow,
+    event,
     Yblt,
 ):
     """
