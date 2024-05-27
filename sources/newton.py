@@ -157,3 +157,126 @@ def newton(
 
         # Convergência
         powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+        
+        
+def timenewt(
+    powerflow,
+):
+    """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Variável para armazenamento de solução
+    powerflow.solution.update(
+        {
+            "system": powerflow.name,
+            "method": "EXSI",
+            "iter": 0,
+            "freq": 1.0,
+        }
+    )
+
+    # Variáveis Especificadas
+    scheduled(
+        powerflow,
+    )
+
+    # Resíduos
+    residue(
+        powerflow,
+    )
+
+    while (
+        norm(
+            powerflow.deltaP[powerflow.maskP],
+        )
+        > powerflow.options["TEPA"]
+        or norm(
+            powerflow.deltaQ[powerflow.maskQ],
+        )
+        > powerflow.options["TEPR"]
+        or controldelta(
+            powerflow,
+        )
+    ):
+        # Armazenamento da trajetória de convergência
+        convergence(
+            powerflow,
+        )
+
+        # Matriz Jacobiana
+        matrices(
+            powerflow,
+        )
+
+        # Variáveis de estado
+        powerflow.statevar, residuals, rank, singular = lstsq(
+            powerflow.jacobian,
+            powerflow.deltaPQY,
+            rcond=None,
+        )
+
+        # Atualização das Variáveis de estado
+        updtstt(
+            powerflow,
+        )
+
+        # Atualização das potências
+        updtpwr(
+            powerflow,
+        )
+
+        # Atualização dos resíduos
+        residue(
+            powerflow,
+        )
+
+        # Incremento de iteração
+        powerflow.solution["iter"] += 1
+
+        # Condição Divergência por iterações
+        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
+            powerflow.solution[
+                "convergence"
+            ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            break
+
+    # Iteração Adicional
+    if powerflow.solution["iter"] <= powerflow.options["ACIT"]:
+        # Armazenamento da trajetória de convergência
+        convergence(
+            powerflow,
+        )
+
+        # Matriz Jacobiana
+        matrices(
+            powerflow,
+        )
+
+        # Variáveis de estado
+        powerflow.statevar, residuals, rank, singular = lstsq(
+            powerflow.jacobian,
+            powerflow.deltaPQY,
+            rcond=None,
+        )
+
+        # Atualização das variáveis de estado
+        updtstt(
+            powerflow,
+        )
+
+        # Atualização das potências
+        updtpwr(
+            powerflow,
+        )
+
+        # Atualização dos resíduos
+        residue(
+            powerflow,
+        )
+
+        # Convergência
+        powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"

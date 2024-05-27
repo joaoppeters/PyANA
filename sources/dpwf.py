@@ -573,8 +573,8 @@ def dbar(
 
         powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
 
-        # # Número de barras PV
-        # powerflow.npv = powerflow.nger - 1
+        # Número de barras PV
+        powerflow.nger = powerflow.npv
 
         # Número de barras PQ
         powerflow.npq = powerflow.nbus - powerflow.npv

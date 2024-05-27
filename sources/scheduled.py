@@ -21,29 +21,39 @@ def scheduled(
 
     ## Inicialização
     # Variável para armazenamento das potências ativa e reativa especificadas
-    powerflow.psch = zeros(powerflow.nbus)
-    powerflow.qsch = zeros(powerflow.nbus)
 
     # Potências ativa e reativa especificadas
     if powerflow.solution["method"] == "LFDC":
+        powerflow.psch = zeros(powerflow.nbus)
+        powerflow.qsch = zeros(powerflow.nbus)
         powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
 
     elif powerflow.solution["method"] == "EXPC":
+        powerflow.psch = zeros(powerflow.nbus)
         powerflow.psch += powerflow.solution["potencia_ativa"]
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
-
+        powerflow.qsch = zeros(powerflow.nbus)
         powerflow.qsch += powerflow.solution["potencia_reativa"]
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
+        
+    elif powerflow.solution["method"] == "EXSI":
+        powerflow.psch = zeros(powerflow.nger)
+        powerflow.psch = 
+        powerflow.qsch = zeros(powerflow.nger)
+        powerflow.qsch = 
 
     elif (powerflow.solution["method"] != "EXPC") and (
         powerflow.solution["method"] != "LFDC"
     ):
+        powerflow.psch = zeros(powerflow.nbus)
         powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
         powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
-
+        powerflow.qsch = zeros(powerflow.nbus)
         powerflow.qsch += powerflow.dbarDF["potencia_reativa"].to_numpy()
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
+        
+    
 
     powerflow.psch /= powerflow.options["BASE"]
     powerflow.qsch /= powerflow.options["BASE"]

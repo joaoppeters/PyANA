@@ -38,9 +38,12 @@ def convergence(
     powerflow.solution["convQ"] = append(
         powerflow.solution["convQ"], norm(powerflow.deltaQ[powerflow.maskQ])
     )
-    powerflow.solution["busQ"] = append(
-        powerflow.solution["busQ"], argmax(abs(powerflow.deltaQ[powerflow.maskQ]))
-    )
+    try:
+        powerflow.solution["busQ"] = append(
+            powerflow.solution["busQ"], argmax(abs(powerflow.deltaQ[powerflow.maskQ]))
+        )
+    except:
+        powerflow.solution["busQ"] = append(powerflow.solution["busQ"], [0.0])
 
     # Trajetória de convergência referente a cada equação de controle adicional
     if powerflow.deltaY.size != 0:

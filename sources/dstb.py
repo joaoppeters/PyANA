@@ -330,6 +330,8 @@ def dmaq(
     else:
         powerflow.codes["DMAQ"] = True
 
+        powerflow.dmaqDF = powerflow.dmaqDF.sort_values(by=["numero"], ascending=True)
+
 
 def blt(
     powerflow,

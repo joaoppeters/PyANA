@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "ieee14.pwf"
+system = "3bus3gen.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method = "LFDC" # LINEARIZED NEWTON-RAPHSON
