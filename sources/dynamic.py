@@ -17,13 +17,13 @@ from numpy import (
     diag,
     exp,
     ones,
-    pi,
     zeros,
 )
-from numpy.linalg import inv
+from numpy.linalg import inv, LinAlgError, lstsq, norm
 
 from devt import *
-from newton import timenewt
+from generator import *
+from update import updttm
 
 
 def dynamic(
@@ -107,39 +107,42 @@ def dynamic(
         powerflow.dsimDF.step.values[0],
     )
 
-    for idx, value in enumerate(t):
+    for _, value in enumerate(t):
         try:
-            if value == powerflow.devtDF.iloc[event]["tempo"]:
-                if powerflow.devtDF.iloc[event]["tipo"] == "APCB":
-                    Yr = apcb(
-                        powerflow,
-                        event,
-                        Yblc,
-                    )
-                elif powerflow.devtDF.iloc[event]["tipo"] == "RMCB":
-                    Yr = rmcb(
-                        powerflow,
-                        Yblc,
-                    )
-                elif powerflow.devtDF.iloc[event]["tipo"] == "RMGR":
-                    Yr = rmgr(
-                        powerflow,
-                        event,
-                        Yblc,
-                    )
-                elif powerflow.devtDF.iloc[event]["tipo"] == "ABCI":
-                    Yr = abci(
-                        powerflow,
-                        event,
-                        Yblc,
-                    )
+            if value in powerflow.devtDF.tempo.tolist():
+                allevents = powerflow.devtDF.loc[powerflow.devtDF.tempo == value, "tipo"].tolist()
+                for event in allevents:
+                    if event == "APCB":
+                        Yr = apcb(
+                            powerflow,
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            Yblc,
+                        )
+                    elif event == "RMCB":
+                        Yr = rmcb(
+                            powerflow,
+                            Yblc,
+                        )
+                    elif event == "RMGR":
+                        Yr = rmgr(
+                            powerflow,
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            Yblc,
+                        )
+                    elif event == "ABCI":
+                        Yr = abci(
+                            powerflow,
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            Yblc,
+                        )
 
                 Yblc = deepcopy(Yblcaux)
-                event += 1
-                x0 = timenewt(powerflow, Yblc, x0)
+                powerflow.solution["x"] = deepcopy(x0)
+                x0 = timenewt(powerflow, Yr, x0)
 
-            elif value > powerflow.devtDF.iloc[event - 1]["tempo"]:
-                x0 = timenewt(powerflow, Yblc, x0)
+            elif value not in powerflow.devtDF.tempo.tolist():
+                powerflow.solution["x"] = deepcopy(x0)
+                x0 = timenewt(powerflow, Yr, x0)
                 
         except:
             pass
@@ -149,30 +152,88 @@ def dynamic(
 
     for gen in range(0, powerflow.nger):
         plt.figure(1)
-        plt.plot(t, y[:, gen], label="d{}".format(gen + 1))
+        plt.plot(t, y[:, gen] * 180 / pi, label="d{}".format(gen + 1))
+        plt.legend()
 
         plt.figure(2)
         plt.plot(t, y[:, gen + powerflow.nger], label="w{}".format(gen + 1))
+        plt.legend()
 
-    plt.legend()
     plt.show()
     print()    
-
-
-def md01(
+    
+    
+def timenewt(
     powerflow,
-    gen,
-    value2,
+    Yr,
+    x0,
 ):
-    """
+    """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
-    powerflow.generator[gen].append("MD01")
-    powerflow.generator[gen].append(value2["inercia"].values[0])
-    powerflow.generator[gen].append(value2["amortecimento"].values[0])
-    powerflow.generator[gen].append(value2["l-transitoria"].values[0] * 2 * pi * 1)
-    powerflow.generator[gen].append(value2["r-armadura"].values[0])
+    # Variável para armazenamento de solução
+    powerflow.solution.update(
+        {
+            "method": "EXSI",
+            "iter": 0,
+            "freq": 1.0,
+        }
+    )
+
+    powerflow.deltagen = zeros(2 * powerflow.nger)
+
+    while True:
+        gen = 0
+        A1, A2, A3, A4 = zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger))
+        for generator in powerflow.generator:
+            if powerflow.generator[generator][0] == "MD01":
+                md01newt(powerflow, Yr, x0, generator, gen,)
+                md01jacob(powerflow, generator, gen, A1, A2, A3, A4, Yr,)
+            gen += 1
+
+        powerflow.jacobiangen = concatenate(
+            (
+                concatenate((A1, A2), axis=1),
+                concatenate((A3, A4), axis=1),
+            ),
+            axis=0,
+        )
+
+        try:
+            # Your sparse matrix computation using spsolve here
+            powerflow.timestatevar, residuals, rank, singular = lstsq(
+                powerflow.jacobiangen,
+                powerflow.deltagen,
+                rcond=None,
+            )
+        except LinAlgError:
+            raise ValueError(
+                "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
+            )
+
+        # Atualização das Variáveis de estado
+        updttm(
+            powerflow,
+
+        )
+
+        # Incremento de iteração
+        powerflow.solution["iter"] += 1
+
+        # Condição de Divergência por iterações
+        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
+            powerflow.solution[
+                "convergence"
+            ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            break
+
+        elif (norm(powerflow.timestatevar) <= powerflow.options["CTOL"]) and (
+            powerflow.solution["iter"] <= powerflow.options["ACIT"]
+        ):
+            break
+
+    return powerflow.solution["x"]

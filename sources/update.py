@@ -158,3 +158,22 @@ def updtlinear(
     ## Inicialização
     # Atualização dos ângulos dos barramentos
     powerflow.solution["theta"] = deepcopy(powerflow.statevar)
+
+
+def updttm(
+    powerflow,
+):
+    """
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Atualização das variaveis dinamicas tempo
+    gen = 0
+    for generator in powerflow.generator:
+        if powerflow.generator[generator][0] == "MD01":
+            powerflow.solution["x"][gen] -= powerflow.timestatevar[gen]
+            powerflow.solution["x"][gen + powerflow.nger] -= powerflow.timestatevar[gen + powerflow.nger] 
+        gen += 1

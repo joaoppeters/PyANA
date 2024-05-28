@@ -20,8 +20,6 @@ def scheduled(
     """
 
     ## Inicialização
-    # Variável para armazenamento das potências ativa e reativa especificadas
-
     # Potências ativa e reativa especificadas
     if powerflow.solution["method"] == "LFDC":
         powerflow.psch = zeros(powerflow.nbus)
@@ -36,12 +34,6 @@ def scheduled(
         powerflow.qsch = zeros(powerflow.nbus)
         powerflow.qsch += powerflow.solution["potencia_reativa"]
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
-        
-    elif powerflow.solution["method"] == "EXSI":
-        powerflow.psch = zeros(powerflow.nger)
-        powerflow.psch = 
-        powerflow.qsch = zeros(powerflow.nger)
-        powerflow.qsch = 
 
     elif (powerflow.solution["method"] != "EXPC") and (
         powerflow.solution["method"] != "LFDC"
@@ -52,8 +44,6 @@ def scheduled(
         powerflow.qsch = zeros(powerflow.nbus)
         powerflow.qsch += powerflow.dbarDF["potencia_reativa"].to_numpy()
         powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
-        
-    
 
     powerflow.psch /= powerflow.options["BASE"]
     powerflow.qsch /= powerflow.options["BASE"]
