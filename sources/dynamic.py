@@ -89,12 +89,12 @@ def dynamic(
     
     powerflow.solution["fem"] = abs(Eg)
     powerflow.solution["delta"] = arctan(Eg.imag / Eg.real)
-    powerflow.solution["omega"] = ones(powerflow.nger)
+    powerflow.solution["omega"] = zeros(powerflow.nger)
 
     x0 = concatenate(
         (
             delta,
-            ones(powerflow.nger),
+            zeros(powerflow.nger),
         )
     )
 
