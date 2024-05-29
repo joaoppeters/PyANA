@@ -72,11 +72,11 @@ def abci(
     Yblc,
 ):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
-    
+
     ## Inicialização
     de = powerflow.devtDF.iloc[idx].elemento - 1
     para = powerflow.devtDF.iloc[idx].para - 1

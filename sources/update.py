@@ -164,7 +164,7 @@ def updttm(
     powerflow,
 ):
     """
-    
+
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
@@ -175,5 +175,7 @@ def updttm(
     for generator in powerflow.generator:
         if powerflow.generator[generator][0] == "MD01":
             powerflow.solution["x"][gen] -= powerflow.timestatevar[gen]
-            powerflow.solution["x"][gen + powerflow.nger] -= powerflow.timestatevar[gen + powerflow.nger] 
+            powerflow.solution["x"][gen + powerflow.nger] -= powerflow.timestatevar[
+                gen + powerflow.nger
+            ]
         gen += 1

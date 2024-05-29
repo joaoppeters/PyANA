@@ -36,6 +36,13 @@ def dynamic(
     """
 
     ## Inicialização
+    # Variável para armazenamento de solução
+    powerflow.solution.update(
+        {
+            "method": "EXSI",
+        }
+    )
+
     # Transformação das cargas para impedância constante
     load2ycte = diag(
         (
@@ -86,15 +93,15 @@ def dynamic(
     Eg = E[: powerflow.nger]
     delta = arctan(Eg.imag / Eg.real)
     Eg = abs(Eg) * exp(1j * delta)
-    
+
     powerflow.solution["fem"] = abs(Eg)
     powerflow.solution["delta"] = arctan(Eg.imag / Eg.real)
-    powerflow.solution["omega"] = zeros(powerflow.nger)
+    powerflow.solution["omega"] = ones(powerflow.nger)
 
     x0 = concatenate(
         (
             delta,
-            zeros(powerflow.nger),
+            ones(powerflow.nger),
         )
     )
 
@@ -110,12 +117,16 @@ def dynamic(
     for _, value in enumerate(t):
         try:
             if value in powerflow.devtDF.tempo.tolist():
-                allevents = powerflow.devtDF.loc[powerflow.devtDF.tempo == value, "tipo"].tolist()
+                allevents = powerflow.devtDF.loc[
+                    powerflow.devtDF.tempo == value, "tipo"
+                ].tolist()
                 for event in allevents:
                     if event == "APCB":
                         Yr = apcb(
                             powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
+                                0
+                            ],
                             Yblc,
                         )
                     elif event == "RMCB":
@@ -126,13 +137,17 @@ def dynamic(
                     elif event == "RMGR":
                         Yr = rmgr(
                             powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
+                                0
+                            ],
                             Yblc,
                         )
                     elif event == "ABCI":
                         Yr = abci(
                             powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[0],
+                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
+                                0
+                            ],
                             Yblc,
                         )
 
@@ -143,7 +158,7 @@ def dynamic(
             elif value not in powerflow.devtDF.tempo.tolist():
                 powerflow.solution["x"] = deepcopy(x0)
                 x0 = timenewt(powerflow, Yr, x0)
-                
+
         except:
             pass
         y.append(x0)
@@ -160,9 +175,9 @@ def dynamic(
         plt.legend()
 
     plt.show()
-    print()    
-    
-    
+    print()
+
+
 def timenewt(
     powerflow,
     Yr,
@@ -178,7 +193,6 @@ def timenewt(
     # Variável para armazenamento de solução
     powerflow.solution.update(
         {
-            "method": "EXSI",
             "iter": 0,
             "freq": 1.0,
         }
@@ -188,11 +202,31 @@ def timenewt(
 
     while True:
         gen = 0
-        A1, A2, A3, A4 = zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger)), zeros((powerflow.nger, powerflow.nger))
+        A1, A2, A3, A4 = (
+            zeros((powerflow.nger, powerflow.nger)),
+            zeros((powerflow.nger, powerflow.nger)),
+            zeros((powerflow.nger, powerflow.nger)),
+            zeros((powerflow.nger, powerflow.nger)),
+        )
         for generator in powerflow.generator:
             if powerflow.generator[generator][0] == "MD01":
-                md01newt(powerflow, Yr, x0, generator, gen,)
-                md01jacob(powerflow, generator, gen, A1, A2, A3, A4, Yr,)
+                md01newt(
+                    powerflow,
+                    Yr,
+                    x0,
+                    generator,
+                    gen,
+                )
+                md01jacob(
+                    powerflow,
+                    generator,
+                    gen,
+                    A1,
+                    A2,
+                    A3,
+                    A4,
+                    Yr,
+                )
             gen += 1
 
         powerflow.jacobiangen = concatenate(
@@ -218,7 +252,6 @@ def timenewt(
         # Atualização das Variáveis de estado
         updttm(
             powerflow,
-
         )
 
         # Incremento de iteração
