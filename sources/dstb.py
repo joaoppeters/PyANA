@@ -350,17 +350,18 @@ def blt(
     powerflow.lines = f.readlines()
     f.close()
 
-    # Loop de leitura de linhas do `.stb`
-    while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
-        # Dados de Arquivos de Entrada e Saida
-        while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-            if powerflow.lines[powerflow.linecount].strip() == "DMDG MD01":
-                powerflow.linecount += 1
-                powerflow.dmdg = dict()
-                powerflow.dmdg["ruler"] = powerflow.lines[powerflow.linecount][:]
-                md01(
-                    powerflow,
-                )
+    # # Loop de leitura de linhas do `.stb`
+    # while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
+    # Dados de Arquivos de Entrada e Saida
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount].strip() == "DMDG MD01":
+            powerflow.linecount += 1
+            powerflow.dmdg = dict()
+            powerflow.dmdg["ruler"] = powerflow.lines[powerflow.linecount][:]
+            md01(
+                powerflow,
+            )
+            powerflow.linecount -= 1
         powerflow.linecount += 1
 
     ## SUCESSO NA LEITURA

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<chartConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://sage.web.chartConfig" type="XY"
+       title="Sage" font="Dialog, 1, 18" fontcolor="0 0 0 255"
+       showlegend="true"
+       bgcolor="255 255 255 255" bordervisible="true" borderstroke="2.0" borderpaint="0 0 0 255"
+       xaxiszoom="true" yaxiszoom="true" >
+
+   <plot type="XYPlot" id="plot_B"
+         bgcolor="170 0 0 255"
+         xaxisgridshow="true" xaxisgridstroke="1.0" xaxisgridpaint="160 160 160 255"
+         yaxisgridshow="true" yaxisgridstroke="1.0" yaxisgridpaint="160 160 160 255"
+         xaxiscroshairshow="false" yaxiscroshairshow="false">
+
+      <marker id="pontoOper" type="Pointer" angle="0.0" showtext="true" bgcolor="56 56 56 255"/>
+
+      <axis id="mw"  type="NumberAxis" format="#.###" tick="200" fontcolor="0 0 0 255" />
+
+      <curve id="c1" type="XYLineAndShape" paintAlpha="0" paint="128 64 64 255" paintAreaColor="0 135 0 255" stroke="2.0" showline="true" fillshapes="true" showshapes="true" paintarea="true" />
+
+      <curve id="c2" type="XYLineAndShape" paintAlpha="55" paint="0 0 255 255" paintAreaColor="0 135 0 255" stroke="2.0" showline="true" fillshapes="true" showshapes="true" paintarea="true" />
+
+      <curve id="c3" type="XYLineAndShape" paintAlpha="55" paint="0 255 0 255" paintAreaColor="0 135 0 255" stroke="2.0" showline="true" fillshapes="true" showshapes="true" paintarea="true" />
+
+      <curve id="c4" type="XYLineAndShape" paintAlpha="255" paint="255 255 0 255" paintAreaColor="255 255 0 255" stroke="2.0" showline="true" fillshapes="true" showshapes="true" paintarea="true" />
+
+      <curve id="c5" type="XYLineAndShape" paintAlpha="255" paint="255 128 0 255" paintAreaColor="255 128 0 255" stroke="2.0" showline="true" fillshapes="true" showshapes="true" paintarea="true" />
+
+   </plot>
+
+</chartConfig>

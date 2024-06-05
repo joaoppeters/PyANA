@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<chartData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://sage.web.chartData">
+
+   <timestamps>
+      <pedido>1260363578</pedido>
+      <chartTI>1260364390</chartTI>
+      <chartTF>9999999999</chartTF>
+      <mensagem>Desatualizado</mensagem>
+   </timestamps>
+
+   <infoPanel id="pnInfo" label="Informações">
+      <message label="Caso:"                     value="Dados de Rede no Formato ANAREDE"/>
+      <message label="Hora da Simulação:"        value="03/06/2024  10:02:4"/>
+      <message label="Sim ESTÁTICA - Direções:"  value="8"/>
+      <message label="Status:"                   value="Ponto de Operação Seguro e sem Violação"/>
+      <message label="Hora do Nomograma: "       value=""/>
+      <message label="Atualização do Nomograma:" value="MACRO_DATE_TIME"/>
+   </infoPanel>
+
+   <group id="G1xG2" label="G1 X G2">
+      <x-range id="G1" label="G1"   min="57.05" max="224.34" tick="10" unit="MW" />
+      <y-range id="G2" label="G2" min="8.83" max="177.23" tick="10" unit="MW" />
+
+      <operatingPoint id="SOP" label="OP" x="142.49" y="90.00" tip="Ponto de Operação" action="" />
+
+      <serie id="s1" label="Limite de Mvar">
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="90.00" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="66.20" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="22.86" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="56.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="90.00" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="163.20" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="163.20" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s2" label="Limite Térmico">
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="90.00" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="66.20" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="195.33" y="37.56" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 74" verticeid="4" />
+         <coordenada enabled="true" x="196.60" y="63.10" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 66" verticeid="5" />
+         <coordenada enabled="true" x="197.92" y="90.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 78" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="163.20" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="163.20" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s3" label="Limite de Tensão">
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#2 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="2" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#3 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="3" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="4" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="5" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="6" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#7 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="7" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#8 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="8" />
+         <coordenada enabled="true" x="142.49" y="90.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+      </serie>
+
+      <serie id="s4" label="Limite de Segurança">
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="90.00" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="66.20" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="22.86" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="56.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="90.00" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="163.20" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="163.20" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s5" label="Limite de MW">
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="90.00" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="66.20" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="22.86" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="56.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="90.00" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="163.20" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="163.20" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="113.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+   </group>
+
+   <group id="G1xG3" label="G1 X G3">
+      <x-range id="G1" label="G1"   min="57.05" max="224.34"  tick="10" unit="MW" />
+      <y-range id="G3" label="G3" min="2.10" max="118.50" tick="10" unit="MW" />
+
+      <operatingPoint id="SOP" label="OP" x="142.49" y="85.00" tip="Ponto de Operação" action="" />
+
+      <serie id="s1" label="Limite de Mvar">
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s2" label="Limite Térmico">
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="195.33" y="85.00" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 74" verticeid="4" />
+         <coordenada enabled="true" x="196.60" y="58.10" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 66" verticeid="5" />
+         <coordenada enabled="true" x="197.92" y="30.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 78" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s3" label="Limite de Tensão">
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#2 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="2" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#3 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="3" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="4" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="5" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="6" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#7 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="7" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#8 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="8" />
+         <coordenada enabled="true" x="142.49" y="85.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+      </serie>
+
+      <serie id="s4" label="Limite de Segurança">
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s5" label="Limite de MW">
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="119.02" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="142.63" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="210.40" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="210.40" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="210.40" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="143.18" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="70.99" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="95.69" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+   </group>
+
+   <group id="G2xG3" label="G2 X G3">
+      <x-range id="G2" label="G2" min="8.83" max="177.23"  tick="10" unit="MW" />
+      <y-range id="G3" label="G3"  min="2.10" max="118.50" tick="10" unit="MW" />
+
+      <operatingPoint id="SOP" label="OP" x="90.00" y="85.00" tip="Ponto de Operação" action="" />
+
+      <serie id="s1" label="Limite de Mvar">
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="90.00" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="66.20" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="22.86" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="56.34" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="90.00" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="163.20" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="163.20" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s2" label="Limite Térmico">
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="90.00" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="66.20" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="37.56" y="85.00" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 74" verticeid="4" />
+         <coordenada enabled="true" x="63.10" y="58.10" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 66" verticeid="5" />
+         <coordenada enabled="true" x="90.00" y="30.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 78" verticeid="6" />
+         <coordenada enabled="true" x="163.20" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="163.20" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s3" label="Limite de Tensão">
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#2 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="2" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#3 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="3" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#4 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="4" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#5 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="5" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#6 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="6" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#7 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="7" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#8 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="8" />
+         <coordenada enabled="true" x="90.00" y="85.00" tip="#1 T:Limite de Segurança C:LT_4_5_1 D: 0" verticeid="1" />
+      </serie>
+
+      <serie id="s4" label="Limite de Segurança">
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="90.00" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="66.20" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="22.86" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="56.34" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="90.00" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="163.20" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="163.20" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+      <serie id="s5" label="Limite de MW">
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+         <coordenada enabled="true" x="90.00" y="108.80" tip="#2 T:Limite de MW C:Nenhuma D: 33" verticeid="2" />
+         <coordenada enabled="true" x="66.20" y="108.80" tip="#3 T:Limite de MW C:Nenhuma D: 33" verticeid="3" />
+         <coordenada enabled="true" x="22.86" y="85.00" tip="#4 T:Limite de MW C:Nenhuma D: 95" verticeid="4" />
+         <coordenada enabled="true" x="56.34" y="51.34" tip="#5 T:Limite de MW C:Nenhuma D: 82" verticeid="5" />
+         <coordenada enabled="true" x="90.00" y="17.85" tip="#6 T:Limite de MW C:Nenhuma D: 95" verticeid="6" />
+         <coordenada enabled="true" x="163.20" y="11.80" tip="#7 T:Limite de MW C:Nenhuma D: 103" verticeid="7" />
+         <coordenada enabled="true" x="163.20" y="85.00" tip="#8 T:Limite de MW C:Nenhuma D: 102" verticeid="8" />
+         <coordenada enabled="true" x="113.80" y="108.80" tip="#1 T:Limite de MW C:Nenhuma D: 57" verticeid="1" />
+      </serie>
+
+   </group>
+
+</chartData>

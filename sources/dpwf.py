@@ -545,6 +545,7 @@ def dbar(
                 if value["tipo"] == 2:
                     powerflow.maskP[idx] = False
                     powerflow.slackidx = idx
+                    powerflow.refgen = powerflow.npv - 1
 
                 elif value["tipo"] == 1:
                     powerflow.dbarDF.at[idx, "angulo"] = 0.0

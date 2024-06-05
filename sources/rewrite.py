@@ -276,57 +276,57 @@ def writedbar(
         else:
             if value["demanda_ativa"] >= 0.0:
                 if value["demanda_ativa"] / 1e3 >= 1.0:
-                    pl = str(round(value["demanda_ativa"]))
+                    pl = str(round(value["demanda_ativa"] * 1.1))
                 elif (
                     value["demanda_ativa"] / 1e3 >= 0.1
                     and value["demanda_ativa"] / 1e3 < 1.0
                 ):
-                    pl = str(round(value["demanda_ativa"], 1))
+                    pl = str(round(value["demanda_ativa"] * 1.1, 1))
                 else:
-                    pl = str(round(value["demanda_ativa"], 2))
+                    pl = str(round(value["demanda_ativa"] * 1.1, 2))
             else:
                 if value["demanda_ativa"] / 1e3 < -0.1:
-                    pl = str(round(value["demanda_ativa"]))
+                    pl = str(round(value["demanda_ativa"] * 1.1))
                 else:
-                    pl = str(round(value["demanda_ativa"], 1))
+                    pl = str(round(value["demanda_ativa"] * 1.1, 1))
 
         if value["demanda_reativa"] == 0.0:
             ql = 5 * " "
         else:
             if value["demanda_reativa"] >= 0.0:
                 if value["demanda_reativa"] / 1e3 >= 1.0:
-                    ql = str(round(value["demanda_reativa"]))
+                    ql = str(round(value["demanda_reativa"] * 1.1))
                 elif (
                     value["demanda_reativa"] / 1e3 >= 0.1
                     and value["demanda_reativa"] / 1e3 < 1.0
                 ):
-                    ql = str(round(value["demanda_reativa"], 1))
+                    ql = str(round(value["demanda_reativa"] * 1.1, 1))
                 else:
-                    ql = str(round(value["demanda_reativa"], 2))
+                    ql = str(round(value["demanda_reativa"] * 1.1, 2))
             else:
                 if value["demanda_reativa"] / 1e3 < -0.1:
-                    ql = str(round(value["demanda_reativa"]))
+                    ql = str(round(value["demanda_reativa"] * 1.1))
                 else:
-                    ql = str(round(value["demanda_reativa"], 1))
+                    ql = str(round(value["demanda_reativa"] * 1.1, 1))
 
         if value["shunt_barra"] == 0.0:
             sb = 5 * " "
         else:
             if value["shunt_barra"] >= 0.0:
                 if value["shunt_barra"] / 1e3 >= 1.0:
-                    sb = str(round(value["shunt_barra"]))
+                    sb = str(round(value["shunt_barra"] * 1.1))
                 elif (
                     value["shunt_barra"] / 1e3 >= 0.1
                     and value["shunt_barra"] / 1e3 < 1.0
                 ):
-                    sb = str(round(value["shunt_barra"], 1))
+                    sb = str(round(value["shunt_barra"] * 1.1, 1))
                 else:
-                    sb = str(round(value["shunt_barra"], 2))
+                    sb = str(round(value["shunt_barra"] * 1.1, 2))
             else:
                 if value["shunt_barra"] / 1e3 < -0.1:
-                    sb = str(round(value["shunt_barra"]))
+                    sb = str(round(value["shunt_barra"] * 1.1))
                 else:
-                    sb = str(round(value["shunt_barra"], 1))
+                    sb = str(round(value["shunt_barra"] * 1.1, 1))
         file.write(
             f"{value['numero']:>5}{value['operacao']:1}{value['estado']:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{value['tensao']:>4}{value['angulo']:>4}{value['potencia_ativa']:>5}{value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5}{value['barra_controlada']:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{value['tensao_base']:>4}{value['modo']:1}{value['agreg1']:<3}{value['agreg2']:<3}{value['agreg3']:<3}{value['agreg4']:<3}{value['agreg5']:<3}{value['agreg6']:<3}{value['agreg7']:<3}{value['agreg8']:<3}{value['agreg9']:<3}{value['agreg10']:<3}"
         )

@@ -6,87 +6,77 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, cos, pi, sin
+from numpy import append, array, concatenate, cos, pi, sin, zeros
 
 
 def md01(
     powerflow,
     gen,
-    value2,
+    dmdg,
 ):
-    """
+    """armazenamento de dados dos geradores
+    Posicao 0: modelo do gerador - de acordo com ANATEM
+    Posicao 1: inercia (M)
+    Posicao 2: amortecimento (D)
+    Posicao 3: reatancia transitoria
+    Posicao 4: resistencia
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        gen: indice do gerador
+        dmdg: informacoes obtidas do dmdgDF
     """
 
     ## Inicialização
     powerflow.generator[gen].append("MD01")
     powerflow.generator[gen].append(
-        value2["inercia"].values[0] / (powerflow.options["FBASE"] * pi)
+        dmdg["inercia"].values[0] / (powerflow.options["FBASE"] * pi)
     )
-    powerflow.generator[gen].append(value2["amortecimento"].values[0])
+    powerflow.generator[gen].append(dmdg["amortecimento"].values[0])
     powerflow.generator[gen].append(
-        value2["l-transitoria"].values[0] * 2 * pi * powerflow.solution["freq"]
+        dmdg["l-transitoria"].values[0] * 2 * pi * powerflow.solution["freq"]
     )
-    powerflow.generator[gen].append(value2["r-armadura"].values[0])
+    powerflow.generator[gen].append(dmdg["r-armadura"].values[0])
 
 
-def md01newt(
+def md01residue(
     powerflow,
-    Yr,
-    x0,
+    Yred,
     generator,
     gen,
 ):
-    """
+    """calculo dos residuos
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
-    powerflow.deltagen[gen] = (
-        powerflow.solution["x"][gen]
-        - x0[gen]
+    powerflow.deltagen[2 * gen] = (
+        powerflow.solution["delta"][gen]
+        - powerflow.solution["delta0"][gen]
         - powerflow.dsimDF.step.values[0]
         * 0.5
-        * (powerflow.solution["x"][gen + powerflow.nger] + x0[gen + powerflow.nger])
+        * (powerflow.solution["omega"][gen] + powerflow.solution["omega0"][gen])
     )
-    powerflow.deltagen[gen + powerflow.nger] = (
-        powerflow.solution["x"][gen + powerflow.nger]
-        - x0[gen + powerflow.nger]
-        - powerflow.dsimDF.step.values[0]
-        * 0.5
+
+    powerflow.deltagen[2 * gen + 1] = (
+        powerflow.solution["omega"][gen]
+        - powerflow.solution["omega0"][gen]
+        - (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
         * (
-            (1 / powerflow.generator[generator][1])
-            * (
-                2 * powerflow.solution["active"][gen - 1] * 1e-2
-                - md01peut(
-                    powerflow,
-                    Yr,
-                    powerflow.solution["x"],
-                    gen,
-                )
-                - md01peut(
-                    powerflow,
-                    Yr,
-                    x0,
-                    gen,
-                )
-                - powerflow.generator[generator][2]
-                * (
-                    powerflow.solution["x"][gen + powerflow.nger]
-                    + x0[gen + powerflow.nger]
-                )
-            )
+            2 * powerflow.solution["active"][generator - 1]
+            - md01peut(powerflow, Yred, powerflow.solution["delta"], gen)
+            - md01peut(powerflow, Yred, powerflow.solution["delta0"], gen)
+            - powerflow.generator[generator][2] * powerflow.solution["omega"][gen]
+            - powerflow.generator[generator][2] * powerflow.solution["omega0"][gen]
         )
     )
 
 
 def md01peut(
     powerflow,
-    Yr,
+    Yred,
     delta,
     gen,
 ):
@@ -103,8 +93,8 @@ def md01peut(
             [
                 powerflow.solution["fem"][j]
                 * (
-                    Yr[gen, j].real * cos(delta[gen] - delta[j])
-                    + Yr[gen, j].imag * sin(delta[gen] - delta[j])
+                    Yred[gen, j].imag * sin(delta[j])
+                    + Yred[gen, j].real * cos(delta[j])
                 )
                 for j in range(powerflow.nger)
             ]
@@ -116,11 +106,7 @@ def md01jacob(
     powerflow,
     generator,
     gen,
-    A1,
-    A2,
-    A3,
-    A4,
-    Yr,
+    Yred,
 ):
     """
 
@@ -129,37 +115,72 @@ def md01jacob(
     """
 
     ## Inicialização
-    A1[gen, gen] = 1
-    A2[gen, gen] = -powerflow.dsimDF.step.values[0] * 0.5
-    A4[gen, gen] = (
-        1
-        + powerflow.dsimDF.step.values[0]
-        * 0.5
-        * (1 / powerflow.generator[generator][1])
-        * powerflow.generator[generator][2]
-    )
+    if gen == 0:
+        powerflow.jacobiangen = zeros((2, 2))
+        powerflow.jacobiangen[0, 0] = 1
+        powerflow.jacobiangen[0, 1] = -powerflow.dsimDF.step.values[0] * 0.5
+        powerflow.jacobiangen[1, 0] = (
+            (
+                powerflow.dsimDF.step.values[0]
+                * 0.5
+                * 1
+                / powerflow.generator[generator][1]
+            )
+            * powerflow.solution["fem"][gen]
+            * array(
+                [
+                    powerflow.solution["fem"][j]
+                    * (
+                        Yred[gen, j].imag * cos(powerflow.solution["delta"][j])
+                        - Yred[gen, j].real * sin(powerflow.solution["delta"][j])
+                    )
+                    for j in range(powerflow.nger)
+                ]
+            ).sum()
+        )
+        powerflow.jacobiangen[1, 1] = (
+            1
+            + powerflow.dsimDF.step.values[0]
+            * 0.5
+            * powerflow.generator[generator][2]
+            / powerflow.generator[generator][1]
+        )
 
-    for j in range(0, powerflow.nger):
-        if j != gen:
-            A3[gen, j] = (
+    else:
+        powerflow.jacobiangen = concatenate(
+            (powerflow.jacobiangen, zeros((powerflow.jacobiangen.shape[0], 2))), axis=1
+        )
+        powerflow.jacobiangen = concatenate(
+            (powerflow.jacobiangen, zeros((2, powerflow.jacobiangen.shape[1]))), axis=0
+        )
+
+        powerflow.jacobiangen[2 * gen, 2 * gen] = 1
+        powerflow.jacobiangen[2 * gen, 2 * gen + 1] = (
+            -powerflow.dsimDF.step.values[0] * 0.5
+        )
+        powerflow.jacobiangen[2 * gen + 1, 2 * gen] = (
+            (
                 powerflow.dsimDF.step.values[0]
                 * 0.5
-                * (1 / powerflow.generator[generator][1])
-                * powerflow.solution["fem"][gen]
-                * powerflow.solution["fem"][j]
-                * (
-                    -Yr[gen, j].real
-                    * sin(powerflow.solution["x"][gen] - powerflow.solution["x"][j])
-                    + Yr[gen, j].imag
-                    * cos(powerflow.solution["x"][gen] - powerflow.solution["x"][j])
-                )
+                * 1
+                / powerflow.generator[generator][1]
             )
-        else:
-            A3[gen, gen] = (
-                powerflow.dsimDF.step.values[0]
-                * 0.5
-                * (1 / powerflow.generator[generator][1])
-                * powerflow.solution["fem"][gen]
-                * powerflow.solution["fem"][j]
-                * Yr[gen, gen].imag
-            )
+            * powerflow.solution["fem"][gen]
+            * array(
+                [
+                    powerflow.solution["fem"][j]
+                    * (
+                        Yred[gen, j].imag * cos(powerflow.solution["delta"][j])
+                        - Yred[gen, j].real * sin(powerflow.solution["delta"][j])
+                    )
+                    for j in range(powerflow.nger)
+                ]
+            ).sum()
+        )
+        powerflow.jacobiangen[2 * gen + 1, 2 * gen + 1] = (
+            1
+            + powerflow.dsimDF.step.values[0]
+            * 0.5
+            * powerflow.generator[generator][2]
+            / powerflow.generator[generator][1]
+        )

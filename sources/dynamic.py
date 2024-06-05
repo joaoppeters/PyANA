@@ -18,6 +18,10 @@ from numpy import (
     exp,
     ones,
     zeros,
+    abs,
+    angle,
+    rad2deg,
+    pi,
 )
 from numpy.linalg import inv, LinAlgError, lstsq, norm
 
@@ -66,12 +70,12 @@ def dynamic(
             powerflow.dbarDF["numero"] == value["numero"], "numero"
         ].values[0]
         powerflow.generator[gen] = list()
-        value2 = powerflow.dmdgDF.loc[powerflow.dmdgDF["numero"] == value["gerador"]]
-        if value2.tipo.values[0] == "MD01":
+        dmdg = powerflow.dmdgDF.loc[powerflow.dmdgDF["numero"] == value["gerador"]]
+        if dmdg.tipo.values[0] == "MD01":
             md01(
                 powerflow,
                 gen,
-                value2,
+                dmdg,
             )
 
             Ya[idx, idx] = 1 / (1j * powerflow.generator[gen][3])
@@ -90,20 +94,20 @@ def dynamic(
     Yblcaux = deepcopy(Yblc)
 
     E = inv(Yblc) @ I
+
     Eg = E[: powerflow.nger]
     delta = arctan(Eg.imag / Eg.real)
     Eg = abs(Eg) * exp(1j * delta)
 
+    deltaref = delta[powerflow.refgen]
+
     powerflow.solution["fem"] = abs(Eg)
-    powerflow.solution["delta"] = arctan(Eg.imag / Eg.real)
+    powerflow.solution["delta0"] = arctan(Eg.imag / Eg.real) - deltaref
+    powerflow.solution["omega0"] = ones(powerflow.nger)
+    powerflow.solution["delta"] = arctan(Eg.imag / Eg.real) - deltaref
     powerflow.solution["omega"] = ones(powerflow.nger)
 
-    x0 = concatenate(
-        (
-            delta,
-            ones(powerflow.nger),
-        )
-    )
+    powerflow.deltagen = zeros((powerflow.nger * 2))
 
     y = list()
     event = 0
@@ -122,7 +126,7 @@ def dynamic(
                 ].tolist()
                 for event in allevents:
                     if event == "APCB":
-                        Yr = apcb(
+                        Yred = apcb(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
@@ -130,12 +134,12 @@ def dynamic(
                             Yblc,
                         )
                     elif event == "RMCB":
-                        Yr = rmcb(
+                        Yred = rmcb(
                             powerflow,
                             Yblc,
                         )
                     elif event == "RMGR":
-                        Yr = rmgr(
+                        Yred = rmgr(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
@@ -143,7 +147,7 @@ def dynamic(
                             Yblc,
                         )
                     elif event == "ABCI":
-                        Yr = abci(
+                        Yred = abci(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
@@ -152,16 +156,25 @@ def dynamic(
                         )
 
                 Yblc = deepcopy(Yblcaux)
-                powerflow.solution["x"] = deepcopy(x0)
-                x0 = timenewt(powerflow, Yr, x0)
+                timenewt(
+                    powerflow,
+                    Yred,
+                )
 
             elif value not in powerflow.devtDF.tempo.tolist():
-                powerflow.solution["x"] = deepcopy(x0)
-                x0 = timenewt(powerflow, Yr, x0)
+                timenewt(
+                    powerflow,
+                    Yred,
+                )
 
         except:
             pass
-        y.append(x0)
+
+        y.append(
+            concatenate((powerflow.solution["delta"], powerflow.solution["omega"]))
+        )
+        powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
+        powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
 
     y = array(y)
 
@@ -180,8 +193,7 @@ def dynamic(
 
 def timenewt(
     powerflow,
-    Yr,
-    x0,
+    Yred,
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
 
@@ -190,30 +202,15 @@ def timenewt(
     """
 
     ## Inicialização
-    # Variável para armazenamento de solução
-    powerflow.solution.update(
-        {
-            "iter": 0,
-            "freq": 1.0,
-        }
-    )
-
-    powerflow.deltagen = zeros(2 * powerflow.nger)
+    powerflow.solution["iter"] = 0
 
     while True:
         gen = 0
-        A1, A2, A3, A4 = (
-            zeros((powerflow.nger, powerflow.nger)),
-            zeros((powerflow.nger, powerflow.nger)),
-            zeros((powerflow.nger, powerflow.nger)),
-            zeros((powerflow.nger, powerflow.nger)),
-        )
         for generator in powerflow.generator:
             if powerflow.generator[generator][0] == "MD01":
-                md01newt(
+                md01residue(
                     powerflow,
-                    Yr,
-                    x0,
+                    Yred,
                     generator,
                     gen,
                 )
@@ -221,27 +218,15 @@ def timenewt(
                     powerflow,
                     generator,
                     gen,
-                    A1,
-                    A2,
-                    A3,
-                    A4,
-                    Yr,
+                    Yred,
                 )
             gen += 1
-
-        powerflow.jacobiangen = concatenate(
-            (
-                concatenate((A1, A2), axis=1),
-                concatenate((A3, A4), axis=1),
-            ),
-            axis=0,
-        )
 
         try:
             # Your sparse matrix computation using spsolve here
             powerflow.timestatevar, residuals, rank, singular = lstsq(
                 powerflow.jacobiangen,
-                powerflow.deltagen,
+                -powerflow.deltagen,
                 rcond=None,
             )
         except LinAlgError:
@@ -268,5 +253,3 @@ def timenewt(
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             break
-
-    return powerflow.solution["x"]
