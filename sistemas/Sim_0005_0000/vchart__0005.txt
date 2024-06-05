@@ -1,6 +1,0 @@
-<operatingPoint G1=  142.49 G2=   90.00 G3=   85.00 tip="Ponto de Operação" seguro=1 violado=0>
-<serie limit="Limite de Mvar" G1=  210.40 G2=   56.34 G3=   51.34 T="Limite de MW" C="Nenhuma" D=0082>
-<serie limit="Limite Térmico" G1=  196.60 G2=   63.10 G3=   58.10 T="Limite de Segurança" C="LT_4_5_1" D=0066>
-<serie limit="Limite de Tensão" G1=  142.49 G2=   90.00 G3=   85.00 T="Limite de Segurança" C="LT_4_5_1" D=0000>                                                                                                                                                
-<serie limit="Limite de Segurança" G1=  210.40 G2=   56.34 G3=   51.34 T="Limite de MW" C="Nenhuma" D=0082>                                                                                                                                                     
-<serie limit="Limite de MW" G1=  210.40 G2=   56.34 G3=   51.34 T="Limite de MW" C="Nenhuma" D=0082>                                                                                                                                                            
