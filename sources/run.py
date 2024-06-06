@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_REV2.pwf"
+system = "ieee14.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method = "LFDC" # LINEARIZED NEWTON-RAPHSON
@@ -19,7 +19,7 @@ method = "EXLF"  # NEWTON-RAPHSON
 method = "EXSI"  # DYNAMIC SIMULATION
 # method = "DATA" # DATA MANIPULATION
 # method = "BATCH" # ANAREDE BATCH RUNNING
-method = "PWF"  # FILE MODIFYING AND SAVING AS REQUESTED BY PROF. RKUIAVA
+# method = "PWF"  # FILE MODIFYING AND SAVING AS REQUESTED BY PROF. RKUIAVA
 
 control = [
     # "CREM",

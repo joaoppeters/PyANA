@@ -270,10 +270,46 @@ def writedbar(
     file.write("DBAR")
     file.write("\n")
     file.write(format(powerflow.dbar.ruler.iloc[0]))
+
+    # powerflow.dbar = powerflow.dbar.replace(r"^\s*$", "0", regex=True)
+    # powerflow.dbar = powerflow.dbar.astype(
+    #     {
+    #         "numero": "object",
+    #         "operacao": "object",
+    #         "estado": "object",
+    #         "tipo": "object",
+    #         "grupo_base_tensao": "object",
+    #         "nome": "object",
+    #         "grupo_limite_tensao": "object",
+    #         "tensao": "object",
+    #         "angulo": "object",
+    #         "potencia_ativa": "object",
+    #         "potencia_reativa": "object",
+    #         "potencia_reativa_minima": "object",
+    #         "potencia_reativa_maxima": "object",
+    #         "barra_controlada": "object",
+    #         "demanda_ativa": "float",
+    #         "demanda_reativa": "float",
+    #         "shunt_barra": "float",
+    #         "area": "object",
+    #         "tensao_base": "object",
+    #         "modo": "object",
+    #         "agreg1": "object",
+    #         "agreg2": "object",
+    #         "agreg3": "object",
+    #         "agreg4": "object",
+    #         "agreg5": "object",
+    #         "agreg6": "object",
+    #         "agreg7": "object",
+    #         "agreg8": "object",
+    #         "agreg9": "object",
+    #         "agreg10": "object",
+    #     }
+    # )
+
     for idx, value in powerflow.dbar.iterrows():
-        if value["demanda_ativa"] == 0.0:
-            pl = 5 * " "
-        else:
+        if value["demanda_ativa"] != 5 * " ":
+            value["demanda_ativa"] = float(value["demanda_ativa"])
             if value["demanda_ativa"] >= 0.0:
                 if value["demanda_ativa"] / 1e3 >= 1.0:
                     pl = str(round(value["demanda_ativa"] * 1.1))
@@ -289,10 +325,11 @@ def writedbar(
                     pl = str(round(value["demanda_ativa"] * 1.1))
                 else:
                     pl = str(round(value["demanda_ativa"] * 1.1, 1))
-
-        if value["demanda_reativa"] == 0.0:
-            ql = 5 * " "
         else:
+            pl = 5 * " "
+
+        if value["demanda_reativa"] != 5 * " ":
+            value["demanda_reativa"] = float(value["demanda_reativa"])
             if value["demanda_reativa"] >= 0.0:
                 if value["demanda_reativa"] / 1e3 >= 1.0:
                     ql = str(round(value["demanda_reativa"] * 1.1))
@@ -308,10 +345,11 @@ def writedbar(
                     ql = str(round(value["demanda_reativa"] * 1.1))
                 else:
                     ql = str(round(value["demanda_reativa"] * 1.1, 1))
-
-        if value["shunt_barra"] == 0.0:
-            sb = 5 * " "
         else:
+            ql = 5 * " "
+
+        if value["shunt_barra"] != 5 * " ":
+            value["shunt_barra"] = float(value["shunt_barra"])
             if value["shunt_barra"] >= 0.0:
                 if value["shunt_barra"] / 1e3 >= 1.0:
                     sb = str(round(value["shunt_barra"] * 1.1))
@@ -327,6 +365,8 @@ def writedbar(
                     sb = str(round(value["shunt_barra"] * 1.1))
                 else:
                     sb = str(round(value["shunt_barra"] * 1.1, 1))
+        else:
+            sb = 5 * " "
         file.write(
             f"{value['numero']:>5}{value['operacao']:1}{value['estado']:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{value['tensao']:>4}{value['angulo']:>4}{value['potencia_ativa']:>5}{value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5}{value['barra_controlada']:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{value['tensao_base']:>4}{value['modo']:1}{value['agreg1']:<3}{value['agreg2']:<3}{value['agreg3']:<3}{value['agreg4']:<3}{value['agreg5']:<3}{value['agreg6']:<3}{value['agreg7']:<3}{value['agreg8']:<3}{value['agreg9']:<3}{value['agreg10']:<3}"
         )

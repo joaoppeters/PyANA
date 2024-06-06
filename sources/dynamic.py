@@ -44,8 +44,11 @@ def dynamic(
     powerflow.solution.update(
         {
             "method": "EXSI",
+            "active": powerflow.solution["active"] * 1e-2,
         }
     )
+
+    powerflow.options["ACIT"] = 100
 
     # Transformação das cargas para impedância constante
     load2ycte = diag(
@@ -102,12 +105,11 @@ def dynamic(
     deltaref = delta[powerflow.refgen]
 
     powerflow.solution["fem"] = abs(Eg)
-    powerflow.solution["delta0"] = arctan(Eg.imag / Eg.real) - deltaref
-    powerflow.solution["omega0"] = ones(powerflow.nger)
-    powerflow.solution["delta"] = arctan(Eg.imag / Eg.real) - deltaref
-    powerflow.solution["omega"] = ones(powerflow.nger)
+    powerflow.solution["delta"] = delta  # - deltaref
+    powerflow.solution["omega"] = zeros(powerflow.nger)
 
-    powerflow.deltagen = zeros((powerflow.nger * 2))
+    powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
+    powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
 
     y = list()
     event = 0
@@ -118,11 +120,11 @@ def dynamic(
         powerflow.dsimDF.step.values[0],
     )
 
-    for _, value in enumerate(t):
+    for _, tempo in enumerate(t):
         try:
-            if value in powerflow.devtDF.tempo.tolist():
+            if tempo in powerflow.devtDF.tempo.tolist():
                 allevents = powerflow.devtDF.loc[
-                    powerflow.devtDF.tempo == value, "tipo"
+                    powerflow.devtDF.tempo == tempo, "tipo"
                 ].tolist()
                 for event in allevents:
                     if event == "APCB":
@@ -161,7 +163,10 @@ def dynamic(
                     Yred,
                 )
 
-            elif value not in powerflow.devtDF.tempo.tolist():
+            elif (
+                tempo not in powerflow.devtDF.tempo.tolist()
+                and tempo > powerflow.devtDF.tempo.tolist()[0]
+            ):
                 timenewt(
                     powerflow,
                     Yred,
@@ -178,13 +183,32 @@ def dynamic(
 
     y = array(y)
 
+    linestyles = [
+        "--",
+        ":",
+        "-",
+        "-.",
+        "-",
+    ]
+
     for gen in range(0, powerflow.nger):
         plt.figure(1)
-        plt.plot(t, y[:, gen] * 180 / pi, label="d{}".format(gen + 1))
+        plt.plot(
+            t, y[:, gen], label="Gerador {}".format(gen + 1), linestyle=linestyles[gen]
+        )
+        plt.ylabel("Ângulo (rad)")
+        plt.xlabel("Tempo (s)")
         plt.legend()
 
         plt.figure(2)
-        plt.plot(t, y[:, gen + powerflow.nger], label="w{}".format(gen + 1))
+        plt.plot(
+            t,
+            y[:, gen + 3],
+            label="Gerador {}".format(gen + 1),
+            linestyle=linestyles[gen],
+        )
+        plt.ylabel("Velocidade (rad/s)")
+        plt.xlabel("Tempo (s)")
         plt.legend()
 
     plt.show()
@@ -195,7 +219,7 @@ def timenewt(
     powerflow,
     Yred,
 ):
-    """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
+    """
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
@@ -203,6 +227,7 @@ def timenewt(
 
     ## Inicialização
     powerflow.solution["iter"] = 0
+    powerflow.deltagen = zeros((powerflow.nger * 2))
 
     while True:
         gen = 0
@@ -221,6 +246,12 @@ def timenewt(
                     Yred,
                 )
             gen += 1
+
+        md01jacoboffblock(
+            powerflow,
+            Yred,
+            list(powerflow.generator.keys()),
+        )
 
         try:
             # Your sparse matrix computation using spsolve here

@@ -1,6 +1,254 @@
 CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
 
  ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- Dados do Sistema Eletrico inicializados ---
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE CONSTANTES
+
+ X-----------X-----------X-----------X-----------X-----------X-----------X
+   CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR
+ X----X------X----X------X----X------X----X------X----X------X----X------X
+
+  BASE   100. DASE   100. TEPA   1E-8 EXST    .04 TETP     5. TBPA     5.
+  TLPP     1. TEPR   1E-8 QLST    .04 TLPR   1E-8 TLPQ     2. TSBZ    .01
+  TSBA     5. ASTP    .05 VSTP     5. TLVC    .05 TLTC    .01 TSFR  .1E-7
+  ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
+  PGER    30. TPST    .02 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
+  ACIT    100 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+  PDIT     10 LCRT    200 LPRT     60 CSTP     5. ASDC     1.            
+  ICIT   9999 DMAX   9999 FDIV     2. ICMN   1E-9 VART     5. TSTP     32
+  ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.
+  VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
+  TLSI     0. NDIR    20. STTR     5. TRPT   100. STIR     1. BFPO     1.
+  LFPO     .1 TLMT     0. TLMF     0. TLMG     0. PARS    10.            
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ SUMARIO DE CONSTANTES
+
+ X------X------X------X------X------X------X------X------X------X------X
+   BASE   DASE   TEPA   EXST   TETP   TBPA   TLPP   TEPR   QLST   TLPR
+ X------X------X------X------X------X------X------X------X------X------X
+
+    100.   100.  .1E-7    .04     5.     5.     1.  .1E-7    .04  .1E-7
+
+ X------X------X------X------X------X------X------X------X------X------X
+   TLPQ   TSBZ   TSBA   ASTP   VSTP   CSTP   TLVC   TLTC   TSFR   ZMAX
+ X------X------X------X------X------X------X------X------X------X------X
+
+      2.    .01     5.    .05     5.     5.    .05    .01  .1E-7   500.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   VDVM   VDVN   TUDC   TADC   PGER   TPST   TLPV   VFLD   ZMIN   HIST
+ X------X------X------X------X------X------X------X------X------X------X
+
+    200.    40.   .001    .01    30.    .02     .5    70.   .001    470
+
+ X------X------X------X------X------X------X------X------X------X------X
+   LFIT   ACIT   LFCV   DCIT   VSIT   LPIT   LFLP   PDIT   LCRT   LPRT
+ X------X------X------X------X------X------X------X------X------X------X
+
+      10    100      1     10     10     50     10     10    200     60
+
+ X------X------X------X------X------X------X------X------X------X------X
+   DMAX   VART   FDIV   ICMN   ICIT   TSTP   ICMV   APAS   CPAR   VAVT
+ X------X------X------X------X------X------X------X------X------X------X
+
+    9999     5.     2.  .1E-8   9999     32     .5    90.    70.     2.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   VAVF   VMVF   VPVT   VPVF   VPMF   VSVF   VINF   VSUP   TLSI   ASDC
+ X------X------X------X------X------X------X------X------X------X------X
+
+      5.    15.     2.     5.    10.    20.     1.     1.     0.     1.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   NDIR   STTR   TRPT   STIR   BFPO   LFPO   TLMT   TLMF   TLMG   PARS 
+ X------X------X------X------X------X------X------X------X------X------X
+
+     20.     5.   100.     1.     1.     .1     0.     0.     0.    10.
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE BARRA CA
+
+ X------------X------X---------------X-----X-----------------X-----X-----X----X-X---------------------------------------X
+      BARRA    BARRA    TENSAO  GRUPO GERMW     GER Mvar      CARGA SHUNT V CF M     A  G  R  E  G  A  D  O  R  E  S
+  NUM.  T  ARE CONTR.  MOD  ANG B  L  ESPEC  MIN  ESPEC  MAX   MW/   Mvar  MOD P AGR AGR AGR AGR AGR AGR AGR AGR AGR AGR
+      NOME                                                     Mvar               1   2   3   4   5   6   7   8   9   10
+ X------------X------X----X----X--X--X-----X-----X-----X-----X-----X-----X----X-X---X---X---X---X---X---X---X---X---X---X
+
+      1 2    1        1060    0  0  0       -9999       99999    .0       1000 0                                         A
+  BARRA-1                                                        .0
+      2 1    1        1045       0  0 40.00 -40.0        50.0 21.70       1000 0                                         A
+  BARRA-2                                                      12.7
+      3 1    1        1010       0  0   0.0   0.0   0.0  40.0 94.20       1000 0                                         A
+  BARRA-3                                                      19.0
+      4 0    1        1000       0  0                         47.80       1000 0                                         A
+  BARRA-4                                                      -3.9
+      5 0    1        1000       0  0                          7.60       1000 0                                         A
+  BARRA-5                                                      1.60
+      6 1    1        1070       0  0   0.0  -6.0   0.0  24.0 11.20       1000 0                                         A
+  BARRA-6                                                      7.50
+      7 0    1        1000       0  0                          10.0       1000 0                                         A
+  BARRA-7                                                       0.0
+      8 1    1        1090       0  0   0.0  -6.0   0.0  24.0   0.0       1000 0                                         A
+  BARRA-8                                                       0.0
+      9 0    1        1000       0  0                         29.50  19.0 1000 0                                         A
+  BARRA-9                                                      16.6
+     10 0    1        1000       0  0                          9.00       1000 0                                         A
+  BARRA-10                                                     5.80
+     11 0    1        1000       0  0                          3.50       1000 0                                         A
+  BARRA-11                                                     1.80
+     12 0    1        1000       0  0                          6.10       1000 0                                         A
+  BARRA-12                                                     1.60
+     13 0    1        1000       0  0                         13.50       1000 0                                         A
+  BARRA-13                                                     5.80
+     14 0    1        1000       0  0                         14.90       1000 0                                         A
+  BARRA-14                                                     5.00
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE CIRCUITO CA
+
+ X-----------X------X------X------X--------------------------X---------X------------X---------------------------------------X
+     BARRA           RESIST            T A P                    (MVA)     IDENTIF        A  G  R  E  G  A  D  O  R  E  S
+   DE   PARA   CIRC  REATAN SUSCEP ESPEC  MIN   ANG  BARRA  M NORM EQPT   DA BARRA   AGR AGR AGR AGR AGR AGR AGR AGR AGR AGR
+   EST.  EST. NC E P   (%)  (Mvar) NSTEP  MAX  DEFAS CONTR.   EMER       PARA BARRA   1   2   3   4   5   6   7   8   9   10
+ X-----X-----X--X-X-X------X------X-----X-----X-----X------X-X----X----X------------X---X---X---X---X---X---X---X---X---X---X
+      1     2  1 L F 1.9380 5.2800                            9999 9999 BARRA-1                                              ADIC 
+   LIG.  LIG.        5.9170                                   9999      BARRA-2     
+      1     5  1 L F 5.4030 4.9200                            9999 9999 BARRA-1                                              ADIC 
+   LIG.  LIG.        22.304                                   9999      BARRA-5     
+      2     3  1 L F 4.6990 4.3800                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        19.797                                   9999      BARRA-3     
+      2     4  1 L F 5.8110 3.7400                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        17.632                                   9999      BARRA-4     
+      2     5  1 L F 5.6950 3.4000                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        17.388                                   9999      BARRA-5     
+      3     4  1 L F 6.7010 3.4600                            9999 9999 BARRA-3                                              ADIC 
+   LIG.  LIG.        17.103                                   9999      BARRA-4     
+      4     5  1 L F 1.3350 1.2800                            9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        4.2110                                   9999      BARRA-5     
+      4     7  1 L F               0.978   0.8            4 S 9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        20.912                1.2                9999      BARRA-7     
+      4     9  1 L F               0.969   0.8            4 S 9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        55.618                1.2                9999      BARRA-9     
+      5     6  1 L F               0.932   0.8            5 S 9999 9999 BARRA-5                                              ADIC 
+   LIG.  LIG.        25.202                1.2                9999      BARRA-6     
+      6    11  1 L F 9.4980                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        19.890                                   9999      BARRA-11    
+      6    12  1 L F 12.291                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        25.581                                   9999      BARRA-12    
+      6    13  1 L F 6.6150                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        13.027                                   9999      BARRA-13    
+      7     8  1 L F                                          9999 9999 BARRA-7                                              ADIC 
+   LIG.  LIG.        17.615                                   9999      BARRA-8     
+      7     9  1 L F                                          9999 9999 BARRA-7                                              ADIC 
+   LIG.  LIG.        11.001                                   9999      BARRA-9     
+      9    10  1 L F 3.1810                                   9999 9999 BARRA-9                                              ADIC 
+   LIG.  LIG.        8.4500                                   9999      BARRA-10    
+      9    14  1 L F 12.711                                   9999 9999 BARRA-9                                              ADIC 
+   LIG.  LIG.        27.038                                   9999      BARRA-14    
+     10    11  1 L F 8.2050                                   9999 9999 BARRA-10                                             ADIC 
+   LIG.  LIG.        19.207                                   9999      BARRA-11    
+     12    13  1 L F 22.092                                   9999 9999 BARRA-12                                             ADIC 
+   LIG.  LIG.        19.988                                   9999      BARRA-13    
+     13    14  1 L F 17.093                                   9999 9999 BARRA-13                                             ADIC 
+   LIG.  LIG.        34.802                                   9999      BARRA-14    
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+      1 BARRA-1     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      2 BARRA-2     
+   -9999    40.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      3 BARRA-3     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      6 BARRA-6     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      8 BARRA-8     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE MONITORACAO PARA ESTABILIDADE DE TENSAO
+ X-----------------------X-X-----------------------X
+  Elemento     Elemento     Elemento     Elemento  
+  Tipo  Num  C Tipo  Num  C Tipo  Num  C Tipo  Num 
+ X----X-----X-X----X-----X-X----X-----X-X----X-----X
+
+  AREA     1                                       
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE INCREMENTO DE CARGA
+ X-----------------------X-X-----------------------X-----X-----X-----X-----X
+  Elemento     Elemento     Elemento     Elemento    Incremento  Incr. Max. 
+  Tipo  Num  C Tipo  Num  C Tipo  Num  C Tipo  Num   P(%)  Q(%)  P(%)  Q(%) 
+ X----X-----X-X----X-----X-X----X-----X-X----X-----X-----X-----X-----X-----X
+
+  AREA     1                                           1.    1.  9999  9999  ADIC 
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: QLIM NEWT RCVG RMON FILE 80CO
+
+ X-----------X------X------X---------------X---------------X---------------X--X
+    ITERACAO          FREQ.  ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV    
+  FC  P  Q  V  M.O.   (Hz)       MW    NUM.     Mvar   NUM.  TENSAO %  NUM. FM 
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X--X
+
+      1  1    1.0000 60.000     92.19     3     61.85     7
+      2  2    1.0000 60.000      6.36     2      9.43     5
+      3  3    1.0000 60.000      0.01     4      0.01     5
+      4  4    1.0000 60.000      0.00     4      0.00     5
+ ................................................................
+
+
+
+
+ CONVERGENCIA FINAL
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+      4  4  0 1.0000 60.000      0.00     5      0.00     4     0.000     0
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
  RELATORIO DE BARRAS CA * AREA   1 *                                     
 
  X------------X------X-------X-------X-----X-------X-------X-------X-------X
@@ -10,34 +258,34 @@
                       CE Mvar                               SHUNT L
  X------------X------X-------X-------X-----X-------X-------X-------X-------X
 
-      1    1 2  1.060   232.4     0.0   0.0     0.0     0.0     0.0     0.0
-  BARRA-1        -0.0   -16.9     0.0   0.0     0.0     0.0     0.0     0.0
+      1    1 2  1.060   243.5     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-1        -0.0   -18.1     0.0   0.0     0.0     0.0     0.0     0.0
       2    1 1  1.045    40.0     0.0   0.0    21.7     0.0     0.0     0.0
-  BARRA-2        -5.0    42.4     0.0   0.0    12.7     0.0     0.0     0.0
+  BARRA-2        -5.2    46.1     0.0   0.0    12.7     0.0     0.0     0.0
       3    1 1  1.010     0.0     0.0   0.0    94.2     0.0     0.0     0.0
-  BARRA-3       -12.7    23.4     0.0   0.0    19.0     0.0     0.0     0.0
-      4    1 0  1.019     0.0     0.0   0.0    47.8     0.0     0.0     0.0
-  BARRA-4       -10.3     0.0     0.0   0.0    -3.9     0.0     0.0     0.0
-      5    1 0  1.020     0.0     0.0   0.0     7.6     0.0     0.0     0.0
-  BARRA-5        -8.8     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+  BARRA-3       -13.1    24.5     0.0   0.0    19.0     0.0     0.0     0.0
+      4    1 0  1.017     0.0     0.0   0.0    47.8     0.0     0.0     0.0
+  BARRA-4       -10.9     0.0     0.0   0.0    -3.9     0.0     0.0     0.0
+      5    1 0  1.019     0.0     0.0   0.0     7.6     0.0     0.0     0.0
+  BARRA-5        -9.2     0.0     0.0   0.0     1.6     0.0     0.0     0.0
       6    1 1  1.070     0.0     0.0   0.0    11.2     0.0     0.0     0.0
-  BARRA-6       -14.2    12.2     0.0   0.0     7.5     0.0     0.0     0.0
-      7    1 0  1.062     0.0     0.0   0.0     0.0     0.0     0.0     0.0
-  BARRA-7       -13.4     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-6       -14.9    13.0     0.0   0.0     7.5     0.0     0.0     0.0
+      7    1 0  1.060     0.0     0.0   0.0    10.0     0.0     0.0     0.0
+  BARRA-7       -14.6     0.0     0.0   0.0     0.0     0.0     0.0     0.0
       8    1 1  1.090     0.0     0.0   0.0     0.0     0.0     0.0     0.0
-  BARRA-8       -13.4    17.4     0.0   0.0     0.0     0.0     0.0     0.0
-      9    1 0  1.056     0.0     0.0   0.0    29.5     0.0    21.2     0.0
-  BARRA-9       -14.9     0.0     0.0   0.0    16.6     0.0     0.0     0.0
-     10    1 0  1.051     0.0     0.0   0.0     9.0     0.0     0.0     0.0
-  BARRA-10      -15.1     0.0     0.0   0.0     5.8     0.0     0.0     0.0
-     11    1 0  1.057     0.0     0.0   0.0     3.5     0.0     0.0     0.0
-  BARRA-11      -14.8     0.0     0.0   0.0     1.8     0.0     0.0     0.0
+  BARRA-8       -14.6    18.3     0.0   0.0     0.0     0.0     0.0     0.0
+      9    1 0  1.054     0.0     0.0   0.0    29.5     0.0    21.1     0.0
+  BARRA-9       -16.0     0.0     0.0   0.0    16.6     0.0     0.0     0.0
+     10    1 0  1.050     0.0     0.0   0.0     9.0     0.0     0.0     0.0
+  BARRA-10      -16.1     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     11    1 0  1.056     0.0     0.0   0.0     3.5     0.0     0.0     0.0
+  BARRA-11      -15.6     0.0     0.0   0.0     1.8     0.0     0.0     0.0
      12    1 0  1.055     0.0     0.0   0.0     6.1     0.0     0.0     0.0
-  BARRA-12      -15.1     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+  BARRA-12      -15.8     0.0     0.0   0.0     1.6     0.0     0.0     0.0
      13    1 0  1.050     0.0     0.0   0.0    13.5     0.0     0.0     0.0
-  BARRA-13      -15.2     0.0     0.0   0.0     5.8     0.0     0.0     0.0
-     14    1 0  1.036     0.0     0.0   0.0    14.9     0.0     0.0     0.0
-  BARRA-14      -16.0     0.0     0.0   0.0     5.0     0.0     0.0     0.0
+  BARRA-13      -15.9     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     14    1 0  1.034     0.0     0.0   0.0    14.9     0.0     0.0     0.0
+  BARRA-14      -17.0     0.0     0.0   0.0     5.0     0.0     0.0     0.0
 CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
 
  ****   Sistema teste de 14 maquinas - IEEE  ****                                
@@ -49,13 +297,468 @@
       NOME       ANG     MIN    Mvar     MAX  Mvar  EQUIV   MVA
  X------------X------X-------X-------X-------X----X------X-------X
 
-      1      2  1.060 -9999.0   232.4  9999.0         0.0       1
-  BARRA-1        -0.0 -9999.0   -16.9 99999.0         0.0   233.0
+      1      2  1.060 -9999.0   243.5  9999.0         0.0       1
+  BARRA-1        -0.0 -9999.0   -18.1 99999.0         0.0   244.2
       2      1  1.045 -9999.0    40.0  9999.0         0.0       2
-  BARRA-2        -5.0   -40.0    42.4    50.0         0.0    58.3
+  BARRA-2        -5.2   -40.0    46.1    50.0         0.0    61.0
       3      1  1.010 -9999.0     0.0  9999.0         0.0       3
-  BARRA-3       -12.7     0.0    23.4    40.0         0.0    23.4
+  BARRA-3       -13.1     0.0    24.5    40.0         0.0    24.5
       6      1  1.070 -9999.0     0.0  9999.0         0.0       6
-  BARRA-6       -14.2    -6.0    12.2    24.0         0.0    12.2
+  BARRA-6       -14.9    -6.0    13.0    24.0         0.0    13.0
       8      1  1.090 -9999.0     0.0  9999.0         0.0       8
-  BARRA-8       -13.4    -6.0    17.4    24.0         0.0    17.4
+  BARRA-8       -14.6    -6.0    18.3    24.0         0.0    18.3
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- Historico ANAREDE inicializado. ---
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- CASO ANAREDE 02 GRAVADO. ---
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- Dados do Sistema Eletrico inicializados ---
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE CONSTANTES
+
+ X-----------X-----------X-----------X-----------X-----------X-----------X
+   CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR  CTE  VALOR
+ X----X------X----X------X----X------X----X------X----X------X----X------X
+
+  BASE   100. DASE   100. TEPA   1E-8 EXST    .04 TETP     5. TBPA     5.
+  TLPP     1. TEPR   1E-8 QLST    .04 TLPR   1E-8 TLPQ     2. TSBZ    .01
+  TSBA     5. ASTP    .05 VSTP     5. TLVC    .05 TLTC    .01 TSFR  .1E-7
+  ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
+  PGER    30. TPST    .02 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
+  ACIT    100 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+  PDIT     10 LCRT    200 LPRT     60 CSTP     5. ASDC     1.            
+  ICIT   9999 DMAX   9999 FDIV     2. ICMN   1E-9 VART     5. TSTP     32
+  ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.
+  VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
+  TLSI     0. NDIR    20. STTR     5. TRPT   100. STIR     1. BFPO     1.
+  LFPO     .1 TLMT     0. TLMF     0. TLMG     0. PARS    10.            
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ SUMARIO DE CONSTANTES
+
+ X------X------X------X------X------X------X------X------X------X------X
+   BASE   DASE   TEPA   EXST   TETP   TBPA   TLPP   TEPR   QLST   TLPR
+ X------X------X------X------X------X------X------X------X------X------X
+
+    100.   100.  .1E-7    .04     5.     5.     1.  .1E-7    .04  .1E-7
+
+ X------X------X------X------X------X------X------X------X------X------X
+   TLPQ   TSBZ   TSBA   ASTP   VSTP   CSTP   TLVC   TLTC   TSFR   ZMAX
+ X------X------X------X------X------X------X------X------X------X------X
+
+      2.    .01     5.    .05     5.     5.    .05    .01  .1E-7   500.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   VDVM   VDVN   TUDC   TADC   PGER   TPST   TLPV   VFLD   ZMIN   HIST
+ X------X------X------X------X------X------X------X------X------X------X
+
+    200.    40.   .001    .01    30.    .02     .5    70.   .001    470
+
+ X------X------X------X------X------X------X------X------X------X------X
+   LFIT   ACIT   LFCV   DCIT   VSIT   LPIT   LFLP   PDIT   LCRT   LPRT
+ X------X------X------X------X------X------X------X------X------X------X
+
+      10    100      1     10     10     50     10     10    200     60
+
+ X------X------X------X------X------X------X------X------X------X------X
+   DMAX   VART   FDIV   ICMN   ICIT   TSTP   ICMV   APAS   CPAR   VAVT
+ X------X------X------X------X------X------X------X------X------X------X
+
+    9999     5.     2.  .1E-8   9999     32     .5    90.    70.     2.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   VAVF   VMVF   VPVT   VPVF   VPMF   VSVF   VINF   VSUP   TLSI   ASDC
+ X------X------X------X------X------X------X------X------X------X------X
+
+      5.    15.     2.     5.    10.    20.     1.     1.     0.     1.
+
+ X------X------X------X------X------X------X------X------X------X------X
+   NDIR   STTR   TRPT   STIR   BFPO   LFPO   TLMT   TLMF   TLMG   PARS 
+ X------X------X------X------X------X------X------X------X------X------X
+
+     20.     5.   100.     1.     1.     .1     0.     0.     0.    10.
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE BARRA CA
+
+ X------------X------X---------------X-----X-----------------X-----X-----X----X-X---------------------------------------X
+      BARRA    BARRA    TENSAO  GRUPO GERMW     GER Mvar      CARGA SHUNT V CF M     A  G  R  E  G  A  D  O  R  E  S
+  NUM.  T  ARE CONTR.  MOD  ANG B  L  ESPEC  MIN  ESPEC  MAX   MW/   Mvar  MOD P AGR AGR AGR AGR AGR AGR AGR AGR AGR AGR
+      NOME                                                     Mvar               1   2   3   4   5   6   7   8   9   10
+ X------------X------X----X----X--X--X-----X-----X-----X-----X-----X-----X----X-X---X---X---X---X---X---X---X---X---X---X
+
+      1 2    1        1060    0  0  0       -9999       99999    .0       1000 0                                         A
+  BARRA-1                                                        .0
+      2 1    1        1045       0  0 40.00 -40.0        50.0 21.70       1000 0                                         A
+  BARRA-2                                                      12.7
+      3 1    1        1010       0  0   0.0   0.0   0.0  40.0 94.20       1000 0                                         A
+  BARRA-3                                                      19.0
+      4 0    1        1000       0  0                         47.80       1000 0                                         A
+  BARRA-4                                                      -3.9
+      5 0    1        1000       0  0                          7.60       1000 0                                         A
+  BARRA-5                                                      1.60
+      6 1    1        1070       0  0   0.0  -6.0   0.0  24.0 11.20       1000 0                                         A
+  BARRA-6                                                      7.50
+      7 0    1        1000       0  0                          10.0       1000 0                                         A
+  BARRA-7                                                       0.0
+      8 1    1        1090       0  0   0.0  -6.0   0.0  24.0   0.0       1000 0                                         A
+  BARRA-8                                                       0.0
+      9 0    1        1000       0  0                         29.50  19.0 1000 0                                         A
+  BARRA-9                                                      16.6
+     10 0    1        1000       0  0                          9.00       1000 0                                         A
+  BARRA-10                                                     5.80
+     11 0    1        1000       0  0                          3.50       1000 0                                         A
+  BARRA-11                                                     1.80
+     12 0    1        1000       0  0                          6.10       1000 0                                         A
+  BARRA-12                                                     1.60
+     13 0    1        1000       0  0                         13.50       1000 0                                         A
+  BARRA-13                                                     5.80
+     14 0    1        1000       0  0                         14.90       1000 0                                         A
+  BARRA-14                                                     5.00
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE CIRCUITO CA
+
+ X-----------X------X------X------X--------------------------X---------X------------X---------------------------------------X
+     BARRA           RESIST            T A P                    (MVA)     IDENTIF        A  G  R  E  G  A  D  O  R  E  S
+   DE   PARA   CIRC  REATAN SUSCEP ESPEC  MIN   ANG  BARRA  M NORM EQPT   DA BARRA   AGR AGR AGR AGR AGR AGR AGR AGR AGR AGR
+   EST.  EST. NC E P   (%)  (Mvar) NSTEP  MAX  DEFAS CONTR.   EMER       PARA BARRA   1   2   3   4   5   6   7   8   9   10
+ X-----X-----X--X-X-X------X------X-----X-----X-----X------X-X----X----X------------X---X---X---X---X---X---X---X---X---X---X
+      1     2  1 L F 1.9380 5.2800                            9999 9999 BARRA-1                                              ADIC 
+   LIG.  LIG.        5.9170                                   9999      BARRA-2     
+      1     5  1 L F 5.4030 4.9200                            9999 9999 BARRA-1                                              ADIC 
+   LIG.  LIG.        22.304                                   9999      BARRA-5     
+      2     3  1 L F 4.6990 4.3800                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        19.797                                   9999      BARRA-3     
+      2     4  1 L F 5.8110 3.7400                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        17.632                                   9999      BARRA-4     
+      2     5  1 L F 5.6950 3.4000                            9999 9999 BARRA-2                                              ADIC 
+   LIG.  LIG.        17.388                                   9999      BARRA-5     
+      3     4  1 L F 6.7010 3.4600                            9999 9999 BARRA-3                                              ADIC 
+   LIG.  LIG.        17.103                                   9999      BARRA-4     
+      4     5  1 L F 1.3350 1.2800                            9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        4.2110                                   9999      BARRA-5     
+      4     7  1 L F               0.978   0.8            4 S 9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        20.912                1.2                9999      BARRA-7     
+      4     9  1 L F               0.969   0.8            4 S 9999 9999 BARRA-4                                              ADIC 
+   LIG.  LIG.        55.618                1.2                9999      BARRA-9     
+      5     6  1 L F               0.932   0.8            5 S 9999 9999 BARRA-5                                              ADIC 
+   LIG.  LIG.        25.202                1.2                9999      BARRA-6     
+      6    11  1 L F 9.4980                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        19.890                                   9999      BARRA-11    
+      6    12  1 L F 12.291                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        25.581                                   9999      BARRA-12    
+      6    13  1 L F 6.6150                                   9999 9999 BARRA-6                                              ADIC 
+   LIG.  LIG.        13.027                                   9999      BARRA-13    
+      7     8  1 L F                                          9999 9999 BARRA-7                                              ADIC 
+   LIG.  LIG.        17.615                                   9999      BARRA-8     
+      7     9  1 L F                                          9999 9999 BARRA-7                                              ADIC 
+   LIG.  LIG.        11.001                                   9999      BARRA-9     
+      9    10  1 L F 3.1810                                   9999 9999 BARRA-9                                              ADIC 
+   LIG.  LIG.        8.4500                                   9999      BARRA-10    
+      9    14  1 L F 12.711                                   9999 9999 BARRA-9                                              ADIC 
+   LIG.  LIG.        27.038                                   9999      BARRA-14    
+     10    11  1 L F 8.2050                                   9999 9999 BARRA-10                                             ADIC 
+   LIG.  LIG.        19.207                                   9999      BARRA-11    
+     12    13  1 L F 22.092                                   9999 9999 BARRA-12                                             ADIC 
+   LIG.  LIG.        19.988                                   9999      BARRA-13    
+     13    14  1 L F 17.093                                   9999 9999 BARRA-13                                             ADIC 
+   LIG.  LIG.        34.802                                   9999      BARRA-14    
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE GERADOR
+
+ X--------------------X--------------X----X----X----X-----X-----X-----X
+  NUM.      NOME
+     GERACAO ATIVA         FATOR      SERV SERV ANG. REAT. P.NOM  EST. 
+   MIN    ATUAL   MAX  PART CREM PNOM ARMD ROT. C.MX QUAD.  MVA   R(%) 
+ X------X------X------X----X----X----X----X----X----X-----X-----X-----X
+
+      1 BARRA-1     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      2 BARRA-2     
+   -9999    40.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      3 BARRA-3     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      6 BARRA-6     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+      8 BARRA-8     
+   -9999     0.  9999.   0.                                       1.67
+ *** AVISO INPGEN-0950 ***
+ Limite minimo de geracao de potencia ativa negativo.
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE MONITORACAO PARA ESTABILIDADE DE TENSAO
+ X-----------------------X-X-----------------------X
+  Elemento     Elemento     Elemento     Elemento  
+  Tipo  Num  C Tipo  Num  C Tipo  Num  C Tipo  Num 
+ X----X-----X-X----X-----X-X----X-----X-X----X-----X
+
+  AREA     1                                       
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ DADOS DE INCREMENTO DE CARGA
+ X-----------------------X-X-----------------------X-----X-----X-----X-----X
+  Elemento     Elemento     Elemento     Elemento    Incremento  Incr. Max. 
+  Tipo  Num  C Tipo  Num  C Tipo  Num  C Tipo  Num   P(%)  Q(%)  P(%)  Q(%) 
+ X----X-----X-X----X-----X-X----X-----X-X----X-----X-----X-----X-----X-----X
+
+  AREA     1                                           1.    1.  9999  9999  ADIC 
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: QLIM NEWT RCVG RMON FILE 80CO
+
+ X-----------X------X------X---------------X---------------X---------------X--X
+    ITERACAO          FREQ.  ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV    
+  FC  P  Q  V  M.O.   (Hz)       MW    NUM.     Mvar   NUM.  TENSAO %  NUM. FM 
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X--X
+
+      1  1    1.0000 60.000     92.19     3     61.85     7
+      2  2    1.0000 60.000      6.36     2      9.43     5
+      3  3    1.0000 60.000      0.01     4      0.01     5
+      4  4    1.0000 60.000      0.00     4      0.00     5
+ ................................................................
+
+
+
+
+ CONVERGENCIA FINAL
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+      4  4  0 1.0000 60.000      0.00     5      0.00     4     0.000     0
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE BARRAS CA * AREA   1 *                                     
+
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+     BARRA     TENSAO GERACAO INJ EQV FATOR  CARGA   ELO CC  SHUNT   MOTOR
+  NUM. KV TIPO  MOD/    MW/     MW/   GER %   MW/      MW/   Mvar/    MW/
+      NOME      ANG    Mvar/   Mvar   EQV %  Mvar     Mvar   EQUIV   Mvar
+                      CE Mvar                               SHUNT L
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+
+      1    1 2  1.060   243.5     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-1        -0.0   -18.1     0.0   0.0     0.0     0.0     0.0     0.0
+      2    1 1  1.045    40.0     0.0   0.0    21.7     0.0     0.0     0.0
+  BARRA-2        -5.2    46.1     0.0   0.0    12.7     0.0     0.0     0.0
+      3    1 1  1.010     0.0     0.0   0.0    94.2     0.0     0.0     0.0
+  BARRA-3       -13.1    24.5     0.0   0.0    19.0     0.0     0.0     0.0
+      4    1 0  1.017     0.0     0.0   0.0    47.8     0.0     0.0     0.0
+  BARRA-4       -10.9     0.0     0.0   0.0    -3.9     0.0     0.0     0.0
+      5    1 0  1.019     0.0     0.0   0.0     7.6     0.0     0.0     0.0
+  BARRA-5        -9.2     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+      6    1 1  1.070     0.0     0.0   0.0    11.2     0.0     0.0     0.0
+  BARRA-6       -14.9    13.0     0.0   0.0     7.5     0.0     0.0     0.0
+      7    1 0  1.060     0.0     0.0   0.0    10.0     0.0     0.0     0.0
+  BARRA-7       -14.6     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+      8    1 1  1.090     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-8       -14.6    18.3     0.0   0.0     0.0     0.0     0.0     0.0
+      9    1 0  1.054     0.0     0.0   0.0    29.5     0.0    21.1     0.0
+  BARRA-9       -16.0     0.0     0.0   0.0    16.6     0.0     0.0     0.0
+     10    1 0  1.050     0.0     0.0   0.0     9.0     0.0     0.0     0.0
+  BARRA-10      -16.1     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     11    1 0  1.056     0.0     0.0   0.0     3.5     0.0     0.0     0.0
+  BARRA-11      -15.6     0.0     0.0   0.0     1.8     0.0     0.0     0.0
+     12    1 0  1.055     0.0     0.0   0.0     6.1     0.0     0.0     0.0
+  BARRA-12      -15.8     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+     13    1 0  1.050     0.0     0.0   0.0    13.5     0.0     0.0     0.0
+  BARRA-13      -15.9     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     14    1 0  1.034     0.0     0.0   0.0    14.9     0.0     0.0     0.0
+  BARRA-14      -17.0     0.0     0.0   0.0     5.0     0.0     0.0     0.0
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE GERADOR * AREA   1 *                                     
+
+ X------------X------X-----------------------X----X------X-------X
+     BARRA     TENSAO         GERACAO         LIM. PARTIC  BARRA
+  NUM.    TIPO   MOD     MIN     MW      MAX   MW    GER  CONTROL
+      NOME       ANG     MIN    Mvar     MAX  Mvar  EQUIV   MVA
+ X------------X------X-------X-------X-------X----X------X-------X
+
+      1      2  1.060 -9999.0   243.5  9999.0         0.0       1
+  BARRA-1        -0.0 -9999.0   -18.1 99999.0         0.0   244.2
+      2      1  1.045 -9999.0    40.0  9999.0         0.0       2
+  BARRA-2        -5.2   -40.0    46.1    50.0         0.0    61.0
+      3      1  1.010 -9999.0     0.0  9999.0         0.0       3
+  BARRA-3       -13.1     0.0    24.5    40.0         0.0    24.5
+      6      1  1.070 -9999.0     0.0  9999.0         0.0       6
+  BARRA-6       -14.9    -6.0    13.0    24.0         0.0    13.0
+      8      1  1.090 -9999.0     0.0  9999.0         0.0       8
+  BARRA-8       -14.6    -6.0    18.3    24.0         0.0    18.3
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- Historico ANAREDE inicializado. ---
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+ --- CASO ANAREDE 02 GRAVADO. ---
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE BARRAS CA * AREA   1 *                                     
+
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+     BARRA     TENSAO GERACAO INJ EQV FATOR  CARGA   ELO CC  SHUNT   MOTOR
+  NUM. KV TIPO  MOD/    MW/     MW/   GER %   MW/      MW/   Mvar/    MW/
+      NOME      ANG    Mvar/   Mvar   EQV %  Mvar     Mvar   EQUIV   Mvar
+                      CE Mvar                               SHUNT L
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+
+      1    1 2  1.060   243.5     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-1        -0.0   -18.1     0.0   0.0     0.0     0.0     0.0     0.0
+      2    1 1  1.045    40.0     0.0   0.0    21.7     0.0     0.0     0.0
+  BARRA-2        -5.2    46.1     0.0   0.0    12.7     0.0     0.0     0.0
+      3    1 1  1.010     0.0     0.0   0.0    94.2     0.0     0.0     0.0
+  BARRA-3       -13.1    24.5     0.0   0.0    19.0     0.0     0.0     0.0
+      4    1 0  1.017     0.0     0.0   0.0    47.8     0.0     0.0     0.0
+  BARRA-4       -10.9     0.0     0.0   0.0    -3.9     0.0     0.0     0.0
+      5    1 0  1.019     0.0     0.0   0.0     7.6     0.0     0.0     0.0
+  BARRA-5        -9.2     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+      6    1 1  1.070     0.0     0.0   0.0    11.2     0.0     0.0     0.0
+  BARRA-6       -14.9    13.0     0.0   0.0     7.5     0.0     0.0     0.0
+      7    1 0  1.060     0.0     0.0   0.0    10.0     0.0     0.0     0.0
+  BARRA-7       -14.6     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+      8    1 1  1.090     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-8       -14.6    18.3     0.0   0.0     0.0     0.0     0.0     0.0
+      9    1 0  1.054     0.0     0.0   0.0    29.5     0.0    21.1     0.0
+  BARRA-9       -16.0     0.0     0.0   0.0    16.6     0.0     0.0     0.0
+     10    1 0  1.050     0.0     0.0   0.0     9.0     0.0     0.0     0.0
+  BARRA-10      -16.1     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     11    1 0  1.056     0.0     0.0   0.0     3.5     0.0     0.0     0.0
+  BARRA-11      -15.6     0.0     0.0   0.0     1.8     0.0     0.0     0.0
+     12    1 0  1.055     0.0     0.0   0.0     6.1     0.0     0.0     0.0
+  BARRA-12      -15.8     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+     13    1 0  1.050     0.0     0.0   0.0    13.5     0.0     0.0     0.0
+  BARRA-13      -15.9     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     14    1 0  1.034     0.0     0.0   0.0    14.9     0.0     0.0     0.0
+  BARRA-14      -17.0     0.0     0.0   0.0     5.0     0.0     0.0     0.0
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE GERADOR * AREA   1 *                                     
+
+ X------------X------X-----------------------X----X------X-------X
+     BARRA     TENSAO         GERACAO         LIM. PARTIC  BARRA
+  NUM.    TIPO   MOD     MIN     MW      MAX   MW    GER  CONTROL
+      NOME       ANG     MIN    Mvar     MAX  Mvar  EQUIV   MVA
+ X------------X------X-------X-------X-------X----X------X-------X
+
+      1      2  1.060 -9999.0   243.5  9999.0         0.0       1
+  BARRA-1        -0.0 -9999.0   -18.1 99999.0         0.0   244.2
+      2      1  1.045 -9999.0    40.0  9999.0         0.0       2
+  BARRA-2        -5.2   -40.0    46.1    50.0         0.0    61.0
+      3      1  1.010 -9999.0     0.0  9999.0         0.0       3
+  BARRA-3       -13.1     0.0    24.5    40.0         0.0    24.5
+      6      1  1.070 -9999.0     0.0  9999.0         0.0       6
+  BARRA-6       -14.9    -6.0    13.0    24.0         0.0    13.0
+      8      1  1.090 -9999.0     0.0  9999.0         0.0       8
+  BARRA-8       -14.6    -6.0    18.3    24.0         0.0    18.3
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE BARRAS CA * AREA   1 *                                     
+
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+     BARRA     TENSAO GERACAO INJ EQV FATOR  CARGA   ELO CC  SHUNT   MOTOR
+  NUM. KV TIPO  MOD/    MW/     MW/   GER %   MW/      MW/   Mvar/    MW/
+      NOME      ANG    Mvar/   Mvar   EQV %  Mvar     Mvar   EQUIV   Mvar
+                      CE Mvar                               SHUNT L
+ X------------X------X-------X-------X-----X-------X-------X-------X-------X
+
+      1    1 2  1.060   243.5     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-1        -0.0   -18.1     0.0   0.0     0.0     0.0     0.0     0.0
+      2    1 1  1.045    40.0     0.0   0.0    21.7     0.0     0.0     0.0
+  BARRA-2        -5.2    46.1     0.0   0.0    12.7     0.0     0.0     0.0
+      3    1 1  1.010     0.0     0.0   0.0    94.2     0.0     0.0     0.0
+  BARRA-3       -13.1    24.5     0.0   0.0    19.0     0.0     0.0     0.0
+      4    1 0  1.017     0.0     0.0   0.0    47.8     0.0     0.0     0.0
+  BARRA-4       -10.9     0.0     0.0   0.0    -3.9     0.0     0.0     0.0
+      5    1 0  1.019     0.0     0.0   0.0     7.6     0.0     0.0     0.0
+  BARRA-5        -9.2     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+      6    1 1  1.070     0.0     0.0   0.0    11.2     0.0     0.0     0.0
+  BARRA-6       -14.9    13.0     0.0   0.0     7.5     0.0     0.0     0.0
+      7    1 0  1.060     0.0     0.0   0.0    10.0     0.0     0.0     0.0
+  BARRA-7       -14.6     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+      8    1 1  1.090     0.0     0.0   0.0     0.0     0.0     0.0     0.0
+  BARRA-8       -14.6    18.3     0.0   0.0     0.0     0.0     0.0     0.0
+      9    1 0  1.054     0.0     0.0   0.0    29.5     0.0    21.1     0.0
+  BARRA-9       -16.0     0.0     0.0   0.0    16.6     0.0     0.0     0.0
+     10    1 0  1.050     0.0     0.0   0.0     9.0     0.0     0.0     0.0
+  BARRA-10      -16.1     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     11    1 0  1.056     0.0     0.0   0.0     3.5     0.0     0.0     0.0
+  BARRA-11      -15.6     0.0     0.0   0.0     1.8     0.0     0.0     0.0
+     12    1 0  1.055     0.0     0.0   0.0     6.1     0.0     0.0     0.0
+  BARRA-12      -15.8     0.0     0.0   0.0     1.6     0.0     0.0     0.0
+     13    1 0  1.050     0.0     0.0   0.0    13.5     0.0     0.0     0.0
+  BARRA-13      -15.9     0.0     0.0   0.0     5.8     0.0     0.0     0.0
+     14    1 0  1.034     0.0     0.0   0.0    14.9     0.0     0.0     0.0
+  BARRA-14      -17.0     0.0     0.0   0.0     5.0     0.0     0.0     0.0
+CEPEL - Centro de Pesquisas de Energia Eletrica - ANAREDE V11.07.02
+
+ ****   Sistema teste de 14 maquinas - IEEE  ****                                
+ RELATORIO DE GERADOR * AREA   1 *                                     
+
+ X------------X------X-----------------------X----X------X-------X
+     BARRA     TENSAO         GERACAO         LIM. PARTIC  BARRA
+  NUM.    TIPO   MOD     MIN     MW      MAX   MW    GER  CONTROL
+      NOME       ANG     MIN    Mvar     MAX  Mvar  EQUIV   MVA
+ X------------X------X-------X-------X-------X----X------X-------X
+
+      1      2  1.060 -9999.0   243.5  9999.0         0.0       1
+  BARRA-1        -0.0 -9999.0   -18.1 99999.0         0.0   244.2
+      2      1  1.045 -9999.0    40.0  9999.0         0.0       2
+  BARRA-2        -5.2   -40.0    46.1    50.0         0.0    61.0
+      3      1  1.010 -9999.0     0.0  9999.0         0.0       3
+  BARRA-3       -13.1     0.0    24.5    40.0         0.0    24.5
+      6      1  1.070 -9999.0     0.0  9999.0         0.0       6
+  BARRA-6       -14.9    -6.0    13.0    24.0         0.0    13.0
+      8      1  1.090 -9999.0     0.0  9999.0         0.0       8
+  BARRA-8       -14.6    -6.0    18.3    24.0         0.0    18.3

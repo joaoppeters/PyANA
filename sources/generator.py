@@ -80,7 +80,7 @@ def md01peut(
     delta,
     gen,
 ):
-    """
+    """equação de potência eletrica do modelo clássico do gerador
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
@@ -93,8 +93,8 @@ def md01peut(
             [
                 powerflow.solution["fem"][j]
                 * (
-                    Yred[gen, j].imag * sin(delta[j])
-                    + Yred[gen, j].real * cos(delta[j])
+                    Yred[gen, j].imag * sin(delta[gen] - delta[j])
+                    + Yred[gen, j].real * cos(delta[gen] - delta[j])
                 )
                 for j in range(powerflow.nger)
             ]
@@ -108,7 +108,7 @@ def md01jacob(
     gen,
     Yred,
 ):
-    """
+    """matriz jacobiana
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
@@ -131,8 +131,16 @@ def md01jacob(
                 [
                     powerflow.solution["fem"][j]
                     * (
-                        Yred[gen, j].imag * cos(powerflow.solution["delta"][j])
-                        - Yred[gen, j].real * sin(powerflow.solution["delta"][j])
+                        Yred[gen, j].imag
+                        * cos(
+                            powerflow.solution["delta"][gen]
+                            - powerflow.solution["delta"][j]
+                        )
+                        - Yred[gen, j].real
+                        * sin(
+                            powerflow.solution["delta"][gen]
+                            - powerflow.solution["delta"][j]
+                        )
                     )
                     for j in range(powerflow.nger)
                 ]
@@ -170,8 +178,16 @@ def md01jacob(
                 [
                     powerflow.solution["fem"][j]
                     * (
-                        Yred[gen, j].imag * cos(powerflow.solution["delta"][j])
-                        - Yred[gen, j].real * sin(powerflow.solution["delta"][j])
+                        Yred[gen, j].imag
+                        * cos(
+                            powerflow.solution["delta"][gen]
+                            - powerflow.solution["delta"][j]
+                        )
+                        - Yred[gen, j].real
+                        * sin(
+                            powerflow.solution["delta"][gen]
+                            - powerflow.solution["delta"][j]
+                        )
                     )
                     for j in range(powerflow.nger)
                 ]
@@ -184,3 +200,42 @@ def md01jacob(
             * powerflow.generator[generator][2]
             / powerflow.generator[generator][1]
         )
+
+
+def md01jacoboffblock(
+    powerflow,
+    Yred,
+    generator,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    for i in range(powerflow.nger):
+        for j in range(powerflow.nger):
+            if j != i:
+                powerflow.jacobiangen[2 * i + 1, 2 * j] = (
+                    (
+                        powerflow.dsimDF.step.values[0]
+                        * 0.5
+                        * 1
+                        / powerflow.generator[generator[i]][1]
+                    )
+                    * powerflow.solution["fem"][i]
+                    * powerflow.solution["fem"][j]
+                    * (
+                        Yred[i, j].real
+                        * sin(
+                            powerflow.solution["delta"][i]
+                            - powerflow.solution["delta"][j]
+                        )
+                        - Yred[i, j].imag
+                        * cos(
+                            powerflow.solution["delta"][i]
+                            - powerflow.solution["delta"][j]
+                        )
+                    )
+                )

@@ -196,7 +196,7 @@ def methodo(
 
         rewrite(
             powerflow,
-            "10p",
+            "10pct",
         )
 
     # BATCH

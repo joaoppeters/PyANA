@@ -30,7 +30,7 @@ DBAR
     4  0  BARRA-4       1000                              47.80 -3.9       11000                               
     5  0  BARRA-5       1000                              7.60  1.60       11000                               
     6  1  BARRA-6       1070    0.0   0.0 -6.0  24.0      11.20 7.50       11000                               
-    7  0  BARRA-7       1000                               0.0  0.0        11000                               
+    7  0  BARRA-7       1000                              10.0  0.0        11000                               
     8  1  BARRA-8       1090    0.0   0.0 -6.0  24.0       0.0  0.0        11000                               
     9  0  BARRA-9       1000                              29.50 16.6 19.0  11000                               
    10  0  BARRA-10      1000                              9.00  5.80       11000                               
@@ -85,10 +85,10 @@ ULOG
 (N
 2
 IEEE14.SAV
-ARQV INIC IMPR
-SIM
-ARQV GRAV IMPR NOVO
-01
+(ARQV INIC IMPR
+(SIM
+ARQV GRAV IMPR
+02
 ULOG
 (N
 4
