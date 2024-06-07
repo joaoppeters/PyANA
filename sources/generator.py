@@ -34,7 +34,7 @@ def md01(
     )
     powerflow.generator[gen].append(dmdg["amortecimento"].values[0])
     powerflow.generator[gen].append(
-        dmdg["l-transitoria"].values[0] * 2 * pi * powerflow.solution["freq"]
+        dmdg["l-transitoria"].values[0] * 2 * pi * powerflow.options["FBASE"]
     )
     powerflow.generator[gen].append(dmdg["r-armadura"].values[0])
 

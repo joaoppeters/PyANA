@@ -48,8 +48,6 @@ def dynamic(
         }
     )
 
-    powerflow.options["ACIT"] = 100
-
     # Transformação das cargas para impedância constante
     load2ycte = diag(
         (

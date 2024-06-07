@@ -20,12 +20,12 @@ def batch(
     """
 
     ## Inicialização
-    case = 1
-    rewrite(
-        powerflow,
-        case,
-    )
+    # case = 1
+    # rewrite(
+    #     powerflow,
+    #     case,
+    # ) "-" + case + 
 
     filepath = "C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas"
-    powerflow.namecase = powerflow.name + "-" + case + ".pwf"
-    anarede(filepath=filepath, filename=powerflow.namecase)
+    powerflow.namecase = powerflow.name +".pwf"
+    anarede(filepath=filepath, filenamecase=powerflow.namecase)
