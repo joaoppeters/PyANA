@@ -1,0 +1,49 @@
+DPLT IERR
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+FMAQ       1           10                                   FMAQ - BARRA--1
+FMAQ       2           10                                   FMAQ - BARRA--2
+FMAQ       3           10                                   FMAQ - BARRA--3
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+DELT       1           10    1  10                          DELT - BARRA--1
+DELT       2           10    1  10                          DELT - BARRA--2
+DELT       3           10    1  10                          DELT - BARRA--3
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+PELE       1           10                                   PELE - BARRA--1
+PELE       2           10                                   PELE - BARRA--2
+PELE       3           10                                   PELE - BARRA--3
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+QELE       1           10                                   QELE - BARRA--1
+QELE       2           10                                   QELE - BARRA--2
+QELE       3           10                                   QELE - BARRA--3
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+VOLT       1                                                VOLT - BARRA--1
+VOLT       2                                                VOLT - BARRA--2
+VOLT       3                                                VOLT - BARRA--3
+VOLT       4                                                VOLT - BARRA--4
+VOLT       5                                                VOLT - BARRA--5
+VOLT       6                                                VOLT - BARRA--6
+VOLT       7                                                VOLT - BARRA--7
+VOLT       8                                                VOLT - BARRA--8
+VOLT       9                                                VOLT - BARRA--9
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+ANGL       1                                                ANGL - BARRA--1
+ANGL       2                                                ANGL - BARRA--2
+ANGL       3                                                ANGL - BARRA--3
+ANGL       4                                                ANGL - BARRA--4
+ANGL       5                                                ANGL - BARRA--5
+ANGL       6                                                ANGL - BARRA--6
+ANGL       7                                                ANGL - BARRA--7
+ANGL       8                                                ANGL - BARRA--8
+ANGL       9                                                ANGL - BARRA--9
+(Tipo)M( El ) ( Pa) Nc Gp ( Br) Gr ( Ex) (Bl) P   (              Nome da Variável                )
+FREQ       1                                                FREQ - BARRA--1
+FREQ       2                                                FREQ - BARRA--2
+FREQ       3                                                FREQ - BARRA--3
+FREQ       4                                                FREQ - BARRA--4
+FREQ       5                                                FREQ - BARRA--5
+FREQ       6                                                FREQ - BARRA--6
+FREQ       7                                                FREQ - BARRA--7
+FREQ       8                                                FREQ - BARRA--8
+FREQ       9                                                FREQ - BARRA--9
+999999
+FIM 

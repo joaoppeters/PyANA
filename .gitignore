@@ -189,8 +189,8 @@ Thumbs.db
 *.bkp
 *.stb
 *.cdu
-*.blt
-*.dat
+# *.blt
+# *.dat
 *.log
 *.tex
 
