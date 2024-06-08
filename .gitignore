@@ -193,10 +193,10 @@ Thumbs.db
 *.dat
 *.log
 
-*OUT/
-*LOG/
-*PLT/
-*BDADOS/
+# *OUT/
+# *LOG/
+# *PLT/
+# *BDADOS/
 
 *resultados/Continuado/
 *resultados/Smooth/

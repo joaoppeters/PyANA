@@ -21,6 +21,7 @@ def apcb(
     """
 
     ## Inicialização
+    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
     busidx = powerflow.devtDF.iloc[idx].elemento - 1
     Yblc[powerflow.nger + busidx, :] = 0
     Yblc[:, powerflow.nger + busidx] = 0
@@ -64,6 +65,7 @@ def rmgr(
 
     ## Inicialização
     pass
+    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
 
 
 def abci(
@@ -78,6 +80,7 @@ def abci(
     """
 
     ## Inicialização
+    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
     de = powerflow.devtDF.iloc[idx].elemento - 1
     para = powerflow.devtDF.iloc[idx].para - 1
 

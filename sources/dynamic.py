@@ -16,7 +16,7 @@ from numpy import (
     concatenate,
     diag,
     exp,
-    ones,
+    savetxt,
     zeros,
     abs,
     angle,
@@ -45,6 +45,7 @@ def dynamic(
         {
             "method": "EXSI",
             "active": powerflow.solution["active"] * 1e-2,
+            "eventname": ""
         }
     )
 
@@ -100,8 +101,6 @@ def dynamic(
     delta = arctan(Eg.imag / Eg.real)
     Eg = abs(Eg) * exp(1j * delta)
 
-    deltaref = delta[powerflow.refgen]
-
     powerflow.solution["fem"] = abs(Eg)
     powerflow.solution["delta"] = delta  # - deltaref
     powerflow.solution["omega"] = zeros(powerflow.nger)
@@ -126,6 +125,7 @@ def dynamic(
                 ].tolist()
                 for event in allevents:
                     if event == "APCB":
+                        powerflow.solution["eventname"] += "APCB"
                         Yred = apcb(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
@@ -134,11 +134,13 @@ def dynamic(
                             Yblc,
                         )
                     elif event == "RMCB":
+                        powerflow.solution["eventname"] += "RMCB"
                         Yred = rmcb(
                             powerflow,
                             Yblc,
                         )
                     elif event == "RMGR":
+                        powerflow.solution["eventname"] += "RMGR"
                         Yred = rmgr(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
@@ -147,6 +149,7 @@ def dynamic(
                             Yblc,
                         )
                     elif event == "ABCI":
+                        powerflow.solution["eventname"] += "ABCI"
                         Yred = abci(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
@@ -180,6 +183,7 @@ def dynamic(
         powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
 
     y = array(y)
+    # savetxt(powerflow.maindir + "/sistemas/" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
 
     linestyles = [
         "--",
@@ -210,7 +214,6 @@ def dynamic(
         plt.legend()
 
     plt.show()
-    print()
 
 
 def timenewt(

@@ -30,7 +30,7 @@ def md01(
     ## Inicialização
     powerflow.generator[gen].append("MD01")
     powerflow.generator[gen].append(
-        dmdg["inercia"].values[0] / (powerflow.options["FBASE"] * pi)
+        dmdg["inercia"].values[0] / (pi * powerflow.options["FBASE"])
     )
     powerflow.generator[gen].append(dmdg["amortecimento"].values[0])
     powerflow.generator[gen].append(
