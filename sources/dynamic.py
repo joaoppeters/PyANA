@@ -27,6 +27,8 @@ from numpy.linalg import inv, LinAlgError, lstsq, norm
 
 from devt import *
 from generator import *
+from matrices import load2ycte, md01jacob, jacexsi
+from residue import md01residue, resexsi
 from update import updttm
 
 
@@ -45,59 +47,26 @@ def dynamic(
         {
             "method": "EXSI",
             "active": powerflow.solution["active"] * 1e-2,
-            "eventname": ""
+            "eventname": "",
         }
     )
 
-    # Transformação das cargas para impedância constante
-    load2ycte = diag(
-        (
-            powerflow.dbarDF.demanda_ativa.values
-            - 1j * powerflow.dbarDF.demanda_reativa.values
-        )
-        * 1e-2
-        / powerflow.solution["voltage"] ** 2
+    # Transformação das cargas para impedância constante e expansao da matriz admitância
+    # load2ycte(
+    #     powerflow,
+    # )
+    postflow(
+        powerflow,
     )
-    Ybl = powerflow.Yb.A + load2ycte
 
+    # Estado SEP após fluxo de potência
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    Ig = Ybl @ V
+    I = powerflow.Yb @ V
 
-    Ya = zeros([powerflow.nger, powerflow.nger], dtype=complex)
-    Yb = zeros([powerflow.nger, powerflow.nbus], dtype=complex)
+    Ig = append(I[~powerflow.maskQ], zeros((powerflow.nbus), dtype=complex))
+    Eg = inv(powerflow.Yblc.A) @ Ig
 
-    powerflow.generator = dict()
-    for idx, value in powerflow.dmaqDF.iterrows():
-        gen = powerflow.dbarDF.loc[
-            powerflow.dbarDF["numero"] == value["numero"], "numero"
-        ].values[0]
-        powerflow.generator[gen] = list()
-        dmdg = powerflow.dmdgDF.loc[powerflow.dmdgDF["numero"] == value["gerador"]]
-        if dmdg.tipo.values[0] == "MD01":
-            md01(
-                powerflow,
-                gen,
-                dmdg,
-            )
-
-            Ya[idx, idx] = 1 / (1j * powerflow.generator[gen][3])
-            Yb[idx, value["numero"] - 1] = -1 / (1j * powerflow.generator[gen][3])
-            Ybl[value["numero"] - 1, value["numero"] - 1] += 1 / (
-                1j * powerflow.generator[gen][3]
-            )
-
-    I = Ig[~powerflow.maskQ]
-    I = append(I, zeros((powerflow.nbus), dtype=complex))
-
-    Yblc = concatenate(
-        (concatenate((Ya, Yb), axis=1), concatenate((Yb.T, Ybl), axis=1)),
-        axis=0,
-    )
-    Yblcaux = deepcopy(Yblc)
-
-    E = inv(Yblc) @ I
-
-    Eg = E[: powerflow.nger]
+    Eg = Eg[: powerflow.nger]
     delta = arctan(Eg.imag / Eg.real)
     Eg = abs(Eg) * exp(1j * delta)
 
@@ -105,11 +74,15 @@ def dynamic(
     powerflow.solution["delta"] = delta  # - deltaref
     powerflow.solution["omega"] = zeros(powerflow.nger)
 
+    powerflow.solution["fem0"] = deepcopy(powerflow.solution["fem"])
     powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
     powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
+    powerflow.solution["theta0"] = deepcopy(powerflow.solution["theta"])
+    powerflow.solution["voltage0"] = deepcopy(powerflow.solution["voltage"])
 
     y = list()
     event = 0
+    powerflow.YblcOG = deepcopy(powerflow.Yblc)
 
     t = arange(
         0.0,
@@ -125,43 +98,37 @@ def dynamic(
                 ].tolist()
                 for event in allevents:
                     if event == "APCB":
+                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
                         powerflow.solution["eventname"] += "APCB"
-                        Yred = apcb(
+                        apcb(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
                             ],
-                            Yblc,
                         )
                     elif event == "RMCB":
+                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
                         powerflow.solution["eventname"] += "RMCB"
-                        Yred = rmcb(
-                            powerflow,
-                            Yblc,
-                        )
                     elif event == "RMGR":
+                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
                         powerflow.solution["eventname"] += "RMGR"
-                        Yred = rmgr(
+                        rmgr(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
                             ],
-                            Yblc,
                         )
                     elif event == "ABCI":
                         powerflow.solution["eventname"] += "ABCI"
-                        Yred = abci(
+                        abci(
                             powerflow,
                             powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
                                 0
                             ],
-                            Yblc,
                         )
 
-                Yblc = deepcopy(Yblcaux)
                 timenewt(
                     powerflow,
-                    Yred,
                 )
 
             elif (
@@ -170,55 +137,36 @@ def dynamic(
             ):
                 timenewt(
                     powerflow,
-                    Yred,
                 )
 
         except:
             pass
 
         y.append(
-            concatenate((powerflow.solution["delta"], powerflow.solution["omega"]))
+            concatenate(
+                (
+                    [tempo],
+                    powerflow.solution["delta"],
+                    powerflow.solution["omega"],
+                    powerflow.solution["theta"],
+                    powerflow.solution["voltage"],
+                )
+            )
         )
         powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
         powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
+        powerflow.solution["theta0"] = deepcopy(powerflow.solution["theta"])
+        powerflow.solution["voltage0"] = deepcopy(powerflow.solution["voltage"])
 
     y = array(y)
-    # savetxt(powerflow.maindir + "/sistemas/" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
-
-    linestyles = [
-        "--",
-        ":",
-        "-",
-        "-.",
-        "-",
-    ]
-
-    for gen in range(0, powerflow.nger):
-        plt.figure(1)
-        plt.plot(
-            t, y[:, gen], label="Gerador {}".format(gen + 1), linestyle=linestyles[gen]
-        )
-        plt.ylabel("Ângulo (rad)")
-        plt.xlabel("Tempo (s)")
-        plt.legend()
-
-        plt.figure(2)
-        plt.plot(
-            t,
-            y[:, gen + 3],
-            label="Gerador {}".format(gen + 1),
-            linestyle=linestyles[gen],
-        )
-        plt.ylabel("Velocidade (rad/s)")
-        plt.xlabel("Tempo (s)")
-        plt.legend()
-
-    plt.show()
+    timeplot(
+        powerflow,
+        y,
+    )
 
 
 def timenewt(
     powerflow,
-    Yred,
 ):
     """
 
@@ -228,7 +176,7 @@ def timenewt(
 
     ## Inicialização
     powerflow.solution["iter"] = 0
-    powerflow.deltagen = zeros((powerflow.nger * 2))
+    powerflow.deltagen = zeros((2 * (2*powerflow.nger + powerflow.nbus)))
 
     while True:
         gen = 0
@@ -236,7 +184,6 @@ def timenewt(
             if powerflow.generator[generator][0] == "MD01":
                 md01residue(
                     powerflow,
-                    Yred,
                     generator,
                     gen,
                 )
@@ -244,14 +191,15 @@ def timenewt(
                     powerflow,
                     generator,
                     gen,
-                    Yred,
                 )
             gen += 1
 
-        md01jacoboffblock(
+        resexsi(
             powerflow,
-            Yred,
-            list(powerflow.generator.keys()),
+        )
+
+        jacexsi(
+            powerflow,
         )
 
         try:
@@ -285,3 +233,51 @@ def timenewt(
             powerflow.solution["iter"] <= powerflow.options["ACIT"]
         ):
             break
+
+
+def timeplot(
+    powerflow,
+    y,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+        y:
+    """
+
+    ## Inicialização
+    # savetxt(powerflow.maindir + "/sistemas/" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
+
+    linestyles = [
+        "--",
+        ":",
+        "-",
+        "-.",
+        "-",
+    ]
+
+    for gen in range(0, powerflow.nger):
+        plt.figure(1)
+        plt.plot(
+            y[:, 0],
+            y[:, gen + 1],
+            label="Gerador {}".format(gen + 1),
+            linestyle=linestyles[gen],
+        )
+        plt.ylabel("Ângulo (rad)")
+        plt.xlabel("Tempo (s)")
+        plt.legend()
+
+        plt.figure(2)
+        plt.plot(
+            y[:, 0],
+            y[:, gen + powerflow.nger + 1],
+            label="Gerador {}".format(gen + 1),
+            linestyle=linestyles[gen],
+        )
+        plt.ylabel("Velocidade (rad/s)")
+        plt.xlabel("Tempo (s)")
+        plt.legend()
+
+    plt.show()

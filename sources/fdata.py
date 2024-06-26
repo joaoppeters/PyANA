@@ -18,6 +18,9 @@ def fdata(
 
     ## Inicialização
 
+    # cargas = powerflow.dbarDF[powerflow.dbarDF.tipo == 0]
+    # cargas = cargas.groupby("area")['area'].count()
+
     bus = list()
     for idx, value in powerflow.dgerDF.iterrows():
         nome = powerflow.dbarDF.loc[

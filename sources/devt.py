@@ -12,7 +12,6 @@ from numpy.linalg import inv
 def apcb(
     powerflow,
     idx,
-    Yblc,
 ):
     """
 
@@ -23,39 +22,14 @@ def apcb(
     ## Inicialização
     powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
     busidx = powerflow.devtDF.iloc[idx].elemento - 1
-    Yblc[powerflow.nger + busidx, :] = 0
-    Yblc[:, powerflow.nger + busidx] = 0
-    Yblc[powerflow.nger + busidx, powerflow.nger + busidx] = 1
-
-    Ya = Yblc[: (powerflow.nger), :][:, : (powerflow.nger)]
-    Yb = Yblc[: (powerflow.nger), :][:, (powerflow.nger) :]
-    Ybl = Yblc[(powerflow.nger) :, :][:, (powerflow.nger) :]
-
-    return Ya - Yb @ inv(Ybl) @ Yb.T
-
-
-def rmcb(
-    powerflow,
-    Yblc,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    Ya = Yblc[: (powerflow.nger), :][:, : (powerflow.nger)]
-    Yb = Yblc[: (powerflow.nger), :][:, (powerflow.nger) :]
-    Ybl = Yblc[(powerflow.nger) :, :][:, (powerflow.nger) :]
-
-    return Ya - Yb @ inv(Ybl) @ Yb.T
+    powerflow.Yblc[powerflow.nger + busidx, :] = 0
+    powerflow.Yblc[:, powerflow.nger + busidx] = 0
+    powerflow.Yblc[powerflow.nger + busidx, powerflow.nger + busidx] = 1
 
 
 def rmgr(
     powerflow,
     idx,
-    Yblc,
 ):
     """
 
@@ -71,7 +45,6 @@ def rmgr(
 def abci(
     powerflow,
     idx,
-    Yblc,
 ):
     """
 
@@ -84,15 +57,13 @@ def abci(
     de = powerflow.devtDF.iloc[idx].elemento - 1
     para = powerflow.devtDF.iloc[idx].para - 1
 
-    Ya = Yblc[: (powerflow.nger), :][:, : (powerflow.nger)]
-    Yb = Yblc[: (powerflow.nger), :][:, (powerflow.nger) :]
-    Ybl = Yblc[(powerflow.nger) :, :][:, (powerflow.nger) :]
-
-    y = Ybl[de, para]
-
-    Ybl[de, de] += y
-    Ybl[de, para] -= y
-    Ybl[para, de] -= y
-    Ybl[para, para] += y
-
-    return Ya - Yb @ inv(Ybl) @ Yb.T
+    powerflow.Yblc[de, de] += powerflow.Yblc[powerflow.nger + de, powerflow.nger + para]
+    powerflow.Yblc[de, para] -= powerflow.Yblc[
+        powerflow.nger + de, powerflow.nger + para
+    ]
+    powerflow.Yblc[para, de] -= powerflow.Yblc[
+        powerflow.nger + de, powerflow.nger + para
+    ]
+    powerflow.Yblc[para, para] += powerflow.Yblc[
+        powerflow.nger + de, powerflow.nger + para
+    ]

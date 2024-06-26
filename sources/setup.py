@@ -28,7 +28,7 @@ def setup(
     ## Inicialização
     if powerflow.system:
         # Verificação de diretório
-        pathrede(
+        pathpwf(
             powerflow,
         )
 
@@ -62,7 +62,7 @@ def setup(
         raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
 
 
-def pathrede(
+def pathpwf(
     powerflow,
 ):
     """verificação automática de diretório sistemas
@@ -100,7 +100,7 @@ def pathrede(
         )
 
 
-def pathtem(
+def pathstb(
     powerflow,
 ):
     """verificação automática de diretório sistemas

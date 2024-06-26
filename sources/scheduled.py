@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import zeros
+from numpy import cos, sin, zeros
 from ctrl import controlsch
 
 

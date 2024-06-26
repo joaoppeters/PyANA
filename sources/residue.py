@@ -6,8 +6,11 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import array, concatenate, conj, diag, exp, zeros
+from numpy import array, concatenate, conj, diag, exp, sin, zeros
+
 from ctrl import controlres
+
+# from generator import md01peut
 
 
 def residue(
@@ -90,3 +93,80 @@ def residue(
             )
 
         powerflow.deltaPQY = concatenate((powerflow.deltaPQY, powerflow.deltaY), axis=0)
+
+
+def md01residue(
+    powerflow,
+    generator,
+    gen,
+):
+    """calculo dos residuos
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.deltagen[2 * gen] = (
+        powerflow.solution["delta"][gen]
+        - powerflow.solution["delta0"][gen]
+        - powerflow.dsimDF.step.values[0]
+        * 0.5
+        * (powerflow.solution["omega"][gen] + powerflow.solution["omega0"][gen])
+    )
+
+    powerflow.deltagen[2 * gen + 1] = (
+        powerflow.solution["omega"][gen]
+        - powerflow.solution["omega0"][gen]
+        - (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
+        * (
+            2 * powerflow.solution["active"][generator - 1]
+            - (
+                powerflow.solution["fem"][gen]
+                * powerflow.solution["voltage"][generator - 1]
+                * sin(
+                    powerflow.solution["delta"][gen]
+                    - powerflow.solution["theta"][generator - 1]
+                )
+                / powerflow.generator[generator][3]
+            )
+            - (
+                powerflow.solution["fem"][gen]
+                * powerflow.solution["voltage"][generator - 1]
+                * sin(
+                    powerflow.solution["delta0"][gen]
+                    - powerflow.solution["theta"][generator - 1]
+                )
+                / powerflow.generator[generator][3]
+            )
+            - powerflow.generator[generator][2] * powerflow.solution["omega"][gen]
+            - powerflow.generator[generator][2] * powerflow.solution["omega0"][gen]
+        )
+    )
+
+
+def resexsi(
+    powerflow,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    # Vetores de resíduo
+    ev0 = concatenate((powerflow.solution["fem0"], powerflow.solution["voltage0"]), axis=0)
+    dt0 = concatenate((powerflow.solution["delta0"], powerflow.solution["theta0"]), axis=0)
+    V0 = ev0 * exp(1j * dt0)
+    I0 = powerflow.Yblc.A @ V0
+    S0 = diag(V0) @ conj(I0)
+
+    ev = concatenate((powerflow.solution["fem"], powerflow.solution["voltage"]), axis=0)
+    dt = concatenate((powerflow.solution["delta"], powerflow.solution["theta"]), axis=0)
+    V = ev * exp(1j * dt)
+    I = powerflow.Yblc.A @ V
+    S = diag(V) @ conj(I)
+
+    powerflow.deltagen[2 * powerflow.nger : 3 * powerflow.nger + powerflow.nbus] = S.real - S0.real
+    powerflow.deltagen[3 * powerflow.nger + powerflow.nbus :] = S.imag - S0.imag

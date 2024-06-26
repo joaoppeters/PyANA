@@ -138,6 +138,110 @@ def danc(
         powerflow.codes["DANC"] = True
 
 
+def danc_acls(
+    powerflow,
+):
+    """inicialização para leitura de dados de alteração do nível de carregamento
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.danc["tipo_elemento_1"] = list()
+    powerflow.danc["identificacao_elemento_1"] = list()
+    powerflow.danc["condicao_elemento_1"] = list()
+    powerflow.danc["tipo_elemento_2"] = list()
+    powerflow.danc["identificacao_elemento_2"] = list()
+    powerflow.danc["condicao_elemento_2"] = list()
+    powerflow.danc["tipo_elemento_3"] = list()
+    powerflow.danc["identificacao_elemento_3"] = list()
+    powerflow.danc["condicao_elemento_3"] = list()
+    powerflow.danc["tipo_elemento_4"] = list()
+    powerflow.danc["identificacao_elemento_4"] = list()
+    powerflow.danc["fator_carga_ativa"] = list()
+    powerflow.danc["fator_carga_reativa"] = list()
+    powerflow.danc["fator_shunt_barra"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.danc["tipo_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.danc["identificacao_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.danc["condicao_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.danc["tipo_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.danc["identificacao_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.danc["condicao_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.danc["tipo_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.danc["identificacao_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.danc["condicao_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.danc["tipo_incremento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.danc["identificacao_incremento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.danc["fator_carga_ativa"].append(
+                powerflow.lines[powerflow.linecount][50:56]
+            )
+            powerflow.danc["fator_carga_reativa"].append(
+                powerflow.lines[powerflow.linecount][57:63]
+            )
+            powerflow.danc["fator_shunt_barra"].append(
+                powerflow.lines[powerflow.linecount][64:70]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Alteração do Nível de Carregamento
+    powerflow.dancDF = DF(data=powerflow.danc)
+    powerflow.dancDF = deepcopy(powerflow.dancDF)
+    powerflow.dancDF = powerflow.dancDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dancDF = powerflow.dancDF.astype(
+        {
+            "tipo_incremento_1": "int",
+            "identificacao_incremento_1": "int",
+            "condicao_incremento_1": "object",
+            "tipo_incremento_2": "int",
+            "identificacao_incremento_2": "int",
+            "condicao_incremento_2": "object",
+            "tipo_incremento_3": "int",
+            "identificacao_incremento_3": "int",
+            "condicao_incremento_3": "object",
+            "tipo_incremento_4": "int",
+            "identificacao_incremento_4": "int",
+            "fator_carga_ativa": "float",
+            "fator_carga_reativa": "float",
+            "fator_shunt_barra": "float",
+        }
+    )
+    if powerflow.dancDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
+        )
+    else:
+        powerflow.codes["DANC"] = True
+
+
 def checkdanc(
     powerflow,
 ):
@@ -227,150 +331,6 @@ def dare(
         # Numero de Areas
         powerflow.narea = powerflow.dareDF.shape[0]
         powerflow.areas = sorted(powerflow.dareDF["numero"].unique())
-
-
-def dbsh(
-    powerflow,
-):
-    """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-    ## Inicialização
-    powerflow.dbsh1["from"] = list()
-    powerflow.dbsh1["operacao"] = list()
-    powerflow.dbsh1["to"] = list()
-    powerflow.dbsh1["circuito"] = list()
-    powerflow.dbsh1["modo_controle"] = list()
-    powerflow.dbsh1["tensao_minima"] = list()
-    powerflow.dbsh1["tensao_maxima"] = list()
-    powerflow.dbsh1["barra_controlada"] = list()
-    powerflow.dbsh1["injecao_reativa_inicial"] = list()
-    powerflow.dbsh1["tipo_controle"] = list()
-    powerflow.dbsh1["apagar"] = list()
-    powerflow.dbsh1["extremidade"] = list()
-    powerflow.dbsh1["ndbsh2"] = list()
-    powerflow.dbsh2["grupo_banco"] = list()
-    powerflow.dbsh2["operacao"] = list()
-    powerflow.dbsh2["estado"] = list()
-    powerflow.dbsh2["unidades"] = list()
-    powerflow.dbsh2["unidades_operacao"] = list()
-    powerflow.dbsh2["capacitor_reator"] = list()
-    idx = 0
-
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
-            pass
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh1["ruler"]:
-            powerflow.dbsh1["from"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dbsh1["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dbsh1["to"].append(powerflow.lines[powerflow.linecount][8:13])
-            powerflow.dbsh1["circuito"].append(
-                powerflow.lines[powerflow.linecount][14:16]
-            )
-            powerflow.dbsh1["modo_controle"].append(
-                powerflow.lines[powerflow.linecount][17]
-            )
-            powerflow.dbsh1["tensao_minima"].append(
-                powerflow.lines[powerflow.linecount][19:23]
-            )
-            powerflow.dbsh1["tensao_maxima"].append(
-                powerflow.lines[powerflow.linecount][24:28]
-            )
-            powerflow.dbsh1["barra_controlada"].append(
-                powerflow.lines[powerflow.linecount][29:34]
-            )
-            powerflow.dbsh1["injecao_reativa_inicial"].append(
-                powerflow.lines[powerflow.linecount][35:41]
-            )
-            powerflow.dbsh1["tipo_controle"].append(
-                powerflow.lines[powerflow.linecount][42]
-            )
-            powerflow.dbsh1["apagar"].append(powerflow.lines[powerflow.linecount][44])
-            powerflow.dbsh1["extremidade"].append(
-                powerflow.lines[powerflow.linecount][46:51]
-            )
-
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh2["ruler"]:
-            powerflow.dbsh1["ndbsh2"].append(0)
-            while powerflow.lines[powerflow.linecount].strip() != "FBAN":
-                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
-                    pass
-                else:
-                    powerflow.dbsh2["grupo_banco"].append(
-                        powerflow.lines[powerflow.linecount][:2]
-                    )
-                    powerflow.dbsh2["operacao"].append(
-                        powerflow.lines[powerflow.linecount][4]
-                    )
-                    powerflow.dbsh2["estado"].append(
-                        powerflow.lines[powerflow.linecount][6]
-                    )
-                    powerflow.dbsh2["unidades"].append(
-                        powerflow.lines[powerflow.linecount][8:11]
-                    )
-                    powerflow.dbsh2["unidades_operacao"].append(
-                        powerflow.lines[powerflow.linecount][12:15]
-                    )
-                    powerflow.dbsh2["capacitor_reator"].append(
-                        powerflow.lines[powerflow.linecount][16:22]
-                    )
-                powerflow.dbsh1["ndbsh2"][idx] += 1
-                powerflow.linecount += 1
-            idx += 1
-        powerflow.linecount += 1
-
-    # DataFrame dos Dados de Agregadores Genericos
-    powerflow.dbsh1DF = DF(data=powerflow.dbsh1)
-    powerflow.dbsh1 = deepcopy(powerflow.dbsh1DF)
-    powerflow.dbsh1DF = powerflow.dbsh1DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbsh1DF = powerflow.dbsh1DF.astype(
-        {
-            "from": "int",
-            "operacao": "object",
-            "to": "int",
-            "circuito": "int",
-            "modo_controle": "object",
-            "tensao_minima": "int",
-            "tensao_maxima": "int",
-            "barra_controlada": "int",
-            "injecao_reativa_inicial": "float",
-            "tipo_controle": "object",
-            "apagar": "object",
-            "extremidade": "int",
-        }
-    )
-
-    powerflow.dbsh2DF = DF(data=powerflow.dbsh2)
-    powerflow.dbsh2 = deepcopy(powerflow.dbsh2DF)
-    powerflow.dbsh2DF = powerflow.dbsh2DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbsh2DF = powerflow.dbsh2DF.astype(
-        {
-            "grupo_banco": "int",
-            "operacao": "object",
-            "estado": "object",
-            "unidades": "int",
-            "unidades_operacao": "int",
-            "capacitor_reator": "float",
-        }
-    )
-    if powerflow.dbsh1DF.empty or powerflow.dbsh2DF.empty:
-        ## ERROR - VERMELHO
-        raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DBSH`!\033[0m"
-        )
-    else:
-        powerflow.codes["DBSH"] = True
-
-        for idx, value in powerflow.dbsh1DF.iterrows():
-            if value["circuito"] == 0:
-                powerflow.dbsh1DF.at[idx, "circuito"] = 1
-            if value["apagar"] == "0":
-                powerflow.dbsh1DF.at[idx, "apagar"] = " "
-
-        # for idx, value in powerflow.dbsh2DF.iterrows():
-        #     if value['to'] ==
 
 
 def dbar(
@@ -588,6 +548,453 @@ def dbar(
         powerflow.dbarDF = powerflow.dbarDF.reset_index()
 
 
+def dbsh(
+    powerflow,
+):
+    """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dbsh1["from"] = list()
+    powerflow.dbsh1["operacao"] = list()
+    powerflow.dbsh1["to"] = list()
+    powerflow.dbsh1["circuito"] = list()
+    powerflow.dbsh1["modo_controle"] = list()
+    powerflow.dbsh1["tensao_minima"] = list()
+    powerflow.dbsh1["tensao_maxima"] = list()
+    powerflow.dbsh1["barra_controlada"] = list()
+    powerflow.dbsh1["injecao_reativa_inicial"] = list()
+    powerflow.dbsh1["tipo_controle"] = list()
+    powerflow.dbsh1["apagar"] = list()
+    powerflow.dbsh1["extremidade"] = list()
+    powerflow.dbsh1["ndbsh2"] = list()
+    powerflow.dbsh2["grupo_banco"] = list()
+    powerflow.dbsh2["operacao"] = list()
+    powerflow.dbsh2["estado"] = list()
+    powerflow.dbsh2["unidades"] = list()
+    powerflow.dbsh2["unidades_operacao"] = list()
+    powerflow.dbsh2["capacitor_reator"] = list()
+    powerflow.dbsh2["manobravel"] = list()
+    idx = 0
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh1["ruler"]:
+            powerflow.dbsh1["from"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dbsh1["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dbsh1["to"].append(powerflow.lines[powerflow.linecount][8:13])
+            powerflow.dbsh1["circuito"].append(
+                powerflow.lines[powerflow.linecount][14:16]
+            )
+            powerflow.dbsh1["modo_controle"].append(
+                powerflow.lines[powerflow.linecount][17]
+            )
+            powerflow.dbsh1["tensao_minima"].append(
+                powerflow.lines[powerflow.linecount][19:23]
+            )
+            powerflow.dbsh1["tensao_maxima"].append(
+                powerflow.lines[powerflow.linecount][24:28]
+            )
+            powerflow.dbsh1["barra_controlada"].append(
+                powerflow.lines[powerflow.linecount][29:34]
+            )
+            powerflow.dbsh1["injecao_reativa_inicial"].append(
+                powerflow.lines[powerflow.linecount][35:41]
+            )
+            powerflow.dbsh1["tipo_controle"].append(
+                powerflow.lines[powerflow.linecount][42]
+            )
+            powerflow.dbsh1["apagar"].append(powerflow.lines[powerflow.linecount][44])
+            powerflow.dbsh1["extremidade"].append(
+                powerflow.lines[powerflow.linecount][46:51]
+            )
+
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh2["ruler"]:
+            powerflow.dbsh1["ndbsh2"].append(0)
+            while powerflow.lines[powerflow.linecount].strip() != "FBAN":
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dbsh2["grupo_banco"].append(
+                        powerflow.lines[powerflow.linecount][:2]
+                    )
+                    powerflow.dbsh2["operacao"].append(
+                        powerflow.lines[powerflow.linecount][4]
+                    )
+                    powerflow.dbsh2["estado"].append(
+                        powerflow.lines[powerflow.linecount][6]
+                    )
+                    powerflow.dbsh2["unidades"].append(
+                        powerflow.lines[powerflow.linecount][8:11]
+                    )
+                    powerflow.dbsh2["unidades_operacao"].append(
+                        powerflow.lines[powerflow.linecount][12:15]
+                    )
+                    powerflow.dbsh2["capacitor_reator"].append(
+                        powerflow.lines[powerflow.linecount][16:22]
+                    )
+                    powerflow.dbsh2["manobravel"].append(
+                        powerflow.lines[powerflow.linecount][23]
+                    )
+                powerflow.dbsh1["ndbsh2"][idx] += 1
+                powerflow.linecount += 1
+            idx += 1
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Agregadores Genericos
+    powerflow.dbsh1DF = DF(data=powerflow.dbsh1)
+    powerflow.dbsh1 = deepcopy(powerflow.dbsh1DF)
+    powerflow.dbsh1DF = powerflow.dbsh1DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dbsh1DF = powerflow.dbsh1DF.astype(
+        {
+            "from": "int",
+            "operacao": "object",
+            "to": "int",
+            "circuito": "int",
+            "modo_controle": "object",
+            "tensao_minima": "int",
+            "tensao_maxima": "int",
+            "barra_controlada": "int",
+            "injecao_reativa_inicial": "float",
+            "tipo_controle": "object",
+            "apagar": "object",
+            "extremidade": "int",
+        }
+    )
+
+    powerflow.dbsh2DF = DF(data=powerflow.dbsh2)
+    powerflow.dbsh2 = deepcopy(powerflow.dbsh2DF)
+    powerflow.dbsh2DF = powerflow.dbsh2DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dbsh2DF = powerflow.dbsh2DF.astype(
+        {
+            "grupo_banco": "int",
+            "operacao": "object",
+            "estado": "object",
+            "unidades": "int",
+            "unidades_operacao": "int",
+            "capacitor_reator": "float",
+            "manobravel": "object",
+        }
+    )
+    if powerflow.dbsh1DF.empty or powerflow.dbsh2DF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DBSH`!\033[0m"
+        )
+    else:
+        powerflow.codes["DBSH"] = True
+
+        for idx, value in powerflow.dbsh1DF.iterrows():
+            if value["circuito"] == 0:
+                powerflow.dbsh1DF.at[idx, "circuito"] = 1
+            if value["apagar"] == "0":
+                powerflow.dbsh1DF.at[idx, "apagar"] = " "
+
+
+def dcar(
+    powerflow,
+):
+    """inicialização para leitura de parâmetros A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dcar["tipo_elemento_1"] = list()
+    powerflow.dcar["identificacao_elemento_1"] = list()
+    powerflow.dcar["condicao_elemento_1"] = list()
+    powerflow.dcar["tipo_elemento_2"] = list()
+    powerflow.dcar["identificacao_elemento_2"] = list()
+    powerflow.dcar["condicao_elemento_2"] = list()
+    powerflow.dcar["tipo_elemento_3"] = list()
+    powerflow.dcar["identificacao_elemento_3"] = list()
+    powerflow.dcar["condicao_elemento_3"] = list()
+    powerflow.dcar["tipo_elemento_4"] = list()
+    powerflow.dcar["identificacao_elemento_4"] = list()
+    powerflow.dcar["operacao"] = list()
+    powerflow.dcar["parametro_A"] = list()
+    powerflow.dcar["parametro_B"] = list()
+    powerflow.dcar["parametro_C"] = list()
+    powerflow.dcar["parametro_D"] = list()
+    powerflow.dcar["tensao_limite"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dcar["tipo_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dcar["identificacao_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.dcar["condicao_incremento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.dcar["tipo_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dcar["identificacao_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.dcar["condicao_incremento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.dcar["tipo_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.dcar["identificacao_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.dcar["condicao_incremento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.dcar["tipo_incremento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.dcar["identificacao_incremento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.dcar["operacao"].append(powerflow.lines[powerflow.linecount][50])
+            powerflow.dcar["parametro_A"].append(
+                powerflow.lines[powerflow.linecount][52:55]
+            )
+            powerflow.dcar["parametro_B"].append(
+                powerflow.lines[powerflow.linecount][56:59]
+            )
+            powerflow.dcar["parametro_C"].append(
+                powerflow.lines[powerflow.linecount][60:63]
+            )
+            powerflow.dcar["parametro_D"].append(
+                powerflow.lines[powerflow.linecount][64:67]
+            )
+            powerflow.dcar["tensao_limite"].append(
+                powerflow.options["VFLD"]
+                if powerflow.lines[powerflow.linecount][68:72] == 4 * " "
+                else powerflow.lines[powerflow.linecount][68:72]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Incremento do Nível de Carregamento
+    powerflow.dcarDF = DF(data=powerflow.dcar)
+    powerflow.dcarDF = deepcopy(powerflow.dcarDF)
+    powerflow.dcarDF = powerflow.dcarDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dcarDF = powerflow.dcarDF.astype(
+        {
+            "tipo_incremento_1": "object",
+            "identificacao_incremento_1": "int",
+            "condicao_incremento_1": "object",
+            "tipo_incremento_2": "object",
+            "identificacao_incremento_2": "int",
+            "condicao_incremento_2": "object",
+            "tipo_incremento_3": "object",
+            "identificacao_incremento_3": "int",
+            "condicao_incremento_3": "object",
+            "tipo_incremento_4": "object",
+            "identificacao_incremento_4": "int",
+            "operacao": "object",
+            "parametro_A": "int",
+            "parametro_B": "int",
+            "parametro_C": "int",
+            "parametro_D": "int",
+            "tensao_limite": "float",
+        }
+    )
+    if powerflow.dcarDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCAR`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCAR"] = True
+
+
+def dcba(
+    powerflow,
+):
+    """inicialização para leitura de dados de barra CC
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dcba["numero"] = list()
+    powerflow.dcba["operacao"] = list()
+    powerflow.dcba["tipo"] = list()
+    powerflow.dcba["polaridade"] = list()
+    powerflow.dcba["nome"] = list()
+    powerflow.dcba["grupo_limite_tensao"] = list()
+    powerflow.dcba["tensao"] = list()
+    powerflow.dcba["eletrodo_terra"] = list()
+    powerflow.dcba["numero_elo_cc"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dcba["numero"].append(powerflow.lines[powerflow.linecount][:4])
+            powerflow.dcba["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dcba["tipo"].append(powerflow.lines[powerflow.linecount][7])
+            powerflow.dcba["polaridade"].append(powerflow.lines[powerflow.linecount][8])
+            powerflow.dcba["nome"].append(powerflow.lines[powerflow.linecount][9:21])
+            powerflow.dcba["grupo_limite_tensao"].append(
+                powerflow.lines[powerflow.linecount][21:23]
+            )
+            powerflow.dcba["tensao"].append(powerflow.lines[powerflow.linecount][23:28])
+            powerflow.dcba["eletrodo_terra"].append(
+                powerflow.lines[powerflow.linecount][66:71]
+            )
+            powerflow.dcba["numero_elo_cc"].append(
+                powerflow.lines[powerflow.linecount][71:75]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Barra CC
+    powerflow.dcbaDF = DF(data=powerflow.dcba)
+    powerflow.dcba = deepcopy(powerflow.dcbaDF)
+    powerflow.dcbaDF = powerflow.dcbaDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dcbaDF = powerflow.dcbaDF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "tipo": "int",
+            "polaridade": "object",
+            "nome": "str",
+            "grupo_limite_tensao": "object",
+            "tensao": "float",
+            "eletrodo_terra": "object",
+            "numero_elo_cc": "int",
+        }
+    )
+    if powerflow.dcbaDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCBA`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCBA"] = True
+
+
+def dccv(
+    powerflow,
+):
+    """inicialização para leitura de dados de controle de conversores CA/CC
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dccv["numero"] = list()
+    powerflow.dccv["operacao"] = list()
+    powerflow.dccv["folga"] = list()
+    powerflow.dccv["modo_controle_inversor"] = list()
+    powerflow.dccv["tipo_controle_conversor"] = list()
+    powerflow.dccv["valor_especificado"] = list()
+    powerflow.dccv["margem_corrente"] = list()
+    powerflow.dccv["maxima_sobrecorrente"] = list()
+    powerflow.dccv["angulo_conversor"] = list()
+    powerflow.dccv["angulo_conversor_minimo"] = list()
+    powerflow.dccv["angulo_conversor_maximo"] = list()
+    powerflow.dccv["tap_transformador_minimo"] = list()
+    powerflow.dccv["tap_transformador_maximo"] = list()
+    powerflow.dccv["tap_transformador_numero"] = list()
+    powerflow.dccv["tensao_cc_minima"] = list()
+    powerflow.dccv["tap_high"] = list()
+    powerflow.dccv["tap_reduzido"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dccv["numero"].append(powerflow.lines[powerflow.linecount][:4])
+            powerflow.dccv["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dccv["folga"].append(powerflow.lines[powerflow.linecount][7])
+            powerflow.dccv["modo_controle_inversor"].append(
+                powerflow.lines[powerflow.linecount][8]
+            )
+            powerflow.dccv["tipo_controle_conversor"].append(
+                powerflow.lines[powerflow.linecount][9]
+            )
+            powerflow.dccv["valor_especificado"].append(
+                powerflow.lines[powerflow.linecount][11:16]
+            )
+            powerflow.dccv["margem_corrente"].append(
+                powerflow.lines[powerflow.linecount][17:22]
+            )
+            powerflow.dccv["maxima_sobrecorrente"].append(
+                powerflow.lines[powerflow.linecount][23:28]
+            )
+            powerflow.dccv["angulo_conversor"].append(
+                powerflow.lines[powerflow.linecount][29:34]
+            )
+            powerflow.dccv["angulo_conversor_minimo"].append(
+                powerflow.lines[powerflow.linecount][35:40]
+            )
+            powerflow.dccv["angulo_conversor_maximo"].append(
+                powerflow.lines[powerflow.linecount][41:46]
+            )
+            powerflow.dccv["tap_transformador_minimo"].append(
+                powerflow.lines[powerflow.linecount][47:52]
+            )
+            powerflow.dccv["tap_transformador_maximo"].append(
+                powerflow.lines[powerflow.linecount][53:58]
+            )
+            powerflow.dccv["tap_transformador_numero"].append(
+                powerflow.lines[powerflow.linecount][59:61]
+            )
+            powerflow.dccv["tensao_cc_minima"].append(
+                powerflow.lines[powerflow.linecount][62:66]
+            )
+            powerflow.dccv["tap_high"].append(
+                powerflow.lines[powerflow.linecount][67:72]
+            )
+            powerflow.dccv["tap_reduzido"].append(
+                powerflow.lines[powerflow.linecount][73:78]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Controle de Conversores de Tensão CC
+    powerflow.dccvDF = DF(data=powerflow.dccv)
+    powerflow.dccv = deepcopy(powerflow.dccvDF)
+    powerflow.dccvDF = powerflow.dccvDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dccvDF = powerflow.dccvDF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "folga": "object",
+            "modo_controle_inversor": "object",
+            "tipo_controle_conversor": "object",
+            "valor_especificado": "float",
+            "margem_corrente": "float",
+            "maxima_sobrecorrente": "float",
+            "angulo_conversor": "float",
+            "angulo_conversor_minimo": "float",
+            "angulo_conversor_maximo": "float",
+            "tap_transformador_minimo": "float",
+            "tap_transformador_maximo": "float",
+            "tap_transformador_numero": "int",
+            "tensao_cc_minima": "float",
+            "tap_high": "object",
+            "tap_reduzido": "object",
+        }
+    )
+
+    if powerflow.dccvDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCCV`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCCV"] = True
+
+
 def dcer(
     powerflow,
 ):
@@ -609,6 +1016,7 @@ def dcer(
     powerflow.dcer["potencia_reativa_maxima"] = list()
     powerflow.dcer["controle"] = list()
     powerflow.dcer["estado"] = list()
+    powerflow.dcer["modo_correcao_limites"] = list()
 
     while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
@@ -637,6 +1045,9 @@ def dcer(
             )
             powerflow.dcer["controle"].append(powerflow.lines[powerflow.linecount][43])
             powerflow.dcer["estado"].append(powerflow.lines[powerflow.linecount][45])
+            powerflow.dcer["modo_correcao_limites"].append(
+                powerflow.lines[powerflow.linecount][47]
+            )
         powerflow.linecount += 1
 
     # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
@@ -711,6 +1122,321 @@ def dcer(
 
                 if value["barra_controlada"] == 0:
                     powerflow.dcerDF.at[idx, "barra_controlada"] = value["barra"]
+
+
+def dcli(
+    powerflow,
+):
+    """inicialização para leitura de dados de linhas de transmissão CC
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dcli["de"] = list()
+    powerflow.dcli["operacao"] = list()
+    powerflow.dcli["para"] = list()
+    powerflow.dcli["circuito"] = list()
+    powerflow.dcli["proprietario"] = list()
+    powerflow.dcli["resistencia"] = list()
+    powerflow.dcli["indutancia"] = list()
+    powerflow.dcli["capacidade"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dcli["de"].append(powerflow.lines[powerflow.linecount][:4])
+            powerflow.dcli["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dcli["para"].append(powerflow.lines[powerflow.linecount][8:12])
+            powerflow.dcli["circuito"].append(
+                powerflow.lines[powerflow.linecount][12:14]
+            )
+            powerflow.dcli["proprietario"].append(
+                powerflow.lines[powerflow.linecount][15]
+            )
+            powerflow.dcli["resistencia"].append(
+                powerflow.lines[powerflow.linecount][17:23]
+            )
+            powerflow.dcli["indutancia"].append(
+                powerflow.lines[powerflow.linecount][23:29]
+            )
+            powerflow.dcli["capacidade"].append(
+                powerflow.lines[powerflow.linecount][60:64]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Linhas de Transmissão CC
+    powerflow.dcliDF = DF(data=powerflow.dcli)
+    powerflow.dcli = deepcopy(powerflow.dcliDF)
+    powerflow.dcliDF = powerflow.dcliDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dcliDF = powerflow.dcliDF.astype(
+        {
+            "de": "int",
+            "operacao": "object",
+            "para": "int",
+            "circuito": "int",
+            "proprietario": "object",
+            "resistencia": "float",
+            "indutancia": "float",
+            "capacidade": "float",
+        }
+    )
+
+    if powerflow.dcliDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCLI`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCLI"] = True
+
+
+def dcnv(
+    powerflow,
+):
+    """inicialização para leitura de dados de conversores CA/CC
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dcnv["numero"] = list()
+    powerflow.dcnv["operacao"] = list()
+    powerflow.dcnv["barra_CA"] = list()
+    powerflow.dcnv["barra_CC"] = list()
+    powerflow.dcnv["barra_neutra"] = list()
+    powerflow.dcnv["modo_operacao"] = list()
+    powerflow.dcnv["pontes"] = list()
+    powerflow.dcnv["corrente"] = list()
+    powerflow.dcnv["reatancia_comutacao"] = list()
+    powerflow.dcnv["tensao_secundario"] = list()
+    powerflow.dcnv["potencia_transformador"] = list()
+    powerflow.dcnv["resistencia_reator"] = list()
+    powerflow.dcnv["indutancia_reator"] = list()
+    powerflow.dcnv["capacitancia"] = list()
+    powerflow.dcnv["frequencia"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dcnv["numero"].append(powerflow.lines[powerflow.linecount][:4])
+            powerflow.dcnv["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dcnv["barra_CA"].append(
+                powerflow.lines[powerflow.linecount][7:12]
+            )
+            powerflow.dcnv["barra_CC"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dcnv["barra_neutra"].append(
+                powerflow.lines[powerflow.linecount][18:22]
+            )
+            powerflow.dcnv["modo_operacao"].append(
+                powerflow.lines[powerflow.linecount][23]
+            )
+            powerflow.dcnv["pontes"].append(powerflow.lines[powerflow.linecount][25])
+            powerflow.dcnv["corrente"].append(
+                powerflow.lines[powerflow.linecount][27:32]
+            )
+            powerflow.dcnv["reatancia_comutacao"].append(
+                powerflow.lines[powerflow.linecount][33:38]
+            )
+            powerflow.dcnv["tensao_secundario"].append(
+                powerflow.lines[powerflow.linecount][39:44]
+            )
+            powerflow.dcnv["potencia_transformador"].append(
+                powerflow.lines[powerflow.linecount][45:50]
+            )
+            powerflow.dcnv["resistencia_reator"].append(
+                powerflow.lines[powerflow.linecount][51:56]
+            )
+            powerflow.dcnv["indutancia_reator"].append(
+                powerflow.lines[powerflow.linecount][57:62]
+            )
+            powerflow.dcnv["capacitancia"].append(
+                powerflow.lines[powerflow.linecount][63:68]
+            )
+            powerflow.dcnv["frequencia"].append(
+                powerflow.lines[powerflow.linecount][69:71]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Conversores CA/CC
+    powerflow.dcnvDF = DF(data=powerflow.dcnv)
+    powerflow.dcnv = deepcopy(powerflow.dcnvDF)
+    powerflow.dcnvDF = powerflow.dcnvDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dcnvDF = powerflow.dcnvDF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "barra_CA": "int",
+            "barra_CC": "int",
+            "barra_neutra": "int",
+            "modo_operacao": "object",
+            "pontes": "int",
+            "corrente": "float",
+            "reatancia_comutacao": "float",
+            "tensao_secundario": "float",
+            "potencia_transformador": "float",
+            "resistencia_reator": "float",
+            "indutancia_reator": "float",
+            "capacitancia": "float",
+            "frequencia": "float",
+        }
+    )
+
+    if powerflow.dcnvDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCNV`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCNV"] = True
+
+
+def dcsc(
+    powerflow,
+):
+    """inicialização para leitura de dados de compensador série controlável
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dcsc["de"] = list()
+    powerflow.dcsc["operacao"] = list()
+    powerflow.dcsc["para"] = list()
+    powerflow.dcsc["circuito"] = list()
+    powerflow.dcsc["estado"] = list()
+    powerflow.dcsc["proprietario"] = list()
+    powerflow.dcsc["bypass"] = list()
+    powerflow.dcsc["reatancia_minima"] = list()
+    powerflow.dcsc["reatancia_maxima"] = list()
+    powerflow.dcsc["reatancia_inicial"] = list()
+    powerflow.dcsc["modo_controle"] = list()
+    powerflow.dcsc["especificado"] = list()
+    powerflow.dcsc["extremidade"] = list()
+    powerflow.dcsc["estagios"] = list()
+    powerflow.dcsc["capacidade_normal"] = list()
+    powerflow.dcsc["capacidade_emergencia"] = list()
+    powerflow.dcsc["capacidade"] = list()
+    powerflow.dcsc["agreg1"] = list()
+    powerflow.dcsc["agreg2"] = list()
+    powerflow.dcsc["agreg3"] = list()
+    powerflow.dcsc["agreg4"] = list()
+    powerflow.dcsc["agreg5"] = list()
+    powerflow.dcsc["agreg6"] = list()
+    powerflow.dcsc["agreg7"] = list()
+    powerflow.dcsc["agreg8"] = list()
+    powerflow.dcsc["agreg9"] = list()
+    powerflow.dcsc["agreg10"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dcsc["de"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dcsc["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dcsc["para"].append(powerflow.lines[powerflow.linecount][9:14])
+            powerflow.dcsc["circuito"].append(
+                powerflow.lines[powerflow.linecount][14:16]
+            )
+            powerflow.dcsc["estado"].append(powerflow.lines[powerflow.linecount][16])
+            powerflow.dcsc["proprietario"].append(
+                powerflow.lines[powerflow.linecount][17]
+            )
+            powerflow.dcsc["bypass"].append(powerflow.lines[powerflow.linecount][18])
+            powerflow.dcsc["reatancia_minima"].append(
+                powerflow.lines[powerflow.linecount][25:31]
+            )
+            powerflow.dcsc["reatancia_maxima"].append(
+                powerflow.lines[powerflow.linecount][31:37]
+            )
+            powerflow.dcsc["reatancia_inicial"].append(
+                powerflow.lines[powerflow.linecount][37:43]
+            )
+            powerflow.dcsc["modo_controle"].append(
+                powerflow.lines[powerflow.linecount][43]
+            )
+            powerflow.dcsc["especificado"].append(
+                powerflow.lines[powerflow.linecount][45:51]
+            )
+            powerflow.dcsc["extremidade"].append(
+                powerflow.lines[powerflow.linecount][52:57]
+            )
+            powerflow.dcsc["estagios"].append(
+                powerflow.lines[powerflow.linecount][57:60]
+            )
+            powerflow.dcsc["capacidade_normal"].append(
+                powerflow.lines[powerflow.linecount][60:64]
+            )
+            powerflow.dcsc["capacidade_emergencia"].append(
+                powerflow.lines[powerflow.linecount][64:68]
+            )
+            powerflow.dcsc["capacidade"].append(
+                powerflow.lines[powerflow.linecount][68:72]
+            )
+            powerflow.dcsc["agreg1"].append(powerflow.lines[powerflow.linecount][72:75])
+            powerflow.dcsc["agreg2"].append(powerflow.lines[powerflow.linecount][75:78])
+            powerflow.dcsc["agreg3"].append(powerflow.lines[powerflow.linecount][78:81])
+            powerflow.dcsc["agreg4"].append(powerflow.lines[powerflow.linecount][81:84])
+            powerflow.dcsc["agreg5"].append(powerflow.lines[powerflow.linecount][84:87])
+            powerflow.dcsc["agreg6"].append(powerflow.lines[powerflow.linecount][87:90])
+            powerflow.dcsc["agreg7"].append(powerflow.lines[powerflow.linecount][90:93])
+            powerflow.dcsc["agreg8"].append(powerflow.lines[powerflow.linecount][93:96])
+            powerflow.dcsc["agreg9"].append(powerflow.lines[powerflow.linecount][96:99])
+            powerflow.dcsc["agreg10"].append(
+                powerflow.lines[powerflow.linecount][99:102]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Compensador Série Controlável
+    powerflow.dcscDF = DF(data=powerflow.dcsc)
+    powerflow.dcsc = deepcopy(powerflow.dcscDF)
+    powerflow.dcscDF = powerflow.dcscDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dcscDF = powerflow.dcscDF.astype(
+        {
+            "de": "int",
+            "operacao": "object",
+            "para": "int",
+            "circuito": "int",
+            "estado": "object",
+            "proprietario": "object",
+            "bypass": "object",
+            "reatancia_minima": "float",
+            "reatancia_maxima": "float",
+            "reatancia_inicial": "float",
+            "modo_controle": "object",
+            "especificado": "object",
+            "extremidade": "object",
+            "estagios": "int",
+            "capacidade_normal": "float",
+            "capacidade_emergencia": "float",
+            "capacidade": "float",
+            "agreg1": "int",
+            "agreg2": "int",
+            "agreg3": "int",
+            "agreg4": "int",
+            "agreg5": "int",
+            "agreg6": "int",
+            "agreg7": "int",
+            "agreg8": "int",
+            "agreg9": "int",
+            "agreg10": "int",
+        }
+    )
+
+    if powerflow.dcscDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCSC`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCSC"] = True
 
 
 def dcte(
@@ -789,6 +1515,172 @@ def dcte(
         powerflow.dcteDF = powerflow.dcteDF.drop_duplicates(
             subset=["constante"], keep="last"
         ).reset_index(drop=True)
+
+
+def dctg(
+    powerflow,
+):
+    """inicialização para leitura de lista de casos de contingência
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    pass
+
+
+def dctr(
+    powerflow,
+):
+    """inicialização para leitura de dados complementares de transformadores
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dctr["de"] = list()
+    powerflow.dctr["operacao"] = list()
+    powerflow.dctr["para"] = list()
+    powerflow.dctr["circuito"] = list()
+    powerflow.dctr["tensao_minima"] = list()
+    powerflow.dctr["tensao_maxima"] = list()
+    powerflow.dctr["tipo_controle_1"] = list()
+    powerflow.dctr["modo_controle"] = list()
+    powerflow.dctr["fase_minima"] = list()
+    powerflow.dctr["fase_maxima"] = list()
+    powerflow.dctr["tipo_controle_2"] = list()
+    powerflow.dctr["valor_especificado"] = list()
+    powerflow.dctr["extremidade"] = list()
+    powerflow.dctr["taps"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dctr["de"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dctr["operacao"].append(powerflow.lines[powerflow.linecount][6])
+            powerflow.dctr["para"].append(powerflow.lines[powerflow.linecount][8:13])
+            powerflow.dctr["circuito"].append(
+                powerflow.lines[powerflow.linecount][14:16]
+            )
+            powerflow.dctr["tensao_minima"].append(
+                powerflow.lines[powerflow.linecount][17:21]
+            )
+            powerflow.dctr["tensao_maxima"].append(
+                powerflow.lines[powerflow.linecount][22:26]
+            )
+            powerflow.dctr["tipo_controle_1"].append(
+                powerflow.lines[powerflow.linecount][27]
+            )
+            powerflow.dctr["modo_controle"].append(
+                powerflow.lines[powerflow.linecount][29]
+            )
+            powerflow.dctr["fase_minima"].append(
+                powerflow.lines[powerflow.linecount][31:37]
+            )
+            powerflow.dctr["fase_maxima"].append(
+                powerflow.lines[powerflow.linecount][38:44]
+            )
+            powerflow.dctr["tipo_controle_2"].append(
+                powerflow.lines[powerflow.linecount][45]
+            )
+            powerflow.dctr["valor_especificado"].append(
+                powerflow.lines[powerflow.linecount][47:53]
+            )
+            powerflow.dctr["extremidade"].append(
+                powerflow.lines[powerflow.linecount][54:59]
+            )
+            powerflow.dctr["taps"].append(powerflow.lines[powerflow.linecount][60:62])
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados Complementares de Transformadores
+    powerflow.dctrDF = DF(data=powerflow.dctr)
+    powerflow.dctr = deepcopy(powerflow.dctrDF)
+    powerflow.dctrDF = powerflow.dctrDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dctrDF = powerflow.dctrDF.astype(
+        {
+            "de": "int",
+            "operacao": "object",
+            "para": "int",
+            "circuito": "int",
+            "tensao_minima": "float",
+            "tensao_maxima": "float",
+            "tipo_controle_1": "object",
+            "modo_controle": "object",
+            "fase_minima": "float",
+            "fase_maxima": "float",
+            "tipo_controle_2": "object",
+            "valor_especificado": "float",
+            "extremidade": "object",
+            "taps": "int",
+        }
+    )
+
+    if powerflow.dctrDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCTR`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCTR"] = True
+
+
+def delo(
+    powerflow,
+):
+    """inicialização para leitura de dados de elo CC
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.delo["numero"] = list()
+    powerflow.delo["operacao"] = list()
+    powerflow.delo["tensao"] = list()
+    powerflow.delo["base"] = list()
+    powerflow.delo["nome"] = list()
+    powerflow.delo["modo_high"] = list()
+    powerflow.delo["estado"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.delo["numero"].append(powerflow.lines[powerflow.linecount][:4])
+            powerflow.delo["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.delo["tensao"].append(powerflow.lines[powerflow.linecount][7:12])
+            powerflow.delo["base"].append(powerflow.lines[powerflow.linecount][13:18])
+            powerflow.delo["nome"].append(powerflow.lines[powerflow.linecount][19:39])
+            powerflow.delo["modo_high"].append(powerflow.lines[powerflow.linecount][40])
+            powerflow.delo["estado"].append(powerflow.lines[powerflow.linecount][42])
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Elo CC
+    powerflow.deloDF = DF(data=powerflow.delo)
+    powerflow.delo = deepcopy(powerflow.deloDF)
+    powerflow.deloDF = powerflow.deloDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.deloDF = powerflow.deloDF.astype(
+        {
+            "numero": "int",
+            "operacao": "object",
+            "tensao": "float",
+            "base": "float",
+            "nome": "object",
+            "modo_high": "object",
+            "estado": "object",
+        }
+    )
+
+    if powerflow.deloDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DELO`!\033[0m"
+        )
+    else:
+        powerflow.codes["DELO"] = True
 
 
 def dgbt(
@@ -1200,39 +2092,39 @@ def dinj(
         )
     else:
         powerflow.codes["DINJ"] = True
-        precision = lambda x: tuple(len(p) for p in str(x).split("."))
+        # precision = lambda x: tuple(len(p) for p in str(x).split("."))
 
-        for idx, value in powerflow.dinjDF.iterrows():
-            precision(powerflow.dinj.injecao_ativa_eq[idx])
-            precision(powerflow.dinj.injecao_reativa_eq[idx])
-            precision(powerflow.dinj.shunt_eq[idx])
-            powerflow.dbarDF.loc[
-                powerflow.dbarDF["numero"] == value["numero"], "demanda_ativa"
-            ] += -value["injecao_ativa_eq"]
+        # for idx, value in powerflow.dinjDF.iterrows():
+        #     precision(powerflow.dinj.injecao_ativa_eq[idx])
+        #     precision(powerflow.dinj.injecao_reativa_eq[idx])
+        #     precision(powerflow.dinj.shunt_eq[idx])
+        #     powerflow.dbarDF.loc[
+        #         powerflow.dbarDF["numero"] == value["numero"], "demanda_ativa"
+        #     ] += -value["injecao_ativa_eq"]
 
-            powerflow.dbarDF.loc[
-                powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
-            ] += (-value["injecao_reativa_eq"] + value["shunt_eq"])
+        #     powerflow.dbarDF.loc[
+        #         powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
+        #     ] += (-value["injecao_reativa_eq"] + value["shunt_eq"])
 
-            # powerflow.dbarDF.loc[
-            #     powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
-            # ] += round(value["shunt_eq"])
+        #     # powerflow.dbarDF.loc[
+        #     #     powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
+        #     # ] += round(value["shunt_eq"])
 
-            if powerflow.codes["DGER"]:
-                powerflow.dgerDF.loc[
-                    powerflow.dbarDF["numero"] == value["numero"],
-                    "fator_participacao",
-                ] += value["fator_participacao_eq"]
+        #     if powerflow.codes["DGER"]:
+        #         powerflow.dgerDF.loc[
+        #             powerflow.dbarDF["numero"] == value["numero"],
+        #             "fator_participacao",
+        #         ] += value["fator_participacao_eq"]
 
-        powerflow.dbar.demanda_ativa = powerflow.dbarDF.demanda_ativa.values
-        powerflow.dbar.demanda_reativa = powerflow.dbarDF.demanda_reativa.values
-        powerflow.dbar.shunt_barra = powerflow.dbarDF.shunt_barra.values
+        # powerflow.dbar.demanda_ativa = powerflow.dbarDF.demanda_ativa.values
+        # powerflow.dbar.demanda_reativa = powerflow.dbarDF.demanda_reativa.values
+        # powerflow.dbar.shunt_barra = powerflow.dbarDF.shunt_barra.values
 
 
 def dlin(
     powerflow,
 ):
-    """inicialização para leitura de dados de linha
+    """inicialização para leitura de dados de linha de transmissão CA
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
@@ -1596,3 +2488,196 @@ def dshl(
         )
     else:
         powerflow.codes["DSHL"] = True
+
+
+def dtpf(
+    powerflow,
+):
+    """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dtpf["tipo_elemento_1"] = list()
+    powerflow.dtpf["identificacao_elemento_1"] = list()
+    powerflow.dtpf["condicao_elemento_1"] = list()
+    powerflow.dtpf["tipo_elemento_2"] = list()
+    powerflow.dtpf["identificacao_elemento_2"] = list()
+    powerflow.dtpf["condicao_elemento_2"] = list()
+    powerflow.dtpf["tipo_elemento_3"] = list()
+    powerflow.dtpf["identificacao_elemento_3"] = list()
+    powerflow.dtpf["condicao_elemento_3"] = list()
+    powerflow.dtpf["tipo_elemento_4"] = list()
+    powerflow.dtpf["identificacao_elemento_4"] = list()
+    powerflow.dtpf["operacao"] = list()
+    powerflow.dtpf["interligacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dtpf["tipo_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dtpf["identificacao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.dtpf["condicao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.dtpf["tipo_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dtpf["identificacao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.dtpf["condicao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.dtpf["tipo_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.dtpf["identificacao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.dtpf["condicao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.dtpf["tipo_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.dtpf["identificacao_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.dtpf["operacao"].append(powerflow.lines[powerflow.linecount][50])
+            powerflow.dtpf["interligacao"].append(
+                powerflow.lines[powerflow.linecount][52]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    powerflow.dtpfDF = DF(data=powerflow.dtpf)
+    powerflow.dtpf = deepcopy(powerflow.dtpfDF)
+    powerflow.dtpfDF = powerflow.dtpfDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dtpfDF = powerflow.dtpfDF.astype(
+        {
+            "tipo_elemento_1": "object",
+            "identificacao_elemento_1": "int",
+            "condicao_elemento_1": "object",
+            "tipo_elemento_2": "object",
+            "identificacao_elemento_2": "int",
+            "condicao_elemento_2": "object",
+            "tipo_elemento_3": "object",
+            "identificacao_elemento_3": "int",
+            "condicao_elemento_3": "object",
+            "tipo_elemento_4": "object",
+            "identificacao_elemento_4": "int",
+            "operacao": "object",
+            "interligacao": "float",
+        }
+    )
+    if powerflow.dtpfDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
+        )
+    else:
+        powerflow.codes["DTPF"] = True
+
+
+def dtpf_circ(
+    powerflow,
+):
+    """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dtpf["de"] = list()
+    powerflow.dtpf["para"] = list()
+    powerflow.dtpf["circuito"] = list()
+    powerflow.dtpf["operacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            try:
+                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][:5])
+                powerflow.dtpf["para"].append(
+                    powerflow.lines[powerflow.linecount][6:11]
+                )
+                powerflow.dtpf["circuito"].append(
+                    powerflow.lines[powerflow.linecount][12:14]
+                )
+                powerflow.dtpf["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][15:20])
+                powerflow.dtpf["para"].append(
+                    powerflow.lines[powerflow.linecount][21:26]
+                )
+                powerflow.dtpf["circuito"].append(
+                    powerflow.lines[powerflow.linecount][27:29]
+                )
+                powerflow.dtpf["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][30:35])
+                powerflow.dtpf["para"].append(
+                    powerflow.lines[powerflow.linecount][36:41]
+                )
+                powerflow.dtpf["circuito"].append(
+                    powerflow.lines[powerflow.linecount][42:44]
+                )
+                powerflow.dtpf["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][45:50])
+                powerflow.dtpf["para"].append(
+                    powerflow.lines[powerflow.linecount][51:56]
+                )
+                powerflow.dtpf["circuito"].append(
+                    powerflow.lines[powerflow.linecount][57:59]
+                )
+                powerflow.dtpf["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][60:65])
+                powerflow.dtpf["para"].append(
+                    powerflow.lines[powerflow.linecount][66:71]
+                )
+                powerflow.dtpf["circuito"].append(
+                    powerflow.lines[powerflow.linecount][72:74]
+                )
+                powerflow.dtpf["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+            except:
+                powerflow.dtpf["de"] = powerflow.dtpf["de"][:-1]
+                break
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    powerflow.dtpfDF = DF(data=powerflow.dtpf)
+    powerflow.dtpf = deepcopy(powerflow.dtpfDF)
+    powerflow.dtpfDF = powerflow.dtpfDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dtpfDF = powerflow.dtpfDF.astype(
+        {
+            "de": "int",
+            "para": "int",
+            "circuito": "object",
+            "operacao": "object",
+        }
+    )
+    if powerflow.dtpfDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
+        )
+    else:
+        powerflow.codes["DTPF"] = True

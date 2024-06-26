@@ -8,15 +8,19 @@
 
 from numpy import (
     arange,
+    array,
     asarray,
     asmatrix,
     concatenate,
     conj,
+    cos,
     diag,
     exp,
     ones,
     r_,
+    sin,
     vectorize,
+    zeros,
 )
 from scipy.sparse import issparse, csr_matrix as sparse
 
@@ -299,3 +303,151 @@ def d2Sbus_dV2(
     Gvv = G * (C + C.T) * G
 
     return Gaa, Gav, Gva, Gvv
+
+
+def load2ycte(
+    powerflow,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    load2ycte = diag(
+        (
+            powerflow.dbarDF.demanda_ativa.values
+            - 1j * powerflow.dbarDF.demanda_reativa.values
+        )
+        * 1e-2
+        / powerflow.solution["voltage"] ** 2
+    )
+    powerflow.Yb.A = powerflow.Yb.A + load2ycte
+
+
+def md01jacob(
+    powerflow,
+    generator,
+    gen,
+):
+    """matriz jacobiana
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    if gen == 0:
+        powerflow.jacobiangenoffright = zeros((2 * powerflow.nger, 2 * (powerflow.nger + powerflow.nbus)))
+        powerflow.jacobiangenoffdown = zeros((2 * (powerflow.nger + powerflow.nbus), 2 * powerflow.nger))
+        powerflow.jacobiangen = zeros((2, 2))
+        powerflow.jacobiangen[0, 0] = 1
+        powerflow.jacobiangen[0, 1] = -powerflow.dsimDF.step.values[0] * 0.5
+        powerflow.jacobiangen[1, 0] = (
+            (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
+            * powerflow.solution["fem"][gen]
+            * powerflow.solution["voltage"][generator - 1]
+            * cos(
+                powerflow.solution["delta"][gen]
+                - powerflow.solution["theta"][generator - 1]
+            )
+            / powerflow.generator[generator][3]
+        )
+        powerflow.jacobiangen[1, 1] = (
+            1
+            + powerflow.dsimDF.step.values[0]
+            * 0.5
+            * powerflow.generator[generator][2]
+            / powerflow.generator[generator][1]
+        )
+
+    else:
+        powerflow.jacobiangen = concatenate(
+            (powerflow.jacobiangen, zeros((powerflow.jacobiangen.shape[0], 2))), axis=1
+        )
+        powerflow.jacobiangen = concatenate(
+            (powerflow.jacobiangen, zeros((2, powerflow.jacobiangen.shape[1]))), axis=0
+        )
+
+        powerflow.jacobiangen[2 * gen, 2 * gen] = 1
+        powerflow.jacobiangen[2 * gen, 2 * gen + 1] = (
+            -powerflow.dsimDF.step.values[0] * 0.5
+        )
+        powerflow.jacobiangen[2 * gen + 1, 2 * gen] = (
+            (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
+            * powerflow.solution["fem"][gen]
+            * powerflow.solution["voltage"][generator - 1]
+            * cos(
+                powerflow.solution["delta"][gen]
+                - powerflow.solution["theta"][generator - 1]
+            )
+            / powerflow.generator[generator][3]
+        )
+        powerflow.jacobiangen[2 * gen + 1, 2 * gen + 1] = (
+            1
+            + powerflow.dsimDF.step.values[0]
+            * 0.5
+            * powerflow.generator[generator][2]
+            / powerflow.generator[generator][1]
+        )
+
+    powerflow.jacobiangenoffright[2 * gen + 1, generator - 1] = (
+        (-powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
+        * powerflow.solution["fem"][gen]
+        * powerflow.solution["voltage"][generator - 1]
+        * cos(
+            powerflow.solution["delta"][gen]
+            - powerflow.solution["theta"][generator - 1]
+        )
+        / powerflow.generator[generator][3]
+    )
+    powerflow.jacobiangenoffright[2 * gen + 1, powerflow.nbus + generator - 1] = (
+        (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
+        * powerflow.solution["fem"][gen]
+        * sin(
+            powerflow.solution["delta"][gen]
+            - powerflow.solution["theta"][generator - 1]
+        )
+        / powerflow.generator[generator][3]
+    )
+    powerflow.jacobiangenoffdown[generator - 1, 2 * gen] = (
+        powerflow.solution["fem"][gen]
+        * powerflow.solution["voltage"][generator - 1]
+        * cos(
+            powerflow.solution["delta"][gen]
+            - powerflow.solution["theta"][generator - 1]
+        )
+        / powerflow.generator[generator][3]
+    )
+    powerflow.jacobiangenoffdown[generator - 1 + powerflow.nbus, 2 * gen] = (
+        -powerflow.solution["fem"][gen]
+        * powerflow.solution["voltage"][generator - 1]
+        * sin(
+            powerflow.solution["delta"][gen]
+            - powerflow.solution["theta"][generator - 1]
+        )
+        / powerflow.generator[generator][3]
+    )
+
+
+def jacexsi(
+    powerflow,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    dS_dVm, dS_dVa = dSbus_dV(powerflow.Yblc, concatenate((powerflow.solution["fem"], powerflow.solution["voltage"]), axis=0))
+
+    powerflow.jacobian = concatenate(
+        (concatenate((dS_dVa.A.real, dS_dVa.A.imag), axis=0), concatenate((dS_dVm.A.real, dS_dVm.A.imag), axis=0)), axis=1
+    )
+
+    powerflow.jacobiangen = concatenate((
+        concatenate((powerflow.jacobiangen, powerflow.jacobiangenoffright), axis=1),
+        concatenate((powerflow.jacobiangenoffdown, powerflow.jacobian), axis=1)), axis=0,
+    )

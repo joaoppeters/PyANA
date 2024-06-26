@@ -77,8 +77,16 @@ def codes(
         "DARE": False,
         "DBAR": False,
         "DBSH": False,
+        "DCAR": False,
+        "DCBA": False,
+        "DCCV": False,
         "DCER": False,
+        "DCLI": False,
+        "DCNV": False,
+        "DCSC": False,
         "DCTE": False,
+        "DCTR": False,
+        "DELO": False,
         "DGBT": False,
         "DGER": False,
         "DGLT": False,
@@ -87,6 +95,7 @@ def codes(
         "DLIN": False,
         "DOPC": False,
         "DSHL": False,
+        "DTPF": False,
     }
 
 
@@ -107,10 +116,15 @@ def readfile(
     # Loop de leitura de linhas do `.pwf`
     while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
         # Dados de Agregadores Genericos
-        if powerflow.lines[powerflow.linecount].strip() == "DAGR":
+        if (
+            powerflow.lines[powerflow.linecount].strip() == "DAGR"
+            or powerflow.lines[powerflow.linecount].strip() == "DAGR IMPR"
+        ):
             powerflow.linecount += 1
+            powerflow.dagr = dict()
             powerflow.dagr1 = dict()
             powerflow.dagr2 = dict()
+            powerflow.dagr["dagr"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dagr1["ruler"] = powerflow.lines[powerflow.linecount][:]
             powerflow.dagr2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
             dagr(
@@ -118,110 +132,270 @@ def readfile(
             )
 
         # Dados de Alteração do Nível de Carregamento
-        elif powerflow.lines[powerflow.linecount].strip() == "DANC":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DANC"
+            or powerflow.lines[powerflow.linecount].strip() == "DANC IMPR"
+            or powerflow.lines[powerflow.linecount].strip() == "DANC ACLS"
+            or powerflow.lines[powerflow.linecount].strip() == "DANC ACLS IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.danc = dict()
+            powerflow.danc["danc"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.danc["ruler"] = powerflow.lines[powerflow.linecount][:]
-            danc(
-                powerflow,
-            )
+            if "ACLS" in powerflow.lines[powerflow.linecount - 1].strip():
+                danc_acls(
+                    powerflow,
+                )
+            else:
+                danc(
+                    powerflow,
+                )
 
         # Dados de Intercâmbio de Potência Ativa entre Áreas
-        elif powerflow.lines[powerflow.linecount].strip() == "DARE":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DARE"
+            or powerflow.lines[powerflow.linecount].strip() == "DARE IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dare = dict()
+            powerflow.dare["dare"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dare["ruler"] = powerflow.lines[powerflow.linecount][:]
             dare(
                 powerflow,
             )
 
         # Dados de Barra
-        elif powerflow.lines[powerflow.linecount].strip() == "DBAR":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DBAR"
+            or powerflow.lines[powerflow.linecount].strip() == "DBAR IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dbar = dict()
+            powerflow.dbar["dbar"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dbar["ruler"] = powerflow.lines[powerflow.linecount][:]
             dbar(
                 powerflow,
             )
 
         # Dados de Bancos de Capacitores e/ou Reatores Individualizados de Barras CA ou de Linhas de Transmissão
-        elif powerflow.lines[powerflow.linecount].strip() == "DBSH":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DBSH"
+            or powerflow.lines[powerflow.linecount].strip() == "DBSH IMPR"
+        ):
             powerflow.linecount += 1
+            powerflow.dbsh = dict()
             powerflow.dbsh1 = dict()
             powerflow.dbsh2 = dict()
+            powerflow.dbsh["dbsh"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dbsh1["ruler"] = powerflow.lines[powerflow.linecount][:]
             powerflow.dbsh2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
             dbsh(
                 powerflow,
             )
 
+        # Dados de Parâmetros da Curva de Carga
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCAR"
+            or powerflow.lines[powerflow.linecount].strip() == "DCAR IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dcar = dict()
+            powerflow.dcar["dcar"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dcar["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dcar(
+                powerflow,
+            )
+
+        # Dados de Barras CC
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCBA"
+            or powerflow.lines[powerflow.linecount].strip() == "DCBA IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dcba = dict()
+            powerflow.dcba["dcba"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dcba["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dcba(
+                powerflow,
+            )
+
+        # Dados de Controle de Conversor CA/CC
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCCV"
+            or powerflow.lines[powerflow.linecount].strip() == "DCCV IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dccv = dict()
+            powerflow.dccv["dccv"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dccv["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dccv(
+                powerflow,
+            )
+
         # Dados de Compensadores Estáticos de Potência Reativa
-        elif powerflow.lines[powerflow.linecount].strip() == "DCER":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCER"
+            or powerflow.lines[powerflow.linecount].strip() == "DCER IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dcer = dict()
+            powerflow.dcer["dcer"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dcer["ruler"] = powerflow.lines[powerflow.linecount][:]
             dcer(
                 powerflow,
             )
 
+        # Dados de Linha CC
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCLI"
+            or powerflow.lines[powerflow.linecount].strip() == "DCLI IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dcli = dict()
+            powerflow.dcli["dcli"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dcli["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dcli(
+                powerflow,
+            )
+
+        # Dados de Conversor CA/CC
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCNV"
+            or powerflow.lines[powerflow.linecount].strip() == "DCNV IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dcnv = dict()
+            powerflow.dcnv["dcnv"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dcnv["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dcnv(
+                powerflow,
+            )
+
+        # Dados de Compensador Série Controlável
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCSC"
+            or powerflow.lines[powerflow.linecount].strip() == "DCSC IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dcsc = dict()
+            powerflow.dcsc["dcsc"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dcsc["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dcsc(
+                powerflow,
+            )
+
         # Dados de Constantes
-        elif powerflow.lines[powerflow.linecount].strip() == "DCTE":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCTE"
+            or powerflow.lines[powerflow.linecount].strip() == "DCTE IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dcte = dict()
+            powerflow.dcte["dcte"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dcte["ruler"] = powerflow.lines[powerflow.linecount][:]
             dcte(
                 powerflow,
             )
 
+        # Dados Complementares de Transformadores
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCTR"
+            or powerflow.lines[powerflow.linecount].strip() == "DCTR IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dctr = dict()
+            powerflow.dctr["dctr"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dctr["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dctr(
+                powerflow,
+            )
+
+        # Dados de Elo CC
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DELO"
+            or powerflow.lines[powerflow.linecount].strip() == "DELO IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.delo = dict()
+            powerflow.delo["delo"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.delo["ruler"] = powerflow.lines[powerflow.linecount][:]
+            delo(
+                powerflow,
+            )
+
         # Dados de Grupo de Base de Tensão de Barras CA
-        elif powerflow.lines[powerflow.linecount].strip() == "DGBT":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DGBT"
+            or powerflow.lines[powerflow.linecount].strip() == "DGBT IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dgbt = dict()
+            powerflow.dgbt["dgbt"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dgbt["ruler"] = powerflow.lines[powerflow.linecount][:]
             dgbt(
                 powerflow,
             )
 
         # Dados de Geradores
-        elif powerflow.lines[powerflow.linecount].strip() == "DGER":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DGER"
+            or powerflow.lines[powerflow.linecount].strip() == "DGER IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dger = dict()
+            powerflow.dger["dger"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dger["ruler"] = powerflow.lines[powerflow.linecount][:]
             dger(
                 powerflow,
             )
 
         # Dados de Grupos de Limites de Tensão
-        elif powerflow.lines[powerflow.linecount].strip() == "DGLT":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DGLT"
+            or powerflow.lines[powerflow.linecount].strip() == "DGLT IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dglt = dict()
+            powerflow.dglt["dglt"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dglt["ruler"] = powerflow.lines[powerflow.linecount][:]
             dglt(
                 powerflow,
             )
 
         # Dados de Incremento do Nível de Carregamento
-        elif powerflow.lines[powerflow.linecount].strip() == "DINC":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DINC"
+            or powerflow.lines[powerflow.linecount].strip() == "DINC IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dinc = dict()
+            powerflow.dinc["dinc"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dinc["ruler"] = powerflow.lines[powerflow.linecount][:]
             dinc(
                 powerflow,
             )
 
         # Dados de Injeções de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
-        elif powerflow.lines[powerflow.linecount].strip() == "DINJ":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DINJ"
+            or powerflow.lines[powerflow.linecount].strip() == "DINJ IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dinj = dict()
+            powerflow.dinj["dinj"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dinj["ruler"] = powerflow.lines[powerflow.linecount][:]
             dinj(
                 powerflow,
             )
 
-        # Dados de Linha
-        elif powerflow.lines[powerflow.linecount].strip() == "DLIN":
+        # Dados de Linha CA
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DLIN"
+            or powerflow.lines[powerflow.linecount].strip() == "DLIN IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dlin = dict()
+            powerflow.dlin["dlin"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dlin["ruler"] = powerflow.lines[powerflow.linecount][:]
             dlin(
                 powerflow,
@@ -234,24 +408,54 @@ def readfile(
         ):
             powerflow.linecount += 1
             powerflow.dopc = dict()
+            powerflow.dopc["dopc"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dopc["ruler"] = powerflow.lines[powerflow.linecount][:]
             dopc(
                 powerflow,
             )
 
         # Dados de Dispositivos Shunt de Circuito CA
-        elif powerflow.lines[powerflow.linecount].strip() == "DSHL":
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DSHL"
+            or powerflow.lines[powerflow.linecount].strip() == "DSHL IMPR"
+        ):
             powerflow.linecount += 1
             powerflow.dshl = dict()
+            powerflow.dshl["dshl"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dshl["ruler"] = powerflow.lines[powerflow.linecount][:]
             dshl(
                 powerflow,
             )
 
-        # Título do Sistema/Caso em Estudo
-        elif powerflow.lines[powerflow.linecount].strip() == "TITU":
+        # Dados de
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DTPF"
+            or powerflow.lines[powerflow.linecount].strip() == "DTPF IMPR"
+            or powerflow.lines[powerflow.linecount].strip() == "DTPF CIRC"
+            or powerflow.lines[powerflow.linecount].strip() == "DTPF CIRC IMPR"
+        ):
             powerflow.linecount += 1
-            powerflow.titu = powerflow.lines[powerflow.linecount][:]
+            powerflow.dtpf = dict()
+            powerflow.dtpf["dtpf"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dtpf["ruler"] = powerflow.lines[powerflow.linecount][:]
+            if "CIRC" in powerflow.lines[powerflow.linecount - 1].strip():
+                dtpf_circ(
+                    powerflow,
+                )
+            else:
+                dtpf(
+                    powerflow,
+                )
+
+        # Título do Sistema/Caso em Estudo
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "TITU"
+            or powerflow.lines[powerflow.linecount].strip() == "TITU IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.titu = dict()
+            powerflow.titu["titu"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.titu["ruler"] = powerflow.lines[powerflow.linecount][:]
             powerflow.codes["TITU"] = True
 
         powerflow.linecount += 1
