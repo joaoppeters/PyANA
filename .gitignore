@@ -193,6 +193,9 @@ Thumbs.db
 # *.dat
 *.log
 *.tex
+*.REL
+*.png
+
 
 *sistemas/*.txt
 

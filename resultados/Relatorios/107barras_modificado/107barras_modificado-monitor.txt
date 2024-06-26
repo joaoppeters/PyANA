@@ -1,0 +1,10 @@
+June 14, 2024
+
+
+relatório de monitoramento do sistema 107barras_modificado
+solução do fluxo de potência via método newton-raphson
+
+opções de monitoramento ativadas: 
+
+
+fim do relatório de monitoramento do sistema 107barras_modificado
