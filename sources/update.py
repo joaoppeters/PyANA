@@ -171,8 +171,7 @@ def updttm(
 
     ## Inicialização
     # Atualização das variaveis dinamicas tempo
-    powerflow.solution["delta"] += powerflow.timestatevar[0::2]
-    powerflow.solution["omega"] += powerflow.timestatevar[1::2]
-
-    # powerflow.solution["delta"][powerflow.refgen] = 0
-    # powerflow.solution["omega"][powerflow.refgen] = 0
+    powerflow.solution["delta"] += powerflow.timestatevar[0:2*powerflow.nger:2]
+    powerflow.solution["omega"] += powerflow.timestatevar[1:2*powerflow.nger:2]
+    powerflow.solution["theta"] += powerflow.timestatevar[3*powerflow.nger:3*powerflow.nger+powerflow.nbus]
+    powerflow.solution["voltage"] += powerflow.timestatevar[4*powerflow.nger+powerflow.nbus:]
