@@ -8,17 +8,18 @@
 
 from powerflow import PowerFlow
 
+system = "2Q2024_REV2.pwf"
 system = "ieee14.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method = "LFDC" # LINEARIZED NEWTON-RAPHSON
-# method = "EXIC" # CONTINUATION POWER FLOW
+method = "EXIC" # CONTINUATION POWER FLOW
 # method = "EXCE" # CROSS-ENTROPY
 # method = "EXSC" # STOCHASTIC
 # method = "EXPC" # POINT OF COLLAPSE
-method = "EXSI"  # DYNAMIC SIMULATION
+# method = "EXSI"  # DYNAMIC SIMULATION
 # method = "DATA" # DATA MANIPULATION
-# method = "BATCH" # ANAREDE BATCH RUNNING
+# method = "BPWF" # ANAREDE BATCH RUNNING
 # method = "PWF"  # FILE MODIFYING AND SAVING AS REQUESTED BY PROF. RKUIAVA
 
 control = [

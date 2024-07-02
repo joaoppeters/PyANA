@@ -43,35 +43,46 @@ def stocharou(
     ## Inicialização
     random.seed(1)
 
+    # ACTIVE DEMAND
+    nsamples = 5000
+
     pmean = powerflow.dbarDF.demanda_ativa[powerflow.dbarDF.demanda_ativa > 0].sum()
     pstddev = 0.05 * pmean
-    x = linspace(pmean - 4 * pstddev, pmean + 4 * pstddev, 1000)
+    x = linspace(pmean - 4 * pstddev, pmean + 4 * pstddev, nsamples)
 
     pdf = (1 / (pstddev * sqrt(2 * pi))) * exp(-0.5 * ((x - pmean) / pstddev) ** 2)
 
-    psamples = random.normal(pmean, pstddev, 1000)
+    psamples = random.normal(pmean, pstddev, nsamples)
 
+    # # Plot the PDF
+    # plt.figure(1, figsize=(10, 6))
+    # # plt.plot(x, pdf, "r", label="Theoretical PDF")
+    # plt.hist(psamples, bins=500, density=True, alpha=0.6, color="b")
+    # plt.xlabel('Total Active Demand', fontsize=18)
+    # plt.ylabel('Probability Density', fontsize=18)
+    # plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\active_demand.pdf", dpi=500)
+
+
+    # WIND POWER
     shape = 8.46
     scale = 3.18
 
-    N = 1000
     wdata = powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"].reset_index()
     neol = wdata.shape[0]
-    Sigma = eye(neol)
 
     vci = 3
     vco = 25
     vrd = 15
     wscaled = dict()
     wpower = dict()
-    pwtotal = zeros(N)
+    pwtotal = zeros(nsamples)
 
     for eol in range(0, neol):
-        wsamples = random.weibull(scale, N)
+        wsamples = random.weibull(scale, nsamples)
         wscaled[eol] = wsamples * shape
-        wpower[eol] = zeros(N)
+        wpower[eol] = zeros(nsamples)
 
-    for i in range(0, N):
+    for i in range(0, nsamples):
         for j in range(0, neol):
             if wscaled[j][i] < vci or wscaled[j][i] > vco:
                 wpower[j][i] = 0
@@ -83,51 +94,12 @@ def stocharou(
             pwtotal[i] += wpower[j][i]
 
     
-    plt.figure(1, figsize=(10, 6))
-    plt.hist(pwtotal, bins=100, density=True, alpha=0.6, color="g")
-    plt.xlabel('Total Wind Power Generation', fontsize=18)
-    plt.ylabel('Probability Density', fontsize=18)
-    plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\eolic.png", dpi=500)
-
-    # wmean = powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"].mean()
-    # wstddev = 0.1 * wmean
-
-    # min_power = min(powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"])
-    # max_power = max(powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"])
-    # normalized_power_data = (powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"] - min_power) / (max_power - min_power)
-    # wmean = normalized_power_data.values.mean()
-
-    # # Ensure the normalized data is strictly within (0, 1) by trimming edge values
-    # normalized_power_data = clip(normalized_power_data, 1e-6, 1 - 1e-6)
-
-    # # Fit Beta distribution to normalized data
-    # walpha, wbeta, loc, scale = beta.fit(normalized_power_data, floc=0, fscale=1)
-
-    # # Generate random samples from the Beta distribution using numpy.random
-    # wsamples = (random.beta(walpha, wbeta, size=1000) * (max_power - min_power) + min_power) * normalized_power_data.shape[0]
-
-
-    # Plot the PDF
-    plt.figure(2, figsize=(10, 6))
-    # plt.plot(x, pdf, "r", label="Theoretical PDF")
-    plt.hist(psamples, bins=100, density=True, alpha=0.6, color="b")
-    plt.xlabel('Total Active Demand', fontsize=18)
-    plt.ylabel('Probability Density', fontsize=18)
-    plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\active.png", dpi=500)
-
-    # # Plot the histogram
-    # plt.figure(2)
-    # plt.hist(wsamples, bins=100, density=True, alpha=0.6, color="g")
-
-    # # Add titles and labels
-    # plt.title('Normal Distribution: Simulation vs Theoretical PDF')
-    # plt.xlabel('Value')
-    # plt.ylabel('Density')
-    # plt.legend()
-    plt.show()
-
-    # # Plt_area = powerflow.dbarDF.groupby("area")['demanda_ativa'].sum().reset_index()
-    return pdf, psamples, wsamples
+    # plt.figure(2, figsize=(10, 6))
+    # plt.hist(pwtotal, bins=500, density=True, alpha=0.6, color="g")
+    # plt.xlabel('Total Wind Power Generation', fontsize=18)
+    # plt.ylabel('Probability Density', fontsize=18)
+    # plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\eolic_power.pdf", dpi=500)
+    return psamples, pwtotal
 
 
 def stoch_apparent_1(

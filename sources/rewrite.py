@@ -12,7 +12,6 @@ from datetime import datetime as dt
 
 def rewrite(
     powerflow,
-    case,
 ):
     """inicializacao
 
@@ -23,7 +22,7 @@ def rewrite(
     ## Inicializacao
     # Arquivo
     filedir = realpath(
-        dirname(dirname(__file__)) + "/sistemas/" + powerflow.name + "-" + case + ".pwf"
+        dirname(dirname(__file__)) + "/sistemas/" + powerflow.namecase + ".pwf"
     )
 
     # Manipulacao
@@ -52,12 +51,6 @@ def rewrite(
             file,
         )
 
-    if powerflow.codes["DAGR"]:
-        writedagr(
-            powerflow,
-            file,
-        )
-
     if powerflow.codes["DBAR"]:
         writedbar(
             powerflow,
@@ -70,14 +63,8 @@ def rewrite(
             file,
         )
 
-    if powerflow.codes["DGER"]:
-        writedger(
-            powerflow,
-            file,
-        )
-
-    if powerflow.codes["DSHL"]:
-        writedshl(
+    if powerflow.codes["DCSC"]:
+        writedcsc(
             powerflow,
             file,
         )
@@ -88,20 +75,20 @@ def rewrite(
             file,
         )
 
+    if powerflow.codes["DGER"]:
+        writedger(
+            powerflow,
+            file,
+        )
+
     if powerflow.codes["DCER"]:
         writedcer(
             powerflow,
             file,
         )
 
-    if powerflow.codes["DARE"]:
-        writedare(
-            powerflow,
-            file,
-        )
-
-    if powerflow.codes["DGBT"]:
-        writedgbt(
+    if powerflow.codes["DCTR"]:
+        writedctr(
             powerflow,
             file,
         )
@@ -112,8 +99,80 @@ def rewrite(
             file,
         )
 
+    if powerflow.codes["DARE"]:
+        writedare(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DTPF"]:  # FAZER
+        if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
+            writedtpf_circ(
+                powerflow,
+                file,
+            )
+        else:
+            writedtpf(
+                powerflow,
+                file,
+            )
+
+    if powerflow.codes["DELO"]:
+        writedelo(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DCBA"]:
+        writedcba(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DCLI"]:
+        writedcli(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DCNV"]:
+        writedcnv(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DCCV"]:
+        writedccv(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DGBT"]:
+        writedgbt(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DAGR"]:
+        writedagr(
+            powerflow,
+            file,
+        )
+
     if powerflow.codes["DANC"]:
-        writedanc(
+        if "ACLS" in powerflow.danc.danc.iloc[0]:  # FAZER
+            writedanc_acls(
+                powerflow,
+                file,
+            )
+        else:
+            writedanc(
+                powerflow,
+                file,
+            )
+
+    if powerflow.codes["DCAR"]:
+        writedcar(
             powerflow,
             file,
         )
@@ -123,6 +182,23 @@ def rewrite(
             powerflow,
             file,
         )
+
+    if powerflow.codes["DINJ"]:
+        writedinj(
+            powerflow,
+            file,
+        )
+
+    if powerflow.codes["DSHL"]:
+        writedshl(
+            powerflow,
+            file,
+        )
+
+    writetail(
+        powerflow,
+        file,
+    )
 
     file.close()
 
@@ -170,59 +246,8 @@ def writetitu(
     """
 
     ## Inicialização
-    file.write("TITU")
-    file.write("\n")
-    file.write(format(powerflow.titu))
-
-
-def writedopc(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    file.write("DOPC IMPR")
-    file.write("\n")
-    file.write(format(powerflow.dopc.ruler.iloc[0]))
-    for idx, value in powerflow.dopcDF.iterrows():
-        file.write(f"{value['opcao']:4} {value['padrao']:1} ")
-
-        if (idx + 1) % 10 == 0:
-            file.write("\n")
-
-    file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedcte(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    file.write("DCTE")
-    file.write("\n")
-    file.write(format(powerflow.dcte.ruler.iloc[0]))
-    for idx, value in powerflow.dcte.iterrows():
-        file.write(f"{value['constante']:<4} {value['valor_constante']:>6} ")
-
-        if (idx + 1) % 6 == 0:
-            file.write("\n")
-    if (idx + 1) % 6 != 0:
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
+    file.write(format(powerflow.titu["titu"]))
+    file.write(format(powerflow.titu["ruler"]))
 
 
 def writedagr(
@@ -237,8 +262,7 @@ def writedagr(
 
     ## Inicialização
     agr = 0
-    file.write("DAGR")
-    file.write("\n")
+    file.write(format(powerflow.dagr.dagr.iloc[0]))
     for idx, value in powerflow.dagr1.iterrows():
         file.write(value.ruler)
         file.write(f"{value['numero']:>3} {value['descricao']:>36}")
@@ -256,7 +280,7 @@ def writedagr(
     file.write("\n")
 
 
-def writedbar(
+def writedanc(
     powerflow,
     file,
 ):
@@ -267,193 +291,21 @@ def writedbar(
     """
 
     ## Inicialização
-    file.write("DBAR")
-    file.write("\n")
-    file.write(format(powerflow.dbar.ruler.iloc[0]))
-
-    # powerflow.dbar = powerflow.dbar.replace(r"^\s*$", "0", regex=True)
-    # powerflow.dbar = powerflow.dbar.astype(
-    #     {
-    #         "numero": "object",
-    #         "operacao": "object",
-    #         "estado": "object",
-    #         "tipo": "object",
-    #         "grupo_base_tensao": "object",
-    #         "nome": "object",
-    #         "grupo_limite_tensao": "object",
-    #         "tensao": "object",
-    #         "angulo": "object",
-    #         "potencia_ativa": "object",
-    #         "potencia_reativa": "object",
-    #         "potencia_reativa_minima": "object",
-    #         "potencia_reativa_maxima": "object",
-    #         "barra_controlada": "object",
-    #         "demanda_ativa": "float",
-    #         "demanda_reativa": "float",
-    #         "shunt_barra": "float",
-    #         "area": "object",
-    #         "tensao_base": "object",
-    #         "modo": "object",
-    #         "agreg1": "object",
-    #         "agreg2": "object",
-    #         "agreg3": "object",
-    #         "agreg4": "object",
-    #         "agreg5": "object",
-    #         "agreg6": "object",
-    #         "agreg7": "object",
-    #         "agreg8": "object",
-    #         "agreg9": "object",
-    #         "agreg10": "object",
-    #     }
-    # )
-
-    for idx, value in powerflow.dbar.iterrows():
-        if value["demanda_ativa"] != 5 * " ":
-            value["demanda_ativa"] = float(value["demanda_ativa"])
-            if value["demanda_ativa"] >= 0.0:
-                if value["demanda_ativa"] / 1e3 >= 1.0:
-                    pl = str(round(value["demanda_ativa"] * 1.1))
-                elif (
-                    value["demanda_ativa"] / 1e3 >= 0.1
-                    and value["demanda_ativa"] / 1e3 < 1.0
-                ):
-                    pl = str(round(value["demanda_ativa"] * 1.1, 1))
-                else:
-                    pl = str(round(value["demanda_ativa"] * 1.1, 2))
-            else:
-                if value["demanda_ativa"] / 1e3 < -0.1:
-                    pl = str(round(value["demanda_ativa"] * 1.1))
-                else:
-                    pl = str(round(value["demanda_ativa"] * 1.1, 1))
-        else:
-            pl = 5 * " "
-
-        if value["demanda_reativa"] != 5 * " ":
-            value["demanda_reativa"] = float(value["demanda_reativa"])
-            if value["demanda_reativa"] >= 0.0:
-                if value["demanda_reativa"] / 1e3 >= 1.0:
-                    ql = str(round(value["demanda_reativa"] * 1.1))
-                elif (
-                    value["demanda_reativa"] / 1e3 >= 0.1
-                    and value["demanda_reativa"] / 1e3 < 1.0
-                ):
-                    ql = str(round(value["demanda_reativa"] * 1.1, 1))
-                else:
-                    ql = str(round(value["demanda_reativa"] * 1.1, 2))
-            else:
-                if value["demanda_reativa"] / 1e3 < -0.1:
-                    ql = str(round(value["demanda_reativa"] * 1.1))
-                else:
-                    ql = str(round(value["demanda_reativa"] * 1.1, 1))
-        else:
-            ql = 5 * " "
-
-        if value["shunt_barra"] != 5 * " ":
-            value["shunt_barra"] = float(value["shunt_barra"])
-            if value["shunt_barra"] >= 0.0:
-                if value["shunt_barra"] / 1e3 >= 1.0:
-                    sb = str(round(value["shunt_barra"] * 1.1))
-                elif (
-                    value["shunt_barra"] / 1e3 >= 0.1
-                    and value["shunt_barra"] / 1e3 < 1.0
-                ):
-                    sb = str(round(value["shunt_barra"] * 1.1, 1))
-                else:
-                    sb = str(round(value["shunt_barra"] * 1.1, 2))
-            else:
-                if value["shunt_barra"] / 1e3 < -0.1:
-                    sb = str(round(value["shunt_barra"] * 1.1))
-                else:
-                    sb = str(round(value["shunt_barra"] * 1.1, 1))
-        else:
-            sb = 5 * " "
-        file.write(
-            f"{value['numero']:>5}{value['operacao']:1}{value['estado']:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{value['tensao']:>4}{value['angulo']:>4}{value['potencia_ativa']:>5}{value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5}{value['barra_controlada']:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{value['tensao_base']:>4}{value['modo']:1}{value['agreg1']:<3}{value['agreg2']:<3}{value['agreg3']:<3}{value['agreg4']:<3}{value['agreg5']:<3}{value['agreg6']:<3}{value['agreg7']:<3}{value['agreg8']:<3}{value['agreg9']:<3}{value['agreg10']:<3}"
-        )
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedlin(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    file.write("DLIN")
-    file.write("\n")
-    file.write(format(powerflow.dlin.ruler.iloc[0]))
-    for idx, value in powerflow.dlin.iterrows():
-        file.write(
-            f"{value['de']:>5}{value['abertura_de']:1} {value['operacao']:1} {value['abertura_para']:1}{value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['manobravel']:1}{value['resistencia']:>6}{value['reatancia']:>6}{value['susceptancia']:>6}{value['tap']:>5}{value['tap_minimo']:>5}{value['tap_maximo']:>5}{value['tap_defasagem']:>5}{value['barra_controlada']:>6}{value['capacidade_normal']:>4}{value['capacidade_emergencial']:>4}{value['numero_taps']:>2}{value['capacidade_equipamento']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}"
-        )
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedger(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    file.write("DGER")
-    file.write("\n")
-    file.write(format(powerflow.dger.ruler.iloc[0]))
-    for idx, value in powerflow.dger.iterrows():
-        file.write(
-            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {value['fator_participacao']:>5} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']}:>6"
-        )
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedbsh(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-    ## Inicialização
-    bsh = 0
-    file.write("DBSH")
-    file.write("\n")
-    for idx, value in powerflow.dbsh1.iterrows():
-        file.write(value.ruler)
-        file.write(
-            f"{value['from']:>5} {value['operacao']:1} {value['to']:>5} {value['circuito']:>2} {value['modo_controle']:1} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['barra_controlada']:>5} {value['injecao_reativa_inicial']:>6} {value['tipo_controle']:1} {value['apagar']:1} {value['extremidade']:>5}"
-        )
-        file.write("\n")
-        file.write(powerflow.dbsh2.ruler.iloc[0])
-        for idx in range(0, value["ndbsh2"]):
+    file.write(format(powerflow.danc.danc.iloc[0]))
+    file.write(format(powerflow.danc.ruler.iloc[0]))
+    if "ACLS" in powerflow.danc.danc:
+        pass
+    else:
+        for idx, value in powerflow.danc.iterrows():
             file.write(
-                f"{powerflow.dbsh2.grupo_banco.iloc[idx + bsh]:>2}  {powerflow.dbsh2.operacao.iloc[idx + bsh]:1} {powerflow.dbsh2.estado.iloc[idx + bsh]:1} {powerflow.dbsh2.unidades.iloc[idx + bsh]:>3} {powerflow.dbsh2.unidades_operacao.iloc[idx + bsh]:>3} {powerflow.dbsh2.capacitor_reator.iloc[idx + bsh]:>6}"
+                f"{value['numero']:>3} {value['fator_carga_ativa']:>6} {value['fator_carga_reativa']:>6} {value['fator_shunt_barra']:>6}"
             )
             file.write("\n")
-        bsh += value["ndbsh2"]
-        file.write("FBAN")
-        file.write("\n")
     file.write("99999")
     file.write("\n")
 
 
-def writedshl(
+def writedanc_acls(
     powerflow,
     file,
 ):
@@ -464,55 +316,11 @@ def writedshl(
     """
 
     ## Inicialização
-    file.write("DSHL")
-    file.write("\n")
-    file.write(format(powerflow.dshl.ruler.iloc[0]))
-    for idx, value in powerflow.dshl.iterrows():
+    file.write(format(powerflow.danc.danc.iloc[0]))
+    file.write(format(powerflow.danc.ruler.iloc[0]))
+    for idx, value in powerflow.danc.iterrows():
         file.write(
-            f"{value['from']:>5} {value['operacao']:1}  {value['to']:>5}{value['circuito']:>2} {value['shunt_from']:>6}{value['shunt_to']:>6} {value['estado_shunt_from']:>2} {value['estado_shunt_to']:>2}"
-        )
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedinj(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-    ## Inicialização
-    file.write("DINJ")
-    file.write("\n")
-    file.write(format(powerflow.dinj.ruler.iloc[0]))
-    for idx, value in powerflow.dinj.iterrows():
-        file.write(
-            f"{value['numero']:>3} {value['injecao_ativa']:>6} {value['injecao_reativa']:>6} {value['barra']:>5}"
-        )
-        file.write("\n")
-
-
-def writedcer(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros:
-        powerflow (_type_): _description_
-        file (_type_): _description_
-    """
-    ## Inicialização
-    file.write("DCER")
-    file.write("\n")
-    file.write(format(powerflow.dcer.ruler.iloc[0]))
-    for idx, value in powerflow.dcer.iterrows():
-        file.write(
-            f"{value['barra']:>5} {value['operacao']:1} {value['grupo_base']:>2} {value['unidades']:>2} {value['barra_controlada']:>5} {value['droop']:>6} {value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5} {value['controle']:1} {value['estado']:1}"
+            f"{value['numero']:>3} {value['fator_carga_ativa']:>6} {value['fator_carga_reativa']:>6} {value['fator_shunt_barra']:>6} {value['ACLS']:>6}"
         )
         file.write("\n")
     file.write("99999")
@@ -530,12 +338,380 @@ def writedare(
     """
 
     ## Inicialização
-    file.write("DARE")
-    file.write("\n")
+    file.write(format(powerflow.dare.dare.iloc[0]))
     file.write(format(powerflow.dare.ruler.iloc[0]))
     for idx, value in powerflow.dare.iterrows():
         file.write(
             f"{value['numero']:3}    {value['intercambio_liquido']:>6}     {value['nome']:^35} {value['intercambio_minimo']:>6} {value['intercambio_maximo']:>6}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedbar(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dbar.dbar.iloc[0]))
+    file.write(format(powerflow.dbar.ruler.iloc[0]))
+
+    for idx, value in powerflow.dbar.iterrows():
+        if value["demanda_ativa"] != 5 * " ":
+            value["demanda_ativa"] = float(value["demanda_ativa"])
+            if value["demanda_ativa"] >= 0.0:
+                if value["demanda_ativa"] / 1e3 >= 1.0:
+                    pl = str(
+                        round(
+                            value["demanda_ativa"],
+                        )
+                    )
+                elif (
+                    value["demanda_ativa"] / 1e3 >= 0.1
+                    and value["demanda_ativa"] / 1e3 < 1.0
+                ):
+                    pl = str(round(value["demanda_ativa"], 1))
+                else:
+                    pl = str(round(value["demanda_ativa"], 1))
+            else:
+                if value["demanda_ativa"] / 1e3 < -0.1:
+                    pl = str(
+                        round(
+                            value["demanda_ativa"],
+                        )
+                    )
+                else:
+                    pl = str(round(value["demanda_ativa"], 1))
+        else:
+            pl = 5 * " "
+
+        if value["demanda_reativa"] != 5 * " ":
+            value["demanda_reativa"] = float(value["demanda_reativa"])
+            if value["demanda_reativa"] >= 0.0:
+                if value["demanda_reativa"] / 1e3 >= 1.0:
+                    ql = str(
+                        round(
+                            value["demanda_reativa"],
+                        )
+                    )
+                elif (
+                    value["demanda_reativa"] / 1e3 >= 0.1
+                    and value["demanda_reativa"] / 1e3 < 1.0
+                ):
+                    ql = str(round(value["demanda_reativa"], 1))
+                else:
+                    ql = str(round(value["demanda_reativa"], 1))
+            else:
+                if value["demanda_reativa"] / 1e3 < -0.1:
+                    ql = str(
+                        round(
+                            value["demanda_reativa"],
+                        )
+                    )
+                else:
+                    ql = str(round(value["demanda_reativa"], 1))
+        else:
+            ql = 5 * " "
+
+        if value["shunt_barra"] != 5 * " ":
+            value["shunt_barra"] = float(value["shunt_barra"])
+            if value["shunt_barra"] >= 0.0:
+                if value["shunt_barra"] / 1e3 >= 1.0:
+                    sb = str(
+                        round(
+                            value["shunt_barra"],
+                        )
+                    )
+                elif (
+                    value["shunt_barra"] / 1e3 >= 0.1
+                    and value["shunt_barra"] / 1e3 < 1.0
+                ):
+                    sb = str(round(value["shunt_barra"], 1))
+                else:
+                    sb = str(round(value["shunt_barra"], 2))
+            else:
+                if value["shunt_barra"] / 1e3 < -0.1:
+                    sb = str(
+                        round(
+                            value["shunt_barra"],
+                        )
+                    )
+                else:
+                    sb = str(round(value["shunt_barra"], 1))
+        else:
+            sb = 5 * " "
+        file.write(
+            f"{value['numero']:>5}{value['operacao']:1}{value['estado']:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{value['tensao']:>4}{value['angulo']:>4}{value['potencia_ativa']:>5}{value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5}{value['barra_controlada']:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{value['tensao_base']:>4}{value['modo']:1}{value['agreg1']:<3}{value['agreg2']:<3}{value['agreg3']:<3}{value['agreg4']:<3}{value['agreg5']:<3}{value['agreg6']:<3}{value['agreg7']:<3}{value['agreg8']:<3}{value['agreg9']:<3}{value['agreg10']:<3}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedbsh(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    bsh = 0
+    file.write(format(powerflow.dbsh["dbsh"]))
+    for idx, value in powerflow.dbsh1.iterrows():
+        file.write(value.ruler)
+        file.write(
+            f"{value['from']:>5} {value['operacao']:1} {value['to']:>5} {value['circuito']:>2} {value['modo_controle']:1} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['barra_controlada']:>5} {value['injecao_reativa_inicial']:>6} {value['tipo_controle']:1} {value['apagar']:1} {value['extremidade']:>5}"
+        )
+        file.write("\n")
+        file.write(powerflow.dbsh2.ruler.iloc[0])
+        for idx in range(0, value["ndbsh2"]):
+            file.write(
+                f"{powerflow.dbsh2.grupo_banco.iloc[idx + bsh]:>2}  {powerflow.dbsh2.operacao.iloc[idx + bsh]:1} {powerflow.dbsh2.estado.iloc[idx + bsh]:1} {powerflow.dbsh2.unidades.iloc[idx + bsh]:>3} {powerflow.dbsh2.unidades_operacao.iloc[idx + bsh]:>3} {powerflow.dbsh2.capacitor_reator.iloc[idx + bsh]:>6} {powerflow.dbsh2.manobravel.iloc[idx + bsh]:1}"
+            )
+            file.write("\n")
+        bsh += value["ndbsh2"]
+        file.write("FBAN")
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcar(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcar.dcar.iloc[0]))
+    file.write(format(powerflow.dcar.ruler.iloc[0]))
+
+    for idx, value in powerflow.dcar.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['parametro_A']:>3} {value['parametro_B']:>3} {value['parametro_C']:>3} {value['parametro_D']:>3} {value['tensao_limite']:>5}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcba(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcba.dcba.iloc[0]))
+    file.write(format(powerflow.dcba.ruler.iloc[0]))
+
+    for idx, value in powerflow.dcba.iterrows():
+        file.write(
+            f"{value['numero']:>4} {value['operacao']:1} {value['tipo']:1}{value['polaridade']:1}{value['nome']:>11}{value['grupo_limite_tensao']:>2}{value['tensao']:>5}                                      {value['eletrodo_terra']:>5}{value['numero_elo_cc']:>4}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedccv(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dccv.dccv.iloc[0]))
+    file.write(format(powerflow.dccv.ruler.iloc[0]))
+
+    for idx, value in powerflow.dccv.iterrows():
+        file.write(
+            f"{value['numero']:>4} {value['operacao']:1} {value['folga']:1}{value['modo_controle_inversor']:1}{value['tipo_controle_conversor']:1} {value['valor_especificado']:>5} {value['margem_corrente']:>5} {value['maxima_sobrecorrente']:>5} {value['angulo_conversor']:>5} {value['angulo_conversor_minimo']:>5} {value['angulo_conversor_maximo']:>5} {value['tap_transformador_minimo']:>5} {value['tap_transformador_maximo']:>5} {value['tap_transformador_numero']:>2} {value['tensao_cc_minima']:>4} {value['tap_high']:>5} {value['tap_reduzido']:>5}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcer(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros:
+        powerflow (_type_): _description_
+        file (_type_): _description_
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcer.dcer.iloc[0]))
+    file.write(format(powerflow.dcer.ruler.iloc[0]))
+    for idx, value in powerflow.dcer.iterrows():
+        file.write(
+            f"{value['barra']:>5} {value['operacao']:1} {value['grupo_base']:>2} {value['unidades']:>2} {value['barra_controlada']:>5} {value['droop']:>6} {value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5} {value['controle']:1} {value['estado']:1} {value['modo_correcao_limites']:1}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcli(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcli.dcli.iloc[0]))
+    file.write(format(powerflow.dcli.ruler.iloc[0]))
+
+    for idx, value in powerflow.dcli.iterrows():
+        file.write(
+            f"{value['de']:>4} {value['operacao']:1}  {value['para']:>4}{value['circuito']:>2} {value['proprietario']:1} {value['resistencia']:>6}{value['indutancia']:>6}                               {value['capacidade']:>4}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcnv(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcnv.dcnv.iloc[0]))
+    file.write(format(powerflow.dcnv.ruler.iloc[0]))
+
+    for idx, value in powerflow.dcnv.iterrows():
+        file.write(
+            f"{value['numero']:>4} {value['operacao']:1} {value['barra_CA']:>5} {value['barra_CC']:>4} {value['barra_neutra']:>4} {value['modo_operacao']:1} {value['pontes']:1} {value['corrente']:>5} {value['reatancia_comutacao']:>5} {value['tensao_secundario']:>5} {value['potencia_transformador']:>5} {value['resistencia_reator']:>5} {value['indutancia_reator']:>5} {value['capacitancia']:>5} {value['frequencia']:>2}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcsc(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcsc.dcsc.iloc[0]))
+    file.write(format(powerflow.dcsc.ruler.iloc[0]))
+
+    for idx, value in powerflow.dcsc.iterrows():
+        file.write(
+            f"{value['de']:>5} {value['operacao']:1}  {value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['bypass']:1}      {value['reatancia_minima']:>6}{value['reatancia_maxima']:>6}{value['reatancia_inicial']:>6}{value['modo_controle']:1} {value['especificado']:>6} {value['extremidade']:>5}{value['estagios']:>3}{value['capacidade_normal']:>4}{value['capacidade_emergencia']:>4}{value['capacidade']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}\n"
+        )
+        # file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedcte(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dcte.dcte.iloc[0]))
+    file.write(format(powerflow.dcte.ruler.iloc[0]))
+    for idx, value in powerflow.dcte.iterrows():
+        file.write(f"{value['constante']:<4} {value['valor_constante']:>6} ")
+
+        if (idx + 1) % 6 == 0:
+            file.write("\n")
+    if (idx + 1) % 6 != 0:
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedctr(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dctr.dctr.iloc[0]))
+    file.write(format(powerflow.dctr.ruler.iloc[0]))
+
+    for idx, value in powerflow.dctr.iterrows():
+        file.write(
+            f"{value['de']:>5} {value['operacao']:1} {value['para']:>5} {value['circuito']:>2} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['tipo_controle_1']:1} {value['modo_controle']:1} {value['fase_minima']:>6} {value['fase_maxima']:>6} {value['tipo_controle_2']:1} {value['valor_especificado']:>6} {value['extremidade']:>5} {value['taps']:>2}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedelo(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.delo.delo.iloc[0]))
+    file.write(format(powerflow.delo.ruler.iloc[0]))
+
+    for idx, value in powerflow.delo.iterrows():
+        file.write(
+            f"{value['numero']:>4} {value['operacao']:1} {value['tensao']:>5} {value['base']:>5} {value['nome']:>20} {value['modo_high']:1} {value['estado']:1}"
         )
         file.write("\n")
     file.write("99999")
@@ -553,11 +729,32 @@ def writedgbt(
     """
 
     ## Inicialização
-    file.write("DGBT")
-    file.write("\n")
+    file.write(format(powerflow.dgbt.dgbt.iloc[0]))
     file.write(format(powerflow.dgbt.ruler.iloc[0]))
     for idx, value in powerflow.dgbt.iterrows():
         file.write(f"{value['grupo']:2} {value['tensao']:>5}")
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedger(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dger.dger.iloc[0]))
+    file.write(format(powerflow.dger.ruler.iloc[0]))
+    for idx, value in powerflow.dger.iterrows():
+        file.write(
+            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {value['fator_participacao']:>5} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']:>6}"
+        )
         file.write("\n")
     file.write("99999")
     file.write("\n")
@@ -574,35 +771,11 @@ def writedglt(
     """
 
     ## Inicialização
-    file.write("DGLT")
-    file.write("\n")
+    file.write(format(powerflow.dglt.dglt.iloc[0]))
     file.write(format(powerflow.dglt.ruler.iloc[0]))
     for idx, value in powerflow.dglt.iterrows():
         file.write(
             f"{value['grupo']:2} {str(value['limite_minimo']):>5} {str(value['limite_maximo']):>5} {str(value['limite_minimo_E']):>5} {str(value['limite_maximo_E']):>5}"
-        )
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
-def writedanc(
-    powerflow,
-    file,
-):
-    """
-
-    Parâmetros
-        powerflow: self do arquivo powerflow.py
-    """
-
-    ## Inicialização
-    file.write("DANC")
-    file.write("\n")
-    file.write(format(powerflow.danc.ruler.iloc[0]))
-    for idx, value in powerflow.danc.iterrows():
-        file.write(
-            f"{value['numero']:>3} {value['fator_carga_ativa']:>6} {value['fator_carga_reativa']:>6} {value['fator_shunt_barra']:>6}"
         )
         file.write("\n")
     file.write("99999")
@@ -618,15 +791,155 @@ def writedinc(
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
+
     ## Inicialização
-    file.write("DINC")
-    file.write("\n")
+    file.write(format(powerflow.dinc.dinc.iloc[0]))
     file.write(format(powerflow.dinc.ruler.iloc[0]))
     for idx, value in powerflow.dinc.iterrows():
         file.write(
             f"{value['tipo_incremento_1']:>4} {value['identificacao_incremento_1']:>5} {value['condicao_incremento_1']:1} {value['tipo_incremento_2']:>4} {value['identificacao_incremento_2']:>5} {value['condicao_incremento_2']:1} {value['tipo_incremento_3']:>4} {value['identificacao_incremento_3']:>5} {value['condicao_incremento_3']:1} {value['tipo_incremento_4']:>4} {value['identificacao_incremento_4']:>5} {value['condicao_incremento_4']:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
         )
         file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedinj(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dinj.dinj.iloc[0]))
+    file.write(format(powerflow.dinj.ruler.iloc[0]))
+    for idx, value in powerflow.dinj.iterrows():
+        file.write(
+            f"{value['numero']:>3} {value['injecao_ativa']:>6} {value['injecao_reativa']:>6} {value['barra']:>5}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedlin(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dlin.dlin.iloc[0]))
+    file.write(format(powerflow.dlin.ruler.iloc[0]))
+    for idx, value in powerflow.dlin.iterrows():
+        file.write(
+            f"{value['de']:>5}{value['abertura_de']:1} {value['operacao']:1} {value['abertura_para']:1}{value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['manobravel']:1}{value['resistencia']:>6}{value['reatancia']:>6}{value['susceptancia']:>6}{value['tap']:>5}{value['tap_minimo']:>5}{value['tap_maximo']:>5}{value['tap_defasagem']:>5}{value['barra_controlada']:>6}{value['capacidade_normal']:>4}{value['capacidade_emergencial']:>4}{value['numero_taps']:>2}{value['capacidade_equipamento']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedopc(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dopc.dopc.iloc[0]))
+    file.write(format(powerflow.dopc.ruler.iloc[0]))
+    for idx, value in powerflow.dopcDF.iterrows():
+        file.write(f"{value['opcao']:4} {value['padrao']:1} ")
+
+        if (idx + 1) % 10 == 0:
+            file.write("\n")
+
+    file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedshl(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dshl.dshl.iloc[0]))
+    file.write(format(powerflow.dshl.ruler.iloc[0]))
+    for idx, value in powerflow.dshl.iterrows():
+        file.write(
+            f"{value['from']:>5} {value['operacao']:1}  {value['to']:>5}{value['circuito']:>2} {value['shunt_from']:>6}{value['shunt_to']:>6} {value['estado_shunt_from']:>2} {value['estado_shunt_to']:>2}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedtpf(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dtpf.dtpf.iloc[0]))
+    file.write(format(powerflow.dtpf.ruler.iloc[0]))
+
+    for idx, value in powerflow.dtpf.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def writedtpf_circ(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dtpf.dtpf.iloc[0]))
+    file.write(format(powerflow.dtpf.ruler.iloc[0]))
+    for idx, value in powerflow.dtpf.iterrows():
+        file.write(f"{value['de']:>5} {value['para']:>5} {value['circuito']:>2} ")
+
+        if (idx + 1) % 5 == 0:
+            file.write(f"{value['operacao']:1}")
+            file.write("\n")
+    # if (idx + 1) % 5 != 0:
+    #     file.write("\n")
+
+    file.write("\n")
     file.write("99999")
     file.write("\n")
 
@@ -645,6 +958,10 @@ def writetail(
     ## Inicialização
     file.write("(")
     file.write("\n")
+    file.write("EXLF")
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
 
     file.write("ULOG")
     file.write("\n")
@@ -652,26 +969,35 @@ def writetail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    file.write(powerflow.namecase + ".SAV")
+    file.write(powerflow.namecase + str(powerflow.tenths) + ".SAV")
 
     file.write("\n")
     file.write("(")
     file.write("\n")
 
-    file.write("ARQV INIC IMPR")
-    file.write("\n")
-    file.write("SIM")
+    if powerflow.ones == 1:
+        file.write("ARQV INIC IMPR")
+        file.write("\n")
+        file.write("SIM")
 
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
 
-    file.write("ARQV GRAV IMPR NOVO")
-    file.write("\n")
-    file.write("01")
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
+        file.write("ARQV GRAV IMPR NOVO")
+        file.write("\n")
+        file.write(f"{10*(powerflow.tenths-1) + powerflow.ones}")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
+
+    else:
+        file.write("ARQV GRAV IMPR")
+        file.write("\n")
+        file.write(f"{10*(powerflow.tenths-1) + powerflow.ones}")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
 
     file.write("ULOG")
     file.write("\n")
@@ -679,7 +1005,12 @@ def writetail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write(powerflow.namecase + ".REL")
+    file.write(
+        powerflow.namecase
+        + "c"
+        + str(10 * (powerflow.tenths - 1) + powerflow.ones)
+        + ".REL"
+    )
 
     file.write("\n")
     file.write("( ")

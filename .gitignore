@@ -195,7 +195,9 @@ Thumbs.db
 *.tex
 *.REL
 *.png
-
+*.aux
+*.pdf
+*.gz
 
 *sistemas/*.txt
 

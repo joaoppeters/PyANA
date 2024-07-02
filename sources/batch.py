@@ -24,7 +24,7 @@ def batch(
     """
 
     ## Inicialização
-    pdf, psamples, wsamples, = stocharou(
+    psamples, wsamples = stocharou(
         powerflow,
     )
     qsamples = zeros(psamples.shape[0])
@@ -38,44 +38,29 @@ def batch(
     powerflow.tenths = 1
     powerflow.ones = 0
 
-    for s in range(0, psamples.shape[0]):
-        for idx, value in powerflow.dbarDF.iterrows():
-            if value["demanda_reativa"] != 0 and value["demanda_ativa"] != 0:
-                qsamples[s] += psamples[s] * powerflow.dbar.loc[idx, "fator_demanda_ativa"] * powerflow.dbar.loc[idx, "fator_potencia"]
+    for s in range(0, len(psamples)):
+        powerfactor(
+            powerflow,
+            psamples,
+            s,
+        )
+        powerflow.ones += 1
 
-    # for s in range(0, len(psamples)):
-    #     powerfactor(
-    #         powerflow,
-    #         psamples,
-    #         s,
-    #         qsamples,
-    #     )
-    #     powerflow.ones += 1
+        rewrite(
+            powerflow,
+        )
 
-        # rewrite(
-        #     powerflow,
-        # )
-
-        # filepath = "C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas"
-        # anarede(filepath=filepath, filenamecase=powerflow.namecase)
-        # if powerflow.ones == 10:
-        #     powerflow.tenths += 1
-        #     powerflow.ones = 0
-
-    plt.hist(psamples, bins=100, density=True, alpha=0.6, color="g", label="Active Demand")
-    plt.hist(qsamples, bins=100, density=True, alpha=0.6, color="b", label="Reactive Demand")
-    plt.hist(wsamples, bins=100, density=True, alpha=0.6, color="r", label="Wind Generation")
-    plt.xlabel("Density", fontsize=12)
-    plt.ylabel("Probability", fontsize=12)
-    plt.legend()
-    plt.show()
+        filepath = "C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas"
+        anarede(filepath=filepath, filenamecase=powerflow.namecase)
+        if powerflow.ones == 10:
+            powerflow.tenths += 1
+            powerflow.ones = 0
 
 
 def powerfactor(
     powerflow,
     psamples,
     s,
-    qsamples,
 ):    
 
 
@@ -91,4 +76,4 @@ def powerfactor(
             )
             # qsamples[s] += psamples[s] * powerflow.dbar.loc[idx, "fator_demanda_ativa"] * powerflow.dbar.loc[idx, "fator_potencia"]
             
-    qsamples[s] = sum(powerflow.dbar.demanda_reativa.astype(float))
+    # qsamples[s] = sum(powerflow.dbar.demanda_reativa.astype(float))

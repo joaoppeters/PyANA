@@ -20,8 +20,6 @@ def methodo(
     # Chamada específica método de Newton-Raphson Não-Linear
     if powerflow.method == "EXLF":
         from matrices import admittance
-
-        # from linear import linear
         from monitor import monitorfile
         from newton import newton
         from report import reportfile
@@ -29,10 +27,6 @@ def methodo(
         admittance(
             powerflow,
         )
-
-        # linear(
-        #     powerflow,
-        # )
 
         newton(
             powerflow,
@@ -80,18 +74,12 @@ def methodo(
     elif powerflow.method == "EXIC":
         from matrices import admittance
         from continuation import prediction_correction
-
-        # from linear import linear
         from newton import newton
         from report import reportfile
 
         admittance(
             powerflow,
         )
-
-        # linear(
-        #     powerflow,
-        # )
 
         newton(
             powerflow,
@@ -156,8 +144,6 @@ def methodo(
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
         from matrices import admittance
-
-        # from linear import linear
         from newton import newton
         from poc import poc
         from report import reportfile
@@ -165,10 +151,6 @@ def methodo(
         admittance(
             powerflow,
         )
-
-        # linear(
-        #     powerflow,
-        # )
 
         newton(
             powerflow,
@@ -191,17 +173,18 @@ def methodo(
         )
 
     # ROMAN KUIAVA REQUIREMENTS
-    elif powerflow.method == "PWF":
+    elif powerflow.method == "RPWF":
         from rewrite import rewrite
 
         rewrite(
             powerflow,
-            "10pct",
         )
 
     # BATCH
-    elif powerflow.method == "BATCH":
+    elif powerflow.method == "BPWF":
         from batch import batch
+
+        powerflow.namecase = powerflow.name + "jpmod"
 
         batch(
             powerflow,
@@ -212,10 +195,10 @@ def methodo(
         from matrices import admittance
         from dynamic import dynamic
         from newton import newton
-        from setup import pathtem
+        from setup import pathstb
         from stb import stb
 
-        pathtem(
+        pathstb(
             powerflow,
         )
 
