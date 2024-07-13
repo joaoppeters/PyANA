@@ -867,6 +867,9 @@ def writedopc(
         if (idx + 1) % 10 == 0:
             file.write("\n")
 
+    file.write("\nIMPR L FILE L 80CO L")
+    file.write("\n")
+    file.write("\nRBAR L RGER L RTOT L RINT L")
     file.write("\n")
     file.write("99999")
     file.write("\n")
@@ -1016,7 +1019,7 @@ def writetail(
     file.write("( ")
     file.write("\n")
 
-    file.write("RELA FILE 80CO")
+    file.write("EXLF")
 
     file.write("\n")
     file.write("( ")

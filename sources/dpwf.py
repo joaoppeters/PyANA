@@ -498,6 +498,8 @@ def dbar(
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
         powerflow.maskLq = ones(powerflow.nbus, dtype=bool)
         for idx, value in powerflow.dbarDF.iterrows():
+            powerflow.dbarDF.at[idx, "grupo_base_tensao"] = value['grupo_base_tensao'].strip()
+            powerflow.dbarDF.at[idx, "grupo_limite_tensao"] = value['grupo_limite_tensao'].strip()
             if (value["tipo"] == 2) or (value["tipo"] == 1):
                 powerflow.npv += 1
                 powerflow.maskQ[idx] = False
@@ -1723,6 +1725,7 @@ def dgbt(
         powerflow.codes["DGBT"] = True
 
         for idx, value in powerflow.dgbtDF.iterrows():
+            powerflow.dgbtDF.at[idx, "grupo"] = value['grupo'].strip()
             if value["tensao"] == 0.0:
                 powerflow.dgbtDF.at[idx, "tensao"] = 1.0
 
@@ -1885,6 +1888,7 @@ def dglt(
         powerflow.codes["DGLT"] = True
 
         for idx, value in powerflow.dgltDF.iterrows():
+            powerflow.dgltDF.at[idx, "grupo"] = value['grupo'].strip()
             if value["limite_minimo"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo"] = 0.8
 

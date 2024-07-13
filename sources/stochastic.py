@@ -47,7 +47,7 @@ def stocharou(
     nsamples = 5000
 
     pmean = powerflow.dbarDF.demanda_ativa[powerflow.dbarDF.demanda_ativa > 0].sum()
-    pstddev = 0.05 * pmean
+    pstddev = 0.06 * pmean
     x = linspace(pmean - 4 * pstddev, pmean + 4 * pstddev, nsamples)
 
     pdf = (1 / (pstddev * sqrt(2 * pi))) * exp(-0.5 * ((x - pmean) / pstddev) ** 2)
@@ -64,34 +64,34 @@ def stocharou(
 
 
     # WIND POWER
-    shape = 8.46
-    scale = 3.18
+    # shape = 8.46
+    # scale = 3.18
 
-    wdata = powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"].reset_index()
-    neol = wdata.shape[0]
+    # wdata = powerflow.dbarDF[powerflow.dbarDF['nome'].str.contains('EOL')]["potencia_ativa"].reset_index()
+    # neol = wdata.shape[0]
 
-    vci = 3
-    vco = 25
-    vrd = 15
-    wscaled = dict()
-    wpower = dict()
-    pwtotal = zeros(nsamples)
+    # vci = 3
+    # vco = 25
+    # vrd = 15
+    # wscaled = dict()
+    # wpower = dict()
+    # pwtotal = zeros(nsamples)
 
-    for eol in range(0, neol):
-        wsamples = random.weibull(scale, nsamples)
-        wscaled[eol] = wsamples * shape
-        wpower[eol] = zeros(nsamples)
+    # for eol in range(0, neol):
+    #     wsamples = random.weibull(scale, nsamples)
+    #     wscaled[eol] = wsamples * shape
+    #     wpower[eol] = zeros(nsamples)
 
-    for i in range(0, nsamples):
-        for j in range(0, neol):
-            if wscaled[j][i] < vci or wscaled[j][i] > vco:
-                wpower[j][i] = 0
-            elif wscaled[j][i] >= vci and wscaled[j][i] <= vrd:
-                wpower[j][i] = wdata.iloc[j].potencia_ativa * (wscaled[j][i] - vci) / (vrd - vci)
-            else:
-                wpower[j][i] = wdata.iloc[j].potencia_ativa
+    # for i in range(0, nsamples):
+    #     for j in range(0, neol):
+    #         if wscaled[j][i] < vci or wscaled[j][i] > vco:
+    #             wpower[j][i] = 0
+    #         elif wscaled[j][i] >= vci and wscaled[j][i] <= vrd:
+    #             wpower[j][i] = wdata.iloc[j].potencia_ativa * (wscaled[j][i] - vci) / (vrd - vci)
+    #         else:
+    #             wpower[j][i] = wdata.iloc[j].potencia_ativa
 
-            pwtotal[i] += wpower[j][i]
+    #         pwtotal[i] += wpower[j][i]
 
     
     # plt.figure(2, figsize=(10, 6))
@@ -99,7 +99,7 @@ def stocharou(
     # plt.xlabel('Total Wind Power Generation', fontsize=18)
     # plt.ylabel('Probability Density', fontsize=18)
     # plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\eolic_power.pdf", dpi=500)
-    return psamples, pwtotal
+    return psamples, 1
 
 
 def stoch_apparent_1(

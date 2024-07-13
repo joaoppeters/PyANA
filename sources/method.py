@@ -217,3 +217,12 @@ def methodo(
         dynamic(
             powerflow,
         )
+
+
+    # PSS/E EXCEL FILE FORMATTING
+    elif powerflow.method == "PSSe":
+        from psse import pssexcel
+
+        pssexcel(
+            powerflow,
+        )
