@@ -498,8 +498,12 @@ def dbar(
         powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
         powerflow.maskLq = ones(powerflow.nbus, dtype=bool)
         for idx, value in powerflow.dbarDF.iterrows():
-            powerflow.dbarDF.at[idx, "grupo_base_tensao"] = value['grupo_base_tensao'].strip()
-            powerflow.dbarDF.at[idx, "grupo_limite_tensao"] = value['grupo_limite_tensao'].strip()
+            powerflow.dbarDF.at[idx, "grupo_base_tensao"] = value[
+                "grupo_base_tensao"
+            ].strip()
+            powerflow.dbarDF.at[idx, "grupo_limite_tensao"] = value[
+                "grupo_limite_tensao"
+            ].strip()
             if (value["tipo"] == 2) or (value["tipo"] == 1):
                 powerflow.npv += 1
                 powerflow.maskQ[idx] = False
@@ -543,9 +547,9 @@ def dbar(
         powerflow.npq = powerflow.nbus - powerflow.npv
 
         # Tensao Base
-        powerflow.dbarDF.loc[
-            powerflow.dbarDF["tensao_base"] == 0.0, "tensao_base"
-        ] = 1000.0
+        powerflow.dbarDF.loc[powerflow.dbarDF["tensao_base"] == 0.0, "tensao_base"] = (
+            1000.0
+        )
 
         powerflow.dbarDF = powerflow.dbarDF.reset_index()
 
@@ -1529,7 +1533,89 @@ def dctg(
     """
 
     ## Inicialização
-    pass
+    powerflow.dctg1["identificacao"] = list()
+    powerflow.dctg1["operacao"] = list()
+    powerflow.dctg1["prioridade"] = list()
+    powerflow.dctg1["nome"] = list()
+    powerflow.dctg1["ndctg2"] = list()
+    powerflow.dctg2["tipo"] = list()
+    powerflow.dctg2["de"] = list()
+    powerflow.dctg2["para"] = list()
+    powerflow.dctg2["circuito"] = list()
+    powerflow.dctg2["extremidade"] = list()
+    idx = 0
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dctg1["ruler"]:
+            powerflow.dctg1["identificacao"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dctg1["operacao"].append(powerflow.lines[powerflow.linecount][5])
+            powerflow.dctg1["prioridade"].append(
+                powerflow.lines[powerflow.linecount][7:9]
+            )
+            powerflow.dctg1["nome"].append(powerflow.lines[powerflow.linecount][10:56])
+
+        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dctg2["ruler"]:
+            powerflow.dctg1["ndctg2"].append(0)
+            while powerflow.lines[powerflow.linecount].strip() != "FCAS":
+                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+                    pass
+                else:
+                    powerflow.dctg2["tipo"].append(
+                        powerflow.lines[powerflow.linecount][:4]
+                    )
+                    powerflow.dctg2["de"].append(
+                        powerflow.lines[powerflow.linecount][5:10]
+                    )
+                    powerflow.dctg2["para"].append(
+                        powerflow.lines[powerflow.linecount][11:16]
+                    )
+                    powerflow.dctg2["circuito"].append(
+                        powerflow.lines[powerflow.linecount][17:19]
+                    )
+                    powerflow.dctg2["extremidade"].append(
+                        powerflow.lines[powerflow.linecount][20:25]
+                    )
+                powerflow.dctg1["ndctg2"][idx] += 1
+                powerflow.linecount += 1
+            idx += 1
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Agregadores Genericos
+    powerflow.dctg1DF = DF(data=powerflow.dctg1)
+    powerflow.dctg1 = deepcopy(powerflow.dctg1DF)
+    powerflow.dctg1DF = powerflow.dctg1DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dctg1DF = powerflow.dctg1DF.astype(
+        {
+            "identificacao": "int",
+            "operacao": "object",
+            "prioridade": "int",
+            "nome": "object",
+        }
+    )
+
+    powerflow.dctg2DF = DF(data=powerflow.dctg2)
+    powerflow.dctg2 = deepcopy(powerflow.dctg2DF)
+    powerflow.dctg2DF = powerflow.dctg2DF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dctg2DF = powerflow.dctg2DF.astype(
+        {
+            "tipo": "object",
+            "de": "int",
+            "para": "int",
+            "circuito": "int",
+            "extremidade": "object",
+        }
+    )
+    if powerflow.dctg1DF.empty or powerflow.dctg2DF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DCTG`!\033[0m"
+        )
+    else:
+        powerflow.codes["DCTG"] = True
 
 
 def dctr(
@@ -1725,7 +1811,7 @@ def dgbt(
         powerflow.codes["DGBT"] = True
 
         for idx, value in powerflow.dgbtDF.iterrows():
-            powerflow.dgbtDF.at[idx, "grupo"] = value['grupo'].strip()
+            powerflow.dgbtDF.at[idx, "grupo"] = value["grupo"].strip()
             if value["tensao"] == 0.0:
                 powerflow.dgbtDF.at[idx, "tensao"] = 1.0
 
@@ -1888,7 +1974,7 @@ def dglt(
         powerflow.codes["DGLT"] = True
 
         for idx, value in powerflow.dgltDF.iterrows():
-            powerflow.dgltDF.at[idx, "grupo"] = value['grupo'].strip()
+            powerflow.dgltDF.at[idx, "grupo"] = value["grupo"].strip()
             if value["limite_minimo"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo"] = 0.8
 
@@ -1992,7 +2078,7 @@ def dinc(
 
     # DataFrame dos dados de Incremento do Nível de Carregamento
     powerflow.dincDF = DF(data=powerflow.dinc)
-    powerflow.dincDF = deepcopy(powerflow.dincDF)
+    powerflow.dinc = deepcopy(powerflow.dincDF)
     powerflow.dincDF = powerflow.dincDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dincDF = powerflow.dincDF.astype(
         {
@@ -2297,6 +2383,8 @@ def dlin(
                 powerflow.dcteDF.constante == "BASE"
             ].valor_constante[0]
         )
+
+        powerflow.dlinDF["circuito"] = powerflow.dlinDF["circuito"].replace("0", "1")
 
         powerflow.dlinDF["estado"] = (powerflow.dlinDF["estado"] == "0") | (
             powerflow.dlinDF["estado"] == "L"

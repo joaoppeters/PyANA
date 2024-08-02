@@ -47,12 +47,17 @@ def stocharou(
     nsamples = 5000
 
     pmean = powerflow.dbarDF.demanda_ativa[powerflow.dbarDF.demanda_ativa > 0].sum()
-    pstddev = 0.06 * pmean
-    x = linspace(pmean - 4 * pstddev, pmean + 4 * pstddev, nsamples)
-
+    pstddev = 0.1 * pmean
+    x = linspace(pmean - 5 * pstddev, pmean + 5 * pstddev, nsamples)
     pdf = (1 / (pstddev * sqrt(2 * pi))) * exp(-0.5 * ((x - pmean) / pstddev) ** 2)
-
     psamples = random.normal(pmean, pstddev, nsamples)
+
+    wmean = powerflow.dbarDF[powerflow.dbarDF["nome"].str.contains("EOL")][
+        "potencia_ativa"
+    ].mean()
+    wstddev = 0.1 * wmean
+    x = linspace(pmean - 5 * wstddev, pmean + 5 * wstddev, nsamples)
+    wsamples = random.normal(wmean, wstddev, nsamples)
 
     # # Plot the PDF
     # plt.figure(1, figsize=(10, 6))
@@ -61,7 +66,6 @@ def stocharou(
     # plt.xlabel('Total Active Demand', fontsize=18)
     # plt.ylabel('Probability Density', fontsize=18)
     # plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\active_demand.pdf", dpi=500)
-
 
     # WIND POWER
     # shape = 8.46
@@ -93,13 +97,12 @@ def stocharou(
 
     #         pwtotal[i] += wpower[j][i]
 
-    
     # plt.figure(2, figsize=(10, 6))
     # plt.hist(pwtotal, bins=500, density=True, alpha=0.6, color="g")
     # plt.xlabel('Total Wind Power Generation', fontsize=18)
     # plt.ylabel('Probability Density', fontsize=18)
     # plt.savefig("C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas\\eolic_power.pdf", dpi=500)
-    return psamples, 1
+    return psamples, pmean, wsamples, wmean
 
 
 def stoch_apparent_1(

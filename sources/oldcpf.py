@@ -73,7 +73,9 @@ class Continuation:
         if "SVCs" in powerflow.setup.control:
             for k, v in powerflow.setup.svckeys.items():
                 v.popitem()
-            Smooth(powerflow,).svcstorage(
+            Smooth(
+                powerflow,
+            ).svcstorage(
                 powerflow,
             )
 
@@ -105,7 +107,10 @@ class Continuation:
         }
 
         # Variável para armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
-        Control(powerflow, powerflow.setup,).controlcpf(
+        Control(
+            powerflow,
+            powerflow.setup,
+        ).controlcpf(
             powerflow,
         )
 
@@ -303,7 +308,10 @@ class Continuation:
         }
 
         # Adição de variáveis de controle na variável de armazenamento de solução
-        Control(powerflow, powerflow.setup,).controlcorrsol(
+        Control(
+            powerflow,
+            powerflow.setup,
+        ).controlcorrsol(
             powerflow,
             self.case,
         )
@@ -378,9 +386,9 @@ class Continuation:
 
             # Condição de Divergência por iterações
             if powerflow.sol["iter"] > powerflow.setup.options["itermx"]:
-                powerflow.sol[
-                    "convergence"
-                ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                powerflow.sol["convergence"] = (
+                    "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                )
                 break
 
         ## Condição
@@ -451,7 +459,10 @@ class Continuation:
 
             # Reconfiguração do caso
             self.case -= 1
-            Control(powerflow, powerflow.setup,).controlpop(
+            Control(
+                powerflow,
+                powerflow.setup,
+            ).controlpop(
                 powerflow,
             )
 
@@ -486,7 +497,10 @@ class Continuation:
 
             # Reconfiguração do caso
             self.case -= 1
-            Control(powerflow, powerflow.setup,).controlpop(
+            Control(
+                powerflow,
+                powerflow.setup,
+            ).controlpop(
                 powerflow,
             )
 
@@ -532,15 +546,13 @@ class Continuation:
                 for idxbar, valuebar in powerflow.setup.dbarraDF.iterrows():
                     if valuebar["area"] == valueinc["identificacao_incremento_1"]:
                         # Incremento de Carregamento
-                        powerflow.setup.dbarraDF.at[
-                            idxbar, "demanda_ativa"
-                        ] = powerflow.cpfsol["demanda_ativa"][idxbar] * (
-                            1 + powerflow.cpfsol["stepsch"]
+                        powerflow.setup.dbarraDF.at[idxbar, "demanda_ativa"] = (
+                            powerflow.cpfsol["demanda_ativa"][idxbar]
+                            * (1 + powerflow.cpfsol["stepsch"])
                         )
-                        powerflow.setup.dbarraDF.at[
-                            idxbar, "demanda_reativa"
-                        ] = powerflow.cpfsol["demanda_reativa"][idxbar] * (
-                            1 + powerflow.cpfsol["stepsch"]
+                        powerflow.setup.dbarraDF.at[idxbar, "demanda_reativa"] = (
+                            powerflow.cpfsol["demanda_reativa"][idxbar]
+                            * (1 + powerflow.cpfsol["stepsch"])
                         )
 
             elif valueinc["tipo_incremento_1"] == "BARR":
@@ -551,10 +563,9 @@ class Continuation:
                 powerflow.setup.dbarraDF.at[idxinc, "demanda_ativa"] = powerflow.cpfsol[
                     "demanda_ativa"
                 ][idxinc] * (1 + powerflow.cpfsol["stepsch"])
-                powerflow.setup.dbarraDF.at[
-                    idxinc, "demanda_reativa"
-                ] = powerflow.cpfsol["demanda_reativa"][idxinc] * (
-                    1 + powerflow.cpfsol["stepsch"]
+                powerflow.setup.dbarraDF.at[idxinc, "demanda_reativa"] = (
+                    powerflow.cpfsol["demanda_reativa"][idxinc]
+                    * (1 + powerflow.cpfsol["stepsch"])
                 )
 
         self.deltaincrement = (
@@ -566,10 +577,9 @@ class Continuation:
         if hasattr(powerflow.setup, "dgeraDF"):
             for idxger, valueger in powerflow.setup.dgeraDF.iterrows():
                 idx = valueger["numero"] - 1
-                powerflow.setup.dbarraDF.at[
-                    idx, "potencia_ativa"
-                ] = powerflow.setup.dbarraDF["potencia_ativa"][idx] + (
-                    self.deltaincrement * valueger["fator_participacao"]
+                powerflow.setup.dbarraDF.at[idx, "potencia_ativa"] = (
+                    powerflow.setup.dbarraDF["potencia_ativa"][idx]
+                    + (self.deltaincrement * valueger["fator_participacao"])
                 )
 
             powerflow.cpfsol["potencia_ativa"] = deepcopy(
@@ -1199,7 +1209,10 @@ class Continuation:
             # Reconfiguração do caso
             self.auxdiv = deepcopy(powerflow.cpfsol["div"]) + 1
             self.case -= 1
-            Control(powerflow, powerflow.setup,).controlpop(
+            Control(
+                powerflow,
+                powerflow.setup,
+            ).controlpop(
                 powerflow,
             )
 
@@ -1376,7 +1389,10 @@ class Continuation:
                 # Reconfiguração do caso
                 self.auxdiv = deepcopy(powerflow.cpfsol["div"]) + 1
                 self.case -= 1
-                Control(powerflow, powerflow.setup,).controlpop(
+                Control(
+                    powerflow,
+                    powerflow.setup,
+                ).controlpop(
                     powerflow,
                 )
 
@@ -1532,7 +1548,10 @@ class Continuation:
                 # Reconfiguração do caso
                 self.auxdiv = deepcopy(powerflow.cpfsol["div"]) + 1
                 self.case -= 1
-                Control(powerflow, powerflow.setup,).controlpop(
+                Control(
+                    powerflow,
+                    powerflow.setup,
+                ).controlpop(
                     powerflow,
                 )
 
@@ -1581,7 +1600,10 @@ class Continuation:
 
                 # Reconfiguração de caso
                 self.case -= 1
-                Control(powerflow, powerflow.setup,).controlpop(
+                Control(
+                    powerflow,
+                    powerflow.setup,
+                ).controlpop(
                     powerflow,
                 )
 
@@ -1625,7 +1647,10 @@ class Continuation:
                     # Reconfiguração do caso
                     self.auxdiv = deepcopy(powerflow.cpfsol["div"]) + 1
                     self.case -= 1
-                    Control(powerflow, powerflow.setup,).controlpop(
+                    Control(
+                        powerflow,
+                        powerflow.setup,
+                    ).controlpop(
                         powerflow,
                     )
 
@@ -1661,7 +1686,10 @@ class Continuation:
 
             # Condição de Heurísticas para controle
             if powerflow.setup.controlcount > 0:
-                Control(powerflow, powerflow.setup,).controlheuristics(
+                Control(
+                    powerflow,
+                    powerflow.setup,
+                ).controlheuristics(
                     powerflow,
                 )
 
@@ -1672,7 +1700,10 @@ class Continuation:
                     # Reconfiguração do caso
                     self.auxdiv = deepcopy(powerflow.cpfsol["div"]) + 1
                     self.case -= 1
-                    Control(powerflow, powerflow.setup,).controlpop(
+                    Control(
+                        powerflow,
+                        powerflow.setup,
+                    ).controlpop(
                         powerflow,
                     )
 

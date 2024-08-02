@@ -199,7 +199,10 @@ Thumbs.db
 *.pdf
 *.gz
 *.xlsx
-
+*.html
+*.BIN
+*.bin
+*.zip
 
 
 sistemas/*.txt

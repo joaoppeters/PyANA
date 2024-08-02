@@ -83,7 +83,7 @@ def pathpwf(
     if exists(powerflow.maindir + "/sistemas/") is True:
         if exists(powerflow.maindir + "/sistemas/" + powerflow.anarede) is True:
             powerflow.dirPWF = realpath(
-                dirname(dirname(__file__)) + "/sistemas/" + powerflow.anarede
+                powerflow.maindir + "/sistemas/" + powerflow.anarede
             )
             print(
                 f"\033[93mArquivo `{powerflow.anarede}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"

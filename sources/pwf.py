@@ -85,6 +85,7 @@ def codes(
         "DCNV": False,
         "DCSC": False,
         "DCTE": False,
+        "DCTG": False,  # FAZER
         "DCTR": False,
         "DELO": False,
         "DGBT": False,
@@ -294,6 +295,22 @@ def readfile(
             powerflow.dcte["dcte"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dcte["ruler"] = powerflow.lines[powerflow.linecount][:]
             dcte(
+                powerflow,
+            )
+
+        # Dados de Contingências
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DCTG"
+            or powerflow.lines[powerflow.linecount].strip() == "DCTG IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dctg = dict()
+            powerflow.dctg1 = dict()
+            powerflow.dctg2 = dict()
+            powerflow.dctg["dctg"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dctg1["ruler"] = powerflow.lines[powerflow.linecount][:]
+            powerflow.dctg2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
+            dctg(
                 powerflow,
             )
 

@@ -91,9 +91,7 @@ class CrossEntropy:
             n += 1
 
             # PASSO 1:  NÃO É NECESSÁRIO NA DISTRIBUIÇÃO NORMAL
-            self.a = (
-                ((1 - self.mean) * (self.mean**2)) / (self.stdd**2)
-            ) - self.mean
+            self.a = (((1 - self.mean) * (self.mean**2)) / (self.stdd**2)) - self.mean
             self.b = ((1 - self.mean) / self.mean) * self.a
 
             # PASSO 2: CRIAÇÃO DO VETOR DE AMOSTRAS

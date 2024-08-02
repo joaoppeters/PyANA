@@ -371,9 +371,9 @@ def correction(
 
         # Condição de Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            powerflow.solution[
-                "convergence"
-            ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            powerflow.solution["convergence"] = (
+                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            )
             break
 
     ## Condição

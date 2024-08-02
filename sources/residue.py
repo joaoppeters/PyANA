@@ -156,8 +156,12 @@ def resexsi(
 
     ## Inicialização
     # Vetores de resíduo
-    ev0 = concatenate((powerflow.solution["fem0"], powerflow.solution["voltage0"]), axis=0)
-    dt0 = concatenate((powerflow.solution["delta0"], powerflow.solution["theta0"]), axis=0)
+    ev0 = concatenate(
+        (powerflow.solution["fem0"], powerflow.solution["voltage0"]), axis=0
+    )
+    dt0 = concatenate(
+        (powerflow.solution["delta0"], powerflow.solution["theta0"]), axis=0
+    )
     V0 = ev0 * exp(1j * dt0)
     I0 = powerflow.Yblc.A @ V0
     S0 = diag(V0) @ conj(I0)
@@ -168,5 +172,7 @@ def resexsi(
     I = powerflow.Yblc.A @ V
     S = diag(V) @ conj(I)
 
-    powerflow.deltagen[2 * powerflow.nger : 3 * powerflow.nger + powerflow.nbus] = S.real - S0.real
+    powerflow.deltagen[2 * powerflow.nger : 3 * powerflow.nger + powerflow.nbus] = (
+        S.real - S0.real
+    )
     powerflow.deltagen[3 * powerflow.nger + powerflow.nbus :] = S.imag - S0.imag

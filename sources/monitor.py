@@ -150,10 +150,12 @@ def monitorpflow(
 
     # Rankeamento das linhas com maiores fluxos de potência ativa
     rank_active_flow = [
-        powerflow.solution["active_flow_F2"][i]
-        if powerflow.solution["active_flow_F2"][i]
-        > powerflow.solution["active_flow_2F"][i]
-        else powerflow.solution["active_flow_2F"][i]
+        (
+            powerflow.solution["active_flow_F2"][i]
+            if powerflow.solution["active_flow_F2"][i]
+            > powerflow.solution["active_flow_2F"][i]
+            else powerflow.solution["active_flow_2F"][i]
+        )
         for i in range(0, powerflow.nlin)
     ]
     mean_active_flow = mean(rank_active_flow)
@@ -193,10 +195,12 @@ def monitorpflow(
 
     # Rankeamento das linhas com maiores fluxos de potência reativa
     rank_reactive_flow = [
-        powerflow.solution["reactive_flow_F2"][i]
-        if powerflow.solution["reactive_flow_F2"][i]
-        > powerflow.solution["reactive_flow_2F"][i]
-        else powerflow.solution["reactive_flow_2F"][i]
+        (
+            powerflow.solution["reactive_flow_F2"][i]
+            if powerflow.solution["reactive_flow_F2"][i]
+            > powerflow.solution["reactive_flow_2F"][i]
+            else powerflow.solution["reactive_flow_2F"][i]
+        )
         for i in range(0, powerflow.nlin)
     ]
     mean_reactive_flow = mean(rank_reactive_flow)

@@ -218,7 +218,6 @@ def methodo(
             powerflow,
         )
 
-
     # PSS/E EXCEL FILE FORMATTING
     elif powerflow.method == "PSSe":
         from psse import pssexcel
@@ -226,3 +225,29 @@ def methodo(
         pssexcel(
             powerflow,
         )
+
+    # CONTINGENCY ANALYSIS
+    elif powerflow.method == "EXCT":
+        from rewrite import rewrite
+
+        powerflow.namecase = powerflow.name + "-dctg"
+
+        rewrite(
+            powerflow,
+        )
+
+    # LOAD SENSIBILITY ANALYSIS
+    elif powerflow.method == "AROU":
+        from increment import arou
+
+        powerflow.namecase = powerflow.name + "-loadvar"
+
+        arou(
+            powerflow,
+        )
+        
+        
+    elif powerflow.method == "REL":
+        from rel import rel
+        
+        rel(powerflow,)

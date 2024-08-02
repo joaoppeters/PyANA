@@ -339,8 +339,12 @@ def md01jacob(
 
     ## Inicialização
     if gen == 0:
-        powerflow.jacobiangenoffright = zeros((2 * powerflow.nger, 2 * (powerflow.nger + powerflow.nbus)))
-        powerflow.jacobiangenoffdown = zeros((2 * (powerflow.nger + powerflow.nbus), 2 * powerflow.nger))
+        powerflow.jacobiangenoffright = zeros(
+            (2 * powerflow.nger, 2 * (powerflow.nger + powerflow.nbus))
+        )
+        powerflow.jacobiangenoffdown = zeros(
+            (2 * (powerflow.nger + powerflow.nbus), 2 * powerflow.nger)
+        )
         powerflow.jacobiangen = zeros((2, 2))
         powerflow.jacobiangen[0, 0] = 1
         powerflow.jacobiangen[0, 1] = -powerflow.dsimDF.step.values[0] * 0.5
@@ -441,13 +445,23 @@ def jacexsi(
     """
 
     ## Inicialização
-    dS_dVm, dS_dVa = dSbus_dV(powerflow.Yblc, concatenate((powerflow.solution["fem"], powerflow.solution["voltage"]), axis=0))
-
-    powerflow.jacobian = concatenate(
-        (concatenate((dS_dVa.A.real, dS_dVa.A.imag), axis=0), concatenate((dS_dVm.A.real, dS_dVm.A.imag), axis=0)), axis=1
+    dS_dVm, dS_dVa = dSbus_dV(
+        powerflow.Yblc,
+        concatenate((powerflow.solution["fem"], powerflow.solution["voltage"]), axis=0),
     )
 
-    powerflow.jacobiangen = concatenate((
-        concatenate((powerflow.jacobiangen, powerflow.jacobiangenoffright), axis=1),
-        concatenate((powerflow.jacobiangenoffdown, powerflow.jacobian), axis=1)), axis=0,
+    powerflow.jacobian = concatenate(
+        (
+            concatenate((dS_dVa.A.real, dS_dVa.A.imag), axis=0),
+            concatenate((dS_dVm.A.real, dS_dVm.A.imag), axis=0),
+        ),
+        axis=1,
+    )
+
+    powerflow.jacobiangen = concatenate(
+        (
+            concatenate((powerflow.jacobiangen, powerflow.jacobiangenoffright), axis=1),
+            concatenate((powerflow.jacobiangenoffdown, powerflow.jacobian), axis=1),
+        ),
+        axis=0,
     )

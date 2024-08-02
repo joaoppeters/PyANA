@@ -176,7 +176,7 @@ def timenewt(
 
     ## Inicialização
     powerflow.solution["iter"] = 0
-    powerflow.deltagen = zeros((2 * (2*powerflow.nger + powerflow.nbus)))
+    powerflow.deltagen = zeros((2 * (2 * powerflow.nger + powerflow.nbus)))
 
     while True:
         gen = 0
@@ -224,9 +224,9 @@ def timenewt(
 
         # Condição de Divergência por iterações
         if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            powerflow.solution[
-                "convergence"
-            ] = "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            powerflow.solution["convergence"] = (
+                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+            )
             break
 
         elif (norm(powerflow.timestatevar) <= powerflow.options["CTOL"]) and (

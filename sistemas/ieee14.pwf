@@ -79,22 +79,27 @@ DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 AREA     1                                            1.   1.   99999 99999
 99999
+(DCTG
+((Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+(  1     1  LT7-8
+((Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+(CIRC     7     8  1
+(99999
+(EXLF 
 
-EXLF 
-
-ULOG
-(N
-2
-IEEE14.SAV
-ARQV INIC IMPR
-SIM
-ARQV GRAV IMPR NOVO
-01
-ULOG
-(N
-4
-IEEE14.REL
-
-EXLF
+(ULOG
+((N
+(2
+(IEEE14.SAV
+(ARQV INIC IMPR
+(SIM
+(ARQV GRAV IMPR NOVO
+(01
+(ULOG
+((N
+(4
+(IEEE14.REL
+(
+(EXLF
 
 FIM

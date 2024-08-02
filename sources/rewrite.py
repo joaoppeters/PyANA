@@ -9,6 +9,8 @@
 from os.path import dirname, realpath
 from datetime import datetime as dt
 
+from contingency import allctgs
+
 
 def rewrite(
     powerflow,
@@ -105,7 +107,7 @@ def rewrite(
             file,
         )
 
-    if powerflow.codes["DTPF"]:  # FAZER
+    if powerflow.codes["DTPF"]:
         if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
             writedtpf_circ(
                 powerflow,
@@ -160,7 +162,7 @@ def rewrite(
         )
 
     if powerflow.codes["DANC"]:
-        if "ACLS" in powerflow.danc.danc.iloc[0]:  # FAZER
+        if "ACLS" in powerflow.danc.danc.iloc[0]:
             writedanc_acls(
                 powerflow,
                 file,
@@ -195,10 +197,22 @@ def rewrite(
             file,
         )
 
-    writetail(
-        powerflow,
-        file,
-    )
+    if powerflow.codes["DCTG"]:
+        writedctg(
+            powerflow,
+            file,
+        )
+
+    if (powerflow.method != "EXCT") and (not powerflow.codes["DCTG"]):
+        writetail(
+            powerflow,
+            file,
+        )
+    elif powerflow.method == "EXCT":
+        allctgs(
+            powerflow,
+            file,
+        )
 
     file.close()
 
@@ -672,6 +686,38 @@ def writedcte(
     file.write("\n")
 
 
+def writedctg(
+    powerflow,
+    file,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    ctg = 0
+    file.write(format(powerflow.dctg["dctg"]))
+    for idx, value in powerflow.dctg1.iterrows():
+        file.write(value.ruler)
+        file.write(
+            f"{value['from']:>5} {value['operacao']:1} {value['to']:>5} {value['circuito']:>2} {value['modo_controle']:1} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['barra_controlada']:>5} {value['injecao_reativa_inicial']:>6} {value['tipo_controle']:1} {value['apagar']:1} {value['extremidade']:>5}"
+        )
+        file.write("\n")
+        file.write(powerflow.dctg2.ruler.iloc[0])
+        for idx in range(0, value["ndctg2"]):
+            file.write(
+                f"{powerflow.dctg2.grupo_banco.iloc[idx + ctg]:>2}  {powerflow.dctg2.operacao.iloc[idx + ctg]:1} {powerflow.dctg2.estado.iloc[idx + ctg]:1} {powerflow.dctg2.unidades.iloc[idx + ctg]:>3} {powerflow.dctg2.unidades_operacao.iloc[idx + ctg]:>3} {powerflow.dctg2.capacitor_reator.iloc[idx + ctg]:>6} {powerflow.dctg2.manobravel.iloc[idx + ctg]:1}"
+            )
+            file.write("\n")
+        ctg += value["ndctg2"]
+        file.write("FBAN")
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
 def writedctr(
     powerflow,
     file,
@@ -869,8 +915,8 @@ def writedopc(
 
     file.write("\nIMPR L FILE L 80CO L")
     file.write("\n")
-    file.write("\nRBAR L RGER L RTOT L RINT L")
-    file.write("\n")
+    # file.write("\nRBAR L RGER L RTOT L RINT L")
+    # file.write("\n")
     file.write("99999")
     file.write("\n")
 
@@ -1020,6 +1066,30 @@ def writetail(
     file.write("\n")
 
     file.write("EXLF")
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("4")
+    file.write("\n")
+    file.write(
+        "EXIC_"
+        + powerflow.namecase
+        + "c"
+        + str(10 * (powerflow.tenths - 1) + powerflow.ones)
+        + ".REL"
+    )
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("EXIC")
 
     file.write("\n")
     file.write("( ")
