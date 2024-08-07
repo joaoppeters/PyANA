@@ -117,7 +117,7 @@ def convP(
 
     # Save
     fig.savefig(
-        powerflow.nbusdirRconvergence + powerflow.name + "-trajconv-deltaP.png",
+        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaP.png",
         dpi=400,
     )
 
@@ -193,7 +193,7 @@ def convQ(
 
     # Save
     fig.savefig(
-        powerflow.nbusdirRconvergence + powerflow.name + "-trajconv-deltaQ.png",
+        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaQ.png",
         dpi=400,
     )
 
@@ -269,7 +269,7 @@ def convY(
 
     # Save
     fig.savefig(
-        powerflow.nbusdirRconvergence + powerflow.name + "-trajconv-deltaY.png",
+        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaY.png",
         dpi=400,
     )
 
@@ -416,7 +416,7 @@ def stateVT(
 
     # Save
     fig.savefig(
-        powerflow.nbusdirRstatevar + powerflow.name + "-stateVT.png",
+        powerflow.nbusstatevarfolder + powerflow.name + "-stateVT.png",
         dpi=400,
     )
 

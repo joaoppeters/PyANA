@@ -42,7 +42,7 @@ def monitorfile(
     """
 
     ## Inicialização
-    filedirname = powerflow.dirRreports + powerflow.name + "-monitor.txt"
+    filedirname = powerflow.reportsfolder + powerflow.name + "-monitor.txt"
 
     # Manipulação
     file = open(filedirname, "w")

@@ -53,7 +53,7 @@ def reportfile(
     )
 
     # Arquivo
-    filedirname = powerflow.dirRreports + powerflow.name + "-report.txt"
+    filedirname = powerflow.reportsfolder + powerflow.name + "-report.txt"
 
     # Manipulacao
     file = open(filedirname, "w")
@@ -648,11 +648,11 @@ def tobecontinued(
     var = False
 
     # Manipulacao
-    filevtan = open(powerflow.dircpfsys + powerflow.name + "-tangent.txt", "w")
-    filevarv = open(powerflow.dircpfsys + powerflow.name + "-voltagevar.txt", "w")
+    filevtan = open(powerflow.systemcontinuationfolder + powerflow.name + "-tangent.txt", "w")
+    filevarv = open(powerflow.systemcontinuationfolder + powerflow.name + "-voltagevar.txt", "w")
     if powerflow.solution["eigencalculation"]:
         filedeteigen = open(
-            powerflow.dircpfsys + powerflow.name + "-det&eigen.txt", "w"
+            powerflow.systemcontinuationfolder + powerflow.name + "-det&eigen.txt", "w"
         )
 
     # Cabecalho FILEVTAN
@@ -945,7 +945,7 @@ def tobecontinued(
         filedeteigen.close()
 
         # # FILEJACOBIAN@PMC
-        # file = powerflow.dircpfsys + powerflow.name + "-jacobi@PMC.csv"
+        # file = powerflow.systemcontinuationfolder + powerflow.name + "-jacobi@PMC.csv"
         # header = (
         #     "vv Sistema "
         #     + powerflow.name
@@ -971,7 +971,7 @@ def tobecontinued(
 
         # # FILEJACOBIAN-QV@PMC
         # file = (
-        #     powerflow.dircpfsys + powerflow.name + "-jacobiQV@PMC.csv"
+        #     powerflow.systemcontinuationfolder + powerflow.name + "-jacobiQV@PMC.csv"
         # )
         # header = (
         #     "vv Sistema "
@@ -999,7 +999,7 @@ def tobecontinued(
         # # Arquivos em Loop
         # for key, value in powerflow.pqtv.items():
         #     savetxt(
-        #         powerflow.dircpfsystxt
+        #         powerflow.systemcontinuationfoldertxt
         #         + powerflow.name
         #         + "-"
         #         + key

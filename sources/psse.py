@@ -6,6 +6,9 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+from folder import pssefolder
+
+from pandas import ExcelWriter
 
 def pssexcel(
     powerflow,
@@ -17,21 +20,21 @@ def pssexcel(
     """
 
     ## Inicialização
-    import numpy as np
-    import pandas as pd
 
-    excel_file = f"{powerflow.system.split('.')[0]}.xlsx"
+    pssefolder(powerflow,)
+
+    excel_file = powerflow.pssefolder + f"{powerflow.system.split('.')[0]}.xlsx"
 
     busDF = powerflow.dbarDF[
         [
             "numero",
             "nome",
-            "area",
+            "tipo",
             "tensao",
             "angulo",
-            "tipo",
         ]
     ]
+    busDF["angulo"] = powerflow.dbar.angulo
     busDF["dgbt"] = powerflow.dbarDF.grupo_base_tensao.map(
         powerflow.dgbtDF.set_index("grupo")["tensao"].to_dict()
     )
@@ -54,8 +57,8 @@ def pssexcel(
             "tensao",
             "potencia_ativa",
             "potencia_reativa",
-            "potencia_reativa_minima",
             "potencia_reativa_maxima",
+            "potencia_reativa_minima",
         ]
     ]
 
@@ -110,7 +113,7 @@ def pssexcel(
     )
 
     # Save to different worksheets
-    with pd.ExcelWriter(excel_file, engine="openpyxl") as writer:
+    with ExcelWriter(excel_file, engine="openpyxl") as writer:
         busDF.to_excel(writer, sheet_name="Bus", index=False)
         machineDF.to_excel(writer, sheet_name="Machine", index=False)
         loadDF.to_excel(writer, sheet_name="Load", index=False)

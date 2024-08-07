@@ -391,7 +391,7 @@ def pqvt(
 
         # Save
         fig.savefig(
-            powerflow.nbusdircpfsysimag + key[0] + "-" + busname + ".png", dpi=400
+            powerflow.nbussystemcontinuationfolderimag + key[0] + "-" + busname + ".png", dpi=400
         )
         plt.close(fig)
 
@@ -455,7 +455,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbusdircpfsys + powerflow.name + "-rootlocus-Jacobian.png",
+        powerflow.nbussystemcontinuationfolder + powerflow.name + "-rootlocus-Jacobian.png",
         dpi=400,
     )
     plt.close(fig)
@@ -491,7 +491,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbusdircpfsys + powerflow.name + "-rootlocus-PTsens.png",
+        powerflow.nbussystemcontinuationfolder + powerflow.name + "-rootlocus-PTsens.png",
         dpi=400,
     )
     plt.close(fig)
@@ -527,7 +527,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbusdircpfsys + powerflow.name + "-rootlocus-QVsens.png",
+        powerflow.nbussystemcontinuationfolder + powerflow.name + "-rootlocus-QVsens.png",
         dpi=400,
     )
     plt.close(fig)
