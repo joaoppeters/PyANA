@@ -11,7 +11,8 @@ import time
 
 
 def anarede(
-    powerflow,
+    batchtime,
+    filedir,
 ):
     """execução do Anarede
 
@@ -25,8 +26,8 @@ def anarede(
     # Chamada do Anarede
     os.system(
         'start C:\\CEPEL\\Anarede\\V110702\\ANAREDE.exe "{}"'.format(
-            powerflow.filedir
+            filedir
         )
     )
-    time.sleep(powerflow.batchtime)
+    time.sleep(batchtime)
     os.system("taskkill /f /im ANAREDE.exe")

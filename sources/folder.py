@@ -173,7 +173,7 @@ def stochasticfolder(
     if geolstd > 0:
         powerflow.stochasticsystems = powerflow.maindir + "\\sistemas\\" + powerflow.name + "_loadstd{}_geolstd{}".format(lstd, geolstd,)	
     else:
-        powerflow.stochasticsystems = powerflow.maindir + "\\sistemas\\" + powerflow.name + "_loadstd{}".format(lstd,)
+        powerflow.stochasticsystems = powerflow.maindir + "\\sistemas\\" + powerflow.name + "_load std{}".format(lstd,)
     if exists(powerflow.stochasticsystems) is False:
         mkdir(powerflow.stochasticsystems)
 

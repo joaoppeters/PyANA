@@ -6,91 +6,127 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-import matplotlib.pyplot as plt
-from numpy import arctan, tan, zeros
-
 from anarede import anarede
+from folder import stochasticfolder
 from rewrite import rewrite
-from stochastic import stocharou
+from stochastic import normalLOAD, normalEOL
 
 
-def batch(
+def stochbatch(
     powerflow,
 ):
-    """batch de execução
+    """batch de execução estocástica
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
+    powerflow.nsamples = 5000
+    stochasticfolder(
+        powerflow,
+        lstd=10,
+        geolstd=10,
+    )
+
     (
         psamples,
         pmean,
+    ) = normalLOAD(
+        dbarDF=powerflow.dbarDF,
+        nsamples=powerflow.nsamples,
+        lstd=10,
+    )
+    (
         wsamples,
         wmean,
-    ) = stocharou(
-        powerflow,
+    ) = normalEOL(
+        dbarDF=powerflow.dbarDF,
+        nsamples=powerflow.nsamples,
+        wstd=10,
     )
-    # qsamples = zeros(psamples.shape[0])
 
+    # Load Power Factor
     powerflow.dbar["fator_demanda_ativa"] = powerflow.dbarDF.demanda_ativa / pmean
     powerflow.dbar["fator_potencia"] = (
         powerflow.dbarDF.demanda_reativa / powerflow.dbarDF.demanda_ativa
     )
+
+    # Wind Generation Power Factor
     powerflow.dbar["fator_eol"] = [
         value["potencia_ativa"] / wmean if "EOL" in value["nome"] else 0
         for idx, value in powerflow.dbarDF.iterrows()
     ]
 
+    # Loop de amostras
     powerflow.ones = 0
-
     for s in range(0, len(psamples)):
         powerfactor(
-            powerflow,
+            powerflow.dbar,
+            powerflow.dbarDF,
             psamples,
             s,
         )
-        eol(powerflow, wsamples, s, wmean)
+        eol(powerflow.dbar,
+            powerflow.dbarDF,
+            wsamples, 
+            s, 
+        )
         powerflow.ones += 1
 
         rewrite(
             powerflow,
         )
 
-        anarede(powerflow,)
+        anarede(batchtime=powerflow.batchtime, filedir=powerflow.stochasticsystems)
 
 
 def powerfactor(
-    powerflow,
+    dbar,
+    dbarDF,
     psamples,
     s,
 ):
+    """fator de potência aplicado à estocasticidade das cargas
 
-    for idx, value in powerflow.dbarDF.iterrows():
-        powerflow.dbar.loc[idx, "demanda_ativa"] = str(
-            psamples[s] * powerflow.dbar.loc[idx, "fator_demanda_ativa"]
+    Parâmetros
+        dbar: DataFrame com as barras
+        dbarDF: DataFrame com as barras
+        psamples: amostras da demanda ativa
+        s: amostra
+    """
+
+    ## Inicialização
+    for idx, value in dbarDF.iterrows():
+        dbar.loc[idx, "demanda_ativa"] = str(
+            psamples[s] * dbar.loc[idx, "fator_demanda_ativa"]
         )
         if value["demanda_reativa"] != 0 and value["demanda_ativa"] != 0:
-            powerflow.dbar.loc[idx, "demanda_reativa"] = str(
+            dbar.loc[idx, "demanda_reativa"] = str(
                 psamples[s]
-                * powerflow.dbar.loc[idx, "fator_demanda_ativa"]
-                * powerflow.dbar.loc[idx, "fator_potencia"]
+                * dbar.loc[idx, "fator_demanda_ativa"]
+                * dbar.loc[idx, "fator_potencia"]
             )
-            # qsamples[s] += psamples[s] * powerflow.dbar.loc[idx, "fator_demanda_ativa"] * powerflow.dbar.loc[idx, "fator_potencia"]
-
-    # qsamples[s] = sum(powerflow.dbar.demanda_reativa.astype(float))
 
 
 def eol(
-    powerflow,
+    dbar,
+    dbarDF,
     wsamples,
     s,
-    wmean,
 ):
+    """fator de potência aplicado à estocasticidade da geração eólica	
 
-    for idx, value in powerflow.dbarDF.iterrows():
+    Parâmetros
+        dbar: DataFrame com as barras
+        dbarDF: DataFrame com as barras
+        wsamples: amostras da geração eólica
+        s: amostra
+    """
+
+    ## Inicialização
+    for idx, value in dbarDF.iterrows():
         if "EOL" in value["nome"]:
-            powerflow.dbar.loc[idx, "potencia_ativa"] = str(
-                round(wsamples[s] * powerflow.dbar.loc[idx, "fator_eol"], 0)
+            dbar.loc[idx, "potencia_ativa"] = str(
+                round(wsamples[s] * dbar.loc[idx, "fator_eol"], 0)
             )

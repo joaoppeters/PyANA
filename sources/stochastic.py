@@ -6,50 +6,52 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy import (
-    exp,
-    linspace,
-    pi,
-    sqrt,
-    random,
-)
-from folder import stochasticfolder
+from numpy import random
 
 
-def stocharou(
-    powerflow,
+def normalLOAD(
+    dbarDF,
+    nsamples,
+    lstd=10,
 ):
     """
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        lstd: desvio padrão da carga em porcento (default=10)
     """
 
     ## Inicialização
     random.seed(1)
-    nsamples = 5000
-
-    stochasticfolder(
-        powerflow,
-        lstd=10,
-        geolstd=10,
-    )
-
-    powerflow.filefolder = powerflow.stochasticsystems
 
     # ACTIVE DEMAND
-    pmean = powerflow.dbarDF.demanda_ativa[powerflow.dbarDF.demanda_ativa > 0].sum()
-    pstddev = 0.1 * pmean
-    # x = linspace(pmean - 5 * pstddev, pmean + 5 * pstddev, nsamples)
-    # pdf = (1 / (pstddev * sqrt(2 * pi))) * exp(-0.5 * ((x - pmean) / pstddev) ** 2)
+    pmean = dbarDF.demanda_ativa[dbarDF.demanda_ativa > 0].sum()
+    pstddev = (lstd * 1e-2) * pmean
     psamples = random.normal(pmean, pstddev, nsamples)
 
+    return psamples, pmean
+
+
+def normalEOL(
+    dbarDF,
+    nsamples,
+    wstd=10,
+):
+    """
+
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+        wstd: desvio padrão da geração eólica em porcento (default=10)
+    """
+
+    ## Inicialização
+    random.seed(1)
+
     # WIND POWER GENERATION
-    wmean = powerflow.dbarDF[powerflow.dbarDF["nome"].str.contains("EOL")][
+    wmean = dbarDF[dbarDF["nome"].str.contains("EOL")][
         "potencia_ativa"
-    ].mean()
-    wstddev = 0.1 * wmean
-    # x = linspace(pmean - 5 * wstddev, pmean + 5 * wstddev, nsamples)
+    ].sum()
+    wstddev = (wstd * 1e-2) * wmean
     wsamples = random.normal(wmean, wstddev, nsamples)
 
-    return psamples, pmean, wsamples, wmean
+    return wsamples, wmean

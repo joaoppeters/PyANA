@@ -86,7 +86,23 @@ def methodo(
 
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
-        pass
+        from batch import stochbatch
+
+        powerflow.namecase = powerflow.name + "jpmod"
+        
+        powerflow.exicflag = False
+        powerflow.exctflag = True
+
+        if not powerflow.exicflag and not powerflow.exctflag:
+            powerflow.batchtime = 5
+        elif (powerflow.exicflag and not powerflow.exctflag) or (not powerflow.exicflag and powerflow.exctflag):
+            powerflow.batchtime = 30
+        elif powerflow.exicflag and powerflow.exctflag:
+            powerflow.batchtime = 50
+
+        stochbatch(
+            powerflow,
+        )
 
     # Chamada especifica metodo direto (Canizares, 1993)
     elif powerflow.method == "EXPC":
@@ -129,21 +145,13 @@ def methodo(
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BPWF":
-        from batch import batch
+        from anarede import anarede
 
-        powerflow.namecase = powerflow.name + "jpmod"
-        powerflow.exicflag = False
-        powerflow.exctflag = True
-
-        if not powerflow.exicflag and not powerflow.exctflag:
-            powerflow.batchtime = 5
-        elif (powerflow.exicflag and not powerflow.exctflag) or (not powerflow.exicflag and powerflow.exctflag):
-            powerflow.batchtime = 30
-        elif powerflow.exicflag and powerflow.exctflag:
-            powerflow.batchtime = 50
-
-        batch(
-            powerflow,
+        powerflow.batchtime = 10
+        
+        anarede(
+            powerflow.batchtime,
+            powerflow.dirPWF,
         )
 
     # Chamada Específica para simulação dinâmica
