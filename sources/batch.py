@@ -32,7 +32,7 @@ def batch(
     ) = stocharou(
         powerflow,
     )
-    qsamples = zeros(psamples.shape[0])
+    # qsamples = zeros(psamples.shape[0])
 
     powerflow.dbar["fator_demanda_ativa"] = powerflow.dbarDF.demanda_ativa / pmean
     powerflow.dbar["fator_potencia"] = (
@@ -43,7 +43,6 @@ def batch(
         for idx, value in powerflow.dbarDF.iterrows()
     ]
 
-    powerflow.tenths = 1
     powerflow.ones = 0
 
     for s in range(0, len(psamples)):
@@ -59,13 +58,7 @@ def batch(
             powerflow,
         )
 
-        filepath = (
-            powerflow.maindir + "/sistemas"
-        )  # C:\\Users\\JoaoPedroPetersBarbo\\Dropbox\\outros\\github\\gitPyANA\\PyANA\\sistemas"
-        anarede(filepath=filepath, filenamecase=powerflow.namecase)
-        if powerflow.ones == 10:
-            powerflow.tenths += 1
-            powerflow.ones = 0
+        anarede(powerflow,)
 
 
 def powerfactor(

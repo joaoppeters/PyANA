@@ -1543,6 +1543,15 @@ def dctg(
     powerflow.dctg2["para"] = list()
     powerflow.dctg2["circuito"] = list()
     powerflow.dctg2["extremidade"] = list()
+    powerflow.dctg2["variacao_geracao_ativa"] = list()
+    powerflow.dctg2["variacao_geracao_ativa_minima"] = list()
+    powerflow.dctg2["variacao_geracao_ativa_maxima"] = list()
+    powerflow.dctg2["variacao_geracao_reativa"] = list()
+    powerflow.dctg2["variacao_geracao_reativa_minima"] = list()
+    powerflow.dctg2["variacao_geracao_reativa_maxima"] = list()
+    powerflow.dctg2["variacao_fator_participacao"] = list()
+    powerflow.dctg2["grupo"] = list()
+    powerflow.dctg2["unidades"] = list()
     idx = 0
 
     while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
@@ -1579,6 +1588,33 @@ def dctg(
                     powerflow.dctg2["extremidade"].append(
                         powerflow.lines[powerflow.linecount][20:25]
                     )
+                    powerflow.dctg2["variacao_geracao_ativa"].append(
+                        powerflow.lines[powerflow.linecount][26:31]
+                    )
+                    powerflow.dctg2["variacao_geracao_ativa_minima"].append(
+                        powerflow.lines[powerflow.linecount][32:37]
+                    )
+                    powerflow.dctg2["variacao_geracao_ativa_maxima"].append(
+                        powerflow.lines[powerflow.linecount][38:43]
+                    )
+                    powerflow.dctg2["variacao_geracao_reativa"].append(
+                        powerflow.lines[powerflow.linecount][44:49]
+                    )
+                    powerflow.dctg2["variacao_geracao_reativa_minima"].append(
+                        powerflow.lines[powerflow.linecount][50:55]
+                    )
+                    powerflow.dctg2["variacao_geracao_reativa_maxima"].append(
+                        powerflow.lines[powerflow.linecount][56:61]
+                    )
+                    powerflow.dctg2["variacao_fator_participacao"].append(
+                        powerflow.lines[powerflow.linecount][62:67]
+                    )
+                    powerflow.dctg2["grupo"].append(
+                        powerflow.lines[powerflow.linecount][68:70]
+                    )
+                    powerflow.dctg2["unidades"].append(
+                        powerflow.lines[powerflow.linecount][71:74]
+                    )
                 powerflow.dctg1["ndctg2"][idx] += 1
                 powerflow.linecount += 1
             idx += 1
@@ -1607,6 +1643,13 @@ def dctg(
             "para": "int",
             "circuito": "int",
             "extremidade": "object",
+            "variacao_geracao_ativa": "float",
+            "variacao_geracao_ativa_minima": "float",
+            "variacao_geracao_ativa_maxima": "float",
+            "variacao_geracao_reativa": "float",
+            "variacao_geracao_reativa_minima": "float",
+            "variacao_geracao_reativa_maxima": "float",
+            "variacao_fator_participacao": "float",
         }
     )
     if powerflow.dctg1DF.empty or powerflow.dctg2DF.empty:

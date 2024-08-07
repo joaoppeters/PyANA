@@ -9,7 +9,6 @@
 from powerflow import PowerFlow
 
 system = "2Q2024_REV2_C6.pwf"
-# system = "case118bus_modificado.pwf"
 # system = "NE224_CASO1_MA.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
@@ -21,11 +20,11 @@ method = "EXLF"  # NEWTON-RAPHSON
 # method = "EXPC" # POINT OF COLLAPSE
 # method = "EXSI"  # DYNAMIC SIMULATION
 # method = "DATA" # DATA MANIPULATION
-# method = "BPWF" # ANAREDE BATCH RUNNING
+method = "BPWF" # ANAREDE BATCH RUNNING
 # method = "PSSe" # PSS/E EXCEL FILE FORMATTING
 # method = "PWF"  # FILE MODIFYING AND SAVING AS REQUESTED BY PROF. RKUIAVA
-method = "AROU"  # FILE VARYING LOAD DEMAND AND EVALUATING SENSIBILITY AS REQUESTED BY AROU
-method = "REL"
+# method = "AROU"  # FILE VARYING LOAD DEMAND AND EVALUATING SENSIBILITY AS REQUESTED BY AROU
+# method = "REL"
 
 control = [
     # "CREM",

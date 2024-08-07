@@ -23,12 +23,12 @@ def rewrite(
 
     ## Inicializacao
     # Arquivo
-    filedir = realpath(
-        dirname(dirname(__file__)) + "/sistemas/" + powerflow.namecase + ".pwf"
+    powerflow.filedir = realpath(
+        powerflow.filefolder + "\\" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
-    file = open(filedir, "w")
+    file = open(powerflow.filedir, "w")
 
     # Cabecalho
     writeheader(
@@ -203,16 +203,21 @@ def rewrite(
             file,
         )
 
-    if (powerflow.method != "EXCT") and (not powerflow.codes["DCTG"]):
-        writetail(
-            powerflow,
-            file,
-        )
-    elif powerflow.method == "EXCT":
-        allctgs(
-            powerflow,
-            file,
-        )
+    # if (powerflow.method != "EXCT") and (not powerflow.codes["DCTG"]):
+    #     writetail(
+    #         powerflow,
+    #         file,
+    #     )
+    # elif powerflow.method == "EXCT":
+    #     allctgs(
+    #         powerflow,
+    #         file,
+    #     )
+
+    writetail(
+        powerflow,
+        file,
+    )
 
     file.close()
 
@@ -223,8 +228,7 @@ def writeheader(
     """
 
     Parâmetros
-        file
-        powerflow
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -257,6 +261,7 @@ def writetitu(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -272,6 +277,7 @@ def writedagr(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -302,6 +308,7 @@ def writedanc(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -327,6 +334,7 @@ def writedanc_acls(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -349,6 +357,7 @@ def writedare(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -371,6 +380,7 @@ def writedbar(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -477,21 +487,22 @@ def writedbsh(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
     bsh = 0
     file.write(format(powerflow.dbsh["dbsh"]))
-    for idx, value in powerflow.dbsh1.iterrows():
+    for idx1, value in powerflow.dbsh1.iterrows():
         file.write(value.ruler)
         file.write(
             f"{value['from']:>5} {value['operacao']:1} {value['to']:>5} {value['circuito']:>2} {value['modo_controle']:1} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['barra_controlada']:>5} {value['injecao_reativa_inicial']:>6} {value['tipo_controle']:1} {value['apagar']:1} {value['extremidade']:>5}"
         )
         file.write("\n")
         file.write(powerflow.dbsh2.ruler.iloc[0])
-        for idx in range(0, value["ndbsh2"]):
+        for idx2 in range(0, value["ndbsh2"]):
             file.write(
-                f"{powerflow.dbsh2.grupo_banco.iloc[idx + bsh]:>2}  {powerflow.dbsh2.operacao.iloc[idx + bsh]:1} {powerflow.dbsh2.estado.iloc[idx + bsh]:1} {powerflow.dbsh2.unidades.iloc[idx + bsh]:>3} {powerflow.dbsh2.unidades_operacao.iloc[idx + bsh]:>3} {powerflow.dbsh2.capacitor_reator.iloc[idx + bsh]:>6} {powerflow.dbsh2.manobravel.iloc[idx + bsh]:1}"
+                f"{powerflow.dbsh2.grupo_banco.iloc[idx2 + bsh]:>2}  {powerflow.dbsh2.operacao.iloc[idx2 + bsh]:1} {powerflow.dbsh2.estado.iloc[idx2 + bsh]:1} {powerflow.dbsh2.unidades.iloc[idx2 + bsh]:>3} {powerflow.dbsh2.unidades_operacao.iloc[idx2 + bsh]:>3} {powerflow.dbsh2.capacitor_reator.iloc[idx2 + bsh]:>6} {powerflow.dbsh2.manobravel.iloc[idx2 + bsh]:1}"
             )
             file.write("\n")
         bsh += value["ndbsh2"]
@@ -509,6 +520,7 @@ def writedcar(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -532,6 +544,7 @@ def writedcba(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -555,6 +568,7 @@ def writedccv(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -577,8 +591,8 @@ def writedcer(
     """
 
     Parâmetros:
-        powerflow (_type_): _description_
-        file (_type_): _description_
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -601,6 +615,7 @@ def writedcli(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -624,6 +639,7 @@ def writedcnv(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -647,6 +663,7 @@ def writedcsc(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -670,6 +687,7 @@ def writedcte(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -694,25 +712,26 @@ def writedctg(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
     ctg = 0
     file.write(format(powerflow.dctg["dctg"]))
-    for idx, value in powerflow.dctg1.iterrows():
+    for idx1, value in powerflow.dctg1.iterrows():
         file.write(value.ruler)
         file.write(
-            f"{value['from']:>5} {value['operacao']:1} {value['to']:>5} {value['circuito']:>2} {value['modo_controle']:1} {value['tensao_minima']:>4} {value['tensao_maxima']:>4} {value['barra_controlada']:>5} {value['injecao_reativa_inicial']:>6} {value['tipo_controle']:1} {value['apagar']:1} {value['extremidade']:>5}"
+            f"{value['identificacao']:>4} {value['operacao']:1} {value['prioridade']:>2} {value['nome']:<47}"
         )
         file.write("\n")
         file.write(powerflow.dctg2.ruler.iloc[0])
-        for idx in range(0, value["ndctg2"]):
+        for idx2 in range(0, value["ndctg2"]):
             file.write(
-                f"{powerflow.dctg2.grupo_banco.iloc[idx + ctg]:>2}  {powerflow.dctg2.operacao.iloc[idx + ctg]:1} {powerflow.dctg2.estado.iloc[idx + ctg]:1} {powerflow.dctg2.unidades.iloc[idx + ctg]:>3} {powerflow.dctg2.unidades_operacao.iloc[idx + ctg]:>3} {powerflow.dctg2.capacitor_reator.iloc[idx + ctg]:>6} {powerflow.dctg2.manobravel.iloc[idx + ctg]:1}"
+                f"{powerflow.dctg2.tipo.iloc[idx2 + ctg]:>4} {powerflow.dctg2.de.iloc[idx2 + ctg]:>5} {powerflow.dctg2.para.iloc[idx2 + ctg]:>5} {powerflow.dctg2.circuito.iloc[idx2 + ctg]:>2} {powerflow.dctg2.extremidade.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {powerflow.dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
             )
             file.write("\n")
         ctg += value["ndctg2"]
-        file.write("FBAN")
+        file.write("FCAS")
         file.write("\n")
     file.write("99999")
     file.write("\n")
@@ -726,6 +745,7 @@ def writedctr(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -749,6 +769,7 @@ def writedelo(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -772,6 +793,7 @@ def writedgbt(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -792,6 +814,7 @@ def writedger(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -814,6 +837,7 @@ def writedglt(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -836,6 +860,7 @@ def writedinc(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -858,6 +883,7 @@ def writedinj(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -880,6 +906,7 @@ def writedlin(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -902,6 +929,7 @@ def writedopc(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -929,6 +957,7 @@ def writedshl(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -951,6 +980,7 @@ def writedtpf(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -974,6 +1004,7 @@ def writedtpf_circ(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
@@ -1000,14 +1031,16 @@ def writetail(
     """
 
     Parâmetros
-        file
-        powerflow
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
     """
 
     ## Inicialização
     file.write("(")
     file.write("\n")
+
     file.write("EXLF")
+
     file.write("\n")
     file.write("(")
     file.write("\n")
@@ -1018,35 +1051,26 @@ def writetail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    file.write(powerflow.namecase + str(powerflow.tenths) + ".SAV")
+    file.write(powerflow.namecase + str(powerflow.ones) + ".SAV")
 
     file.write("\n")
     file.write("(")
     file.write("\n")
 
-    if powerflow.ones == 1:
-        file.write("ARQV INIC IMPR")
-        file.write("\n")
-        file.write("SIM")
+    file.write("ARQV INIC IMPR")
+    file.write("\n")
+    file.write("SIM")
 
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
 
-        file.write("ARQV GRAV IMPR NOVO")
-        file.write("\n")
-        file.write(f"{10*(powerflow.tenths-1) + powerflow.ones}")
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
-
-    else:
-        file.write("ARQV GRAV IMPR")
-        file.write("\n")
-        file.write(f"{10*(powerflow.tenths-1) + powerflow.ones}")
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
+    file.write("ARQV GRAV IMPR NOVO")
+    file.write("\n")
+    file.write("1")
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
 
     file.write("ULOG")
     file.write("\n")
@@ -1055,9 +1079,10 @@ def writetail(
     file.write("4")
     file.write("\n")
     file.write(
-        powerflow.namecase
+        "EXLF_"
+        + powerflow.namecase
         + "c"
-        + str(10 * (powerflow.tenths - 1) + powerflow.ones)
+        + str(powerflow.ones)
         + ".REL"
     )
 
@@ -1068,31 +1093,86 @@ def writetail(
     file.write("EXLF")
 
     file.write("\n")
-    file.write("( ")
+    file.write("(")
     file.write("\n")
 
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("4")
-    file.write("\n")
-    file.write(
-        "EXIC_"
-        + powerflow.namecase
-        + "c"
-        + str(10 * (powerflow.tenths - 1) + powerflow.ones)
-        + ".REL"
-    )
+    if powerflow.exicflag and not powerflow.exctflag:
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write(
+            "EXIC_"
+            + powerflow.namecase
+            + "c"
+            + str(powerflow.ones)
+            + ".REL"
+        )
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
-    file.write("EXIC")
+        file.write("EXIC")
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+    elif not powerflow.exicflag and powerflow.exctflag:
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write(
+            "EXCT_"
+            + powerflow.namecase
+            + "c"
+            + str(powerflow.ones)
+            + ".REL"
+        )
+
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+        
+        file.write("EXCT DADB RCVC")
+        file.write("\n")
+        file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
+        file.write("\n")
+        file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
+
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+    elif powerflow.exicflag and powerflow.exctflag:
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write(
+            "ICnCT_"
+            + powerflow.namecase
+            + "c"
+            + str(powerflow.ones)
+            + ".REL"
+        )
+
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+        file.write("EXIC PVCT GSAV")
+
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
     file.write("FIM")

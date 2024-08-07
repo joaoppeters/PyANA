@@ -158,6 +158,26 @@ def smoothfolder(
             mkdir(powerflow.dirsmoothsys)
 
 
+def stochasticfolder(
+    powerflow,
+    lstd,
+    geolstd,
+):
+    """criação de diretório para armazenar dados de simulação estocástica
+    
+    Parâmetros
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    if geolstd > 0:
+        powerflow.stochasticsystems = powerflow.maindir + "\\sistemas\\" + powerflow.name + "_loadstd{}_geolstd{}".format(lstd, geolstd,)	
+    else:
+        powerflow.stochasticsystems = powerflow.maindir + "\\sistemas\\" + powerflow.name + "_loadstd{}".format(lstd,)
+    if exists(powerflow.stochasticsystems) is False:
+        mkdir(powerflow.stochasticsystems)
+
+
 def statevarfolder(
     powerflow,
 ):
