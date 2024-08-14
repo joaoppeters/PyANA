@@ -192,6 +192,8 @@ def stochasticfolder(
     if exists(powerflow.stochasticsystems) is False:
         mkdir(powerflow.stochasticsystems)
 
+    powerflow.filefolder = powerflow.stochasticsystems
+
 
 def statevarfolder(
     powerflow,

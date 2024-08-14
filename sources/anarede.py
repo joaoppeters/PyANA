@@ -7,12 +7,10 @@
 # ------------------------------------- #
 
 import os
-import time
 
 
 def anarede(
-    batchtime,
-    filedir,
+    file,
 ):
     """execução do Anarede
 
@@ -26,8 +24,6 @@ def anarede(
     # Chamada do Anarede
     os.system(
         'start C:\\CEPEL\\Anarede\\V110702\\ANAREDE.exe "{}"'.format(
-            filedir
+            file
         )
     )
-    time.sleep(batchtime)
-    os.system("taskkill /f /im ANAREDE.exe")

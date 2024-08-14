@@ -90,7 +90,7 @@ def methodo(
 
         powerflow.namecase = powerflow.name + "jpmod"
         
-        powerflow.exicflag = False
+        powerflow.exicflag = True
         powerflow.exctflag = True
 
         if not powerflow.exicflag and not powerflow.exctflag:

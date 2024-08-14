@@ -943,8 +943,8 @@ def writedopc(
 
     file.write("\nIMPR L FILE L 80CO L")
     file.write("\n")
-    # file.write("\nRBAR L RGER L RTOT L RINT L")
-    # file.write("\n")
+    file.write("\nRINT L")
+    file.write("\n")
     file.write("99999")
     file.write("\n")
 
@@ -1016,8 +1016,6 @@ def writedtpf_circ(
         if (idx + 1) % 5 == 0:
             file.write(f"{value['operacao']:1}")
             file.write("\n")
-    # if (idx + 1) % 5 != 0:
-    #     file.write("\n")
 
     file.write("\n")
     file.write("99999")
@@ -1158,7 +1156,7 @@ def writetail(
         file.write("4")
         file.write("\n")
         file.write(
-            "ICnCT_"
+            "EXICnEXCT_"
             + powerflow.namecase
             + "c"
             + str(powerflow.ones)

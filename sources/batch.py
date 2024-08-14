@@ -6,6 +6,9 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+import os
+import time
+
 from anarede import anarede
 from folder import stochasticfolder
 from rewrite import rewrite
@@ -22,7 +25,7 @@ def stochbatch(
     """
 
     ## Inicialização
-    powerflow.nsamples = 5000
+    powerflow.nsamples = 1000
     stochasticfolder(
         powerflow,
         lstd=10,
@@ -78,7 +81,35 @@ def stochbatch(
             powerflow,
         )
 
-        anarede(batchtime=powerflow.batchtime, filedir=powerflow.stochasticsystems)
+        anarede(file=powerflow.filedir,)
+
+        if powerflow.exicflag and not powerflow.exctflag:
+            print("Monitoring for file: EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+            while not os.path.exists(powerflow.filedir + "//EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                time.sleep(1)
+            
+            os.system("taskkill /f /im ANAREDE.exe")
+        
+        elif not powerflow.exicflag and powerflow.exctflag:
+            print("Monitoring for file: EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+            while not os.path.exists(powerflow.filedir + "//EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                time.sleep(1)
+            
+            os.system("taskkill /f /im ANAREDE.exe")
+
+        elif powerflow.exicflag and powerflow.exctflag:
+            print("Monitoring for file: EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+            while not os.path.exists(powerflow.filedir + "//EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                time.sleep(1)
+            
+            os.system("taskkill /f /im ANAREDE.exe")
+        
+        else:
+            print("Monitoring for file: EXLF_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+            while not os.path.exists(powerflow.filedir + "//EXLF_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                time.sleep(1)
+            
+            os.system("taskkill /f /im ANAREDE.exe")
 
 
 def powerfactor(
