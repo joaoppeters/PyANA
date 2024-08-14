@@ -23,7 +23,7 @@ def anarede(
     ## Inicialização
     # Chamada do Anarede
     os.system(
-        'start C:\\CEPEL\\Anarede\\V110702\\ANAREDE.exe "{}"'.format(
+        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
             file
         )
     )

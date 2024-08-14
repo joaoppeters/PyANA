@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from os.path import dirname, realpath
+from os.path import realpath
 from datetime import datetime as dt
 
 from contingency import allctgs
@@ -24,7 +24,7 @@ def rewrite(
     ## Inicializacao
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.filefolder + "\\" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.filefolder + "/" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -1077,9 +1077,8 @@ def writetail(
     file.write("4")
     file.write("\n")
     file.write(
-        "EXLF_"
+        "EXLF"
         + powerflow.namecase
-        + "c"
         + str(powerflow.ones)
         + ".REL"
     )
@@ -1102,9 +1101,8 @@ def writetail(
         file.write("4")
         file.write("\n")
         file.write(
-            "EXIC_"
+            "EXIC"
             + powerflow.namecase
-            + "c"
             + str(powerflow.ones)
             + ".REL"
         )
@@ -1127,9 +1125,8 @@ def writetail(
         file.write("4")
         file.write("\n")
         file.write(
-            "EXCT_"
+            "EXCT"
             + powerflow.namecase
-            + "c"
             + str(powerflow.ones)
             + ".REL"
         )
@@ -1156,9 +1153,8 @@ def writetail(
         file.write("4")
         file.write("\n")
         file.write(
-            "EXICnEXCT_"
+            "EXICnEXCT"
             + powerflow.namecase
-            + "c"
             + str(powerflow.ones)
             + ".REL"
         )

@@ -26,6 +26,9 @@ def stochbatch(
 
     ## Inicialização
     powerflow.nsamples = 1000
+    powerflow.exicflag = False
+    powerflow.exctflag = False
+
     stochasticfolder(
         powerflow,
         lstd=10,
@@ -82,34 +85,43 @@ def stochbatch(
         )
 
         anarede(file=powerflow.filedir,)
+        time.sleep(4)
+        os.system("taskkill /f /im ANAREDE.exe")
 
-        if powerflow.exicflag and not powerflow.exctflag:
-            print("Monitoring for file: EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-            while not os.path.exists(powerflow.filedir + "//EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
-                time.sleep(1)
-            
-            os.system("taskkill /f /im ANAREDE.exe")
-        
-        elif not powerflow.exicflag and powerflow.exctflag:
-            print("Monitoring for file: EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-            while not os.path.exists(powerflow.filedir + "//EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
-                time.sleep(1)
-            
-            os.system("taskkill /f /im ANAREDE.exe")
+        exlfrel = os.path.realpath(powerflow.filefolder + "/" + "EXLF"+ powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+        exicrel = 'EXIC_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
+        exctrel = 'EXCT_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
+        exicexctrel = 'EXICnEXCT_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
 
-        elif powerflow.exicflag and powerflow.exctflag:
-            print("Monitoring for file: EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-            while not os.path.exists(powerflow.filedir + "//EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
-                time.sleep(1)
+        if os.path.exists(exlfrel):
+            powerflow.exicflag = True
+            powerflow.exctflag = True
+            rewrite(
+                powerflow,
+            )
+    
+            if powerflow.exicflag and not powerflow.exctflag:
+                print("Monitoring for file: EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+                while not os.path.exists(powerflow.filefolder + "/EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                    time.sleep(1)
+                
+                os.system("taskkill /f /im ANAREDE.exe")
             
-            os.system("taskkill /f /im ANAREDE.exe")
-        
+            elif not powerflow.exicflag and powerflow.exctflag:
+                print("Monitoring for file: EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+                while not os.path.exists(powerflow.filefolder + "/EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                    time.sleep(1)
+                
+                os.system("taskkill /f /im ANAREDE.exe")
+
+            elif powerflow.exicflag and powerflow.exctflag:
+                print("Monitoring for file: EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
+                while not os.path.exists(powerflow.filefolder + "/EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                    time.sleep(1)
+                
+                os.system("taskkill /f /im ANAREDE.exe")
         else:
-            print("Monitoring for file: EXLF_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-            while not os.path.exists(powerflow.filedir + "//EXLF_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
-                time.sleep(1)
-            
-            os.system("taskkill /f /im ANAREDE.exe")
+            os.remove(os.path.realpath(powerflow.filefolder + "/" + powerflow.namecase.upper() + "{}.SAV".format(powerflow.ones)))
 
 
 def powerfactor(

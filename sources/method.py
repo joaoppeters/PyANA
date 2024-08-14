@@ -89,16 +89,6 @@ def methodo(
         from batch import stochbatch
 
         powerflow.namecase = powerflow.name + "jpmod"
-        
-        powerflow.exicflag = True
-        powerflow.exctflag = True
-
-        if not powerflow.exicflag and not powerflow.exctflag:
-            powerflow.batchtime = 5
-        elif (powerflow.exicflag and not powerflow.exctflag) or (not powerflow.exicflag and powerflow.exctflag):
-            powerflow.batchtime = 30
-        elif powerflow.exicflag and powerflow.exctflag:
-            powerflow.batchtime = 50
 
         stochbatch(
             powerflow,
