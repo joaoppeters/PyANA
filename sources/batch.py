@@ -88,10 +88,11 @@ def stochbatch(
         time.sleep(4)
         os.system("taskkill /f /im ANAREDE.exe")
 
-        exlfrel = os.path.realpath(powerflow.filefolder + "/" + "EXLF"+ powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
-        exicrel = 'EXIC_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
-        exctrel = 'EXCT_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
-        exicexctrel = 'EXICnEXCT_' + powerflow.namecase.upper() + str(powerflow.ones) + '.REL'
+        exlfrel = os.path.realpath(powerflow.filefolder + "/" + "EXLF" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+        exicrel = os.path.realpath(powerflow.filefolder + "/" + "EXIC" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+        exctrel = os.path.realpath(powerflow.filefolder + "/" + "EXCT" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+        exicexctrel = os.path.realpath(powerflow.filefolder + "/" + "EXICnEXCT" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+        pvplt = os.path.realpath(powerflow.filefolder + "/" + "pv.plt")
 
         if os.path.exists(exlfrel):
             powerflow.exicflag = True
@@ -101,22 +102,25 @@ def stochbatch(
             )
     
             if powerflow.exicflag and not powerflow.exctflag:
-                print("Monitoring for file: EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-                while not os.path.exists(powerflow.filefolder + "/EXIC_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                anarede(file=powerflow.filedir,)
+                print("Monitoring for file: " + exicrel)
+                while not os.path.exists(pvplt):
                     time.sleep(1)
                 
                 os.system("taskkill /f /im ANAREDE.exe")
             
             elif not powerflow.exicflag and powerflow.exctflag:
-                print("Monitoring for file: EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-                while not os.path.exists(powerflow.filefolder + "/EXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                anarede(file=powerflow.filedir,)
+                print("Monitoring for file: " + exctrel)
+                while not os.path.exists(exctrel):
                     time.sleep(1)
                 
                 os.system("taskkill /f /im ANAREDE.exe")
 
             elif powerflow.exicflag and powerflow.exctflag:
-                print("Monitoring for file: EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL")
-                while not os.path.exists(powerflow.filefolder + "/EXICnEXCT_" + powerflow.namecase + "c" + str(powerflow.ones) + ".REL"):
+                anarede(file=powerflow.filedir,)
+                print("Monitoring for file: " + exicexctrel)
+                while not os.path.exists(pvplt):
                     time.sleep(1)
                 
                 os.system("taskkill /f /im ANAREDE.exe")
