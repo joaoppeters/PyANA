@@ -9,7 +9,6 @@
 import time
 
 from dstb import *
-from pwf import keywords
 
 
 def stb(
@@ -33,13 +32,14 @@ def stb(
     )
 
     # Leitura
-    readfile(
+    rstb(
         powerflow,
     )
 
-    readfile2(
-        powerflow,
-    )
+    if powerflow.method == "EXSI":
+        rdarq(
+            powerflow,
+        )
 
     print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
 
@@ -57,7 +57,6 @@ def codes(
     # Variável
     powerflow.codes.update(
         {
-            "TITU": False,
             "DARQ": False,
             "DEVT": False,
             "DMAQ": False,
@@ -67,7 +66,7 @@ def codes(
     )
 
 
-def readfile(
+def rstb(
     powerflow,
 ):
     """leitura de arquivo .stb
@@ -120,10 +119,10 @@ def readfile(
     print(f"\033[32mSucesso na leitura de arquivo `{powerflow.anatem}`!\033[0m")
 
 
-def readfile2(
+def rdarq(
     powerflow,
 ):
-    """
+    """leitura de arquivos .dat e .blt associados ao dado de entrada DARQ
 
     Parâmetros
         powerflow: self do arquivo powerflow.py

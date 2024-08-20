@@ -153,10 +153,7 @@ def devt(
         }
     )
     if powerflow.devtDF.empty:
-        ## ERROR - VERMELHO
-        raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DEVT`!\033[0m"
-        )
+        pass
     else:
         powerflow.codes["DEVT"] = True
 

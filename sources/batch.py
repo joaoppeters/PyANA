@@ -12,7 +12,8 @@ import time
 from anarede import anarede
 from factor import loadfactor, eolfactor
 from folder import stochasticfolder
-from rpwf import rpwf
+from rwpwf import rwpwf
+from rwstb import rwstb
 from stochastic import normalLOAD, normalEOL
 
 
@@ -29,7 +30,7 @@ def stochbatch(
     powerflow.nsamples = 1000
     powerflow.exicflag = False
     powerflow.exctflag = False
-    for stddev in range(1, 15, 1):
+    for stddev in range(5, 15, 1):
         loadstd = stddev
         geolstd = stddev
 
@@ -84,7 +85,7 @@ def stochbatch(
             )
             powerflow.ones += 1
 
-            rpwf(
+            rwpwf(
                 powerflow,
             )
 
@@ -96,7 +97,9 @@ def stochbatch(
             savfile = os.path.realpath(powerflow.filefolder + "/" + powerflow.namecase.upper() + "{}.SAV".format(powerflow.ones))
 
             if os.path.exists(exlfrel):
-                pass
+                rwstb(
+                    powerflow,
+                )
             else:
                 os.remove(savfile)
 
@@ -118,7 +121,7 @@ def icnctbatch(
 
     # powerflow.exicflag = True
     # powerflow.exctflag = True
-    # rpwf(
+    # rwpwf(
     #     powerflow,
     # )
 

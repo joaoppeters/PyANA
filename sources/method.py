@@ -88,8 +88,13 @@ def methodo(
     elif powerflow.method == "EXSC":
         from batch import stochbatch
         from setup import pathstb
+        from stb import stb
 
         pathstb(
+            powerflow,
+        )
+
+        stb(
             powerflow,
         )
 
@@ -132,9 +137,9 @@ def methodo(
 
     # Chamada específica para reescrita de documentos .pwf (ROMAN KUIAVA REQUIREMENTS)
     elif powerflow.method == "RPWF":
-        from rpwf import rpwf
+        from rwpwf import rwpwf
 
-        rpwf(
+        rwpwf(
             powerflow,
         )
 
@@ -187,11 +192,11 @@ def methodo(
 
     # Chamada específicada para análise de contingências
     elif powerflow.method == "EXCT":
-        from rpwf import rpwf
+        from rwpwf import rwpwf
 
         powerflow.namecase = powerflow.name + "-dctg"
 
-        rpwf(
+        rwpwf(
             powerflow,
         )
         

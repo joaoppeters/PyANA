@@ -230,4 +230,9 @@ sistemas/*.gz
 !ieee57.pwf
 !ieee300.pwf
 
+*.dat
+*.blt
+*.cdu
+*/BDADOS/*/*
+
 todo.txt

@@ -12,7 +12,7 @@ from datetime import datetime as dt
 from contingency import allctgs
 
 
-def rpwf(
+def rwpwf(
     powerflow,
 ):
     """inicializacao
