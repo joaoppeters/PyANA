@@ -12,7 +12,7 @@ from datetime import datetime as dt
 from contingency import allctgs
 
 
-def rewrite(
+def rpwf(
     powerflow,
 ):
     """inicializacao
@@ -31,180 +31,180 @@ def rewrite(
     file = open(powerflow.filedir, "w")
 
     # Cabecalho
-    writeheader(
+    wheader(
         file,
     )
 
     if powerflow.codes["TITU"]:
-        writetitu(
+        wtitu(
             powerflow,
             file,
         )
 
     if powerflow.codes["DOPC"]:
-        writedopc(
+        wdopc(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCTE"]:
-        writedcte(
+        wdcte(
             powerflow,
             file,
         )
 
     if powerflow.codes["DBAR"]:
-        writedbar(
+        wdbar(
             powerflow,
             file,
         )
 
     if powerflow.codes["DLIN"]:
-        writedlin(
+        wdlin(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCSC"]:
-        writedcsc(
+        wdcsc(
             powerflow,
             file,
         )
 
     if powerflow.codes["DBSH"]:
-        writedbsh(
+        wdbsh(
             powerflow,
             file,
         )
 
     if powerflow.codes["DGER"]:
-        writedger(
+        wdger(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCER"]:
-        writedcer(
+        wdcer(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCTR"]:
-        writedctr(
+        wdctr(
             powerflow,
             file,
         )
 
     if powerflow.codes["DGLT"]:
-        writedglt(
+        wdglt(
             powerflow,
             file,
         )
 
     if powerflow.codes["DARE"]:
-        writedare(
+        wdare(
             powerflow,
             file,
         )
 
     if powerflow.codes["DTPF"]:
         if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
-            writedtpf_circ(
+            wdtpf_circ(
                 powerflow,
                 file,
             )
         else:
-            writedtpf(
+            wdtpf(
                 powerflow,
                 file,
             )
 
     if powerflow.codes["DELO"]:
-        writedelo(
+        wdelo(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCBA"]:
-        writedcba(
+        wdcba(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCLI"]:
-        writedcli(
+        wdcli(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCNV"]:
-        writedcnv(
+        wdcnv(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCCV"]:
-        writedccv(
+        wdccv(
             powerflow,
             file,
         )
 
     if powerflow.codes["DGBT"]:
-        writedgbt(
+        wdgbt(
             powerflow,
             file,
         )
 
     if powerflow.codes["DAGR"]:
-        writedagr(
+        wdagr(
             powerflow,
             file,
         )
 
     if powerflow.codes["DANC"]:
         if "ACLS" in powerflow.danc.danc.iloc[0]:
-            writedanc_acls(
+            wdanc_acls(
                 powerflow,
                 file,
             )
         else:
-            writedanc(
+            wdanc(
                 powerflow,
                 file,
             )
 
     if powerflow.codes["DCAR"]:
-        writedcar(
+        wdcar(
             powerflow,
             file,
         )
 
     if powerflow.codes["DINC"]:
-        writedinc(
+        wdinc(
             powerflow,
             file,
         )
 
     if powerflow.codes["DINJ"]:
-        writedinj(
+        wdinj(
             powerflow,
             file,
         )
 
     if powerflow.codes["DSHL"]:
-        writedshl(
+        wdshl(
             powerflow,
             file,
         )
 
     if powerflow.codes["DCTG"]:
-        writedctg(
+        wdctg(
             powerflow,
             file,
         )
 
     # if (powerflow.method != "EXCT") and (not powerflow.codes["DCTG"]):
-    #     writetail(
+    #     wtail(
     #         powerflow,
     #         file,
     #     )
@@ -214,7 +214,7 @@ def rewrite(
     #         file,
     #     )
 
-    writetail(
+    wtail(
         powerflow,
         file,
     )
@@ -222,7 +222,7 @@ def rewrite(
     file.close()
 
 
-def writeheader(
+def wheader(
     file,
 ):
     """
@@ -253,7 +253,7 @@ def writeheader(
     file.write("\n")
 
 
-def writetitu(
+def wtitu(
     powerflow,
     file,
 ):
@@ -269,7 +269,7 @@ def writetitu(
     file.write(format(powerflow.titu["ruler"]))
 
 
-def writedagr(
+def wdagr(
     powerflow,
     file,
 ):
@@ -300,7 +300,7 @@ def writedagr(
     file.write("\n")
 
 
-def writedanc(
+def wdanc(
     powerflow,
     file,
 ):
@@ -326,7 +326,7 @@ def writedanc(
     file.write("\n")
 
 
-def writedanc_acls(
+def wdanc_acls(
     powerflow,
     file,
 ):
@@ -349,7 +349,7 @@ def writedanc_acls(
     file.write("\n")
 
 
-def writedare(
+def wdare(
     powerflow,
     file,
 ):
@@ -372,7 +372,7 @@ def writedare(
     file.write("\n")
 
 
-def writedbar(
+def wdbar(
     powerflow,
     file,
 ):
@@ -479,7 +479,7 @@ def writedbar(
     file.write("\n")
 
 
-def writedbsh(
+def wdbsh(
     powerflow,
     file,
 ):
@@ -512,7 +512,7 @@ def writedbsh(
     file.write("\n")
 
 
-def writedcar(
+def wdcar(
     powerflow,
     file,
 ):
@@ -536,7 +536,7 @@ def writedcar(
     file.write("\n")
 
 
-def writedcba(
+def wdcba(
     powerflow,
     file,
 ):
@@ -560,7 +560,7 @@ def writedcba(
     file.write("\n")
 
 
-def writedccv(
+def wdccv(
     powerflow,
     file,
 ):
@@ -584,7 +584,7 @@ def writedccv(
     file.write("\n")
 
 
-def writedcer(
+def wdcer(
     powerflow,
     file,
 ):
@@ -607,7 +607,7 @@ def writedcer(
     file.write("\n")
 
 
-def writedcli(
+def wdcli(
     powerflow,
     file,
 ):
@@ -631,7 +631,7 @@ def writedcli(
     file.write("\n")
 
 
-def writedcnv(
+def wdcnv(
     powerflow,
     file,
 ):
@@ -655,7 +655,7 @@ def writedcnv(
     file.write("\n")
 
 
-def writedcsc(
+def wdcsc(
     powerflow,
     file,
 ):
@@ -679,7 +679,7 @@ def writedcsc(
     file.write("\n")
 
 
-def writedcte(
+def wdcte(
     powerflow,
     file,
 ):
@@ -704,7 +704,7 @@ def writedcte(
     file.write("\n")
 
 
-def writedctg(
+def wdctg(
     powerflow,
     file,
 ):
@@ -737,7 +737,7 @@ def writedctg(
     file.write("\n")
 
 
-def writedctr(
+def wdctr(
     powerflow,
     file,
 ):
@@ -761,7 +761,7 @@ def writedctr(
     file.write("\n")
 
 
-def writedelo(
+def wdelo(
     powerflow,
     file,
 ):
@@ -785,7 +785,7 @@ def writedelo(
     file.write("\n")
 
 
-def writedgbt(
+def wdgbt(
     powerflow,
     file,
 ):
@@ -806,7 +806,7 @@ def writedgbt(
     file.write("\n")
 
 
-def writedger(
+def wdger(
     powerflow,
     file,
 ):
@@ -822,14 +822,14 @@ def writedger(
     file.write(format(powerflow.dger.ruler.iloc[0]))
     for idx, value in powerflow.dger.iterrows():
         file.write(
-            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {value['fator_participacao']:>5} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']:>6}"
+            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {powerflow.dgerDF.fator_participacao.iloc[idx]:>5.3f} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']:>6}"
         )
         file.write("\n")
     file.write("99999")
     file.write("\n")
 
 
-def writedglt(
+def wdglt(
     powerflow,
     file,
 ):
@@ -852,7 +852,7 @@ def writedglt(
     file.write("\n")
 
 
-def writedinc(
+def wdinc(
     powerflow,
     file,
 ):
@@ -875,7 +875,7 @@ def writedinc(
     file.write("\n")
 
 
-def writedinj(
+def wdinj(
     powerflow,
     file,
 ):
@@ -898,7 +898,7 @@ def writedinj(
     file.write("\n")
 
 
-def writedlin(
+def wdlin(
     powerflow,
     file,
 ):
@@ -921,7 +921,7 @@ def writedlin(
     file.write("\n")
 
 
-def writedopc(
+def wdopc(
     powerflow,
     file,
 ):
@@ -949,7 +949,7 @@ def writedopc(
     file.write("\n")
 
 
-def writedshl(
+def wdshl(
     powerflow,
     file,
 ):
@@ -972,7 +972,7 @@ def writedshl(
     file.write("\n")
 
 
-def writedtpf(
+def wdtpf(
     powerflow,
     file,
 ):
@@ -996,7 +996,7 @@ def writedtpf(
     file.write("\n")
 
 
-def writedtpf_circ(
+def wdtpf_circ(
     powerflow,
     file,
 ):
@@ -1022,7 +1022,7 @@ def writedtpf_circ(
     file.write("\n")
 
 
-def writetail(
+def wtail(
     powerflow,
     file,
 ):
@@ -1037,7 +1037,7 @@ def writetail(
     file.write("(")
     file.write("\n")
 
-    file.write("EXLF")
+    file.write("EXLF BPSI")
 
     file.write("\n")
     file.write("(")
@@ -1077,7 +1077,7 @@ def writetail(
     file.write("4")
     file.write("\n")
     file.write(
-        "EXLF"
+        "EXLFBPSI"
         + powerflow.namecase
         + str(powerflow.ones)
         + ".REL"
@@ -1087,86 +1087,86 @@ def writetail(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF")
+    file.write("EXLF BPSI")
 
     file.write("\n")
     file.write("(")
     file.write("\n")
 
-    if powerflow.exicflag and not powerflow.exctflag:
-        file.write("ULOG")
-        file.write("\n")
-        file.write("(N")
-        file.write("\n")
-        file.write("4")
-        file.write("\n")
-        file.write(
-            "EXIC"
-            + powerflow.namecase
-            + str(powerflow.ones)
-            + ".REL"
-        )
+    # if powerflow.exicflag and not powerflow.exctflag:
+    #     file.write("ULOG")
+    #     file.write("\n")
+    #     file.write("(N")
+    #     file.write("\n")
+    #     file.write("4")
+    #     file.write("\n")
+    #     file.write(
+    #         "EXIC"
+    #         + powerflow.namecase
+    #         + str(powerflow.ones)
+    #         + ".REL"
+    #     )
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
 
-        file.write("EXIC")
+    #     file.write("EXIC")
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
 
-    elif not powerflow.exicflag and powerflow.exctflag:
-        file.write("ULOG")
-        file.write("\n")
-        file.write("(N")
-        file.write("\n")
-        file.write("4")
-        file.write("\n")
-        file.write(
-            "EXCT"
-            + powerflow.namecase
-            + str(powerflow.ones)
-            + ".REL"
-        )
+    # elif not powerflow.exicflag and powerflow.exctflag:
+    #     file.write("ULOG")
+    #     file.write("\n")
+    #     file.write("(N")
+    #     file.write("\n")
+    #     file.write("4")
+    #     file.write("\n")
+    #     file.write(
+    #         "EXCT"
+    #         + powerflow.namecase
+    #         + str(powerflow.ones)
+    #         + ".REL"
+    #     )
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
         
-        file.write("EXCT DADB RCVC")
-        file.write("\n")
-        file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
-        file.write("\n")
-        file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
+    #     file.write("EXCT DADB RCVC")
+    #     file.write("\n")
+    #     file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
+    #     file.write("\n")
+    #     file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
 
-    elif powerflow.exicflag and powerflow.exctflag:
-        file.write("ULOG")
-        file.write("\n")
-        file.write("(N")
-        file.write("\n")
-        file.write("4")
-        file.write("\n")
-        file.write(
-            "EXICnEXCT"
-            + powerflow.namecase
-            + str(powerflow.ones)
-            + ".REL"
-        )
+    # elif powerflow.exicflag and powerflow.exctflag:
+    #     file.write("ULOG")
+    #     file.write("\n")
+    #     file.write("(N")
+    #     file.write("\n")
+    #     file.write("4")
+    #     file.write("\n")
+    #     file.write(
+    #         "EXICnEXCT"
+    #         + powerflow.namecase
+    #         + str(powerflow.ones)
+    #         + ".REL"
+    #     )
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
 
-        file.write("EXIC PVCT GSAV")
+    #     file.write("EXIC PVCT GSAV")
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+    #     file.write("\n")
+    #     file.write("( ")
+    #     file.write("\n")
 
     file.write("FIM")

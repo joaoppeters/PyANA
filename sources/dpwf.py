@@ -1953,9 +1953,16 @@ def dger(
     else:
         powerflow.codes["DGER"] = True
 
-        powerflow.dgerDF["fator_participacao"] = powerflow.dgerDF[
-            "fator_participacao"
-        ].apply(lambda x: x * 1e-2)
+        if powerflow.dgerDF["fator_participacao"].sum() == 0:
+            import pandas as pd
+            geradores = pd.merge(powerflow.dgerDF[["numero"]], powerflow.dbarDF, on="numero",)
+            geradores['fator_participacao'] = geradores["potencia_ativa"] * 1e2 / geradores["potencia_ativa"].sum()
+
+            geradores.set_index("numero", inplace=True)
+            powerflow.dgerDF.set_index("numero", inplace=True)
+
+            powerflow.dgerDF["fator_participacao"].update(geradores["fator_participacao"])
+            powerflow.dgerDF.reset_index(inplace=True)
 
         powerflow.nger = powerflow.dgerDF.shape[0]
 

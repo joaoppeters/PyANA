@@ -87,6 +87,11 @@ def methodo(
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "EXSC":
         from batch import stochbatch
+        from setup import pathstb
+
+        pathstb(
+            powerflow,
+        )
 
         powerflow.namecase = powerflow.name + "jpmod"
 
@@ -127,9 +132,9 @@ def methodo(
 
     # Chamada específica para reescrita de documentos .pwf (ROMAN KUIAVA REQUIREMENTS)
     elif powerflow.method == "RPWF":
-        from rewrite import rewrite
+        from rpwf import rpwf
 
-        rewrite(
+        rpwf(
             powerflow,
         )
 
@@ -182,28 +187,26 @@ def methodo(
 
     # Chamada específicada para análise de contingências
     elif powerflow.method == "EXCT":
-        from rewrite import rewrite
+        from rpwf import rpwf
 
         powerflow.namecase = powerflow.name + "-dctg"
 
-        rewrite(
-            powerflow,
-        )
-
-    # Chamada específica para análise de sensibilidade à variação de carga
-    elif powerflow.method == "AROU":
-        from increment import arou
-
-        powerflow.namecase = powerflow.name + "-loadvar"
-
-        arou(
+        rpwf(
             powerflow,
         )
         
-    # Chamada específica para 
+    # Chamada específica para leitura de arquivos .REL
     elif powerflow.method == "REL":
         from rel import rel
         
         rel(
+            powerflow,
+        )
+
+    # Chamada específica para simulação de contingências e fluxo de potência continuado
+    elif powerflow.method == "ICCT":
+        from batch import icnctbatch
+
+        icnctbatch(
             powerflow,
         )

@@ -12,30 +12,30 @@ from numpy import random
 def normalLOAD(
     dbarDF,
     nsamples,
-    lstd=10,
+    loadstd,
 ):
     """
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-        lstd: desvio padrão da carga em porcento (default=10)
+        loadstd: desvio padrão da carga em porcento (default=10)
     """
 
     ## Inicialização
     random.seed(1)
 
     # ACTIVE DEMAND
-    pmean = dbarDF.demanda_ativa[dbarDF.demanda_ativa > 0].sum()
-    pstddev = (lstd * 1e-2) * pmean
-    psamples = random.normal(pmean, pstddev, nsamples)
+    lpmean = dbarDF.demanda_ativa[dbarDF.demanda_ativa > 0].sum()
+    lpstddev = (loadstd * 1e-2) * lpmean
+    lpsamples = random.normal(lpmean, lpstddev, nsamples)
 
-    return psamples, pmean
+    return lpsamples, lpmean
 
 
 def normalEOL(
     dbarDF,
     nsamples,
-    wstd=10,
+    geolstd,
 ):
     """
 
@@ -48,10 +48,10 @@ def normalEOL(
     random.seed(1)
 
     # WIND POWER GENERATION
-    wmean = dbarDF[dbarDF["nome"].str.contains("EOL")][
+    wpmean = dbarDF[dbarDF["nome"].str.contains("EOL")][
         "potencia_ativa"
     ].sum()
-    wstddev = (wstd * 1e-2) * wmean
-    wsamples = random.normal(wmean, wstddev, nsamples)
+    wpstddev = (geolstd * 1e-2) * wpmean
+    wpsamples = random.normal(wpmean, wpstddev, nsamples)
 
-    return wsamples, wmean
+    return wpsamples, wpmean
