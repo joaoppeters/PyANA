@@ -30,7 +30,7 @@ def stochbatch(
     powerflow.nsamples = 1000
     powerflow.exicflag = False
     powerflow.exctflag = False
-    for stddev in range(5, 15, 1):
+    for stddev in range(5, 6, 1):
         loadstd = stddev
         geolstd = stddev
 

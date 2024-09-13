@@ -643,9 +643,12 @@ def dbsh(
                     powerflow.dbsh2["capacitor_reator"].append(
                         powerflow.lines[powerflow.linecount][16:22]
                     )
-                    powerflow.dbsh2["manobravel"].append(
-                        powerflow.lines[powerflow.linecount][23]
-                    )
+                    try:
+                        powerflow.dbsh2["manobravel"].append(
+                            powerflow.lines[powerflow.linecount][23]
+                        )
+                    except:
+                        powerflow.dbsh2["manobravel"].append(" ")
                 powerflow.dbsh1["ndbsh2"][idx] += 1
                 powerflow.linecount += 1
             idx += 1

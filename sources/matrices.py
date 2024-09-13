@@ -8,7 +8,6 @@
 
 from numpy import (
     arange,
-    array,
     asarray,
     asmatrix,
     concatenate,

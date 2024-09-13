@@ -8,7 +8,9 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_REV2_C6.pwf"
+system = "2Q2024_R2_C6.pwf"
+# system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE - R1.pwf"
+# system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE.pwf"
 # system = "NE224_CASO1_MA.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
