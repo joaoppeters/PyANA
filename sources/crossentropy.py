@@ -47,19 +47,19 @@ class CrossEntropy:
 
         ## Inicialização
         # População Inicial
-        self.PA = zeros(powerflow.setup.narea)
-        self.mean = zeros(powerflow.setup.narea)
-        self.stdd = zeros(powerflow.setup.narea)
+        self.PA = zeros(powerflow.setting.narea)
+        self.mean = zeros(powerflow.setting.narea)
+        self.stdd = zeros(powerflow.setting.narea)
         a = 0
-        for area in powerflow.setup.areas:
-            self.PA[a] = powerflow.setup.dbarDF.loc[
-                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
+        for area in powerflow.setting.areas:
+            self.PA[a] = powerflow.setting.dbarDF.loc[
+                powerflow.setting.dbarDF["area"] == area, "demanda_ativa"
             ].sum()
-            self.mean[a] = powerflow.setup.dbarDF.loc[
-                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
+            self.mean[a] = powerflow.setting.dbarDF.loc[
+                powerflow.setting.dbarDF["area"] == area, "demanda_ativa"
             ].mean()
-            self.stdd[a] = powerflow.setup.dbarDF.loc[
-                powerflow.setup.dbarDF["area"] == area, "demanda_ativa"
+            self.stdd[a] = powerflow.setting.dbarDF.loc[
+                powerflow.setting.dbarDF["area"] == area, "demanda_ativa"
             ].std()
             a += 1
 
@@ -95,15 +95,15 @@ class CrossEntropy:
             self.b = ((1 - self.mean) / self.mean) * self.a
 
             # PASSO 2: CRIAÇÃO DO VETOR DE AMOSTRAS
-            self.x = zeros(shape=[powerflow.setup.narea, self.amostras])
-            for j in range(0, powerflow.setup.narea):
+            self.x = zeros(shape=[powerflow.setting.narea, self.amostras])
+            for j in range(0, powerflow.setting.narea):
                 self.x[j, :] = self.mean[j] + sqrt(self.stdd[j]) * (
                     random.randn(self.amostras)
                 )
 
             # PASSO 3: COMPUTAR O VALOR DE Sx PARA CADA AMOSTRA
             self.s = array([])
-            for k in range(powerflow.setup.narea):
+            for k in range(powerflow.setting.narea):
                 self.s[k] = FastContinuation(
                     powerflow, (self.x[:][k] - self.PA) / self.PA
                 )

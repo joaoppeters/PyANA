@@ -19,7 +19,7 @@ def convergence(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-        setup: self do arquivo setup.py
+        setting: self do arquivo setting.py
     """
 
     ## Inicialização
@@ -281,7 +281,7 @@ def statevar(
 
     Parâmetros
         powerflow: self do arquivo powerflow.py
-        setup: self do arquivo setup.py
+        setting: self do arquivo setting.py
     """
 
     ## Inicialização

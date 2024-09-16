@@ -8,7 +8,7 @@
 
 from folder import folder
 from method import methodo
-from setup import setup
+from setting import setting
 
 
 class PowerFlow:
@@ -40,8 +40,8 @@ class PowerFlow:
         self.monitor = monitor
         self.report = report
 
-        # Data Setup
-        setup(
+        # Data setting
+        setting(
             self,
         )
 

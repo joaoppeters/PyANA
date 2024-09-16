@@ -29,10 +29,14 @@ def rwpwf(
 
     # Manipulacao
     file = open(powerflow.filedir, "w")
+    # sav = '-'.join(powerflow.name.split("_")[:-1]) + '.SAV'
+    # case = powerflow.name.split("_")[-1]
 
     # Cabecalho
     wheader(
         file,
+        # sav,
+        # case,
     )
 
     if powerflow.codes["TITU"]:
@@ -203,17 +207,6 @@ def rwpwf(
             file,
         )
 
-    # if (powerflow.method != "EXCT") and (not powerflow.codes["DCTG"]):
-    #     wtail(
-    #         powerflow,
-    #         file,
-    #     )
-    # elif powerflow.method == "EXCT":
-    #     allctgs(
-    #         powerflow,
-    #         file,
-    #     )
-
     wtail(
         powerflow,
         file,
@@ -224,6 +217,8 @@ def rwpwf(
 
 def wheader(
     file,
+    # sav,
+    # case,
 ):
     """
 
@@ -251,6 +246,16 @@ def wheader(
     file.write("\n")
     file.write("( ")
     file.write("\n")
+
+    # file.write("ULOG")
+    # file.write("\n")
+    # file.write("2")
+    # file.write("\n")
+    # file.write("{}".format(sav))
+    # file.write("\n")
+    # file.write("ARQV REST")
+    # file.write("\n")
+    # file.write("{}".format(case))
 
 
 def wtitu(

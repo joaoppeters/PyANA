@@ -16,7 +16,7 @@ from pwf import pwf
 from report import report
 
 
-def setup(
+def setting(
     powerflow,
 ):
     """initialization
