@@ -17,7 +17,7 @@ def loading(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -46,7 +46,7 @@ def var(
 ):
     """variáveis para geração dos gráficos de fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -299,7 +299,7 @@ def pqvt(
 ):
     """geração e armazenamento de gráficos de variáveis de estado e controle em função do carregamento
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -402,7 +402,7 @@ def ruthe(
 ):
     """geração e armazenamento de gráfico rootlocus
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

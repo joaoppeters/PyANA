@@ -15,7 +15,7 @@ def increment(
 ):
     """realiza incremento no nível de carregamento (e geração)
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

@@ -16,7 +16,7 @@ def dagr(
 ):
     """inicialização para leitura de dados de agregadores genéricos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
@@ -91,7 +91,7 @@ def danc(
 ):
     """inicialização para leitura de dados de alteração do nível de carregamento
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -143,7 +143,7 @@ def danc_acls(
 ):
     """inicialização para leitura de dados de alteração do nível de carregamento
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -247,7 +247,7 @@ def checkdanc(
 ):
     """checa alteração no nível de carregamento
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -279,7 +279,7 @@ def dare(
 ):
     """inicialização para leitura de dados de intercâmbio de potência ativa entre áreas
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -338,7 +338,7 @@ def dbar(
 ):
     """inicialização para leitura de dados de barra
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -559,7 +559,7 @@ def dbsh(
 ):
     """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -707,9 +707,9 @@ def dbsh(
 def dcar(
     powerflow,
 ):
-    """inicialização para leitura de parâmetros A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+    """inicialização para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -828,7 +828,7 @@ def dcba(
 ):
     """inicialização para leitura de dados de barra CC
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -895,7 +895,7 @@ def dccv(
 ):
     """inicialização para leitura de dados de controle de conversores CA/CC
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1009,7 +1009,7 @@ def dcer(
 ):
     """inicialização para leitura de dados de compensadores estáticos de potência reativa
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1138,7 +1138,7 @@ def dcli(
 ):
     """inicialização para leitura de dados de linhas de transmissão CC
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1207,7 +1207,7 @@ def dcnv(
 ):
     """inicialização para leitura de dados de conversores CA/CC
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1311,7 +1311,7 @@ def dcsc(
 ):
     """inicialização para leitura de dados de compensador série controlável
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1453,7 +1453,7 @@ def dcte(
 ):
     """inicialização para leitura de dados de constantes
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1531,7 +1531,7 @@ def dctg(
 ):
     """inicialização para leitura de lista de casos de contingência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1669,7 +1669,7 @@ def dctr(
 ):
     """inicialização para leitura de dados complementares de transformadores
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1766,7 +1766,7 @@ def delo(
 ):
     """inicialização para leitura de dados de elo CC
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1822,7 +1822,7 @@ def dgbt(
 ):
     """inicialização para leitura de dados de grupos de base de tensão de barras CA
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1867,7 +1867,7 @@ def dger(
 ):
     """inicialização para leitura de dados de geradores
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1975,7 +1975,7 @@ def dglt(
 ):
     """inicialização para leitura de dados de grupos de limites de tensão
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -2045,7 +2045,7 @@ def dinc(
 ):
     """inicialização para leitura de dados de incremento do nível de carregamento
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -2182,7 +2182,7 @@ def dinj(
 ):
     """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -2269,7 +2269,7 @@ def dlin(
 ):
     """inicialização para leitura de dados de linha de transmissão CA
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -2470,7 +2470,7 @@ def dopc(
 ):
     """inicialização para leitura de dados de código de opções de controle e execução padrão
 
-    Parâmetros
+    Args
         powerflow:
     """
     ## Inicialização
@@ -2573,7 +2573,7 @@ def dshl(
 ):
     """inicialização para leitura de dados de dispositivos shunt de circuito CA
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
@@ -2640,7 +2640,7 @@ def dtpf(
 ):
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -2737,7 +2737,7 @@ def dtpf_circ(
 ):
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

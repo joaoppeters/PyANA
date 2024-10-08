@@ -16,7 +16,7 @@ def darq(
 ):
     """inicialização para leitura de dados de entrada e saida de arquivos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
@@ -59,7 +59,7 @@ def devt(
 ):
     """inicialização para leitura de dados de eventos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -163,7 +163,7 @@ def dsim(
 ):
     """inicialização para leitura de dados de controle de simulação
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -214,7 +214,7 @@ def dmaq(
 ):
     """inicialização para leitura de dados
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
     ## Inicialização
@@ -337,7 +337,7 @@ def blt(
 ):
     """inicialização para leitura de dados
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -370,7 +370,7 @@ def md01(
 ):
     """ "
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -446,7 +446,7 @@ def checktem(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

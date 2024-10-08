@@ -10,7 +10,7 @@ from glob import glob
 from os.path import join
 
 
-def rel(
+def relr(
     powerflow,
 ):
     """

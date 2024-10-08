@@ -20,7 +20,7 @@ def eigensens(
 ):
     """análise de autovalores e autovetores
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         stage: string de identificação da etapa do fluxo de potência continuado
     """

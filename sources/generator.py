@@ -14,7 +14,7 @@ def postflow(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -64,7 +64,7 @@ def md01(
     Posicao 3: reatancia transitoria
     Posicao 4: resistencia
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         gen: indice do gerador
         dmdg: informacoes obtidas do dmdgDF
@@ -89,7 +89,7 @@ def md01(
 # ):
 #     """equação de potência eletrica do modelo clássico do gerador
 
-#     Parâmetros
+#     Args
 #         powerflow: self do arquivo powerflow.py
 #     """
 

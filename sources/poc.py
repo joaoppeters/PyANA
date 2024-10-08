@@ -23,7 +23,7 @@ def poc(
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -131,7 +131,7 @@ def expansion(
 ):
     """expansão da matriz jacobiana para o método direto (Canizares, 1993)
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

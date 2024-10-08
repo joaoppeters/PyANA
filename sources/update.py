@@ -19,7 +19,7 @@ def updtstt(
 ):
     """atualização das variáveis de estado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -128,7 +128,7 @@ def updtpwr(
 ):
     """atualização das variáveis de estado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -151,7 +151,7 @@ def updtlinear(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -165,7 +165,7 @@ def updttm(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

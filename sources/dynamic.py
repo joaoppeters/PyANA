@@ -37,7 +37,7 @@ def dynamic(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -170,7 +170,7 @@ def timenewt(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -241,7 +241,7 @@ def timeplot(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         y:
     """

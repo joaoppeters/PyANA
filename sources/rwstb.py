@@ -15,7 +15,7 @@ def rwstb(
 ):
     """inicializacao
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -76,7 +76,7 @@ def wheader(
 ):
     """
 
-    Parâmetros
+    Args
         file: arquivo de saída
     """
 
@@ -108,7 +108,7 @@ def wdarq(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -124,7 +124,7 @@ def wdevt(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -155,7 +155,7 @@ def wdmaq(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -181,7 +181,7 @@ def wdmdg_md01(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -204,7 +204,7 @@ def wdsim(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -226,7 +226,7 @@ def wtail(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """

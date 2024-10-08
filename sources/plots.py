@@ -17,7 +17,7 @@ def convergence(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         setting: self do arquivo setting.py
     """
@@ -51,7 +51,7 @@ def convP(
 ):
     """trajetória de convergência de equação de potência ativa
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -127,7 +127,7 @@ def convQ(
 ):
     """trajetória de convergência de equação de potência reativa
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -203,7 +203,7 @@ def convY(
 ):
     """trajetória de convergência de equações de controle adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -279,7 +279,7 @@ def statevar(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         setting: self do arquivo setting.py
     """
@@ -309,7 +309,7 @@ def stateVT(
 ):
     """resultado final de convergência das magnitudes e ângulos de tensão
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -427,7 +427,7 @@ def stateY(
 ):
     """resultado final de convergência das variáveis de estado adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

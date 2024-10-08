@@ -9,15 +9,13 @@
 from os.path import realpath
 from datetime import datetime as dt
 
-from contingency import allctgs
-
 
 def rwpwf(
     powerflow,
 ):
     """inicializacao
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -29,14 +27,10 @@ def rwpwf(
 
     # Manipulacao
     file = open(powerflow.filedir, "w")
-    # sav = '-'.join(powerflow.name.split("_")[:-1]) + '.SAV'
-    # case = powerflow.name.split("_")[-1]
 
     # Cabecalho
     wheader(
         file,
-        # sav,
-        # case,
     )
 
     if powerflow.codes["TITU"]:
@@ -217,12 +211,10 @@ def rwpwf(
 
 def wheader(
     file,
-    # sav,
-    # case,
 ):
     """
 
-    Parâmetros
+    Args
         file: arquivo de saída
     """
 
@@ -247,16 +239,6 @@ def wheader(
     file.write("( ")
     file.write("\n")
 
-    # file.write("ULOG")
-    # file.write("\n")
-    # file.write("2")
-    # file.write("\n")
-    # file.write("{}".format(sav))
-    # file.write("\n")
-    # file.write("ARQV REST")
-    # file.write("\n")
-    # file.write("{}".format(case))
-
 
 def wtitu(
     powerflow,
@@ -264,7 +246,7 @@ def wtitu(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -280,7 +262,7 @@ def wdagr(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -311,7 +293,7 @@ def wdanc(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -337,7 +319,7 @@ def wdanc_acls(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -360,7 +342,7 @@ def wdare(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -383,7 +365,7 @@ def wdbar(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -490,7 +472,7 @@ def wdbsh(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -523,7 +505,7 @@ def wdcar(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -547,7 +529,7 @@ def wdcba(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -571,7 +553,7 @@ def wdccv(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -595,7 +577,7 @@ def wdcer(
 ):
     """
 
-    Parâmetros:
+    Args:
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -618,7 +600,7 @@ def wdcli(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -642,7 +624,7 @@ def wdcnv(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -666,7 +648,7 @@ def wdcsc(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -690,7 +672,7 @@ def wdcte(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -715,7 +697,7 @@ def wdctg(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -748,7 +730,7 @@ def wdctr(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -772,7 +754,7 @@ def wdelo(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -796,7 +778,7 @@ def wdgbt(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -817,7 +799,7 @@ def wdger(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -840,7 +822,7 @@ def wdglt(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -863,7 +845,7 @@ def wdinc(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -886,7 +868,7 @@ def wdinj(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -909,7 +891,7 @@ def wdlin(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -932,7 +914,7 @@ def wdopc(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -960,7 +942,7 @@ def wdshl(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -983,7 +965,7 @@ def wdtpf(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -1007,7 +989,7 @@ def wdtpf_circ(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -1033,7 +1015,7 @@ def wtail(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         file: arquivo de saída
     """
@@ -1047,131 +1029,5 @@ def wtail(
     file.write("\n")
     file.write("(")
     file.write("\n")
-
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("2")
-    file.write("\n")
-    file.write(powerflow.namecase + str(powerflow.ones) + ".SAV")
-
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
-
-    file.write("ARQV INIC IMPR")
-    file.write("\n")
-    file.write("SIM")
-
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
-
-    file.write("ARQV GRAV IMPR NOVO")
-    file.write("\n")
-    file.write("1")
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
-
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("4")
-    file.write("\n")
-    file.write(
-        "EXLFBPSI"
-        + powerflow.namecase
-        + str(powerflow.ones)
-        + ".REL"
-    )
-
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
-
-    file.write("EXLF BPSI")
-
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
-
-    # if powerflow.exicflag and not powerflow.exctflag:
-    #     file.write("ULOG")
-    #     file.write("\n")
-    #     file.write("(N")
-    #     file.write("\n")
-    #     file.write("4")
-    #     file.write("\n")
-    #     file.write(
-    #         "EXIC"
-    #         + powerflow.namecase
-    #         + str(powerflow.ones)
-    #         + ".REL"
-    #     )
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
-
-    #     file.write("EXIC")
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
-
-    # elif not powerflow.exicflag and powerflow.exctflag:
-    #     file.write("ULOG")
-    #     file.write("\n")
-    #     file.write("(N")
-    #     file.write("\n")
-    #     file.write("4")
-    #     file.write("\n")
-    #     file.write(
-    #         "EXCT"
-    #         + powerflow.namecase
-    #         + str(powerflow.ones)
-    #         + ".REL"
-    #     )
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
-        
-    #     file.write("EXCT DADB RCVC")
-    #     file.write("\n")
-    #     file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
-    #     file.write("\n")
-    #     file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
-
-    # elif powerflow.exicflag and powerflow.exctflag:
-    #     file.write("ULOG")
-    #     file.write("\n")
-    #     file.write("(N")
-    #     file.write("\n")
-    #     file.write("4")
-    #     file.write("\n")
-    #     file.write(
-    #         "EXICnEXCT"
-    #         + powerflow.namecase
-    #         + str(powerflow.ones)
-    #         + ".REL"
-    #     )
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
-
-    #     file.write("EXIC PVCT GSAV")
-
-    #     file.write("\n")
-    #     file.write("( ")
-    #     file.write("\n")
 
     file.write("FIM")

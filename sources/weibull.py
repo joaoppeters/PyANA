@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parameters for Weibull distribution (shape and scale for wind speed)
+# Args for Weibull distribution (shape and scale for wind speed)
 k_wind = 2.0  # Shape parameter for wind speed
 c_wind = 5.0  # Scale parameter for wind speed (mean wind speed in m/s)
 
-# Parameters for active power output
+# Args for active power output
 cut_in_speed = 3.0  # Cut-in wind speed in m/s
 rated_power = 100.0  # Rated power output in kW
 cut_out_speed = 25.0  # Cut-out wind speed in m/s
@@ -83,7 +83,7 @@ shape, loc, scale = weibull_min.fit(
     power_data, floc=0
 )  # floc=0 to force fit without shifting
 
-# Generate Weibull distribution based on fitted parameters
+# Generate Weibull distribution based on fitted Args
 x = np.linspace(0, np.max(power_data) * 1.2, 100)
 pdf = weibull_min.pdf(x, shape, loc, scale)
 
@@ -115,14 +115,14 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-print(f"Fitted Weibull parameters: Shape = {shape:.2f}, Scale = {scale:.2f}")
+print(f"Fitted Weibull Args: Shape = {shape:.2f}, Scale = {scale:.2f}")
 
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import beta
 
-# Parameters for Beta distribution (shape parameters)
+# Args for Beta distribution (shape Args)
 alpha = 2.0
 beta_param = 5.0
 
@@ -152,7 +152,7 @@ plt.show()
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parameters for Beta distribution (shape parameters)
+# Args for Beta distribution (shape Args)
 alpha = 2.0
 beta_param = 5.0
 
@@ -276,4 +276,4 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
-print(f"Fitted Beta parameters: alpha = {alpha:.2f}, beta = {beta_param:.2f}")
+print(f"Fitted Beta Args: alpha = {alpha:.2f}, beta = {beta_param:.2f}")

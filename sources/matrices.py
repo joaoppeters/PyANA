@@ -27,9 +27,9 @@ from scipy.sparse import issparse, csr_matrix as sparse
 def admittance(
     powerflow,
 ):
-    """Método para cálculo dos parâmetros da matriz Admitância
+    """Método para cálculo dos Args da matriz Admitância
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
 
     Builds the bus admittance matrix and branch admittance matrices.
@@ -100,7 +100,7 @@ def matrices(
 ):
     """jacobian and hessian matrices
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -309,7 +309,7 @@ def load2ycte(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -332,7 +332,7 @@ def md01jacob(
 ):
     """matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -439,7 +439,7 @@ def jacexsi(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

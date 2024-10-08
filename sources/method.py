@@ -12,7 +12,7 @@ def methodo(
 ):
     """chamada automática do método de solução selecionado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -115,7 +115,29 @@ def methodo(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.method == "BPWF":
+    elif powerflow.method == "BXLF":
+        from anarede import anarede
+
+        powerflow.batchtime = 10
+        
+        anarede(
+            powerflow.batchtime,
+            powerflow.dirPWF,
+        )
+
+    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
+    elif powerflow.method == "BXIC":
+        from anarede import anarede
+
+        powerflow.batchtime = 10
+        
+        anarede(
+            powerflow.batchtime,
+            powerflow.dirPWF,
+        )
+
+    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
+    elif powerflow.method == "BXCT":
         from anarede import anarede
 
         powerflow.batchtime = 10
@@ -126,8 +148,8 @@ def methodo(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.method == "bXSC":
-        from batch import stochbatch
+    elif powerflow.method == "SXSC":
+        from batch import stochsxsc
         from setting import pathstb
         from stb import stb
 
@@ -141,35 +163,33 @@ def methodo(
 
         powerflow.namecase = powerflow.name + "jpmod"
 
-        stochbatch(
+        stochsxsc(
             powerflow,
         )
 
-    # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.method == "bXIC":
-        pass
+    # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
+    elif powerflow.method == "SXIC":
+        from batch import stochsxic
 
-        
+        stochsxic(
+            powerflow,
+        )
 
-    # # Chamada especifica geracao estocastica inicial de valores
-    # elif powerflow.method == "bXCT":
-    #     from batch import stochbatch
-    #     from setting import pathstb
-    #     from stb import stb
+    # Chamada especifica para analise de contingencia em arquivos com dados estocasticos
+    elif powerflow.method == "SXCT":
+        from batch import stochsxct
 
-    #     pathstb(
-    #         powerflow,
-    #     )
+        stochsxct(
+            powerflow,
+        )
 
-    #     stb(
-    #         powerflow,
-    #     )
+    # Chamada especifica para analise de fluxo de potência continuado e contingencia em arquivos com dados estocasticos
+    elif powerflow.method == "SXICT":
+        from batch import stochsxict
 
-    #     powerflow.namecase = powerflow.name + "jpmod"
-
-    #     stochbatch(
-    #         powerflow,
-    #     )
+        stochsxict(
+            powerflow,
+        )
 
     # Chamada específica para geração de arquivo contendo formatação de dados de simulação PSS/E (EXCEL FILE FORMATTING)
     elif powerflow.method == "PSSe":
@@ -178,20 +198,12 @@ def methodo(
         pssexcel(
             powerflow,
         )
-
-    # Chamada específica para reescrita de documentos .pwf (ROMAN KUIAVA REQUIREMENTS)
-    elif powerflow.method == "RPWF":
-        from rwpwf import rwpwf
-
-        rwpwf(
-            powerflow,
-        )
         
     # Chamada específica para leitura de arquivos .REL
-    elif powerflow.method == "REL":
-        from rel import rel
+    elif powerflow.method == "RELR":
+        from rel import relr
         
-        rel(
+        relr(
             powerflow,
         )
 
@@ -216,12 +228,11 @@ def methodo(
             powerflow,
         )
 
-    # Chamada específicada para análise de contingências
-    elif powerflow.method == "EXCT":
-        from rwpwf import rwpwf
+    # Chamada específicada para análise de areas
+    elif powerflow.method == "AREA":
+        from areas import areanalysis
+        from folder import areasfolder
 
-        powerflow.namecase = powerflow.name + "-dctg"
-
-        rwpwf(
-            powerflow,
-        )
+        areasfolder(powerflow,)
+        
+        areanalysis(powerflow,)

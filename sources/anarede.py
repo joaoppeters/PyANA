@@ -6,24 +6,100 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-import os
 
-
-def anarede(
+def exlf(
     file,
+    time,
 ):
     """execução do Anarede
 
-    Parâmetros
-        batchtime: tempo de execução do Anarede
-        filepath: caminho do arquivo
-        filenamecase: nome do arquivo
+    Args
+        file:
+        time:
     """
+
+    from os import system
+    from time import sleep
 
     ## Inicialização
     # Chamada do Anarede
-    os.system(
+    system(
         'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
             file
         )
     )
+
+    sleep(time)
+    system("taskkill /f /im ANAREDE.exe")
+
+
+def exic(
+    file,
+):
+    """
+    
+    Args
+        file: 
+    """
+    
+    from os import system
+    from time import sleep
+
+    ## Inicialização
+    # Chamada do Anarede
+    system(
+        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
+            file
+        )
+    )
+
+    sleep(10)
+    system("taskkill /f /im ANAREDE.exe")
+
+
+def exct(
+    file,
+):
+    """
+    
+    Args
+        file: 
+    """
+    
+    from os import system
+    from time import sleep
+
+    ## Inicialização
+    # Chamada do Anarede
+    system(
+        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
+            file
+        )
+    )
+
+    sleep(10)
+    system("taskkill /f /im ANAREDE.exe")
+
+
+def exicpvct(
+    file,
+):
+    """
+    
+    Args
+        file: 
+    """
+    
+    from os import system
+    from time import sleep
+
+    ## Inicialização
+    # Chamada do Anarede
+    system(
+        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
+            file
+        )
+    )
+
+    sleep(10)
+    system("taskkill /f /im ANAREDE.exe")

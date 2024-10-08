@@ -16,7 +16,7 @@ def qlimsol(
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -34,7 +34,7 @@ def qlimres(
 ):
     """cálculo de resíduos das equações de controle adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -215,7 +215,7 @@ def qlimsubjac(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -303,7 +303,7 @@ def qlimupdt(
 ):
     """atualização das variáveis de estado adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -356,7 +356,7 @@ def qlimsch(
 ):
     """atualização do valor de potência reativa especificada
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -376,7 +376,7 @@ def qlimcorr(
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -392,7 +392,7 @@ def qlimheur(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -437,7 +437,7 @@ def qlimsubhess(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -458,7 +458,7 @@ def qlimsubjacsym(
 ):
     """
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

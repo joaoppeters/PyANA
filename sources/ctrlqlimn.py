@@ -18,7 +18,7 @@ def qlimnsol(
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -36,7 +36,7 @@ def qlimnres(
 ):
     """cálculo de resíduos das equações de controle adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -70,7 +70,7 @@ def qlimnsubjac(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -158,7 +158,7 @@ def qlimnupdt(
 ):
     """atualização das variáveis de estado adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -187,7 +187,7 @@ def qlimnsch(
 ):
     """atualização do valor de potência reativa especificada
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -207,7 +207,7 @@ def qlimncorr(
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -224,7 +224,7 @@ def qlimnheur(
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -273,7 +273,7 @@ def qlimnpop(
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
             atua diretamente na variável de controle associada à opção de controle QLIMn
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         pop: quantidade de ações necessárias
     """
@@ -290,7 +290,7 @@ def qlimnsubhess(
 ):
     """submatrizes da matriz hessiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -311,7 +311,7 @@ def qlimnsubjacsym(
 ):
     """
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

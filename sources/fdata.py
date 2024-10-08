@@ -12,7 +12,7 @@ def fdata(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

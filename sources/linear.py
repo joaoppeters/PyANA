@@ -18,7 +18,7 @@ def linear(
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -89,7 +89,7 @@ def convergence(
 ):
     """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

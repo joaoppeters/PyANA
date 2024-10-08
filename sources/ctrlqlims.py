@@ -17,7 +17,7 @@ def qlimssol(
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -62,7 +62,7 @@ def qlimsres(
 ):
     """cálculo de resíduos das equações de controle adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -96,7 +96,7 @@ def qlimssubjac(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -211,7 +211,7 @@ def qlimsupdt(
 ):
     """atualização das variáveis de estado adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -244,7 +244,7 @@ def qlimssch(
 ):
     """atualização do valor de potência reativa especificada
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -264,7 +264,7 @@ def qlimscorr(
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -281,7 +281,7 @@ def qlimsheur(
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -330,7 +330,7 @@ def qlimspop(
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
             atua diretamente na variável de controle associada à opção de controle QLIMs
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         pop: quantidade de ações necessárias
     """
@@ -347,7 +347,7 @@ def qlimscpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -363,7 +363,7 @@ def qlimssolcpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -387,7 +387,7 @@ def qlimssubhess(
 ):
     """submatrizes da matriz hessiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

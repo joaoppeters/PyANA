@@ -21,7 +21,7 @@ class CrossEntropy:
     ):
         """inicialização
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -41,7 +41,7 @@ class CrossEntropy:
         powerflow,
     ):
         """
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -73,7 +73,7 @@ class CrossEntropy:
     ):
         """
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 

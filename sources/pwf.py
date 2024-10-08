@@ -16,7 +16,7 @@ def pwf(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -49,7 +49,7 @@ def keywords(
 ):
     """palavras-chave de arquivo .pwf
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -64,7 +64,7 @@ def codes(
 ):
     """códigos de dados de execução implementados
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -105,7 +105,7 @@ def readfile(
 ):
     """leitura do arquivo .pwf
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -194,7 +194,7 @@ def readfile(
                 powerflow,
             )
 
-        # Dados de Parâmetros da Curva de Carga
+        # Dados de Args da Curva de Carga
         elif (
             powerflow.lines[powerflow.linecount].strip() == "DCAR"
             or powerflow.lines[powerflow.linecount].strip() == "DCAR IMPR"

@@ -22,7 +22,7 @@ def control(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -49,7 +49,7 @@ def controlsol(
 ):
     """altera variável de armazenamento de solução do fluxo de potência em função do controle ativo
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -139,7 +139,7 @@ def controlsch(
 ):
     """adiciona variáveis especificadas de controles ativos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -194,7 +194,7 @@ def controlres(
 ):
     """adiciona resíduos de equações de controle de controles ativos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
             valor padrão igual a zero -> Newton-Raphson
@@ -259,7 +259,7 @@ def controljac(
 ):
     """submatrizes referentes aos controles ativos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -329,7 +329,7 @@ def controlupdt(
 ):
     """atualização das variáveis de estado adicionais por controle ativo
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -384,7 +384,7 @@ def controlcorrsol(
 ):
     """atualização das variáveis de controle para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -444,7 +444,7 @@ def controlheuristics(
 ):
     """aplicação de heurísticas das variáveis de controle para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -508,7 +508,7 @@ def controlpop(
 ):
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         pop: quantidade de ações necessárias
     """
@@ -553,7 +553,7 @@ def controlcpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -600,7 +600,7 @@ def controlsolcpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -651,7 +651,7 @@ def controldelta(
 ):
     """checagem da variação dos resíduos durante método iterativo de newton-raphson
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -731,7 +731,7 @@ def controlhess(
 ):
     """submatrizes referentes aos controles ativos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

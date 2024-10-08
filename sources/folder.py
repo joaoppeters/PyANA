@@ -15,7 +15,7 @@ def folder(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -29,12 +29,27 @@ def folder(
         mkdir(powerflow.resultsfolder)
 
 
+def areasfolder(
+    powerflow,
+):
+    """criação de diretório para armazenar resultados de análise de área	
+
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.areasfolder = powerflow.resultsfolder + "AnaliseArea/"
+    if exists(powerflow.areasfolder) is False:
+        mkdir(powerflow.areasfolder)
+
+
 def admittancefolder(
     powerflow,
 ):
     """criação de diretório para armazenar resultados de matriz admitância
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -53,7 +68,7 @@ def convergencefolder(
 ):
     """criação de diretório para armazenar resultados da trajetória de convergência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -72,7 +87,7 @@ def continuationfolder(
 ):
     """criação de diretório para armazenar resultados de fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -99,7 +114,7 @@ def jacobifolder(
 ):
     """criação de diretório para armazenar resultados de matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -118,7 +133,7 @@ def pssefolder(
 ):
     """criação de diretório para armazenar resultados no formato do PSS/E
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -133,7 +148,7 @@ def reportsfolder(
 ):
     """criação de diretório para armazenar resultados de relatórios
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -152,7 +167,7 @@ def smoothfolder(
 ):
     """criação de diretório para armazenar resultados suaves
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -180,7 +195,7 @@ def stochasticfolder(
 ):
     """criação de diretório para armazenar dados de simulação estocástica
     
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -200,7 +215,7 @@ def statevarfolder(
 ):
     """criação de diretório para armazenar resultados finais de convergência das variáveis de estado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

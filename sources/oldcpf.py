@@ -43,7 +43,7 @@ class Continuation:
     ):
         """inicialização
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -85,7 +85,7 @@ class Continuation:
     ):
         """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -153,7 +153,7 @@ class Continuation:
     ):
         """loop do fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -222,7 +222,7 @@ class Continuation:
     ):
         """etapa de previsão do fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -281,7 +281,7 @@ class Continuation:
     ):
         """etapa de correção do fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -532,7 +532,7 @@ class Continuation:
     ):
         """realiza incremento no nível de carregamento (e geração)
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -597,9 +597,9 @@ class Continuation:
         self,
         powerflow,
     ):
-        """método para armazenamento dos parâmetros especificados
+        """método para armazenamento dos Args especificados
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -649,7 +649,7 @@ class Continuation:
     ):
         """cálculo de resíduos das equações diferenciáveis
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
@@ -757,7 +757,7 @@ class Continuation:
     ):
         """determinação do vetor de resíduos
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -773,7 +773,7 @@ class Continuation:
     ):
         """expansão da matriz jacobiana para o método continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -818,7 +818,7 @@ class Continuation:
     ):
         """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -865,7 +865,7 @@ class Continuation:
     ):
         """atualização das variáveis de estado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
@@ -935,7 +935,7 @@ class Continuation:
     ):
         """cálculo do fluxo de potência nas linhas de transmissão
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -1016,7 +1016,7 @@ class Continuation:
     ):
         """armazenamento dos resultados de fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
@@ -1049,7 +1049,7 @@ class Continuation:
     ):
         """análise de autovalores e autovetores
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
             stage: string de identificação da etapa do fluxo de potência continuado
         """
@@ -1255,7 +1255,7 @@ class Continuation:
     ):
         """avaliação para determinação do passo do fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 
@@ -1363,7 +1363,7 @@ class Continuation:
     ):
         """heurísticas para determinação do funcionamento do fluxo de potência continuado
 
-        Parâmetros
+        Args
             powerflow: self do arquivo powerflow.py
         """
 

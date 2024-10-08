@@ -16,7 +16,7 @@ def stb(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -49,7 +49,7 @@ def codes(
 ):
     """códigos de dados de execução implementados
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -71,7 +71,7 @@ def rstb(
 ):
     """leitura de arquivo .stb
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -124,7 +124,7 @@ def rdarq(
 ):
     """leitura de arquivos .dat e .blt associados ao dado de entrada DARQ
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

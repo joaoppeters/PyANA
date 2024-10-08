@@ -13,9 +13,9 @@ from ctrl import controlsch
 def scheduled(
     powerflow,
 ):
-    """método para armazenamento dos parâmetros especificados
+    """método para armazenamento dos Args especificados
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

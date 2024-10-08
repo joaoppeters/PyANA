@@ -20,7 +20,7 @@ def residue(
 ):
     """cálculo de resíduos das equações diferenciáveis
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -102,7 +102,7 @@ def md01residue(
 ):
     """calculo dos residuos
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -150,7 +150,7 @@ def resexsi(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

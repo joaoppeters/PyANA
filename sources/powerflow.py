@@ -24,7 +24,7 @@ class PowerFlow:
     ):
         """initialization
 
-        Parameters:
+        Args:
             system: str, optional, default ''
             method: str, optional, default 'EXLF'
             control: list, optional, default None

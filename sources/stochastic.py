@@ -16,7 +16,7 @@ def normalLOAD(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         loadstd: desvio padrão da carga em porcento (default=10)
     """
@@ -47,7 +47,7 @@ def normalEOL(
 ):
     """
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         wstd: desvio padrão da geração eólica em porcento (default=10)
     """

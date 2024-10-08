@@ -72,7 +72,7 @@ A construção da matriz jacobiana é feita de forma diferente nesse [programa](
 
 
 ## Conclusão
-Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()` e passe os `parâmetros da classe` que gostaria de analisar.
+Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()` e passe os `Args da classe` que gostaria de analisar.
 
 ```Python
 from powerflow import PowerFlow
@@ -133,7 +133,7 @@ PowerFlow(
         - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
 
 
-> **PASSE OS PARÂMETROS DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
+> **PASSE OS Args DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
 
 > **O CÓDIGO ABAIXO SE TRATA DE UM EXEMPLO, NÃO CONDIZ COM A REAL APLICAÇÃO PRÁTICA DEVIDO AO FATO QUE NEM TODAS AS OPÇÕES DE CONTROLE PODEM SER ATRIBUÍDAS AO MESMO TEMPO.**  
 

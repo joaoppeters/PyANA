@@ -15,7 +15,7 @@ def loadfactor(
 ):
     """fator de potência aplicado à estocasticidade das cargas
 
-    Parâmetros
+    Args
         dbar: DataFrame com as barras
         dbarDF: DataFrame com as barras
         psamples: amostras da demanda ativa
@@ -43,7 +43,7 @@ def eolfactor(
 ):
     """fator de potência aplicado à estocasticidade da geração eólica	
 
-    Parâmetros
+    Args
         dbar: DataFrame com as barras
         dbarDF: DataFrame com as barras
         wsamples: amostras da geração eólica

@@ -23,7 +23,7 @@ def report(
 ):
     """inicializacao
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -43,7 +43,7 @@ def reportfile(
 ):
     """
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -131,7 +131,7 @@ def rheader(
 ):
     """cabecalho do relatorio
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -189,7 +189,7 @@ def RCONV(
 ):
     """relatorio de convergencia tradicional
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -262,7 +262,7 @@ def RBAR(
 ):
     """relatorio de barra
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -316,7 +316,7 @@ def RLIN(
 ):
     """relatorio de linha
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -403,7 +403,7 @@ def RGER(
 ):
     """relatorio de geradores
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -417,7 +417,7 @@ def RSVC(
 ):
     """relatorio de compensadores estaticos de potencia reativa
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -538,7 +538,7 @@ def RXIC(
 ):
     """relatorio de fluxo de potencia continuado
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -640,7 +640,7 @@ def tobecontinued(
 ):
     """armazena o resultado do fluxo de potencia continuado em formato txt e formato png
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1184,7 +1184,7 @@ def RPoC(
 ):
     """
 
-    Parametros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

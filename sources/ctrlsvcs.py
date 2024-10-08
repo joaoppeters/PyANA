@@ -21,7 +21,7 @@ def svcssol(
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -98,9 +98,9 @@ def svcssol(
 def alphavar(
     powerflow,
 ):
-    """calculo dos parametros para metodologia alpha do compensador estatico de potencia reativa
+    """calculo dos Args para metodologia alpha do compensador estatico de potencia reativa
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -167,7 +167,7 @@ def svcres(
 ):
     """cálculo de resíduos das equações de controle adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -248,7 +248,7 @@ def svcsubjac(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -393,7 +393,7 @@ def svcupdt(
 ):
     """atualização das variáveis de estado adicionais
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -429,7 +429,7 @@ def svcsch(
 ):
     """atualização do valor de potência reativa especificada
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -463,7 +463,7 @@ def svccorr(
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -480,7 +480,7 @@ def svcheur(
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -502,7 +502,7 @@ def svccpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -518,7 +518,7 @@ def svcsolcpf(
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         case: etapa do fluxo de potência continuado analisada
     """
@@ -542,7 +542,7 @@ def svcsubhess(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
@@ -563,7 +563,7 @@ def svcsubjacsym(
 ):
     """submatrizes da matriz jacobiana
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 

@@ -6,31 +6,30 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-import os
-import time
 
-from anarede import anarede
-from factor import loadfactor, eolfactor
-from folder import stochasticfolder
-from rwpwf import rwpwf
-from rwstb import rwstb
-from stochastic import normalLOAD, normalEOL
-
-
-def stochbatch(
+def stochsxsc(
     powerflow,
 ):
     """batch de execução estocástica
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
+
+    from os import path, remove
+
+    from anarede import exlf
+    from factor import loadfactor, eolfactor
+    from folder import stochasticfolder
+    from stochastic import normalLOAD, normalEOL
+    from rwstb import rwstb
+    from ulog import wulog
 
     ## Inicialização
     powerflow.nsamples = 1000
     powerflow.exicflag = False
     powerflow.exctflag = False
-    for stddev in range(5, 6, 1):
+    for stddev in range(1, 11, 1):
         loadstd = stddev
         geolstd = stddev
 
@@ -85,20 +84,110 @@ def stochbatch(
             )
             powerflow.ones += 1
 
-            rwpwf(
+            # rwpwf(
+            #     powerflow,
+            # )
+
+            wulog(
                 powerflow,
             )
 
-            anarede(file=powerflow.filedir,)
-            time.sleep(3)
-            os.system("taskkill /f /im ANAREDE.exe")
+            exlf(file=powerflow.filedir, time=3)
 
-            exlfrel = os.path.realpath(powerflow.filefolder + "/" + "EXLF" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
-            savfile = os.path.realpath(powerflow.filefolder + "/" + powerflow.namecase.upper() + "{}.SAV".format(powerflow.ones))
+            exlfrel = path.realpath(powerflow.filefolder + "/" + "EXLF" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
+            savfile = path.realpath(powerflow.filefolder + "/" + powerflow.namecase.upper() + "{}.SAV".format(powerflow.ones))
 
-            if os.path.exists(exlfrel):
-                rwstb(
-                    powerflow,
-                )
-            else:
-                os.remove(savfile)
+            if not path.exists(exlfrel):
+                remove(savfile)
+            # else:
+            #     rwstb(powerflow,)
+
+
+def stochsxct(
+    powerflow,
+):
+    """
+    
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    from os import listdir
+
+    from ulog import usxct
+
+    for stddev in range(1, 11, 1):
+        loadstd = stddev
+        geolstd = stddev
+
+        # Specify the folder path and file extension
+        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
+        savextension = '.SAV'  # Change to the extension you need
+
+        # List and filter files by extension
+        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+
+        # Print the filtered files
+        for savfile in savfiles:
+            usxct(powerflow, savfile,)
+
+
+def stochsxic(
+    powerflow,
+):
+    """
+    
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    from os import listdir
+    
+    from ulog import usxic
+    
+    for stddev in range(1, 11, 1):
+        loadstd = stddev
+        geolstd = stddev
+
+        # Specify the folder path and file extension
+        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
+        savextension = '.REL'  # Change to the extension you need
+
+        # List and filter files by extension
+        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+
+        # Print the filtered files
+        for savfile in savfiles:
+            usxic(powerflow, savfile,)
+
+
+def stochsxict(
+    powerflow,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    from os import listdir
+
+    from ulog import uspvct
+
+    for stddev in range(1, 11, 1):
+        loadstd = stddev
+        geolstd = stddev
+
+        # Specify the folder path and file extension
+        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
+        savextension = '.REL'  # Change to the extension you need
+
+        # List and filter files by extension
+        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+
+        # Print the filtered files
+        for savfile in savfiles:
+            uspvct(powerflow, savfile,)

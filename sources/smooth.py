@@ -22,7 +22,7 @@ def qlims(
 ):
     """_summary_
 
-    Parametros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 
@@ -137,7 +137,7 @@ def qlimssmooth(
 ):
     """aplicação da função suave sigmoide para tratamento de limite de geração de potência reativa
 
-    Parâmetros
+    Args
         idx: índice da da barra geradora
         powerflow: self do arquivo powerflow.py
         nger: índice de geradores
@@ -211,7 +211,7 @@ def qlimnsmooth(
 ):
     """aplicação da função suave sigmoide para tratamento de limite de geração de potência reativa
 
-    Parâmetros
+    Args
         idx: índice da da barra geradora
         powerflow: self do arquivo powerflow.py
         nger: índice de geradores
@@ -295,7 +295,7 @@ def svcsQ(
 ):
     """_summary_
 
-    Parametros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 
@@ -397,7 +397,7 @@ def svcsQsmooth(
     """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
         metodologia por potência reativa injetada
 
-    Parâmetros
+    Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
         powerflow: self do arquivo powerflow.py
@@ -472,7 +472,7 @@ def svcsI(
 ):
     """_summary_
 
-    Parametros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 
@@ -589,7 +589,7 @@ def svcsIsmooth(
     """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
         metodologia por corrente injetada
 
-    Parâmetros
+    Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
         powerflow: self do arquivo powerflow.py
@@ -710,7 +710,7 @@ def svcsA(
 ):
     """_summary_
 
-    Parametros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 
@@ -827,7 +827,7 @@ def svcsAsmooth(
     """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
         metodologia por ângulo de disparo
 
-    Parâmetros
+    Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
         powerflow: self do arquivo powerflow.py
@@ -1013,7 +1013,7 @@ def qlimspop(
 ):
     """deleta última instância salva em variável powerflow.qlimskeys
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
         pop: quantidade de ações necessárias
     """
@@ -1032,7 +1032,7 @@ def qlimstorage(
 ):
     """armazenamento e geração de imagens referente a comutação das chaves
 
-    Parâmetros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 
@@ -1336,7 +1336,7 @@ def svcstorage(
 ):
     """armazenamento e geração de imagens referente a comutação das chaves
 
-    Parâmetros:
+    Args:
         powerflow: self do arquivo powerflow.py
     """
 

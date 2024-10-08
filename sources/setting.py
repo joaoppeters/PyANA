@@ -21,7 +21,7 @@ def setting(
 ):
     """initialization
 
-    Parameters
+    Args
         powerflow: powerflow do arquivo powerflow.py
     """
 
@@ -67,7 +67,7 @@ def pathpwf(
 ):
     """verificação automática de diretório sistemas
 
-    Parâmetros
+    Args
         powerflow: powerflow do arquivo powerflow.py
     """
 
@@ -105,7 +105,7 @@ def pathstb(
 ):
     """verificação automática de diretório sistemas
 
-    Parâmetros
+    Args
         powerflow: powerflow do arquivo powerflow.py
     """
 

@@ -15,7 +15,7 @@ def options(
 ):
     """inicialização
 
-    Parâmetros
+    Args
         powerflow: self do arquivo powerflow.py
     """
 
