@@ -236,3 +236,11 @@ def methodo(
         areasfolder(powerflow,)
         
         areanalysis(powerflow,)
+
+    # 
+    elif powerflow.method == "RPVCT":
+        from rel import relpvct
+
+        relpvct(
+            powerflow,
+        )

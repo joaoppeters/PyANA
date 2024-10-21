@@ -52,4 +52,46 @@ def relr(
     print("Trues", cases.count(True))
     print("Falses", cases.count(False))
     print()
+
+
+def relpvct(
+    powerflow,
+):
+    """
     
+    Args:
+        powerflow (_type_): _description_
+    """
+
+    string0 = " X----X------------X---X--------X--------X--------X-------------X---------X\n"
+    string1 = " X-----X----------------------------------------------X-------------X------------X\n"
+    
+    folder = powerflow.maindir + '/sistemas/'
+    
+    rel_files = glob(join(folder, 'PVCT*'))
+    load = list()
+    
+    for rel_file in rel_files:
+        flag = False
+        with open(rel_file, 'r', encoding='utf-8', errors='ignore') as file:
+            for line in file:
+                print(line)
+                if ((line == string0) or (line == string1)) and not flag:
+                    flag = True
+                    
+                elif flag:
+                    content = line.split()
+                    try:
+                        if (content[1] == "Convergente") and (content[-2] == "MW"):
+                            load.append(float(content[-3]))
+                            flag = False
+                        elif content[-2] == "MW":
+                            load.append(float(content[-3]))
+                        else:
+                            pass
+                    except:
+                        pass                           
+                        
+    
+    for l in range(1, len(load)):
+        print((load[l] - load[0]) * 100 / load[0])
