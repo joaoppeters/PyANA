@@ -462,5 +462,5 @@ def qlimsubjacsym(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     pass

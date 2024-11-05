@@ -13,13 +13,13 @@ from datetime import datetime as dt
 def rwstb(
     powerflow,
 ):
-    """inicializacao
+    """Inicialização
 
     Args
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
         powerflow.filefolder + "/" + powerflow.namecase + "{}.stb".format(powerflow.ones)

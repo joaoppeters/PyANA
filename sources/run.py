@@ -12,7 +12,7 @@ system = "2Q2024_R2_C6.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE - R1.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE.pwf"
 # system = "NE224_CASO1_MA.pwf"
-system = "ieee14.pwf"
+# system = "NE224-C3.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method = "EXIC" # CONTINUATION POWER FLOW
@@ -30,8 +30,8 @@ method = "SXSC" # STOCHASTIC (ANAREDE BATCH RUNNING)
 # method = "DATA" # DATA MANIPULATION
 # method = "EXCE" # CROSS-ENTROPY
 method = "AREA"
-method = "RINT"
-method = "RPVCT"
+# method = "RINT"
+# method = "RPVCT"
 
 
 control = [

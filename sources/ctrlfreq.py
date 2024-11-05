@@ -576,5 +576,5 @@ def freqsubjacsym(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     pass

@@ -19,7 +19,7 @@ def wulog(
         powerflow (_type_): _description_
     """
 
-    ## Inicializacao
+    ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
         powerflow.filefolder + "/" + powerflow.namecase + "{}.pwf".format(powerflow.ones)

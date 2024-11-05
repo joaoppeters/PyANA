@@ -211,10 +211,12 @@ sistemas/*.log
 sistemas/*.pdf
 sistemas/*.png
 sistemas/*.gz
+sistemas/*.HIS
+sistemas/ULOG*
 
 *resultados/Continuado/
 *resultados/Smooth/
-*/resultados/AnaliseArea/
+*resultados/iNFO/
 
 */107-Barras/*
 

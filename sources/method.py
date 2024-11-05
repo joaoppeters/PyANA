@@ -228,16 +228,20 @@ def methodo(
             powerflow,
         )
 
-    # Chamada específicada para análise de areas
+    # Chamada específica para análise de areas
     elif powerflow.method == "AREA":
-        from areas import areanalysis
+        from areas import q2024, ne224
         from folder import areasfolder
 
         areasfolder(powerflow,)
         
-        areanalysis(powerflow,)
+        if "2Q2024" in powerflow.name:
+            q2024(powerflow,)
+        
+        elif "NE224" in powerflow.name:
+            ne224(powerflow,)
 
-    # 
+    # Chamada específica para leitura dos relatórios de fluxo de potência continuado com contingência
     elif powerflow.method == "RPVCT":
         from rel import relpvct
 

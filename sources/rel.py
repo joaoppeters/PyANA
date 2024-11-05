@@ -69,29 +69,29 @@ def relpvct(
     folder = powerflow.maindir + '/sistemas/'
     
     rel_files = glob(join(folder, 'PVCT*'))
-    load = list()
     
     for rel_file in rel_files:
+        load = dict()
         flag = False
         with open(rel_file, 'r', encoding='utf-8', errors='ignore') as file:
             for line in file:
-                print(line)
                 if ((line == string0) or (line == string1)) and not flag:
                     flag = True
                     
                 elif flag:
                     content = line.split()
                     try:
-                        if (content[1] == "Convergente") and (content[-2] == "MW"):
-                            load.append(float(content[-3]))
+                        if (content[0] == "0") and (content[-2] == "MW"):
+                            load0 = float(content[-3])
                             flag = False
-                        elif content[-2] == "MW":
-                            load.append(float(content[-3]))
+                        elif (content[1] != "Convergente") and (content[-2] == "MW"):
+                            load[content[0]] = (float(content[-3]) - load0) * 100 / load0
                         else:
                             pass
                     except:
-                        pass                           
-                        
-    
-    for l in range(1, len(load)):
-        print((load[l] - load[0]) * 100 / load[0])
+                        pass  
+
+        print(rel_file)
+        print(*[f"{k}: {v}" for k, v in load.items()], sep="\n")
+
+print()

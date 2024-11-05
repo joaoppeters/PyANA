@@ -7,15 +7,16 @@
 # ------------------------------------- #
 
 
-def areanalysis(
+def q2024(
     powerflow,
 ):
     """
     
     Args:
+        powerflow (_type_): _description_
     """
 
-    ## Inicializacao
+    ## Inicialização
     # Areas
     allareas = powerflow.dbarDF.area.unique().sort_values()
     generation_types = ["UNE", "UHE", "UTE", "EOL", "UFV", "PCH", "BIO", "OTHER", "TOTAL",]
@@ -133,7 +134,7 @@ def areanalysis(
         dger += 1
         
     # AREA REPORT
-    filename = powerflow.areasfolder + powerflow.name + "-areas.txt"
+    filename = powerflow.infofolder + powerflow.name + "-areas.txt"
     with open(filename, "w") as file:
         file.write("AREA REPORT\n")
         file.write("\n")
@@ -156,3 +157,161 @@ def areanalysis(
         file.write("AREA;UNE;UHE;UTE;EOL;UFV;PCH;BIO;OTHER;TOTAL\n")
         # for area in allareas:
         #     file.write(f"{area};{stateareas_number[area]['UNE']};{stateareas_number[area]['UHE']};{stateareas_number
+
+
+    
+def ne224(
+    powerflow,
+):
+    """	
+
+    Args
+        powerflow (_type_): _description_
+    """
+
+    ## Inicialização
+    fronteira = powerflow.dbarDF.loc[(powerflow.dbarDF.potencia_reativa_minima == -9999) & (powerflow.dbarDF.potencia_reativa_maxima == 99999)]
+
+    alagoas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == '  2']
+    maceio = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 259]
+
+    bahia = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == '  5']
+    camacari = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 284]
+
+    ceara = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == '  6']
+    fortaleza = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 325]
+
+    maranhao = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 10']
+    saoluis = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 332]
+
+    paraiba = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 15']
+    joaopessoa = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 12999]
+
+    pernambuco = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 16']
+    recife = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 241]
+
+    piaui = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 17']
+    teresina = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 228]
+
+    rio_grande_do_norte = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 20']
+    natal = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 346]
+
+    sergipe = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == ' 25']
+    aracaju = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 273]
+
+    eolicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == '  2']
+    hidreletricas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == '  5']
+    termicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == '  7']
+
+
+    # AREA REPORT
+    filename = powerflow.infofolder + powerflow.name + ".txt"
+    with open(filename, "w") as file:
+        file.write("- AREA REPORT")
+        file.write("\n\n")
+        file.write("    -- GERADORES")
+        file.write("\n")
+        file.write(str(powerflow.nger))
+        file.write("\n\n")
+        file.write("        --- UHE")
+        file.write("\n")
+        file.write(hidreletricas.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- UTE")
+        file.write("\n")
+        file.write(termicas.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- EOL")
+        file.write("\n")
+        file.write(eolicas.to_string(index=False))
+        file.write("\n\n")
+        file.write("    -- BARRAS")
+        file.write("\n")
+        file.write(str(powerflow.nbus))
+        file.write("\n\n")
+        file.write("    -- FRONTEIRA")
+        file.write("\n")
+        file.write(fronteira.to_string(index=False))
+        file.write("\n\n")
+        file.write("    -- LINHAS")
+        file.write("\n")
+        file.write(str(powerflow.nlin))
+        file.write("\n\n")
+        file.write("    -- ESTADOS")
+        file.write("\n")
+        file.write("        --- AL")
+        file.write("\n")
+        file.write(alagoas.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Maceio")
+        file.write("\n")
+        file.write(maceio.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- BA")
+        file.write("\n")
+        file.write(bahia.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Camacari")
+        file.write("\n")
+        file.write(camacari.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- CE")
+        file.write("\n")
+        file.write(ceara.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Fortaleza")
+        file.write("\n")
+        file.write(fortaleza.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- MA")
+        file.write("\n")
+        file.write(maranhao.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Sao Luis")
+        file.write("\n")
+        file.write(saoluis.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- PB")
+        file.write("\n")
+        file.write(paraiba.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Joao Pessoa")
+        file.write("\n")
+        file.write(joaopessoa.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- PE")
+        file.write("\n")
+        file.write(pernambuco.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Recife")
+        file.write("\n")
+        file.write(recife.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- PI")
+        file.write("\n")
+        file.write(piaui.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Teresina")
+        file.write("\n")
+        file.write(teresina.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- RN")
+        file.write("\n")
+        file.write(rio_grande_do_norte.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Natal")
+        file.write("\n")
+        file.write(natal.to_string(index=False))
+        file.write("\n\n")
+        file.write("        --- SE")
+        file.write("\n")
+        file.write(sergipe.to_string(index=False))
+        file.write("\n")
+        file.write("            ---- Aracaju")
+        file.write("\n")
+        file.write(aracaju.to_string(index=False))
+
+        
+
+
+    print()

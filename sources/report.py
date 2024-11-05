@@ -21,13 +21,13 @@ from numpy import (
 def report(
     powerflow,
 ):
-    """inicializacao
+    """Inicialização
 
     Args
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     if powerflow.report:
         print("\033[96mOpcoes de relatorio escolhidas: ", end="")
         for k in powerflow.report:
@@ -135,7 +135,7 @@ def rheader(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     file.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -193,7 +193,7 @@ def RCONV(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     file.write("vv relatorio de convergencia vv")
     if powerflow.method != "LINEAR":
         file.write("\n\n")
@@ -266,7 +266,7 @@ def RBAR(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     # Loop por area
     for area in powerflow.dbarDF["area"].unique():
         file.write("vv relatorio de barras vv area {} vv".format(area))
@@ -320,7 +320,7 @@ def RLIN(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     file.write("vv relatorio de linhas vv")
     file.write("\n\n")
     file.write(
@@ -407,7 +407,7 @@ def RGER(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     pass
 
 
@@ -421,7 +421,7 @@ def RSVC(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     file.write("vv relatorio de compensadores estaticos de potencia reativa vv")
     file.write("\n\n")
     if (powerflow.dcerDF["controle"][0] == "A") or (
@@ -542,7 +542,7 @@ def RXIC(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     var = False
     file.write("vv relatorio de execucao do fluxo de potencia continuado vv")
     file.write("\n\n")
@@ -644,7 +644,7 @@ def tobecontinued(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     var = False
 
     # Manipulacao
@@ -1188,7 +1188,7 @@ def RPoC(
         powerflow: self do arquivo powerflow.py
     """
 
-    ## Inicializacao
+    ## Inicialização
     file.write("vv relatorio de convergencia vv")
     file.write("\n\n")
     file.write(" * * * * " + powerflow.solution["convergence"] + " * * * * ")

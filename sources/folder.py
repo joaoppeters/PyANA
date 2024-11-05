@@ -36,12 +36,13 @@ def areasfolder(
 
     Args
         powerflow: self do arquivo powerflow.py
+        name: nome do diretório
     """
 
     ## Inicialização
-    powerflow.areasfolder = powerflow.resultsfolder + "AnaliseArea/"
-    if exists(powerflow.areasfolder) is False:
-        mkdir(powerflow.areasfolder)
+    powerflow.infofolder = powerflow.resultsfolder + "iNFO/"
+    if exists(powerflow.infofolder) is False:
+        mkdir(powerflow.infofolder)
 
 
 def admittancefolder(
