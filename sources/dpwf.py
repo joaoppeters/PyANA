@@ -2465,6 +2465,162 @@ def dlin(
         )
 
 
+def dmfl(
+    powerflow,
+):
+    """inicialização para leitura de dados de monitoração de fluxo em circuito CA
+
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dmfl["tipo_elemento_1"] = list()
+    powerflow.dmfl["identificacao_elemento_1"] = list()
+    powerflow.dmfl["condicao_elemento_1"] = list()
+    powerflow.dmfl["tipo_elemento_2"] = list()
+    powerflow.dmfl["identificacao_elemento_2"] = list()
+    powerflow.dmfl["condicao_elemento_2"] = list()
+    powerflow.dmfl["tipo_elemento_3"] = list()
+    powerflow.dmfl["identificacao_elemento_3"] = list()
+    powerflow.dmfl["condicao_elemento_3"] = list()
+    powerflow.dmfl["tipo_elemento_4"] = list()
+    powerflow.dmfl["identificacao_elemento_4"] = list()
+    powerflow.dmfl["operacao"] = list()
+    powerflow.dmfl["interligacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dmfl["tipo_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dmfl["identificacao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.dmfl["condicao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.dmfl["tipo_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dmfl["identificacao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.dmfl["condicao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.dmfl["tipo_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.dmfl["identificacao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.dmfl["condicao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.dmfl["tipo_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.dmfl["identificacao_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.dmfl["operacao"].append(powerflow.lines[powerflow.linecount][50])
+            powerflow.dmfl["interligacao"].append(
+                powerflow.lines[powerflow.linecount][52]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    powerflow.dmflDF = DF(data=powerflow.dmfl)
+    powerflow.dmfl = deepcopy(powerflow.dmflDF)
+    powerflow.dmflDF = powerflow.dmflDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dmflDF = powerflow.dmflDF.astype(
+        {
+            "tipo_elemento_1": "object",
+            "identificacao_elemento_1": "int",
+            "condicao_elemento_1": "object",
+            "tipo_elemento_2": "object",
+            "identificacao_elemento_2": "int",
+            "condicao_elemento_2": "object",
+            "tipo_elemento_3": "object",
+            "identificacao_elemento_3": "int",
+            "condicao_elemento_3": "object",
+            "tipo_elemento_4": "object",
+            "identificacao_elemento_4": "int",
+            "operacao": "object",
+            "interligacao": "float",
+        }
+    )
+    if powerflow.dmflDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
+        )
+    else:
+        powerflow.codes["DMFL"] = True
+
+
+def dmfl_circ(
+    powerflow,
+):
+    """inicialização para leitura de dados de monitoração de fluxo em circuito CA
+
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dmfl["de"] = list()
+    powerflow.dmfl["para"] = list()
+    powerflow.dmfl["circuito"] = list()
+    powerflow.dmfl["operacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][:5])
+            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][6:11])
+            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][12:14])            
+            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][15:20])
+            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][21:26])
+            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][27:29])
+            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][30:35])
+            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][36:41])
+            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][42:44])
+            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][45:50])
+            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][51:56])
+            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][57:59])
+            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][60:65])
+            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][66:71])
+            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][72:74])
+            powerflow.dmfl["operacao"].append(powerflow.lines[powerflow.linecount][75])
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Constantes
+    powerflow.dmflDF = DF(data=powerflow.dmfl)
+    powerflow.dmfl = deepcopy(powerflow.dmflDF)
+    powerflow.dmflDF = powerflow.dmflDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dmflDF = powerflow.dmflDF.astype(
+        {
+            "de": "int",
+            "para": "int",
+            "circuito": "int",
+            "operacao": "object",
+        }
+    )
+
+    if powerflow.dmflDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
+        )
+    else:
+        powerflow.codes["DMFL"] = True
+
+
 def dopc(
     powerflow,
 ):

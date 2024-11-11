@@ -908,6 +908,56 @@ def wdlin(
     file.write("\n")
 
 
+def wdmfl(
+    powerflow,
+    file,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dmfl.dmfl.iloc[0]))
+    file.write(format(powerflow.dmfl.ruler.iloc[0]))
+
+    for idx, value in powerflow.dmfl.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def wdmfl_circ(
+    powerflow,
+    file,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
+    """
+
+    ## Inicialização
+    file.write(format(powerflow.dmfl.dmfl.iloc[0]))
+    file.write(format(powerflow.dmfl.ruler.iloc[0]))
+    for idx, value in powerflow.dmfl.iterrows():
+        file.write(f"{value['de']:>5} {value['para']:>5} {value['circuito']:>2} ")
+
+        if (idx + 1) % 5 == 0:
+            file.write(f"{value['operacao']:1}")
+            file.write("\n")
+
+    file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
 def wdopc(
     powerflow,
     file,
@@ -929,8 +979,6 @@ def wdopc(
             file.write("\n")
 
     file.write("\nIMPR L FILE L 80CO L")
-    file.write("\n")
-    file.write("\nRINT L")
     file.write("\n")
     file.write("99999")
     file.write("\n")

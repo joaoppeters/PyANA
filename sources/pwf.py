@@ -94,6 +94,7 @@ def codes(
         "DINC": False,
         "DINJ": False,
         "DLIN": False,
+        "DMFL": False,
         "DOPC": False,
         "DSHL": False,
         "DTPF": False,
@@ -417,6 +418,26 @@ def readfile(
             dlin(
                 powerflow,
             )
+
+        # Dados de Monitoração de Fluxo em Circuito CA
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DMFL"
+            or powerflow.lines[powerflow.linecount].strip() == "DMFL IMPR"
+            or powerflow.lines[powerflow.linecount].strip() == "DMFL CIRC"
+            or powerflow.lines[powerflow.linecount].strip() == "DMFL CIRC IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dmfl = dict()
+            powerflow.dmfl["dmfl"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dmfl["ruler"] = powerflow.lines[powerflow.linecount][:]
+            if "CIRC" in powerflow.lines[powerflow.linecount - 1].strip():
+                dmfl_circ(
+                    powerflow,
+                )
+            else:
+                dmfl(
+                    powerflow,
+                )
 
         # Dados de Opções de Controle e Execução Padrão
         elif (
