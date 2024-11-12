@@ -77,10 +77,11 @@ def stochsxsc(
                 lpsamples,
                 s,
             )
-            eolfactor(powerflow.dbar,
+            eolfactor(
+                powerflow.dbar,
                 powerflow.dbarDF,
-                wpsamples, 
-                s, 
+                wpsamples,
+                s,
             )
             powerflow.ones += 1
 
@@ -94,8 +95,19 @@ def stochsxsc(
 
             exlf(file=powerflow.filedir, time=3)
 
-            exlfrel = path.realpath(powerflow.filefolder + "/" + "EXLF" + powerflow.namecase.upper() + "{}.REL".format(powerflow.ones))
-            savfile = path.realpath(powerflow.filefolder + "/" + powerflow.namecase.upper() + "{}.SAV".format(powerflow.ones))
+            exlfrel = path.realpath(
+                powerflow.filefolder
+                + "/"
+                + "EXLF"
+                + powerflow.namecase.upper()
+                + "{}.REL".format(powerflow.ones)
+            )
+            savfile = path.realpath(
+                powerflow.filefolder
+                + "/"
+                + powerflow.namecase.upper()
+                + "{}.SAV".format(powerflow.ones)
+            )
 
             if not path.exists(exlfrel):
                 remove(savfile)
@@ -107,7 +119,7 @@ def stochsxct(
     powerflow,
 ):
     """
-    
+
     Args
         powerflow: self do arquivo powerflow.py
     """
@@ -122,45 +134,67 @@ def stochsxct(
         geolstd = stddev
 
         # Specify the folder path and file extension
-        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
-        savextension = '.SAV'  # Change to the extension you need
+        folder_path = (
+            powerflow.maindir
+            + "/sistemas/"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+        savextension = ".SAV"  # Change to the extension you need
 
         # List and filter files by extension
         savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
 
         # Print the filtered files
         for savfile in savfiles:
-            usxct(powerflow, savfile,)
+            usxct(
+                powerflow,
+                savfile,
+            )
 
 
 def stochsxic(
     powerflow,
 ):
     """
-    
+
     Args
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
     from os import listdir
-    
+
     from ulog import usxic
-    
+
     for stddev in range(1, 11, 1):
         loadstd = stddev
         geolstd = stddev
 
         # Specify the folder path and file extension
-        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
-        savextension = '.REL'  # Change to the extension you need
+        folder_path = (
+            powerflow.maindir
+            + "/sistemas/"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+        savextension = ".REL"  # Change to the extension you need
 
         # List and filter files by extension
         savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
 
         # Print the filtered files
         for savfile in savfiles:
-            usxic(powerflow, savfile,)
+            usxic(
+                powerflow,
+                savfile,
+            )
 
 
 def stochsxict(
@@ -182,12 +216,23 @@ def stochsxict(
         geolstd = stddev
 
         # Specify the folder path and file extension
-        folder_path = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)
-        savextension = '.REL'  # Change to the extension you need
+        folder_path = (
+            powerflow.maindir
+            + "/sistemas/"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+        savextension = ".REL"  # Change to the extension you need
 
         # List and filter files by extension
         savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
 
         # Print the filtered files
         for savfile in savfiles:
-            uspvct(powerflow, savfile,)
+            uspvct(
+                powerflow,
+                savfile,
+            )

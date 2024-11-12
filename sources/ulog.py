@@ -14,7 +14,7 @@ def wulog(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow (_type_): _description_
     """
@@ -22,12 +22,15 @@ def wulog(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.filefolder + "/" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.filefolder
+        + "/"
+        + powerflow.namecase
+        + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
     file = open(powerflow.filedir, "w")
-    sav = '_'.join(powerflow.name.split("_")[:-1]) + '.SAV'
+    sav = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
     case = powerflow.name.split("_")[-1][1:]
 
     # Cabecalho
@@ -69,7 +72,7 @@ def wulog(
         powerflow,
         file,
     )
-    
+
 
 def uheader(
     file,
@@ -143,7 +146,7 @@ def udbar(
 
     for idx, value in dbar.iterrows():
         if "EOL" not in value["nome"]:
-            dbar.loc[idx, "potencia_ativa"] = 5*""
+            dbar.loc[idx, "potencia_ativa"] = 5 * ""
 
         if value["demanda_ativa"] != 5 * " ":
             value["demanda_ativa"] = float(value["demanda_ativa"])
@@ -333,7 +336,7 @@ def usxsc(
     file.write("\n")
 
     file.write("EXLF BPSI")
-    
+
     file.write("\n")
     file.write("( ")
     file.write("\n")
@@ -371,12 +374,7 @@ def usxsc(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write(
-        "EXLF"
-        + powerflow.namecase
-        + str(powerflow.ones)
-        + ".REL"
-    )
+    file.write("EXLF" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")
@@ -405,7 +403,10 @@ def usxic(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.filefolder + "/SXIC_" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.filefolder
+        + "/SXIC_"
+        + powerflow.namecase
+        + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -429,12 +430,7 @@ def usxic(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write(
-        "EXIC"
-        + powerflow.namecase
-        + str(powerflow.ones)
-        + ".REL"
-    )
+    file.write("EXIC" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")
@@ -447,7 +443,6 @@ def usxic(
     file.write("\n")
 
     file.write("FIM")
-    
 
 
 def usxct(
@@ -464,7 +459,10 @@ def usxct(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.filefolder + "/SXCT_" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.filefolder
+        + "/SXCT_"
+        + powerflow.namecase
+        + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -488,17 +486,12 @@ def usxct(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write(
-        "EXCT"
-        + powerflow.namecase
-        + str(powerflow.ones)
-        + ".REL"
-    )
+    file.write("EXCT" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")
     file.write("\n")
-    
+
     file.write("EXCT BPSI RCVC RINT")
     file.write("\n")
     file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
@@ -526,7 +519,10 @@ def uspvct(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.filefolder + "/SPVCT_" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.filefolder
+        + "/SPVCT_"
+        + powerflow.namecase
+        + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -550,12 +546,7 @@ def uspvct(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write(
-        "EXICCT"
-        + powerflow.namecase
-        + str(powerflow.ones)
-        + ".REL"
-    )
+    file.write("EXICCT" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")

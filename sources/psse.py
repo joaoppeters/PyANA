@@ -10,6 +10,7 @@ from folder import pssefolder
 
 from pandas import ExcelWriter
 
+
 def pssexcel(
     powerflow,
 ):
@@ -21,7 +22,9 @@ def pssexcel(
 
     ## Inicialização
 
-    pssefolder(powerflow,)
+    pssefolder(
+        powerflow,
+    )
 
     excel_file = powerflow.pssefolder + f"{powerflow.system.split('.')[0]}.xlsx"
 

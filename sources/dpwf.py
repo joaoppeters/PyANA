@@ -1958,13 +1958,22 @@ def dger(
 
         if powerflow.dgerDF["fator_participacao"].sum() == 0:
             import pandas as pd
-            geradores = pd.merge(powerflow.dgerDF[["numero"]], powerflow.dbarDF, on="numero",)
-            geradores['fator_participacao'] = geradores["potencia_ativa"] * 1e2 / geradores["potencia_ativa"].sum()
+
+            geradores = pd.merge(
+                powerflow.dgerDF[["numero"]],
+                powerflow.dbarDF,
+                on="numero",
+            )
+            geradores["fator_participacao"] = (
+                geradores["potencia_ativa"] * 1e2 / geradores["potencia_ativa"].sum()
+            )
 
             geradores.set_index("numero", inplace=True)
             powerflow.dgerDF.set_index("numero", inplace=True)
 
-            powerflow.dgerDF["fator_participacao"].update(geradores["fator_participacao"])
+            powerflow.dgerDF["fator_participacao"].update(
+                geradores["fator_participacao"]
+            )
             powerflow.dgerDF.reset_index(inplace=True)
 
         powerflow.nger = powerflow.dgerDF.shape[0]
@@ -2583,19 +2592,29 @@ def dmfl_circ(
         else:
             powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][:5])
             powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][6:11])
-            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][12:14])            
+            powerflow.dmfl["circuito"].append(
+                powerflow.lines[powerflow.linecount][12:14]
+            )
             powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][15:20])
             powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][21:26])
-            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][27:29])
+            powerflow.dmfl["circuito"].append(
+                powerflow.lines[powerflow.linecount][27:29]
+            )
             powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][30:35])
             powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][36:41])
-            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][42:44])
+            powerflow.dmfl["circuito"].append(
+                powerflow.lines[powerflow.linecount][42:44]
+            )
             powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][45:50])
             powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][51:56])
-            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][57:59])
+            powerflow.dmfl["circuito"].append(
+                powerflow.lines[powerflow.linecount][57:59]
+            )
             powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][60:65])
             powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][66:71])
-            powerflow.dmfl["circuito"].append(powerflow.lines[powerflow.linecount][72:74])
+            powerflow.dmfl["circuito"].append(
+                powerflow.lines[powerflow.linecount][72:74]
+            )
             powerflow.dmfl["operacao"].append(powerflow.lines[powerflow.linecount][75])
         powerflow.linecount += 1
 

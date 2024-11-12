@@ -648,8 +648,12 @@ def tobecontinued(
     var = False
 
     # Manipulacao
-    filevtan = open(powerflow.systemcontinuationfolder + powerflow.name + "-tangent.txt", "w")
-    filevarv = open(powerflow.systemcontinuationfolder + powerflow.name + "-voltagevar.txt", "w")
+    filevtan = open(
+        powerflow.systemcontinuationfolder + powerflow.name + "-tangent.txt", "w"
+    )
+    filevarv = open(
+        powerflow.systemcontinuationfolder + powerflow.name + "-voltagevar.txt", "w"
+    )
     if powerflow.solution["eigencalculation"]:
         filedeteigen = open(
             powerflow.systemcontinuationfolder + powerflow.name + "-det&eigen.txt", "w"

@@ -32,7 +32,7 @@ def folder(
 def areasfolder(
     powerflow,
 ):
-    """criação de diretório para armazenar resultados de análise de área	
+    """criação de diretório para armazenar resultados de análise de área
 
     Args
         powerflow: self do arquivo powerflow.py
@@ -97,11 +97,15 @@ def continuationfolder(
     if exists(powerflow.continuationfolder) is False:
         mkdir(powerflow.continuationfolder)
 
-    powerflow.systemcontinuationfolder = powerflow.continuationfolder + powerflow.name + "/"
+    powerflow.systemcontinuationfolder = (
+        powerflow.continuationfolder + powerflow.name + "/"
+    )
     if exists(powerflow.systemcontinuationfolder) is False:
         mkdir(powerflow.systemcontinuationfolder)
 
-    powerflow.systemcontinuationfolderimag = powerflow.systemcontinuationfolder + "imagens/"
+    powerflow.systemcontinuationfolderimag = (
+        powerflow.systemcontinuationfolder + "imagens/"
+    )
     if exists(powerflow.systemcontinuationfolderimag) is False:
         mkdir(powerflow.systemcontinuationfolderimag)
 
@@ -139,7 +143,7 @@ def pssefolder(
     """
 
     ## Inicialização
-    powerflow.pssefolder = dirname(powerflow.dirPWF) +  "/PSSe/"
+    powerflow.pssefolder = dirname(powerflow.dirPWF) + "/PSSe/"
     if exists(powerflow.pssefolder) is False:
         mkdir(powerflow.pssefolder)
 
@@ -195,16 +199,31 @@ def stochasticfolder(
     geolstd,
 ):
     """criação de diretório para armazenar dados de simulação estocástica
-    
+
     Args
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
     if geolstd > 0:
-        powerflow.stochasticsystems = powerflow.maindir + "/sistemas/" + powerflow.name + "_loadstd{}_geolstd{}".format(loadstd, geolstd,)	
+        powerflow.stochasticsystems = (
+            powerflow.maindir
+            + "/sistemas/"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
     else:
-        powerflow.stochasticsystems = powerflow.maindir + "/sistemas/" + powerflow.name + "_load std{}".format(loadstd,)
+        powerflow.stochasticsystems = (
+            powerflow.maindir
+            + "/sistemas/"
+            + powerflow.name
+            + "_load std{}".format(
+                loadstd,
+            )
+        )
     if exists(powerflow.stochasticsystems) is False:
         mkdir(powerflow.stochasticsystems)
 

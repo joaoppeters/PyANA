@@ -23,11 +23,7 @@ def exlf(
 
     ## Inicialização
     # Chamada do Anarede
-    system(
-        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
-            file
-        )
-    )
+    system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
     sleep(time)
     system("taskkill /f /im ANAREDE.exe")
@@ -37,21 +33,17 @@ def exic(
     file,
 ):
     """
-    
+
     Args
-        file: 
+        file:
     """
-    
+
     from os import system
     from time import sleep
 
     ## Inicialização
     # Chamada do Anarede
-    system(
-        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
-            file
-        )
-    )
+    system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
     sleep(10)
     system("taskkill /f /im ANAREDE.exe")
@@ -61,21 +53,17 @@ def exct(
     file,
 ):
     """
-    
+
     Args
-        file: 
+        file:
     """
-    
+
     from os import system
     from time import sleep
 
     ## Inicialização
     # Chamada do Anarede
-    system(
-        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
-            file
-        )
-    )
+    system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
     sleep(10)
     system("taskkill /f /im ANAREDE.exe")
@@ -85,21 +73,17 @@ def exicpvct(
     file,
 ):
     """
-    
+
     Args
-        file: 
+        file:
     """
-    
+
     from os import system
     from time import sleep
 
     ## Inicialização
     # Chamada do Anarede
-    system(
-        'start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(
-            file
-        )
-    )
+    system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
     sleep(10)
     system("taskkill /f /im ANAREDE.exe")

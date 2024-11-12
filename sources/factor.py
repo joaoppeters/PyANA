@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
- 
+
 def loadfactor(
     dbar,
     dbarDF,
@@ -41,7 +41,7 @@ def eolfactor(
     wsamples,
     s,
 ):
-    """fator de potência aplicado à estocasticidade da geração eólica	
+    """fator de potência aplicado à estocasticidade da geração eólica
 
     Args
         dbar: DataFrame com as barras

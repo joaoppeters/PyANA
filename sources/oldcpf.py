@@ -560,9 +560,10 @@ class Continuation:
                 idxinc = valueinc["identificacao_incremento_1"] - 1
 
                 # Incremento de Carregamento
-                powerflow.setting.dbarraDF.at[idxinc, "demanda_ativa"] = powerflow.cpfsol[
-                    "demanda_ativa"
-                ][idxinc] * (1 + powerflow.cpfsol["stepsch"])
+                powerflow.setting.dbarraDF.at[idxinc, "demanda_ativa"] = (
+                    powerflow.cpfsol["demanda_ativa"][idxinc]
+                    * (1 + powerflow.cpfsol["stepsch"])
+                )
                 powerflow.setting.dbarraDF.at[idxinc, "demanda_reativa"] = (
                     powerflow.cpfsol["demanda_reativa"][idxinc]
                     * (1 + powerflow.cpfsol["stepsch"])
@@ -629,9 +630,9 @@ class Continuation:
             ]
 
         # Tratamento
-        powerflow.setting.pqsch["potencia_ativa_especificada"] /= powerflow.setting.options[
-            "sbase"
-        ]
+        powerflow.setting.pqsch[
+            "potencia_ativa_especificada"
+        ] /= powerflow.setting.options["sbase"]
         powerflow.setting.pqsch[
             "potencia_reativa_especificada"
         ] /= powerflow.setting.options["sbase"]
@@ -805,11 +806,14 @@ class Continuation:
         colarray /= powerflow.setting.options["sbase"]
 
         # Expansão Inferior
-        powerflow.setting.jacob = concatenate((powerflow.setting.jacob, colarray), axis=1)
+        powerflow.setting.jacob = concatenate(
+            (powerflow.setting.jacob, colarray), axis=1
+        )
 
         # Expansão Lateral
         powerflow.setting.jacob = concatenate(
-            (powerflow.setting.jacob, concatenate((rowarray, [stepvar]), axis=1)), axis=0
+            (powerflow.setting.jacob, concatenate((rowarray, [stepvar]), axis=1)),
+            axis=0,
         )
 
     def convergence(
@@ -872,7 +876,9 @@ class Continuation:
 
         ## Inicialização
         # configuração completa
-        powerflow.sol["theta"] += powerflow.setting.statevar[0 : (powerflow.setting.nbus)]
+        powerflow.sol["theta"] += powerflow.setting.statevar[
+            0 : (powerflow.setting.nbus)
+        ]
         # Condição de previsão
         if stage == "prev":
             # Condição de variável de passo
@@ -1034,7 +1040,9 @@ class Continuation:
             )
 
         # Armazenamento do índice do barramento com maior variação de magnitude de tensão
-        powerflow.case[self.case]["nodevarvolt"] = deepcopy(powerflow.setting.nodevarvolt)
+        powerflow.case[self.case]["nodevarvolt"] = deepcopy(
+            powerflow.setting.nodevarvolt
+        )
 
         # Análise de sensibilidade e armazenamento
         self.eigensens(
@@ -1063,7 +1071,9 @@ class Continuation:
 
         # # Submatrizes Jacobianas
         self.pt = deepcopy(
-            self.jacob[: (2 * powerflow.setting.nbus), :][:, : (2 * powerflow.setting.nbus)]
+            self.jacob[: (2 * powerflow.setting.nbus), :][
+                :, : (2 * powerflow.setting.nbus)
+            ]
         )
         self.pv = deepcopy(
             self.jacob[: (2 * powerflow.setting.nbus), :][
@@ -1098,7 +1108,9 @@ class Continuation:
         try:
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             rightvalues, rightvector = eig(
-                powerflow.setting.jacob[powerflow.setting.mask, :][:, powerflow.setting.mask]
+                powerflow.setting.jacob[powerflow.setting.mask, :][
+                    :, powerflow.setting.mask
+                ]
             )
             powerflow.setting.PF = zeros(
                 [
@@ -1112,7 +1124,9 @@ class Continuation:
             )
 
             # Jacobiana reduzida - sensibilidade QV
-            powerflow.setting.jacobQV = self.qv - dot(dot(self.qt, inv(self.pt)), self.pv)
+            powerflow.setting.jacobQV = self.qv - dot(
+                dot(self.qt, inv(self.pt)), self.pv
+            )
             rightvaluesQV, rightvectorQV = eig(powerflow.setting.jacobQV)
             rightvaluesQV = absolute(rightvaluesQV)
             powerflow.setting.PFQV = zeros(
@@ -1620,7 +1634,9 @@ class Continuation:
                 (
                     powerflow.sol["voltage"][powerflow.setting.slackidx]
                     < (
-                        powerflow.setting.dbarraDF.loc[powerflow.setting.slackidx, "tensao"]
+                        powerflow.setting.dbarraDF.loc[
+                            powerflow.setting.slackidx, "tensao"
+                        ]
                         * 1e-3
                     )
                     - 1e-8
@@ -1628,7 +1644,9 @@ class Continuation:
                 or (
                     powerflow.sol["voltage"][powerflow.setting.slackidx]
                     > (
-                        powerflow.setting.dbarraDF.loc[powerflow.setting.slackidx, "tensao"]
+                        powerflow.setting.dbarraDF.loc[
+                            powerflow.setting.slackidx, "tensao"
+                        ]
                         * 1e-3
                     )
                     + 1e-8

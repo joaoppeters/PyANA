@@ -17,14 +17,31 @@ def fdata(
     """
 
     ## Inicialização
-    sp = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217,]
+    sp = [
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+    ]
     pl = list()
     for idx, value in powerflow.dbarDF.iterrows():
         if value.area in sp:
             pl.append(value.demanda_ativa)
 
     print(sum(pl))
-    
 
     # pg = list()
     # for idx, value in powerflow.dgerDF.iterrows():
@@ -51,4 +68,3 @@ def fdata(
     #         #         area.remove(value.de)
     #         #     except:
     #         #         area.remove(value.para)
-    

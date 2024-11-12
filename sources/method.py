@@ -119,7 +119,7 @@ def methodo(
         from anarede import anarede
 
         powerflow.batchtime = 10
-        
+
         anarede(
             powerflow.batchtime,
             powerflow.dirPWF,
@@ -130,7 +130,7 @@ def methodo(
         from anarede import anarede
 
         powerflow.batchtime = 10
-        
+
         anarede(
             powerflow.batchtime,
             powerflow.dirPWF,
@@ -141,7 +141,7 @@ def methodo(
         from anarede import anarede
 
         powerflow.batchtime = 10
-        
+
         anarede(
             powerflow.batchtime,
             powerflow.dirPWF,
@@ -158,7 +158,7 @@ def methodo(
         )
 
         stb(
-            powerflow, 
+            powerflow,
         )
 
         powerflow.namecase = powerflow.name + "jpmod"
@@ -198,11 +198,11 @@ def methodo(
         pssexcel(
             powerflow,
         )
-        
+
     # Chamada específica para leitura de arquivos .REL
     elif powerflow.method == "RELR":
         from rel import relr
-        
+
         relr(
             powerflow,
         )
@@ -233,13 +233,19 @@ def methodo(
         from areas import q2024, ne224
         from folder import areasfolder
 
-        areasfolder(powerflow,)
-        
+        areasfolder(
+            powerflow,
+        )
+
         if "2Q2024" in powerflow.name:
-            q2024(powerflow,)
-        
+            q2024(
+                powerflow,
+            )
+
         elif "NE224" in powerflow.name:
-            ne224(powerflow,)
+            ne224(
+                powerflow,
+            )
 
     # Chamada específica para leitura dos relatórios de fluxo de potência continuado com contingência
     elif powerflow.method == "RPVCT":
