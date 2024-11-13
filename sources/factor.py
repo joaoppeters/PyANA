@@ -21,7 +21,7 @@ def factor(
         powerflow: self do arquivo powerflow.py
     """
 
-    from pandas import concat
+    from pandas import concat, merge
     from numpy import random
 
     ## Inicialização
@@ -81,45 +81,29 @@ def factor(
             for idx, value in nordeste.iterrows()
         ]
         # Update on DGER DataFrame For Wind Generation in NE region
-        ruler = dger[["ruler"]].copy()
-        blockname = dger[["dger"]].copy()
+        ruler = dger.ruler.iloc[0]
+        blockname = dger.dger.iloc[0]
         wind = nordeste[nordeste.fator_eol != 0]
-        dger = wind[["numero", "fator_eol"]]
-        dger["ruler"] = (
-            ruler.ruler.reindex(range(len(dger))).fillna(method="ffill").values
-        )
-        dger["dger"] = (
-            blockname.dger.reindex(range(len(dger))).fillna(method="ffill").values
-        )
-        dger["fator_eol"] = (dger["fator_eol"] * 1e2).round(2)
-        difference = 100 - dger["fator_eol"].sum()
+        dger["fator_eol"] = 0
+        dger = dger.astype({"numero": int})
+        dger["operacao"] = "M"
+
+        dger = merge(dger, wind[["numero", "fator_eol"]], on="numero", how="outer")
+        dger["ruler"] = ruler
+        dger["dger"] = blockname
+        dger["operacao"] = dger["operacao"].fillna("A")
+        dger = dger.fillna(0)
+        dger["fator_participacao"] = dger["fator_eol_y"]
+        dger["fator_participacao"] = (dger["fator_participacao"] * 1e2).round(2)
+        difference = 100 - dger["fator_participacao"].sum()
         if difference > 0:
             increment_indices = random.choice(
                 dger.index, int(difference * 100), replace=True
             )
-            dger.loc[increment_indices, "fator_eol"] += 0.01
-        dger = dger.sort_values(by="fator_eol", ascending=False)
-        dger["fator_eol"] = (dger["fator_eol"]).round(2)
-        dger = dger.rename(columns={"fator_eol": "fator_participacao"})
-        dger = dger.assign(
-            **{
-                col: None
-                for col in [
-                    "operacao",
-                    "potencia_ativa_minima",
-                    "potencia_ativa_maxima",
-                    "fator_participacao_controle_remoto",
-                    "fator_potencia_nominal",
-                    "fator_servico_armadura",
-                    "fator_servico_rotor",
-                    "angulo_maximo_carga",
-                    "reatancia_maquina",
-                    "potencia_aparente_nominal",
-                    "estatismo",
-                ]
-            }
-        )
-
+            dger.loc[increment_indices, "fator_participacao"] += 0.01
+        dger = dger.sort_values(by="fator_participacao", ascending=False)
+        dger["fator_participacao"] = (dger["fator_participacao"]).round(2)
+        
         # Merging Data Variables
         dbar = dbar.astype({"numero": int})
         dbar = dbar.merge(

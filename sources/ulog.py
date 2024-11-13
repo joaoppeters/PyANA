@@ -278,7 +278,7 @@ def udger(
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
         file.write(
-            f"{value['numero']:>5} {'M':1} {6*' ':>6} {6*' ':>6} {value['fator_participacao']:>5} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
+            f"{value.numero:>5} {value.operacao:1} {6*' ':>6} {6*' ':>6} {value.fator_participacao:>5} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
         )
         file.write("\n")
     file.write("99999")
