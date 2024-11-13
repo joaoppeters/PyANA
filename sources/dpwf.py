@@ -2474,6 +2474,98 @@ def dlin(
         )
 
 
+def dmet(
+    powerflow,
+):
+    """inicialização para leitura de dados de monitoração para estabilidade de tensão em barra CA
+
+    Args
+        powerflow: self do arquivo powerflow.py
+    """
+
+    ## Inicialização
+    powerflow.dmet["tipo_elemento_1"] = list()
+    powerflow.dmet["identificacao_elemento_1"] = list()
+    powerflow.dmet["condicao_elemento_1"] = list()
+    powerflow.dmet["tipo_elemento_2"] = list()
+    powerflow.dmet["identificacao_elemento_2"] = list()
+    powerflow.dmet["condicao_elemento_2"] = list()
+    powerflow.dmet["tipo_elemento_3"] = list()
+    powerflow.dmet["identificacao_elemento_3"] = list()
+    powerflow.dmet["condicao_elemento_3"] = list()
+    powerflow.dmet["tipo_elemento_4"] = list()
+    powerflow.dmet["identificacao_elemento_4"] = list()
+    powerflow.dmet["operacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dmet["tipo_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dmet["identificacao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.dmet["condicao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.dmet["tipo_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dmet["identificacao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.dmet["condicao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.dmet["tipo_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.dmet["identificacao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.dmet["condicao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.dmet["tipo_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.dmet["identificacao_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.dmet["operacao"].append(powerflow.lines[powerflow.linecount][50])
+        powerflow.linecount += 1
+
+    # DataFrame dos Dados de Monitoração para Estabilidade de Tensão em Barra CA
+    powerflow.dmetDF = DF(data=powerflow.dmet)
+    powerflow.dmet = deepcopy(powerflow.dmetDF)
+    powerflow.dmetDF = powerflow.dmetDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dmetDF = powerflow.dmetDF.astype(
+        {
+            "tipo_elemento_1": "object",
+            "identificacao_elemento_1": "int",
+            "condicao_elemento_1": "object",
+            "tipo_elemento_2": "object",
+            "identificacao_elemento_2": "int",
+            "condicao_elemento_2": "object",
+            "tipo_elemento_3": "object",
+            "identificacao_elemento_3": "int",
+            "condicao_elemento_3": "object",
+            "tipo_elemento_4": "object",
+            "identificacao_elemento_4": "int",
+            "operacao": "object",
+        }
+    )
+    if powerflow.dmetDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DMET`!\033[0m"
+        )
+    else:
+        powerflow.codes["DMET"] = True
+
+
 def dmfl(
     powerflow,
 ):
@@ -2541,7 +2633,7 @@ def dmfl(
             )
         powerflow.linecount += 1
 
-    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    # DataFrame dos dados de Monitoração de Fluxo em Circuito CA
     powerflow.dmflDF = DF(data=powerflow.dmfl)
     powerflow.dmfl = deepcopy(powerflow.dmflDF)
     powerflow.dmflDF = powerflow.dmflDF.replace(r"^\s*$", "0", regex=True)
@@ -2590,32 +2682,60 @@ def dmfl_circ(
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][6:11])
-            powerflow.dmfl["circuito"].append(
-                powerflow.lines[powerflow.linecount][12:14]
-            )
-            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][15:20])
-            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][21:26])
-            powerflow.dmfl["circuito"].append(
-                powerflow.lines[powerflow.linecount][27:29]
-            )
-            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][30:35])
-            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][36:41])
-            powerflow.dmfl["circuito"].append(
-                powerflow.lines[powerflow.linecount][42:44]
-            )
-            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][45:50])
-            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][51:56])
-            powerflow.dmfl["circuito"].append(
-                powerflow.lines[powerflow.linecount][57:59]
-            )
-            powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][60:65])
-            powerflow.dmfl["para"].append(powerflow.lines[powerflow.linecount][66:71])
-            powerflow.dmfl["circuito"].append(
-                powerflow.lines[powerflow.linecount][72:74]
-            )
-            powerflow.dmfl["operacao"].append(powerflow.lines[powerflow.linecount][75])
+            try:
+                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][:5])
+                powerflow.dmfl["para"].append(
+                    powerflow.lines[powerflow.linecount][6:11]
+                )
+                powerflow.dmfl["circuito"].append(
+                    powerflow.lines[powerflow.linecount][12:14]
+                )
+                powerflow.dmfl["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][15:20])
+                powerflow.dmfl["para"].append(
+                    powerflow.lines[powerflow.linecount][21:26]
+                )
+                powerflow.dmfl["circuito"].append(
+                    powerflow.lines[powerflow.linecount][27:29]
+                )
+                powerflow.dmfl["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][30:35])
+                powerflow.dmfl["para"].append(
+                    powerflow.lines[powerflow.linecount][36:41]
+                )
+                powerflow.dmfl["circuito"].append(
+                    powerflow.lines[powerflow.linecount][42:44]
+                )
+                powerflow.dmfl["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][45:50])
+                powerflow.dmfl["para"].append(
+                    powerflow.lines[powerflow.linecount][51:56]
+                )
+                powerflow.dmfl["circuito"].append(
+                    powerflow.lines[powerflow.linecount][57:59]
+                )
+                powerflow.dmfl["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][60:65])
+                powerflow.dmfl["para"].append(
+                    powerflow.lines[powerflow.linecount][66:71]
+                )
+                powerflow.dmfl["circuito"].append(
+                    powerflow.lines[powerflow.linecount][72:74]
+                )
+                powerflow.dmfl["operacao"].append(
+                    powerflow.lines[powerflow.linecount][75]
+                )
+            except:
+                powerflow.dmfl["de"] = powerflow.dmfl["de"][:-1]
+                break
         powerflow.linecount += 1
 
     # DataFrame dos Dados de Constantes
@@ -2990,7 +3110,7 @@ def dtpf_circ(
         {
             "de": "int",
             "para": "int",
-            "circuito": "object",
+            "circuito": "int",
             "operacao": "object",
         }
     )

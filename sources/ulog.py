@@ -9,6 +9,8 @@
 from os.path import realpath
 from datetime import datetime as dt
 
+from sav import savmove
+
 
 def wulog(
     powerflow,
@@ -30,8 +32,13 @@ def wulog(
 
     # Manipulacao
     file = open(powerflow.filedir, "w")
-    sav = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
+    savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
     case = powerflow.name.split("_")[-1][1:]
+
+    savmove(
+        filename=powerflow.maindir + "\\sistemas\\" + savfile,
+        filedir=powerflow.filefolder,
+    )
 
     # Cabecalho
     uheader(
@@ -41,7 +48,7 @@ def wulog(
     # Corpo
     uarq(
         file,
-        sav,
+        savfile,
         case,
     )
 
@@ -60,12 +67,28 @@ def wulog(
         file,
     )
 
+    udmet(
+        powerflow.dmet,
+        file,
+    )
+
     udctg(
         powerflow.dctg,
         powerflow.dctg1,
         powerflow.dctg2,
         file,
     )
+
+    if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
+        udmfl_circ(
+            powerflow.dmfl,
+            file,
+        )
+    else:
+        udmfl(
+            powerflow.dmfl,
+            file,
+        )
 
     # Saida
     usxsc(
@@ -285,6 +308,26 @@ def udinc(
     file.write("\n")
 
 
+def udmet(
+    dmet,
+    file,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
+    """
+
+    ## Inicialização
+    file.write(format(dmet.dmet.iloc[0]))
+    file.write(format(dmet.ruler.iloc[0]))
+    file.write(f"{'AREA':>4} {'1':>5} {'A':1} {'AREA':>4} {'999':>5}")
+    file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
 def udctg(
     dctg,
     dctg1,
@@ -316,6 +359,56 @@ def udctg(
         ctg += value["ndctg2"]
         file.write("FCAS")
         file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def udmfl(
+    dmfl,
+    file,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
+    """
+
+    ## Inicialização
+    file.write(format(dmfl.dmfl.iloc[0]))
+    file.write(format(dmfl.ruler.iloc[0]))
+
+    for idx, value in dmfl.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def udmfl_circ(
+    dmfl,
+    file,
+):
+    """
+
+    Args
+        powerflow: self do arquivo powerflow.py
+        file: arquivo de saída
+    """
+
+    ## Inicialização
+    file.write(format(dmfl.dmfl.iloc[0]))
+    file.write(format(dmfl.ruler.iloc[0]))
+    for idx, value in dmfl.iterrows():
+        file.write(f"{value['de']:>5} {value['para']:>5} {value['circuito']:>2} ")
+
+        if (idx + 1) % 5 == 0:
+            file.write(f"{value['operacao']:1}")
+            file.write("\n")
+
+    file.write("\n")
     file.write("99999")
     file.write("\n")
 

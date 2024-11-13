@@ -204,6 +204,17 @@ def rwpwf(
             file,
         )
 
+    if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+        wdmfl_circ(
+            powerflow,
+            file,
+        )
+    else:
+        wdmfl(
+            powerflow,
+            file,
+        )
+
     wtail(
         powerflow,
         file,

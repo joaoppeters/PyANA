@@ -24,7 +24,7 @@ def folder(
     dirSistemas = dirname(powerflow.dirPWF)
 
     # Criação de diretório Resultados
-    powerflow.resultsfolder = dirname(dirSistemas) + "/resultados/"
+    powerflow.resultsfolder = dirname(dirSistemas) + "\\resultados\\"
     if exists(powerflow.resultsfolder) is False:
         mkdir(powerflow.resultsfolder)
 
@@ -40,7 +40,7 @@ def areasfolder(
     """
 
     ## Inicialização
-    powerflow.infofolder = powerflow.resultsfolder + "iNFO/"
+    powerflow.infofolder = powerflow.resultsfolder + "iNFO\\"
     if exists(powerflow.infofolder) is False:
         mkdir(powerflow.infofolder)
 
@@ -55,11 +55,11 @@ def admittancefolder(
     """
 
     ## Inicialização
-    powerflow.admittancefolder = powerflow.resultsfolder + "MatrizAdmitancia/"
+    powerflow.admittancefolder = powerflow.resultsfolder + "MatrizAdmitancia\\"
     if exists(powerflow.admittancefolder) is False:
         mkdir(powerflow.admittancefolder)
 
-    powerflow.admittancefolder = powerflow.admittancefolder + powerflow.name + "/"
+    powerflow.admittancefolder = powerflow.admittancefolder + powerflow.name + "\\"
     if exists(powerflow.admittancefolder) is False:
         mkdir(powerflow.admittancefolder)
 
@@ -74,11 +74,11 @@ def convergencefolder(
     """
 
     ## Inicialização
-    powerflow.convergencefolder = powerflow.resultsfolder + "TrajetoriaConvergencia/"
+    powerflow.convergencefolder = powerflow.resultsfolder + "TrajetoriaConvergencia\\"
     if exists(powerflow.convergencefolder) is False:
         mkdir(powerflow.convergencefolder)
 
-    powerflow.convergencefolder = powerflow.convergencefolder + powerflow.name + "/"
+    powerflow.convergencefolder = powerflow.convergencefolder + powerflow.name + "\\"
     if exists(powerflow.convergencefolder) is False:
         mkdir(powerflow.convergencefolder)
 
@@ -93,23 +93,23 @@ def continuationfolder(
     """
 
     ## Inicialização
-    powerflow.continuationfolder = powerflow.resultsfolder + "Continuado/"
+    powerflow.continuationfolder = powerflow.resultsfolder + "Continuado\\"
     if exists(powerflow.continuationfolder) is False:
         mkdir(powerflow.continuationfolder)
 
     powerflow.systemcontinuationfolder = (
-        powerflow.continuationfolder + powerflow.name + "/"
+        powerflow.continuationfolder + powerflow.name + "\\"
     )
     if exists(powerflow.systemcontinuationfolder) is False:
         mkdir(powerflow.systemcontinuationfolder)
 
     powerflow.systemcontinuationfolderimag = (
-        powerflow.systemcontinuationfolder + "imagens/"
+        powerflow.systemcontinuationfolder + "imagens\\"
     )
     if exists(powerflow.systemcontinuationfolderimag) is False:
         mkdir(powerflow.systemcontinuationfolderimag)
 
-    powerflow.systemcontinuationfoldertxt = powerflow.systemcontinuationfolder + "txt/"
+    powerflow.systemcontinuationfoldertxt = powerflow.systemcontinuationfolder + "txt\\"
     if exists(powerflow.systemcontinuationfoldertxt) is False:
         mkdir(powerflow.systemcontinuationfoldertxt)
 
@@ -124,11 +124,11 @@ def jacobifolder(
     """
 
     ## Inicialização
-    powerflow.jacobifolder = powerflow.resultsfolder + "MatrizJacobiana/"
+    powerflow.jacobifolder = powerflow.resultsfolder + "MatrizJacobiana\\"
     if exists(powerflow.jacobifolder) is False:
         mkdir(powerflow.jacobifolder)
 
-    powerflow.jacobifolder = powerflow.jacobifolder + powerflow.name + "/"
+    powerflow.jacobifolder = powerflow.jacobifolder + powerflow.name + "\\"
     if exists(powerflow.jacobifolder) is False:
         mkdir(powerflow.jacobifolder)
 
@@ -136,14 +136,14 @@ def jacobifolder(
 def pssefolder(
     powerflow,
 ):
-    """criação de diretório para armazenar resultados no formato do PSS/E
+    """criação de diretório para armazenar resultados no formato do PSSe
 
     Args
         powerflow: self do arquivo powerflow.py
     """
 
     ## Inicialização
-    powerflow.pssefolder = dirname(powerflow.dirPWF) + "/PSSe/"
+    powerflow.pssefolder = dirname(powerflow.dirPWF) + "\\PSSe\\"
     if exists(powerflow.pssefolder) is False:
         mkdir(powerflow.pssefolder)
 
@@ -158,11 +158,11 @@ def reportsfolder(
     """
 
     ## Inicialização
-    powerflow.reportsfolder = powerflow.resultsfolder + "Relatorios/"
+    powerflow.reportsfolder = powerflow.resultsfolder + "Relatorios\\"
     if exists(powerflow.reportsfolder) is False:
         mkdir(powerflow.reportsfolder)
 
-    powerflow.reportsfolder = powerflow.reportsfolder + powerflow.name + "/"
+    powerflow.reportsfolder = powerflow.reportsfolder + powerflow.name + "\\"
     if exists(powerflow.reportsfolder) is False:
         mkdir(powerflow.reportsfolder)
 
@@ -179,16 +179,16 @@ def smoothfolder(
     ## Inicialização
     # Condição de método
     if powerflow.method == "EXLF":
-        powerflow.dirsmooth = powerflow.resultsfolder + "Smooth/"
+        powerflow.dirsmooth = powerflow.resultsfolder + "Smooth\\"
         if exists(powerflow.dirsmooth) is False:
             mkdir(powerflow.dirsmooth)
 
-        powerflow.dirsmoothsys = powerflow.dirsmooth + powerflow.name + "/"
+        powerflow.dirsmoothsys = powerflow.dirsmooth + powerflow.name + "\\"
         if exists(powerflow.dirsmoothsys) is False:
             mkdir(powerflow.dirsmoothsys)
 
     elif powerflow.method == "EXIC":
-        powerflow.dirsmoothsys = powerflow.systemcontinuationfolder + "smooth/"
+        powerflow.dirsmoothsys = powerflow.systemcontinuationfolder + "smooth\\"
         if exists(powerflow.dirsmoothsys) is False:
             mkdir(powerflow.dirsmoothsys)
 
@@ -208,7 +208,7 @@ def stochasticfolder(
     if geolstd > 0:
         powerflow.stochasticsystems = (
             powerflow.maindir
-            + "/sistemas/"
+            + "\\sistemas\\"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
@@ -218,7 +218,7 @@ def stochasticfolder(
     else:
         powerflow.stochasticsystems = (
             powerflow.maindir
-            + "/sistemas/"
+            + "\\sistemas\\"
             + powerflow.name
             + "_load std{}".format(
                 loadstd,
@@ -240,10 +240,10 @@ def statevarfolder(
     """
 
     ## Inicialização
-    powerflow.statevarfolder = powerflow.resultsfolder + "VariaveisEstado/"
+    powerflow.statevarfolder = powerflow.resultsfolder + "VariaveisEstado\\"
     if exists(powerflow.statevarfolder) is False:
         mkdir(powerflow.statevarfolder)
 
-    powerflow.statevarfolder = powerflow.statevarfolder + powerflow.name + "/"
+    powerflow.statevarfolder = powerflow.statevarfolder + powerflow.name + "\\"
     if exists(powerflow.statevarfolder) is False:
         mkdir(powerflow.statevarfolder)

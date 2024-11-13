@@ -85,7 +85,7 @@ def codes(
         "DCNV": False,
         "DCSC": False,
         "DCTE": False,
-        "DCTG": False,  # FAZER
+        "DCTG": False,
         "DCTR": False,
         "DELO": False,
         "DGBT": False,
@@ -94,6 +94,7 @@ def codes(
         "DINC": False,
         "DINJ": False,
         "DLIN": False,
+        "DMET": False,
         "DMFL": False,
         "DOPC": False,
         "DSHL": False,
@@ -416,6 +417,19 @@ def readfile(
             powerflow.dlin["dlin"] = powerflow.lines[powerflow.linecount - 1][:]
             powerflow.dlin["ruler"] = powerflow.lines[powerflow.linecount][:]
             dlin(
+                powerflow,
+            )
+
+        # Dados de Monitoração para Estabilidade de Tensão em Barra CA
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DMET"
+            or powerflow.lines[powerflow.linecount].strip() == "DMET IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dmet = dict()
+            powerflow.dmet["dmet"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dmet["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dmet(
                 powerflow,
             )
 

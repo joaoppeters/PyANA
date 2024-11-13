@@ -19,9 +19,9 @@ def stochsxsc(
     from os import path, remove
 
     from anarede import exlf
-    from factor import loadfactor, eolfactor
+    from factor import factor, loadf, windf
     from folder import stochasticfolder
-    from stochastic import normalLOAD, normalEOL
+    from stochastic import loadn, windn
     from rwstb import rwstb
     from ulog import wulog
 
@@ -42,7 +42,8 @@ def stochsxsc(
         (
             lpsamples,
             lpmean,
-        ) = normalLOAD(
+        ) = loadn(
+            name=powerflow.name,
             dbarDF=powerflow.dbarDF,
             nsamples=powerflow.nsamples,
             loadstd=loadstd,
@@ -50,38 +51,37 @@ def stochsxsc(
         (
             wpsamples,
             wpmean,
-        ) = normalEOL(
+        ) = windn(
+            name=powerflow.name,
             dbarDF=powerflow.dbarDF,
             nsamples=powerflow.nsamples,
             geolstd=geolstd,
         )
 
-        # Load Power Factor
-        powerflow.dbar["fator_demanda_ativa"] = powerflow.dbarDF.demanda_ativa / lpmean
-        powerflow.dbar["fator_potencia"] = (
-            powerflow.dbarDF.demanda_reativa / powerflow.dbarDF.demanda_ativa
+        # Factor
+        powerflow.dbar, powerflow.dger = factor(
+            name=powerflow.name,
+            lpmean=lpmean,
+            wpmean=wpmean,
+            dbarDF=powerflow.dbarDF,
+            dbar=powerflow.dbar,
+            dger=powerflow.dger,
         )
-
-        # Wind Generation Power Factor
-        powerflow.dbar["fator_eol"] = [
-            value["potencia_ativa"] / wpmean if "EOL" in value["nome"] else 0
-            for idx, value in powerflow.dbarDF.iterrows()
-        ]
 
         # Loop de amostras
         powerflow.ones = 0
         for s in range(0, len(lpsamples)):
-            loadfactor(
-                powerflow.dbar,
-                powerflow.dbarDF,
-                lpsamples,
-                s,
+            loadf(
+                dbar=powerflow.dbar,
+                dbarDF=powerflow.dbarDF,
+                psamples=lpsamples,
+                s=s,
             )
-            eolfactor(
-                powerflow.dbar,
-                powerflow.dbarDF,
-                wpsamples,
-                s,
+            windf(
+                dbar=powerflow.dbar,
+                dbarDF=powerflow.dbarDF,
+                wsamples=wpsamples,
+                s=s,
             )
             powerflow.ones += 1
 

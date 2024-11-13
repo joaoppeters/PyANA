@@ -29,7 +29,7 @@ method = "SXSC"  # STOCHASTIC (ANAREDE BATCH RUNNING)
 # method = "RELR"  # READING ANAREDE REL FILES
 # method = "DATA" # DATA MANIPULATION
 # method = "EXCE" # CROSS-ENTROPY
-method = "AREA"
+# method = "AREA"
 # method = "RINT"
 # method = "RPVCT"
 
