@@ -94,6 +94,8 @@ def factor(
         dger["operacao"] = dger["operacao"].fillna("A")
         dger = dger.fillna(0)
         dger["fator_participacao"] = dger["fator_eol_y"]
+        del dger["fator_eol_x"]
+        del dger["fator_eol_y"]
         dger["fator_participacao"] = (dger["fator_participacao"] * 1e2).round(2)
         difference = 100 - dger["fator_participacao"].sum()
         if difference > 0:
@@ -103,7 +105,7 @@ def factor(
             dger.loc[increment_indices, "fator_participacao"] += 0.01
         dger = dger.sort_values(by="fator_participacao", ascending=False)
         dger["fator_participacao"] = (dger["fator_participacao"]).round(2)
-        
+
         # Merging Data Variables
         dbar = dbar.astype({"numero": int})
         dbar = dbar.merge(
@@ -163,6 +165,8 @@ def loadf(
                 * dbar.loc[idx, "fator_potencia"]
             )
 
+    return dbar
+
 
 def windf(
     dbar,
@@ -187,3 +191,5 @@ def windf(
             dbar.loc[idx, "potencia_ativa"] = str(
                 round(wsamples[s] * dbar.loc[idx, "fator_eol"], 0)
             )
+
+    return dbar

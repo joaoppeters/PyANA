@@ -17,6 +17,7 @@ def stochsxsc(
     """
 
     from os import path, remove
+    from pandas import to_numeric
 
     from anarede import exlf
     from factor import factor, loadf, windf
@@ -26,7 +27,7 @@ def stochsxsc(
     from ulog import wulog
 
     ## Inicialização
-    powerflow.nsamples = 1000
+    powerflow.nsamples = 5
     powerflow.exicflag = False
     powerflow.exctflag = False
     for stddev in range(1, 11, 1):
@@ -71,13 +72,13 @@ def stochsxsc(
         # Loop de amostras
         powerflow.ones = 0
         for s in range(0, len(lpsamples)):
-            loadf(
+            powerflow.dbar = loadf(
                 dbar=powerflow.dbar,
                 dbarDF=powerflow.dbarDF,
                 psamples=lpsamples,
                 s=s,
             )
-            windf(
+            powerflow.dbar = windf(
                 dbar=powerflow.dbar,
                 dbarDF=powerflow.dbarDF,
                 wsamples=wpsamples,
@@ -111,8 +112,15 @@ def stochsxsc(
 
             if not path.exists(exlfrel):
                 remove(savfile)
-            # else:
-            #     rwstb(powerflow,)
+            else:
+                with open(powerflow.stochasticsystems + "\\BALANCE.txt", "a") as file:
+                    file.write(
+                        "{};{};{}\n".format(
+                            stddev,
+                            to_numeric(powerflow.dbar.potencia_ativa, errors="coerce").fillna(0).sum(),
+                            to_numeric(powerflow.dbar.demanda_ativa, errors="coerce").fillna(0).sum(),
+                        )
+                    )
 
 
 def stochsxct(

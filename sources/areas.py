@@ -51,6 +51,43 @@ def q2024(
             ]
         )
     ]
+    sp201 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 201]
+    sp202 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 202]
+    sp203 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 203]
+    sp204 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 204]
+    sp205 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 205]
+    sp206 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 206]
+    sp207 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 207]
+    sp208 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 208]
+    sp209 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 209]
+    sp210 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 210]
+    sp211 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 211]
+    sp212 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 212]
+    sp213 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 213]
+    sp214 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 214]
+    sp215 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 215]
+    sp216 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 216]
+    sp217 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 217]
+
+    print("\n")
+    print("201: ", sp201.demanda_ativa.sum())
+    print("202: ", sp202.demanda_ativa.sum())
+    print("203: ", sp203.demanda_ativa.sum())
+    print("204: ", sp204.demanda_ativa.sum())
+    print("205: ", sp205.demanda_ativa.sum())
+    print("206: ", sp206.demanda_ativa.sum())
+    print("207: ", sp207.demanda_ativa.sum())
+    print("208: ", sp208.demanda_ativa.sum())
+    print("209: ", sp209.demanda_ativa.sum())
+    print("210: ", sp210.demanda_ativa.sum())
+    print("211: ", sp211.demanda_ativa.sum())
+    print("212: ", sp212.demanda_ativa.sum())
+    print("213: ", sp213.demanda_ativa.sum())
+    print("214: ", sp214.demanda_ativa.sum())
+    print("215: ", sp215.demanda_ativa.sum())
+    print("216: ", sp216.demanda_ativa.sum())
+    print("217: ", sp217.demanda_ativa.sum())
+
     rio_janeiro = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262]
