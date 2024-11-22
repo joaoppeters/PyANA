@@ -117,8 +117,12 @@ def stochsxsc(
                     file.write(
                         "{};{};{}\n".format(
                             stddev,
-                            to_numeric(powerflow.dbar.potencia_ativa, errors="coerce").fillna(0).sum(),
-                            to_numeric(powerflow.dbar.demanda_ativa, errors="coerce").fillna(0).sum(),
+                            to_numeric(powerflow.dbar.potencia_ativa, errors="coerce")
+                            .fillna(0)
+                            .sum(),
+                            to_numeric(powerflow.dbar.demanda_ativa, errors="coerce")
+                            .fillna(0)
+                            .sum(),
                         )
                     )
 

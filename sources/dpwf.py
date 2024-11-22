@@ -2738,7 +2738,7 @@ def dmte(
     powerflow,
 ):
     """inicialização para leitura de dados de monitoração de tensão em barra CA
-    
+
     Args
         powerflow:
     """

@@ -914,7 +914,7 @@ def wdmet(
     file,
 ):
     """
-    
+
     Args
         powerflow:
         file:
@@ -1001,7 +1001,6 @@ def wdmte(
         file.write("\n")
     file.write("99999")
     file.write("\n")
-
 
 
 def wdopc(
