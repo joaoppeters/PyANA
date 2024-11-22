@@ -52,41 +52,52 @@ def wulog(
         case,
     )
 
-    udbar(
-        powerflow.dbar,
-        file,
-    )
-
-    udger(
-        powerflow.dger,
-        file,
-    )
-
-    udinc(
-        powerflow.dinc,
-        file,
-    )
-
-    udmet(
-        powerflow.dmet,
-        file,
-    )
-
-    udctg(
-        powerflow.dctg,
-        powerflow.dctg1,
-        powerflow.dctg2,
-        file,
-    )
-
-    if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
-        udmfl_circ(
-            powerflow.dmfl,
+    if powerflow.codes["DBAR"]:
+        udbar(
+            powerflow.dbar,
             file,
         )
-    else:
-        udmfl(
-            powerflow.dmfl,
+
+    if powerflow.codes["DGER"]:
+        udger(
+            powerflow.dger,
+            file,
+        )
+
+    if powerflow.codes["DINC"]:
+        udinc(
+            powerflow.dinc,
+            file,
+        )
+
+    if powerflow.codes["DMET"]:
+        udmet(
+            powerflow.dmet,
+            file,
+        )
+
+    if powerflow.codes["DCTG"]:
+        udctg(
+            powerflow.dctg,
+            powerflow.dctg1,
+            powerflow.dctg2,
+            file,
+        )
+    if powerflow.codes["DMFL"]:
+        if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+            udmfl_circ(
+                powerflow.dmfl,
+                file,
+            )
+        else:
+            udmfl(
+                powerflow.dmfl,
+                file,
+            )
+
+    if powerflow.codes["DMTE"]:
+        udmte(
+            powerflow.dmte,
             file,
         )
 
@@ -262,6 +273,41 @@ def udbar(
     file.write("\n")
 
 
+def udctg(
+    dctg,
+    dctg1,
+    dctg2,
+    file,
+):
+    """
+
+    Args
+        powerflow:
+        file:
+    """
+
+    ## Inicialização
+    ctg = 0
+    file.write(format(dctg["dctg"]))
+    for idx1, value in dctg1.iterrows():
+        file.write(value.ruler)
+        file.write(
+            f"{value['identificacao']:>4} {value['operacao']:1} {value['prioridade']:>2} {value['nome']:<47}"
+        )
+        file.write("\n")
+        file.write(dctg2.ruler.iloc[0])
+        for idx2 in range(0, value["ndctg2"]):
+            file.write(
+                f"{dctg2.tipo.iloc[idx2 + ctg]:>4} {dctg2.de.iloc[idx2 + ctg]:>5} {dctg2.para.iloc[idx2 + ctg]:>5} {dctg2.circuito.iloc[idx2 + ctg]:>2} {dctg2.extremidade.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
+            )
+            file.write("\n")
+        ctg += value["ndctg2"]
+        file.write("FCAS")
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
 def udger(
     dger,
     file,
@@ -328,41 +374,6 @@ def udmet(
     file.write("\n")
 
 
-def udctg(
-    dctg,
-    dctg1,
-    dctg2,
-    file,
-):
-    """
-
-    Args
-        powerflow:
-        file:
-    """
-
-    ## Inicialização
-    ctg = 0
-    file.write(format(dctg["dctg"]))
-    for idx1, value in dctg1.iterrows():
-        file.write(value.ruler)
-        file.write(
-            f"{value['identificacao']:>4} {value['operacao']:1} {value['prioridade']:>2} {value['nome']:<47}"
-        )
-        file.write("\n")
-        file.write(dctg2.ruler.iloc[0])
-        for idx2 in range(0, value["ndctg2"]):
-            file.write(
-                f"{dctg2.tipo.iloc[idx2 + ctg]:>4} {dctg2.de.iloc[idx2 + ctg]:>5} {dctg2.para.iloc[idx2 + ctg]:>5} {dctg2.circuito.iloc[idx2 + ctg]:>2} {dctg2.extremidade.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
-            )
-            file.write("\n")
-        ctg += value["ndctg2"]
-        file.write("FCAS")
-        file.write("\n")
-    file.write("99999")
-    file.write("\n")
-
-
 def udmfl(
     dmfl,
     file,
@@ -409,6 +420,29 @@ def udmfl_circ(
             file.write("\n")
 
     file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def udmte(
+    dmte,
+    file,
+):
+    """
+
+    Args
+        powerflow:
+        file:
+    """
+
+    ## Inicialização
+    file.write(format(dmte.dinc.iloc[0]))
+    file.write(format(dmte.ruler.iloc[0]))
+    for idx, value in dmte.iterrows():
+        file.write(
+            f"{value['tipo_incremento_1']:>4} {value['identificacao_incremento_1']:>5} {value['condicao_incremento_1']:1} {value['tipo_incremento_2']:>4} {value['identificacao_incremento_2']:>5} {value['condicao_incremento_2']:1} {value['tipo_incremento_3']:>4} {value['identificacao_incremento_3']:>5} {value['condicao_incremento_3']:1} {value['tipo_incremento_4']:>4} {value['identificacao_incremento_4']:>5} {value['condicao_incremento_4']:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
+        )
+        file.write("\n")
     file.write("99999")
     file.write("\n")
 
