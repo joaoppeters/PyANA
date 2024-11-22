@@ -17,7 +17,7 @@ def darq(
     """inicialização para leitura de dados de entrada e saida de arquivos
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
     ## Inicialização
     powerflow.darq["tipo"] = list()
@@ -60,7 +60,7 @@ def devt(
     """inicialização para leitura de dados de eventos
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -164,7 +164,7 @@ def dsim(
     """inicialização para leitura de dados de controle de simulação
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -215,7 +215,7 @@ def dmaq(
     """inicialização para leitura de dados
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
     ## Inicialização
     powerflow.linecount = 0
@@ -338,7 +338,7 @@ def blt(
     """inicialização para leitura de dados
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -371,7 +371,7 @@ def md01(
     """ "
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -447,7 +447,7 @@ def checktem(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

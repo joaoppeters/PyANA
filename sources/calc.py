@@ -16,7 +16,7 @@ def pcalc(
     """cálculo da potência ativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência ativa
 
@@ -72,7 +72,7 @@ def qcalc(
     """cálculo da potência reativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência reativa
 
@@ -128,7 +128,7 @@ def pcalct(
     """cálculo da potência ativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência ativa
 
@@ -184,7 +184,7 @@ def pcalcv(
     """cálculo da potência ativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência ativa
 
@@ -238,7 +238,7 @@ def qcalct(
     """cálculo da potência reativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência reativa
 
@@ -294,7 +294,7 @@ def qcalcv(
     """cálculo da potência reativa de cada barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         idx: int, obrigatório, valor padrão None
             referencia o índice da barra a qual vai ser calculada a potência reativa
 

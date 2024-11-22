@@ -16,7 +16,7 @@ def rwstb(
     """Inicialização
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -80,7 +80,7 @@ def wheader(
     """
 
     Args
-        file: arquivo de saída
+        file:
     """
 
     ## Inicialização
@@ -112,8 +112,8 @@ def wdarq(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -128,8 +128,8 @@ def wdevt(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -159,8 +159,8 @@ def wdmaq(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -185,8 +185,8 @@ def wdmdg_md01(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -208,8 +208,8 @@ def wdsim(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -230,8 +230,8 @@ def wtail(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização

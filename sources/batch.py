@@ -13,7 +13,7 @@ def stochsxsc(
     """batch de execução estocástica
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     from os import path, remove
@@ -129,7 +129,7 @@ def stochsxct(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -170,7 +170,7 @@ def stochsxic(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -211,7 +211,7 @@ def stochsxict(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

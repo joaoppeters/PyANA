@@ -38,7 +38,7 @@ def dynamic(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -171,7 +171,7 @@ def timenewt(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -242,7 +242,7 @@ def timeplot(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         y:
     """
 

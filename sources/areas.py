@@ -573,7 +573,6 @@ def ne224(
     Args
         powerflow (_type_): _description_
     """
-
     ## Inicialização
     fronteira = powerflow.dbarDF.loc[
         (powerflow.dbarDF.potencia_reativa_minima == -9999)

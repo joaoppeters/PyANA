@@ -17,7 +17,7 @@ def stb(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -50,7 +50,7 @@ def codes(
     """códigos de dados de execução implementados
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -72,7 +72,7 @@ def rstb(
     """leitura de arquivo .stb
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -125,7 +125,7 @@ def rdarq(
     """leitura de arquivos .dat e .blt associados ao dado de entrada DARQ
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     for idx, value in powerflow.darqDF.iterrows():

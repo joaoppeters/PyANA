@@ -42,7 +42,7 @@ def prediction_correction(
     """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -132,7 +132,7 @@ def exicloop(
     """loop do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -185,7 +185,7 @@ def prediction(
     """etapa de previsão do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -251,7 +251,7 @@ def correction(
     """etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -511,7 +511,7 @@ def exicresidue(
     """cálculo de resíduos das equações diferenciáveis
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
 
@@ -569,7 +569,7 @@ def exicjacobian(
     """expansão da matriz jacobiana para o método continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -615,7 +615,7 @@ def update_statevar(
     """atualização das variáveis de estado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
 
@@ -694,7 +694,7 @@ def exicstorage(
     """armazenamento dos resultados de fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
 
@@ -722,7 +722,7 @@ def exicevaluate(
     """avaliação para determinação do passo do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -820,7 +820,7 @@ def exicheuristics(
     """heurísticas para determinação do funcionamento do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -1176,7 +1176,7 @@ def exiccvgprint(
     """impressão de convergência do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

@@ -17,9 +17,8 @@ def pwf(
     """inicialização
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     t = time.process_time()
 
@@ -50,9 +49,8 @@ def keywords(
     """palavras-chave de arquivo .pwf
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.end_archive = "FIM"
     powerflow.end_block = ("9999", "99999", "999999")
@@ -65,9 +63,8 @@ def codes(
     """códigos de dados de execução implementados
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.codes = {
@@ -96,6 +93,7 @@ def codes(
         "DLIN": False,
         "DMET": False,
         "DMFL": False,
+        "DMTE": False,
         "DOPC": False,
         "DSHL": False,
         "DTPF": False,
@@ -108,9 +106,8 @@ def readfile(
     """leitura do arquivo .pwf
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     f = open(f"{powerflow.dirPWF}", "r", encoding="latin-1")
     powerflow.lines = f.readlines()
@@ -452,6 +449,19 @@ def readfile(
                 dmfl(
                     powerflow,
                 )
+
+        # Dados de Monitoração de Tensão em Barra CA
+        elif (
+            powerflow.lines[powerflow.linecount].strip() == "DMTE"
+            or powerflow.lines[powerflow.linecount].strip() == "DMTE IMPR"
+        ):
+            powerflow.linecount += 1
+            powerflow.dmte = dict()
+            powerflow.dmte["dmte"] = powerflow.lines[powerflow.linecount - 1][:]
+            powerflow.dmte["ruler"] = powerflow.lines[powerflow.linecount][:]
+            dmte(
+                powerflow,
+            )
 
         # Dados de Opções de Controle e Execução Padrão
         elif (

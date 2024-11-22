@@ -22,7 +22,7 @@ def svcssol(
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -101,7 +101,7 @@ def alphavar(
     """calculo dos Args para metodologia alpha do compensador estatico de potencia reativa
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -168,7 +168,7 @@ def svcres(
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
 
@@ -249,7 +249,7 @@ def svcsubjac(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -394,7 +394,7 @@ def svcupdt(
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -430,7 +430,7 @@ def svcsch(
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -464,7 +464,7 @@ def svccorr(
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
 
@@ -481,7 +481,7 @@ def svcheur(
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -503,7 +503,7 @@ def svccpf(
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -519,7 +519,7 @@ def svcsolcpf(
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
 
@@ -543,7 +543,7 @@ def svcsubhess(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -564,7 +564,7 @@ def svcsubjacsym(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

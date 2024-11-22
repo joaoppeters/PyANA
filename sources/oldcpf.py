@@ -44,7 +44,7 @@ class Continuation:
         """inicialização
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -86,7 +86,7 @@ class Continuation:
         """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -154,7 +154,7 @@ class Continuation:
         """loop do fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -223,7 +223,7 @@ class Continuation:
         """etapa de previsão do fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -282,7 +282,7 @@ class Continuation:
         """etapa de correção do fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -533,7 +533,7 @@ class Continuation:
         """realiza incremento no nível de carregamento (e geração)
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -601,7 +601,7 @@ class Continuation:
         """método para armazenamento dos Args especificados
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -651,7 +651,7 @@ class Continuation:
         """cálculo de resíduos das equações diferenciáveis
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
 
@@ -759,7 +759,7 @@ class Continuation:
         """determinação do vetor de resíduos
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -775,7 +775,7 @@ class Continuation:
         """expansão da matriz jacobiana para o método continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -823,7 +823,7 @@ class Continuation:
         """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -870,7 +870,7 @@ class Continuation:
         """atualização das variáveis de estado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
 
@@ -942,7 +942,7 @@ class Continuation:
         """cálculo do fluxo de potência nas linhas de transmissão
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -1023,7 +1023,7 @@ class Continuation:
         """armazenamento dos resultados de fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
             stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
         """
 
@@ -1058,7 +1058,7 @@ class Continuation:
         """análise de autovalores e autovetores
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
             stage: string de identificação da etapa do fluxo de potência continuado
         """
 
@@ -1270,7 +1270,7 @@ class Continuation:
         """avaliação para determinação do passo do fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -1378,7 +1378,7 @@ class Continuation:
         """heurísticas para determinação do funcionamento do fluxo de potência continuado
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização

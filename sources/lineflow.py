@@ -16,7 +16,7 @@ def lineflow(
     """cálculo do fluxo de potência nas linhas de transmissão
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
     ## Inicialização
     powerflow.solution.update(

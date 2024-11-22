@@ -17,7 +17,7 @@ def pssexcel(
     """salva arquivo no formato do PSS/E
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

@@ -103,7 +103,7 @@ def uheader(
     """
 
     Args
-        file: arquivo de saída
+        file:
     """
 
     ## Inicialização
@@ -136,7 +136,7 @@ def uarq(
     """
 
     Args
-        file: arquivo de saída
+        file:
     """
 
     ## Inicialização
@@ -159,8 +159,8 @@ def udbar(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -269,8 +269,8 @@ def udger(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -292,8 +292,8 @@ def udinc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -315,8 +315,8 @@ def udmet(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -337,8 +337,8 @@ def udctg(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -370,8 +370,8 @@ def udmfl(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -394,8 +394,8 @@ def udmfl_circ(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -420,8 +420,8 @@ def usxsc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -489,8 +489,8 @@ def usxic(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -545,8 +545,8 @@ def usxct(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização
@@ -605,8 +605,8 @@ def uspvct(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
 
     ## Inicialização

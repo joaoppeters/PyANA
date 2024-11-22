@@ -18,7 +18,7 @@ def loadn(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         loadstd: desvio padrão da carga em porcento (default=10)
     """
 
@@ -85,7 +85,7 @@ def windn(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         wstd: desvio padrão da geração eólica em porcento (default=10)
     """
 

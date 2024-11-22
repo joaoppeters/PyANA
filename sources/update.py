@@ -20,7 +20,7 @@ def updtstt(
     """atualização das variáveis de estado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -129,7 +129,7 @@ def updtpwr(
     """atualização das variáveis de estado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -152,7 +152,7 @@ def updtlinear(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -166,7 +166,7 @@ def updttm(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

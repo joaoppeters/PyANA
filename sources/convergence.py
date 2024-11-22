@@ -16,7 +16,7 @@ def convergence(
     """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

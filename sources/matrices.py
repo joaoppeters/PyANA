@@ -30,7 +30,7 @@ def admittance(
     """Método para cálculo dos Args da matriz Admitância
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
 
     Builds the bus admittance matrix and branch admittance matrices.
 
@@ -101,7 +101,7 @@ def matrices(
     """jacobian and hessian matrices
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -310,7 +310,7 @@ def load2ycte(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -333,7 +333,7 @@ def md01jacob(
     """matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -440,7 +440,7 @@ def jacexsi(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

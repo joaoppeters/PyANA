@@ -27,7 +27,7 @@ def newton(
     """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

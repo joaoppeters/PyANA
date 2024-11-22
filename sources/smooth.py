@@ -23,7 +23,7 @@ def qlims(
     """_summary_
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -139,7 +139,7 @@ def qlimssmooth(
 
     Args
         idx: índice da da barra geradora
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -213,7 +213,7 @@ def qlimnsmooth(
 
     Args
         idx: índice da da barra geradora
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -296,7 +296,7 @@ def svcsQ(
     """_summary_
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -400,7 +400,7 @@ def svcsQsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -473,7 +473,7 @@ def svcsI(
     """_summary_
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -592,7 +592,7 @@ def svcsIsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -711,7 +711,7 @@ def svcsA(
     """_summary_
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -830,7 +830,7 @@ def svcsAsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -1014,7 +1014,7 @@ def qlimspop(
     """deleta última instância salva em variável powerflow.qlimskeys
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         pop: quantidade de ações necessárias
     """
 
@@ -1033,7 +1033,7 @@ def qlimstorage(
     """armazenamento e geração de imagens referente a comutação das chaves
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -1337,7 +1337,7 @@ def svcstorage(
     """armazenamento e geração de imagens referente a comutação das chaves
 
     Args:
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

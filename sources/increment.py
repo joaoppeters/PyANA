@@ -16,7 +16,7 @@ def increment(
     """realiza incremento no nível de carregamento (e geração)
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

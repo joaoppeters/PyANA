@@ -16,7 +16,7 @@ def monitor(
     """inicialização
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         setting: self do arquivo setting.py
     """
 
@@ -38,7 +38,7 @@ def monitorfile(
     """
 
     Parâmetro
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -92,7 +92,7 @@ def rheader(
     """cabeçalho do relatório
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -139,7 +139,7 @@ def monitorpflow(
     """monitoramento de fluxo de potência ativa em linhas de transmissão
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -248,7 +248,7 @@ def monitorpgmon(
     """monitoramento de potência ativa gerada
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -277,7 +277,7 @@ def monitorqgmon(
     """monitoramento de potência reativa gerada
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -328,7 +328,7 @@ def monitorvmon(
     """monitoramento de magnitude de tensão de barramentos
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

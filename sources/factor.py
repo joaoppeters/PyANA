@@ -18,7 +18,7 @@ def factor(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     from pandas import concat, merge

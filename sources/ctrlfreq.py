@@ -19,7 +19,7 @@ def freqsol(
     """adiciona variáveis narea solução para caso controle de regulação primária de frequência esteja ativado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -111,7 +111,7 @@ def freqsch(
     """armazenamento de Args especificados das equações de controle adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -158,7 +158,7 @@ def freqres(
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -236,7 +236,7 @@ def freqsubjac(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -488,7 +488,7 @@ def frequpdt(
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -530,7 +530,7 @@ def freqcorr(
     """atualização dos valores de frequência para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -550,7 +550,7 @@ def freqsubhess(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -573,7 +573,7 @@ def freqsubjacsym(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

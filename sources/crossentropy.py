@@ -22,7 +22,7 @@ class CrossEntropy:
         """inicialização
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -42,7 +42,7 @@ class CrossEntropy:
     ):
         """
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização
@@ -74,7 +74,7 @@ class CrossEntropy:
         """
 
         Args
-            powerflow: self do arquivo powerflow.py
+            powerflow:
         """
 
         ## Inicialização

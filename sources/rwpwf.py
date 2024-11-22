@@ -16,9 +16,8 @@ def rwpwf(
     """Inicialização
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
@@ -186,6 +185,12 @@ def rwpwf(
             file,
         )
 
+    if powerflow.codes["DMET"]:
+        wdmet(
+            powerflow,
+            file,
+        )
+
     if powerflow.codes["DINJ"]:
         wdinj(
             powerflow,
@@ -204,13 +209,20 @@ def rwpwf(
             file,
         )
 
-    if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
-        wdmfl_circ(
-            powerflow,
-            file,
-        )
-    else:
-        wdmfl(
+    if powerflow.codes["DMFL"]:
+        if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+            wdmfl_circ(
+                powerflow,
+                file,
+            )
+        else:
+            wdmfl(
+                powerflow,
+                file,
+            )
+
+    if powerflow.codes["DMTE"]:
+        wdmte(
             powerflow,
             file,
         )
@@ -229,9 +241,8 @@ def wheader(
     """
 
     Args
-        file: arquivo de saída
+        file:
     """
-
     ## Inicialização
     file.write("(")
     file.write("\n")
@@ -261,10 +272,9 @@ def wtitu(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.titu["titu"]))
     file.write(format(powerflow.titu["ruler"]))
@@ -277,10 +287,9 @@ def wdagr(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     agr = 0
     file.write(format(powerflow.dagr.dagr.iloc[0]))
@@ -308,10 +317,9 @@ def wdanc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.danc.danc.iloc[0]))
     file.write(format(powerflow.danc.ruler.iloc[0]))
@@ -334,10 +342,9 @@ def wdanc_acls(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.danc.danc.iloc[0]))
     file.write(format(powerflow.danc.ruler.iloc[0]))
@@ -357,10 +364,9 @@ def wdare(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dare.dare.iloc[0]))
     file.write(format(powerflow.dare.ruler.iloc[0]))
@@ -380,10 +386,9 @@ def wdbar(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dbar.dbar.iloc[0]))
     file.write(format(powerflow.dbar.ruler.iloc[0]))
@@ -487,10 +492,9 @@ def wdbsh(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     bsh = 0
     file.write(format(powerflow.dbsh["dbsh"]))
@@ -520,10 +524,9 @@ def wdcar(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcar.dcar.iloc[0]))
     file.write(format(powerflow.dcar.ruler.iloc[0]))
@@ -544,10 +547,9 @@ def wdcba(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcba.dcba.iloc[0]))
     file.write(format(powerflow.dcba.ruler.iloc[0]))
@@ -568,10 +570,9 @@ def wdccv(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dccv.dccv.iloc[0]))
     file.write(format(powerflow.dccv.ruler.iloc[0]))
@@ -592,10 +593,9 @@ def wdcer(
     """
 
     Args:
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcer.dcer.iloc[0]))
     file.write(format(powerflow.dcer.ruler.iloc[0]))
@@ -615,10 +615,9 @@ def wdcli(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcli.dcli.iloc[0]))
     file.write(format(powerflow.dcli.ruler.iloc[0]))
@@ -639,10 +638,9 @@ def wdcnv(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcnv.dcnv.iloc[0]))
     file.write(format(powerflow.dcnv.ruler.iloc[0]))
@@ -663,10 +661,9 @@ def wdcsc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcsc.dcsc.iloc[0]))
     file.write(format(powerflow.dcsc.ruler.iloc[0]))
@@ -687,10 +684,9 @@ def wdcte(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dcte.dcte.iloc[0]))
     file.write(format(powerflow.dcte.ruler.iloc[0]))
@@ -712,10 +708,9 @@ def wdctg(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     ctg = 0
     file.write(format(powerflow.dctg["dctg"]))
@@ -745,10 +740,9 @@ def wdctr(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dctr.dctr.iloc[0]))
     file.write(format(powerflow.dctr.ruler.iloc[0]))
@@ -769,10 +763,9 @@ def wdelo(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.delo.delo.iloc[0]))
     file.write(format(powerflow.delo.ruler.iloc[0]))
@@ -793,10 +786,9 @@ def wdgbt(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dgbt.dgbt.iloc[0]))
     file.write(format(powerflow.dgbt.ruler.iloc[0]))
@@ -814,10 +806,9 @@ def wdger(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dger.dger.iloc[0]))
     file.write(format(powerflow.dger.ruler.iloc[0]))
@@ -837,10 +828,9 @@ def wdglt(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dglt.dglt.iloc[0]))
     file.write(format(powerflow.dglt.ruler.iloc[0]))
@@ -860,10 +850,9 @@ def wdinc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dinc.dinc.iloc[0]))
     file.write(format(powerflow.dinc.ruler.iloc[0]))
@@ -883,10 +872,9 @@ def wdinj(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dinj.dinj.iloc[0]))
     file.write(format(powerflow.dinj.ruler.iloc[0]))
@@ -906,16 +894,38 @@ def wdlin(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dlin.dlin.iloc[0]))
     file.write(format(powerflow.dlin.ruler.iloc[0]))
     for idx, value in powerflow.dlin.iterrows():
         file.write(
             f"{value['de']:>5}{value['abertura_de']:1} {value['operacao']:1} {value['abertura_para']:1}{value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['manobravel']:1}{value['resistencia']:>6}{value['reatancia']:>6}{value['susceptancia']:>6}{value['tap']:>5}{value['tap_minimo']:>5}{value['tap_maximo']:>5}{value['tap_defasagem']:>5}{value['barra_controlada']:>6}{value['capacidade_normal']:>4}{value['capacidade_emergencial']:>4}{value['numero_taps']:>2}{value['capacidade_equipamento']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+def wdmet(
+    powerflow,
+    file,
+):
+    """
+    
+    Args
+        powerflow:
+        file:
+    """
+    ## Inicialização
+    file.write(format(powerflow.dmet.dmet.iloc[0]))
+    file.write(format(powerflow.dmet.ruler.iloc[0]))
+
+    for idx, value in powerflow.dmte.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
         )
         file.write("\n")
     file.write("99999")
@@ -929,10 +939,9 @@ def wdmfl(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dmfl.dmfl.iloc[0]))
     file.write(format(powerflow.dmfl.ruler.iloc[0]))
@@ -953,10 +962,9 @@ def wdmfl_circ(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dmfl.dmfl.iloc[0]))
     file.write(format(powerflow.dmfl.ruler.iloc[0]))
@@ -972,6 +980,30 @@ def wdmfl_circ(
     file.write("\n")
 
 
+def wdmte(
+    powerflow,
+    file,
+):
+    """
+
+    Args
+        powerflow:
+        file:
+    """
+    ## Inicialização
+    file.write(format(powerflow.dmte.dmte.iloc[0]))
+    file.write(format(powerflow.dmte.ruler.iloc[0]))
+
+    for idx, value in powerflow.dmte.iterrows():
+        file.write(
+            f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
+        )
+        file.write("\n")
+    file.write("99999")
+    file.write("\n")
+
+
+
 def wdopc(
     powerflow,
     file,
@@ -979,10 +1011,9 @@ def wdopc(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dopc.dopc.iloc[0]))
     file.write(format(powerflow.dopc.ruler.iloc[0]))
@@ -1005,10 +1036,9 @@ def wdshl(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dshl.dshl.iloc[0]))
     file.write(format(powerflow.dshl.ruler.iloc[0]))
@@ -1028,10 +1058,9 @@ def wdtpf(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dtpf.dtpf.iloc[0]))
     file.write(format(powerflow.dtpf.ruler.iloc[0]))
@@ -1052,10 +1081,9 @@ def wdtpf_circ(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dtpf.dtpf.iloc[0]))
     file.write(format(powerflow.dtpf.ruler.iloc[0]))
@@ -1078,10 +1106,9 @@ def wtail(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
-        file: arquivo de saída
+        powerflow:
+        file:
     """
-
     ## Inicialização
     file.write("(")
     file.write("\n")

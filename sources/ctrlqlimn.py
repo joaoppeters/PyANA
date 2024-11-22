@@ -19,7 +19,7 @@ def qlimnsol(
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -37,7 +37,7 @@ def qlimnres(
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
 
@@ -71,7 +71,7 @@ def qlimnsubjac(
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -159,7 +159,7 @@ def qlimnupdt(
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -188,7 +188,7 @@ def qlimnsch(
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -208,7 +208,7 @@ def qlimncorr(
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
 
@@ -225,7 +225,7 @@ def qlimnheur(
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -274,7 +274,7 @@ def qlimnpop(
             atua diretamente na variável de controle associada à opção de controle QLIMn
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         pop: quantidade de ações necessárias
     """
 
@@ -291,7 +291,7 @@ def qlimnsubhess(
     """submatrizes da matriz hessiana
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
@@ -312,7 +312,7 @@ def qlimnsubjacsym(
     """
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

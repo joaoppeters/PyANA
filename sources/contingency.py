@@ -14,7 +14,7 @@ def allctgs(
     """adição de dados de contingência em arquivo .pwf
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
         file
     """
 

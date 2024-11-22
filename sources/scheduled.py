@@ -16,7 +16,7 @@ def scheduled(
     """método para armazenamento dos Args especificados
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização

@@ -17,7 +17,7 @@ def dagr(
     """inicialização para leitura de dados de agregadores genéricos
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
     ## Inicialização
     powerflow.dagr1["numero"] = list()
@@ -92,9 +92,8 @@ def danc(
     """inicialização para leitura de dados de alteração do nível de carregamento
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.danc["area"] = list()
     powerflow.danc["fator_carga_ativa"] = list()
@@ -144,9 +143,8 @@ def danc_acls(
     """inicialização para leitura de dados de alteração do nível de carregamento
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.danc["tipo_elemento_1"] = list()
     powerflow.danc["identificacao_elemento_1"] = list()
@@ -248,9 +246,8 @@ def checkdanc(
     """checa alteração no nível de carregamento
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     # Variável
     if powerflow.codes["DANC"]:
@@ -280,9 +277,8 @@ def dare(
     """inicialização para leitura de dados de intercâmbio de potência ativa entre áreas
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dare["numero"] = list()
     powerflow.dare["intercambio_liquido"] = list()
@@ -339,9 +335,8 @@ def dbar(
     """inicialização para leitura de dados de barra
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dbar["numero"] = list()
     powerflow.dbar["operacao"] = list()
@@ -560,9 +555,8 @@ def dbsh(
     """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dbsh1["from"] = list()
     powerflow.dbsh1["operacao"] = list()
@@ -710,9 +704,8 @@ def dcar(
     """inicialização para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcar["tipo_elemento_1"] = list()
     powerflow.dcar["identificacao_elemento_1"] = list()
@@ -829,9 +822,8 @@ def dcba(
     """inicialização para leitura de dados de barra CC
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcba["numero"] = list()
     powerflow.dcba["operacao"] = list()
@@ -896,9 +888,8 @@ def dccv(
     """inicialização para leitura de dados de controle de conversores CA/CC
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dccv["numero"] = list()
     powerflow.dccv["operacao"] = list()
@@ -1010,9 +1001,8 @@ def dcer(
     """inicialização para leitura de dados de compensadores estáticos de potência reativa
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcer["barra"] = list()
     powerflow.dcer["operacao"] = list()
@@ -1139,9 +1129,8 @@ def dcli(
     """inicialização para leitura de dados de linhas de transmissão CC
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcli["de"] = list()
     powerflow.dcli["operacao"] = list()
@@ -1208,9 +1197,8 @@ def dcnv(
     """inicialização para leitura de dados de conversores CA/CC
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcnv["numero"] = list()
     powerflow.dcnv["operacao"] = list()
@@ -1312,9 +1300,8 @@ def dcsc(
     """inicialização para leitura de dados de compensador série controlável
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcsc["de"] = list()
     powerflow.dcsc["operacao"] = list()
@@ -1454,9 +1441,8 @@ def dcte(
     """inicialização para leitura de dados de constantes
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dcte["constante"] = list()
     powerflow.dcte["valor_constante"] = list()
@@ -1532,9 +1518,8 @@ def dctg(
     """inicialização para leitura de lista de casos de contingência
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dctg1["identificacao"] = list()
     powerflow.dctg1["operacao"] = list()
@@ -1670,9 +1655,8 @@ def dctr(
     """inicialização para leitura de dados complementares de transformadores
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dctr["de"] = list()
     powerflow.dctr["operacao"] = list()
@@ -1767,9 +1751,8 @@ def delo(
     """inicialização para leitura de dados de elo CC
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.delo["numero"] = list()
     powerflow.delo["operacao"] = list()
@@ -1823,9 +1806,8 @@ def dgbt(
     """inicialização para leitura de dados de grupos de base de tensão de barras CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dgbt["grupo"] = list()
     powerflow.dgbt["tensao"] = list()
@@ -1868,9 +1850,8 @@ def dger(
     """inicialização para leitura de dados de geradores
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dger["numero"] = list()
     powerflow.dger["operacao"] = list()
@@ -1985,9 +1966,8 @@ def dglt(
     """inicialização para leitura de dados de grupos de limites de tensão
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dglt["grupo"] = list()
     powerflow.dglt["limite_minimo"] = list()
@@ -2055,9 +2035,8 @@ def dinc(
     """inicialização para leitura de dados de incremento do nível de carregamento
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dinc["tipo_incremento_1"] = list()
     powerflow.dinc["identificacao_incremento_1"] = list()
@@ -2192,9 +2171,8 @@ def dinj(
     """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dinj["numero"] = list()
     powerflow.dinj["operacao"] = list()
@@ -2279,9 +2257,8 @@ def dlin(
     """inicialização para leitura de dados de linha de transmissão CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dlin["de"] = list()
     powerflow.dlin["abertura_de"] = list()
@@ -2480,9 +2457,8 @@ def dmet(
     """inicialização para leitura de dados de monitoração para estabilidade de tensão em barra CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dmet["tipo_elemento_1"] = list()
     powerflow.dmet["identificacao_elemento_1"] = list()
@@ -2572,9 +2548,8 @@ def dmfl(
     """inicialização para leitura de dados de monitoração de fluxo em circuito CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dmfl["tipo_elemento_1"] = list()
     powerflow.dmfl["identificacao_elemento_1"] = list()
@@ -2669,9 +2644,8 @@ def dmfl_circ(
     """inicialização para leitura de dados de monitoração de fluxo em circuito CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dmfl["de"] = list()
     powerflow.dmfl["para"] = list()
@@ -2758,6 +2732,102 @@ def dmfl_circ(
         )
     else:
         powerflow.codes["DMFL"] = True
+
+
+def dmte(
+    powerflow,
+):
+    """inicialização para leitura de dados de monitoração de tensão em barra CA
+    
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.dmte["tipo_elemento_1"] = list()
+    powerflow.dmte["identificacao_elemento_1"] = list()
+    powerflow.dmte["condicao_elemento_1"] = list()
+    powerflow.dmte["tipo_elemento_2"] = list()
+    powerflow.dmte["identificacao_elemento_2"] = list()
+    powerflow.dmte["condicao_elemento_2"] = list()
+    powerflow.dmte["tipo_elemento_3"] = list()
+    powerflow.dmte["identificacao_elemento_3"] = list()
+    powerflow.dmte["condicao_elemento_3"] = list()
+    powerflow.dmte["tipo_elemento_4"] = list()
+    powerflow.dmte["identificacao_elemento_4"] = list()
+    powerflow.dmte["operacao"] = list()
+    powerflow.dmte["interligacao"] = list()
+
+    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
+        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+            pass
+        else:
+            powerflow.dmte["tipo_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][:4]
+            )
+            powerflow.dmte["identificacao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][5:10]
+            )
+            powerflow.dmte["condicao_elemento_1"].append(
+                powerflow.lines[powerflow.linecount][11]
+            )
+            powerflow.dmte["tipo_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][13:17]
+            )
+            powerflow.dmte["identificacao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][18:23]
+            )
+            powerflow.dmte["condicao_elemento_2"].append(
+                powerflow.lines[powerflow.linecount][24]
+            )
+            powerflow.dmte["tipo_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][26:30]
+            )
+            powerflow.dmte["identificacao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][31:36]
+            )
+            powerflow.dmte["condicao_elemento_3"].append(
+                powerflow.lines[powerflow.linecount][37]
+            )
+            powerflow.dmte["tipo_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][39:43]
+            )
+            powerflow.dmte["identificacao_elemento_4"].append(
+                powerflow.lines[powerflow.linecount][44:49]
+            )
+            powerflow.dmte["operacao"].append(powerflow.lines[powerflow.linecount][50])
+            powerflow.dmte["interligacao"].append(
+                powerflow.lines[powerflow.linecount][52]
+            )
+        powerflow.linecount += 1
+
+    # DataFrame dos dados de Monitoração de Tensão em Circuito CA
+    powerflow.dmteDF = DF(data=powerflow.dmte)
+    powerflow.dmte = deepcopy(powerflow.dmteDF)
+    powerflow.dmteDF = powerflow.dmteDF.replace(r"^\s*$", "0", regex=True)
+    powerflow.dmteDF = powerflow.dmteDF.astype(
+        {
+            "tipo_elemento_1": "object",
+            "identificacao_elemento_1": "int",
+            "condicao_elemento_1": "object",
+            "tipo_elemento_2": "object",
+            "identificacao_elemento_2": "int",
+            "condicao_elemento_2": "object",
+            "tipo_elemento_3": "object",
+            "identificacao_elemento_3": "int",
+            "condicao_elemento_3": "object",
+            "tipo_elemento_4": "object",
+            "identificacao_elemento_4": "int",
+            "operacao": "object",
+            "interligacao": "float",
+        }
+    )
+    if powerflow.dmteDF.empty:
+        ## ERROR - VERMELHO
+        raise ValueError(
+            "\033[91mERROR: Falha na leitura de código de execução `DMTE`!\033[0m"
+        )
+    else:
+        powerflow.codes["DMTE"] = True
 
 
 def dopc(
@@ -2869,7 +2939,7 @@ def dshl(
     """inicialização para leitura de dados de dispositivos shunt de circuito CA
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
     ## Inicialização
     powerflow.dshl["from"] = list()
@@ -2936,9 +3006,8 @@ def dtpf(
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dtpf["tipo_elemento_1"] = list()
     powerflow.dtpf["identificacao_elemento_1"] = list()
@@ -3033,9 +3102,8 @@ def dtpf_circ(
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
-
     ## Inicialização
     powerflow.dtpf["de"] = list()
     powerflow.dtpf["para"] = list()

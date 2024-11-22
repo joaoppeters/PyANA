@@ -13,7 +13,7 @@ def methodo(
     """chamada automática do método de solução selecionado
 
     Args
-        powerflow: self do arquivo powerflow.py
+        powerflow:
     """
 
     ## Inicialização
