@@ -20,7 +20,6 @@ def wulog(
     Args:
         powerflow (_type_): _description_
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
@@ -54,13 +53,13 @@ def wulog(
 
     if powerflow.codes["DBAR"]:
         udbar(
-            powerflow.dbar,
+            powerflow.mdbar,
             file,
         )
 
     if powerflow.codes["DGER"]:
         udger(
-            powerflow.dger,
+            powerflow.mdger,
             file,
         )
 
@@ -116,7 +115,6 @@ def uheader(
     Args
         file:
     """
-
     ## Inicialização
     file.write("(")
     file.write("\n")
@@ -149,7 +147,6 @@ def uarq(
     Args
         file:
     """
-
     ## Inicialização
     file.write("ULOG")
     file.write("\n")
@@ -173,100 +170,146 @@ def udbar(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dbar.dbar.iloc[0]))
     file.write(format(dbar.ruler.iloc[0]))
 
     for idx, value in dbar.iterrows():
-        if "EOL" not in value["nome"]:
-            dbar.loc[idx, "potencia_ativa"] = 5 * ""
-
-        if value["demanda_ativa"] != 5 * " ":
-            value["demanda_ativa"] = float(value["demanda_ativa"])
-            if value["demanda_ativa"] >= 0.0:
-                if value["demanda_ativa"] / 1e3 >= 1.0:
-                    pl = str(
-                        round(
-                            value["demanda_ativa"],
-                        )
-                    )
-                elif (
-                    value["demanda_ativa"] / 1e3 >= 0.1
-                    and value["demanda_ativa"] / 1e3 < 1.0
-                ):
-                    pl = str(round(value["demanda_ativa"], 1))
-                else:
-                    pl = str(round(value["demanda_ativa"], 1))
+        if "EOL" not in value.nome:
+            pg = 5 * " "
+        else:
+            # Positive numbers
+            if value.potencia_ativa >= 10000:
+                pg = f"{int(value.potencia_ativa)}"[
+                    :5
+                ]  # i) Maintain 5 digits (truncate without decimal point)
+            elif value.potencia_ativa >= 1000:
+                pg = f"{value.potencia_ativa:.4g}"  # ii) Maintain 4 digits, include decimal point
+            elif value.potencia_ativa >= 100:
+                pg = f"{value.potencia_ativa:.3g}"  # iii) Maintain 3 digits, include one decimal
+            elif value.potencia_ativa >= 10:
+                pg = f"{value.potencia_ativa:.2g}"  # iv) Maintain 2 digits, include two decimals
+            elif value.potencia_ativa >= 1:
+                pg = f"{value.potencia_ativa:.3f}".rstrip("0").rstrip(".")[
+                    :5
+                ]  # v) Maintain 1 digit and up to 3 decimals
             else:
-                if value["demanda_ativa"] / 1e3 < -0.1:
-                    pl = str(
-                        round(
-                            value["demanda_ativa"],
-                        )
-                    )
-                else:
-                    pl = str(round(value["demanda_ativa"], 1))
+                pg = f"{value.potencia_ativa:.4f}".rstrip("0")[
+                    :5
+                ]  # xi) Maintain 4 decimal places for small values
+
+        if value.demanda_ativa > 0:
+            # Positive numbers
+            if value.demanda_ativa >= 10000:
+                pl = f"{int(value.demanda_ativa)}"[
+                    :5
+                ]  # i) Maintain 5 digits (truncate without decimal point)
+            elif value.demanda_ativa >= 1000:
+                pl = f"{value.demanda_ativa:.4g}"  # ii) Maintain 4 digits, include decimal point
+            elif value.demanda_ativa >= 100:
+                pl = f"{value.demanda_ativa:.3g}"  # iii) Maintain 3 digits, include one decimal
+            elif value.demanda_ativa >= 10:
+                pl = f"{value.demanda_ativa:.2g}"  # iv) Maintain 2 digits, include two decimals
+            elif value.demanda_ativa >= 1:
+                pl = f"{value.demanda_ativa:.3f}".rstrip("0").rstrip(".")[
+                    :5
+                ]  # v) Maintain 1 digit and up to 3 decimals
+            else:
+                pl = f"{value.demanda_ativa:.4f}".rstrip("0")[
+                    :5
+                ]  # xi) Maintain 4 decimal places for small values
+        elif value.demanda_ativa < 0:
+            # Negative numbers
+            if value.demanda_ativa <= -100:
+                pl = f"{value.demanda_ativa:.4g}"  # vii) Maintain 4 digits without decimal point
+            elif value.demanda_ativa <= -10:
+                pl = f"{value.demanda_ativa:.3g}"  # viii) Maintain 3 digits with decimal point
+            elif value.demanda_ativa <= -1:
+                pl = f"{value.demanda_ativa:.2f}"[
+                    :5
+                ]  # ix) Maintain 2 digits and one decimal
+            elif value.demanda_ativa > -1:
+                pl = f"{value.demanda_ativa:.3f}"[
+                    :5
+                ]  # xii) Maintain decimal point and up to 3 decimals
         else:
             pl = 5 * " "
 
-        if value["demanda_reativa"] != 5 * " ":
-            value["demanda_reativa"] = float(value["demanda_reativa"])
-            if value["demanda_reativa"] >= 0.0:
-                if value["demanda_reativa"] / 1e3 >= 1.0:
-                    ql = str(
-                        round(
-                            value["demanda_reativa"],
-                        )
-                    )
-                elif (
-                    value["demanda_reativa"] / 1e3 >= 0.1
-                    and value["demanda_reativa"] / 1e3 < 1.0
-                ):
-                    ql = str(round(value["demanda_reativa"], 1))
-                else:
-                    ql = str(round(value["demanda_reativa"], 1))
+        if value.demanda_reativa > 0:
+            # Positive numbers
+            if value.demanda_reativa >= 10000:
+                ql = f"{int(value.demanda_reativa)}"[
+                    :5
+                ]  # i) Maintain 5 digits (truncate without decimal point)
+            elif value.demanda_reativa >= 1000:
+                ql = f"{value.demanda_reativa:.4g}"  # ii) Maintain 4 digits, include decimal point
+            elif value.demanda_reativa >= 100:
+                ql = f"{value.demanda_reativa:.3g}"  # iii) Maintain 3 digits, include one decimal
+            elif value.demanda_reativa >= 10:
+                ql = f"{value.demanda_reativa:.2g}"  # iv) Maintain 2 digits, include two decimals
+            elif value.demanda_reativa >= 1:
+                ql = f"{value.demanda_reativa:.3f}".rstrip("0").rstrip(".")[
+                    :5
+                ]  # v) Maintain 1 digit and up to 3 decimals
             else:
-                if value["demanda_reativa"] / 1e3 < -0.1:
-                    ql = str(
-                        round(
-                            value["demanda_reativa"],
-                        )
-                    )
-                else:
-                    ql = str(round(value["demanda_reativa"], 1))
+                ql = f"{value.demanda_reativa:.4f}".rstrip("0")[
+                    :5
+                ]  # xi) Maintain 4 decimal places for small values
+        elif value.demanda_reativa < 0:
+            # Negative numbers
+            if value.demanda_reativa <= -100:
+                ql = f"{value.demanda_reativa:.4g}"  # vii) Maintain 4 digits without decimal point
+            elif value.demanda_reativa <= -10:
+                ql = f"{value.demanda_reativa:.3g}"  # viii) Maintain 3 digits with decimal point
+            elif value.demanda_reativa <= -1:
+                ql = f"{value.demanda_reativa:.2f}"[
+                    :5
+                ]  # ix) Maintain 2 digits and one decimal
+            elif value.demanda_reativa > -1:
+                ql = f"{value.demanda_reativa:.3f}"[
+                    :5
+                ]  # xii) Maintain decimal point and up to 3 decimals
         else:
             ql = 5 * " "
 
-        if value["shunt_barra"] != 5 * " ":
-            value["shunt_barra"] = float(value["shunt_barra"])
-            if value["shunt_barra"] >= 0.0:
-                if value["shunt_barra"] / 1e3 >= 1.0:
-                    sb = str(
-                        round(
-                            value["shunt_barra"],
-                        )
-                    )
-                elif (
-                    value["shunt_barra"] / 1e3 >= 0.1
-                    and value["shunt_barra"] / 1e3 < 1.0
-                ):
-                    sb = str(round(value["shunt_barra"], 1))
-                else:
-                    sb = str(round(value["shunt_barra"], 2))
+        if value.shunt_barra > 0:
+            # Positive numbers
+            if value.shunt_barra >= 10000:
+                sb = f"{int(value.shunt_barra)}"[
+                    :5
+                ]  # i) Maintain 5 digits (truncate without decimal point)
+            elif value.shunt_barra >= 1000:
+                sb = f"{value.shunt_barra:.4g}"  # ii) Maintain 4 digits, include decimal point
+            elif value.shunt_barra >= 100:
+                sb = f"{value.shunt_barra:.3g}"  # iii) Maintain 3 digits, include one decimal
+            elif value.shunt_barra >= 10:
+                sb = f"{value.shunt_barra:.2g}"  # iv) Maintain 2 digits, include two decimals
+            elif value.shunt_barra >= 1:
+                sb = f"{value.shunt_barra:.3f}".rstrip("0").rstrip(".")[
+                    :5
+                ]  # v) Maintain 1 digit and up to 3 decimals
             else:
-                if value["shunt_barra"] / 1e3 < -0.1:
-                    sb = str(
-                        round(
-                            value["shunt_barra"],
-                        )
-                    )
-                else:
-                    sb = str(round(value["shunt_barra"], 1))
+                sb = f"{value.shunt_barra:.4f}".rstrip("0")[
+                    :5
+                ]  # xi) Maintain 4 decimal places for small values
+        elif value.shunt_barra < 0:
+            # Negative numbers
+            if value.shunt_barra <= -100:
+                sb = f"{value.shunt_barra:.4g}"  # vii) Maintain 4 digits without decimal point
+            elif value.shunt_barra <= -10:
+                sb = f"{value.shunt_barra:.3g}"  # viii) Maintain 3 digits with decimal point
+            elif value.shunt_barra <= -1:
+                sb = f"{value.shunt_barra:.2f}"[
+                    :5
+                ]  # ix) Maintain 2 digits and one decimal
+            elif value.shunt_barra > -1:
+                sb = f"{value.shunt_barra:.3f}"[
+                    :5
+                ]  # xii) Maintain decimal point and up to 3 decimals
         else:
             sb = 5 * " "
         file.write(
-            f"{value['numero']:>5}{'M':1}{26*' ':>26}{value['potencia_ativa']:>5}{21*' ':21}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{35*' ':>35}"
+            f"{value.numero:>5}{'M':1}{26*' ':>26}{pg:>5}{21*' ':21}{pl:>5}{ql:>5}{sb:>5}{value.area:>3}{35*' ':>35}"
         )
         file.write("\n")
     file.write("99999")
@@ -285,7 +328,6 @@ def udctg(
         powerflow:
         file:
     """
-
     ## Inicialização
     ctg = 0
     file.write(format(dctg["dctg"]))
@@ -318,13 +360,32 @@ def udger(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dger.dger.iloc[0]))
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
+        if value.fator_participacao >= 0:
+            # Positive numbers
+            if value.fator_participacao >= 10000:
+                vp = f"{int(value.fator_participacao)}"[
+                    :5
+                ]  # i) Maintain 5 digits (truncate without decimal point)
+            elif value.fator_participacao >= 1000:
+                vp = f"{value.fator_participacao:.4g}"  # ii) Maintain 4 digits, include decimal point
+            elif value.fator_participacao >= 100:
+                vp = f"{value.fator_participacao:.3g}"  # iii) Maintain 3 digits, include one decimal
+            elif value.fator_participacao >= 10:
+                vp = f"{value.fator_participacao:.2g}"  # iv) Maintain 2 digits, include two decimals
+            elif value.fator_participacao >= 1:
+                vp = f"{value.fator_participacao:.3f}".rstrip("0").rstrip(".")[
+                    :5
+                ]  # v) Maintain 1 digit and up to 3 decimals
+            else:
+                vp = f"{value.fator_participacao:.4f}".rstrip("0")[
+                    :5
+                ]  # xi) Maintain 4 decimal places for small values
         file.write(
-            f"{value.numero:>5} {value.operacao:1} {6*' ':>6} {6*' ':>6} {value.fator_participacao:>5} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
+            f"{value.numero:>5} {value.operacao:1} {6*' ':>6} {6*' ':>6} {vp:>5} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
         )
         file.write("\n")
     file.write("99999")
@@ -341,7 +402,6 @@ def udinc(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dinc.dinc.iloc[0]))
     file.write(format(dinc.ruler.iloc[0]))
@@ -364,7 +424,6 @@ def udmet(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dmet.dmet.iloc[0]))
     file.write(format(dmet.ruler.iloc[0]))
@@ -384,7 +443,6 @@ def udmfl(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
@@ -408,7 +466,6 @@ def udmfl_circ(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
@@ -434,7 +491,6 @@ def udmte(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(dmte.dinc.iloc[0]))
     file.write(format(dmte.ruler.iloc[0]))
@@ -457,7 +513,6 @@ def usxsc(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write("( ")
     file.write("\n")
@@ -526,7 +581,6 @@ def usxic(
         powerflow:
         file:
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
@@ -582,7 +636,6 @@ def usxct(
         powerflow:
         file:
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
@@ -642,7 +695,6 @@ def uspvct(
         powerflow:
         file:
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(

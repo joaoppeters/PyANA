@@ -20,8 +20,9 @@ def stochsxsc(
     from pandas import to_numeric
 
     from anarede import exlf
+    from areas import q2024
     from factor import factor, loadf, windf
-    from folder import stochasticfolder
+    from folder import areasfolder, stochasticfolder
     from stochastic import loadn, windn
     from rwstb import rwstb
     from ulog import wulog
@@ -30,6 +31,12 @@ def stochsxsc(
     powerflow.nsamples = 5
     powerflow.exicflag = False
     powerflow.exctflag = False
+    areasfolder(
+        powerflow,
+    )
+    q2024(
+        powerflow,
+    )
     for stddev in range(1, 11, 1):
         loadstd = stddev
         geolstd = stddev
@@ -45,50 +52,46 @@ def stochsxsc(
             lpmean,
         ) = loadn(
             name=powerflow.name,
-            dbarDF=powerflow.dbarDF,
             nsamples=powerflow.nsamples,
             loadstd=loadstd,
+            stateload=powerflow.sao_paulo,
         )
         (
             wpsamples,
             wpmean,
         ) = windn(
             name=powerflow.name,
-            dbarDF=powerflow.dbarDF,
             nsamples=powerflow.nsamples,
             geolstd=geolstd,
+            stategeneration=powerflow.nordeste,
         )
 
         # Factor
-        powerflow.dbar, powerflow.dger = factor(
+        powerflow.mdbar, powerflow.mdger = factor(
             name=powerflow.name,
             lpmean=lpmean,
             wpmean=wpmean,
-            dbarDF=powerflow.dbarDF,
-            dbar=powerflow.dbar,
-            dger=powerflow.dger,
+            dbarDF=powerflow.dbarDF.copy(),
+            dbar=powerflow.dbar.copy(),
+            dger=powerflow.dger.copy(),
+            stateload=powerflow.sao_paulo.copy(),
+            stategeneration=powerflow.nordeste.copy(),
         )
 
         # Loop de amostras
         powerflow.ones = 0
         for s in range(0, len(lpsamples)):
-            powerflow.dbar = loadf(
-                dbar=powerflow.dbar,
-                dbarDF=powerflow.dbarDF,
+            powerflow.mdbar = loadf(
+                mdbar=powerflow.mdbar,
                 psamples=lpsamples,
                 s=s,
             )
-            powerflow.dbar = windf(
-                dbar=powerflow.dbar,
-                dbarDF=powerflow.dbarDF,
+            powerflow.mdbar = windf(
+                mdbar=powerflow.mdbar,
                 wsamples=wpsamples,
                 s=s,
             )
             powerflow.ones += 1
-
-            # rwpwf(
-            #     powerflow,
-            # )
 
             wulog(
                 powerflow,
@@ -126,6 +129,8 @@ def stochsxsc(
                         )
                     )
 
+        # del
+
 
 def stochsxct(
     powerflow,
@@ -135,7 +140,6 @@ def stochsxct(
     Args
         powerflow:
     """
-
     ## Inicialização
     from os import listdir
 
@@ -176,7 +180,6 @@ def stochsxic(
     Args
         powerflow:
     """
-
     ## Inicialização
     from os import listdir
 
@@ -217,7 +220,6 @@ def stochsxict(
     Args
         powerflow:
     """
-
     ## Inicialização
     from os import listdir
 

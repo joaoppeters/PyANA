@@ -19,16 +19,22 @@ def q2024(
 
     ## Inicialização
     # Areas
-    rio_grande_sul = powerflow.dbarDF.loc[
+    powerflow.rio_grande_sul = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([1, 2, 3, 4, 5, 6])
     ]
-    santa_catarina = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([51, 52, 53, 54])]
-    parana = powerflow.dbarDF.loc[
+    powerflow.santa_catarina = powerflow.dbarDF.loc[
+        powerflow.dbarDF.area.isin([51, 52, 53, 54])
+    ]
+    powerflow.parana = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([7, 101, 102, 103, 104, 105, 240, 241])
     ]
-    sul = concat([rio_grande_sul, santa_catarina, parana], axis=0, ignore_index=True)
+    powerflow.sul = concat(
+        [powerflow.rio_grande_sul, powerflow.santa_catarina, powerflow.parana],
+        axis=0,
+        ignore_index=True,
+    )
 
-    sao_paulo = powerflow.dbarDF.loc[
+    powerflow.sao_paulo = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [
                 201,
@@ -51,144 +57,131 @@ def q2024(
             ]
         )
     ]
-    sp201 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 201]
-    sp202 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 202]
-    sp203 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 203]
-    sp204 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 204]
-    sp205 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 205]
-    sp206 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 206]
-    sp207 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 207]
-    sp208 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 208]
-    sp209 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 209]
-    sp210 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 210]
-    sp211 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 211]
-    sp212 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 212]
-    sp213 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 213]
-    sp214 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 214]
-    sp215 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 215]
-    sp216 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 216]
-    sp217 = powerflow.dbarDF.loc[powerflow.dbarDF.area == 217]
 
-    print("\n")
-    print("201: ", sp201.demanda_ativa.sum())
-    print("202: ", sp202.demanda_ativa.sum())
-    print("203: ", sp203.demanda_ativa.sum())
-    print("204: ", sp204.demanda_ativa.sum())
-    print("205: ", sp205.demanda_ativa.sum())
-    print("206: ", sp206.demanda_ativa.sum())
-    print("207: ", sp207.demanda_ativa.sum())
-    print("208: ", sp208.demanda_ativa.sum())
-    print("209: ", sp209.demanda_ativa.sum())
-    print("210: ", sp210.demanda_ativa.sum())
-    print("211: ", sp211.demanda_ativa.sum())
-    print("212: ", sp212.demanda_ativa.sum())
-    print("213: ", sp213.demanda_ativa.sum())
-    print("214: ", sp214.demanda_ativa.sum())
-    print("215: ", sp215.demanda_ativa.sum())
-    print("216: ", sp216.demanda_ativa.sum())
-    print("217: ", sp217.demanda_ativa.sum())
-
-    rio_janeiro = powerflow.dbarDF.loc[
+    powerflow.rio_janeiro = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262]
         )
     ]
-    espirito_santo = powerflow.dbarDF.loc[
+    powerflow.espirito_santo = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([301, 302, 303, 304, 305, 306, 307])
     ]
-    minas_gerais = powerflow.dbarDF.loc[
+    powerflow.minas_gerais = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363]
         )
     ]
-    sudeste = concat(
-        [sao_paulo, rio_janeiro, espirito_santo, minas_gerais],
+    powerflow.sudeste = concat(
+        [
+            powerflow.sao_paulo,
+            powerflow.rio_janeiro,
+            powerflow.espirito_santo,
+            powerflow.minas_gerais,
+        ],
         axis=0,
         ignore_index=True,
     )
 
-    mato_grosso_sul = powerflow.dbarDF.loc[
+    powerflow.mato_grosso_sul = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([401, 402, 403, 404, 405])
     ]
-    mato_grosso = powerflow.dbarDF.loc[
+    powerflow.mato_grosso = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482]
         )
     ]
-    goias = powerflow.dbarDF.loc[
+    powerflow.goias = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([511, 512, 513, 514, 515, 516, 517, 518, 519, 520])
     ]
-    distrito_federal = powerflow.dbarDF.loc[
+    powerflow.distrito_federal = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([561, 562, 563, 564])
     ]
-    centro = concat(
-        [mato_grosso_sul, mato_grosso, goias, distrito_federal],
+    powerflow.centro = concat(
+        [
+            powerflow.mato_grosso_sul,
+            powerflow.mato_grosso,
+            powerflow.goias,
+            powerflow.distrito_federal,
+        ],
         axis=0,
         ignore_index=True,
     )
-    seco = concat(
+    powerflow.seco = concat(
         [
-            sudeste,
-            centro,
+            powerflow.sudeste,
+            powerflow.centro,
         ],
         axis=0,
         ignore_index=True,
     )
 
-    bahia = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([701, 702, 703, 704])]
-    bahia_sergipe = powerflow.dbarDF.loc[
+    powerflow.bahia = powerflow.dbarDF.loc[
+        powerflow.dbarDF.area.isin([701, 702, 703, 704])
+    ]
+    powerflow.bahia_sergipe = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([711, 712, 713, 714, 715, 716])
     ]
-    alagoas_pernambuco = powerflow.dbarDF.loc[
+    powerflow.alagoas_pernambuco = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([721, 722, 723, 724])
     ]
-    paraiba_rio_grande_norte = powerflow.dbarDF.loc[
+    powerflow.paraiba_rio_grande_norte = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([741, 742, 743, 744])
     ]
-    ceara = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([761, 762, 763, 764])]
-    piaui = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([771, 772, 773])]
-    maranhao = powerflow.dbarDF.loc[
+    powerflow.ceara = powerflow.dbarDF.loc[
+        powerflow.dbarDF.area.isin([761, 762, 763, 764])
+    ]
+    powerflow.piaui = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([771, 772, 773])]
+    powerflow.maranhao = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([222, 861, 862, 863, 864, 865, 866])
     ]
-    nordeste = concat(
+    powerflow.nordeste = concat(
         [
-            bahia,
-            bahia_sergipe,
-            alagoas_pernambuco,
-            paraiba_rio_grande_norte,
-            ceara,
-            piaui,
-            maranhao,
+            powerflow.bahia,
+            powerflow.bahia_sergipe,
+            powerflow.alagoas_pernambuco,
+            powerflow.paraiba_rio_grande_norte,
+            powerflow.ceara,
+            powerflow.piaui,
+            powerflow.maranhao,
         ],
         axis=0,
         ignore_index=True,
     )
 
-    acre = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([431, 432, 433])]
-    amazonas = powerflow.dbarDF.loc[
+    powerflow.acre = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([431, 432, 433])]
+    powerflow.amazonas = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([801, 802, 803, 804, 805, 806])
     ]
-    rondonia = powerflow.dbarDF.loc[
+    powerflow.rondonia = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([451, 452, 453, 454, 455, 456, 457, 458, 459, 460])
     ]
-    roraima = powerflow.dbarDF.loc[
+    powerflow.roraima = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin(
             [471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482]
         )
     ]
-    amapa = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([821, 822])]
-    para = powerflow.dbarDF.loc[
+    powerflow.amapa = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([821, 822])]
+    powerflow.para = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([841, 842, 843, 844, 845, 846, 847, 848])
     ]
-    tocantins = powerflow.dbarDF.loc[powerflow.dbarDF.area.isin([581, 881, 882, 883])]
-    norte = concat(
-        [acre, amazonas, rondonia, roraima, amapa, para, tocantins],
+    powerflow.tocantins = powerflow.dbarDF.loc[
+        powerflow.dbarDF.area.isin([581, 881, 882, 883])
+    ]
+    powerflow.norte = concat(
+        [
+            powerflow.acre,
+            powerflow.amazonas,
+            powerflow.rondonia,
+            powerflow.roraima,
+            powerflow.amapa,
+            powerflow.para,
+            powerflow.tocantins,
+        ],
         axis=0,
         ignore_index=True,
     )
 
-    # CODIGO PARA FILTRAGEM DE LINHAS DE INTERCONEXAO ENTRE REGIOES GEOELETRICAS DO SISTEMA ELETRICO BRASILEIRO
-
+    ## CODIGO PARA FILTRAGEM DE LINHAS DE INTERCONEXAO ENTRE REGIOES GEOELETRICAS DO SISTEMA ELETRICO BRASILEIRO
     # seco = concat([sudeste, centro,], axis=0, ignore_index=True)
     # seco_de = seco.rename(columns={"numero": "de"})
     # seco_para = seco.rename(columns={"numero": "para"})
@@ -211,71 +204,71 @@ def q2024(
     # fneseco = merge(powerflow.dlinDF, nordeste_de, on="de")
     # fneseco = merge(fneseco, seco_para, on="para")
 
-    estados = {
-        "RS": rio_grande_sul,
-        "SC": santa_catarina,
-        "PR": parana,
-        "SP": sao_paulo,
-        "RJ": rio_janeiro,
-        "ES": espirito_santo,
-        "MG": minas_gerais,
-        "MS": mato_grosso_sul,
-        "MT": mato_grosso,
-        "GO": goias,
-        "DF": distrito_federal,
-        "BA": bahia,
-        "BA/SE": bahia_sergipe,
-        "AL/PE": alagoas_pernambuco,
-        "PB/RN": paraiba_rio_grande_norte,
-        "CE": ceara,
-        "PI": piaui,
-        "MA": maranhao,
-        "PA": para,
-        "AP": amapa,
-        "AM": amazonas,
-        "RR": roraima,
-        "RO": rondonia,
-        "AC": acre,
-        "TO": tocantins,
+    powerflow.estados = {
+        "RS": powerflow.rio_grande_sul,
+        "SC": powerflow.santa_catarina,
+        "PR": powerflow.parana,
+        "SP": powerflow.sao_paulo,
+        "RJ": powerflow.rio_janeiro,
+        "ES": powerflow.espirito_santo,
+        "MG": powerflow.minas_gerais,
+        "MS": powerflow.mato_grosso_sul,
+        "MT": powerflow.mato_grosso,
+        "GO": powerflow.goias,
+        "DF": powerflow.distrito_federal,
+        "BA": powerflow.bahia,
+        "BA/SE": powerflow.bahia_sergipe,
+        "AL/PE": powerflow.alagoas_pernambuco,
+        "PB/RN": powerflow.paraiba_rio_grande_norte,
+        "CE": powerflow.ceara,
+        "PI": powerflow.piaui,
+        "MA": powerflow.maranhao,
+        "PA": powerflow.para,
+        "AP": powerflow.amapa,
+        "AM": powerflow.amazonas,
+        "RR": powerflow.roraima,
+        "RO": powerflow.rondonia,
+        "AC": powerflow.acre,
+        "TO": powerflow.tocantins,
     }
 
-    regioes = {
-        "S": sul,
-        "SECO": seco,
-        "NE": nordeste,
-        "N": norte,
+    powerflow.regioes = {
+        "S": powerflow.sul,
+        "SECO": powerflow.seco,
+        "NE": powerflow.nordeste,
+        "N": powerflow.norte,
     }
 
-    geracao_total = powerflow.dbarDF.potencia_ativa.sum()
-    nucleares = powerflow.dbarDF.loc[
+    powerflow.geracao_total = powerflow.dbarDF.potencia_ativa.sum()
+    powerflow.une = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("UNE")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    hidreletricas = powerflow.dbarDF.loc[
+    powerflow.uhe = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("UHE")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    termeletricas = powerflow.dbarDF.loc[
+    powerflow.ute = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("UTE")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    eolicas = powerflow.dbarDF.loc[
+    powerflow.eol = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("EOL")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    solares = powerflow.dbarDF.loc[
+    powerflow.ufv = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("UFV")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    pchs = powerflow.dbarDF.loc[
+    powerflow.pch = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("PCH")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    biomassa = powerflow.dbarDF.loc[
+    powerflow.bio = powerflow.dbarDF.loc[
         powerflow.dbarDF.nome.str.contains("BIO")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
-    outras = powerflow.dbarDF.loc[
+    powerflow.gd = powerflow.dbarDF.loc[
         ~powerflow.dbarDF.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
@@ -287,78 +280,78 @@ def q2024(
         file.write("\n\n")
         file.write(
             "    -- GERADORES: {} unidades, {} MW".format(
-                (powerflow.dbarDF.potencia_ativa > 0).sum(), geracao_total
+                (powerflow.dbarDF.potencia_ativa > 0).sum(), powerflow.geracao_total
             )
         )
         file.write("\n\n")
         file.write(
             "        --- UNE: {} unidades, {} MW".format(
-                nucleares.shape[0], nucleares.potencia_ativa.sum()
+                powerflow.une.shape[0], powerflow.une.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(nucleares.to_string(index=False))
+        file.write(powerflow.une.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- UHE: {} unidades, {} MW".format(
-                hidreletricas.shape[0], hidreletricas.potencia_ativa.sum()
+                powerflow.uhe.shape[0], powerflow.uhe.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(hidreletricas.to_string(index=False))
+        file.write(powerflow.uhe.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- UTE: {} unidades, {} MW".format(
-                termeletricas.shape[0], termeletricas.potencia_ativa.sum()
+                powerflow.ute.shape[0], powerflow.ute.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(termeletricas.to_string(index=False))
+        file.write(powerflow.ute.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- EOL: {} unidades, {} MW".format(
-                eolicas.shape[0], eolicas.potencia_ativa.sum()
+                powerflow.eol.shape[0], powerflow.eol.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(eolicas.to_string(index=False))
+        file.write(powerflow.eol.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- UFV: {} unidades, {} MW".format(
-                solares.shape[0], solares.potencia_ativa.sum()
+                powerflow.ufv.shape[0], powerflow.ufv.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(solares.to_string(index=False))
+        file.write(powerflow.ufv.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- PCH: {} unidades, {} MW".format(
-                pchs.shape[0], pchs.potencia_ativa.sum()
+                powerflow.pch.shape[0], powerflow.pch.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(pchs.to_string(index=False))
+        file.write(powerflow.pch.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- BIO: {} unidades, {} MW".format(
-                biomassa.shape[0], biomassa.potencia_ativa.sum()
+                powerflow.bio.shape[0], powerflow.bio.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(biomassa.to_string(index=False))
+        file.write(powerflow.bio.to_string(index=False))
         file.write("\n\n")
         file.write(
             "        --- OTHER: {} unidades, {} MW".format(
-                outras.shape[0], outras.potencia_ativa.sum()
+                powerflow.gd.shape[0], powerflow.gd.potencia_ativa.sum()
             )
         )
         file.write("\n")
-        file.write(outras.to_string(index=False))
+        file.write(powerflow.gd.to_string(index=False))
         file.write("\n\n")
 
         file.write("\n\n")
         file.write("- STATE REPORT")
-        for key, item in estados.items():
+        for key, item in powerflow.estados.items():
             geradores = item.loc[item.potencia_ativa > 0.0]
             file.write("\n")
             file.write("    -- {}".format(key))
@@ -462,7 +455,7 @@ def q2024(
 
         file.write("\n\n")
         file.write("- SUBREGION REPORT")
-        for key, item in regioes.items():
+        for key, item in powerflow.regioes.items():
             geradores = item.loc[item.potencia_ativa > 0.0]
             file.write("\n")
             file.write("    -- {}".format(key))

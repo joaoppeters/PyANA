@@ -14,6 +14,8 @@ def factor(
     dbarDF,
     dbar,
     dger,
+    stateload,
+    stategeneration,
 ):
     """
 
@@ -22,174 +24,169 @@ def factor(
     """
 
     from pandas import concat, merge
-    from numpy import random
+    from numpy import nan
 
     ## Inicialização
     if "2Q2024" in name:
         # Load Power Factor IN SP State
-        sao_paulo = dbarDF.loc[
-            dbarDF.area.isin(
-                [
-                    201,
-                    202,
-                    203,
-                    204,
-                    205,
-                    206,
-                    207,
-                    208,
-                    209,
-                    210,
-                    211,
-                    212,
-                    213,
-                    214,
-                    215,
-                    216,
-                    217,
-                ]
-            )
-        ]
-        sao_paulo["fator_demanda_ativa"] = sao_paulo.demanda_ativa / lpmean
-        sao_paulo["fator_potencia"] = (
-            sao_paulo.demanda_reativa / sao_paulo.demanda_ativa
-        )
-
-        # Wind Generation Power Factor in NE Region
-        bahia = dbarDF.loc[dbarDF.area.isin([701, 702, 703, 704])]
-        bahia_sergipe = dbarDF.loc[dbarDF.area.isin([711, 712, 713, 714, 715, 716])]
-        alagoas_pernambuco = dbarDF.loc[dbarDF.area.isin([721, 722, 723, 724])]
-        paraiba_rio_grande_norte = dbarDF.loc[dbarDF.area.isin([741, 742, 743, 744])]
-        ceara = dbarDF.loc[dbarDF.area.isin([761, 762, 763, 764])]
-        piaui = dbarDF.loc[dbarDF.area.isin([771, 772, 773])]
-        maranhao = dbarDF.loc[dbarDF.area.isin([222, 861, 862, 863, 864, 865, 866])]
-        nordeste = concat(
+        dbar[
             [
-                bahia,
-                bahia_sergipe,
-                alagoas_pernambuco,
-                paraiba_rio_grande_norte,
-                ceara,
-                piaui,
-                maranhao,
-            ],
-            axis=0,
-            ignore_index=True,
+                "numero",
+                "potencia_ativa",
+                "potencia_reativa",
+                "demanda_ativa",
+                "demanda_reativa",
+                "shunt_barra",
+            ]
+        ] = dbar[
+            [
+                "numero",
+                "potencia_ativa",
+                "potencia_reativa",
+                "demanda_ativa",
+                "demanda_reativa",
+                "shunt_barra",
+            ]
+        ].replace(
+            r"^\s*$", nan, regex=True
         )
-        nordeste["fator_eol"] = [
-            value.potencia_ativa / wpmean if "EOL" in value.nome else 0
-            for idx, value in nordeste.iterrows()
-        ]
-        # Update on DGER DataFrame For Wind Generation in NE region
-        ruler = dger.ruler.iloc[0]
-        blockname = dger.dger.iloc[0]
-        wind = nordeste[nordeste.fator_eol != 0]
-        dger["fator_eol"] = 0
+        dbar = dbar.astype(
+            {
+                "numero": int,
+                "potencia_ativa": float,
+                "potencia_reativa": float,
+                "demanda_ativa": float,
+                "demanda_reativa": float,
+                "shunt_barra": float,
+            }
+        )
+        # Mark rows for common bars
+        mdbar = dbar.copy()
+        commondbar = mdbar.numero.isin(stateload.numero)
+        mdbar["operacao"] = "M"
+
+        # Update `fator_demanda_ativa` and `fator_demanda_reativa` directly in `mdbar`
+        mdbar.loc[commondbar, "fator_demanda_ativa"] = (
+            mdbar.loc[commondbar, "demanda_ativa"] / lpmean
+        )
+        mdbar.loc[commondbar, "fator_demanda_reativa"] = (
+            mdbar.loc[commondbar, "demanda_reativa"]
+            / mdbar.loc[commondbar, "demanda_ativa"]
+        ).where(mdbar.loc[commondbar, "demanda_ativa"] != 0, 0)
+
+        # Filter rows corresponding to wind generation
+        eolNE = mdbar.numero.isin(
+            stategeneration.loc[stategeneration.nome.str.contains("EOL")].numero
+        )
+        mdbar.loc[eolNE, "fator_geracao_eolica"] = (
+            mdbar.loc[eolNE, "potencia_ativa"] / wpmean
+        )
+        mdbar = mdbar.fillna(0)
+        # mdbar = merge(
+        #     mdbar,
+        #     eol[["numero", "nome", "potencia_ativa", "fator_geracao_eolica"]],
+        #     on="numero",
+        #     how="outer",
+        #     suffixes=("", "_eol"),
+        # )
+        # mdbar["nome"] = mdbar.nome.combine_first(mdbar.nome_eol)
+        # mdbar["potencia_ativa"] = mdbar.potencia_ativa.combine_first(
+        #     mdbar.potencia_ativa_eol
+        # )
+        # mdbar.drop(columns=["nome_eol", "potencia_ativa_eol"], inplace=True)
+        # mdbar = mdbar.fillna(0)
+
+        # UHE & UTE Generation Power Factor in NE Region
+        uheute = dbarDF[dbarDF.nome.str.contains("UHE|UTE") & dbarDF.tipo == 1].copy()
         dger = dger.astype({"numero": int})
-        dger["operacao"] = "M"
-
-        dger = merge(dger, wind[["numero", "fator_eol"]], on="numero", how="outer")
-        dger["ruler"] = ruler
-        dger["dger"] = blockname
-        dger["operacao"] = dger["operacao"].fillna("A")
-        dger = dger.fillna(0)
-        dger["fator_participacao"] = dger["fator_eol_y"]
-        del dger["fator_eol_x"]
-        del dger["fator_eol_y"]
-        dger["fator_participacao"] = (dger["fator_participacao"] * 1e2).round(2)
-        difference = 100 - dger["fator_participacao"].sum()
-        if difference > 0:
-            increment_indices = random.choice(
-                dger.index, int(difference * 100), replace=True
-            )
-            dger.loc[increment_indices, "fator_participacao"] += 0.01
-        dger = dger.sort_values(by="fator_participacao", ascending=False)
-        dger["fator_participacao"] = (dger["fator_participacao"]).round(2)
-
-        # Merging Data Variables
-        dbar = dbar.astype({"numero": int})
-        dbar = dbar.merge(
-            sao_paulo[["numero", "fator_demanda_ativa", "fator_potencia"]],
-            on="numero",
-            how="left",
+        commondger = merge(dger, uheute, on="numero").numero
+        dger["operacao"] = dger.numero.apply(
+            lambda x: "M" if x in commondger.values else None
         )
-        dbar = dbar.merge(nordeste[["numero", "fator_eol"]], on="numero", how="left")
-        # dbar[['fator_demanda_ativa', 'fator_potencia', 'fator_eol']] = dbar[['fator_demanda_ativa', 'fator_potencia', 'fator_eol']].fillna(0)
+        dger = merge(
+            dger, dbarDF[["numero", "potencia_ativa"]], on="numero", how="left"
+        )
+        newdger = uheute[~uheute.numero.isin(dger.numero)].copy()
+        newdger["operacao"] = "A"
+        mdger = concat([dger, newdger], ignore_index=True)
+        mdger = mdger[mdger.numero.isin(uheute.numero)].reset_index(drop=True)
+        mdger["fator_participacao"] = (
+            mdger.potencia_ativa * 100 / mdger.potencia_ativa.sum()
+        )
+        mdger = mdger.fillna(0)
 
     else:
         # Load Power Factor
-        dbar["fator_demanda_ativa"] = dbarDF.demanda_ativa / lpmean
-        dbar["fator_potencia"] = dbarDF.demanda_reativa / dbarDF.demanda_ativa
+        dbar["fator_demanda_ativa"] = stateload.demanda_ativa / lpmean
+        dbar["fator_potencia"] = stateload.demanda_reativa / stateload.demanda_ativa
 
-        # Wind Generation Power Factor
-        dbar["fator_eol"] = [
-            value["potencia_ativa"] / wpmean if "EOL" in value["nome"] else 0
-            for idx, value in dbarDF.iterrows()
-        ]
+        # # Wind Generation Power Factor
+        # dbar["fator_geracao_eolica"] = [
+        #     value["potencia_ativa"] / wpmean if "EOL" in value["nome"] else 0
+        #     for idx, value in stategeneration.iterrows()
+        # ]
 
-    return dbar, dger
+    return mdbar, mdger
 
 
 def loadf(
-    dbar,
-    dbarDF,
+    mdbar,
     psamples,
     s,
 ):
     """fator de potência aplicado à estocasticidade das cargas
 
     Args
-        dbar: DataFrame com as barras
-        dbarDF: DataFrame com as barras
-        psamples: amostras da demanda ativa
-        s: amostra
+        mdbar:
+        dbarDF:
+        psamples:
+        s:
     """
 
     import pandas as pd
 
     ## Inicialização
-    for idx, value in dbarDF.iterrows():
-        if not pd.isna(dbar.loc[idx, "fator_demanda_ativa"]):
-            dbar.loc[idx, "demanda_ativa"] = str(
-                psamples[s] * dbar.loc[idx, "fator_demanda_ativa"]
+    for idx, value in mdbar.iterrows():
+        if not pd.isna(value.fator_demanda_ativa) and value.demanda_ativa != 0:
+            mdbar.loc[idx, "demanda_ativa"] = (
+                psamples[s] * mdbar.loc[idx, "fator_demanda_ativa"]
             )
         if (
-            (not pd.isna(dbar.loc[idx, "fator_potencia"]))
-            and (not pd.isna(dbar.loc[idx, "fator_demanda_ativa"]))
-            and value["demanda_reativa"] != 0
-            and value["demanda_ativa"] != 0
+            (not pd.isna(value.fator_demanda_reativa))
+            and (not pd.isna(value.fator_demanda_ativa))
+            and value.demanda_reativa != 0
+            and value.demanda_ativa != 0
         ):
-            dbar.loc[idx, "demanda_reativa"] = str(
+            mdbar.loc[idx, "demanda_reativa"] = (
                 psamples[s]
-                * dbar.loc[idx, "fator_demanda_ativa"]
-                * dbar.loc[idx, "fator_potencia"]
+                * mdbar.loc[idx, "fator_demanda_ativa"]
+                * mdbar.loc[idx, "fator_demanda_reativa"]
             )
 
-    return dbar
+    return mdbar
 
 
 def windf(
-    dbar,
-    dbarDF,
+    mdbar,
     wsamples,
     s,
 ):
     """fator de potência aplicado à estocasticidade da geração eólica
 
     Args
-        dbar: DataFrame com as barras
-        dbarDF: DataFrame com as barras
-        wsamples: amostras da geração eólica
-        s: amostra
+        dbar:
+        dbarDF:
+        wsamples:
+        s:
     """
 
     import pandas as pd
 
     ## Inicialização
-    for idx, value in dbarDF.iterrows():
-        if (not pd.isna(dbar.loc[idx, "fator_eol"])) and "EOL" in value["nome"]:
-            dbar.loc[idx, "potencia_ativa"] = str(
-                round(wsamples[s] * dbar.loc[idx, "fator_eol"], 0)
+    for idx, value in mdbar.iterrows():
+        if (not pd.isna(value.fator_geracao_eolica)) and "EOL" in value.nome:
+            mdbar.loc[idx, "potencia_ativa"] = round(
+                wsamples[s] * mdbar.loc[idx, "fator_geracao_eolica"], 0
             )
 
-    return dbar
+    return mdbar
