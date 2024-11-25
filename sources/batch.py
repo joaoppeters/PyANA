@@ -28,7 +28,7 @@ def stochsxsc(
     from ulog import wulog
 
     ## Inicialização
-    powerflow.nsamples = 5
+    powerflow.nsamples = 1000
     powerflow.exicflag = False
     powerflow.exctflag = False
     areasfolder(
@@ -115,21 +115,26 @@ def stochsxsc(
 
             if not path.exists(exlfrel):
                 remove(savfile)
-            else:
-                with open(powerflow.stochasticsystems + "\\BALANCE.txt", "a") as file:
-                    file.write(
-                        "{};{};{}\n".format(
-                            stddev,
-                            to_numeric(powerflow.dbar.potencia_ativa, errors="coerce")
-                            .fillna(0)
-                            .sum(),
-                            to_numeric(powerflow.dbar.demanda_ativa, errors="coerce")
-                            .fillna(0)
-                            .sum(),
-                        )
-                    )
-
-        # del
+            # else:
+                # print()
+                # with open(powerflow.stochasticsystems + "\\BALANCE.txt", "a") as file:
+                #     file.write(
+                #         "{};{};{}\n".format(
+                #             stddev,
+                #             to_numeric(powerflow.mdbar.potencia_ativa, errors="coerce")
+                #             .fillna(0)
+                #             .sum(),
+                #             to_numeric(powerflow.mdbar.potencia_reativa, errors="coerce")
+                #             .fillna(0)
+                #             .sum(),
+                #             to_numeric(powerflow.mdbar.demanda_ativa, errors="coerce")
+                #             .fillna(0)
+                #             .sum(),
+                #             to_numeric(powerflow.mdbar.demanda_reativa, errors="coerce")
+                #             .fillna(0)
+                #             .sum(),
+                #         )
+                #     )
 
 
 def stochsxct(
