@@ -16,14 +16,15 @@ def stochsxsc(
         powerflow:
     """
 
-    from os import path, remove
-    from pandas import to_numeric
+    from os import listdir, remove
+    from os.path import exists, isfile, join, realpath
 
     from anarede import exlf
     from areas import q2024
     from factor import factor, loadf, windf
     from folder import areasfolder, stochasticfolder
     from stochastic import loadn, windn
+    from rela import rxlf
     from rwstb import rwstb
     from ulog import wulog
 
@@ -99,82 +100,70 @@ def stochsxsc(
 
             exlf(file=powerflow.filedir, time=3)
 
-            exlfrel = path.realpath(
+            exlfrel = realpath(
                 powerflow.filefolder
-                + "/"
+                + "\\"
                 + "EXLF"
                 + powerflow.namecase.upper()
                 + "{}.REL".format(powerflow.ones)
             )
-            savfile = path.realpath(
+            savfile = realpath(
                 powerflow.filefolder
-                + "/"
+                + "\\"
                 + powerflow.namecase.upper()
                 + "{}.SAV".format(powerflow.ones)
             )
 
-            if not path.exists(exlfrel):
+            if not exists(exlfrel):
                 remove(savfile)
-            # else:
-                # print()
-                # with open(powerflow.stochasticsystems + "\\BALANCE.txt", "a") as file:
-                #     file.write(
-                #         "{};{};{}\n".format(
-                #             stddev,
-                #             to_numeric(powerflow.mdbar.potencia_ativa, errors="coerce")
-                #             .fillna(0)
-                #             .sum(),
-                #             to_numeric(powerflow.mdbar.potencia_reativa, errors="coerce")
-                #             .fillna(0)
-                #             .sum(),
-                #             to_numeric(powerflow.mdbar.demanda_ativa, errors="coerce")
-                #             .fillna(0)
-                #             .sum(),
-                #             to_numeric(powerflow.mdbar.demanda_reativa, errors="coerce")
-                #             .fillna(0)
-                #             .sum(),
-                #         )
-                #     )
-
-
-def stochsxct(
-    powerflow,
-):
-    """
-
-    Args
-        powerflow:
-    """
-    ## Inicialização
-    from os import listdir
-
-    from ulog import usxct
 
     for stddev in range(1, 11, 1):
-        loadstd = stddev
-        geolstd = stddev
-
-        # Specify the folder path and file extension
         folder_path = (
             powerflow.maindir
-            + "/sistemas/"
+            + "\\sistemas\\"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
-                loadstd,
-                geolstd,
+                stddev,
+                stddev,
             )
         )
-        savextension = ".SAV"  # Change to the extension you need
+
+        with open(folder_path + "\\BALANCE.txt", "w") as balancefile:
+            balancefile.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
 
         # List and filter files by extension
-        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+        relfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith("EXLF")
+            and f.endswith(".REL")
+            and isfile(join(folder_path, f))
+        ]
 
-        # Print the filtered files
-        for savfile in savfiles:
-            usxct(
-                powerflow,
-                savfile,
-            )
+        rxlf(
+            powerflow,
+            folder=folder_path,
+            relfiles=relfiles,
+            balancefile=balancefile,
+        )
+
+        # Open and read the file
+        with open(folder_path + "\\BALANCE.txt", "r") as f:
+            lines = f.readlines()
+
+        # Separate the header and data
+        header = lines[0]
+        data = lines[1:]
+
+        # Sort the data lines based on the first column (split by `;`)
+        sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
+
+        # Combine the header and sorted data
+        sorted_lines = [header] + sorted_data
+
+        # Write the sorted lines to a new file
+        with open(folder_path + "\\BALANCE.txt", "w") as f:
+            f.writelines(sorted_lines)
 
 
 def stochsxic(
@@ -187,34 +176,125 @@ def stochsxic(
     """
     ## Inicialização
     from os import listdir
+    from os.path import isfile, join
 
+    from rela import rxic
     from ulog import usxic
 
     for stddev in range(1, 11, 1):
-        loadstd = stddev
-        geolstd = stddev
-
         # Specify the folder path and file extension
         folder_path = (
             powerflow.maindir
-            + "/sistemas/"
+            + "\\sistemas\\"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
-                loadstd,
-                geolstd,
+                stddev,
+                stddev,
             )
         )
-        savextension = ".REL"  # Change to the extension you need
+        # List and filter files by extension
+        savfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith(powerflow.name + "JP")
+            and f.endswith(".SAV")
+            and isfile(join(folder_path, f))
+        ]
+        usxic(
+            powerflow,
+            savfiles,
+        )
+
+    for stddev in range(1, 11, 1):
+        folder_path = (
+            powerflow.maindir
+            + "\\sistemas\\"
+            + powerflow.name
+            + "_loadstd{}geolstd{}".format(
+                stddev,
+                stddev,
+            )
+        )
 
         # List and filter files by extension
-        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+        relfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith("EXIC")
+            and f.endswith(".REL")
+            and isfile(join(folder_path, f))
+        ]
 
-        # Print the filtered files
-        for savfile in savfiles:
-            usxic(
-                powerflow,
-                savfile,
+        rxic(
+            powerflow,
+            relfiles,
+        )
+
+
+def stochsxct(
+    powerflow,
+):
+    """
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    from os import listdir
+    from os.path import isfile, join
+
+    from rela import rxct
+    from ulog import usxct
+
+    for stddev in range(1, 11, 1):
+        # Specify the folder path and file extension
+        folder_path = (
+            powerflow.maindir
+            + "\\sistemas\\"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                stddev,
+                stddev,
             )
+        )
+        # List and filter files by extension
+        savfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith(powerflow.name + "JP")
+            and f.endswith(".SAV")
+            and isfile(join(folder_path, f))
+        ]
+
+        usxct(
+            powerflow,
+            savfiles,
+        )
+
+    for stddev in range(1, 11, 1):
+        folder_path = (
+            powerflow.maindir
+            + "\\sistemas\\"
+            + powerflow.name
+            + "_loadstd{}geolstd{}".format(
+                stddev,
+                stddev,
+            )
+        )
+
+        # List and filter files by extension
+        relfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith("EXCT")
+            and f.endswith(".REL")
+            and isfile(join(folder_path, f))
+        ]
+
+        rxct(
+            powerflow,
+            relfiles,
+        )
 
 
 def stochsxict(
@@ -227,31 +307,57 @@ def stochsxict(
     """
     ## Inicialização
     from os import listdir
+    from os.path import isfile, join
 
+    from rela import rpvct
     from ulog import uspvct
 
     for stddev in range(1, 11, 1):
-        loadstd = stddev
-        geolstd = stddev
-
         # Specify the folder path and file extension
         folder_path = (
             powerflow.maindir
-            + "/sistemas/"
+            + "\\sistemas\\"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
-                loadstd,
-                geolstd,
+                stddev,
+                stddev,
             )
         )
-        savextension = ".REL"  # Change to the extension you need
+        # List and filter files by extension
+        savfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith(powerflow.name + "JP")
+            and f.endswith(".SAV")
+            and isfile(join(folder_path, f))
+        ]
+
+        uspvct(
+            powerflow,
+            savfiles,
+        )
+
+    for stddev in range(1, 11, 1):
+        folder_path = (
+            powerflow.maindir
+            + "\\sistemas\\"
+            + powerflow.name
+            + "_loadstd{}geolstd{}".format(
+                stddev,
+                stddev,
+            )
+        )
 
         # List and filter files by extension
-        savfiles = [f for f in listdir(folder_path) if f.endswith(savextension)]
+        relfiles = [
+            f
+            for f in listdir(folder_path)
+            if f.startswith("EPVCT")
+            and f.endswith(".REL")
+            and isfile(join(folder_path, f))
+        ]
 
-        # Print the filtered files
-        for savfile in savfiles:
-            uspvct(
-                powerflow,
-                savfile,
-            )
+        rpvct(
+            powerflow,
+            relfiles,
+        )

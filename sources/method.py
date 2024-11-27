@@ -200,10 +200,10 @@ def methodo(
         )
 
     # Chamada específica para leitura de arquivos .REL
-    elif powerflow.method == "RELR":
-        from rel import relr
+    elif powerflow.method == "RREL":
+        from rela import rrel
 
-        relr(
+        rrel(
             powerflow,
         )
 
@@ -249,7 +249,7 @@ def methodo(
 
     # Chamada específica para leitura dos relatórios de fluxo de potência continuado com contingência
     elif powerflow.method == "RPVCT":
-        from rel import relpvct
+        from rela import relpvct
 
         relpvct(
             powerflow,

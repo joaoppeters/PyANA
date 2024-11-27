@@ -24,9 +24,9 @@ def wulog(
     # Arquivo
     powerflow.filedir = realpath(
         powerflow.filefolder
-        + "/"
+        + "\\"
         + powerflow.namecase
-        + "{}.pwf".format(powerflow.ones)
+        + "{}.PWF".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -562,7 +562,7 @@ def usxsc(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF BPSI RINT")
+    file.write("EXLF BPSI RINT RTOT")
 
     file.write("\n")
     file.write("(")
@@ -573,7 +573,7 @@ def usxsc(
 
 def usxic(
     powerflow,
-    savfile,
+    savfiles,
 ):
     """
 
@@ -582,53 +582,51 @@ def usxic(
         file:
     """
     ## Inicialização
-    # Arquivo
-    powerflow.filedir = realpath(
-        powerflow.filefolder
-        + "/SXIC_"
-        + powerflow.namecase
-        + "{}.pwf".format(powerflow.ones)
-    )
+    for savfile in savfiles:
+        filename = savfile.removesuffix(".SAV")
 
-    # Manipulacao
-    file = open(powerflow.filedir, "w")
+        # Arquivo
+        filedir = realpath(powerflow.filefolder + "\\EXIC_" + filename + ".PWF")
 
-    # Cabecalho
-    uheader(
-        file,
-    )
+        # Manipulacao
+        file = open(filedir, "w")
 
-    # Corpo
-    uarq(
-        file,
-        savfile,
-        case=1,
-    )
+        # Cabecalho
+        uheader(
+            file,
+        )
 
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("4")
-    file.write("\n")
-    file.write("EXIC" + powerflow.namecase + str(powerflow.ones) + ".REL")
+        # Corpo
+        uarq(
+            file,
+            savfile,
+            case=1,
+        )
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write("EXIC" + filename + ".REL")
 
-    file.write("EXIC BPSI RINT")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("EXIC BPSI RINT RTOT")
 
-    file.write("FIM")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+        file.write("FIM")
 
 
 def usxct(
     powerflow,
-    savfile,
+    savfiles,
 ):
     """
 
@@ -637,57 +635,57 @@ def usxct(
         file:
     """
     ## Inicialização
-    # Arquivo
-    powerflow.filedir = realpath(
-        powerflow.filefolder
-        + "/SXCT_"
-        + powerflow.namecase
-        + "{}.pwf".format(powerflow.ones)
-    )
+    for savfile in savfiles:
+        filename = savfile.removeprefix("EXLF").removesuffix(".SAV")
 
-    # Manipulacao
-    file = open(powerflow.filedir, "w")
+        # Arquivo
+        powerflow.filedir = realpath(
+            powerflow.filefolder + "\\EXCT_" + filename + ".PWF"
+        )
 
-    # Cabecalho
-    uheader(
-        file,
-    )
+        # Manipulacao
+        file = open(powerflow.filedir, "w")
 
-    # Corpo
-    uarq(
-        file,
-        savfile,
-        case=1,
-    )
+        # Cabecalho
+        uheader(
+            file,
+        )
 
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("4")
-    file.write("\n")
-    file.write("EXCT" + powerflow.namecase + str(powerflow.ones) + ".REL")
+        # Corpo
+        uarq(
+            file,
+            savfile,
+            case=1,
+        )
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write("EXCT" + filename + ".REL")
 
-    file.write("EXCT BPSI RCVC RINT")
-    file.write("\n")
-    file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
-    file.write("\n")
-    file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("EXCT BPSI RINT RTOT")
+        file.write("\n")
+        file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
+        file.write("\n")
+        file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
 
-    file.write("FIM")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+        file.write("FIM")
 
 
 def uspvct(
     powerflow,
-    savfile,
+    savfiles,
 ):
     """
 
@@ -696,45 +694,45 @@ def uspvct(
         file:
     """
     ## Inicialização
-    # Arquivo
-    powerflow.filedir = realpath(
-        powerflow.filefolder
-        + "/SPVCT_"
-        + powerflow.namecase
-        + "{}.pwf".format(powerflow.ones)
-    )
+    for savfile in savfiles:
+        filename = savfile.removeprefix("EXLF").removesuffix(".SAV")
 
-    # Manipulacao
-    file = open(powerflow.filedir, "w")
+        # Arquivo
+        powerflow.filedir = realpath(
+            powerflow.filefolder + "\\EPVCT_" + filename + ".PWF"
+        )
 
-    # Cabecalho
-    uheader(
-        file,
-    )
+        # Manipulacao
+        file = open(powerflow.filedir, "w")
 
-    # Corpo
-    uarq(
-        file,
-        savfile,
-        case=1,
-    )
+        # Cabecalho
+        uheader(
+            file,
+        )
 
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("4")
-    file.write("\n")
-    file.write("EXICCT" + powerflow.namecase + str(powerflow.ones) + ".REL")
+        # Corpo
+        uarq(
+            file,
+            savfile,
+            case=1,
+        )
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("4")
+        file.write("\n")
+        file.write("EPVCT" + filename + ".REL")
 
-    file.write("EXIC BPSI PVCT")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("EXIC BPSI PVCT")
 
-    file.write("FIM")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+
+        file.write("FIM")

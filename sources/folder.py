@@ -227,9 +227,6 @@ def stochasticfolder(
     if exists(powerflow.stochasticsystems) is False:
         mkdir(powerflow.stochasticsystems)
 
-    with open(powerflow.stochasticsystems + "\\BALANCE.txt", "w") as file:
-        file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
-
     powerflow.filefolder = powerflow.stochasticsystems
 
 

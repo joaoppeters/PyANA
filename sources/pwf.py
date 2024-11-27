@@ -52,6 +52,7 @@ def keywords(
         powerflow:
     """
     ## Inicialização
+    powerflow.end_line = "\n"
     powerflow.end_archive = "FIM"
     powerflow.end_block = ("9999", "99999", "999999")
     powerflow.comment = "("
