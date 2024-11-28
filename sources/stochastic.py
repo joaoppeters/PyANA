@@ -59,9 +59,6 @@ def windn(
         powerflow:
         wstd:
     """
-
-    from pandas import concat
-
     ## Inicialização
     random.seed(2)
 

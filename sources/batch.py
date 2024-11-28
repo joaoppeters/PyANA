@@ -17,35 +17,30 @@ def stochsxsc(
     """
 
     from os import listdir, remove
-    from os.path import exists, isfile, join, realpath
+    from os.path import dirname, exists, isfile, join, realpath
 
     from anarede import exlf
     from areas import q2024
     from factor import factor, loadf, windf
-    from folder import areasfolder, stochasticfolder
+    from folder import areasfolder, sxlffolder
     from stochastic import loadn, windn
     from rela import rxlf
     from rwstb import rwstb
-    from ulog import wulog
+    from ulog import usxlf
 
     ## Inicialização
     powerflow.nsamples = 1000
-    powerflow.exicflag = False
-    powerflow.exctflag = False
     areasfolder(
         powerflow,
     )
     q2024(
         powerflow,
     )
-    for stddev in range(1, 11, 1):
-        loadstd = stddev
-        geolstd = stddev
-
-        stochasticfolder(
+    for stddev in range(12, 13, 1):
+        sxlffolder(
             powerflow,
-            loadstd=loadstd,
-            geolstd=geolstd,
+            loadstd=stddev,
+            geolstd=stddev,
         )
 
         (
@@ -54,7 +49,7 @@ def stochsxsc(
         ) = loadn(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
-            loadstd=loadstd,
+            loadstd=stddev,
             stateload=powerflow.sao_paulo,
         )
         (
@@ -63,7 +58,7 @@ def stochsxsc(
         ) = windn(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
-            geolstd=geolstd,
+            geolstd=stddev,
             stategeneration=powerflow.nordeste,
         )
 
@@ -94,21 +89,21 @@ def stochsxsc(
             )
             powerflow.ones += 1
 
-            wulog(
+            usxlf(
                 powerflow,
             )
 
             exlf(file=powerflow.filedir, time=3)
 
             exlfrel = realpath(
-                powerflow.filefolder
+                powerflow.sxlf
                 + "\\"
                 + "EXLF"
                 + powerflow.namecase.upper()
                 + "{}.REL".format(powerflow.ones)
             )
             savfile = realpath(
-                powerflow.filefolder
+                powerflow.sxlf
                 + "\\"
                 + powerflow.namecase.upper()
                 + "{}.SAV".format(powerflow.ones)
@@ -117,15 +112,13 @@ def stochsxsc(
             if not exists(exlfrel):
                 remove(savfile)
 
-    for stddev in range(1, 11, 1):
+    for stddev in range(11, 12, 1):
+        folder = dirname(powerflow.sxlf)
         folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
+            folder
+            + "\\EXLF_"
             + powerflow.name
-            + "_loadstd{}_geolstd{}".format(
-                stddev,
-                stddev,
-            )
+            + "_loadstd{}_geolstd{}".format(stddev, stddev)
         )
 
         with open(folder_path + "\\BALANCE.txt", "w") as balancefile:
@@ -178,20 +171,27 @@ def stochsxic(
     from os import listdir
     from os.path import isfile, join
 
+    from folder import sxicfolder
     from rela import rxic
     from ulog import usxic
 
     for stddev in range(1, 11, 1):
-        # Specify the folder path and file extension
+        sxicfolder(
+            powerflow,
+            loadstd=stddev,
+            geolstd=stddev,
+        )
+
         folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
+            powerflow.sxlf
+            + "\\EXLF_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
                 stddev,
                 stddev,
             )
         )
+
         # List and filter files by extension
         savfiles = [
             f
@@ -200,8 +200,10 @@ def stochsxic(
             and f.endswith(".SAV")
             and isfile(join(folder_path, f))
         ]
+
         usxic(
             powerflow,
+            folder_path,
             savfiles,
         )
 
@@ -297,7 +299,7 @@ def stochsxct(
         )
 
 
-def stochsxict(
+def stochspvct(
     powerflow,
 ):
     """

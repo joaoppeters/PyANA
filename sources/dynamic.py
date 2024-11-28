@@ -247,7 +247,7 @@ def timeplot(
     """
 
     ## Inicialização
-    # savetxt(powerflow.maindir + "/sistemas/" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
+    # savetxt(powerflow.maindir + "\\sistemas\\" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
 
     linestyles = [
         "--",

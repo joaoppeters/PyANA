@@ -18,7 +18,6 @@ def folder(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Diretório de Sistemas
     dirSistemas = dirname(powerflow.dirPWF)
@@ -38,7 +37,6 @@ def areasfolder(
         powerflow:
         name: nome do diretório
     """
-
     ## Inicialização
     powerflow.infofolder = powerflow.resultsfolder + "iNFO\\"
     if exists(powerflow.infofolder) is False:
@@ -53,7 +51,6 @@ def admittancefolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.admittancefolder = powerflow.resultsfolder + "MatrizAdmitancia\\"
     if exists(powerflow.admittancefolder) is False:
@@ -72,7 +69,6 @@ def convergencefolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.convergencefolder = powerflow.resultsfolder + "TrajetoriaConvergencia\\"
     if exists(powerflow.convergencefolder) is False:
@@ -91,7 +87,6 @@ def continuationfolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.continuationfolder = powerflow.resultsfolder + "Continuado\\"
     if exists(powerflow.continuationfolder) is False:
@@ -122,7 +117,6 @@ def jacobifolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.jacobifolder = powerflow.resultsfolder + "MatrizJacobiana\\"
     if exists(powerflow.jacobifolder) is False:
@@ -141,7 +135,6 @@ def pssefolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.pssefolder = dirname(powerflow.dirPWF) + "\\PSSe\\"
     if exists(powerflow.pssefolder) is False:
@@ -156,7 +149,6 @@ def reportsfolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.reportsfolder = powerflow.resultsfolder + "Relatorios\\"
     if exists(powerflow.reportsfolder) is False:
@@ -175,7 +167,6 @@ def smoothfolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de método
     if powerflow.method == "EXLF":
@@ -193,7 +184,7 @@ def smoothfolder(
             mkdir(powerflow.dirsmoothsys)
 
 
-def stochasticfolder(
+def sxlffolder(
     powerflow,
     loadstd,
     geolstd,
@@ -202,13 +193,18 @@ def stochasticfolder(
 
     Args
         powerflow:
+        loadstd:
+        geolstd:
     """
-
     ## Inicialização
+    sxlf = powerflow.maindir + "\\sistemas\\EXLF\\"
+    if exists(sxlf) is False:
+        mkdir(sxlf)
+
     if geolstd > 0:
-        powerflow.stochasticsystems = (
-            powerflow.maindir
-            + "\\sistemas\\"
+        powerflow.sxlf = (
+            sxlf
+            + "EXLF_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
@@ -216,18 +212,154 @@ def stochasticfolder(
             )
         )
     else:
-        powerflow.stochasticsystems = (
-            powerflow.maindir
-            + "\\sistemas\\"
+        powerflow.sxlf = (
+            sxlf
+            + "EXLF_"
             + powerflow.name
-            + "_load std{}".format(
+            + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.stochasticsystems) is False:
-        mkdir(powerflow.stochasticsystems)
+    if exists(powerflow.sxlf) is False:
+        mkdir(powerflow.sxlf)
 
-    powerflow.filefolder = powerflow.stochasticsystems
+
+def sxicfolder(
+    powerflow,
+    loadstd,
+    geolstd,
+):
+    """criação de diretório para armazenar dados de simulação estocástica
+
+    Args
+        powerflow:
+        loadstd:
+        geolstd:
+    """
+    ## Inicialização
+    powerflow.sxlf = powerflow.maindir + "\\sistemas\\EXLF"
+    if exists(powerflow.sxlf) is False:
+        raise ValueError(
+            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+        )
+
+    sxic = powerflow.maindir + "\\sistemas\\EXIC"
+    if exists(sxic) is False:
+        mkdir(sxic)
+
+    if geolstd > 0:
+        powerflow.sxic = (
+            sxic
+            + "\\EXIC_"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+    else:
+        powerflow.sxic = (
+            sxic
+            + "\\EXIC_"
+            + powerflow.name
+            + "_loadstd{}".format(
+                loadstd,
+            )
+        )
+    if exists(powerflow.sxic) is False:
+        mkdir(powerflow.sxic)
+
+
+def sxctfolder(
+    powerflow,
+    loadstd,
+    geolstd,
+):
+    """criação de diretório para armazenar dados de simulação estocástica
+
+    Args
+        powerflow:
+        loadstd:
+        geolstd:
+    """
+    ## Inicialização
+    powerflow.sxlf = powerflow.maindir + "\\sistemas\\EXLF"
+    if exists(powerflow.sxlf) is False:
+        raise ValueError(
+            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+        )
+
+    sxct = powerflow.maindir + "\\sistemas\\EXCT"
+    if exists(sxct) is False:
+        mkdir(sxct)
+
+    if geolstd > 0:
+        powerflow.sxct = (
+            sxct
+            + "\\EXCT_"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+    else:
+        powerflow.sxct = (
+            sxct
+            + "\\EXCT_"
+            + powerflow.name
+            + "_loadstd{}".format(
+                loadstd,
+            )
+        )
+    if exists(powerflow.sxct) is False:
+        mkdir(powerflow.sxct)
+
+
+def spvctfolder(
+    powerflow,
+    loadstd,
+    geolstd,
+):
+    """criação de diretório para armazenar dados de simulação estocástica
+
+    Args
+        powerflow:
+        loadstd:
+        geolstd:
+    """
+    ## Inicialização
+    powerflow.sxlf = powerflow.maindir + "\\sistemas\\EXLF"
+    if exists(powerflow.sxlf) is False:
+        raise ValueError(
+            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+        )
+
+    pvct = powerflow.maindir + "\\sistemas\\PVCT"
+    if exists(pvct) is False:
+        mkdir(pvct)
+
+    if geolstd > 0:
+        powerflow.pvct = (
+            pvct
+            + "\\PVCT_"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}".format(
+                loadstd,
+                geolstd,
+            )
+        )
+    else:
+        powerflow.pvct = (
+            pvct
+            + "\\PVCT_"
+            + powerflow.name
+            + "_loadstd{}".format(
+                loadstd,
+            )
+        )
+    if exists(powerflow.pvct) is False:
+        mkdir(powerflow.pvct)
 
 
 def statevarfolder(
@@ -238,7 +370,6 @@ def statevarfolder(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.statevarfolder = powerflow.resultsfolder + "VariaveisEstado\\"
     if exists(powerflow.statevarfolder) is False:

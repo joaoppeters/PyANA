@@ -171,7 +171,7 @@ def rxlf(
                     rflines=rflines,
                     linecount=linecount,
                     balancefile=balancefile,
-                    rfilecount=re.search(r'MOD(\d+)\.REL', relfile).group(1),
+                    rfilecount=re.search(r"MOD(\d+)\.REL", relfile).group(1),
                 )
             linecount += 1
 
@@ -180,7 +180,7 @@ def rxic(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow:
     """
@@ -192,7 +192,7 @@ def rxct(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow:
     """
@@ -237,7 +237,7 @@ def rtot(
     while linecount < len(rflines):
         linecount += 1
 
-        try: 
+        try:
             if rflines[linecount].split()[0] == "TOTAL":
                 with open(balancefile.name, "a") as bf:
                     bf.write(

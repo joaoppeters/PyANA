@@ -80,10 +80,10 @@ def pathpwf(
     # Variável de nome do SEP em estudo
     powerflow.name = powerflow.anarede.split(".")[0]
 
-    if exists(powerflow.maindir + "/sistemas/") is True:
-        if exists(powerflow.maindir + "/sistemas/" + powerflow.anarede) is True:
+    if exists(powerflow.maindir + "\\sistemas\\") is True:
+        if exists(powerflow.maindir + "\\sistemas\\" + powerflow.anarede) is True:
             powerflow.dirPWF = realpath(
-                powerflow.maindir + "/sistemas/" + powerflow.anarede
+                powerflow.maindir + "\\sistemas\\" + powerflow.anarede
             )
             print(
                 f"\033[93mArquivo `{powerflow.anarede}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"
@@ -94,7 +94,7 @@ def pathpwf(
             )
 
     else:
-        mkdir(powerflow.maindir + "/sistemas/")
+        mkdir(powerflow.maindir + "\\sistemas\\")
         raise ValueError(
             f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.anarede}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
         )
@@ -111,9 +111,9 @@ def pathstb(
 
     ## Inicialização
     powerflow.anatem = powerflow.name + ".stb"
-    if exists(powerflow.maindir + "/sistemas/" + powerflow.anatem) is True:
+    if exists(powerflow.maindir + "\\sistemas\\" + powerflow.anatem) is True:
         powerflow.dirSTB = realpath(
-            dirname(dirname(__file__)) + "/sistemas/" + powerflow.anatem
+            dirname(dirname(__file__)) + "\\sistemas\\" + powerflow.anatem
         )
         print(
             f"\033[93mArquivo `{powerflow.anatem}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"

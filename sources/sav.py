@@ -6,8 +6,6 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-import shutil
-
 
 def savmove(
     filename: str,
@@ -19,6 +17,8 @@ def savmove(
         filename:
         filedir:
     """
+
+    import shutil
 
     ## Inicialização
     savcheck(filename)
@@ -33,6 +33,7 @@ def savcheck(
     Args:
         filename:
     """
+
     from os.path import exists
 
     ## Inicialização
@@ -43,3 +44,22 @@ def savcheck(
         raise ValueError(
             f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{name}` do SEP informado.\nInsira o arquivo `{name}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
         )
+
+
+def exlf2new(
+    exlffolder: str,
+    newfolder: str,
+    savfile: str,
+):
+    """
+    
+    Args:
+        exlffolder:
+        newfolder:
+        savfiles:
+    """
+
+    import shutil 
+
+    ## Inicialização
+    shutil.copy2(exlffolder + "\\" + savfile, newfolder)

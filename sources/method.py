@@ -184,10 +184,10 @@ def methodo(
         )
 
     # Chamada especifica para analise de fluxo de potência continuado e contingencia em arquivos com dados estocasticos
-    elif powerflow.method == "SXICT":
-        from batch import stochsxict
+    elif powerflow.method == "SPVCT":
+        from batch import stochspvct
 
-        stochsxict(
+        stochspvct(
             powerflow,
         )
 

@@ -31,6 +31,7 @@ def exlf(
 
 def exic(
     file,
+    time,
 ):
     """
 
@@ -45,7 +46,7 @@ def exic(
     # Chamada do Anarede
     system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
-    sleep(10)
+    sleep(time)
     system("taskkill /f /im ANAREDE.exe")
 
 

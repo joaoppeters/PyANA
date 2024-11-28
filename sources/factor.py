@@ -82,19 +82,6 @@ def factor(
             mdbar.loc[eolNE, "potencia_ativa"] / wpmean
         )
         mdbar = mdbar.fillna(0)
-        # mdbar = merge(
-        #     mdbar,
-        #     eol[["numero", "nome", "potencia_ativa", "fator_geracao_eolica"]],
-        #     on="numero",
-        #     how="outer",
-        #     suffixes=("", "_eol"),
-        # )
-        # mdbar["nome"] = mdbar.nome.combine_first(mdbar.nome_eol)
-        # mdbar["potencia_ativa"] = mdbar.potencia_ativa.combine_first(
-        #     mdbar.potencia_ativa_eol
-        # )
-        # mdbar.drop(columns=["nome_eol", "potencia_ativa_eol"], inplace=True)
-        # mdbar = mdbar.fillna(0)
 
         # UHE & UTE Generation Power Factor in NE Region
         uheute = dbarDF[dbarDF.nome.str.contains("UHE|UTE") & dbarDF.tipo == 1].copy()
@@ -116,15 +103,9 @@ def factor(
         mdger = mdger.fillna(0)
 
     else:
-        # Load Power Factor
-        dbar["fator_demanda_ativa"] = stateload.demanda_ativa / lpmean
-        dbar["fator_potencia"] = stateload.demanda_reativa / stateload.demanda_ativa
-
-        # # Wind Generation Power Factor
-        # dbar["fator_geracao_eolica"] = [
-        #     value["potencia_ativa"] / wpmean if "EOL" in value["nome"] else 0
-        #     for idx, value in stategeneration.iterrows()
-        # ]
+        raise ValueError(
+            f"\033[91mERROR: Ajustar código nessa linha 106, factor.py\033[0m"
+        )
 
     return mdbar, mdger
 
