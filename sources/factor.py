@@ -84,7 +84,16 @@ def factor(
         mdbar = mdbar.fillna(0)
 
         # UHE & UTE Generation Power Factor in NE Region
-        uheute = dbarDF[dbarDF.nome.str.contains("UHE|UTE") & dbarDF.tipo == 1].copy()
+        uheute = dbarDF[
+            (
+                dbarDF.nome.str.contains(
+                    "UHE|UTE|UH-|UT-",
+                    na=False,
+                )
+            )
+            & ((dbarDF.tipo == 1) | (dbarDF.tipo == 2))
+            & (dbarDF.potencia_ativa > 0.0)
+        ].copy()
         dger = dger.astype({"numero": int})
         commondger = merge(dger, uheute, on="numero").numero
         dger["operacao"] = dger.numero.apply(
@@ -97,9 +106,20 @@ def factor(
         newdger["operacao"] = "A"
         mdger = concat([dger, newdger], ignore_index=True)
         mdger = mdger[mdger.numero.isin(uheute.numero)].reset_index(drop=True)
-        mdger["fator_participacao"] = (
-            mdger.potencia_ativa * 100 / mdger.potencia_ativa.sum()
+        mdger["fator_participacao"] = round(
+            mdger.potencia_ativa * 100 / mdger.potencia_ativa.sum(), 2
         )
+
+        if mdger.fator_participacao.sum() - 100 != 0.0:
+            slack = (
+                dbarDF[dbarDF.numero.isin(mdger.numero)][dbarDF.tipo == 2]
+                .iloc[0]
+                .numero
+            )
+            mdger.loc[mdger.numero == slack, "fator_participacao"] = mdger.loc[
+                mdger.numero == slack, "fator_participacao"
+            ] - (mdger.fator_participacao.sum() - 100)
+
         mdger = mdger.fillna(0)
 
     else:
@@ -124,17 +144,17 @@ def loadf(
         s:
     """
 
-    import pandas as pd
+    from pandas import isna
 
     ## Inicialização
     for idx, value in mdbar.iterrows():
-        if not pd.isna(value.fator_demanda_ativa) and value.demanda_ativa != 0:
+        if not isna(value.fator_demanda_ativa) and value.demanda_ativa != 0:
             mdbar.loc[idx, "demanda_ativa"] = (
                 psamples[s] * mdbar.loc[idx, "fator_demanda_ativa"]
             )
         if (
-            (not pd.isna(value.fator_demanda_reativa))
-            and (not pd.isna(value.fator_demanda_ativa))
+            (not isna(value.fator_demanda_reativa))
+            and (not isna(value.fator_demanda_ativa))
             and value.demanda_reativa != 0
             and value.demanda_ativa != 0
         ):
@@ -161,11 +181,11 @@ def windf(
         s:
     """
 
-    import pandas as pd
+    from pandas import isna
 
     ## Inicialização
     for idx, value in mdbar.iterrows():
-        if (not pd.isna(value.fator_geracao_eolica)) and "EOL" in value.nome:
+        if (not isna(value.fator_geracao_eolica)) and "EOL" in value.nome:
             mdbar.loc[idx, "potencia_ativa"] = round(
                 wsamples[s] * mdbar.loc[idx, "fator_geracao_eolica"], 0
             )

@@ -148,8 +148,8 @@ def methodo(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.method == "SXSC":
-        from batch import stochsxsc
+    elif powerflow.method == "SXLF":
+        from batch import stochsxlf
         from setting import pathstb
         from stb import stb
 
@@ -163,7 +163,7 @@ def methodo(
 
         powerflow.namecase = powerflow.name + "jpmod"
 
-        stochsxsc(
+        stochsxlf(
             powerflow,
         )
 

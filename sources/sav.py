@@ -52,14 +52,14 @@ def exlf2new(
     savfile: str,
 ):
     """
-    
+
     Args:
         exlffolder:
         newfolder:
         savfiles:
     """
 
-    import shutil 
+    import shutil
 
     ## Inicialização
     shutil.copy2(exlffolder + "\\" + savfile, newfolder)

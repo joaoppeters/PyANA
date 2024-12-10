@@ -37,6 +37,7 @@ def exic(
 
     Args
         file:
+        time:
     """
 
     from os import system
@@ -52,11 +53,13 @@ def exic(
 
 def exct(
     file,
+    time,
 ):
     """
 
     Args
         file:
+        time:
     """
 
     from os import system
@@ -66,17 +69,19 @@ def exct(
     # Chamada do Anarede
     system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
-    sleep(10)
+    sleep(time)
     system("taskkill /f /im ANAREDE.exe")
 
 
-def exicpvct(
+def epvct(
     file,
+    time,
 ):
     """
 
     Args
         file:
+        time:
     """
 
     from os import system
@@ -86,5 +91,5 @@ def exicpvct(
     # Chamada do Anarede
     system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
 
-    sleep(10)
+    sleep(time)
     system("taskkill /f /im ANAREDE.exe")

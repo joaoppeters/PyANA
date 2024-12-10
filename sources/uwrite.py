@@ -267,28 +267,8 @@ def udger(
     file.write(format(dger.dger.iloc[0]))
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
-        if value.fator_participacao >= 0:
-            # Positive numbers
-            if value.fator_participacao >= 10000:
-                vp = f"{int(value.fator_participacao)}"[
-                    :5
-                ]  # i) Maintain 5 digits (truncate without decimal point)
-            elif value.fator_participacao >= 1000:
-                vp = f"{value.fator_participacao:.4g}"  # ii) Maintain 4 digits, include decimal point
-            elif value.fator_participacao >= 100:
-                vp = f"{value.fator_participacao:.3g}"  # iii) Maintain 3 digits, include one decimal
-            elif value.fator_participacao >= 10:
-                vp = f"{value.fator_participacao:.2g}"  # iv) Maintain 2 digits, include two decimals
-            elif value.fator_participacao >= 1:
-                vp = f"{value.fator_participacao:.3f}".rstrip("0").rstrip(".")[
-                    :5
-                ]  # v) Maintain 1 digit and up to 3 decimals
-            else:
-                vp = f"{value.fator_participacao:.4f}".rstrip("0")[
-                    :5
-                ]  # xi) Maintain 4 decimal places for small values
         file.write(
-            f"{value.numero:>5} {value.operacao:1} {6*' ':>6} {6*' ':>6} {vp:>5} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
+            f"{value.numero:>5} {value.operacao:1} {6*' ':>6} {6*' ':>6} {value.fator_participacao:>5.2f} {5*' ':>5} {5*' ':>5} {4*' ':>4} {4*' ':>4} {4*' ':>4} {5*' ':>5} {5*' ':>5}{6*' ':>6}"
         )
         file.write("\n")
     file.write("99999")
@@ -373,7 +353,6 @@ def udmfl(
     ## Inicialização
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
-
     for idx, value in dmfl.iterrows():
         file.write(
             f"{value['tipo_elemento_1']:>4} {value['identificacao_elemento_1']:>5} {value['condicao_elemento_1']:1} {value['tipo_elemento_2']:>4} {value['identificacao_elemento_2']:>5} {value['condicao_elemento_2']:1} {value['tipo_elemento_3']:>4} {value['identificacao_elemento_3']:>5} {value['condicao_elemento_3']:1} {value['tipo_elemento_4']:>4} {value['identificacao_elemento_4']:>5} {value['operacao']:1} {value['interligacao']:1}"
@@ -483,7 +462,7 @@ def utail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write("EXLF" + powerflow.namecase + str(powerflow.ones) + ".REL")
+    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")

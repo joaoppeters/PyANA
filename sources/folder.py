@@ -340,7 +340,7 @@ def spvctfolder(
         mkdir(pvct)
 
     if geolstd > 0:
-        powerflow.pvct = (
+        powerflow.spvct = (
             pvct
             + "\\PVCT_"
             + powerflow.name
@@ -350,7 +350,7 @@ def spvctfolder(
             )
         )
     else:
-        powerflow.pvct = (
+        powerflow.spvct = (
             pvct
             + "\\PVCT_"
             + powerflow.name
@@ -358,8 +358,8 @@ def spvctfolder(
                 loadstd,
             )
         )
-    if exists(powerflow.pvct) is False:
-        mkdir(powerflow.pvct)
+    if exists(powerflow.spvct) is False:
+        mkdir(powerflow.spvct)
 
 
 def statevarfolder(

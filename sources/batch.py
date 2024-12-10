@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 
-def stochsxsc(
+def stochsxlf(
     powerflow,
 ):
     """batch de execução estocástica
@@ -36,7 +36,7 @@ def stochsxsc(
     q2024(
         powerflow,
     )
-    for stddev in range(12, 13, 1):
+    for stddev in range(1, 11, 1):
         sxlffolder(
             powerflow,
             loadstd=stddev,
@@ -95,10 +95,16 @@ def stochsxsc(
 
             exlf(file=powerflow.filedir, time=3)
 
+            exlfpwf = realpath(
+                powerflow.sxlf
+                + "\\EXLF_"
+                + powerflow.namecase.upper()
+                + "{}.PWF".format(powerflow.ones)
+            )
             exlfrel = realpath(
                 powerflow.sxlf
                 + "\\"
-                + "EXLF"
+                + "EXLF_"
                 + powerflow.namecase.upper()
                 + "{}.REL".format(powerflow.ones)
             )
@@ -109,10 +115,17 @@ def stochsxsc(
                 + "{}.SAV".format(powerflow.ones)
             )
 
+            if exists(savfile):
+                remove(exlfpwf)
             if not exists(exlfrel):
                 remove(savfile)
 
-    for stddev in range(11, 12, 1):
+    for stddev in range(1, 11, 1):
+        sxlffolder(
+            powerflow,
+            loadstd=stddev,
+            geolstd=stddev,
+        )
         folder = dirname(powerflow.sxlf)
         folder_path = (
             folder
@@ -175,7 +188,7 @@ def stochsxic(
     from rela import rxic
     from ulog import usxic
 
-    for stddev in range(1, 11, 1):
+    for stddev in range(1, 2, 1):
         sxicfolder(
             powerflow,
             loadstd=stddev,
@@ -207,30 +220,30 @@ def stochsxic(
             savfiles,
         )
 
-    for stddev in range(1, 11, 1):
-        folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
-            + powerflow.name
-            + "_loadstd{}geolstd{}".format(
-                stddev,
-                stddev,
-            )
-        )
+    # for stddev in range(1, 11, 1):
+    #     folder_path = (
+    #         powerflow.maindir
+    #         + "\\sistemas\\"
+    #         + powerflow.name
+    #         + "_loadstd{}_geolstd{}".format(
+    #             stddev,
+    #             stddev,
+    #         )
+    #     )
 
-        # List and filter files by extension
-        relfiles = [
-            f
-            for f in listdir(folder_path)
-            if f.startswith("EXIC")
-            and f.endswith(".REL")
-            and isfile(join(folder_path, f))
-        ]
+    #     # List and filter files by extension
+    #     relfiles = [
+    #         f
+    #         for f in listdir(folder_path)
+    #         if f.startswith("EXIC")
+    #         and f.endswith(".REL")
+    #         and isfile(join(folder_path, f))
+    #     ]
 
-        rxic(
-            powerflow,
-            relfiles,
-        )
+    #     rxic(
+    #         powerflow,
+    #         relfiles,
+    #     )
 
 
 def stochsxct(
@@ -242,23 +255,31 @@ def stochsxct(
         powerflow:
     """
     ## Inicialização
+    ## Inicialização
     from os import listdir
     from os.path import isfile, join
 
+    from folder import sxctfolder
     from rela import rxct
     from ulog import usxct
 
-    for stddev in range(1, 11, 1):
-        # Specify the folder path and file extension
+    for stddev in range(4, 5, 1):
+        sxctfolder(
+            powerflow,
+            loadstd=stddev,
+            geolstd=stddev,
+        )
+
         folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
+            powerflow.sxlf
+            + "\\EXLF_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
                 stddev,
                 stddev,
             )
         )
+
         # List and filter files by extension
         savfiles = [
             f
@@ -270,33 +291,34 @@ def stochsxct(
 
         usxct(
             powerflow,
+            folder_path,
             savfiles,
         )
 
-    for stddev in range(1, 11, 1):
-        folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
-            + powerflow.name
-            + "_loadstd{}geolstd{}".format(
-                stddev,
-                stddev,
-            )
-        )
+    # for stddev in range(1, 11, 1):
+    #     folder_path = (
+    #         powerflow.maindir
+    #         + "\\sistemas\\"
+    #         + powerflow.name
+    #         + "_loadstd{}_geolstd{}".format(
+    #             stddev,
+    #             stddev,
+    #         )
+    #     )
 
-        # List and filter files by extension
-        relfiles = [
-            f
-            for f in listdir(folder_path)
-            if f.startswith("EXCT")
-            and f.endswith(".REL")
-            and isfile(join(folder_path, f))
-        ]
+    #     # List and filter files by extension
+    #     relfiles = [
+    #         f
+    #         for f in listdir(folder_path)
+    #         if f.startswith("EXCT")
+    #         and f.endswith(".REL")
+    #         and isfile(join(folder_path, f))
+    #     ]
 
-        rxct(
-            powerflow,
-            relfiles,
-        )
+    #     rxct(
+    #         powerflow,
+    #         relfiles,
+    #     )
 
 
 def stochspvct(
@@ -308,23 +330,31 @@ def stochspvct(
         powerflow:
     """
     ## Inicialização
+    ## Inicialização
     from os import listdir
     from os.path import isfile, join
 
+    from folder import spvctfolder
     from rela import rpvct
     from ulog import uspvct
 
-    for stddev in range(1, 11, 1):
-        # Specify the folder path and file extension
+    for stddev in range(1, 4, 1):
+        spvctfolder(
+            powerflow,
+            loadstd=stddev,
+            geolstd=stddev,
+        )
+
         folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
+            powerflow.sxlf
+            + "\\EXLF_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
                 stddev,
                 stddev,
             )
         )
+
         # List and filter files by extension
         savfiles = [
             f
@@ -336,30 +366,31 @@ def stochspvct(
 
         uspvct(
             powerflow,
+            folder_path,
             savfiles,
         )
 
-    for stddev in range(1, 11, 1):
-        folder_path = (
-            powerflow.maindir
-            + "\\sistemas\\"
-            + powerflow.name
-            + "_loadstd{}geolstd{}".format(
-                stddev,
-                stddev,
-            )
-        )
+    # for stddev in range(1, 11, 1):
+    #     folder_path = (
+    #         powerflow.maindir
+    #         + "\\sistemas\\"
+    #         + powerflow.name
+    #         + "_loadstd{}_geolstd{}".format(
+    #             stddev,
+    #             stddev,
+    #         )
+    #     )
 
-        # List and filter files by extension
-        relfiles = [
-            f
-            for f in listdir(folder_path)
-            if f.startswith("EPVCT")
-            and f.endswith(".REL")
-            and isfile(join(folder_path, f))
-        ]
+    #     # List and filter files by extension
+    #     relfiles = [
+    #         f
+    #         for f in listdir(folder_path)
+    #         if f.startswith("EPVCT")
+    #         and f.endswith(".REL")
+    #         and isfile(join(folder_path, f))
+    #     ]
 
-        rpvct(
-            powerflow,
-            relfiles,
-        )
+    #     rxpvct(
+    #         powerflow,
+    #         relfiles,
+    #     )
