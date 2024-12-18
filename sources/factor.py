@@ -27,7 +27,7 @@ def factor(
     from numpy import nan
 
     ## Inicialização
-    if "2Q2024" in name:
+    if "Q2024" in name or "NE224" in name:
         # Load Power Factor IN SP State
         dbar[
             [
@@ -97,7 +97,7 @@ def factor(
         dger = dger.astype({"numero": int})
         commondger = merge(dger, uheute, on="numero").numero
         dger["operacao"] = dger.numero.apply(
-            lambda x: "M" if x in commondger.values else None
+            lambda x: "A" if x in commondger.values else None
         )
         dger = merge(
             dger, dbarDF[["numero", "potencia_ativa"]], on="numero", how="left"

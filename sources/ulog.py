@@ -32,8 +32,12 @@ def usxlf(
 
     # Manipulacao
     file = open(powerflow.filedir, "w")
-    savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
-    case = powerflow.name.split("_")[-1][1:]
+    if "Q2024" in powerflow.name:
+        savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
+        case = powerflow.name.split("_")[-1][1:]
+    elif "NE224" in powerflow.name:
+        savfile = powerflow.name + '.SAV'
+        case=1
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
@@ -102,9 +106,10 @@ def usxic(
         file:
     """
 
-    from os.path import realpath
+    from os import remove
+    from os.path import exists, realpath
 
-    from anarede import exic
+    from anarede import anarede
     from rwpwf import wdcte
     from sav import exlf2new
     from uwrite import uheader, uarq, sdinc
@@ -117,7 +122,7 @@ def usxic(
             savfile=savfile,
         )
 
-        filename = savfile.removesuffix(".SAV")
+        filename = savfile.removesuffix(".SAV").removeprefix("EXLF_")
 
         # Arquivo
         filedir = realpath(powerflow.sxic + "\\EXIC_" + filename + ".PWF")
@@ -151,7 +156,8 @@ def usxic(
             )
 
             wdcte(
-                powerflow.mdcte,
+                powerflow.dcte,
+                file,
             )
 
             sdinc(
@@ -159,6 +165,50 @@ def usxic(
                 file,
                 varinc=(x, y),
             )
+
+            file.write("( ")
+            file.write("\n")
+
+            file.write("EXLF BPSI")
+
+            file.write("\n")
+            file.write("( ")
+            file.write("\n")
+
+            file.write("ULOG")
+            file.write("\n")
+            file.write("(N")
+            file.write("\n")
+            file.write("2")
+            file.write("\n")
+            file.write("EXIC_" + filename + ".SAV")
+
+            file.write("\n")
+            file.write("(")
+            file.write("\n")
+
+            if inc == 0:
+                file.write("ARQV INIC IMPR")
+                file.write("\n")
+                file.write("SIM")
+
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
+
+                file.write("ARQV GRAV IMPR NOVO")
+                file.write("\n")
+                file.write("1")
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
+            else:
+                file.write("ARQV GRAV IMPR")
+                file.write("\n")
+                file.write("{}".format(inc + 1))
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
 
             file.write("ULOG")
             file.write("\n")
@@ -181,10 +231,20 @@ def usxic(
         file.write("FIM")
         file.close()
 
-        exic(
+        anarede(
             file=filedir,
-            time=240,
+            time=360,
         )
+
+        savfile = realpath(
+            powerflow.sxic
+            + "\\EXIC_"
+            + filename
+            + "SAV"
+        )
+
+        if exists(savfile):
+            remove(filedir)
 
 
 def usxct(
@@ -200,11 +260,12 @@ def usxct(
         file:
     """
 
-    from os.path import realpath
+    from os import remove
+    from os.path import exists, realpath
 
-    from anarede import exct
+    from anarede import anarede
     from sav import exlf2new
-    from uwrite import uheader, uarq
+    from uwrite import uheader, uarq, udctg
 
     ## Inicialização
     for savfile in savfiles:
@@ -214,7 +275,7 @@ def usxct(
             savfile=savfile,
         )
 
-        filename = savfile.removesuffix(".SAV")
+        filename = savfile.removesuffix(".SAV").removeprefix("EXLF_")
 
         # Arquivo
         filedir = realpath(powerflow.sxct + "\\EXCT_" + filename + ".PWF")
@@ -234,6 +295,13 @@ def usxct(
             case=1,
         )
 
+        udctg(
+            powerflow.dctg,
+            powerflow.dctg1,
+            powerflow.dctg2,
+            file,
+        )
+
         file.write("ULOG")
         file.write("\n")
         file.write("(N")
@@ -246,7 +314,7 @@ def usxct(
         file.write("( ")
         file.write("\n")
 
-        file.write("EXCT BPSI RINT RTOT")
+        file.write("EXCT BPSI RTOT")
         file.write("\n")
         file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
         file.write("\n")
@@ -259,10 +327,20 @@ def usxct(
         file.write("FIM")
         file.close()
 
-        exct(
+        anarede(
             file=filedir,
             time=35,
         )
+
+        savfile = realpath(
+            powerflow.sxct
+            + "\\EXCT_"
+            + filename
+            + "SAV"
+        )
+
+        if exists(savfile):
+            remove(filedir)
 
 
 def uspvct(
@@ -277,11 +355,12 @@ def uspvct(
         file:
     """
 
-    from os.path import realpath
+    from os import remove
+    from os.path import exists, realpath
 
-    from anarede import epvct
+    from anarede import anarede
     from sav import exlf2new
-    from uwrite import uheader, uarq, sdinc
+    from uwrite import uheader, uarq, sdinc, udctg
 
     ## Inicialização
     for savfile in savfiles:
@@ -291,7 +370,7 @@ def uspvct(
             savfile=savfile,
         )
 
-        filename = savfile.removesuffix(".SAV")
+        filename = savfile.removesuffix(".SAV").removeprefix("EXLF_")
 
         # Arquivo
         filedir = realpath(powerflow.spvct + "\\PVCT_" + filename + ".PWF")
@@ -330,19 +409,70 @@ def uspvct(
                 varinc=(x, y),
             )
 
+            udctg(
+                powerflow.dctg,
+                powerflow.dctg1,
+                powerflow.dctg2,
+                file,
+            )
+
+            file.write("( ")
+            file.write("\n")
+
+            file.write("EXLF BPSI")
+
+            file.write("\n")
+            file.write("( ")
+            file.write("\n")
+
+            file.write("ULOG")
+            file.write("\n")
+            file.write("(N")
+            file.write("\n")
+            file.write("2")
+            file.write("\n")
+            file.write("PVCT_" + filename + ".SAV")
+
+            file.write("\n")
+            file.write("(")
+            file.write("\n")
+
+            if inc == 0:
+                file.write("ARQV INIC IMPR")
+                file.write("\n")
+                file.write("SIM")
+
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
+
+                file.write("ARQV GRAV IMPR NOVO")
+                file.write("\n")
+                file.write("1")
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
+            else:
+                file.write("ARQV GRAV IMPR")
+                file.write("\n")
+                file.write("{}".format(inc + 1))
+                file.write("\n")
+                file.write("(")
+                file.write("\n")
+
             file.write("ULOG")
             file.write("\n")
             file.write("(N")
             file.write("\n")
             file.write("4")
             file.write("\n")
-            file.write("EXIC" + filename + "_{}.REL".format(inc + 1))
+            file.write("PVCT_" + filename + "_{}.REL".format(inc + 1))
 
             file.write("\n")
             file.write("( ")
             file.write("\n")
 
-            file.write("EXIC PVCT BPSI RINT RTOT")
+            file.write("EXIC PVCT BPSI RTOT")
 
             file.write("\n")
             file.write("( ")
@@ -351,7 +481,17 @@ def uspvct(
         file.write("FIM")
         file.close()
 
-        epvct(
+        anarede(
             file=filedir,
             time=300,
         )
+
+        savfile = realpath(
+            powerflow.spvct
+            + "\\PVCT_"
+            + filename
+            + "SAV".format(powerflow.ones)
+        )
+
+        if exists(savfile):
+            remove(filedir)

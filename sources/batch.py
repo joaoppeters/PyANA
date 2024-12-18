@@ -19,8 +19,8 @@ def stochsxlf(
     from os import listdir, remove
     from os.path import dirname, exists, isfile, join, realpath
 
-    from anarede import exlf
-    from areas import q2024
+    from anarede import anarede
+    from areas import ne224, q2024
     from factor import factor, loadf, windf
     from folder import areasfolder, sxlffolder
     from stochastic import loadn, windn
@@ -33,9 +33,14 @@ def stochsxlf(
     areasfolder(
         powerflow,
     )
-    q2024(
-        powerflow,
-    )
+    if "NE224" in powerflow.name:
+        ne224(
+            powerflow,
+        )
+    elif "Q2024" in powerflow.name:
+        q2024(
+            powerflow,
+        )
     for stddev in range(1, 11, 1):
         sxlffolder(
             powerflow,
@@ -50,7 +55,8 @@ def stochsxlf(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
             loadstd=stddev,
-            stateload=powerflow.sao_paulo,
+            stateload=powerflow.cargas,
+            maindir=powerflow.maindir,
         )
         (
             wpsamples,
@@ -59,7 +65,8 @@ def stochsxlf(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
             geolstd=stddev,
-            stategeneration=powerflow.nordeste,
+            stategeneration=powerflow.eolicas,
+            maindir=powerflow.maindir,
         )
 
         # Factor
@@ -70,8 +77,8 @@ def stochsxlf(
             dbarDF=powerflow.dbarDF.copy(),
             dbar=powerflow.dbar.copy(),
             dger=powerflow.dger.copy(),
-            stateload=powerflow.sao_paulo.copy(),
-            stategeneration=powerflow.nordeste.copy(),
+            stateload=powerflow.cargas.copy(),
+            stategeneration=powerflow.eolicas.copy(),
         )
 
         # Loop de amostras
@@ -93,7 +100,7 @@ def stochsxlf(
                 powerflow,
             )
 
-            exlf(file=powerflow.filedir, time=3)
+            anarede(file=powerflow.filedir, time=2)
 
             exlfpwf = realpath(
                 powerflow.sxlf
@@ -103,14 +110,13 @@ def stochsxlf(
             )
             exlfrel = realpath(
                 powerflow.sxlf
-                + "\\"
-                + "EXLF_"
+                + "\\EXLF_"
                 + powerflow.namecase.upper()
                 + "{}.REL".format(powerflow.ones)
             )
             savfile = realpath(
                 powerflow.sxlf
-                + "\\"
+                + "\\EXLF_"
                 + powerflow.namecase.upper()
                 + "{}.SAV".format(powerflow.ones)
             )
@@ -209,7 +215,7 @@ def stochsxic(
         savfiles = [
             f
             for f in listdir(folder_path)
-            if f.startswith(powerflow.name + "JP")
+            if f.startswith("EXLF_")
             and f.endswith(".SAV")
             and isfile(join(folder_path, f))
         ]

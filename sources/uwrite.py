@@ -124,11 +124,11 @@ def udbar(
         elif value.demanda_ativa < 0:
             # Negative numbers
             if value.demanda_ativa <= -100:
-                pl = f"{value.demanda_ativa:.4g}"  # vii) Maintain 4 digits without decimal point
+                pl = f"{value.demanda_ativa:.3g}"  # vii) Maintain 4 digits without decimal point
             elif value.demanda_ativa <= -10:
-                pl = f"{value.demanda_ativa:.3g}"  # viii) Maintain 3 digits with decimal point
+                pl = f"{value.demanda_ativa:.2g}"  # viii) Maintain 3 digits with decimal point
             elif value.demanda_ativa <= -1:
-                pl = f"{value.demanda_ativa:.2f}"[
+                pl = f"{value.demanda_ativa:.1f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.demanda_ativa > -1:
@@ -160,12 +160,14 @@ def udbar(
                 ]  # xi) Maintain 4 decimal places for small values
         elif value.demanda_reativa < 0:
             # Negative numbers
-            if value.demanda_reativa <= -100:
-                ql = f"{value.demanda_reativa:.4g}"  # vii) Maintain 4 digits without decimal point
+            if value.demanda_reativa <= -1000:
+                ql = f"{value.demanda_reativa:.4g}"
+            elif value.demanda_reativa <= -100:
+                ql = f"{value.demanda_reativa:.3g}"  # vii) Maintain 4 digits without decimal point
             elif value.demanda_reativa <= -10:
-                ql = f"{value.demanda_reativa:.3g}"  # viii) Maintain 3 digits with decimal point
+                ql = f"{value.demanda_reativa:.2g}"  # viii) Maintain 3 digits with decimal point
             elif value.demanda_reativa <= -1:
-                ql = f"{value.demanda_reativa:.2f}"[
+                ql = f"{value.demanda_reativa:.1f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.demanda_reativa > -1:
@@ -198,11 +200,11 @@ def udbar(
         elif value.shunt_barra < 0:
             # Negative numbers
             if value.shunt_barra <= -100:
-                sb = f"{value.shunt_barra:.4g}"  # vii) Maintain 4 digits without decimal point
+                sb = f"{value.shunt_barra:.3g}"  # vii) Maintain 4 digits without decimal point
             elif value.shunt_barra <= -10:
-                sb = f"{value.shunt_barra:.3g}"  # viii) Maintain 3 digits with decimal point
+                sb = f"{value.shunt_barra:.2g}"  # viii) Maintain 3 digits with decimal point
             elif value.shunt_barra <= -1:
-                sb = f"{value.shunt_barra:.2f}"[
+                sb = f"{value.shunt_barra:.1f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.shunt_barra > -1:
@@ -237,16 +239,16 @@ def udctg(
     for idx1, value in dctg1.iterrows():
         file.write(value.ruler)
         file.write(
-            f"{value['identificacao']:>4} {value['operacao']:1} {value['prioridade']:>2} {value['nome']:<47}"
+            f"{value.identificacao:>4} {value.operacao:1} {value.prioridade:>2} {value.nome:<47}"
         )
         file.write("\n")
         file.write(dctg2.ruler.iloc[0])
-        for idx2 in range(0, value["ndctg2"]):
+        for idx2 in range(0, value.ndctg2):
             file.write(
                 f"{dctg2.tipo.iloc[idx2 + ctg]:>4} {dctg2.de.iloc[idx2 + ctg]:>5} {dctg2.para.iloc[idx2 + ctg]:>5} {dctg2.circuito.iloc[idx2 + ctg]:>2} {dctg2.extremidade.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
             )
             file.write("\n")
-        ctg += value["ndctg2"]
+        ctg += value.ndctg2
         file.write("FCAS")
         file.write("\n")
     file.write("99999")
@@ -290,7 +292,7 @@ def udinc(
     file.write(format(dinc.ruler.iloc[0]))
     for idx, value in dinc.iterrows():
         file.write(
-            f"{value['tipo_incremento_1']:>4} {value['identificacao_incremento_1']:>5} {value['condicao_incremento_1']:1} {value['tipo_incremento_2']:>4} {value['identificacao_incremento_2']:>5} {value['condicao_incremento_2']:1} {value['tipo_incremento_3']:>4} {value['identificacao_incremento_3']:>5} {value['condicao_incremento_3']:1} {value['tipo_incremento_4']:>4} {value['identificacao_incremento_4']:>5} {value['condicao_incremento_4']:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
+            f"{value.tipo_incremento_1:>4} {value.identificacao_incremento_1:>5} {value.condicao_incremento_1:1} {value.tipo_incremento_2:>4} {value.identificacao_incremento_2:>5} {value.condicao_incremento_2:1} {value.tipo_incremento_3:>4} {value.identificacao_incremento_3:>5} {value.condicao_incremento_3:1} {value.tipo_incremento_4:>4} {value.identificacao_incremento_4:>5} {value.condicao_incremento_4:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
         )
         file.write("\n")
     file.write("99999")
@@ -314,7 +316,7 @@ def sdinc(
     file.write(format(dinc.ruler.iloc[0]))
     for idx, value in dinc.iterrows():
         file.write(
-            f"{value['tipo_incremento_1']:>4} {value['identificacao_incremento_1']:>5} {value['condicao_incremento_1']:1} {value['tipo_incremento_2']:>4} {value['identificacao_incremento_2']:>5} {value['condicao_incremento_2']:1} {value['tipo_incremento_3']:>4} {value['identificacao_incremento_3']:>5} {value['condicao_incremento_3']:1} {value['tipo_incremento_4']:>4} {value['identificacao_incremento_4']:>5} {value['condicao_incremento_4']:1} {varinc[0]:>5} {varinc[1]:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
+            f"{value.tipo_incremento_1:>4} {value.identificacao_incremento_1:>5} {value.condicao_incremento_1:1} {value.tipo_incremento_2:>4} {value.identificacao_incremento_2:>5} {value.condicao_incremento_2:1} {value.tipo_incremento_3:>4} {value.identificacao_incremento_3:>5} {value.condicao_incremento_3:1} {value.tipo_incremento_4:>4} {value.identificacao_incremento_4:>5} {value.condicao_incremento_4:1} {varinc[0]:>5} {varinc[1]:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
         )
         file.write("\n")
     file.write("99999")
@@ -402,7 +404,7 @@ def udmte(
     file.write(format(dmte.ruler.iloc[0]))
     for idx, value in dmte.iterrows():
         file.write(
-            f"{value['tipo_incremento_1']:>4} {value['identificacao_incremento_1']:>5} {value['condicao_incremento_1']:1} {value['tipo_incremento_2']:>4} {value['identificacao_incremento_2']:>5} {value['condicao_incremento_2']:1} {value['tipo_incremento_3']:>4} {value['identificacao_incremento_3']:>5} {value['condicao_incremento_3']:1} {value['tipo_incremento_4']:>4} {value['identificacao_incremento_4']:>5} {value['condicao_incremento_4']:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
+            f"{value.tipo_incremento_1:>4} {value.identificacao_incremento_1:>5} {value.condicao_incremento_1:1} {value.tipo_incremento_2:>4} {value.identificacao_incremento_2:>5} {value.condicao_incremento_2:1} {value.tipo_incremento_3:>4} {value.identificacao_incremento_3:>5} {value.condicao_incremento_3:1} {value.tipo_incremento_4:>4} {value.identificacao_incremento_4:>5} {value.condicao_incremento_4:1} {value['passo_incremento_potencia_ativa']:>5} {value['passo_incremento_potencia_reativa']:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
         )
         file.write("\n")
     file.write("99999")
@@ -435,7 +437,7 @@ def utail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    file.write(powerflow.namecase + str(powerflow.ones) + ".SAV")
+    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV")
 
     file.write("\n")
     file.write("(")

@@ -241,37 +241,39 @@ def q2024(
 
     powerflow.geracao_total = powerflow.dbarDF.potencia_ativa.sum()
     powerflow.une = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("UNE")
+        powerflow.dbarDF.nome.str.contains("UNE|UN-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.uhe = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("UHE")
+        powerflow.dbarDF.nome.str.contains("UHE|UH-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.ute = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("UTE")
+        powerflow.dbarDF.nome.str.contains("UTE|UT-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.eol = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("EOL")
+        powerflow.dbarDF.nome.str.contains("EOL|EO-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.ufv = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("UFV")
+        powerflow.dbarDF.nome.str.contains("UFV|UF-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.pch = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("PCH")
+        powerflow.dbarDF.nome.str.contains("PCH|PC-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.bio = powerflow.dbarDF.loc[
-        powerflow.dbarDF.nome.str.contains("BIO")
+        powerflow.dbarDF.nome.str.contains("BIO|BI-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.gd = powerflow.dbarDF.loc[
-        ~powerflow.dbarDF.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
+        ~powerflow.dbarDF.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
+    powerflow.carga_total = powerflow.dbarDF.demanda_ativa.sum()
+    powerflow.cargas = powerflow.dbarDF.loc[powerflow.dbarDF.tipo == 0]
 
     # AREA REPORT
     filename = powerflow.infofolder + powerflow.name + ".txt"
@@ -365,10 +367,10 @@ def q2024(
             file.write(
                 "        --- UNE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UNE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UNE|UN-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UNE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UNE|UN-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -376,10 +378,10 @@ def q2024(
             file.write(
                 "        --- UHE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UHE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UHE|UH-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UHE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UHE|UH-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -387,10 +389,10 @@ def q2024(
             file.write(
                 "        --- UTE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UTE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UTE|UT-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UTE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UTE|UT-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -398,10 +400,10 @@ def q2024(
             file.write(
                 "        --- EOL: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("EOL") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("EOL") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -409,10 +411,10 @@ def q2024(
             file.write(
                 "        --- UFV: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UFV") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UFV|UF-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UFV") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UFV|UF-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -420,10 +422,10 @@ def q2024(
             file.write(
                 "        --- PCH: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("PCH") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("PCH|PC-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("PCH") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("PCH|PC-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -431,10 +433,10 @@ def q2024(
             file.write(
                 "        --- BIO: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("BIO") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("BIO|BI-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("BIO") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("BIO|BI-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -442,11 +444,11 @@ def q2024(
             file.write(
                 "        --- OTHER: {} unidades, {} MW".format(
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
+                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
                         & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
+                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
                         & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
@@ -469,10 +471,10 @@ def q2024(
             file.write(
                 "        --- UNE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UNE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UNE|UN-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UNE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UNE|UN-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -480,10 +482,10 @@ def q2024(
             file.write(
                 "        --- UHE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UHE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UHE|UH-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UHE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UHE|UH-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -491,10 +493,10 @@ def q2024(
             file.write(
                 "        --- UTE: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UTE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UTE|UT-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UTE") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UTE|UT-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -502,10 +504,10 @@ def q2024(
             file.write(
                 "        --- EOL: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("EOL") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("EOL") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -513,10 +515,10 @@ def q2024(
             file.write(
                 "        --- UFV: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("UFV") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UFV|UF-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("UFV") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("UFV|UF-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -524,10 +526,10 @@ def q2024(
             file.write(
                 "        --- PCH: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("PCH") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("PCH|PC-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("PCH") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("PCH|PC-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -535,10 +537,10 @@ def q2024(
             file.write(
                 "        --- BIO: {} unidades, {} MW".format(
                     item.loc[
-                        item.nome.str.contains("BIO") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("BIO|BI-") & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        item.nome.str.contains("BIO") & (item.potencia_ativa > 0.0)
+                        item.nome.str.contains("BIO|BI-") & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
@@ -546,16 +548,20 @@ def q2024(
             file.write(
                 "        --- OTHER: {} unidades, {} MW".format(
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
+                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
                         & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO")
+                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
                         & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
             file.write("\n\n")
+
+    
+    powerflow.cargas = powerflow.sao_paulo.copy()
+    powerflow.eolicas = powerflow.nordeste[powerflow.nordeste.nome.str.contains("EOL|EO-")].copy()
 
 
 def ne224(
@@ -567,41 +573,42 @@ def ne224(
         powerflow (_type_): _description_
     """
     ## Inicialização
-    fronteira = powerflow.dbarDF.loc[
+    powerflow.fronteira = powerflow.dbarDF.loc[
         (powerflow.dbarDF.potencia_reativa_minima == -9999)
         & (powerflow.dbarDF.potencia_reativa_maxima == 99999)
     ]
 
-    alagoas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  2"]
-    maceio = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 259]
+    powerflow.alagoas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  2"]
+    powerflow.maceio = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 259]
 
-    bahia = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  5"]
-    camacari = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 284]
+    powerflow.bahia = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  5"]
+    powerflow.camacari = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 284]
 
-    ceara = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  6"]
-    fortaleza = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 325]
+    powerflow.ceara = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == "  6"]
+    powerflow.fortaleza = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 325]
 
-    maranhao = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 10"]
-    saoluis = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 332]
+    powerflow.maranhao = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 10"]
+    powerflow.saoluis = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 332]
 
-    paraiba = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 15"]
-    joaopessoa = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 12999]
+    powerflow.paraiba = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 15"]
+    powerflow.joaopessoa = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 12999]
 
-    pernambuco = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 16"]
-    recife = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 241]
+    powerflow.pernambuco = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 16"]
+    powerflow.recife = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 241]
 
-    piaui = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 17"]
-    teresina = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 228]
+    powerflow.piaui = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 17"]
+    powerflow.teresina = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 228]
 
-    rio_grande_do_norte = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 20"]
-    natal = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 346]
+    powerflow.rio_grande_do_norte = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 20"]
+    powerflow.natal = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 346]
 
-    sergipe = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 25"]
-    aracaju = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 273]
+    powerflow.sergipe = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 25"]
+    powerflow.aracaju = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 273]
 
-    eolicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  2"]
-    hidreletricas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  5"]
-    termicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  7"]
+    powerflow.eolicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  2"]
+    powerflow.hidreletricas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  5"]
+    powerflow.termicas = powerflow.dbarDF.loc[powerflow.dbarDF.agreg4 == "  7"]
+    powerflow.cargas = powerflow.dbarDF.loc[powerflow.dbarDF.tipo == 0]
 
     # AREA REPORT
     filename = powerflow.infofolder + powerflow.name + ".txt"
@@ -614,15 +621,15 @@ def ne224(
         file.write("\n\n")
         file.write("        --- UHE")
         file.write("\n")
-        file.write(hidreletricas.to_string(index=False))
+        file.write(powerflow.hidreletricas.to_string(index=False))
         file.write("\n\n")
         file.write("        --- UTE")
         file.write("\n")
-        file.write(termicas.to_string(index=False))
+        file.write(powerflow.termicas.to_string(index=False))
         file.write("\n\n")
         file.write("        --- EOL")
         file.write("\n")
-        file.write(eolicas.to_string(index=False))
+        file.write(powerflow.eolicas.to_string(index=False))
         file.write("\n\n")
         file.write("    -- BARRAS")
         file.write("\n")
@@ -630,7 +637,7 @@ def ne224(
         file.write("\n\n")
         file.write("    -- FRONTEIRA")
         file.write("\n")
-        file.write(fronteira.to_string(index=False))
+        file.write(powerflow.fronteira.to_string(index=False))
         file.write("\n\n")
         file.write("    -- LINHAS")
         file.write("\n")
@@ -640,72 +647,72 @@ def ne224(
         file.write("\n")
         file.write("        --- AL")
         file.write("\n")
-        file.write(alagoas.to_string(index=False))
+        file.write(powerflow.alagoas.to_string(index=False))
         file.write("\n")
         file.write("            ---- Maceio")
         file.write("\n")
-        file.write(maceio.to_string(index=False))
+        file.write(powerflow.maceio.to_string(index=False))
         file.write("\n\n")
         file.write("        --- BA")
         file.write("\n")
-        file.write(bahia.to_string(index=False))
+        file.write(powerflow.bahia.to_string(index=False))
         file.write("\n")
         file.write("            ---- Camacari")
         file.write("\n")
-        file.write(camacari.to_string(index=False))
+        file.write(powerflow.camacari.to_string(index=False))
         file.write("\n\n")
         file.write("        --- CE")
         file.write("\n")
-        file.write(ceara.to_string(index=False))
+        file.write(powerflow.ceara.to_string(index=False))
         file.write("\n")
         file.write("            ---- Fortaleza")
         file.write("\n")
-        file.write(fortaleza.to_string(index=False))
+        file.write(powerflow.fortaleza.to_string(index=False))
         file.write("\n\n")
         file.write("        --- MA")
         file.write("\n")
-        file.write(maranhao.to_string(index=False))
+        file.write(powerflow.maranhao.to_string(index=False))
         file.write("\n")
         file.write("            ---- Sao Luis")
         file.write("\n")
-        file.write(saoluis.to_string(index=False))
+        file.write(powerflow.saoluis.to_string(index=False))
         file.write("\n\n")
         file.write("        --- PB")
         file.write("\n")
-        file.write(paraiba.to_string(index=False))
+        file.write(powerflow.paraiba.to_string(index=False))
         file.write("\n")
         file.write("            ---- Joao Pessoa")
         file.write("\n")
-        file.write(joaopessoa.to_string(index=False))
+        file.write(powerflow.joaopessoa.to_string(index=False))
         file.write("\n\n")
         file.write("        --- PE")
         file.write("\n")
-        file.write(pernambuco.to_string(index=False))
+        file.write(powerflow.pernambuco.to_string(index=False))
         file.write("\n")
         file.write("            ---- Recife")
         file.write("\n")
-        file.write(recife.to_string(index=False))
+        file.write(powerflow.recife.to_string(index=False))
         file.write("\n\n")
         file.write("        --- PI")
         file.write("\n")
-        file.write(piaui.to_string(index=False))
+        file.write(powerflow.piaui.to_string(index=False))
         file.write("\n")
         file.write("            ---- Teresina")
         file.write("\n")
-        file.write(teresina.to_string(index=False))
+        file.write(powerflow.teresina.to_string(index=False))
         file.write("\n\n")
         file.write("        --- RN")
         file.write("\n")
-        file.write(rio_grande_do_norte.to_string(index=False))
+        file.write(powerflow.rio_grande_do_norte.to_string(index=False))
         file.write("\n")
         file.write("            ---- Natal")
         file.write("\n")
-        file.write(natal.to_string(index=False))
+        file.write(powerflow.natal.to_string(index=False))
         file.write("\n\n")
         file.write("        --- SE")
         file.write("\n")
-        file.write(sergipe.to_string(index=False))
+        file.write(powerflow.sergipe.to_string(index=False))
         file.write("\n")
         file.write("            ---- Aracaju")
         file.write("\n")
-        file.write(aracaju.to_string(index=False))
+        file.write(powerflow.aracaju.to_string(index=False))

@@ -8,11 +8,11 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_R2_C1.pwf"
+system = "2Q2024_R2_C10.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE - R1.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE.pwf"
 # system = "NE224_CASO1_MA.pwf"
-# system = "NE224-C3.pwf"
+system = "NE224-C1.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method = "EXIC" # CONTINUATION POWER FLOW
