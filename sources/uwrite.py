@@ -124,11 +124,11 @@ def udbar(
         elif value.demanda_ativa < 0:
             # Negative numbers
             if value.demanda_ativa <= -100:
-                pl = f"{value.demanda_ativa:.3g}"  # vii) Maintain 4 digits without decimal point
+                pl = f"{int(value.demanda_ativa):d}"  # vii) Maintain 4 digits without decimal point
             elif value.demanda_ativa <= -10:
-                pl = f"{value.demanda_ativa:.2g}"  # viii) Maintain 3 digits with decimal point
+                pl = f"{value.demanda_ativa:.1f}"  # viii) Maintain 3 digits with decimal point
             elif value.demanda_ativa <= -1:
-                pl = f"{value.demanda_ativa:.1f}"[
+                pl = f"{value.demanda_ativa:.2f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.demanda_ativa > -1:
@@ -160,14 +160,12 @@ def udbar(
                 ]  # xi) Maintain 4 decimal places for small values
         elif value.demanda_reativa < 0:
             # Negative numbers
-            if value.demanda_reativa <= -1000:
-                ql = f"{value.demanda_reativa:.4g}"
-            elif value.demanda_reativa <= -100:
-                ql = f"{value.demanda_reativa:.3g}"  # vii) Maintain 4 digits without decimal point
+            if value.demanda_reativa <= -100:
+                ql = f"{int(value.demanda_reativa)}"  # vii) Maintain 4 digits without decimal point
             elif value.demanda_reativa <= -10:
-                ql = f"{value.demanda_reativa:.2g}"  # viii) Maintain 3 digits with decimal point
+                ql = f"{int(value.demanda_reativa)}"  # viii) Maintain 3 digits with decimal point
             elif value.demanda_reativa <= -1:
-                ql = f"{value.demanda_reativa:.1f}"[
+                ql = f"{value.demanda_reativa:.2f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.demanda_reativa > -1:
@@ -200,11 +198,11 @@ def udbar(
         elif value.shunt_barra < 0:
             # Negative numbers
             if value.shunt_barra <= -100:
-                sb = f"{value.shunt_barra:.3g}"  # vii) Maintain 4 digits without decimal point
+                sb = f"{int(value.shunt_barra):d}"  # vii) Maintain 4 digits without decimal point
             elif value.shunt_barra <= -10:
-                sb = f"{value.shunt_barra:.2g}"  # viii) Maintain 3 digits with decimal point
+                sb = f"{value.shunt_barra:.1f}"  # viii) Maintain 3 digits with decimal point
             elif value.shunt_barra <= -1:
-                sb = f"{value.shunt_barra:.1f}"[
+                sb = f"{value.shunt_barra:.2f}"[
                     :5
                 ]  # ix) Maintain 2 digits and one decimal
             elif value.shunt_barra > -1:

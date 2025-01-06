@@ -41,7 +41,7 @@ def stochsxlf(
         q2024(
             powerflow,
         )
-    for stddev in range(1, 11, 1):
+    for stddev in range(1, 2, 1):
         sxlffolder(
             powerflow,
             loadstd=stddev,
@@ -84,6 +84,8 @@ def stochsxlf(
         # Loop de amostras
         powerflow.ones = 0
         for s in range(0, len(lpsamples)):
+            if s == 35:
+                print()
             powerflow.mdbar = loadf(
                 mdbar=powerflow.mdbar,
                 psamples=lpsamples,
@@ -194,7 +196,7 @@ def stochsxic(
     from rela import rxic
     from ulog import usxic
 
-    for stddev in range(1, 2, 1):
+    for stddev in range(10, 11, 1):
         sxicfolder(
             powerflow,
             loadstd=stddev,

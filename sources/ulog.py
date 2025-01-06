@@ -135,7 +135,7 @@ def usxic(
             file,
         )
 
-        for inc in range(0, 11, 1):
+        for inc in range(3, 8, 1):
             if inc <= 5:
                 x = round(inc * 0.2, 1)
                 y = 1.0
@@ -143,7 +143,7 @@ def usxic(
                 x = 1.0
                 y = round(1.0 - (inc - 5) * 0.2, 1)
 
-            file.write("( Crescimento de Carga No{}: ({};{})".format(inc + 1, x, y))
+            file.write("( Crescimento de Carga No{}: ({};{})".format(inc - 2, x, y))
             file.write("\n")
             file.write("(")
             file.write("\n")
@@ -205,7 +205,7 @@ def usxic(
             else:
                 file.write("ARQV GRAV IMPR")
                 file.write("\n")
-                file.write("{}".format(inc + 1))
+                file.write("{}".format(inc - 2))
                 file.write("\n")
                 file.write("(")
                 file.write("\n")
@@ -216,7 +216,7 @@ def usxic(
             file.write("\n")
             file.write("4")
             file.write("\n")
-            file.write("EXIC_" + filename + "_{}.REL".format(inc + 1))
+            file.write("EXIC_" + filename + "_{}.REL".format(inc - 2))
 
             file.write("\n")
             file.write("( ")
@@ -233,7 +233,7 @@ def usxic(
 
         anarede(
             file=filedir,
-            time=360,
+            time=150,
         )
 
         savfile = realpath(
@@ -383,7 +383,7 @@ def uspvct(
             file,
         )
 
-        for inc in range(0, 11, 1):
+        for inc in range(3, 8, 1):
             if inc <= 5:
                 x = round(inc * 0.2, 1)
                 y = 1.0
@@ -391,7 +391,7 @@ def uspvct(
                 x = 1.0
                 y = round(1.0 - (inc - 5) * 0.2, 1)
 
-            file.write("( Crescimento de Carga No{}: ({};{})".format(inc + 1, x, y))
+            file.write("( Crescimento de Carga No{}: ({};{})".format(inc - 2, x, y))
             file.write("\n")
             file.write("(")
             file.write("\n")
@@ -455,7 +455,7 @@ def uspvct(
             else:
                 file.write("ARQV GRAV IMPR")
                 file.write("\n")
-                file.write("{}".format(inc + 1))
+                file.write("{}".format(inc - 2))
                 file.write("\n")
                 file.write("(")
                 file.write("\n")
@@ -466,7 +466,7 @@ def uspvct(
             file.write("\n")
             file.write("4")
             file.write("\n")
-            file.write("PVCT_" + filename + "_{}.REL".format(inc + 1))
+            file.write("PVCT_" + filename + "_{}.REL".format(inc - 2))
 
             file.write("\n")
             file.write("( ")
