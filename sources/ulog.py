@@ -36,8 +36,8 @@ def usxlf(
         savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
         case = powerflow.name.split("_")[-1][1:]
     elif "NE224" in powerflow.name:
-        savfile = powerflow.name + '.SAV'
-        case=1
+        savfile = powerflow.name + ".SAV"
+        case = 1
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
@@ -187,7 +187,7 @@ def usxic(
             file.write("(")
             file.write("\n")
 
-            if inc == 0:
+            if inc == 3:
                 file.write("ARQV INIC IMPR")
                 file.write("\n")
                 file.write("SIM")
@@ -222,7 +222,7 @@ def usxic(
             file.write("( ")
             file.write("\n")
 
-            file.write("EXIC BPSI RINT RTOT")
+            file.write("EXIC BPSI RBAR RINT RTOT")
 
             file.write("\n")
             file.write("( ")
@@ -233,15 +233,10 @@ def usxic(
 
         anarede(
             file=filedir,
-            time=150,
+            time=120,
         )
 
-        savfile = realpath(
-            powerflow.sxic
-            + "\\EXIC_"
-            + filename
-            + "SAV"
-        )
+        savfile = realpath(powerflow.sxic + "\\EXIC_" + filename + "SAV")
 
         if exists(savfile):
             remove(filedir)
@@ -288,41 +283,77 @@ def usxct(
             file,
         )
 
-        # Corpo
-        uarq(
-            file,
-            savfile,
-            case=1,
-        )
+        ctg = 0
+        for idx, value in powerflow.dctg1.iterrows():
+            file.write("( Contingencia No{}".format(int(value.identificacao)))
+            file.write("\n")
+            file.write("( ")
+            file.write("\n")
+            # Corpo
+            uarq(
+                file,
+                savfile,
+                case=1,
+            )
 
-        udctg(
-            powerflow.dctg,
-            powerflow.dctg1,
-            powerflow.dctg2,
-            file,
-        )
+            ctg = udctg(
+                powerflow.dctg,
+                value,
+                ctg,
+                powerflow.dctg2,
+                file,
+            )
 
-        file.write("ULOG")
-        file.write("\n")
-        file.write("(N")
-        file.write("\n")
-        file.write("4")
-        file.write("\n")
-        file.write("EXCT_" + filename + ".REL")
+            file.write("ULOG")
+            file.write("\n")
+            file.write("(N")
+            file.write("\n")
+            file.write("2")
+            file.write("\n")
+            file.write(
+                "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".SAV"
+            )
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+            file.write("\n")
+            file.write("(")
+            file.write("\n")
 
-        file.write("EXCT BPSI RTOT")
-        file.write("\n")
-        file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
-        file.write("\n")
-        file.write(" 1  2  3  4  5  6  7  8  9 10 11 12")
+            file.write("ARQV INIC IMPR")
+            file.write("\n")
+            file.write("SIM")
 
-        file.write("\n")
-        file.write("( ")
-        file.write("\n")
+            file.write("\n")
+            file.write("(")
+            file.write("\n")
+
+            file.write("ARQV GRAV IMPR NOVO")
+            file.write("\n")
+            file.write("1")
+            file.write("\n")
+            file.write("(")
+            file.write("\n")
+
+            file.write("ULOG")
+            file.write("\n")
+            file.write("(N")
+            file.write("\n")
+            file.write("4")
+            file.write("\n")
+            file.write("EXCT_" + filename + ".REL")
+
+            file.write("\n")
+            file.write("( ")
+            file.write("\n")
+
+            file.write("EXCT BPSI RTOT")
+            file.write("\n")
+            file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
+            file.write("\n")
+            file.write(f"{int(value.identificacao):>2}")
+
+            file.write("\n")
+            file.write("( ")
+            file.write("\n")
 
         file.write("FIM")
         file.close()
@@ -332,12 +363,7 @@ def usxct(
             time=35,
         )
 
-        savfile = realpath(
-            powerflow.sxct
-            + "\\EXCT_"
-            + filename
-            + "SAV"
-        )
+        savfile = realpath(powerflow.sxct + "\\EXCT_" + filename + "SAV")
 
         if exists(savfile):
             remove(filedir)
@@ -437,7 +463,7 @@ def uspvct(
             file.write("(")
             file.write("\n")
 
-            if inc == 0:
+            if inc == 3:
                 file.write("ARQV INIC IMPR")
                 file.write("\n")
                 file.write("SIM")
@@ -487,10 +513,7 @@ def uspvct(
         )
 
         savfile = realpath(
-            powerflow.spvct
-            + "\\PVCT_"
-            + filename
-            + "SAV".format(powerflow.ones)
+            powerflow.spvct + "\\PVCT_" + filename + "SAV".format(powerflow.ones)
         )
 
         if exists(savfile):
