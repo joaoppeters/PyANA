@@ -41,7 +41,8 @@ def stochsxlf(
         q2024(
             powerflow,
         )
-    for stddev in range(1, 2, 1):
+
+    for stddev in range(1, 11, 1):
         sxlffolder(
             powerflow,
             loadstd=stddev,
@@ -84,8 +85,6 @@ def stochsxlf(
         # Loop de amostras
         powerflow.ones = 0
         for s in range(0, len(lpsamples)):
-            if s == 35:
-                print()
             powerflow.mdbar = loadf(
                 mdbar=powerflow.mdbar,
                 psamples=lpsamples,
@@ -135,15 +134,16 @@ def stochsxlf(
             geolstd=stddev,
         )
         folder = dirname(powerflow.sxlf)
-        folder_path = (
-            folder
-            + "\\EXLF_"
-            + powerflow.name
-            + "_loadstd{}_geolstd{}".format(stddev, stddev)
+        name = (
+            "\\EXLF_" + powerflow.name + "_loadstd{}_geolstd{}".format(stddev, stddev)
         )
+        folder_path = folder + name + "\\"
 
-        with open(folder_path + "\\BALANCE.txt", "w") as balancefile:
-            balancefile.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
+        with open(
+            folder_path + name + ".txt",
+            "w",
+        ) as file:
+            file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
 
         # List and filter files by extension
         relfiles = [
@@ -158,11 +158,11 @@ def stochsxlf(
             powerflow,
             folder=folder_path,
             relfiles=relfiles,
-            balancefile=balancefile,
+            balancefile=file,
         )
 
         # Open and read the file
-        with open(folder_path + "\\BALANCE.txt", "r") as f:
+        with open(folder_path + name + ".txt", "r") as f:
             lines = f.readlines()
 
         # Separate the header and data
@@ -176,7 +176,7 @@ def stochsxlf(
         sorted_lines = [header] + sorted_data
 
         # Write the sorted lines to a new file
-        with open(folder_path + "\\BALANCE.txt", "w") as f:
+        with open(folder_path + name + ".txt", "w") as f:
             f.writelines(sorted_lines)
 
 
@@ -190,11 +190,27 @@ def stochsxic(
     """
     ## Inicialização
     from os import listdir
-    from os.path import isfile, join
+    from os.path import exists, isfile, join
 
-    from folder import sxicfolder
+    from areas import ne224, q2024
+    from anarede import anarede
+    from folder import areasfolder, sxicfolder
     from rela import rxic
-    from ulog import usxic
+    from sav import balancecopy
+    from ulog import usxlf, usxic
+
+   
+    areasfolder(
+        powerflow,
+    )
+    if "NE224" in powerflow.name:
+        ne224(
+            powerflow,
+        )
+    elif "Q2024" in powerflow.name:
+        q2024(
+            powerflow,
+        )
 
     for stddev in range(10, 11, 1):
         sxicfolder(
@@ -213,14 +229,19 @@ def stochsxic(
             )
         )
 
-        # List and filter files by extension
-        savfiles = [
-            f
-            for f in listdir(folder_path)
-            if f.startswith("EXLF_")
-            and f.endswith(".SAV")
-            and isfile(join(folder_path, f))
-        ]
+        savfiles = list()
+        with open(folder_path + "\\EXLF_" + powerflow.name + "_loadstd{}_geolstd{}.txt".format(stddev,stddev,), "r") as file:
+            for line_number, line in enumerate(file, start=1):
+                # Split the line by semicolon
+                columns = line.strip().split(";")
+                try:
+                    # Extract the value in the fourth column (index 3)
+                    fourth_column_value = float(columns[3])
+                    # Check if the value meets the condition
+                    if fourth_column_value >= powerflow.carga_total:
+                        savfiles.append("EXLF_" + powerflow.name + "jpmod" + str(columns[0]) + ".SAV")
+                except (IndexError, ValueError):
+                    print(f"Line {line_number}: Invalid format or non-numeric value.")
 
         usxic(
             powerflow,
@@ -267,11 +288,11 @@ def stochsxct(
     from os import listdir
     from os.path import isfile, join
 
-    from folder import sxctfolder
+    from folder import areasfolder, sxctfolder
     from rela import rxct
     from ulog import usxct
 
-    for stddev in range(4, 5, 1):
+    for stddev in range(1, 11, 1):
         sxctfolder(
             powerflow,
             loadstd=stddev,
@@ -292,7 +313,7 @@ def stochsxct(
         savfiles = [
             f
             for f in listdir(folder_path)
-            if f.startswith(powerflow.name + "JP")
+            if f.startswith("EXLF_")
             and f.endswith(".SAV")
             and isfile(join(folder_path, f))
         ]
