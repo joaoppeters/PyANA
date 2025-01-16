@@ -199,7 +199,6 @@ def stochsxic(
     from sav import balancecopy
     from ulog import usxlf, usxic
 
-   
     areasfolder(
         powerflow,
     )
@@ -230,7 +229,16 @@ def stochsxic(
         )
 
         savfiles = list()
-        with open(folder_path + "\\EXLF_" + powerflow.name + "_loadstd{}_geolstd{}.txt".format(stddev,stddev,), "r") as file:
+        with open(
+            folder_path
+            + "\\EXLF_"
+            + powerflow.name
+            + "_loadstd{}_geolstd{}.txt".format(
+                stddev,
+                stddev,
+            ),
+            "r",
+        ) as file:
             for line_number, line in enumerate(file, start=1):
                 # Split the line by semicolon
                 columns = line.strip().split(";")
@@ -239,7 +247,13 @@ def stochsxic(
                     fourth_column_value = float(columns[3])
                     # Check if the value meets the condition
                     if fourth_column_value >= powerflow.carga_total:
-                        savfiles.append("EXLF_" + powerflow.name + "jpmod" + str(columns[0]) + ".SAV")
+                        savfiles.append(
+                            "EXLF_"
+                            + powerflow.name
+                            + "jpmod"
+                            + str(columns[0])
+                            + ".SAV"
+                        )
                 except (IndexError, ValueError):
                     print(f"Line {line_number}: Invalid format or non-numeric value.")
 

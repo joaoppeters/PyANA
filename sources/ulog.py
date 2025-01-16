@@ -339,7 +339,9 @@ def usxct(
             file.write("\n")
             file.write("4")
             file.write("\n")
-            file.write("EXCT_" + filename + ".REL")
+            file.write(
+                "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".REL"
+            )
 
             file.write("\n")
             file.write("( ")

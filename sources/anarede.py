@@ -27,4 +27,3 @@ def anarede(
 
     sleep(time)
     system("taskkill /f /im ANAREDE.exe")
-    
