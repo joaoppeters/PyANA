@@ -39,9 +39,7 @@ def loadn(
     plt.xlabel("Total Active Power Demand", fontsize=18)
     plt.ylabel("Probability Density", fontsize=18)
     plt.savefig(
-        maindir + "\\sistemas\\normal_active_demand_{}.pdf".format(
-            name
-        ),
+        maindir + "\\sistemas\\normal_active_demand_{}.pdf".format(name),
         dpi=500,
     )
 
@@ -66,9 +64,7 @@ def windn(
 
     ## WIND POWER GENERATION
     # IN NORTHEAST REGION if "2Q2024" in name
-    wpmean = stategeneration[
-        stategeneration.potencia_ativa > 0
-    ].potencia_ativa.sum()
+    wpmean = stategeneration[stategeneration.potencia_ativa > 0].potencia_ativa.sum()
     wpstddev = (geolstd * 1e-2) * wpmean
     wpsamples = random.normal(wpmean, wpstddev, nsamples)
 
@@ -80,9 +76,7 @@ def windn(
     plt.xlabel("Total Wind Power Generation", fontsize=18)
     plt.ylabel("Probability Density", fontsize=18)
     plt.savefig(
-        maindir + "\\sistemas\\normal_wind_power{}.pdf".format(
-            name
-        ),
+        maindir + "\\sistemas\\normal_wind_power{}.pdf".format(name),
         dpi=500,
     )
 
