@@ -221,7 +221,8 @@ def udbar(
 
 def udctg(
     dctg,
-    dctg1,
+    value,
+    ctg,
     dctg2,
     file,
 ):
@@ -232,25 +233,23 @@ def udctg(
         file:
     """
     ## Inicialização
-    ctg = 0
     file.write(format(dctg["dctg"]))
-    for idx1, value in dctg1.iterrows():
-        file.write(value.ruler)
+    file.write(value.ruler)
+    file.write(
+        f"{value.identificacao:>4} {value.operacao:1} {value.prioridade:>2} {value.nome:<47}"
+    )
+    file.write("\n")
+    file.write(dctg2.ruler.iloc[0])
+    for idx2 in range(0, value.ndctg2):
         file.write(
-            f"{value.identificacao:>4} {value.operacao:1} {value.prioridade:>2} {value.nome:<47}"
+            f"{dctg2.tipo.iloc[idx2 + ctg]:>4} {dctg2.de.iloc[idx2 + ctg]:>5} {dctg2.para.iloc[idx2 + ctg]:>5} {dctg2.circuito.iloc[idx2 + ctg]:>2} {dctg2.extremidade.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
         )
         file.write("\n")
-        file.write(dctg2.ruler.iloc[0])
-        for idx2 in range(0, value.ndctg2):
-            file.write(
-                f"{dctg2.tipo.iloc[idx2 + ctg]:>4} {dctg2.de.iloc[idx2 + ctg]:>5} {dctg2.para.iloc[idx2 + ctg]:>5} {dctg2.circuito.iloc[idx2 + ctg]:>2} {dctg2.extremidade.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_ativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_minima.iloc[idx2 + ctg]:>5} {dctg2.variacao_geracao_reativa_maxima.iloc[idx2 + ctg]:>5} {dctg2.variacao_fator_participacao.iloc[idx2 + ctg]:>5}"
-            )
-            file.write("\n")
-        ctg += value.ndctg2
-        file.write("FCAS")
-        file.write("\n")
+    file.write("FCAS")
+    file.write("\n")
     file.write("99999")
     file.write("\n")
+    return ctg + value.ndctg2
 
 
 def udger(
@@ -468,7 +467,7 @@ def utail(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF BPSI RINT RTOT")
+    file.write("EXLF BPSI RBAR RINT RTOT")
 
     file.write("\n")
     file.write("(")
