@@ -269,7 +269,9 @@ def q2024(
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.gd = powerflow.dbarDF.loc[
-        ~powerflow.dbarDF.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
+        ~powerflow.dbarDF.nome.str.contains(
+            "UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-"
+        )
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.carga_total = powerflow.dbarDF.demanda_ativa.sum()
@@ -444,11 +446,15 @@ def q2024(
             file.write(
                 "        --- OTHER: {} unidades, {} MW".format(
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
+                        ~item.nome.str.contains(
+                            "UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-"
+                        )
                         & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
+                        ~item.nome.str.contains(
+                            "UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-"
+                        )
                         & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
@@ -548,20 +554,25 @@ def q2024(
             file.write(
                 "        --- OTHER: {} unidades, {} MW".format(
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
+                        ~item.nome.str.contains(
+                            "UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-"
+                        )
                         & (item.potencia_ativa > 0.0)
                     ].shape[0],
                     item.loc[
-                        ~item.nome.str.contains("UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-")
+                        ~item.nome.str.contains(
+                            "UNE|UHE|UTE|EOL|UFV|PCH|BIO|UN-|UH-|UT-|EO-|UF-|PC-|BI-"
+                        )
                         & (item.potencia_ativa > 0.0)
                     ].potencia_ativa.sum(),
                 )
             )
             file.write("\n\n")
 
-    
     powerflow.cargas = powerflow.sao_paulo.copy()
-    powerflow.eolicas = powerflow.nordeste[powerflow.nordeste.nome.str.contains("EOL|EO-")].copy()
+    powerflow.eolicas = powerflow.nordeste[
+        powerflow.nordeste.nome.str.contains("EOL|EO-")
+    ].copy()
 
 
 def ne224(
@@ -599,7 +610,9 @@ def ne224(
     powerflow.piaui = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 17"]
     powerflow.teresina = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 228]
 
-    powerflow.rio_grande_do_norte = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 20"]
+    powerflow.rio_grande_do_norte = powerflow.dbarDF.loc[
+        powerflow.dbarDF.agreg1 == " 20"
+    ]
     powerflow.natal = powerflow.dbarDF.loc[powerflow.dbarDF.numero == 346]
 
     powerflow.sergipe = powerflow.dbarDF.loc[powerflow.dbarDF.agreg1 == " 25"]
