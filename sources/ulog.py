@@ -304,34 +304,34 @@ def usxct(
                 file,
             )
 
-            file.write("ULOG")
-            file.write("\n")
-            file.write("(N")
-            file.write("\n")
-            file.write("2")
-            file.write("\n")
-            file.write(
-                "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".SAV"
-            )
+            # file.write("ULOG")
+            # file.write("\n")
+            # file.write("(N")
+            # file.write("\n")
+            # file.write("2")
+            # file.write("\n")
+            # file.write(
+            #     "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".SAV"
+            # )
 
-            file.write("\n")
-            file.write("(")
-            file.write("\n")
+            # file.write("\n")
+            # file.write("(")
+            # file.write("\n")
 
-            file.write("ARQV INIC IMPR")
-            file.write("\n")
-            file.write("SIM")
+            # file.write("ARQV INIC IMPR")
+            # file.write("\n")
+            # file.write("SIM")
 
-            file.write("\n")
-            file.write("(")
-            file.write("\n")
+            # file.write("\n")
+            # file.write("(")
+            # file.write("\n")
 
-            file.write("ARQV GRAV IMPR NOVO")
-            file.write("\n")
-            file.write("1")
-            file.write("\n")
-            file.write("(")
-            file.write("\n")
+            # file.write("ARQV GRAV IMPR NOVO")
+            # file.write("\n")
+            # file.write("1")
+            # file.write("\n")
+            # file.write("(")
+            # file.write("\n")
 
             file.write("ULOG")
             file.write("\n")
@@ -347,11 +347,11 @@ def usxct(
             file.write("( ")
             file.write("\n")
 
-            file.write("EXCT BPSI RTOT")
+            file.write("EXCT BPSI RBAR RTOT RINT")
             file.write("\n")
             file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
             file.write("\n")
-            file.write(f"{int(value.identificacao):>2}")
+            file.write(f"{value.prioridade:>2}")
 
             file.write("\n")
             file.write("( ")
@@ -365,7 +365,7 @@ def usxct(
             time=35,
         )
 
-        savfile = realpath(powerflow.sxct + "\\EXCT_" + filename + "SAV")
+        savfile = realpath(powerflow.sxct + "\\EXCT_" + filename + ".SAV")
 
         if exists(savfile):
             remove(filedir)

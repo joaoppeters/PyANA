@@ -461,7 +461,7 @@ def utail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL")
+    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".LIS")
 
     file.write("\n")
     file.write("( ")

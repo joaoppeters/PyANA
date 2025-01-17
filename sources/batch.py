@@ -196,7 +196,6 @@ def stochsxic(
     from anarede import anarede
     from folder import areasfolder, sxicfolder
     from rela import rxic
-    from sav import balancecopy
     from ulog import usxlf, usxic
 
     areasfolder(
