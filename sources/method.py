@@ -118,33 +118,27 @@ def methodo(
     elif powerflow.method == "BXLF":
         from anarede import anarede
 
-        powerflow.batchtime = 10
-
         anarede(
-            powerflow.batchtime,
-            powerflow.dirPWF,
+            file=powerflow.dirPWF,
+            time=2,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXIC":
         from anarede import anarede
 
-        powerflow.batchtime = 10
-
         anarede(
-            powerflow.batchtime,
-            powerflow.dirPWF,
+            file=powerflow.dirPWF,
+            time=60,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXCT":
         from anarede import anarede
 
-        powerflow.batchtime = 10
-
         anarede(
-            powerflow.batchtime,
-            powerflow.dirPWF,
+            file=powerflow.dirPWF,
+            time=20,
         )
 
     # Chamada especifica geracao estocastica inicial de valores
