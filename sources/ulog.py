@@ -121,12 +121,7 @@ def basexic(
     from uwrite import (
         uheader,
         uarq,
-        udbar,
-        udger,
         sdinc,
-        udmfl,
-        udmfl_circ,
-        udmte,
         uxictail,
     )
 
@@ -140,7 +135,7 @@ def basexic(
         + powerflow.name
         + ".PWF"
     )
-    
+
     # Manipulacao
     file = open(filedir, "w")
     savfile = "SXLF_" + powerflow.name + ".SAV"
