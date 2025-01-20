@@ -7,6 +7,199 @@
 # ------------------------------------- #
 
 
+def basexlf(
+    powerflow,
+):
+    """
+
+    Args:
+        powerflow (_type_): _description_
+    """
+
+    from os.path import realpath
+
+    from anarede import batchrunning
+    from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
+
+    ## Inicialização
+    # Arquivo
+    filedir = realpath(
+        powerflow.maindir
+        + "\\sistemas\\"
+        + powerflow.method
+        + "_"
+        + powerflow.name
+        + ".PWF"
+    )
+
+    # Manipulacao
+    file = open(filedir, "w")
+    if "Q2024" in powerflow.name:
+        savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
+        case = powerflow.name.split("_")[-1][1:]
+    elif "NE224" in powerflow.name:
+        savfile = powerflow.name + ".SAV"
+        case = 1
+
+    # Cabecalho
+    uheader(
+        file,
+    )
+
+    # Corpo
+    uarq(
+        file,
+        savfile,
+        case,
+    )
+
+    if powerflow.codes["DBAR"]:
+        udbar(
+            powerflow.dbarDF,
+            file,
+        )
+
+    if powerflow.codes["DGER"]:
+        udger(
+            powerflow.mdger,
+            file,
+        )
+
+    if powerflow.codes["DMFL"]:
+        if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+            udmfl_circ(
+                powerflow.dmfl,
+                file,
+            )
+        else:
+            udmfl(
+                powerflow.dmfl,
+                file,
+            )
+
+    if powerflow.codes["DMTE"]:
+        udmte(
+            powerflow.dmte,
+            file,
+        )
+
+    # Saida
+    uxlftail(
+        powerflow,
+        file,
+        base=True,
+    )
+
+    batchrunning(
+        file=filedir,
+        time=2,
+    )
+
+
+def basexic(
+    powerflow,
+    start=3,
+    stop=8,
+    midstop=5,
+    mult=0.2,
+    time=300,
+):
+    """
+
+    Args
+        powerflow:
+        start:
+        stop:
+        midstop:
+        mult:
+    """
+
+    from os.path import realpath
+
+    from anarede import batchrunning
+    from rwpwf import wdcte
+    from uwrite import (
+        uheader,
+        uarq,
+        udbar,
+        udger,
+        sdinc,
+        udmfl,
+        udmfl_circ,
+        udmte,
+        uxictail,
+    )
+
+    ## Inicialização
+    # Arquivo
+    filedir = realpath(
+        powerflow.maindir
+        + "\\sistemas\\"
+        + powerflow.method
+        + "_"
+        + powerflow.name
+        + ".PWF"
+    )
+    
+    # Manipulacao
+    file = open(filedir, "w")
+    savfile = "SXLF_" + powerflow.name + ".SAV"
+
+    # Cabecalho
+    uheader(
+        file,
+    )
+
+    for var in range(start, stop, 1):
+        if var <= midstop:
+            x = round(var * mult, 1)
+            y = 1.0
+        else:
+            x = 1.0
+            y = round(1.0 - (var - midstop) * mult, 1)
+
+        file.write(
+            "( Crescimento de Carga No{}: ({};{})".format(var - (start - 1), x, y)
+        )
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
+
+        # Corpo
+        uarq(
+            file,
+            savfile,
+            case=1,
+        )
+
+        wdcte(
+            powerflow.dcte,
+            file,
+        )
+
+        sdinc(
+            powerflow.dinc,
+            file,
+            var=(x, y),
+        )
+
+        uxictail(
+            file,
+            powerflow.name,
+            var,
+            start=start,
+            base=True,
+        )
+
+    file.write("FIM")
+    file.close()
+
+    batchrunning(
+        file=filedir,
+        time=time,
+    )
+
+
 def usxlf(
     powerflow,
 ):
@@ -19,7 +212,7 @@ def usxlf(
     from os.path import realpath
 
     from sav import savmove
-    from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, utail
+    from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
     # Arquivo
@@ -87,9 +280,10 @@ def usxlf(
         )
 
     # Saida
-    utail(
+    uxlftail(
         powerflow,
         file,
+        base=False,
     )
 
 
@@ -97,6 +291,11 @@ def usxic(
     powerflow,
     folder_path,
     savfiles,
+    start=3,
+    stop=8,
+    midstop=5,
+    mult=0.2,
+    time=300,
 ):
     """
 
@@ -109,10 +308,10 @@ def usxic(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import anarede
+    from anarede import batchrunning
     from rwpwf import wdcte
     from sav import exlf2new
-    from uwrite import uheader, uarq, sdinc
+    from uwrite import uheader, uarq, sdinc, uxictail
 
     ## Inicialização
     for savfile in savfiles:
@@ -135,15 +334,17 @@ def usxic(
             file,
         )
 
-        for inc in range(3, 8, 1):
-            if inc <= 5:
-                x = round(inc * 0.2, 1)
+        for var in range(start, stop, 1):
+            if var <= midstop:
+                x = round(var * mult, 1)
                 y = 1.0
             else:
                 x = 1.0
-                y = round(1.0 - (inc - 5) * 0.2, 1)
+                y = round(1.0 - (var - midstop) * mult, 1)
 
-            file.write("( Crescimento de Carga No{}: ({};{})".format(inc - 2, x, y))
+            file.write(
+                "( Crescimento de Carga No{}: ({};{})".format(var - (start - 1), x, y)
+            )
             file.write("\n")
             file.write("(")
             file.write("\n")
@@ -163,77 +364,22 @@ def usxic(
             sdinc(
                 powerflow.dinc,
                 file,
-                varinc=(x, y),
+                var=(x, y),
             )
 
-            file.write("( ")
-            file.write("\n")
-
-            file.write("EXLF BPSI")
-
-            file.write("\n")
-            file.write("( ")
-            file.write("\n")
-
-            file.write("ULOG")
-            file.write("\n")
-            file.write("(N")
-            file.write("\n")
-            file.write("2")
-            file.write("\n")
-            file.write("EXIC_" + filename + ".SAV")
-
-            file.write("\n")
-            file.write("(")
-            file.write("\n")
-
-            if inc == 3:
-                file.write("ARQV INIC IMPR")
-                file.write("\n")
-                file.write("SIM")
-
-                file.write("\n")
-                file.write("(")
-                file.write("\n")
-
-                file.write("ARQV GRAV IMPR NOVO")
-                file.write("\n")
-                file.write("1")
-                file.write("\n")
-                file.write("(")
-                file.write("\n")
-            else:
-                file.write("ARQV GRAV IMPR")
-                file.write("\n")
-                file.write("{}".format(inc - 2))
-                file.write("\n")
-                file.write("(")
-                file.write("\n")
-
-            file.write("ULOG")
-            file.write("\n")
-            file.write("(N")
-            file.write("\n")
-            file.write("4")
-            file.write("\n")
-            file.write("EXIC_" + filename + "_{}.REL".format(inc - 2))
-
-            file.write("\n")
-            file.write("( ")
-            file.write("\n")
-
-            file.write("EXIC BPSI RBAR RINT RTOT")
-
-            file.write("\n")
-            file.write("( ")
-            file.write("\n")
+            uxictail(
+                file,
+                filename,
+                var,
+                start=start,
+            )
 
         file.write("FIM")
         file.close()
 
-        anarede(
+        batchrunning(
             file=filedir,
-            time=120,
+            time=time,
         )
 
         savfile = realpath(powerflow.sxic + "\\EXIC_" + filename + "SAV")
@@ -258,7 +404,7 @@ def usxct(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import anarede
+    from anarede import batchrunning
     from sav import exlf2new
     from uwrite import uheader, uarq, udctg
 
@@ -360,7 +506,7 @@ def usxct(
         file.write("FIM")
         file.close()
 
-        anarede(
+        batchrunning(
             file=filedir,
             time=35,
         )
@@ -386,7 +532,7 @@ def uspvct(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import anarede
+    from anarede import batchrunning
     from sav import exlf2new
     from uwrite import uheader, uarq, sdinc, udctg
 
@@ -509,7 +655,7 @@ def uspvct(
         file.write("FIM")
         file.close()
 
-        anarede(
+        batchrunning(
             file=filedir,
             time=300,
         )

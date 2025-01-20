@@ -116,36 +116,40 @@ def methodo(
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXLF":
-        from anarede import anarede
+        from anarede import batchrunning
 
-        anarede(
+        batchrunning(
             file=powerflow.dirPWF,
             time=2,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXIC":
-        from anarede import anarede
+        from anarede import batchrunning
 
-        anarede(
+        batchrunning(
             file=powerflow.dirPWF,
             time=60,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXCT":
-        from anarede import anarede
+        from anarede import batchrunning
 
-        anarede(
+        batchrunning(
             file=powerflow.dirPWF,
             time=20,
         )
 
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "SXLF":
+        from areas import q2024, ne224
         from batch import stochsxlf
+        from factor import generator_participation
+        from folder import areasfolder
         from setting import pathstb
         from stb import stb
+        from ulog import basexlf
 
         pathstb(
             powerflow,
@@ -157,13 +161,71 @@ def methodo(
 
         powerflow.namecase = powerflow.name + "jpmod"
 
+        areasfolder(
+            powerflow,
+        )
+        if "NE224" in powerflow.name:
+            ne224(
+                powerflow,
+            )
+        elif "Q2024" in powerflow.name:
+            q2024(
+                powerflow,
+            )
+
+        powerflow.mdger = generator_participation(
+            name=powerflow.name,
+            dbarDF=powerflow.dbarDF.copy(),
+            dger=powerflow.dger.copy(),
+        )
+
+        basexlf(
+            powerflow,
+        )
+
         stochsxlf(
             powerflow,
         )
 
     # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
     elif powerflow.method == "SXIC":
+        from areas import q2024, ne224
         from batch import stochsxic
+        from factor import generator_participation
+        from folder import areasfolder
+        from strat import strat
+        from ulog import basexic
+
+        areasfolder(
+            powerflow,
+        )
+        if "NE224" in powerflow.name:
+            ne224(
+                powerflow,
+            )
+        elif "Q2024" in powerflow.name:
+            q2024(
+                powerflow,
+            )
+
+        powerflow.mdger = generator_participation(
+            name=powerflow.name,
+            dbarDF=powerflow.dbarDF.copy(),
+            dger=powerflow.dger.copy(),
+        )
+
+        # strat(
+        #     powerflow,
+        # )
+
+        basexic(
+            powerflow,
+            start=6,
+            stop=15,
+            midstop=10,
+            mult=0.1,
+            time=600,
+        )
 
         stochsxic(
             powerflow,

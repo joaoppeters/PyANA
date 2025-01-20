@@ -7,13 +7,11 @@
 # ------------------------------------- #
 
 
-def factor(
+def load_participation(
     name,
     lpmean,
     wpmean,
-    dbarDF,
     dbar,
-    dger,
     stateload,
     stategeneration,
 ):
@@ -23,7 +21,6 @@ def factor(
         powerflow:
     """
 
-    from pandas import concat, merge
     from numpy import nan
 
     ## Inicialização
@@ -83,6 +80,27 @@ def factor(
         )
         mdbar = mdbar.fillna(0)
 
+    else:
+        raise ValueError(f"\033[91mERROR: Ajuste dos dados de carga com erro!\033[0m")
+
+    return mdbar
+
+
+def generator_participation(
+    name,
+    dbarDF,
+    dger,
+):
+    """
+
+    Args
+        powerflow:
+    """
+
+    from pandas import concat, merge
+
+    ## Inicialização
+    if "Q2024" in name or "NE224" in name:
         # UHE & UTE Generation Power Factor in NE Region
         uheute = dbarDF[
             (
@@ -124,10 +142,10 @@ def factor(
 
     else:
         raise ValueError(
-            f"\033[91mERROR: Ajustar código nessa linha 106, factor.py\033[0m"
+            f"\033[91mERROR: Ajuste nos dados dos geradores com erro!\033[0m"
         )
 
-    return mdbar, mdger
+    return mdger
 
 
 def loadf(

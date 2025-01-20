@@ -19,10 +19,9 @@ def stochsxlf(
     from os import listdir, remove
     from os.path import dirname, exists, isfile, join, realpath
 
-    from anarede import anarede
-    from areas import ne224, q2024
-    from factor import factor, loadf, windf
-    from folder import areasfolder, sxlffolder
+    from anarede import batchrunning
+    from factor import load_participation, loadf, windf
+    from folder import sxlffolder
     from stochastic import loadn, windn
     from rela import rxlf
     from rwstb import rwstb
@@ -30,18 +29,6 @@ def stochsxlf(
 
     ## Inicialização
     powerflow.nsamples = 1000
-    areasfolder(
-        powerflow,
-    )
-    if "NE224" in powerflow.name:
-        ne224(
-            powerflow,
-        )
-    elif "Q2024" in powerflow.name:
-        q2024(
-            powerflow,
-        )
-
     for stddev in range(1, 11, 1):
         sxlffolder(
             powerflow,
@@ -71,13 +58,11 @@ def stochsxlf(
         )
 
         # Factor
-        powerflow.mdbar, powerflow.mdger = factor(
+        powerflow.mdbar = load_participation(
             name=powerflow.name,
             lpmean=lpmean,
             wpmean=wpmean,
-            dbarDF=powerflow.dbarDF.copy(),
-            dbar=powerflow.dbar.copy(),
-            dger=powerflow.dger.copy(),
+            dbar=powerflow.dbarDF.copy(),
             stateload=powerflow.cargas.copy(),
             stategeneration=powerflow.eolicas.copy(),
         )
@@ -101,7 +86,7 @@ def stochsxlf(
                 powerflow,
             )
 
-            anarede(file=powerflow.filedir, time=2)
+            batchrunning(file=powerflow.filedir, time=2)
 
             exlfpwf = realpath(
                 powerflow.sxlf
@@ -193,7 +178,7 @@ def stochsxic(
     from os.path import exists, isfile, join
 
     from areas import ne224, q2024
-    from anarede import anarede
+    from anarede import batchrunning
     from folder import areasfolder, sxicfolder
     from rela import rxic
     from ulog import usxlf, usxic

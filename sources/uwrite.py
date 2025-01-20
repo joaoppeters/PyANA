@@ -299,7 +299,7 @@ def udinc(
 def sdinc(
     dinc,
     file,
-    varinc,
+    var,
 ):
     """
 
@@ -313,7 +313,7 @@ def sdinc(
     file.write(format(dinc.ruler.iloc[0]))
     for idx, value in dinc.iterrows():
         file.write(
-            f"{value.tipo_incremento_1:>4} {value.identificacao_incremento_1:>5} {value.condicao_incremento_1:1} {value.tipo_incremento_2:>4} {value.identificacao_incremento_2:>5} {value.condicao_incremento_2:1} {value.tipo_incremento_3:>4} {value.identificacao_incremento_3:>5} {value.condicao_incremento_3:1} {value.tipo_incremento_4:>4} {value.identificacao_incremento_4:>5} {value.condicao_incremento_4:1} {varinc[0]:>5} {varinc[1]:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
+            f"{value.tipo_incremento_1:>4} {value.identificacao_incremento_1:>5} {value.condicao_incremento_1:1} {value.tipo_incremento_2:>4} {value.identificacao_incremento_2:>5} {value.condicao_incremento_2:1} {value.tipo_incremento_3:>4} {value.identificacao_incremento_3:>5} {value.condicao_incremento_3:1} {value.tipo_incremento_4:>4} {value.identificacao_incremento_4:>5} {value.condicao_incremento_4:1} {var[0]:>5} {var[1]:>5} {value['maximo_incremento_potencia_ativa']:>5} {value['maximo_incremento_potencia_reativa']:>5}"
         )
         file.write("\n")
     file.write("99999")
@@ -408,9 +408,10 @@ def udmte(
     file.write("\n")
 
 
-def utail(
+def uxlftail(
     powerflow,
     file,
+    base=False,
 ):
     """
 
@@ -434,7 +435,10 @@ def utail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV")
+    if base:
+        file.write("SXLF_" + powerflow.name + ".SAV")
+    else:
+        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV")
 
     file.write("\n")
     file.write("(")
@@ -461,7 +465,10 @@ def utail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".LIS")
+    if base:
+        file.write("SXLF_" + powerflow.name + ".REL")
+    else:
+        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".LIS")
 
     file.write("\n")
     file.write("( ")
@@ -475,3 +482,89 @@ def utail(
 
     file.write("FIM")
     file.close()
+
+
+def uxictail(
+    file,
+    filename,
+    var,
+    start,
+    base=False,
+):
+    """
+
+    Args
+        file:
+        filename:
+        var:
+        start:
+    """
+
+    ## Inicialização
+    file.write("( ")
+    file.write("\n")
+
+    file.write("EXLF BPSI")
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("2")
+    file.write("\n")
+    if base:
+        file.write("SXIC_" + filename + ".SAV")
+    else:
+        file.write("EXIC_" + filename + ".SAV")
+
+    file.write("\n")
+    file.write("(")
+    file.write("\n")
+
+    if var == start:
+        file.write("ARQV INIC IMPR")
+        file.write("\n")
+        file.write("SIM")
+
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
+
+        file.write("ARQV GRAV IMPR NOVO")
+        file.write("\n")
+        file.write("1")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
+    else:
+        file.write("ARQV GRAV IMPR")
+        file.write("\n")
+        file.write("{}".format(var - (start - 1)))
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
+
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("4")
+    file.write("\n")
+    if base:
+        file.write("SXIC_" + filename + "_{}.REL".format(var - (start - 1)))
+    else:
+        file.write("EXIC_" + filename + "_{}.LIS".format(var - (start - 1)))
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("EXIC BPSI RBAR RINT RTOT")
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
