@@ -18,7 +18,6 @@ def scheduled(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Potências ativa e reativa especificadas
     if powerflow.solution["method"] == "LFDC":

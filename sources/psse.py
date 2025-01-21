@@ -19,7 +19,6 @@ def pssexcel(
     Args
         powerflow:
     """
-
     ## Inicialização
 
     pssefolder(

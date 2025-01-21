@@ -19,7 +19,6 @@ def stb(
     Args
         powerflow:
     """
-
     ## Inicialização
     t = time.process_time()
 
@@ -36,7 +35,7 @@ def stb(
         powerflow,
     )
 
-    if powerflow.method == "EXSI":
+    if powerflow.sim == "EXSI":
         rdarq(
             powerflow,
         )
@@ -52,7 +51,6 @@ def codes(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.codes.update(
@@ -74,7 +72,6 @@ def rstb(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     f = open(f"{powerflow.dirSTB}", "r", encoding="latin-1")

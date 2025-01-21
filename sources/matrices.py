@@ -47,7 +47,6 @@ def admittance(
     ALL RIGHTS RESERVED TO RAY ZIMMERMAN
     CODE RETRIEVED FROM: https://github.com/rwl/PYPOWER
     """
-
     ## Inicialização
     Ysr = 1 / vectorize(complex)(
         powerflow.dlinDF["resistencia"], powerflow.dlinDF["reatancia"]
@@ -103,7 +102,6 @@ def matrices(
     Args
         powerflow:
     """
-
     ## Inicialização
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
 
@@ -312,7 +310,6 @@ def load2ycte(
     Args
         powerflow:
     """
-
     ## Inicialização
     load2ycte = diag(
         (
@@ -335,7 +332,6 @@ def md01jacob(
     Args
         powerflow:
     """
-
     ## Inicialização
     if gen == 0:
         powerflow.jacobiangenoffright = zeros(
@@ -442,7 +438,6 @@ def jacexsi(
     Args
         powerflow:
     """
-
     ## Inicialização
     dS_dVm, dS_dVa = dSbus_dV(
         powerflow.Yblc,

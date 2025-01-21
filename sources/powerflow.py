@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from folder import folder
-from method import methodo
+from simulation import simulation
 from setting import setting
 
 
@@ -17,7 +17,7 @@ class PowerFlow:
     def __init__(
         self,
         system: str = "",
-        method: str = "EXLF",
+        sim: str = "EXLF",
         control: list = list(),
         monitor: list = list(),
         report: list = list(),
@@ -26,7 +26,7 @@ class PowerFlow:
 
         Args:
             system: str, optional, default ''
-            method: str, optional, default 'EXLF'
+            sim: str, optional, default 'EXLF'
             control: list, optional, default None
             monitor: list, optional, default None
             report: list, optional, default None
@@ -35,7 +35,7 @@ class PowerFlow:
         ## Inicialization
         # Variables
         self.system = system
-        self.method = method
+        self.sim = sim
         self.control = control
         self.monitor = monitor
         self.report = report
@@ -51,6 +51,6 @@ class PowerFlow:
         )
 
         # Numerical Method
-        methodo(
+        simulation(
             self,
         )

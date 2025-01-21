@@ -140,7 +140,6 @@ def stochsxlf(
         ]
 
         rxlf(
-            powerflow,
             folder=folder_path,
             relfiles=relfiles,
             balancefile=file,

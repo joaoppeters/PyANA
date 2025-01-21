@@ -44,7 +44,6 @@ def prediction_correction(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento das variáveis de solução do fluxo de potência continuado
     powerflow.solution.update(
@@ -134,7 +133,6 @@ def exicloop(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de parada do fluxo de potência continuado -> Estável & Instável
     while (
@@ -187,7 +185,6 @@ def prediction(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.solution["iter"] = 0
 
@@ -253,7 +250,6 @@ def correction(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento de solução
     powerflow.solution.update(
@@ -514,7 +510,6 @@ def exicresidue(
         powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-
     ## Inicialização
     residue(
         powerflow,
@@ -571,7 +566,6 @@ def exicjacobian(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Arrays adicionais
     rowarray = zeros([1, powerflow.jacobian.shape[0]])
@@ -618,7 +612,6 @@ def update_statevar(
         powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-
     ## Inicialização
     powerflow.solution["theta"][powerflow.maskP] += (
         powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
@@ -697,7 +690,6 @@ def exicstorage(
         powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-
     ## Inicialização
     # Armazenamento das variáveis de solução do fluxo de potência
     powerflow.operationpoint[case][stage] = {
@@ -724,7 +716,6 @@ def exicevaluate(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição Inicial
     if case == 1:
@@ -822,7 +813,6 @@ def exicheuristics(
     Args
         powerflow:
     """
-
     ## Inicialização
     ## Afundamento de tensão não desejado (em i+1) e retorno ao valor esperado (em i+2) -> correção: voltar duas casas
     # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
@@ -1178,7 +1168,6 @@ def exiccvgprint(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Impressão de convergência
     # print(

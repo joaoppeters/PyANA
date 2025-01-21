@@ -19,14 +19,15 @@ def basexlf(
     from os.path import realpath
 
     from anarede import batchrunning
+    from sav import savmove
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
     # Arquivo
     filedir = realpath(
         powerflow.maindir
-        + "\\sistemas\\"
-        + powerflow.method
+        + "\\sistemas\\EXLF\\"
+        + powerflow.sim
         + "_"
         + powerflow.name
         + ".PWF"
@@ -40,6 +41,11 @@ def basexlf(
     elif "NE224" in powerflow.name:
         savfile = powerflow.name + ".SAV"
         case = 1
+
+    savmove(
+        filename=powerflow.maindir + "\\sistemas\\" + savfile,
+        filedir=powerflow.maindir + "\\sistemas\\EXLF\\",
+    )
 
     # Cabecalho
     uheader(
@@ -118,6 +124,7 @@ def basexic(
 
     from anarede import batchrunning
     from rwpwf import wdcte
+    from sav import exlf2new
     from uwrite import (
         uheader,
         uarq,
@@ -126,11 +133,18 @@ def basexic(
     )
 
     ## Inicialização
+    savfile = "SXLF_" + powerflow.name + ".SAV"
+    exlf2new(
+            exlffolder=powerflow.maindir + "\\sistemas\\EXLF\\",	
+            newfolder=powerflow.maindir + "\\sistemas\\EXIC\\",
+            savfile=savfile,
+        )
+
     # Arquivo
     filedir = realpath(
         powerflow.maindir
-        + "\\sistemas\\"
-        + powerflow.method
+        + "\\sistemas\\EXIC\\"
+        + powerflow.sim
         + "_"
         + powerflow.name
         + ".PWF"
@@ -138,7 +152,6 @@ def basexic(
 
     # Manipulacao
     file = open(filedir, "w")
-    savfile = "SXLF_" + powerflow.name + ".SAV"
 
     # Cabecalho
     uheader(

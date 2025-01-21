@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 
-def methodo(
+def simulation(
     powerflow,
 ):
     """chamada automática do método de solução selecionado
@@ -15,10 +15,9 @@ def methodo(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == "EXLF":
+    if powerflow.sim == "EXLF":
         from matrices import admittance
         from monitor import monitorfile
         from newton import newton
@@ -41,7 +40,7 @@ def methodo(
         )
 
     # Chamada específica método Continuado
-    elif powerflow.method == "EXIC":
+    elif powerflow.sim == "EXIC":
         from matrices import admittance
         from continuation import prediction_correction
         from newton import newton
@@ -64,7 +63,7 @@ def methodo(
         )
 
     # Chamada especifica metodo direto (Canizares, 1993)
-    elif powerflow.method == "EXPC":
+    elif powerflow.sim == "EXPC":
         from matrices import admittance
         from newton import newton
         from poc import poc
@@ -87,7 +86,7 @@ def methodo(
         )
 
     # Chamada Específica para simulação dinâmica
-    elif powerflow.method == "EXSI":
+    elif powerflow.sim == "EXSI":
         from matrices import admittance
         from dynamic import dynamic
         from newton import newton
@@ -115,7 +114,7 @@ def methodo(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.method == "BXLF":
+    elif powerflow.sim == "BXLF":
         from anarede import batchrunning
 
         batchrunning(
@@ -124,7 +123,7 @@ def methodo(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.method == "BXIC":
+    elif powerflow.sim == "BXIC":
         from anarede import batchrunning
 
         batchrunning(
@@ -133,7 +132,7 @@ def methodo(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.method == "BXCT":
+    elif powerflow.sim == "BXCT":
         from anarede import batchrunning
 
         batchrunning(
@@ -142,7 +141,7 @@ def methodo(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.method == "SXLF":
+    elif powerflow.sim == "SXLF":
         from areas import q2024, ne224
         from batch import stochsxlf
         from factor import generator_participation
@@ -183,12 +182,12 @@ def methodo(
             powerflow,
         )
 
-        stochsxlf(
-            powerflow,
-        )
+        # stochsxlf(
+        #     powerflow,
+        # )
 
     # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
-    elif powerflow.method == "SXIC":
+    elif powerflow.sim == "SXIC":
         from areas import q2024, ne224
         from batch import stochsxic
         from factor import generator_participation
@@ -224,7 +223,7 @@ def methodo(
             stop=15,
             midstop=10,
             mult=0.1,
-            time=600,
+            time=300,
         )
 
         stochsxic(
@@ -232,7 +231,7 @@ def methodo(
         )
 
     # Chamada especifica para analise de contingencia em arquivos com dados estocasticos
-    elif powerflow.method == "SXCT":
+    elif powerflow.sim == "SXCT":
         from batch import stochsxct
 
         stochsxct(
@@ -240,7 +239,7 @@ def methodo(
         )
 
     # Chamada especifica para analise de fluxo de potência continuado e contingencia em arquivos com dados estocasticos
-    elif powerflow.method == "SPVCT":
+    elif powerflow.sim == "SPVCT":
         from batch import stochspvct
 
         stochspvct(
@@ -248,7 +247,7 @@ def methodo(
         )
 
     # Chamada específica para geração de arquivo contendo formatação de dados de simulação PSS/E (EXCEL FILE FORMATTING)
-    elif powerflow.method == "PSSe":
+    elif powerflow.sim == "PSSe":
         from psse import pssexcel
 
         pssexcel(
@@ -256,7 +255,7 @@ def methodo(
         )
 
     # Chamada específica para leitura de arquivos .REL
-    elif powerflow.method == "RREL":
+    elif powerflow.sim == "RREL":
         from rela import rrel
 
         rrel(
@@ -264,7 +263,7 @@ def methodo(
         )
 
     # Chamada específica para manipulação de dados (DATA MANIPULATION - CASE BY CASE DEMAND)
-    elif powerflow.method == "DATA":
+    elif powerflow.sim == "DATA":
         from fdata import fdata
 
         fdata(
@@ -272,7 +271,7 @@ def methodo(
         )
 
     # Chamada especifica metodo Cross-Entropy
-    elif powerflow.method == "CENT":
+    elif powerflow.sim == "CENT":
         from matrices import admittance
         from crossentropy import cent
 
@@ -285,7 +284,7 @@ def methodo(
         )
 
     # Chamada específica para análise de areas
-    elif powerflow.method == "AREA":
+    elif powerflow.sim == "AREA":
         from areas import q2024, ne224
         from folder import areasfolder
 
@@ -304,9 +303,16 @@ def methodo(
             )
 
     # Chamada específica para leitura dos relatórios de fluxo de potência continuado com contingência
-    elif powerflow.method == "RPVCT":
+    elif powerflow.sim == "RPVCT":
         from rela import relpvct
 
         relpvct(
+            powerflow,
+        )
+
+    elif powerflow.sim == "Q2024":
+        from rela import q2024
+
+        q2024(
             powerflow,
         )

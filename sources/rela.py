@@ -133,17 +133,18 @@ print()
 
 
 def rxlf(
-    powerflow,
     folder,
     relfiles,
     balancefile,
+    string=r"MOD(\d+)\.REL"
 ):
     """
 
     Args:
-        powerflow:
-        refiles:
-        file:
+        folder:
+        relfiles:
+        balancefile:
+        string:
     """
 
     import re
@@ -171,7 +172,7 @@ def rxlf(
                     rflines=rflines,
                     linecount=linecount,
                     balancefile=balancefile,
-                    rfilecount=re.search(r"MOD(\d+)\.REL", relfile).group(1),
+                    rfilecount=re.search(string, relfile).group(1),
                 )
             linecount += 1
 
@@ -254,3 +255,62 @@ def rtot(
             pass
 
     return linecount
+
+
+
+def q2024(
+    powerflow,
+):
+    """
+
+    Args:
+        powerflow (_type_): _description_
+    """
+
+    from os import listdir
+
+    from strat import get_mean_stddev
+
+    ## Inicialização
+    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\"
+    relfiles = [
+        f
+        for f in listdir(folder_path)
+        if f.startswith("SXLF")
+        and f.endswith(".REL")
+    ]
+
+    with open(
+        folder_path + powerflow.sim + ".txt",
+        "w",
+    ) as file:
+        file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
+
+    rxlf(
+        folder=folder_path,
+        relfiles=relfiles,
+        balancefile=file,
+        string=r"C(\d+)\.REL"
+    )
+
+    # Open and read the file
+    with open(folder_path + powerflow.sim + ".txt", "r") as f:
+        lines = f.readlines()
+
+    # Separate the header and data
+    header = lines[0]
+    data = lines[1:]
+
+    # Sort the data lines based on the first column (split by `;`)
+    sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
+
+    # Combine the header and sorted data
+    sorted_lines = [header] + sorted_data
+
+    # Write the sorted lines to a new file
+    with open(folder_path + powerflow.sim + ".txt", "w") as f:
+        f.writelines(sorted_lines)
+        
+
+    get_mean_stddev(filename=folder_path + powerflow.sim + ".txt")
+

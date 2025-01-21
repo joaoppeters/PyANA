@@ -19,7 +19,6 @@ def qlimsol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     if "qlim_reactive_generation" not in powerflow.solution:
@@ -37,7 +36,6 @@ def qlimres(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Vetor de resíduos
     powerflow.deltaQLIM = zeros([powerflow.nger])
@@ -218,7 +216,6 @@ def qlimsubjac(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -306,7 +303,6 @@ def qlimupdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Contador
     nger = 0
@@ -359,7 +355,6 @@ def qlimsch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.qsch = zeros([powerflow.nbus])
@@ -379,7 +374,6 @@ def qlimcorr(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.solution["qlim_reactive_generation"] = deepcopy(
@@ -395,7 +389,6 @@ def qlimheur(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo
     if any(
@@ -440,7 +433,6 @@ def qlimsubhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -461,6 +453,5 @@ def qlimsubjacsym(
     Args
         powerflow:
     """
-
     ## Inicialização
     pass

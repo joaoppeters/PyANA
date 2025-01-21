@@ -18,7 +18,6 @@ def rwstb(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
@@ -79,7 +78,6 @@ def wheader(
     Args
         file:
     """
-
     ## Inicialização
     file.write("(")
     file.write("\n")
@@ -112,7 +110,6 @@ def wdarq(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(powerflow.titu["titu"]))
     file.write(format(powerflow.titu["ruler"]))
@@ -128,7 +125,6 @@ def wdevt(
         powerflow:
         file:
     """
-
     ## Inicialização
     agr = 0
     file.write(format(powerflow.dagr.dagr.iloc[0]))
@@ -159,7 +155,6 @@ def wdmaq(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(powerflow.danc.danc.iloc[0]))
     file.write(format(powerflow.danc.ruler.iloc[0]))
@@ -185,7 +180,6 @@ def wdmdg_md01(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(powerflow.danc.danc.iloc[0]))
     file.write(format(powerflow.danc.ruler.iloc[0]))
@@ -208,7 +202,6 @@ def wdsim(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write(format(powerflow.dare.dare.iloc[0]))
     file.write(format(powerflow.dare.ruler.iloc[0]))
@@ -230,7 +223,6 @@ def wtail(
         powerflow:
         file:
     """
-
     ## Inicialização
     file.write("(")
     file.write("\n")

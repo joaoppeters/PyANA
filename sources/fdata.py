@@ -15,7 +15,6 @@ def fdata(
     Args
         powerflow:
     """
-
     ## Inicialização
     sp = [
         201,

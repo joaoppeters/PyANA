@@ -17,7 +17,6 @@ def allctgs(
         powerflow:
         file
     """
-
     ## Inicialização
     pr = 1
     file.write("DCTG")

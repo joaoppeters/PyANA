@@ -19,7 +19,6 @@ def monitor(
         powerflow:
         setting: self do arquivo setting.py
     """
-
     ## Inicialização
     if powerflow.monitor:
         print("\033[96mOpções de monitoramento escolhidas: ", end="")
@@ -40,7 +39,6 @@ def monitorfile(
     Parâmetro
         powerflow:
     """
-
     ## Inicialização
     filedirname = powerflow.reportsfolder + powerflow.name + "-monitor.txt"
 
@@ -69,7 +67,7 @@ def monitorfile(
                     powerflow,
                 )
             # monitoramento de potência reativa gerada
-            elif (r == "QGMON") and (powerflow.method != "LINEAR"):
+            elif (r == "QGMON") and (powerflow.sim != "LINEAR"):
                 monitorqgmon(
                     file,
                     powerflow,
@@ -94,7 +92,6 @@ def rheader(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write(
         "{} {}, {}".format(
@@ -108,22 +105,22 @@ def rheader(
     file.write("\n")
     file.write("solução do fluxo de potência via método ")
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == "EXLF":
+    if powerflow.sim == "EXLF":
         file.write("newton-raphson")
     # Chamada específica método de Gauss-Seidel
-    elif powerflow.method == "GAUSS":
+    elif powerflow.sim == "GAUSS":
         file.write("gauss-seidel")
     # Chamada específica método de Newton-Raphson Linearizado
-    elif powerflow.method == "LINEAR":
+    elif powerflow.sim == "LINEAR":
         file.write("linearizado")
     # Chamada específica método Desacoplado
-    elif powerflow.method == "DECOUP":
+    elif powerflow.sim == "DECOUP":
         file.write("desacoplado")
     # Chamada específica método Desacoplado Rápido
-    elif powerflow.method == "fDECOUP":
+    elif powerflow.sim == "fDECOUP":
         file.write("desacoplado rápido")
     # Chamada específica método Continuado
-    elif powerflow.method == "EXIC":
+    elif powerflow.sim == "EXIC":
         file.write("do fluxo de potência continuado")
     file.write("\n\n")
     file.write("opções de monitoramento ativadas: ")
@@ -141,7 +138,6 @@ def monitorpflow(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write(
         "vv monitoramento de fluxo de potência ativa em linhas de transmissão vv"
@@ -250,7 +246,6 @@ def monitorpgmon(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv monitoramento de potência ativa gerada vv")
     file.write("\n\n")
@@ -279,7 +274,6 @@ def monitorqgmon(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv monitoramento de potência reativa gerada vv")
     file.write("\n\n")
@@ -330,7 +324,6 @@ def monitorvmon(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv monitoramento de magnitude de tensão de barramentos vv")
     file.write("\n\n")

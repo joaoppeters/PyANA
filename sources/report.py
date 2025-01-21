@@ -26,7 +26,6 @@ def report(
     Args
         powerflow:
     """
-
     ## Inicialização
     if powerflow.report:
         print("\033[96mOpcoes de relatorio escolhidas: ", end="")
@@ -64,7 +63,7 @@ def reportfile(
         powerflow,
     )
 
-    if powerflow.method != "EXPC":
+    if powerflow.sim != "EXPC":
         # Relatorio de Convergencia
         RCONV(
             file,
@@ -112,7 +111,7 @@ def reportfile(
                 )
 
     # relatorio de fluxo de potencia continuado
-    if powerflow.method == "EXIC":
+    if powerflow.sim == "EXIC":
         RXIC(
             file,
             powerflow,
@@ -134,7 +133,6 @@ def rheader(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write(
         "{} {}, {}".format(
@@ -148,25 +146,25 @@ def rheader(
     file.write("\n\n")
     file.write("solucao do fluxo de potencia via metodo ")
     # Chamada específica metodo de Newton-Raphson Nao-Linear
-    if powerflow.method == "EXLF":
+    if powerflow.sim == "EXLF":
         file.write("newton-raphson")
     # Chamada específica metodo de Gauss-Seidel
-    elif powerflow.method == "GAUSS":
+    elif powerflow.sim == "GAUSS":
         file.write("gauss-seidel")
     # Chamada específica metodo de Newton-Raphson Linearizado
-    elif powerflow.method == "LINEAR":
+    elif powerflow.sim == "LINEAR":
         file.write("linearizado")
     # Chamada específica metodo Desacoplado
-    elif powerflow.method == "DECOUP":
+    elif powerflow.sim == "DECOUP":
         file.write("desacoplado")
     # Chamada específica metodo Desacoplado Rapido
-    elif powerflow.method == "fDECOUP":
+    elif powerflow.sim == "fDECOUP":
         file.write("desacoplado rapido")
     # Chamada específica metodo Continuado
-    elif powerflow.method == "EXIC":
+    elif powerflow.sim == "EXIC":
         file.write("do fluxo de potencia continuado")
     # Chamada específica metodo direto (Canizares, 1993)
-    elif powerflow.method == "EXPC":
+    elif powerflow.sim == "EXPC":
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")
@@ -192,10 +190,9 @@ def RCONV(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv relatorio de convergencia vv")
-    if powerflow.method != "LINEAR":
+    if powerflow.sim != "LINEAR":
         file.write("\n\n")
         file.write(
             "       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |"
@@ -206,14 +203,14 @@ def RCONV(
         )
         file.write("\n")
         file.write("-" * 71)
-        if powerflow.method != "EXIC":
+        if powerflow.sim != "EXIC":
             for i in range(0, powerflow.solution["iter"]):
                 file.write("\n")
                 file.write(
                     f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i]:^6.3f} | {powerflow.solution['convP'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busP'][i]]:^5d} | {powerflow.solution['convQ'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busQ'][i]]:^5d} | {powerflow.solution['convY'][i]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busY'][i]]:^5d} |"
                 )
 
-        elif powerflow.method == "EXIC":
+        elif powerflow.sim == "EXIC":
             for i in range(0, powerflow.operationpoint[0]["iter"]):
                 file.write("\n")
                 file.write(
@@ -222,7 +219,7 @@ def RCONV(
 
         file.write("\n")
         file.write("-" * 71)
-    if powerflow.method == "LINEAR":
+    if powerflow.sim == "LINEAR":
         i = powerflow.solution["iter"] - 2
     file.write("\n\n")
     file.write(" * * * * " + powerflow.solution["convergence"] + " * * * * ")
@@ -237,14 +234,14 @@ def RCONV(
     file.write("\n")
     file.write("-" * 71)
     file.write("\n")
-    if (powerflow.method != "EXIC") and (
+    if (powerflow.sim != "EXIC") and (
         powerflow.solution["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
             f"| {(i+1):^4d} | {powerflow.solution['freqiter'][i+1]:^6.3f} | {powerflow.solution['convP'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busP'][i+1]]:^5d} | {powerflow.solution['convQ'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busQ'][i+1]]:^5d} | {powerflow.solution['convY'][i+1]*powerflow.options['BASE']:^7.3f} | {powerflow.dbarDF['numero'][powerflow.solution['busY'][i+1]]:^5d} |"
         )
 
-    elif (powerflow.method == "EXIC") and (
+    elif (powerflow.sim == "EXIC") and (
         powerflow.operationpoint[0]["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
@@ -265,7 +262,6 @@ def RBAR(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Loop por area
     for area in powerflow.dbarDF["area"].unique():
@@ -295,12 +291,12 @@ def RBAR(
                     file.write("-" * 106)
 
                 file.write("\n")
-                if powerflow.method != "EXIC":
+                if powerflow.sim != "EXIC":
                     file.write(
                         f"| {powerflow.dbarDF['numero'][i]:^3d} | {powerflow.dbarDF['nome'][i]:^12} | {powerflow.dbarDF['tipo'][i]:^3} |  {powerflow.solution['voltage'][i]:^8.3f} | {degrees(powerflow.solution['theta'][i]):^+8.2f} | {powerflow.solution['active'][i]:^8.3f} | {powerflow.solution['reactive'][i]:^8.3f} | {powerflow.dbarDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarDF['shunt_barra'][i]:^8.3f} |"
                     )
 
-                elif powerflow.method == "EXIC":
+                elif powerflow.sim == "EXIC":
                     file.write(
                         f"| {powerflow.dbarDF['numero'][i]:^3d} | {powerflow.dbarDF['nome'][i]:^12} | {powerflow.dbarDF['tipo'][i]:^3} |  {powerflow.operationpoint[0]['voltage'][i]:^8.3f} | {degrees(powerflow.operationpoint[0]['theta'][i]):^+8.2f} | {powerflow.operationpoint[0]['active'][i]:^8.3f} | {powerflow.operationpoint[0]['reactive'][i]:^8.3f} | {powerflow.dbarDF['demanda_ativa'][i]:^8.3f} | {powerflow.dbarDF['demanda_reativa'][i]:^8.3f} | {(powerflow.solution['voltage'][i]**2)*powerflow.dbarDF['shunt_barra'][i]:^8.3f} |"
                     )
@@ -319,7 +315,6 @@ def RLIN(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv relatorio de linhas vv")
     file.write("\n\n")
@@ -346,12 +341,12 @@ def RLIN(
             file.write("-" * 102)
 
         file.write("\n")
-        if powerflow.method != "EXIC":
+        if powerflow.sim != "EXIC":
             file.write(
                 f"| {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['de'][i]][0]]:^12} | {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['para'][i]][0]]:^12} | {powerflow.solution['active_flow_F2'][i]:^+10.3f} | {powerflow.solution['reactive_flow_F2'][i]:^+10.3f} | {powerflow.solution['active_flow_2F'][i]:^+10.3f} | {powerflow.solution['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
             )
 
-        elif powerflow.method == "EXIC":
+        elif powerflow.sim == "EXIC":
             file.write(
                 f"| {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['de'][i]][0]]:^12} | {powerflow.dbarDF['nome'][powerflow.dbarDF.index[powerflow.dbarDF['numero'] == powerflow.dlinDF['para'][i]][0]]:^12} | {powerflow.operationpoint[0]['active_flow_F2'][i]:^+10.3f} | {powerflow.operationpoint[0]['reactive_flow_F2'][i]:^+10.3f} | {powerflow.operationpoint[0]['active_flow_2F'][i]:^+10.3f} | {powerflow.operationpoint[0]['reactive_flow_2F'][i]:^+10.3f} | {powerflow.solution['active_flow_loss'][i]:^7.3f} | {powerflow.solution['reactive_flow_loss'][i]:^6.3f} |"
             )
@@ -364,29 +359,29 @@ def RLIN(
     file.write("\n")
     file.write("|       MW |       MW |       MW |       MW | ")
     file.write("\n")
-    if powerflow.method != "LINEAR":
+    if powerflow.sim != "LINEAR":
         file.write("|     MVAr |     MVAr |     MVAr |     MVAr |")
         file.write("\n")
     file.write("-" * 45)
     file.write("\n")
-    if powerflow.method != "EXIC":
+    if powerflow.sim != "EXIC":
         file.write(
             f"| {sum(powerflow.solution['active']):^+8.3f} | {sum(powerflow.dbarDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
         )
 
-    elif powerflow.method == "EXIC":
+    elif powerflow.sim == "EXIC":
         file.write(
             f"| {sum(powerflow.operationpoint[0]['active']):^+8.3f} | {sum(powerflow.dbarDF['demanda_ativa']):^+8.3f} |    0.0   | {sum(powerflow.solution['active_flow_loss']):^8.3f} |"
         )
 
     file.write("\n")
-    if powerflow.method != "LINEAR":
-        if powerflow.method != "EXIC":
+    if powerflow.sim != "LINEAR":
+        if powerflow.sim != "EXIC":
             file.write(
                 f"| {sum(powerflow.solution['reactive']):^+8.3f} | {sum(powerflow.dbarDF['demanda_reativa']):^+8.3f} | {sum((powerflow.solution['voltage']**2)*powerflow.dbarDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['reactive_flow_loss']):^8.3f} |"
             )
 
-        elif powerflow.method == "EXIC":
+        elif powerflow.sim == "EXIC":
             file.write(
                 f"| {sum(powerflow.operationpoint[0]['reactive']):^+8.3f} | {sum(powerflow.dbarDF['demanda_reativa']):^+8.3f} | {sum((powerflow.operationpoint[0]['voltage']**2)*powerflow.dbarDF['shunt_barra'].values.T):^8.3f} | {sum(powerflow.solution['arective_flow_loss']):^8.3f} |"
             )
@@ -406,7 +401,6 @@ def RGER(
     Args
         powerflow:
     """
-
     ## Inicialização
     pass
 
@@ -420,7 +414,6 @@ def RSVC(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv relatorio de compensadores estaticos de potencia reativa vv")
     file.write("\n\n")
@@ -541,7 +534,6 @@ def RXIC(
     Args
         powerflow:
     """
-
     ## Inicialização
     var = False
     file.write("vv relatorio de execucao do fluxo de potencia continuado vv")
@@ -643,7 +635,6 @@ def tobecontinued(
     Args
         powerflow:
     """
-
     ## Inicialização
     var = False
 
@@ -1191,7 +1182,6 @@ def RPoC(
     Args
         powerflow:
     """
-
     ## Inicialização
     file.write("vv relatorio de convergencia vv")
     file.write("\n\n")

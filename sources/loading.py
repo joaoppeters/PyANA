@@ -20,7 +20,6 @@ def loading(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Criação automática de diretório
     continuationfolder(
@@ -49,7 +48,6 @@ def var(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.pqtv = {}
@@ -302,7 +300,6 @@ def pqvt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Geração de Gráfico
     color = 0
@@ -410,7 +407,6 @@ def ruthe(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     rows = list(powerflow.operationpoint.keys())[-1]

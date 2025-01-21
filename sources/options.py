@@ -18,7 +18,6 @@ def options(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Configuração de variáveis para processos de convergência de fluxos de potência tradicionais
     powerflow.stdcte = {

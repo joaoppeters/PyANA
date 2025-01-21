@@ -21,7 +21,6 @@ def linear(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento de solução
     powerflow.controlcount = 0
@@ -92,7 +91,6 @@ def convergence(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Trajetória de convergência da frequência
     powerflow.solution["freq"] = append(powerflow.solution["freq"], 0.0)

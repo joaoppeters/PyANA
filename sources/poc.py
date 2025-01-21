@@ -26,7 +26,6 @@ def poc(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento de solução
     powerflow.solution.update(
@@ -134,7 +133,6 @@ def expansion(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.dtf = vstack(
         (powerflow.solution["demanda_ativa"], powerflow.solution["demanda_reativa"])

@@ -24,7 +24,6 @@ def pcalc(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-
     ## Inicialização
     # Variável de potência ativa calculada para o barramento para `idx`
     p = powerflow.gdiag[idx] * powerflow.solution["voltage"][idx]
@@ -80,7 +79,6 @@ def qcalc(
         q: float
             potência reativa calculada para o barramenpara `idx`
     """
-
     ## Inicialização
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]
@@ -136,7 +134,6 @@ def pcalct(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-
     ## Inicialização
     # Variável de potência ativa calculada para o barramento para `idx`
     p = powerflow.gdiag[idx] * powerflow.solution["voltage"][idx]
@@ -192,7 +189,6 @@ def pcalcv(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-
     ## Inicialização
     # Variável de potência ativa calculada para o barramento para `idx`
     p = powerflow.gdiag[idx]
@@ -246,7 +242,6 @@ def qcalct(
         q: float
             potência reativa calculada para o barramenpara `idx`
     """
-
     ## Inicialização
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -powerflow.bdiag[idx] * powerflow.solution["voltage"][idx]

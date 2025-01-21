@@ -17,7 +17,6 @@ def postflow(
     Args
         powerflow:
     """
-
     ## Inicialização
     Ya = zeros([powerflow.nger, powerflow.nger], dtype=complex)
     Yb = zeros([powerflow.nger, powerflow.nbus], dtype=complex)
@@ -69,7 +68,6 @@ def md01(
         gen: indice do gerador
         dmdg: informacoes obtidas do dmdgDF
     """
-
     ## Inicialização
     powerflow.generator[gen].append("MD01")
     powerflow.generator[gen].append(

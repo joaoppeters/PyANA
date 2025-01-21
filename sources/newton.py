@@ -29,7 +29,6 @@ def newton(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento de solução
     powerflow.solution = {

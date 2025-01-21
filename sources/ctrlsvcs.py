@@ -24,7 +24,6 @@ def svcssol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     if "svc_generation" not in powerflow.solution:
@@ -103,7 +102,6 @@ def alphavar(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.alphaxc = (powerflow.options["BASE"]) / (
         powerflow.dcerDF["potencia_reativa_maxima"][0]
@@ -171,7 +169,6 @@ def svcres(
         powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     # Vetor de resíduos
     powerflow.deltaSVC = zeros([powerflow.ncer])
@@ -251,7 +248,6 @@ def svcsubjac(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -396,7 +392,6 @@ def svcupdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Contador
     ncer = 0
@@ -432,7 +427,6 @@ def svcsch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Atualização da potência reativa especificada
     ncer = 0
@@ -467,7 +461,6 @@ def svccorr(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Variável
     powerflow.solution["svc_generation"] = deepcopy(
@@ -483,7 +476,6 @@ def svcheur(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
@@ -505,7 +497,6 @@ def svccpf(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.solution["svc_generation"] = deepcopy(
         powerflow.solution["svc_generation"]
@@ -522,7 +513,6 @@ def svcsolcpf(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Condição
     precase = case - 1
@@ -545,7 +535,6 @@ def svcsubhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -566,7 +555,6 @@ def svcsubjacsym(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:

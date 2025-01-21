@@ -40,7 +40,6 @@ def dynamic(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável para armazenamento de solução
     powerflow.solution.update(
@@ -173,7 +172,6 @@ def timenewt(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.solution["iter"] = 0
     powerflow.deltagen = zeros((2 * (2 * powerflow.nger + powerflow.nbus)))
@@ -245,7 +243,6 @@ def timeplot(
         powerflow:
         y:
     """
-
     ## Inicialização
     # savetxt(powerflow.maindir + "\\sistemas\\" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
 

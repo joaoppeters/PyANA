@@ -25,7 +25,6 @@ def control(
     Args
         powerflow:
     """
-
     ## Inicialização
     if powerflow.control:
         powerflow.maskctrlcount = 0
@@ -52,7 +51,6 @@ def controlsol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     if not hasattr(powerflow, "ctrlcount"):
@@ -142,7 +140,6 @@ def controlsch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -199,7 +196,6 @@ def controlres(
         case: caso analisado do fluxo de potência continuado (prev + corr)
             valor padrão igual a zero -> Newton-Raphson
     """
-
     ## Inicialização
     # Variável
     powerflow.deltaY = array([])
@@ -262,7 +258,6 @@ def controljac(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.truedim = deepcopy(powerflow.jacobian.shape[0])
@@ -332,7 +327,6 @@ def controlupdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -388,7 +382,6 @@ def controlcorrsol(
         powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -447,7 +440,6 @@ def controlheuristics(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.controlheur = False
@@ -512,7 +504,6 @@ def controlpop(
         powerflow:
         pop: quantidade de ações necessárias
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -556,7 +547,6 @@ def controlcpf(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -604,7 +594,6 @@ def controlsolcpf(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:
@@ -654,7 +643,6 @@ def controldelta(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     boollist = list()
@@ -734,7 +722,6 @@ def controlhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Loop
     for value in powerflow.control:

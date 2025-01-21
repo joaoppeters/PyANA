@@ -24,7 +24,6 @@ def setting(
     Args
         powerflow: powerflow do arquivo powerflow.py
     """
-
     ## Inicialização
     if powerflow.system:
         # Verificação de diretório
@@ -70,7 +69,6 @@ def pathpwf(
     Args
         powerflow: powerflow do arquivo powerflow.py
     """
-
     ## Inicialização
     powerflow.anarede = powerflow.system
 
@@ -108,7 +106,6 @@ def pathstb(
     Args
         powerflow: powerflow do arquivo powerflow.py
     """
-
     ## Inicialização
     powerflow.anatem = powerflow.name + ".stb"
     if exists(powerflow.maindir + "\\sistemas\\" + powerflow.anatem) is True:

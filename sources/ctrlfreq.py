@@ -21,7 +21,6 @@ def freqsol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.nare = 1
@@ -68,7 +67,6 @@ def freqgerlim(
     Args
         powerflow: self do arquivo powerflowl.py
     """
-
     ## Inicialização
     # Variáveis
     powerflow.freqger = {
@@ -113,7 +111,6 @@ def freqsch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis adicionais
     powerflow.pqsch["potencia_ativa_gerada_especificada"] = zeros(powerflow.nger)
@@ -160,7 +157,6 @@ def freqres(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Vetor de resíduos
     powerflow.deltaPger = zeros([powerflow.nger])
@@ -238,7 +234,6 @@ def freqsubjac(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -490,7 +485,6 @@ def frequpdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Atualização da potência ativa gerada
     powerflow.solution["active_generation"] += powerflow.statevar[
@@ -532,7 +526,6 @@ def freqcorr(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.solution["freq"] = deepcopy(powerflow.operationpoint[case]["p"]["freq"])
@@ -552,7 +545,6 @@ def freqsubhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -575,6 +567,5 @@ def freqsubjacsym(
     Args
         powerflow:
     """
-
     ## Inicialização
     pass

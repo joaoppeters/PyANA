@@ -20,7 +20,6 @@ def qlimssol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     if "qlim_reactive_generation" not in powerflow.solution:
@@ -66,7 +65,6 @@ def qlimsres(
         powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     # Vetor de resíduos
     powerflow.deltaQLIM = zeros([powerflow.nger])
@@ -99,7 +97,6 @@ def qlimssubjac(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -214,7 +211,6 @@ def qlimsupdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.dimpreqlim = powerflow.jacobian.shape[0] - powerflow.controldim
 
@@ -247,7 +243,6 @@ def qlimssch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.qsch = zeros([powerflow.nbus])
@@ -268,7 +263,6 @@ def qlimscorr(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Variável
     powerflow.solution["qlim_reactive_generation"] = deepcopy(
@@ -284,7 +278,6 @@ def qlimsheur(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
     # powerflow.dbarDF['potencia_reativa_maxima'].to_numpy()
@@ -334,7 +327,6 @@ def qlimspop(
         powerflow:
         pop: quantidade de ações necessárias
     """
-
     ## Inicialização
     qlimspop(
         powerflow,
@@ -350,7 +342,6 @@ def qlimscpf(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.solution["qlim_reactive_generation"] = deepcopy(
         powerflow.solution["qlim_reactive_generation"]
@@ -367,7 +358,6 @@ def qlimssolcpf(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Condição
     precase = case - 1
@@ -390,7 +380,6 @@ def qlimssubhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     # hessiana - LEMBRANDO QUE A MATRIZ HESSIANA É CONSTRUÍDA COM A *TRANSPOSTA* DA JACOBIANA
     #

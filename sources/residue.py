@@ -23,7 +23,6 @@ def residue(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Vetores de resíduo
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
@@ -105,7 +104,6 @@ def md01residue(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.deltagen[2 * gen] = (
         powerflow.solution["delta"][gen]
@@ -153,7 +151,6 @@ def resexsi(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Vetores de resíduo
     ev0 = concatenate(

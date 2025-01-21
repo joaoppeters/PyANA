@@ -25,7 +25,6 @@ def qlims(
     Args:
         powerflow:
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -122,7 +121,7 @@ def qlims(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
+    if powerflow.sim == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -143,7 +142,6 @@ def qlimssmooth(
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
         powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
@@ -217,7 +215,6 @@ def qlimnsmooth(
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
         powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
@@ -298,7 +295,6 @@ def svcsQ(
     Args:
         powerflow:
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -404,7 +400,6 @@ def svcsQsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
         powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
@@ -475,7 +470,6 @@ def svcsI(
     Args:
         powerflow:
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -572,7 +566,7 @@ def svcsI(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
+    if powerflow.sim == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -596,7 +590,6 @@ def svcsIsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -713,7 +706,6 @@ def svcsA(
     Args:
         powerflow:
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -810,7 +802,7 @@ def svcsA(
         powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
+    if powerflow.sim == "EXPC":
         powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
         powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
         powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
@@ -834,7 +826,6 @@ def svcsAsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     seterr(all="ignore")
 
@@ -1017,7 +1008,6 @@ def qlimspop(
         powerflow:
         pop: quantidade de ações necessárias
     """
-
     ## Inicialização
     for _, value in powerflow.dbarDF.iterrows():
         popped = 0
@@ -1035,7 +1025,6 @@ def qlimstorage(
     Args:
         powerflow:
     """
-
     ## Inicialização
     # Criação automática de diretório
     smoothfolder(
@@ -1043,7 +1032,7 @@ def qlimstorage(
     )
 
     # Condição de método
-    if powerflow.method == "EXIC":
+    if powerflow.sim == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
         for key, value in powerflow.operationpoint.items():
             if key == 0:
@@ -1339,7 +1328,6 @@ def svcstorage(
     Args:
         powerflow:
     """
-
     ## Inicialização
     # Criação automática de diretório
     smoothfolder(
@@ -1347,7 +1335,7 @@ def svcstorage(
     )
 
     # Condição de método
-    if powerflow.method == "EXIC":
+    if powerflow.sim == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
         for key, value in powerflow.operationpoint.items():
             if key == 0:

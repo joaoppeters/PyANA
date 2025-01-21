@@ -21,7 +21,6 @@ def qlimnsol(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variáveis
     if "qlim_reactive_generation" not in powerflow.solution:
@@ -40,7 +39,6 @@ def qlimnres(
         powerflow:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-
     ## Inicialização
     # Vetor de resíduos
     powerflow.deltaQLIM = zeros([powerflow.nger])
@@ -73,7 +71,6 @@ def qlimnsubjac(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # jacobiana:
@@ -161,7 +158,6 @@ def qlimnupdt(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Contador
     nger = 0
@@ -190,7 +186,6 @@ def qlimnsch(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     powerflow.qsch = zeros([powerflow.nbus])
@@ -211,7 +206,6 @@ def qlimncorr(
         powerflow:
         case: etapa do fluxo de potência continuado analisada
     """
-
     ## Inicialização
     # Variável
     powerflow.solution["qlim_reactive_generation"] = deepcopy(
@@ -227,7 +221,6 @@ def qlimnheur(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
     # powerflow.dbarDF['potencia_reativa_maxima'].to_numpy()
@@ -277,7 +270,6 @@ def qlimnpop(
         powerflow:
         pop: quantidade de ações necessárias
     """
-
     ## Inicialização
     qlimspop(
         powerflow,
@@ -293,7 +285,6 @@ def qlimnsubhess(
     Args
         powerflow:
     """
-
     ## Inicialização
     #
     # hessiana:
@@ -314,7 +305,6 @@ def qlimnsubjacsym(
     Args
         powerflow:
     """
-
     ## Inicialização
 
     pass

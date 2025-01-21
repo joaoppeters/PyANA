@@ -499,7 +499,6 @@ def uxictail(
         var:
         start:
     """
-
     ## Inicialização
     file.write("( ")
     file.write("\n")
@@ -563,7 +562,7 @@ def uxictail(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXIC BPSI RBAR RINT RTOT")
+    file.write("EXIC BPSI RTOT")
 
     file.write("\n")
     file.write("( ")

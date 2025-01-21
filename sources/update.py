@@ -22,7 +22,6 @@ def updtstt(
     Args
         powerflow:
     """
-
     ## Inicialização
     if stage == None:
         powerflow.statevar = powerflow.statevar.reshape(
@@ -131,7 +130,6 @@ def updtpwr(
     Args
         powerflow:
     """
-
     ## Inicialização
     V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
     I = powerflow.Yb @ V
@@ -154,7 +152,6 @@ def updtlinear(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Atualização dos ângulos dos barramentos
     powerflow.solution["theta"] = deepcopy(powerflow.statevar)
@@ -168,7 +165,6 @@ def updttm(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Atualização das variaveis dinamicas tempo
     powerflow.solution["delta"] += powerflow.timestatevar[0 : 2 * powerflow.nger : 2]

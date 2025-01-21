@@ -62,7 +62,6 @@ def devt(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.devt["tipo"] = list()
     powerflow.devt["tempo"] = list()
@@ -166,7 +165,6 @@ def dsim(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.dsim["tmax"] = list()
     powerflow.dsim["step"] = list()
@@ -340,7 +338,6 @@ def blt(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.linecount = 0
     f = open(f"{arquivo}", "r", encoding="latin-1")
@@ -373,7 +370,6 @@ def md01(
     Args
         powerflow:
     """
-
     ## Inicialização
     powerflow.dmdg["tipo"] = list()
     powerflow.dmdg["numero"] = list()
@@ -449,7 +445,6 @@ def checktem(
     Args
         powerflow:
     """
-
     ## Inicialização
     pasta = dirname(powerflow.dirSTB)
     arquivo = arquivo[1:].strip().replace("\\", "/")

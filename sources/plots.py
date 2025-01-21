@@ -21,7 +21,6 @@ def convergence(
         powerflow:
         setting: self do arquivo setting.py
     """
-
     ## Inicialização
     # Criação de pasta
     convergencefolder(
@@ -54,7 +53,6 @@ def convP(
     Args
         powerflow:
     """
-
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
@@ -130,7 +128,6 @@ def convQ(
     Args
         powerflow:
     """
-
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
@@ -206,7 +203,6 @@ def convY(
     Args
         powerflow:
     """
-
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
@@ -283,7 +279,6 @@ def statevar(
         powerflow:
         setting: self do arquivo setting.py
     """
-
     ## Inicialização
     # Criação de pasta
     statevarfolder(
@@ -312,7 +307,6 @@ def stateVT(
     Args
         powerflow:
     """
-
     ## Inicialização
     fig, ax = plt.subplots(
         nrows=1, ncols=1, subplot_kw={"projection": "polar"}, figsize=(8, 9)
@@ -430,6 +424,5 @@ def stateY(
     Args
         powerflow:
     """
-
     ## Inicialização
     pass

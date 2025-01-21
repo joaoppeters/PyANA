@@ -18,7 +18,6 @@ def increment(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Variável
     preincrement = sum(powerflow.dbarDF["demanda_ativa"].to_numpy())

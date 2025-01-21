@@ -18,7 +18,6 @@ def convergence(
     Args
         powerflow:
     """
-
     ## Inicialização
     # Trajetória de convergência da frequência
     powerflow.solution["freqiter"] = append(

@@ -24,7 +24,6 @@ def eigensens(
         powerflow:
         stage: string de identificação da etapa do fluxo de potência continuado
     """
-
     ## Inicialização
     # Reorganização da Matriz Jacobiana Expandida
     jacobian = deepcopy(powerflow.jacobian)
