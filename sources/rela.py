@@ -52,7 +52,7 @@ def rrel(
         " X----X------------X---X--------X--------X--------X-------------X---------X\n"
     )
 
-    folder = powerflow.maindir + "\\sistemas/2Q2024_C6EOL_EXIC_std10\\"
+    folder = powerflow.maindir + "\\sistemas\\2Q2024_C6EOL_EXIC_std10\\"
 
     rel_files = glob(join(folder, "EXIC*"))
     idx = 0
@@ -135,7 +135,7 @@ print()
 def rxlf(
     folder,
     relfiles,
-    balancefile,
+    file,
     string=r"MOD(\d+)\.REL"
 ):
     """
@@ -143,7 +143,7 @@ def rxlf(
     Args:
         folder:
         relfiles:
-        balancefile:
+        file:
         string:
     """
 
@@ -171,22 +171,63 @@ def rxlf(
                 linecount = rtot(
                     rflines=rflines,
                     linecount=linecount,
-                    balancefile=balancefile,
+                    file=file,
                     rfilecount=re.search(string, relfile).group(1),
                 )
             linecount += 1
 
 
 def rxic(
-    powerflow,
+    folder,
+    relfiles,
+    vsmfile,
+    string=r"C(\d+)\_(\d+)\.REL"
 ):
     """
 
     Args:
-        powerflow:
+        folder:
+        relfiles:
+        vsmfile:
     """
+
+    from os.path import dirname
+    import re 
+
     ## Inicialização
-    pass
+    initstring = " RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO\n"
+    rxicstring = " Atingido incremento minimo\n"
+    
+    base = None
+    surface = list()
+    for relfile in relfiles:
+        with open(dirname(folder) + "\\" + relfile, 'r') as rf:
+            lines = rf.readlines()
+
+            for line_number, line in enumerate(lines):
+                if not base and initstring in line:
+                    base = line_number + 10
+                if rxicstring in line:
+                    break
+
+            for ln in range(line_number-1, -1, -1):
+                try:
+                    if lines[ln].split()[1] == "Convergente":
+                        with open(vsmfile, "a") as vf:
+                            vf.write(
+                                "{};{};{};{};{}\n".format(
+                                    re.search(string, relfile).group(2),
+                                    lines[base].split()[6],
+                                    lines[base + 1].split()[4],
+                                    lines[ln].split()[6],
+                                    lines[ln + 1].split()[4],
+                                )
+                            )
+                        break
+                except:
+                    pass
+            surface.extend([1, 1, float(lines[ln].split()[6])/float(lines[base].split()[6]), float(lines[ln + 1].split()[4])/float(lines[base + 1].split()[4])])
+    return surface
 
 
 def rxct(
@@ -226,7 +267,7 @@ def rint(powerflow, rflines, linecount):
 def rtot(
     rflines,
     linecount,
-    balancefile,
+    file,
     rfilecount,
 ):
     """
@@ -240,8 +281,8 @@ def rtot(
 
         try:
             if rflines[linecount].split()[0] == "TOTAL":
-                with open(balancefile.name, "a") as bf:
-                    bf.write(
+                with open(file.name, "a") as af:
+                    af.write(
                         "{};{};{};{};{}\n".format(
                             rfilecount,
                             rflines[linecount].split()[1],
@@ -289,7 +330,7 @@ def q2024(
     rxlf(
         folder=folder_path,
         relfiles=relfiles,
-        balancefile=file,
+        file=file,
         string=r"C(\d+)\.REL"
     )
 
@@ -313,4 +354,58 @@ def q2024(
         
 
     get_mean_stddev(filename=folder_path + powerflow.sim + ".txt")
+
+
+
+def vsm(
+    powerflow,
+):
+    """
+
+    Args:
+        powerflow (_type_): _description_
+    """
+
+    from matplotlib.pyplot import figure, legend, plot, savefig, scatter, show, title, xlabel, ylabel
+    from os import listdir
+    from os.path import dirname
+
+    from folder import vsmfolder
+
+    ## Inicialização
+    vsmfolder(
+        powerflow,
+    )
+    sxic = dirname(powerflow.vsmfolder)
+    relfiles = [
+        f
+        for f in listdir(sxic)
+        if f.startswith("SXIC_" + powerflow.name + "_") and f.endswith(".REL")
+    ]
+
+    vsmfile = powerflow.vsmfolder + "\\VSM_" + powerflow.name + ".txt"
+    with open(vsmfile, "w") as vf:
+        vf.write("CASO;dATIVA;dREATIVA;dATIVA_VSM;dREATIVA_VSM\n")
+
+    surface = rxic(
+        folder=powerflow.vsmfolder,
+        relfiles=relfiles,
+        vsmfile=vsmfile,
+    )
+
+    figure(1, figsize=(10, 6))
+    scatter(surface[0], surface[1], marker="*", color="black", label="Base Case Load")
+    for s in range(0, 9):
+        scatter(surface[4*s + 2], surface[4*s + 3], marker="o", color="blue", label=f"Increment #{s+1}")
+    plot((surface[0], surface[2]), (surface[1], surface[3]), linestyle="--", color="blue",)
+    plot((surface[0], surface[-2]), (surface[1], surface[-1]), linestyle="--", color="blue",)
+    xlabel("Active Power Load")
+    ylabel("Reactive Power Load")
+    title("Bifurcation Surface")
+    legend()
+    savefig(
+        powerflow.vsmfolder + "\\VSM_" + powerflow.name + ".pdf",
+        dpi=500,
+    )
+    
 

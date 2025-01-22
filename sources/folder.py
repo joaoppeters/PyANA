@@ -201,7 +201,7 @@ def sxlffolder(
     if exists(sxlf) is False:
         mkdir(sxlf)
 
-    if geolstd > 0:
+    if geolstd > 0 and loadstd > 0:
         powerflow.sxlf = (
             sxlf
             + "EXLF_"
@@ -211,7 +211,7 @@ def sxlffolder(
                 geolstd,
             )
         )
-    else:
+    elif loadstd > 0:
         powerflow.sxlf = (
             sxlf
             + "EXLF_"
@@ -237,8 +237,8 @@ def sxicfolder(
         geolstd:
     """
     ## Inicialização
-    powerflow.sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.sxlf) is False:
+    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(sxlf) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
@@ -247,7 +247,7 @@ def sxicfolder(
     if exists(sxic) is False:
         mkdir(sxic)
 
-    if geolstd > 0:
+    if geolstd > 0 and loadstd > 0:
         powerflow.sxic = (
             sxic
             + "\\EXIC_"
@@ -257,7 +257,7 @@ def sxicfolder(
                 geolstd,
             )
         )
-    else:
+    elif loadstd > 0:
         powerflow.sxic = (
             sxic
             + "\\EXIC_"
@@ -283,8 +283,8 @@ def sxctfolder(
         geolstd:
     """
     ## Inicialização
-    powerflow.sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.sxlf) is False:
+    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(sxlf) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
@@ -293,7 +293,7 @@ def sxctfolder(
     if exists(sxct) is False:
         mkdir(sxct)
 
-    if geolstd > 0:
+    if geolstd > 0 and loadstd > 0:
         powerflow.sxct = (
             sxct
             + "\\EXCT_"
@@ -303,7 +303,7 @@ def sxctfolder(
                 geolstd,
             )
         )
-    else:
+    elif loadstd > 0:
         powerflow.sxct = (
             sxct
             + "\\EXCT_"
@@ -329,8 +329,8 @@ def spvctfolder(
         geolstd:
     """
     ## Inicialização
-    powerflow.sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.sxlf) is False:
+    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(sxlf) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
@@ -378,3 +378,27 @@ def statevarfolder(
     powerflow.statevarfolder = powerflow.statevarfolder + powerflow.name + "\\"
     if exists(powerflow.statevarfolder) is False:
         mkdir(powerflow.statevarfolder)
+
+
+def vsmfolder(
+    powerflow,
+):
+    """criação de diretório para armazenar resultados de análise de sensibilidade de tensão
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(sxlf) is False:
+        raise ValueError(
+            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+        )
+
+    sxic = dirname(powerflow.dirPWF) + "\\EXIC"
+    if exists(sxic) is False:
+        mkdir(sxic)
+
+    powerflow.vsmfolder = sxic + "\\VSM"
+    if exists(powerflow.vsmfolder) is False:
+        mkdir(powerflow.vsmfolder)

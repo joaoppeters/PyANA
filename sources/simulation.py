@@ -226,9 +226,9 @@ def simulation(
             time=300,
         )
 
-        stochsxic(
-            powerflow,
-        )
+        # stochsxic(
+        #     powerflow,
+        # )
 
     # Chamada especifica para analise de contingencia em arquivos com dados estocasticos
     elif powerflow.sim == "SXCT":
@@ -314,5 +314,12 @@ def simulation(
         from rela import q2024
 
         q2024(
+            powerflow,
+        )
+
+    elif powerflow.sim == "VSM":
+        from rela import vsm
+
+        vsm(
             powerflow,
         )

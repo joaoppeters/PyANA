@@ -80,6 +80,8 @@ def get_mean_stddev(
 
     print(mean, std_dev/mean*100)
 
+    return mean, std_dev
+
     # import numpy as np
     # import matplotlib.pyplot as plt
     # from scipy.stats import norm

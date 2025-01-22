@@ -189,8 +189,8 @@ Thumbs.db
 *.bkp
 *.stb
 *.cdu
-# *.blt
-# *.dat
+*.blt
+*.dat
 *.log
 *.tex
 *.REL
@@ -245,5 +245,24 @@ sistemas/SAGE/*
 *.blt
 *.cdu
 */BDADOS/*/*
+
+*/2Areas
+*/2Areas/*
+*/AU14GenModel_SmallSignal_TimeResponse_Results_PacDyn_Anarede_files
+*/AU14GenModel_SmallSignal_TimeResponse_Results_PacDyn_Anarede_files/*
+*/Australian_Reduced_Model _14_generator_system_ANATEM_ANAREDE_files
+*/Australian_Reduced_Model _14_generator_system_ANATEM_ANAREDE_files/*
+*/Brazilian_7_bus_Equivalent_Model_PacDyn_Files
+*/Brazilian_7_bus_Equivalent_Model_PacDyn_Files/*
+*/EXIC/VSM/
+*/EXIC/VSM/*
+*/NETS_NYPS_(68_bus_system)_ANAREDE_PacDyn_ANATEM_files
+*/NETS_NYPS_(68_bus_system)_ANAREDE_PacDyn_ANATEM_files/*
+*/New_England_ANAREDE_PacDyn_ANATEM
+*/New_England_ANAREDE_PacDyn_ANATEM/*
+*/ThreeMIB_Benchmark_System_PacDyn_ANATEM_base_files
+*/ThreeMIB_Benchmark_System_PacDyn_ANATEM_base_files/*
+*/ThreeMIB_Benchmark_System_PacDyn_cases
+*/ThreeMIB_Benchmark_System_PacDyn_cases/*
 
 todo.txt
