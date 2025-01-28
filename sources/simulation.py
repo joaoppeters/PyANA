@@ -323,3 +323,25 @@ def simulation(
         vsm(
             powerflow,
         )
+
+    elif powerflow.sim == "CXLF":
+        from cluster import cxlf
+
+        cxlf(
+            powerflow,
+        )
+
+    elif powerflow.sim == "CXIC":
+        from cluster import cxic
+
+        cxic(
+            powerflow,
+        )
+
+    elif powerflow.sim == "CXCT":
+        from cluster import cxct
+
+        cxct(
+            powerflow,
+        )
+        

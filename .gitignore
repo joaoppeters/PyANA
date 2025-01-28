@@ -224,11 +224,14 @@ sistemas/ULOG*
 *balances.py
 *stats.py
 *sats.py
+*test.py
 
 *BALANCE.txt
 
 sistemas/SAGE/
 sistemas/SAGE/*
+sistemas/EXLF/BALANCE/
+sistemas/EXLF/BALANCE/*
 
 !2b-milano.pwf
 !2b-teste.pwf
@@ -246,6 +249,7 @@ sistemas/SAGE/*
 *.cdu
 */BDADOS/*/*
 
+*/OUTROS/*
 */2Areas
 */2Areas/*
 */AU14GenModel_SmallSignal_TimeResponse_Results_PacDyn_Anarede_files

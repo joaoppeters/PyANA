@@ -33,8 +33,12 @@ sim = "SXIC"  # CONTINUATION POWER FLOW (ANAREDE BATCH RUNNING OF STOCHASTIC CAS
 # sim = "RREL"
 # sim = "RINT"
 # sim = "RPVCT"
-# sim = "Q2024"
-sim = "VSM"
+sim = "Q2024"
+# sim = "VSM"
+sim = "CXLF"
+# sim = "CXIC"
+# sim = "CXCT"
+
 
 control = [
     # "CREM",
