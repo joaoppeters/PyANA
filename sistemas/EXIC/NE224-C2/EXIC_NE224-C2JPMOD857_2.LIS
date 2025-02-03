@@ -1,0 +1,164 @@
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  13
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: CREM CTAP STEP BPSI NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO CTAF CTAF
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+     0 Convergente    1    0.000    0.000    0.000 15771.90 MW      0.7000
+                      1    0.000    0.000    0.000  -594.67 Mvar    1.0000
+     1 Convergente    2    0.700    0.700    0.700 15882.30 MW      0.7000
+                      2    1.000    1.000    1.000  -600.62 Mvar    1.0000
+     2 Convergente    2    1.400    1.400    1.400 15992.70 MW      0.7000
+                      2    2.000    2.000    2.000  -606.57 Mvar    1.0000
+     3 Convergente    2    2.100    2.100    2.100 16103.11 MW      0.7000
+                      2    3.000    3.000    3.000  -612.51 Mvar    1.0000
+     4 Convergente    2    2.800    2.800    2.800 16213.51 MW      0.7000
+                      2    4.000    4.000    4.000  -618.46 Mvar    1.0000
+     5 Convergente    2    3.500    3.500    3.500 16323.91 MW      0.7000
+                      2    5.000    5.000    5.000  -624.41 Mvar    1.0000
+     6 Convergente    2    4.200    4.200    4.200 16434.32 MW      0.7000
+                      2    6.000    6.000    6.000  -630.35 Mvar    1.0000
+     7 Convergente    2    4.900    4.900    4.900 16544.72 MW      0.7000
+                      2    7.000    7.000    7.000  -636.30 Mvar    1.0000
+     8 Convergente    2    5.600    5.600    5.600 16655.12 MW      0.7000
+                      2    8.000    8.000    8.000  -642.25 Mvar    1.0000
+     9 Convergente    2    6.300    6.300    6.300 16765.53 MW      0.7000
+                      2    9.000    9.000    9.000  -648.19 Mvar    1.0000
+    10 Convergente    2    7.000    7.000    7.000 16875.93 MW      0.7000
+                      2   10.000   10.000   10.000  -654.14 Mvar    1.0000
+    11 Convergente    2    7.700    7.700    7.700 16986.33 MW      0.7000
+                      2   11.000   11.000   11.000  -660.09 Mvar    1.0000
+    12 Convergente    2    8.400    8.400    8.400 17096.74 MW      0.7000
+                      2   12.000   12.000   12.000  -666.03 Mvar    1.0000
+    13 Convergente    2    9.100    9.100    9.100 17207.14 MW      0.7000
+                      2   13.000   13.000   13.000  -671.98 Mvar    1.0000
+    14 Convergente    2    9.800    9.800    9.800 17317.54 MW      0.7000
+                      2   14.000   14.000   14.000  -677.93 Mvar    1.0000
+    15 Convergente    2   10.500   10.500   10.500 17427.95 MW      0.7000
+                      2   15.000   15.000   15.000  -683.88 Mvar    1.0000
+    16 Convergente    2   11.200   11.200   11.200 17538.35 MW      0.7000
+                      2   16.000   16.000   16.000  -689.82 Mvar    1.0000
+    17 Convergente    3   11.900   11.900   11.900 17648.75 MW      0.7000
+                      3   17.000   17.000   17.000  -695.77 Mvar    1.0000
+    18 Convergente    2   12.600   12.600   12.600 17759.16 MW      0.7000
+                      2   18.000   18.000   18.000  -701.72 Mvar    1.0000
+    19 Convergente    2   13.300   13.300   13.300 17869.56 MW      0.7000
+                      2   19.000   19.000   19.000  -707.66 Mvar    1.0000
+    20 Convergente    2   14.000   14.000   14.000 17979.96 MW      0.7000
+                      2   20.000   20.000   20.000  -713.61 Mvar    1.0000
+    21 Convergente    2   14.700   14.700   14.700 18090.37 MW      0.7000
+                      2   21.000   21.000   21.000  -719.56 Mvar    1.0000
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  14
+
+    15.4000                                                                      
+ RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO
+
+ Opcoes Ativadas: CREM CTAP STEP BPSI NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO CTAF CTAF
+
+ X----X----------------X--------------------------X-------------X---------X
+                            AUMENTO DA CARGA                               
+  NUM.   CONVERGENCIA        ATIVA E REATIVA (%)   CARGA DA AREA PASSO MAX 
+          STATUS    P/Q  MAXIMO    AREA    SISTEMA   MW / Mvar    P/Q (%)  
+ X----X------------X---X--------X--------X--------X-------------X---------X
+
+    22 Convergente    2   15.400   15.400   15.400 18200.77 MW      0.7000
+                      2   22.000   22.000   22.000  -725.50 Mvar    1.0000
+    23 Convergente    2   16.100   16.100   16.100 18311.17 MW      0.7000
+                      2   23.000   23.000   23.000  -731.45 Mvar    1.0000
+    24 Convergente    2   16.800   16.800   16.800 18421.58 MW      0.7000
+                      2   24.000   24.000   24.000  -737.40 Mvar    1.0000
+    25 Convergente    2   17.500   17.500   17.500 18531.98 MW      0.7000
+                      2   25.000   25.000   25.000  -743.34 Mvar    1.0000
+    26 Convergente    2   18.200   18.200   18.200 18642.38 MW      0.7000
+                      2   26.000   26.000   26.000  -749.29 Mvar    1.0000
+    27 Convergente    2   18.900   18.900   18.900 18752.79 MW      0.7000
+                      2   27.000   27.000   27.000  -755.24 Mvar    1.0000
+    28 Convergente    2   19.600   19.600   19.600 18863.19 MW      0.7000
+                      2   28.000   28.000   28.000  -761.18 Mvar    1.0000
+    29 Convergente    2   20.300   20.300   20.300 18973.59 MW      0.7000
+                      2   29.000   29.000   29.000  -767.13 Mvar    1.0000
+    30 Convergente    2   21.000   21.000   21.000 19084.00 MW      0.7000
+                      2   30.000   30.000   30.000  -773.08 Mvar    1.0000
+ 
+ Numero maximo de iteracoes atingido
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  15
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE TOTAIS DE AREA
+
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+  AREA  GERACAO  INJ EQV   CARGA   ELO CC    SHUNT   EXPORT   IMPORT   PERDAS
+  NUM.    MW/      MW/      MW/      MW/     Mvar/     MW/      MW/      MW/
+         Mvar     Mvar     Mvar     Mvar     EQUIV    Mvar     Mvar     Mvar
+ X----X--------X--------X--------X--------X--------X--------X--------X--------X
+
+   200  19854.5      0.0  19084.0      0.0   2749.5      0.0      0.0    770.5
+        -4289.2      0.0   -773.1      0.0      0.0      0.0      0.0   -766.7
+
+ TOTAL  19854.5      0.0  19084.0      0.0   2749.5      0.0      0.0    770.5
+        -4289.2      0.0   -773.1      0.0      0.0      0.0      0.0   -766.7
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  16
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ Listagem dos casos armazenados de Fluxo de Potencia - ANAREDE
+ Arquivo Historico: C:\USERS\JOAOPEDROPETERSBARBO\DROPBOX\GITPYANA\PYANA\SISTEMAS\EXIC\NE224-C2\EXLF
+ X----X-------------------------------------------------------------------------------------X
+  CASO                      INFORMACOES DO CASO GRAVADO
+ X----X-------------------------------------------------------------------------------------X
+
+     1 DATA: 06/01/2025 / HORA: 19:44:31   / VERSAO DO PROGRAMA: V11.07.02             
+ --------------------------------------------------------------------------------
+                                   Comentarios                                   
+ --------------------------------------------------------------------------------
+     (-------------------------------- Comentarios ------------------------------
+ ---)                                                                            
+ SISTEMA NE REDUZIDO                                                             
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  17
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE PADRAO PARA OPCOES DE EXECUCAO
+
+ X------X------X------X------X------X------X------X------X------X------X
+  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO  OPCAO
+  NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E NOME E
+ X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X----X-X
+
+  CREM L CTAP L STEP L NEWT L RCVG L RMON L FILE L SUBS L CONT L NOVO L
+  CELO L MFCT L ATCR L INDC L AREG L STPO L VLCR L CPHS L
+
+
+ *** AVISO ***: Nao foram encontradas inconsistencias no arquivo historico e ele sera restabelecido normalmente.
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  18
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+ RELATORIO DE CONVERGENCIA
+
+ OPCOES ATIVADAS: CREM CTAP STEP BPSI NEWT RCVG RMON FILE CONT CELO ATCR INDC STPO VLCR CPHS
+
+
+
+
+
+ CONVERGENCIA FINAL
+
+ X-----------X------X------X---------------X---------------X---------------X
+    ITERACAO          FREQ. ERRO MAX BARRA  ERRO MAX BARRA  ERRO MAX  CONV  
+  FC  P  Q  V  M.O.   (Hz)      MW    NUM.     Mvar   NUM.  TENSAO %  NUM.  
+ X--X--X--X--X------X------X---------X-----X---------X-----X---------X-----X
+
+   0                             0.00     0      0.00     0
+      0  0  0 1.0000 60.000      0.00   587      0.00   500     0.000     0
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02                                 PAG.  19
+
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+
+ --- CASO ANAREDE 03 GRAVADO. ---
+ **EPE DECENAL 2032** PESADA ** ANO 2026 ** NORTE SECO                           
+

@@ -18,7 +18,7 @@ def basexlf(
 
     from os.path import realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from sav import savmove
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
@@ -96,7 +96,7 @@ def basexlf(
         base=True,
     )
 
-    batchrunning(
+    anarede(
         file=filedir,
         time=2,
     )
@@ -122,7 +122,7 @@ def basexic(
 
     from os.path import realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from rwpwf import wdcte
     from sav import exlf2new
     from uwrite import (
@@ -202,7 +202,7 @@ def basexic(
     file.write("FIM")
     file.close()
 
-    batchrunning(
+    anarede(
         file=filedir,
         time=time,
     )
@@ -316,7 +316,7 @@ def usxic(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from rwpwf import wdcte
     from sav import exlf2new
     from uwrite import uheader, uarq, sdinc, uxictail
@@ -385,7 +385,7 @@ def usxic(
         file.write("FIM")
         file.close()
 
-        batchrunning(
+        anarede(
             file=filedir,
             time=time,
         )
@@ -412,7 +412,7 @@ def usxct(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from sav import exlf2new
     from uwrite import uheader, uarq, udctg
 
@@ -514,7 +514,7 @@ def usxct(
         file.write("FIM")
         file.close()
 
-        batchrunning(
+        anarede(
             file=filedir,
             time=35,
         )
@@ -540,7 +540,7 @@ def uspvct(
     from os import remove
     from os.path import exists, realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from sav import exlf2new
     from uwrite import uheader, uarq, sdinc, udctg
 
@@ -663,7 +663,7 @@ def uspvct(
         file.write("FIM")
         file.close()
 
-        batchrunning(
+        anarede(
             file=filedir,
             time=300,
         )

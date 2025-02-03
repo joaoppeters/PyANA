@@ -19,7 +19,7 @@ def stochsxlf(
     from os import listdir, remove
     from os.path import dirname, exists, isfile, join, realpath
 
-    from anarede import batchrunning
+    from anarede import anarede
     from factor import load_participation, loadf, windf
     from folder import sxlffolder
     from stochastic import loadn, windn
@@ -28,8 +28,10 @@ def stochsxlf(
     from ulog import usxlf
 
     ## Inicialização
-    powerflow.nsamples = 1000
-    for stddev in range(1, 11, 1):
+    powerflow.nsamples = 200
+    for stddev in range(1, 2, 1):
+        loadstd = 9
+        geolstd = 15
         sxlffolder(
             powerflow,
             loadstd=stddev,
@@ -86,7 +88,7 @@ def stochsxlf(
                 powerflow,
             )
 
-            batchrunning(file=powerflow.filedir, time=2)
+            anarede(file=powerflow.filedir, time=2)
 
             exlfpwf = realpath(
                 powerflow.sxlf
@@ -112,7 +114,9 @@ def stochsxlf(
             if not exists(exlfrel):
                 remove(savfile)
 
-    for stddev in range(1, 11, 1):
+    for stddev in range(1, 2, 1):
+        loadstd = 9
+        geolstd = 15
         sxlffolder(
             powerflow,
             loadstd=stddev,
@@ -177,7 +181,7 @@ def stochsxic(
     from os.path import exists, isfile, join
 
     from areas import ne224, q2024
-    from anarede import batchrunning
+    from anarede import anarede
     from folder import areasfolder, sxicfolder
     from rela import rxic
     from ulog import usxlf, usxic

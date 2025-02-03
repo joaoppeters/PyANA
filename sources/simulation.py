@@ -115,27 +115,27 @@ def simulation(
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.sim == "BXLF":
-        from anarede import batchrunning
+        from anarede import anarede
 
-        batchrunning(
+        anarede(
             file=powerflow.dirPWF,
             time=2,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.sim == "BXIC":
-        from anarede import batchrunning
+        from anarede import anarede
 
-        batchrunning(
+        anarede(
             file=powerflow.dirPWF,
             time=60,
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.sim == "BXCT":
-        from anarede import batchrunning
+        from anarede import anarede
 
-        batchrunning(
+        anarede(
             file=powerflow.dirPWF,
             time=20,
         )
@@ -181,6 +181,8 @@ def simulation(
         basexlf(
             powerflow,
         )
+
+        # powerflow.namecase = powerflow.name
 
         # stochsxlf(
         #     powerflow,

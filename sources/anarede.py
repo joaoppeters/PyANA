@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 
-def batchrunning(
+def anarede(
     file,
     time,
 ):

@@ -139,6 +139,8 @@ def generator_participation(
             ] - (mdger.fator_participacao.sum() - 100)
 
         mdger = mdger.fillna(0)
+        if "NE224" in name:
+            mdger["operacao"] = "A"
 
     else:
         raise ValueError(

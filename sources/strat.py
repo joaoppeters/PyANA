@@ -8,7 +8,6 @@
 
 
 def strat(
-    powerflow,
 ):
     """
     
@@ -20,9 +19,9 @@ def strat(
 
     # Criando um DataFrame fictício
     data = {
-        "ID": range(1, 101),
-        "Idade": np.random.randint(18, 70, size=100),
-        "Renda": np.random.randint(2000, 10000, size=100)
+        "ID": range(1, 10001),
+        "Idade": np.random.randint(18, 70, size=10000),
+        "Renda": np.random.randint(2000, 10000, size=10000)
     }
     df = pd.DataFrame(data)
     print(df.head())
@@ -103,3 +102,5 @@ def get_mean_stddev(
     # plt.legend()
 
     # plt.show()
+
+strat()
