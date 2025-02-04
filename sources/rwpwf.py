@@ -21,7 +21,10 @@ def rwpwf(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.sxlf + "\\" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+        powerflow.sxlffolder
+        + "\\"
+        + powerflow.namecase
+        + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao

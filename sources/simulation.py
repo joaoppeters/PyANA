@@ -115,35 +115,7 @@ def simulation(
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.sim == "BXLF":
-        from anarede import anarede
-
-        anarede(
-            file=powerflow.dirPWF,
-            time=2,
-        )
-
-    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.sim == "BXIC":
-        from anarede import anarede
-
-        anarede(
-            file=powerflow.dirPWF,
-            time=60,
-        )
-
-    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.sim == "BXCT":
-        from anarede import anarede
-
-        anarede(
-            file=powerflow.dirPWF,
-            time=20,
-        )
-
-    # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.sim == "SXLF":
         from areas import q2024, ne224
-        from batch import stochsxlf
         from factor import generator_participation
         from folder import areasfolder
         from setting import pathstb
@@ -157,8 +129,6 @@ def simulation(
         stb(
             powerflow,
         )
-
-        powerflow.namecase = powerflow.name + "jpmod"
 
         areasfolder(
             powerflow,
@@ -182,16 +152,9 @@ def simulation(
             powerflow,
         )
 
-        # powerflow.namecase = powerflow.name
-
-        # stochsxlf(
-        #     powerflow,
-        # )
-
-    # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
-    elif powerflow.sim == "SXIC":
+    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
+    elif powerflow.sim == "BXIC":
         from areas import q2024, ne224
-        from batch import stochsxic
         from factor import generator_participation
         from folder import areasfolder
         from strat import strat
@@ -228,23 +191,46 @@ def simulation(
             time=300,
         )
 
-        # stochsxic(
-        #     powerflow,
-        # )
+    # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
+    elif powerflow.sim == "BXCT":
+        from anarede import anarede
+
+        anarede(
+            file=powerflow.dirPWF,
+            time=20,
+        )
+
+    # Chamada especifica geracao estocastica inicial de valores
+    elif powerflow.sim == "SXLF":
+        from stochastic import sxlf
+
+        powerflow.namecase = powerflow.name + "jpmod"
+
+        sxlf(
+            powerflow,
+        )
+
+    # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
+    elif powerflow.sim == "SXIC":
+        from stochastic import sxic
+
+        sxic(
+            powerflow,
+        )
 
     # Chamada especifica para analise de contingencia em arquivos com dados estocasticos
     elif powerflow.sim == "SXCT":
-        from batch import stochsxct
+        from stochastic import sxct
 
-        stochsxct(
+        sxct(
             powerflow,
         )
 
     # Chamada especifica para analise de fluxo de potência continuado e contingencia em arquivos com dados estocasticos
     elif powerflow.sim == "SPVCT":
-        from batch import stochspvct
+        from stochastic import spvct
 
-        stochspvct(
+        spvct(
             powerflow,
         )
 
@@ -256,11 +242,19 @@ def simulation(
             powerflow,
         )
 
-    # Chamada específica para leitura de arquivos .REL
-    elif powerflow.sim == "RREL":
-        from rela import rrel
+    # Chamada específica para leitura de arquivos .REL (RELATORIO TOTAL DE AREA)
+    elif powerflow.sim == "RTOT":
+        from rela import rtot
 
-        rrel(
+        rtot(
+            powerflow,
+        )
+
+    # Chamada específica para leitura de arquivos .REL (RELATORIO DE INTERCAMBIOS)
+    elif powerflow.sim == "RINT":
+        from rela import rint
+
+        rint(
             powerflow,
         )
 
@@ -346,4 +340,3 @@ def simulation(
         cxct(
             powerflow,
         )
-        

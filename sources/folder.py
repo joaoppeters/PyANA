@@ -159,6 +159,42 @@ def reportsfolder(
         mkdir(powerflow.reportsfolder)
 
 
+def rintfolder(
+    powerflow,
+):
+    """
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
+        mkdir(powerflow.exlffolder)
+
+    powerflow.rintfolder = dirname(powerflow.dirPWF) + "\\RINT\\"
+    if exists(powerflow.rintfolder) is False:
+        mkdir(powerflow.rintfolder)
+
+
+def rtotfolder(
+    powerflow,
+):
+    """
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
+        mkdir(powerflow.exlffolder)
+
+    powerflow.rtotfolder = dirname(powerflow.dirPWF) + "\\RTOT\\"
+    if exists(powerflow.rtotfolder) is False:
+        mkdir(powerflow.rtotfolder)
+
+
 def smoothfolder(
     powerflow,
 ):
@@ -197,13 +233,13 @@ def sxlffolder(
         geolstd:
     """
     ## Inicialização
-    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(sxlf) is False:
-        mkdir(sxlf)
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
+        mkdir(powerflow.exlffolder)
 
     if geolstd > 0 and loadstd > 0:
-        powerflow.sxlf = (
-            sxlf
+        powerflow.sxlffolder = (
+            powerflow.exlffolder
             + "EXLF_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
@@ -212,16 +248,16 @@ def sxlffolder(
             )
         )
     elif loadstd > 0:
-        powerflow.sxlf = (
-            sxlf
+        powerflow.sxlffolder = (
+            powerflow.exlffolder
             + "EXLF_"
             + powerflow.name
             + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.sxlf) is False:
-        mkdir(powerflow.sxlf)
+    if exists(powerflow.sxlffolder) is False:
+        mkdir(powerflow.sxlffolder)
 
 
 def sxicfolder(
@@ -237,19 +273,19 @@ def sxicfolder(
         geolstd:
     """
     ## Inicialização
-    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(sxlf) is False:
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    sxic = dirname(powerflow.dirPWF) + "\\EXIC\\"
-    if exists(sxic) is False:
-        mkdir(sxic)
+    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
+    if exists(powerflow.exicfolder) is False:
+        mkdir(powerflow.exicfolder)
 
     if geolstd > 0 and loadstd > 0:
         powerflow.sxic = (
-            sxic
+            powerflow.exicfolder
             + "\\EXIC_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
@@ -259,7 +295,7 @@ def sxicfolder(
         )
     elif loadstd > 0:
         powerflow.sxic = (
-            sxic
+            powerflow.exicfolder
             + "\\EXIC_"
             + powerflow.name
             + "_loadstd{}".format(
@@ -283,19 +319,19 @@ def sxctfolder(
         geolstd:
     """
     ## Inicialização
-    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(sxlf) is False:
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    sxct = dirname(powerflow.dirPWF) + "\\EXCT\\"
-    if exists(sxct) is False:
-        mkdir(sxct)
+    powerflow.exctfolder = dirname(powerflow.dirPWF) + "\\EXCT\\"
+    if exists(powerflow.exctfolder) is False:
+        mkdir(powerflow.exctfolder)
 
     if geolstd > 0 and loadstd > 0:
         powerflow.sxct = (
-            sxct
+            powerflow.exctfolder
             + "\\EXCT_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
@@ -305,7 +341,7 @@ def sxctfolder(
         )
     elif loadstd > 0:
         powerflow.sxct = (
-            sxct
+            powerflow.exctfolder
             + "\\EXCT_"
             + powerflow.name
             + "_loadstd{}".format(
@@ -329,19 +365,19 @@ def spvctfolder(
         geolstd:
     """
     ## Inicialização
-    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(sxlf) is False:
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    pvct = dirname(powerflow.dirPWF) + "\\PVCT\\"
-    if exists(pvct) is False:
-        mkdir(pvct)
+    powerflow.pvctfolder = dirname(powerflow.dirPWF) + "\\PVCT\\"
+    if exists(powerflow.pvctfolder) is False:
+        mkdir(powerflow.pvctfolder)
 
     if geolstd > 0:
         powerflow.spvct = (
-            pvct
+            powerflow.pvctfolder
             + "\\PVCT_"
             + powerflow.name
             + "_loadstd{}_geolstd{}".format(
@@ -351,7 +387,7 @@ def spvctfolder(
         )
     else:
         powerflow.spvct = (
-            pvct
+            powerflow.pvctfolder
             + "\\PVCT_"
             + powerflow.name
             + "_loadstd{}".format(
@@ -389,16 +425,16 @@ def vsmfolder(
         powerflow:
     """
     ## Inicialização
-    sxlf = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(sxlf) is False:
+    exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    sxic = dirname(powerflow.dirPWF) + "\\EXIC"
-    if exists(sxic) is False:
-        mkdir(sxic)
+    exicfolder = dirname(powerflow.dirPWF) + "\\EXIC"
+    if exists(exicfolder) is False:
+        mkdir(exicfolder)
 
-    powerflow.vsmfolder = sxic + "\\VSM"
+    powerflow.vsmfolder = exicfolder + "\\VSM"
     if exists(powerflow.vsmfolder) is False:
         mkdir(powerflow.vsmfolder)

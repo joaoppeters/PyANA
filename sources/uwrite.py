@@ -436,7 +436,7 @@ def uxlftail(
     file.write("2")
     file.write("\n")
     if base:
-        file.write("SXLF_" + powerflow.name + ".SAV")
+        file.write("EXLF_" + powerflow.name + ".SAV")
     else:
         file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV")
 
@@ -466,9 +466,9 @@ def uxlftail(
     file.write("4")
     file.write("\n")
     if base:
-        file.write("SXLF_" + powerflow.name + ".REL")
+        file.write("EXLF_" + powerflow.name + ".REL")
     else:
-        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".LIS")
+        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL")
 
     file.write("\n")
     file.write("( ")
@@ -489,7 +489,6 @@ def uxictail(
     filename,
     var,
     start,
-    base=False,
 ):
     """
 
@@ -515,10 +514,7 @@ def uxictail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    if base:
-        file.write("SXIC_" + filename + ".SAV")
-    else:
-        file.write("EXIC_" + filename + ".SAV")
+    file.write("EXIC_" + filename + ".SAV")
 
     file.write("\n")
     file.write("(")
@@ -553,10 +549,7 @@ def uxictail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    if base:
-        file.write("SXIC_" + filename + "_{}.REL".format(var - (start - 1)))
-    else:
-        file.write("EXIC_" + filename + "_{}.LIS".format(var - (start - 1)))
+    file.write("EXIC_" + filename + "_{}.REL".format(var - (start - 1)))
 
     file.write("\n")
     file.write("( ")

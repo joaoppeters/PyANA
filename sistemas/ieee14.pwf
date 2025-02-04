@@ -73,7 +73,7 @@ DGER
 99999
 DMET
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
-AREA     1
+AREA     1                                          
 99999
 DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
@@ -102,4 +102,6 @@ AREA     1                                            1.   1.   99999 99999
 (
 (EXLF
 
+exlf
+exic
 FIM

@@ -64,7 +64,6 @@
 # plt.show()
 
 
-
 # import pandas as pd
 # import numpy as np
 # import matplotlib.pyplot as plt
@@ -128,7 +127,7 @@
 # import seaborn as sns
 
 # # Load the dataset
-# data = os.getcwd() + "\\sistemas\\EXLF\\BALANCE\\EXLF_2Q2024_R2_C1_loadstd10_geolstd10.txt"
+# data = os.getcwd() + "\\sistemas\\EXLF\\RTOT\\EXLF_2Q2024_R2_C1_loadstd10_geolstd10.txt"
 
 # # Replace with your full dataset
 # df = pd.read_csv(data, sep=";", header=0)
@@ -182,7 +181,7 @@ def cxlf(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow (_type_): Description
     """
@@ -213,21 +212,28 @@ def cxlf(
                 linecount += 1
                 try:
                     if rflines[linecount].split()[0] == "TOTAL":
-                        basecase = [float(rflines[linecount].split()[1]), float(rflines[linecount + 1].split()[0]), float(rflines[linecount].split()[3]), float(rflines[linecount + 1].split()[2])]
+                        basecase = [
+                            float(rflines[linecount].split()[1]),
+                            float(rflines[linecount + 1].split()[0]),
+                            float(rflines[linecount].split()[3]),
+                            float(rflines[linecount + 1].split()[2]),
+                        ]
                         flag = False
                         break
                 except:
                     pass
 
-    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\BALANCE\\"
+    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
     files = [
         f
         for f in listdir(folder_path)
-        if f.startswith("EXLF_" + powerflow.name + "_")
-        and f.endswith(".txt")
+        if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
-    data = pd.concat([pd.read_csv(folder_path + file, delimiter=";", header=0) for file in files], ignore_index=True)
+    data = pd.concat(
+        [pd.read_csv(folder_path + file, delimiter=";", header=0) for file in files],
+        ignore_index=True,
+    )
     data["x"] = data["pATIVA"] - data["dATIVA"]
     data["y"] = data["pREATIVA"] - data["dREATIVA"]
 
@@ -243,8 +249,15 @@ def cxlf(
 
     # ====== 1. PLOTAR PONTOS ORIGINAIS ======
     plt.figure(figsize=(6, 5))
-    plt.scatter(basecase[0]-basecase[2], basecase[1]-basecase[3], marker="d", color="black", s=35, zorder=2)
-    plt.scatter(df['x'], df['y'], s=50, color='gray', alpha=0.7)
+    plt.scatter(
+        basecase[0] - basecase[2],
+        basecase[1] - basecase[3],
+        marker="d",
+        color="black",
+        s=35,
+        zorder=2,
+    )
+    plt.scatter(df["x"], df["y"], s=50, color="gray", alpha=0.7)
     plt.title("Pontos Originais (Antes do Clustering)")
     plt.xlabel("ΔP (MW)")
     plt.ylabel("ΔQ (MVAr)")
@@ -259,84 +272,89 @@ def cxlf(
     # ====== 2. DEFINIR O NÚMERO ÓTIMO DE CLUSTERS PARA K-MEANS ======
     fig, ax = plt.subplots(figsize=(6, 4))
     kmeans_model = KMeans(random_state=42)
-    visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric='distortion', ax=ax)
+    visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric="distortion", ax=ax)
     visualizer.fit(X)
 
     # Número ótimo de clusters
     optimal_k = visualizer.elbow_value_
 
     # ====== 3. K-MEANS ======
-    kmeans = KMeans(n_clusters=5, random_state=42)
-    df_clusters['KMeans'] = kmeans.fit_predict(X)
+    for nclstr in range(2, 10):
+        kmeans = KMeans(n_clusters=nclstr, random_state=42)
+        df_clusters["KMeans"] = kmeans.fit_predict(X)
 
-    # # ====== 4. DBSCAN (automático, baseado na densidade) ======
-    # dbscan = DBSCAN(eps=0.5, min_samples=5)
-    # df_clusters['DBSCAN'] = dbscan.fit_predict(X)
+        # # ====== 4. DBSCAN (automático, baseado na densidade) ======
+        # dbscan = DBSCAN(eps=0.5, min_samples=5)
+        # df_clusters['DBSCAN'] = dbscan.fit_predict(X)
 
-    # # ====== 5. HIERARCHICAL CLUSTERING ======
-    # linked = linkage(X, method='ward')
+        # # ====== 5. HIERARCHICAL CLUSTERING ======
+        # linked = linkage(X, method='ward')
 
-    # # Determinar o número ideal de clusters pela Silhueta
-    # best_k_hierarchical = max(range(2, 10), key=lambda k: silhouette_score(X, fcluster(linked, k, criterion='maxclust')))
-    # df_clusters['Hierarchical'] = fcluster(linked, best_k_hierarchical, criterion='maxclust')
+        # # Determinar o número ideal de clusters pela Silhueta
+        # best_k_hierarchical = max(range(2, 10), key=lambda k: silhouette_score(X, fcluster(linked, k, criterion='maxclust')))
+        # df_clusters['Hierarchical'] = fcluster(linked, best_k_hierarchical, criterion='maxclust')
 
-    # # Plotando o dendrograma
-    # plt.figure(figsize=(8, 5))
-    # dendrogram(linked)
-    # plt.title("Dendrograma - Hierarchical Clustering")
+        # # Plotando o dendrograma
+        # plt.figure(figsize=(8, 5))
+        # dendrogram(linked)
+        # plt.title("Dendrograma - Hierarchical Clustering")
 
-    # # ====== 6. MEAN SHIFT ======
-    # meanshift = MeanShift()
-    # df_clusters['MeanShift'] = meanshift.fit_predict(X)
+        # # ====== 6. MEAN SHIFT ======
+        # meanshift = MeanShift()
+        # df_clusters['MeanShift'] = meanshift.fit_predict(X)
 
-    # # ====== 7. GAUSSIAN MIXTURE MODEL (GMM) ======
-    # # Definir o número ideal de clusters pela Silhueta
-    # best_k_gmm = max(range(2, 10), key=lambda k: silhouette_score(X, GaussianMixture(n_components=k, random_state=42).fit_predict(X)))
-    # gmm = GaussianMixture(n_components=best_k_gmm, random_state=42)
-    # df_clusters['GMM'] = gmm.fit_predict(X)
+        # # ====== 7. GAUSSIAN MIXTURE MODEL (GMM) ======
+        # # Definir o número ideal de clusters pela Silhueta
+        # best_k_gmm = max(range(2, 10), key=lambda k: silhouette_score(X, GaussianMixture(n_components=k, random_state=42).fit_predict(X)))
+        # gmm = GaussianMixture(n_components=best_k_gmm, random_state=42)
+        # df_clusters['GMM'] = gmm.fit_predict(X)
 
-    # # ====== 8. AFFINITY PROPAGATION ======
-    # affinity_propagation = AffinityPropagation(damping=0.7, preference=-150)
-    # df_clusters['AffinityPropagation'] = affinity_propagation.fit_predict(X)
-    # num_clusters_ap = len(np.unique(df_clusters['AffinityPropagation']))  # Número de clusters gerados
+        # # ====== 8. AFFINITY PROPAGATION ======
+        # affinity_propagation = AffinityPropagation(damping=0.7, preference=-150)
+        # df_clusters['AffinityPropagation'] = affinity_propagation.fit_predict(X)
+        # num_clusters_ap = len(np.unique(df_clusters['AffinityPropagation']))  # Número de clusters gerados
 
+        # ====== 8. FUNÇÃO PARA PLOTAR OS CLUSTERS ======
+        def plot_clusters(method, labels):
+            """Gera gráficos de dispersão para visualizar os clusters."""
+            plt.figure(figsize=(6, 5))
+            sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=50)
+            plt.scatter(
+                basecase[0] - basecase[2],
+                basecase[1] - basecase[3],
+                marker="d",
+                color="black",
+                s=35,
+                zorder=2,
+            )
+            plt.title(f"{method} Clustering")
+            plt.xlabel("x")
+            plt.ylabel("y")
+            plt.legend(title="Cluster")
 
-    # ====== 8. FUNÇÃO PARA PLOTAR OS CLUSTERS ======
-    def plot_clusters(method, labels):
-        """Gera gráficos de dispersão para visualizar os clusters."""
-        plt.figure(figsize=(6, 5))
-        sns.scatterplot(x=df['x'], y=df['y'], hue=labels, palette='tab10', s=50)
-        plt.title(f'{method} Clustering')
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.legend(title="Cluster")
-
-    # Criando gráficos para cada método
-    plot_clusters("K-Means", df_clusters['KMeans'])
+        # Criando gráficos para cada método
+        plot_clusters("K-Means", df_clusters["KMeans"])
     # plot_clusters("DBSCAN", df_clusters['DBSCAN'])
     # plot_clusters("Hierarchical", df_clusters['Hierarchical'])
     # plot_clusters("Mean Shift", df_clusters['MeanShift'])
     # plot_clusters("GMM", df_clusters['GMM'])
     # plot_clusters("Affinity Propagation", df_clusters['AffinityPropagation'])
 
-    # Exibir as primeiras linhas do DataFrame com os clusters atribuídos
-    print(df_clusters.head())
     plt.show()
-        
-    
+
 
 def cxic(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow (_type_): Description
     """
 
     import matplotlib.pyplot as plt
     import numpy as np
-    import pandas as pd    
+    import pandas as pd
     from os.path import exists
     from os import listdir, mkdir
     import seaborn as sns
@@ -360,29 +378,54 @@ def cxic(
                 linecount += 1
                 try:
                     if rflines[linecount].split()[0] == "TOTAL":
-                        basecase = [float(rflines[linecount].split()[1]), float(rflines[linecount + 1].split()[0]), float(rflines[linecount].split()[3]), float(rflines[linecount + 1].split()[2])]
+                        basecase = [
+                            float(rflines[linecount].split()[1]),
+                            float(rflines[linecount + 1].split()[0]),
+                            float(rflines[linecount].split()[3]),
+                            float(rflines[linecount + 1].split()[2]),
+                        ]
                         flag = False
                         break
                 except:
                     pass
 
-    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\BALANCE\\"
+    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
     files = [
         f
         for f in listdir(folder_path)
-        if f.startswith("EXLF_" + powerflow.name + "_")
-        and f.endswith(".txt")
+        if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
-    data = pd.concat([pd.read_csv(folder_path + file, delimiter=";", header=0).assign(filename=file) for file in files], ignore_index=True)
+    data = pd.concat(
+        [
+            pd.read_csv(folder_path + file, delimiter=";", header=0).assign(
+                filename=file
+            )
+            for file in files
+        ],
+        ignore_index=True,
+    )
     data["x"] = data["pATIVA"] - data["dATIVA"]
     data["y"] = data["pREATIVA"] - data["dREATIVA"]
-    df = data[["x", "y", "filename",]]
+    df = data[
+        [
+            "x",
+            "y",
+            "filename",
+        ]
+    ]
 
     # ====== 1. PLOTAR PONTOS ORIGINAIS ======
     plt.figure(figsize=(6, 5))
-    plt.scatter(basecase[0]-basecase[2], basecase[1]-basecase[3], marker="d", color="black", s=35, zorder=2)
-    plt.scatter(df['x'], df['y'], s=50, color='gray', alpha=0.7)
+    plt.scatter(
+        basecase[0] - basecase[2],
+        basecase[1] - basecase[3],
+        marker="d",
+        color="black",
+        s=35,
+        zorder=2,
+    )
+    plt.scatter(df["x"], df["y"], s=50, color="gray", alpha=0.7)
     plt.title("Pontos Originais (Antes do Clustering)")
     plt.xlabel("ΔP (MW)")
     plt.ylabel("ΔQ (MVAr)")
@@ -397,7 +440,7 @@ def cxic(
     # Definir o número ótimo de clusters
     fig, ax = plt.subplots(figsize=(6, 4))
     kmeans_model = KMeans(random_state=42)
-    visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric='distortion', ax=ax)
+    visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric="distortion", ax=ax)
     visualizer.fit(X)
     # visualizer.show()
 
@@ -405,8 +448,11 @@ def cxic(
     optimal_k = visualizer.elbow_value_
 
     # Aplicar K-Means
-    pf_kmeans = KMeans(n_clusters=7, random_state=42, metric='euclidean')
-    df_clusters['KMeans'] = pf_kmeans.fit_predict(X)
+    pf_kmeans = KMeans(
+        n_clusters=7,
+        random_state=42,
+    )
+    df_clusters["KMeans"] = pf_kmeans.fit_predict(X)
     pf_centroids = pf_kmeans.cluster_centers_
     for i in range(0, 7):
         print(df_clusters[df_clusters.KMeans == i].shape)
@@ -415,14 +461,14 @@ def cxic(
     def plot_clusters(method, labels):
         """Gera gráficos de dispersão para visualizar os clusters."""
         plt.figure(figsize=(6, 5))
-        sns.scatterplot(x=df['x'], y=df['y'], hue=labels, palette='tab10', s=50)
-        plt.title(f'{method} Clustering')
-        plt.xlabel('x')
-        plt.ylabel('y')
+        sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=50)
+        plt.title(f"{method} Clustering")
+        plt.xlabel("x")
+        plt.ylabel("y")
         plt.legend(title="Cluster")
 
     # Criando gráficos para cada método
-    plot_clusters("K-Means", df_clusters['KMeans'])
+    plot_clusters("K-Means", df_clusters["KMeans"])
     plt.show()
 
     # === 1. DESNORMALIZAR OS CENTRÓIDES ===
@@ -432,7 +478,7 @@ def cxic(
     def find_closest_points(centroids, df):
         closest_points = []
         for centroid in centroids:
-            distances = np.linalg.norm(df[['x', 'y']].values - centroid, axis=1)
+            distances = np.linalg.norm(df[["x", "y"]].values - centroid, axis=1)
             closest_idx = np.argmin(distances)
             closest_points.append(df.iloc[closest_idx])  # Retorna a linha completa
         return pd.DataFrame(closest_points)
@@ -440,17 +486,19 @@ def cxic(
     df_centroids = find_closest_points(centroids_original_scale, df)
 
     # Identificar os pontos correspondentes no dataframe original "data"
-    df_centroids_data = data.merge(df_centroids[['x', 'y', 'filename']], on=['x', 'y', 'filename'], how='inner')
+    df_centroids_data = data.merge(
+        df_centroids[["x", "y", "filename"]], on=["x", "y", "filename"], how="inner"
+    )
     print(df_centroids_data)
 
     for key, value in df_centroids_data.iterrows():
         name = value.filename.removesuffix(".txt")
-        folder = powerflow.maindir + "\\sistemas\\EXLF\\" + name 
+        folder = powerflow.maindir + "\\sistemas\\EXLF\\" + name
         savfile = "EXLF_" + powerflow.name + "JPMOD" + str(value.CASO) + ".SAV"
         powerflow.sxic = powerflow.maindir + "\\sistemas\\EXIC\\" + powerflow.name
         if not exists(powerflow.sxic):
             mkdir(powerflow.sxic)
-        
+
         usxic(
             powerflow,
             folder_path=folder,
@@ -463,12 +511,11 @@ def cxic(
         )
 
 
-
 def cxct(
     powerflow,
 ):
     """
-    
+
     Args:
         powerflow (_type_): Description
     """

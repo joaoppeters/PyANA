@@ -135,10 +135,10 @@ def basexic(
     ## Inicialização
     savfile = "SXLF_" + powerflow.name + ".SAV"
     exlf2new(
-            exlffolder=powerflow.maindir + "\\sistemas\\EXLF\\",	
-            newfolder=powerflow.maindir + "\\sistemas\\EXIC\\",
-            savfile=savfile,
-        )
+        exlffolder=powerflow.maindir + "\\sistemas\\EXLF\\",
+        newfolder=powerflow.maindir + "\\sistemas\\EXIC\\",
+        savfile=savfile,
+    )
 
     # Arquivo
     filedir = realpath(
@@ -196,7 +196,6 @@ def basexic(
             powerflow.name,
             var,
             start=start,
-            base=True,
         )
 
     file.write("FIM")

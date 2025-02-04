@@ -21,7 +21,10 @@ def rwstb(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.sxlf + "\\" + powerflow.namecase + "{}.stb".format(powerflow.ones)
+        powerflow.sxlffolder
+        + "\\"
+        + powerflow.namecase
+        + "{}.stb".format(powerflow.ones)
     )
 
     # Manipulacao

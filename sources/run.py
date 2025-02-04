@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_R2_C1.pwf"
+system = "2Q2024_R2_C11.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE - R1.pwf"
 # system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE.pwf"
 # system = "NE224_CASO1_MA.pwf"
 # system = "NE224-C2.pwf"
 
 sim = "EXLF"  # NEWTON-RAPHSON
-# sim = "EXIC" # CONTINUATION POWER FLOW
+sim = "EXIC"  # CONTINUATION POWER FLOW
 # sim = "EXPC" # POINT OF COLLAPSE
 # sim = "EXSI"  # DYNAMIC SIMULATION
 # sim = "BXLF" # NEWTON-RAPHSON (ANAREDE BATCH RUNNING)
@@ -30,13 +30,14 @@ sim = "SXLF"  # STOCHASTIC (ANAREDE BATCH RUNNING)
 # sim = "DATA" # DATA MANIPULATION
 # sim = "EXCE" # CROSS-ENTROPY
 # sim = "AREA"
-# sim = "RREL"
+# sim = "RTOT"
+# sim = "RINT"
 # sim = "RINT"
 # sim = "RPVCT"
 # sim = "Q2024"
 # sim = "VSM"
-sim = "CXLF"
-sim = "CXIC"
+# sim = "CXLF"
+# sim = "CXIC"
 # sim = "CXCT"
 
 

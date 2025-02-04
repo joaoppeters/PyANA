@@ -129,60 +129,7 @@ def relpvct(
         print(*[f"{k}: {v}" for k, v in load.items()], sep="\n")
 
 
-print()
-
-
-def rxlf(
-    folder,
-    relfiles,
-    file,
-    string=r"MOD(\d+)\.REL"
-):
-    """
-
-    Args:
-        folder:
-        relfiles:
-        file:
-        string:
-    """
-
-    import re
-
-    ## Inicialização
-    rtotstring = " RELATORIO DE TOTAIS DE AREA\n"
-    rintstring = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
-
-    for relfile in relfiles:
-        linecount = 0
-        rf = open(f"{folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
-        rflines = rf.readlines()
-        rf.close()
-
-        while linecount < len(rflines):
-            if rflines[linecount] == rintstring:
-                pass
-                # linecount = rint(
-                #     powerflow,
-                #     rflines,
-                #     linecount,
-                # )
-            elif rflines[linecount] == rtotstring:
-                linecount = rtot(
-                    rflines=rflines,
-                    linecount=linecount,
-                    file=file,
-                    rfilecount=re.search(string, relfile).group(1),
-                )
-            linecount += 1
-
-
-def rxic(
-    folder,
-    relfiles,
-    vsmfile,
-    string=r"C(\d+)\_(\d+)\.REL"
-):
+def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
     """
 
     Args:
@@ -192,16 +139,16 @@ def rxic(
     """
 
     from os.path import dirname
-    import re 
+    import re
 
     ## Inicialização
     initstring = " RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO\n"
     rxicstring = " Atingido incremento minimo\n"
-    
+
     base = None
     surface = list()
     for relfile in relfiles:
-        with open(dirname(folder) + "\\" + relfile, 'r') as rf:
+        with open(dirname(folder) + "\\" + relfile, "r") as rf:
             lines = rf.readlines()
 
             for line_number, line in enumerate(lines):
@@ -210,7 +157,7 @@ def rxic(
                 if rxicstring in line:
                     break
 
-            for ln in range(line_number-1, -1, -1):
+            for ln in range(line_number - 1, -1, -1):
                 try:
                     if lines[ln].split()[1] == "Convergente":
                         with open(vsmfile, "a") as vf:
@@ -226,7 +173,14 @@ def rxic(
                         break
                 except:
                     pass
-            surface.extend([1, 1, float(lines[ln].split()[6])/float(lines[base].split()[6]), float(lines[ln + 1].split()[4])/float(lines[base + 1].split()[4])])
+            surface.extend(
+                [
+                    1,
+                    1,
+                    float(lines[ln].split()[6]) / float(lines[base].split()[6]),
+                    float(lines[ln + 1].split()[4]) / float(lines[base + 1].split()[4]),
+                ]
+            )
     return surface
 
 
@@ -254,107 +208,180 @@ def rpvct(
     pass
 
 
-def rint(powerflow, rflines, linecount):
+def rint(folder, relfiles, file, string=r"MOD(\d+)\.REL"):
     """
 
     Args
         powerflow:
     """
+
+    import re
+
     ## Inicialização
-    return linecount
+    rintstring = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
+
+    for relfile in relfiles:
+        linecount = 0
+        rf = open(f"{folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
+        rflines = rf.readlines()
+        rf.close()
+
+        while linecount < len(rflines):
+            if rflines[linecount] == rintstring:
+                while linecount < len(rflines):
+                    linecount += 1
+
+                    try:
+                        if rflines[linecount].split()[0] == "TOTAL":
+                            with open(file.name, "a") as af:
+                                af.write(
+                                    "{};{};{};{};{}\n".format(
+                                        re.search(string, relfile).group(1),
+                                        rflines[linecount].split()[1],
+                                        rflines[linecount + 1].split()[0],
+                                        rflines[linecount].split()[3],
+                                        rflines[linecount + 1].split()[2],
+                                    )
+                                )
+                            break
+                    except:
+                        pass
 
 
-def rtot(
-    rflines,
-    linecount,
-    file,
-    rfilecount,
-):
+def rtot(powerflow, string=r"MOD(\d+)\.REL"):
     """
 
     Args
-        powerflow:
-    """
-    ## Inicialização
-    while linecount < len(rflines):
-        linecount += 1
-
-        try:
-            if rflines[linecount].split()[0] == "TOTAL":
-                with open(file.name, "a") as af:
-                    af.write(
-                        "{};{};{};{};{}\n".format(
-                            rfilecount,
-                            rflines[linecount].split()[1],
-                            rflines[linecount + 1].split()[0],
-                            rflines[linecount].split()[3],
-                            rflines[linecount + 1].split()[2],
-                        )
-                    )
-                break
-        except:
-            pass
-
-    return linecount
-
-
-
-def q2024(
-    powerflow,
-):
-    """
-
-    Args:
-        powerflow (_type_): _description_
+        folder:
+        relfiles:
+        file:
+        string:
     """
 
     from os import listdir
+    import re
 
-    from strat import get_mean_stddev
+    from folder import rtotfolder
 
     ## Inicialização
-    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\"
-    relfiles = [
-        f
-        for f in listdir(folder_path)
-        if f.startswith("SXLF")
-        and f.endswith(".REL")
-    ]
+    rtotstring = " RELATORIO DE TOTAIS DE AREA\n"
 
-    with open(
-        folder_path + powerflow.sim + ".txt",
-        "w",
-    ) as file:
-        file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
-
-    rxlf(
-        folder=folder_path,
-        relfiles=relfiles,
-        file=file,
-        string=r"C(\d+)\.REL"
+    rtotfolder(
+        powerflow,
     )
 
-    # Open and read the file
-    with open(folder_path + powerflow.sim + ".txt", "r") as f:
-        lines = f.readlines()
+    folders = [
+        f
+        for f in listdir(powerflow.exlffolder)
+        if f.startswith("EXLF_" + powerflow.name + "_")
+    ]
 
-    # Separate the header and data
-    header = lines[0]
-    data = lines[1:]
+    if folders:
+        for folder in folders:
+            with open(
+                folder + ".txt",
+                "w",
+            ) as rtotfile:
+                rtotfile.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
 
-    # Sort the data lines based on the first column (split by `;`)
-    sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
+            relfiles = [
+                f
+                for f in listdir(folder)
+                if f.startswith("EXLF") and f.endswith(".REL")
+            ]
 
-    # Combine the header and sorted data
-    sorted_lines = [header] + sorted_data
+            for relfile in relfiles:
+                linecount = 0
+                rf = open(
+                    f"{folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore"
+                )
+                rflines = rf.readlines()
+                rf.close()
 
-    # Write the sorted lines to a new file
-    with open(folder_path + powerflow.sim + ".txt", "w") as f:
-        f.writelines(sorted_lines)
-        
+                while linecount < len(rflines):
+                    if rflines[linecount] == rtotstring:
+                        while linecount < len(rflines):
+                            linecount += 1
 
-    get_mean_stddev(filename=folder_path + powerflow.sim + ".txt")
+                            try:
+                                if rflines[linecount].split()[0] == "TOTAL":
+                                    with open(rtotfile.name, "a") as af:
+                                        af.write(
+                                            "{};{};{};{};{}\n".format(
+                                                re.search(string, relfile).group(1),
+                                                rflines[linecount].split()[1],
+                                                rflines[linecount + 1].split()[0],
+                                                rflines[linecount].split()[3],
+                                                rflines[linecount + 1].split()[2],
+                                            )
+                                        )
+                                    break
+                            except:
+                                pass
 
+    else:
+        relfiles = [
+            f
+            for f in listdir(powerflow.exlffolder)
+            if f.startswith("EXLF_" + powerflow.name) and f.endswith(".REL")
+        ]
+
+
+# def basecase(
+#     powerflow,
+# ):
+#     """
+
+#     Args:
+#         powerflow (_type_): _description_
+#     """
+
+#     from os import listdir
+
+#     from strat import get_mean_stddev
+
+#     ## Inicialização
+#     folder_path = powerflow.maindir + "\\sistemas\\EXLF\\"
+#     relfiles = [
+#         f
+#         for f in listdir(folder_path)
+#         if f.startswith("SXLF")
+#         and f.endswith(".REL")
+#     ]
+
+#     with open(
+#         folder_path + powerflow.sim + ".txt",
+#         "w",
+#     ) as file:
+#         file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
+
+#     # rxlf(
+#     #     folder=folder_path,
+#     #     relfiles=relfiles,
+#     #     file=file,
+#     #     string=r"C(\d+)\.REL"
+#     # )
+
+#     # Open and read the file
+#     with open(folder_path + powerflow.sim + ".txt", "r") as f:
+#         lines = f.readlines()
+
+#     # Separate the header and data
+#     header = lines[0]
+#     data = lines[1:]
+
+#     # Sort the data lines based on the first column (split by `;`)
+#     sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
+
+#     # Combine the header and sorted data
+#     sorted_lines = [header] + sorted_data
+
+#     # Write the sorted lines to a new file
+#     with open(folder_path + powerflow.sim + ".txt", "w") as f:
+#         f.writelines(sorted_lines)
+
+
+#     get_mean_stddev(filename=folder_path + powerflow.sim + ".txt")
 
 
 def vsm(
@@ -366,7 +393,17 @@ def vsm(
         powerflow (_type_): _description_
     """
 
-    from matplotlib.pyplot import figure, legend, plot, savefig, scatter, show, title, xlabel, ylabel
+    from matplotlib.pyplot import (
+        figure,
+        legend,
+        plot,
+        savefig,
+        scatter,
+        show,
+        title,
+        xlabel,
+        ylabel,
+    )
     from os import listdir
     from os.path import dirname
 
@@ -396,9 +433,25 @@ def vsm(
     figure(1, figsize=(10, 6))
     scatter(surface[0], surface[1], marker="*", color="black", label="Base Case Load")
     for s in range(0, 9):
-        scatter(surface[4*s + 2], surface[4*s + 3], marker="o", color="blue", label=f"Increment #{s+1}")
-    plot((surface[0], surface[2]), (surface[1], surface[3]), linestyle="--", color="blue",)
-    plot((surface[0], surface[-2]), (surface[1], surface[-1]), linestyle="--", color="blue",)
+        scatter(
+            surface[4 * s + 2],
+            surface[4 * s + 3],
+            marker="o",
+            color="blue",
+            label=f"Increment #{s+1}",
+        )
+    plot(
+        (surface[0], surface[2]),
+        (surface[1], surface[3]),
+        linestyle="--",
+        color="blue",
+    )
+    plot(
+        (surface[0], surface[-2]),
+        (surface[1], surface[-1]),
+        linestyle="--",
+        color="blue",
+    )
     xlabel("Active Power Load")
     ylabel("Reactive Power Load")
     title("Bifurcation Surface")
@@ -407,5 +460,3 @@ def vsm(
         powerflow.vsmfolder + "\\VSM_" + powerflow.name + ".pdf",
         dpi=500,
     )
-    
-

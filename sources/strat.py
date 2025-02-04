@@ -7,10 +7,9 @@
 # ------------------------------------- #
 
 
-def strat(
-):
+def strat():
     """
-    
+
     Args
         powerflow:
     """
@@ -21,7 +20,7 @@ def strat(
     data = {
         "ID": range(1, 10001),
         "Idade": np.random.randint(18, 70, size=10000),
-        "Renda": np.random.randint(2000, 10000, size=10000)
+        "Renda": np.random.randint(2000, 10000, size=10000),
     }
     df = pd.DataFrame(data)
     print(df.head())
@@ -32,18 +31,16 @@ def strat(
     df["Faixa_Etaria"] = pd.cut(df["Idade"], bins=bins, labels=labels, right=False)
 
     # Tamanho da amostra desejada por estrato
-    amostra_por_estrato = {
-        "18-30": 5,
-        "31-50": 7,
-        "51-70": 3
-    }
+    amostra_por_estrato = {"18-30": 5, "31-50": 7, "51-70": 3}
 
     # Função para realizar a amostragem estratificada
     def amostragem_estratificada(df, coluna_estrato, amostra_por_estrato):
         amostras = []
         for estrato, tamanho in amostra_por_estrato.items():
             estrato_df = df[df[coluna_estrato] == estrato]
-            amostra = estrato_df.sample(n=tamanho, random_state=42)  # Amostragem aleatória
+            amostra = estrato_df.sample(
+                n=tamanho, random_state=42
+            )  # Amostragem aleatória
             amostras.append(amostra)
         return pd.concat(amostras)
 
@@ -70,14 +67,14 @@ def get_mean_stddev(
     ## Inicialização
     with open(filename, "r") as file:
         data = file.readlines()
-    
+
     load = [float(value.split(";")[3]) for value in data[1:]]
     min_value = min(load)
     max_value = max(load)
     mean = (min_value + max_value) / 2
     std_dev = (max_value - min_value) / 6  # Assuming a range of 4 standard deviations
 
-    print(mean, std_dev/mean*100)
+    print(mean, std_dev / mean * 100)
 
     return mean, std_dev
 
@@ -102,5 +99,6 @@ def get_mean_stddev(
     # plt.legend()
 
     # plt.show()
+
 
 strat()
