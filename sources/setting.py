@@ -25,40 +25,35 @@ def setting(
         powerflow: powerflow do arquivo powerflow.py
     """
     ## Inicialização
-    if powerflow.system:
-        # Verificação de diretório
-        pathpwf(
-            powerflow,
-        )
+    # Verificação de diretório
+    pathpwf(
+        powerflow,
+    )
 
-        # Classe para leitura de arquivo .pwf
-        pwf(
-            powerflow,
-        )
+    # Classe para leitura de arquivo .pwf
+    pwf(
+        powerflow,
+    )
 
-        # Classe para determinação dos valores padrão das variáveis de tolerância
-        options(
-            powerflow,
-        )
+    # Classe para determinação dos valores padrão das variáveis de tolerância
+    options(
+        powerflow,
+    )
 
-        # Classe para determinar a realização das opções de controle escolhidas
-        control(
-            powerflow,
-        )
+    # Classe para determinar a realização das opções de controle escolhidas
+    control(
+        powerflow,
+    )
 
-        # Classe para determinar a realização de monitoramento de valores
-        monitor(
-            powerflow,
-        )
+    # Classe para determinar a realização de monitoramento de valores
+    monitor(
+        powerflow,
+    )
 
-        # Classe para determinar a geração de relatórios
-        report(
-            powerflow,
-        )
-
-    else:
-        ## ERROR - VERMELHO
-        raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
+    # Classe para determinar a geração de relatórios
+    report(
+        powerflow,
+    )
 
 
 def pathpwf(

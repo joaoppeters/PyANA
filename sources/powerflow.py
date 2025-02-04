@@ -17,7 +17,7 @@ class PowerFlow:
     def __init__(
         self,
         system: str = "",
-        sim: str = "EXLF",
+        method: str = "EXLF",
         control: list = list(),
         monitor: list = list(),
         report: list = list(),
@@ -26,7 +26,7 @@ class PowerFlow:
 
         Args:
             system: str, optional, default ''
-            sim: str, optional, default 'EXLF'
+            method: str, optional, default 'EXLF'
             control: list, optional, default None
             monitor: list, optional, default None
             report: list, optional, default None
@@ -35,22 +35,28 @@ class PowerFlow:
         ## Inicialization
         # Variables
         self.system = system
-        self.sim = sim
+        self.method = method
         self.control = control
         self.monitor = monitor
         self.report = report
 
-        # Data setting
-        setting(
-            self,
-        )
+        if self.system:
+            # Data setting
+            setting(
+                self,
+            )
 
-        # Armazenamento dos resultados
-        folder(
-            self,
-        )
+            # Armazenamento dos resultados
+            folder(
+                self,
+            )
 
-        # Numerical Method
-        simulation(
-            self,
-        )
+            # Numerical Method
+            simulation(
+                self,
+            )
+    
+
+        else:
+            ## ERROR - VERMELHO
+            raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")

@@ -17,7 +17,7 @@ def simulation(
     """
     ## Inicialização
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.sim == "EXLF":
+    if powerflow.method == "EXLF":
         from matrices import admittance
         from monitor import monitorfile
         from newton import newton
@@ -40,7 +40,7 @@ def simulation(
         )
 
     # Chamada específica método Continuado
-    elif powerflow.sim == "EXIC":
+    elif powerflow.method == "EXIC":
         from matrices import admittance
         from continuation import prediction_correction
         from newton import newton
@@ -63,7 +63,7 @@ def simulation(
         )
 
     # Chamada especifica metodo direto (Canizares, 1993)
-    elif powerflow.sim == "EXPC":
+    elif powerflow.method == "EXPC":
         from matrices import admittance
         from newton import newton
         from poc import poc
@@ -86,7 +86,7 @@ def simulation(
         )
 
     # Chamada Específica para simulação dinâmica
-    elif powerflow.sim == "EXSI":
+    elif powerflow.method == "EXSI":
         from matrices import admittance
         from dynamic import dynamic
         from newton import newton
@@ -114,7 +114,7 @@ def simulation(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.sim == "BXLF":
+    elif powerflow.method == "BXLF":
         from areas import q2024, ne224
         from factor import generator_participation
         from folder import areasfolder
@@ -153,7 +153,7 @@ def simulation(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.sim == "BXIC":
+    elif powerflow.method == "BXIC":
         from areas import q2024, ne224
         from factor import generator_participation
         from folder import areasfolder
@@ -192,7 +192,7 @@ def simulation(
         )
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
-    elif powerflow.sim == "BXCT":
+    elif powerflow.method == "BXCT":
         from anarede import anarede
 
         anarede(
@@ -201,7 +201,7 @@ def simulation(
         )
 
     # Chamada especifica geracao estocastica inicial de valores
-    elif powerflow.sim == "SXLF":
+    elif powerflow.method == "SXLF":
         from stochastic import sxlf
 
         powerflow.namecase = powerflow.name + "jpmod"
@@ -211,7 +211,7 @@ def simulation(
         )
 
     # Chamada especifica para analise de fluxo de potência continuado em arquivos com dados estocasticos
-    elif powerflow.sim == "SXIC":
+    elif powerflow.method == "SXIC":
         from stochastic import sxic
 
         sxic(
@@ -219,7 +219,7 @@ def simulation(
         )
 
     # Chamada especifica para analise de contingencia em arquivos com dados estocasticos
-    elif powerflow.sim == "SXCT":
+    elif powerflow.method == "SXCT":
         from stochastic import sxct
 
         sxct(
@@ -227,7 +227,7 @@ def simulation(
         )
 
     # Chamada especifica para analise de fluxo de potência continuado e contingencia em arquivos com dados estocasticos
-    elif powerflow.sim == "SPVCT":
+    elif powerflow.method == "SPVCT":
         from stochastic import spvct
 
         spvct(
@@ -235,7 +235,7 @@ def simulation(
         )
 
     # Chamada específica para geração de arquivo contendo formatação de dados de simulação PSS/E (EXCEL FILE FORMATTING)
-    elif powerflow.sim == "PSSe":
+    elif powerflow.method == "PSSe":
         from psse import pssexcel
 
         pssexcel(
@@ -243,7 +243,7 @@ def simulation(
         )
 
     # Chamada específica para leitura de arquivos .REL (RELATORIO TOTAL DE AREA)
-    elif powerflow.sim == "RTOT":
+    elif powerflow.method == "RTOT":
         from rela import rtot
 
         rtot(
@@ -251,7 +251,7 @@ def simulation(
         )
 
     # Chamada específica para leitura de arquivos .REL (RELATORIO DE INTERCAMBIOS)
-    elif powerflow.sim == "RINT":
+    elif powerflow.method == "RINT":
         from rela import rint
 
         rint(
@@ -259,7 +259,7 @@ def simulation(
         )
 
     # Chamada específica para manipulação de dados (DATA MANIPULATION - CASE BY CASE DEMAND)
-    elif powerflow.sim == "DATA":
+    elif powerflow.method == "DATA":
         from fdata import fdata
 
         fdata(
@@ -267,7 +267,7 @@ def simulation(
         )
 
     # Chamada especifica metodo Cross-Entropy
-    elif powerflow.sim == "CENT":
+    elif powerflow.method == "CENT":
         from matrices import admittance
         from crossentropy import cent
 
@@ -280,7 +280,7 @@ def simulation(
         )
 
     # Chamada específica para análise de areas
-    elif powerflow.sim == "AREA":
+    elif powerflow.method == "AREA":
         from areas import q2024, ne224
         from folder import areasfolder
 
@@ -299,42 +299,42 @@ def simulation(
             )
 
     # Chamada específica para leitura dos relatórios de fluxo de potência continuado com contingência
-    elif powerflow.sim == "RPVCT":
+    elif powerflow.method == "RPVCT":
         from rela import relpvct
 
         relpvct(
             powerflow,
         )
 
-    elif powerflow.sim == "Q2024":
+    elif powerflow.method == "Q2024":
         from rela import q2024
 
         q2024(
             powerflow,
         )
 
-    elif powerflow.sim == "VSM":
+    elif powerflow.method == "VSM":
         from rela import vsm
 
         vsm(
             powerflow,
         )
 
-    elif powerflow.sim == "CXLF":
+    elif powerflow.method == "CXLF":
         from cluster import cxlf
 
         cxlf(
             powerflow,
         )
 
-    elif powerflow.sim == "CXIC":
+    elif powerflow.method == "CXIC":
         from cluster import cxic
 
         cxic(
             powerflow,
         )
 
-    elif powerflow.sim == "CXCT":
+    elif powerflow.method == "CXCT":
         from cluster import cxct
 
         cxct(

@@ -27,7 +27,7 @@ def basexlf(
     filedir = realpath(
         powerflow.maindir
         + "\\sistemas\\EXLF\\"
-        + powerflow.sim
+        + powerflow.method
         + "_"
         + powerflow.name
         + ".PWF"
@@ -144,7 +144,7 @@ def basexic(
     filedir = realpath(
         powerflow.maindir
         + "\\sistemas\\EXIC\\"
-        + powerflow.sim
+        + powerflow.method
         + "_"
         + powerflow.name
         + ".PWF"

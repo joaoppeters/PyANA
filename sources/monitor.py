@@ -67,7 +67,7 @@ def monitorfile(
                     powerflow,
                 )
             # monitoramento de potência reativa gerada
-            elif (r == "QGMON") and (powerflow.sim != "LINEAR"):
+            elif (r == "QGMON") and (powerflow.method != "LINEAR"):
                 monitorqgmon(
                     file,
                     powerflow,
@@ -105,22 +105,22 @@ def rheader(
     file.write("\n")
     file.write("solução do fluxo de potência via método ")
     # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.sim == "EXLF":
+    if powerflow.method == "EXLF":
         file.write("newton-raphson")
     # Chamada específica método de Gauss-Seidel
-    elif powerflow.sim == "GAUSS":
+    elif powerflow.method == "GAUSS":
         file.write("gauss-seidel")
     # Chamada específica método de Newton-Raphson Linearizado
-    elif powerflow.sim == "LINEAR":
+    elif powerflow.method == "LINEAR":
         file.write("linearizado")
     # Chamada específica método Desacoplado
-    elif powerflow.sim == "DECOUP":
+    elif powerflow.method == "DECOUP":
         file.write("desacoplado")
     # Chamada específica método Desacoplado Rápido
-    elif powerflow.sim == "fDECOUP":
+    elif powerflow.method == "fDECOUP":
         file.write("desacoplado rápido")
     # Chamada específica método Continuado
-    elif powerflow.sim == "EXIC":
+    elif powerflow.method == "EXIC":
         file.write("do fluxo de potência continuado")
     file.write("\n\n")
     file.write("opções de monitoramento ativadas: ")

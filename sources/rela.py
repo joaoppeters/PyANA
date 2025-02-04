@@ -334,7 +334,7 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
 #     ]
 
 #     with open(
-#         folder_path + powerflow.sim + ".txt",
+#         folder_path + powerflow.method + ".txt",
 #         "w",
 #     ) as file:
 #         file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
@@ -347,7 +347,7 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
 #     # )
 
 #     # Open and read the file
-#     with open(folder_path + powerflow.sim + ".txt", "r") as f:
+#     with open(folder_path + powerflow.method + ".txt", "r") as f:
 #         lines = f.readlines()
 
 #     # Separate the header and data
@@ -361,11 +361,11 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
 #     sorted_lines = [header] + sorted_data
 
 #     # Write the sorted lines to a new file
-#     with open(folder_path + powerflow.sim + ".txt", "w") as f:
+#     with open(folder_path + powerflow.method + ".txt", "w") as f:
 #         f.writelines(sorted_lines)
 
 
-#     get_mean_stddev(filename=folder_path + powerflow.sim + ".txt")
+#     get_mean_stddev(filename=folder_path + powerflow.method + ".txt")
 
 
 def vsm(

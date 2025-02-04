@@ -35,7 +35,7 @@ def stb(
         powerflow,
     )
 
-    if powerflow.sim == "EXSI":
+    if powerflow.method == "EXSI":
         rdarq(
             powerflow,
         )
