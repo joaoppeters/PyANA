@@ -9,22 +9,6 @@
 from glob import glob
 from os.path import join
 
-# for stddev in range(1, 11, 1):
-#     loadstd = stddev
-#     geolstd = stddev
-
-#     # Specify the folder path and file extension
-#     folder_path = (
-#         powerflow.maindir
-#         + "\\sistemas\\"
-#         + powerflow.name
-#         + "_loadstd{}_geolstd{}".format(
-#             loadstd,
-#             geolstd,
-#         )
-#     )
-#     savextension = ".REL"  # Change to the extension you need
-
 
 def rrel(
     powerflow,
