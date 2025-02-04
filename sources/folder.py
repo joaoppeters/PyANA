@@ -172,7 +172,7 @@ def rintfolder(
     if exists(powerflow.exlffolder) is False:
         mkdir(powerflow.exlffolder)
 
-    powerflow.rintfolder = dirname(powerflow.dirPWF) + "\\RINT\\"
+    powerflow.rintfolder = powerflow.exlffolder + "RINT\\"
     if exists(powerflow.rintfolder) is False:
         mkdir(powerflow.rintfolder)
 
@@ -190,7 +190,7 @@ def rtotfolder(
     if exists(powerflow.exlffolder) is False:
         mkdir(powerflow.exlffolder)
 
-    powerflow.rtotfolder = dirname(powerflow.dirPWF) + "\\RTOT\\"
+    powerflow.rtotfolder = powerflow.exlffolder + "RTOT\\"
     if exists(powerflow.rtotfolder) is False:
         mkdir(powerflow.rtotfolder)
 

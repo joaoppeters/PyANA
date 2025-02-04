@@ -113,59 +113,6 @@ def sxlf(
             if not exists(exlfrel):
                 remove(savfile)
 
-    # for stddev in range(1, 2, 1):
-    #     loadstd = 9
-    #     geolstd = 15
-    #     sxlffolder(
-    #         powerflow,
-    #         loadstd=stddev,
-    #         geolstd=stddev,
-    #     )
-    #     folder = dirname(powerflow.sxlffolder)
-    #     name = (
-    #         "\\EXLF_" + powerflow.name + "_loadstd{}_geolstd{}".format(stddev, stddev)
-    #     )
-    #     folder_path = folder + name + "\\"
-
-    #     with open(
-    #         folder_path + name + ".txt",
-    #         "w",
-    #     ) as file:
-    #         file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
-
-    #     # List and filter files by extension
-    #     relfiles = [
-    #         f
-    #         for f in listdir(folder_path)
-    #         if f.startswith("EXLF")
-    #         and f.endswith(".REL")
-    #         and isfile(join(folder_path, f))
-    #     ]
-
-    #     rxlf(
-    #         folder=folder_path,
-    #         relfiles=relfiles,
-    #         balancefile=file,
-    #     )
-
-    #     # Open and read the file
-    #     with open(folder_path + name + ".txt", "r") as f:
-    #         lines = f.readlines()
-
-    #     # Separate the header and data
-    #     header = lines[0]
-    #     data = lines[1:]
-
-    #     # Sort the data lines based on the first column (split by `;`)
-    #     sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
-
-    #     # Combine the header and sorted data
-    #     sorted_lines = [header] + sorted_data
-
-    #     # Write the sorted lines to a new file
-    #     with open(folder_path + name + ".txt", "w") as f:
-    #         f.writelines(sorted_lines)
-
 
 def sxic(
     powerflow,

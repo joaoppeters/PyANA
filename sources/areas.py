@@ -6,6 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+from folder import areasfolder
 
 def q2024(
     powerflow,
@@ -18,6 +19,10 @@ def q2024(
     from pandas import concat, merge
 
     ## Inicialização
+    areasfolder(
+        powerflow,
+    )
+
     # Areas
     powerflow.rio_grande_sul = powerflow.dbarDF.loc[
         powerflow.dbarDF.area.isin([1, 2, 3, 4, 5, 6])
@@ -593,6 +598,9 @@ def ne224(
         powerflow (_type_): _description_
     """
     ## Inicialização
+    areasfolder(
+        powerflow,
+    )
     powerflow.fronteira = powerflow.dbarDF.loc[
         (powerflow.dbarDF.potencia_reativa_minima == -9999)
         & (powerflow.dbarDF.potencia_reativa_maxima == 99999)

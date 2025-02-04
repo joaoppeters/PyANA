@@ -8,11 +8,8 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_R2_C11.pwf"
-# system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE - R1.pwf"
-# system = "01 - ONS - MENSAL - JANEIRO 2020 - LEVE.pwf"
-# system = "NE224_CASO1_MA.pwf"
-# system = "NE224-C2.pwf"
+system = "2Q2024_R2_C1.pwf"
+# system = "NE224-C3.pwf"
 
 method =  "EXLF"  # NEWTON-RAPHSON
 method =  "EXIC"  # CONTINUATION POWER FLOW
@@ -21,7 +18,7 @@ method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "BXLF" # NEWTON-RAPHSON (ANAREDE BATCH RUNNING)
 # method =  "BXIC" # CONTINUATION POWER FLOW (ANAREDE BATCH RUNNING)
 # method =  "BXCT" # CONTINGENCY ANALYSIS (ANAREDE BATCH RUNNING)
-method =  "SXLF"  # STOCHASTIC (ANAREDE BATCH RUNNING)
+# method =  "SXLF"  # STOCHASTIC (ANAREDE BATCH RUNNING)
 # method =  "SXIC"  # CONTINUATION POWER FLOW (ANAREDE BATCH RUNNING OF STOCHASTIC CASES)
 # method =  "SXCT"  # CONTINGENCY ANALYSIS (ANAREDE BATCH RUNNING OF STOCHASTIC CASES)
 # method =  "SPVCT" # CONTINUATION POWER FLOW + CONTINGENCY ANALYSIS (ANAREDE BATCH RUNNING OF STOCHASTIC CASES)
@@ -30,11 +27,10 @@ method =  "SXLF"  # STOCHASTIC (ANAREDE BATCH RUNNING)
 # method =  "DATA" # DATA MANIPULATION
 # method =  "EXCE" # CROSS-ENTROPY
 # method =  "AREA"
-# method =  "RTOT"
-# method =  "RINT"
+method =  "RTOT"
+method =  "RINT"
 # method =  "RINT"
 # method =  "RPVCT"
-# method =  "Q2024"
 # method =  "VSM"
 # method =  "CXLF"
 # method =  "CXIC"

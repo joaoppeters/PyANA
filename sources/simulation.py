@@ -117,22 +117,8 @@ def simulation(
     elif powerflow.method == "BXLF":
         from areas import q2024, ne224
         from factor import generator_participation
-        from folder import areasfolder
-        from setting import pathstb
-        from stb import stb
         from ulog import basexlf
 
-        pathstb(
-            powerflow,
-        )
-
-        stb(
-            powerflow,
-        )
-
-        areasfolder(
-            powerflow,
-        )
         if "NE224" in powerflow.name:
             ne224(
                 powerflow,
@@ -154,23 +140,9 @@ def simulation(
 
     # Chamada específica para ANAREDE BATCH RUNNING SCRIPT
     elif powerflow.method == "BXIC":
-        from areas import q2024, ne224
         from factor import generator_participation
-        from folder import areasfolder
         from strat import strat
         from ulog import basexic
-
-        areasfolder(
-            powerflow,
-        )
-        if "NE224" in powerflow.name:
-            ne224(
-                powerflow,
-            )
-        elif "Q2024" in powerflow.name:
-            q2024(
-                powerflow,
-            )
 
         powerflow.mdger = generator_participation(
             name=powerflow.name,
@@ -303,13 +275,6 @@ def simulation(
         from rela import relpvct
 
         relpvct(
-            powerflow,
-        )
-
-    elif powerflow.method == "Q2024":
-        from rela import q2024
-
-        q2024(
             powerflow,
         )
 

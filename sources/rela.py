@@ -6,111 +6,9 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from glob import glob
-from os.path import join
-
-
-def rrel(
-    powerflow,
-):
-    """
-
-    Args:
-        powerflow (_type_): _description_
-    """
-    ## Inicialização
-    if "2q2024" in powerflow.name:
-        for stddev in range(1, 11, 1):
-            # Specify the folder path and file extension
-            folder_path = (
-                powerflow.maindir
-                + "\\sistemas\\"
-                + powerflow.name
-                + "_loadstd{}_geolstd{}".format(
-                    stddev,
-                    stddev,
-                )
-            )
-
-    string = (
-        " X----X------------X---X--------X--------X--------X-------------X---------X\n"
-    )
-
-    folder = powerflow.maindir + "\\sistemas\\2Q2024_C6EOL_EXIC_std10\\"
-
-    rel_files = glob(join(folder, "EXIC*"))
-    idx = 0
-    cases = list()
-
-    for rel_file in rel_files:
-        flag = False
-        with open(rel_file, "r", encoding="utf-8", errors="ignore") as file:
-            for line in file:
-                print(line)
-                if line == string and not flag:
-                    flag = True
-
-                elif flag:
-                    content = line.split()
-                    try:
-                        if float(content[-6]) >= 7.0:
-                            case = True
-                        else:
-                            case = False
-                    except:
-                        pass
-
-        cases.append(case)
-        idx += 1
-
-    print("Trues", cases.count(True))
-    print("Falses", cases.count(False))
-    print()
-
-
-def relpvct(
-    powerflow,
-):
-    """
-
-    Args:
-        powerflow (_type_): _description_
-    """
-    ## Inicialização
-    string0 = (
-        " X----X------------X---X--------X--------X--------X-------------X---------X\n"
-    )
-    string1 = " X-----X----------------------------------------------X-------------X------------X\n"
-
-    folder = powerflow.maindir + "\\sistemas\\"
-
-    rel_files = glob(join(folder, "PVCT*"))
-
-    for rel_file in rel_files:
-        load = dict()
-        flag = False
-        with open(rel_file, "r", encoding="utf-8", errors="ignore") as file:
-            for line in file:
-                if ((line == string0) or (line == string1)) and not flag:
-                    flag = True
-
-                elif flag:
-                    content = line.split()
-                    try:
-                        if (content[0] == "0") and (content[-2] == "MW"):
-                            load0 = float(content[-3])
-                            flag = False
-                        elif (content[1] != "Convergente") and (content[-2] == "MW"):
-                            load[content[0]] = (
-                                (float(content[-3]) - load0) * 100 / load0
-                            )
-                        else:
-                            pass
-                    except:
-                        pass
-
-        print(rel_file)
-        print(*[f"{k}: {v}" for k, v in load.items()], sep="\n")
+from os import listdir
+from os.path import dirname
+import re
 
 
 def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
@@ -120,11 +18,8 @@ def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
         folder:
         relfiles:
         vsmfile:
+        string:
     """
-
-    from os.path import dirname
-    import re
-
     ## Inicialização
     initstring = " RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO\n"
     rxicstring = " Atingido incremento minimo\n"
@@ -192,44 +87,77 @@ def rpvct(
     pass
 
 
-def rint(folder, relfiles, file, string=r"MOD(\d+)\.REL"):
+def rint(powerflow, string=r"MOD(\d+)\.REL"):
     """
 
     Args
-        powerflow:
+        powerflow (_type_): _description_
+        string (str, optional): Defaults to r"MOD(\d+)\.REL".
     """
 
-    import re
+    import pandas as pd
+
+    from folder import rintfolder
 
     ## Inicialização
     rintstring = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
+    rintheader = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
 
-    for relfile in relfiles:
-        linecount = 0
-        rf = open(f"{folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
-        rflines = rf.readlines()
-        rf.close()
+    rintfolder(powerflow,)
+    areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
 
-        while linecount < len(rflines):
-            if rflines[linecount] == rintstring:
-                while linecount < len(rflines):
-                    linecount += 1
+    folders = [
+        f for f in listdir(powerflow.exlffolder)
+        if f.startswith("EXLF_" + powerflow.name + "_")
+    ]
 
-                    try:
-                        if rflines[linecount].split()[0] == "TOTAL":
-                            with open(file.name, "a") as af:
-                                af.write(
-                                    "{};{};{};{};{}\n".format(
-                                        re.search(string, relfile).group(1),
-                                        rflines[linecount].split()[1],
-                                        rflines[linecount + 1].split()[0],
-                                        rflines[linecount].split()[3],
-                                        rflines[linecount + 1].split()[2],
-                                    )
-                                )
-                            break
-                    except:
-                        pass
+    for folder in folders:
+        relfiles = [
+            f
+            for f in listdir(powerflow.exlffolder + folder)
+            if f.startswith("EXLF") and f.endswith(".REL")
+        ]
+
+        intercambio = pd.DataFrame(index=areas, columns=areas, dtype='object',)
+        
+        for relfile in relfiles:
+            linecount = 0
+            rf = open(f"{powerflow.exlffolder + folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
+            rflines = rf.readlines()
+            rf.close()
+
+            while linecount < len(rflines):
+                linecount += 1
+                try:
+                    if rflines[linecount] == rintheader:
+                        linecount += 3
+                        header = rflines[linecount - 1].split()[1:]
+                        for row in range(0, 15):
+                            r = int(rflines[linecount + 2].split()[0])
+                            for col in range(0, 15):
+                                c = int(header[col])
+                                p = float(rflines[linecount + 2].split()[col + 1])
+                                q = float(rflines[linecount + 3].split()[col])
+                                intercambio.at[r, c] = (p, q)
+                            linecount += 3
+                except:
+                    pass
+
+            #             try:
+            #                 if rflines[linecount].split()[0] == "TOTAL":
+            #                     with open(file.name, "a") as af:
+            #                         af.write(
+            #                             "{};{};{};{};{}\n".format(
+            #                                 re.search(string, relfile).group(1),
+            #                                 rflines[linecount].split()[1],
+            #                                 rflines[linecount + 1].split()[0],
+            #                                 rflines[linecount].split()[3],
+            #                                 rflines[linecount + 1].split()[2],
+            #                             )
+            #                         )
+            #                     break
+            #             except:
+            #                 pass
 
 
 def rtot(powerflow, string=r"MOD(\d+)\.REL"):
@@ -237,13 +165,8 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
 
     Args
         folder:
-        relfiles:
-        file:
         string:
     """
-
-    from os import listdir
-    import re
 
     from folder import rtotfolder
 
@@ -258,57 +181,70 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
         f
         for f in listdir(powerflow.exlffolder)
         if f.startswith("EXLF_" + powerflow.name + "_")
+        and f.endswith(".REL")        
     ]
 
-    if folders:
-        for folder in folders:
-            with open(
-                folder + ".txt",
-                "w",
-            ) as rtotfile:
-                rtotfile.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
+    for folder in folders:
+        with open(
+            powerflow.rtotfolder + folder + ".txt",
+            "w",
+        ) as rtotfile:
+            rtotfile.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
 
-            relfiles = [
-                f
-                for f in listdir(folder)
-                if f.startswith("EXLF") and f.endswith(".REL")
-            ]
-
-            for relfile in relfiles:
-                linecount = 0
-                rf = open(
-                    f"{folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore"
-                )
-                rflines = rf.readlines()
-                rf.close()
-
-                while linecount < len(rflines):
-                    if rflines[linecount] == rtotstring:
-                        while linecount < len(rflines):
-                            linecount += 1
-
-                            try:
-                                if rflines[linecount].split()[0] == "TOTAL":
-                                    with open(rtotfile.name, "a") as af:
-                                        af.write(
-                                            "{};{};{};{};{}\n".format(
-                                                re.search(string, relfile).group(1),
-                                                rflines[linecount].split()[1],
-                                                rflines[linecount + 1].split()[0],
-                                                rflines[linecount].split()[3],
-                                                rflines[linecount + 1].split()[2],
-                                            )
-                                        )
-                                    break
-                            except:
-                                pass
-
-    else:
         relfiles = [
             f
-            for f in listdir(powerflow.exlffolder)
-            if f.startswith("EXLF_" + powerflow.name) and f.endswith(".REL")
+            for f in listdir(powerflow.exlffolder + folder)
+            if f.startswith("EXLF") and f.endswith(".REL")
         ]
+        
+        for relfile in relfiles:
+            linecount = 0
+            rf = open(
+                f"{powerflow.exlffolder + folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore"
+            )
+            rflines = rf.readlines()
+            rf.close()
+            flag = True
+
+            while linecount < len(rflines) and flag:
+                linecount += 1
+                if rflines[linecount] == rtotstring:
+                    while linecount < len(rflines):
+                        linecount += 1
+                        try:
+                            if rflines[linecount].split()[0] == "TOTAL":
+                                with open(rtotfile.name, "a") as af:
+                                    af.write(
+                                        "{};{};{};{};{}\n".format(
+                                            re.search(string, relfile).group(1),
+                                            rflines[linecount].split()[1],
+                                            rflines[linecount + 1].split()[0],
+                                            rflines[linecount].split()[3],
+                                            rflines[linecount + 1].split()[2],
+                                        )
+                                    )
+                                flag = False
+                                break
+                        except:
+                            pass
+                        
+        # Open and read the file
+        with open(powerflow.rtotfolder + folder + ".txt", "r") as f:
+            lines = f.readlines()
+
+        # Separate the header and data
+        header = lines[0]
+        data = lines[1:]
+
+        # Sort the data lines based on the first column (split by `;`)
+        sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
+
+        # Combine the header and sorted data
+        sorted_lines = [header] + sorted_data
+
+        # Write the sorted lines to a new file
+        with open(powerflow.rtotfolder + folder + ".txt", "w") as f:
+            f.writelines(sorted_lines)
 
 
 # def basecase(
@@ -383,13 +319,10 @@ def vsm(
         plot,
         savefig,
         scatter,
-        show,
         title,
         xlabel,
         ylabel,
     )
-    from os import listdir
-    from os.path import dirname
 
     from folder import vsmfolder
 
