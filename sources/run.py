@@ -54,10 +54,10 @@ method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "AREA"
 # method =  "RTOT"
 # method =  "RINT"
-method =  "RINT"
+# method =  "RINT"
 # method =  "RPVCT"
 # method =  "VSM"
-# method =  "CXLF"
+method =  "CXLF"
 # method =  "CXIC"
 # method =  "CXCT"
 

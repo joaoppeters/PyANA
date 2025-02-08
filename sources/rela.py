@@ -11,6 +11,94 @@ from os.path import dirname
 import re
 
 
+def bint(powerflow,):
+    """
+
+    Args
+        powerflow (_type_): _description_
+        string (str, optional): Defaults to r"MOD(\d+)\.REL".
+    """
+
+    import pandas as pd
+
+    ## Inicialização
+    rintheaderlong  = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    
+    relfile = powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    linecount = 0
+    rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
+    rflines = rf.readlines()
+    rf.close()
+    
+    areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
+    intercambio = pd.DataFrame(index=areas, columns=areas, dtype='object',)
+        
+    while linecount < len(rflines):
+        linecount += 1
+        try:
+            if rflines[linecount] == rintheaderlong or rflines[linecount] == rintheadershort:
+                linecount += 3
+                header = rflines[linecount - 1].split()[1:]
+                for row in range(0, 15):
+                    r = int(rflines[linecount + 2].split()[0])
+                    for col in range(0, len(header)):
+                        c = int(header[col])
+                        p = float(rflines[linecount + 2].split()[col + 1])
+                        q = float(rflines[linecount + 3].split()[col])
+                        intercambio.at[r, c] = (p, q)
+                    linecount += 3
+        except:
+            pass
+
+    nnz_dict = {
+        f"{row}/{col}": intercambio.at[row, col]
+        for row in intercambio.index
+        for col in intercambio.columns
+        if isinstance(intercambio.at[row, col], tuple) and intercambio.at[row, col] != (0, 0)
+    }
+
+    # Convert to a DataFrame with columns as (row, col) pairs and the index as file_index
+    nnz_df = pd.DataFrame([list(nnz_dict.values())], columns=nnz_dict.keys(), index=[0])
+    nnz_df.index.name = "CASO"
+
+    return nnz_df
+
+
+def btot(powerflow,):
+    """
+
+    Args
+        folder:
+        string:
+    """
+    ## Inicialização
+    relfile = powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    linecount = 0
+    rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
+    rflines = rf.readlines()
+    rf.close()
+    flag = True
+    while flag:
+        linecount += 1
+        if rflines[linecount] == " RELATORIO DE TOTAIS DE AREA\n":
+            while linecount < len(rflines):
+                linecount += 1
+                try:
+                    if rflines[linecount].split()[0] == "TOTAL":
+                        basecase = [
+                            float(rflines[linecount].split()[1]),
+                            float(rflines[linecount + 1].split()[0]),
+                            float(rflines[linecount].split()[3]),
+                            float(rflines[linecount + 1].split()[2]),
+                        ]
+                        flag = False
+                        break
+                except:
+                    pass
+    return basecase
+
+
 def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
     """
 
@@ -63,48 +151,22 @@ def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
     return surface
 
 
-def rxct(
-    powerflow,
-):
-    """
-
-    Args:
-        powerflow:
-    """
-    ## Inicialização
-    pass
-
-
-def rpvct(
-    powerflow,
-):
-    """
-
-    Args:
-        powerflow:
-    """
-    ## Inicialização
-    pass
-
-
-def rint(powerflow, string=r"MOD(\d+)\.REL"):
+def rint(powerflow,):
     """
 
     Args
         powerflow (_type_): _description_
         string (str, optional): Defaults to r"MOD(\d+)\.REL".
     """
-
-    from os.path import isfile
+    
     import pandas as pd
 
     from folder import rintfolder
 
     ## Inicialização
-    rintstring = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
     rintheaderlong  = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
     rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
-    cepelbreak = "\x0cCEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02"
+    
     rintfolder(powerflow,)
     areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
 
@@ -162,7 +224,6 @@ def rint(powerflow, string=r"MOD(\d+)\.REL"):
 
         nnz_df.index.name = "CASO"
         nnz_df.to_csv(powerflow.rintfolder + folder + ".txt", sep=";", index=True)
-        break
 
 
 
@@ -251,63 +312,6 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
         # Write the sorted lines to a new file
         with open(powerflow.rtotfolder + folder + ".txt", "w") as f:
             f.writelines(sorted_lines)
-
-
-# def basecase(
-#     powerflow,
-# ):
-#     """
-
-#     Args:
-#         powerflow (_type_): _description_
-#     """
-
-#     from os import listdir
-
-#     from strat import get_mean_stddev
-
-#     ## Inicialização
-#     folder_path = powerflow.maindir + "\\sistemas\\EXLF\\"
-#     relfiles = [
-#         f
-#         for f in listdir(folder_path)
-#         if f.startswith("SXLF")
-#         and f.endswith(".REL")
-#     ]
-
-#     with open(
-#         folder_path + powerflow.method + ".txt",
-#         "w",
-#     ) as file:
-#         file.write("CASO;pATIVA;pREATIVA;dATIVA;dREATIVA\n")
-
-#     # rxlf(
-#     #     folder=folder_path,
-#     #     relfiles=relfiles,
-#     #     file=file,
-#     #     string=r"C(\d+)\.REL"
-#     # )
-
-#     # Open and read the file
-#     with open(folder_path + powerflow.method + ".txt", "r") as f:
-#         lines = f.readlines()
-
-#     # Separate the header and data
-#     header = lines[0]
-#     data = lines[1:]
-
-#     # Sort the data lines based on the first column (split by `;`)
-#     sorted_data = sorted(data, key=lambda x: int(x.split(";")[0]))
-
-#     # Combine the header and sorted data
-#     sorted_lines = [header] + sorted_data
-
-#     # Write the sorted lines to a new file
-#     with open(folder_path + powerflow.method + ".txt", "w") as f:
-#         f.writelines(sorted_lines)
-
-
-#     get_mean_stddev(filename=folder_path + powerflow.method + ".txt")
 
 
 def vsm(

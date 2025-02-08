@@ -177,6 +177,39 @@
 # plt.show()
 
 
+
+# # ====== 4. DBSCAN (automático, baseado na densidade) ======
+# dbscan = DBSCAN(eps=0.5, min_samples=5)
+# df_clusters['DBSCAN'] = dbscan.fit_predict(X)
+
+# # ====== 5. HIERARCHICAL CLUSTERING ======
+# linked = linkage(X, method='ward')
+
+# # Determinar o número ideal de clusters pela Silhueta
+# best_k_hierarchical = max(range(2, 10), key=lambda k: silhouette_score(X, fcluster(linked, k, criterion='maxclust')))
+# df_clusters['Hierarchical'] = fcluster(linked, best_k_hierarchical, criterion='maxclust')
+
+# # Plotando o dendrograma
+# plt.figure(figsize=(8, 5))
+# dendrogram(linked)
+# plt.title("Dendrograma - Hierarchical Clustering")
+
+# # ====== 6. MEAN SHIFT ======
+# meanshift = MeanShift()
+# df_clusters['MeanShift'] = meanshift.fit_predict(X)
+
+# # ====== 7. GAUSSIAN MIXTURE MODEL (GMM) ======
+# # Definir o número ideal de clusters pela Silhueta
+# best_k_gmm = max(range(2, 10), key=lambda k: silhouette_score(X, GaussianMixture(n_components=k, random_state=42).fit_predict(X)))
+# gmm = GaussianMixture(n_components=best_k_gmm, random_state=42)
+# df_clusters['GMM'] = gmm.fit_predict(X)
+
+# # ====== 8. AFFINITY PROPAGATION ======
+# affinity_propagation = AffinityPropagation(damping=0.7, preference=-150)
+# df_clusters['AffinityPropagation'] = affinity_propagation.fit_predict(X)
+# num_clusters_ap = len(np.unique(df_clusters['AffinityPropagation']))  # Número de clusters gerados
+
+
 def cxlf(
     powerflow,
 ):
@@ -186,42 +219,20 @@ def cxlf(
         powerflow (_type_): Description
     """
 
+    from rela import bint, btot
+
     import matplotlib.pyplot as plt
-    import numpy as np
     import pandas as pd
     from os import listdir
-    from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
     import seaborn as sns
-    from sklearn.cluster import AffinityPropagation, KMeans, DBSCAN, MeanShift
-    from sklearn.metrics import silhouette_score
-    from sklearn.mixture import GaussianMixture
+    from sklearn.cluster import KMeans
     from sklearn.preprocessing import StandardScaler
+    from sklearn_extra.cluster import KMedoids
     from yellowbrick.cluster import KElbowVisualizer
 
     ## Inicialização
-    file = powerflow.maindir + "\\sistemas\\EXLF\\EXLF_" + powerflow.name + ".REL"
-    linecount = 0
-    rf = open(f"{file}", "r", encoding="utf-8", errors="ignore")
-    rflines = rf.readlines()
-    rf.close()
-    flag = True
-    while flag:
-        linecount += 1
-        if rflines[linecount] == " RELATORIO DE TOTAIS DE AREA\n":
-            while linecount < len(rflines):
-                linecount += 1
-                try:
-                    if rflines[linecount].split()[0] == "TOTAL":
-                        basecase = [
-                            float(rflines[linecount].split()[1]),
-                            float(rflines[linecount + 1].split()[0]),
-                            float(rflines[linecount].split()[3]),
-                            float(rflines[linecount + 1].split()[2]),
-                        ]
-                        flag = False
-                        break
-                except:
-                    pass
+    nnz_df = bint(powerflow,)
+    basecase = btot(powerflow,)
 
     folder_path = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
     files = [
@@ -236,15 +247,6 @@ def cxlf(
     )
     data["x"] = data["pATIVA"] - data["dATIVA"]
     data["y"] = data["pREATIVA"] - data["dREATIVA"]
-
-    # figure(num=1, figsize=(10, 8))
-    # scatter(basecase[0]-basecase[2], basecase[1]-basecase[3], marker="d", color="black", s=35, zorder=2)
-    # scatter(data["x"].to_list(), data["y"].to_list(), marker="o", s=10,)
-    # legend()
-    # xlabel("ΔP (MW)")
-    # ylabel("ΔQ (MVAr)")
-    # show()
-
     df = data[["x", "y"]]
 
     # ====== 1. PLOTAR PONTOS ORIGINAIS ======
@@ -254,10 +256,10 @@ def cxlf(
         basecase[1] - basecase[3],
         marker="d",
         color="black",
-        s=35,
+        s=50,
         zorder=2,
     )
-    plt.scatter(df["x"], df["y"], s=50, color="gray", alpha=0.7)
+    plt.scatter(data["x"], data["y"], s=50, color="gray", alpha=0.7)
     plt.title("Pontos Originais (Antes do Clustering)")
     plt.xlabel("ΔP (MW)")
     plt.ylabel("ΔQ (MVAr)")
@@ -278,43 +280,15 @@ def cxlf(
     # Número ótimo de clusters
     optimal_k = visualizer.elbow_value_
 
-    # ====== 3. K-MEANS ======
-    for nclstr in range(2, 10):
+    # ====== K-MEANS & K-MEDOIDS ======
+    for nclstr in range(2, 11):
         kmeans = KMeans(n_clusters=nclstr, random_state=42)
         df_clusters["KMeans"] = kmeans.fit_predict(X)
 
-        # # ====== 4. DBSCAN (automático, baseado na densidade) ======
-        # dbscan = DBSCAN(eps=0.5, min_samples=5)
-        # df_clusters['DBSCAN'] = dbscan.fit_predict(X)
+        kmedoids = KMedoids(n_clusters=nclstr, metric="manhattan", random_state=42)
+        df_clusters["KMedoids"] = kmedoids.fit_predict(X)
 
-        # # ====== 5. HIERARCHICAL CLUSTERING ======
-        # linked = linkage(X, method='ward')
-
-        # # Determinar o número ideal de clusters pela Silhueta
-        # best_k_hierarchical = max(range(2, 10), key=lambda k: silhouette_score(X, fcluster(linked, k, criterion='maxclust')))
-        # df_clusters['Hierarchical'] = fcluster(linked, best_k_hierarchical, criterion='maxclust')
-
-        # # Plotando o dendrograma
-        # plt.figure(figsize=(8, 5))
-        # dendrogram(linked)
-        # plt.title("Dendrograma - Hierarchical Clustering")
-
-        # # ====== 6. MEAN SHIFT ======
-        # meanshift = MeanShift()
-        # df_clusters['MeanShift'] = meanshift.fit_predict(X)
-
-        # # ====== 7. GAUSSIAN MIXTURE MODEL (GMM) ======
-        # # Definir o número ideal de clusters pela Silhueta
-        # best_k_gmm = max(range(2, 10), key=lambda k: silhouette_score(X, GaussianMixture(n_components=k, random_state=42).fit_predict(X)))
-        # gmm = GaussianMixture(n_components=best_k_gmm, random_state=42)
-        # df_clusters['GMM'] = gmm.fit_predict(X)
-
-        # # ====== 8. AFFINITY PROPAGATION ======
-        # affinity_propagation = AffinityPropagation(damping=0.7, preference=-150)
-        # df_clusters['AffinityPropagation'] = affinity_propagation.fit_predict(X)
-        # num_clusters_ap = len(np.unique(df_clusters['AffinityPropagation']))  # Número de clusters gerados
-
-        # ====== 8. FUNÇÃO PARA PLOTAR OS CLUSTERS ======
+        # ====== FUNÇÃO PARA PLOTAR OS CLUSTERS ======
         def plot_clusters(method, labels):
             """Gera gráficos de dispersão para visualizar os clusters."""
             plt.figure(figsize=(6, 5))
@@ -324,7 +298,7 @@ def cxlf(
                 basecase[1] - basecase[3],
                 marker="d",
                 color="black",
-                s=35,
+                s=50,
                 zorder=2,
             )
             plt.title(f"{method} Clustering")
@@ -334,11 +308,7 @@ def cxlf(
 
         # Criando gráficos para cada método
         plot_clusters("K-Means", df_clusters["KMeans"])
-    # plot_clusters("DBSCAN", df_clusters['DBSCAN'])
-    # plot_clusters("Hierarchical", df_clusters['Hierarchical'])
-    # plot_clusters("Mean Shift", df_clusters['MeanShift'])
-    # plot_clusters("GMM", df_clusters['GMM'])
-    # plot_clusters("Affinity Propagation", df_clusters['AffinityPropagation'])
+        plot_clusters("K-Medoids", df_clusters["KMedoids"])
 
     plt.show()
 
@@ -365,7 +335,7 @@ def cxic(
     from ulog import usxic
 
     ## Inicialização
-    file = powerflow.maindir + "\\sistemas\\EXLF\\SXLF_" + powerflow.name + ".REL"
+    file = powerflow.maindir + "\\sistemas\\EXLF\\EXLF_" + powerflow.name + ".REL"
     linecount = 0
     rf = open(f"{file}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()
@@ -422,7 +392,7 @@ def cxic(
         basecase[1] - basecase[3],
         marker="d",
         color="black",
-        s=35,
+        s=50,
         zorder=2,
     )
     plt.scatter(df["x"], df["y"], s=50, color="gray", alpha=0.7)
