@@ -19,14 +19,16 @@ def basexlf(
     from os.path import realpath
 
     from anarede import anarede
+    from folder import bxlffolder
     from sav import savmove
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
+    bxlffolder(powerflow,)
+
     # Arquivo
     filedir = realpath(
-        powerflow.maindir
-        + "\\sistemas\\EXLF\\"
+        powerflow.bxlffolder
         + powerflow.method
         + "_"
         + powerflow.name
@@ -45,7 +47,7 @@ def basexlf(
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
-        filedir=powerflow.maindir + "\\sistemas\\EXLF\\",
+        filedir=powerflow.bxlffolder,
     )
 
     # Cabecalho
@@ -124,6 +126,7 @@ def basexic(
     from os.path import realpath
 
     from anarede import anarede
+    from folder import bxicfolder
     from rwpwf import wdcte
     from sav import exlf2new
     from uwrite import (
@@ -134,17 +137,17 @@ def basexic(
     )
 
     ## Inicialização
+    bxicfolder(powerflow,)
     savfile = "SXLF_" + powerflow.name + ".SAV"
     exlf2new(
-        exlffolder=powerflow.maindir + "\\sistemas\\EXLF\\",
-        newfolder=powerflow.maindir + "\\sistemas\\EXIC\\",
+        exlffolder=powerflow.bxlffolder,
+        newfolder=powerflow.bxicfolder,
         savfile=savfile,
     )
 
     # Arquivo
     filedir = realpath(
-        powerflow.maindir
-        + "\\sistemas\\EXIC\\"
+        powerflow.bxicfolder
         + powerflow.method
         + "_"
         + powerflow.name

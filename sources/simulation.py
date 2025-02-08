@@ -179,7 +179,23 @@ def simulation(
 
     # Chamada especifica geracao estocastica inicial de valores
     elif powerflow.method == "SXLF":
+        from areas import q2024, ne224
+        from factor import generator_participation
+        from folder import areasfolder
         from stochastic import sxlf
+
+        areasfolder(
+            powerflow,
+        )
+
+        if "NE224" in powerflow.name:
+            ne224(
+                powerflow,
+            )
+        elif "Q2024" in powerflow.name:
+            q2024(
+                powerflow,
+            )
 
         powerflow.namecase = powerflow.name + "jpmod"
 

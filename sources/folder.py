@@ -61,6 +61,46 @@ def admittancefolder(
         mkdir(powerflow.admittancefolder)
 
 
+def bxlffolder(
+    powerflow,
+):
+    """
+    
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    if exists(powerflow.exlffolder) is False:
+        mkdir(powerflow.exlffolder)
+
+    powerflow.bxlffolder = powerflow.exlffolder + "BASE\\"
+    if exists(powerflow.bxlffolder) is False:
+        mkdir(powerflow.bxlffolder)
+
+
+def bxicfolder(
+    powerflow,
+):
+    """
+    
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
+    if exists(powerflow.exicfolder) is False:
+        mkdir(powerflow.exicfolder)
+
+    powerflow.bxlffolder = powerflow.exlffolder + "BASE\\"
+    powerflow.bxicfolder = powerflow.exicfolder + "BASE\\"
+    if exists(powerflow.bxicfolder) is False:
+        mkdir(powerflow.bxicfolder)
+
+
+
+
 def convergencefolder(
     powerflow,
 ):
