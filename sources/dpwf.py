@@ -729,37 +729,37 @@ def dcar(
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dcar["tipo_incremento_1"].append(
+            powerflow.dcar["tipo_elemento_1"].append(
                 powerflow.lines[powerflow.linecount][:4]
             )
-            powerflow.dcar["identificacao_incremento_1"].append(
+            powerflow.dcar["identificacao_elemento_1"].append(
                 powerflow.lines[powerflow.linecount][5:10]
             )
-            powerflow.dcar["condicao_incremento_1"].append(
+            powerflow.dcar["condicao_elemento_1"].append(
                 powerflow.lines[powerflow.linecount][11]
             )
-            powerflow.dcar["tipo_incremento_2"].append(
+            powerflow.dcar["tipo_elemento_2"].append(
                 powerflow.lines[powerflow.linecount][13:17]
             )
-            powerflow.dcar["identificacao_incremento_2"].append(
+            powerflow.dcar["identificacao_elemento_2"].append(
                 powerflow.lines[powerflow.linecount][18:23]
             )
-            powerflow.dcar["condicao_incremento_2"].append(
+            powerflow.dcar["condicao_elemento_2"].append(
                 powerflow.lines[powerflow.linecount][24]
             )
-            powerflow.dcar["tipo_incremento_3"].append(
+            powerflow.dcar["tipo_elemento_3"].append(
                 powerflow.lines[powerflow.linecount][26:30]
             )
-            powerflow.dcar["identificacao_incremento_3"].append(
+            powerflow.dcar["identificacao_elemento_3"].append(
                 powerflow.lines[powerflow.linecount][31:36]
             )
-            powerflow.dcar["condicao_incremento_3"].append(
+            powerflow.dcar["condicao_elemento_3"].append(
                 powerflow.lines[powerflow.linecount][37]
             )
-            powerflow.dcar["tipo_incremento_4"].append(
+            powerflow.dcar["tipo_elemento_4"].append(
                 powerflow.lines[powerflow.linecount][39:43]
             )
-            powerflow.dcar["identificacao_incremento_4"].append(
+            powerflow.dcar["identificacao_elemento_4"].append(
                 powerflow.lines[powerflow.linecount][44:49]
             )
             powerflow.dcar["operacao"].append(powerflow.lines[powerflow.linecount][50])
@@ -782,23 +782,23 @@ def dcar(
             )
         powerflow.linecount += 1
 
-    # DataFrame dos dados de Incremento do Nível de Carregamento
+    # DataFrame dos dados de Variação do Tipo de Carga
     powerflow.dcarDF = DF(data=powerflow.dcar)
     powerflow.dcarDF = deepcopy(powerflow.dcarDF)
     powerflow.dcarDF = powerflow.dcarDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dcarDF = powerflow.dcarDF.astype(
         {
-            "tipo_incremento_1": "object",
-            "identificacao_incremento_1": "int",
-            "condicao_incremento_1": "object",
-            "tipo_incremento_2": "object",
-            "identificacao_incremento_2": "int",
-            "condicao_incremento_2": "object",
-            "tipo_incremento_3": "object",
-            "identificacao_incremento_3": "int",
-            "condicao_incremento_3": "object",
-            "tipo_incremento_4": "object",
-            "identificacao_incremento_4": "int",
+            "tipo_elemento_1": "object",
+            "identificacao_elemento_1": "int",
+            "condicao_elemento_1": "object",
+            "tipo_elemento_2": "object",
+            "identificacao_elemento_2": "int",
+            "condicao_elemento_2": "object",
+            "tipo_elemento_3": "object",
+            "identificacao_elemento_3": "int",
+            "condicao_elemento_3": "object",
+            "tipo_elemento_4": "object",
+            "identificacao_elemento_4": "int",
             "operacao": "object",
             "parametro_A": "int",
             "parametro_B": "int",

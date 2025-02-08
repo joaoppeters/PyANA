@@ -8,8 +8,33 @@
 
 from powerflow import PowerFlow
 
-system = "2Q2024_R2_C1.pwf"
-# system = "NE224-C3.pwf"
+# system = "1Q2017_R1_C6.pwf" # JAN-APR 2017
+# system = "2Q2017_R1_C6.pwf" # MAY-AUG 2017
+# system = "3Q2017_R2_C6.pwf" # SEP-DEC 2017
+# system = "1Q2018_R2_C6.pwf" # JAN-APR 2018
+# system = "2Q2018_R2_C6.pwf" # MAY-AUG 2018
+# system = "3Q2018_R2_C6.pwf" # SEP-DEC 2018
+# system = "1Q2019_R1_C6.pwf" # JAN-APR 2019
+# system = "2Q2019_R2_C6.pwf" # MAY-AUG 2019
+# system = "3Q2019_R1_C6.pwf" # SEP-DEC 2019
+# system = "1Q2020_R1_C6.pwf" # JAN-APR 2020
+# system = "2Q2020_R1_C6.pwf" # MAY-AUG 2020
+# system = "3Q2020_R2_C6.pwf" # SEP-DEC 2020
+# system = "1Q2021_R2_C6.pwf" # JAN-APR 2021
+# system = "2Q2021_R3_C6.pwf" # MAY-AUG 2021
+# system = "3Q2021_R1_C6.pwf" # SEP-DEC 2021
+# system = "1Q2022_R2_C6.pwf" # JAN-APR 2022
+# system = "2Q2022_R1_C6.pwf" # MAY-AUG 2022
+# system = "3Q2022_R1_C6.pwf" # SEP-DEC 2022
+# system = "1Q2023_R1_C3.pwf" # JAN-APR 2023
+# system = "2Q2023_R2_C9.pwf" # MAY-AUG 2023
+# system = "3Q2023_R2_C9.pwf" # SEP-DEC 2023
+# system = "1Q2024_R2_C11.pwf" # JAN-APR 2024
+system = "2Q2024_R2_C1.pwf" # MAY-AUG 2024
+# system = "3Q2024_R2_C11.pwf" # SEP-DEC 2024
+# system = "1Q2025_R1_C11.pwf" # JAN-APR 2025
+# system = "2Q2025_R0_C11.pwf" # MAY-AUG 2025
+# system = "NE224-C1.pwf"
 
 method =  "EXLF"  # NEWTON-RAPHSON
 method =  "EXIC"  # CONTINUATION POWER FLOW
@@ -27,9 +52,9 @@ method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "DATA" # DATA MANIPULATION
 # method =  "EXCE" # CROSS-ENTROPY
 # method =  "AREA"
-method =  "RTOT"
-method =  "RINT"
+# method =  "RTOT"
 # method =  "RINT"
+method =  "RINT"
 # method =  "RPVCT"
 # method =  "VSM"
 # method =  "CXLF"

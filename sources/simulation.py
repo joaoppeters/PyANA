@@ -117,7 +117,12 @@ def simulation(
     elif powerflow.method == "BXLF":
         from areas import q2024, ne224
         from factor import generator_participation
+        from folder import areasfolder
         from ulog import basexlf
+
+        areasfolder(
+            powerflow,
+        )
 
         if "NE224" in powerflow.name:
             ne224(

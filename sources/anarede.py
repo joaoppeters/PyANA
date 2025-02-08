@@ -23,7 +23,7 @@ def anarede(
 
     ## Inicialização
     # Chamada do Anarede
-    system('start C:/CEPEL/Anarede/V110702/ANAREDE.exe "{}"'.format(file))
+    system('start C:/CEPEL/Anarede/V120001/ANAREDE.exe "{}"'.format(file))
 
     sleep(time)
     system("taskkill /f /im ANAREDE.exe")

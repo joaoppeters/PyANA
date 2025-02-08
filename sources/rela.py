@@ -95,14 +95,16 @@ def rint(powerflow, string=r"MOD(\d+)\.REL"):
         string (str, optional): Defaults to r"MOD(\d+)\.REL".
     """
 
+    from os.path import isfile
     import pandas as pd
 
     from folder import rintfolder
 
     ## Inicialização
     rintstring = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
-    rintheader = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
-
+    rintheaderlong  = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    cepelbreak = "\x0cCEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V11.07.02"
     rintfolder(powerflow,)
     areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
 
@@ -119,8 +121,10 @@ def rint(powerflow, string=r"MOD(\d+)\.REL"):
         ]
 
         intercambio = pd.DataFrame(index=areas, columns=areas, dtype='object',)
+        nnz_df = pd.DataFrame()
         
         for relfile in relfiles:
+            index = relfile.removesuffix(".REL").split("JPMOD")[-1]
             linecount = 0
             rf = open(f"{powerflow.exlffolder + folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
             rflines = rf.readlines()
@@ -129,12 +133,12 @@ def rint(powerflow, string=r"MOD(\d+)\.REL"):
             while linecount < len(rflines):
                 linecount += 1
                 try:
-                    if rflines[linecount] == rintheader:
+                    if rflines[linecount] == rintheaderlong or rflines[linecount] == rintheadershort:
                         linecount += 3
                         header = rflines[linecount - 1].split()[1:]
                         for row in range(0, 15):
                             r = int(rflines[linecount + 2].split()[0])
-                            for col in range(0, 15):
+                            for col in range(0, len(header)):
                                 c = int(header[col])
                                 p = float(rflines[linecount + 2].split()[col + 1])
                                 q = float(rflines[linecount + 3].split()[col])
@@ -143,21 +147,23 @@ def rint(powerflow, string=r"MOD(\d+)\.REL"):
                 except:
                     pass
 
-            #             try:
-            #                 if rflines[linecount].split()[0] == "TOTAL":
-            #                     with open(file.name, "a") as af:
-            #                         af.write(
-            #                             "{};{};{};{};{}\n".format(
-            #                                 re.search(string, relfile).group(1),
-            #                                 rflines[linecount].split()[1],
-            #                                 rflines[linecount + 1].split()[0],
-            #                                 rflines[linecount].split()[3],
-            #                                 rflines[linecount + 1].split()[2],
-            #                             )
-            #                         )
-            #                     break
-            #             except:
-            #                 pass
+            nnz_dict = {
+                f"{row}/{col}": intercambio.at[row, col]
+                for row in intercambio.index
+                for col in intercambio.columns
+                if isinstance(intercambio.at[row, col], tuple) and intercambio.at[row, col] != (0, 0)
+            }
+
+            # Convert to a DataFrame with columns as (row, col) pairs and the index as file_index
+            temp_df = pd.DataFrame([list(nnz_dict.values())], columns=nnz_dict.keys(), index=[index])
+
+            # Concatenate results
+            nnz_df = pd.concat([nnz_df, temp_df], ignore_index=False)
+
+        nnz_df.index.name = "CASO"
+        nnz_df.to_csv(powerflow.rintfolder + folder + ".txt", sep=";", index=True)
+        break
+
 
 
 def rtot(powerflow, string=r"MOD(\d+)\.REL"):

@@ -199,7 +199,7 @@ def cxlf(
     from yellowbrick.cluster import KElbowVisualizer
 
     ## Inicialização
-    file = powerflow.maindir + "\\sistemas\\EXLF\\SXLF_" + powerflow.name + ".REL"
+    file = powerflow.maindir + "\\sistemas\\EXLF\\EXLF_" + powerflow.name + ".REL"
     linecount = 0
     rf = open(f"{file}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()

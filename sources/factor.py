@@ -143,9 +143,11 @@ def generator_participation(
             mdger["operacao"] = "A"
 
     else:
-        raise ValueError(
-            f"\033[91mERROR: Ajuste nos dados dos geradores com erro!\033[0m"
-        )
+        mdger = dger.copy()
+        
+        # raise ValueError(
+        #     f"\033[91mERROR: Ajuste nos dados dos geradores com erro!\033[0m"
+        # )
 
     return mdger
 

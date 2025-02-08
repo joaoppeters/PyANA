@@ -35,12 +35,13 @@ def basexlf(
 
     # Manipulacao
     file = open(filedir, "w")
-    if "Q2024" in powerflow.name:
+    if "Q20" in powerflow.name:
         savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
         case = powerflow.name.split("_")[-1][1:]
     elif "NE224" in powerflow.name:
         savfile = powerflow.name + ".SAV"
         case = 1
+    
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
@@ -59,35 +60,35 @@ def basexlf(
         case,
     )
 
-    if powerflow.codes["DBAR"]:
-        udbar(
-            powerflow.dbarDF,
-            file,
-        )
+    # if powerflow.codes["DBAR"]:
+    #     udbar(
+    #         powerflow.dbarDF,
+    #         file,
+    #     )
 
-    if powerflow.codes["DGER"]:
-        udger(
-            powerflow.mdger,
-            file,
-        )
+    # if powerflow.codes["DGER"]:
+    #     udger(
+    #         powerflow.mdger,
+    #         file,
+    #     )
 
-    if powerflow.codes["DMFL"]:
-        if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
-            udmfl_circ(
-                powerflow.dmfl,
-                file,
-            )
-        else:
-            udmfl(
-                powerflow.dmfl,
-                file,
-            )
+    # if powerflow.codes["DMFL"]:
+    #     if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+    #         udmfl_circ(
+    #             powerflow.dmfl,
+    #             file,
+    #         )
+    #     else:
+    #         udmfl(
+    #             powerflow.dmfl,
+    #             file,
+    #         )
 
-    if powerflow.codes["DMTE"]:
-        udmte(
-            powerflow.dmte,
-            file,
-        )
+    # if powerflow.codes["DMTE"]:
+    #     udmte(
+    #         powerflow.dmte,
+    #         file,
+    #     )
 
     # Saida
     uxlftail(

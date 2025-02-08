@@ -420,10 +420,19 @@ def uxlftail(
         file:
     """
     ## Inicialização
+    if base:
+        execute = "EXLF"
+        savfile = "EXLF_" + powerflow.name + ".SAV"
+        relfile = "EXLF_" + powerflow.name + ".REL"
+    else:
+        execute = "EXLF BPSI"
+        savfile = "EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV"
+        relfile = "EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL"
+
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF BPSI")
+    file.write(execute)
 
     file.write("\n")
     file.write("( ")
@@ -435,10 +444,7 @@ def uxlftail(
     file.write("\n")
     file.write("2")
     file.write("\n")
-    if base:
-        file.write("EXLF_" + powerflow.name + ".SAV")
-    else:
-        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV")
+    file.write(savfile)
 
     file.write("\n")
     file.write("(")
@@ -465,16 +471,13 @@ def uxlftail(
     file.write("\n")
     file.write("4")
     file.write("\n")
-    if base:
-        file.write("EXLF_" + powerflow.name + ".REL")
-    else:
-        file.write("EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL")
+    file.write(relfile)
 
     file.write("\n")
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF BPSI RBAR RINT RTOT")
+    file.write(execute + " RBAR RINT RTOT")
 
     file.write("\n")
     file.write("(")
