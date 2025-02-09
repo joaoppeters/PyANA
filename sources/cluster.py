@@ -177,7 +177,6 @@
 # plt.show()
 
 
-
 # # ====== 4. DBSCAN (automático, baseado na densidade) ======
 # dbscan = DBSCAN(eps=0.5, min_samples=5)
 # df_clusters['DBSCAN'] = dbscan.fit_predict(X)
@@ -231,18 +230,27 @@ def cxlf(
     from yellowbrick.cluster import KElbowVisualizer
 
     ## Inicialização
-    nnz_df = bint(powerflow,)
-    basecase = btot(powerflow,)
+    nnz_df = bint(
+        powerflow,
+    )
+    basecase = btot(
+        powerflow,
+    )
 
-    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
+    rtotfolder = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
     files = [
         f
-        for f in listdir(folder_path)
+        for f in listdir(rtotfolder)
         if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
     data = pd.concat(
-        [pd.read_csv(folder_path + file, delimiter=";", header=0) for file in files],
+        [
+            pd.read_csv(rtotfolder + file, delimiter=";", header=0).assign(
+                filename=file
+            )
+            for file in files
+        ],
         ignore_index=True,
     )
     data["x"] = data["pATIVA"] - data["dATIVA"]
@@ -322,6 +330,8 @@ def cxic(
         powerflow (_type_): Description
     """
 
+    from rela import bint, btot
+
     import matplotlib.pyplot as plt
     import numpy as np
     import pandas as pd
@@ -335,40 +345,23 @@ def cxic(
     from ulog import usxic
 
     ## Inicialização
-    file = powerflow.maindir + "\\sistemas\\EXLF\\EXLF_" + powerflow.name + ".REL"
-    linecount = 0
-    rf = open(f"{file}", "r", encoding="utf-8", errors="ignore")
-    rflines = rf.readlines()
-    rf.close()
-    flag = True
-    while flag:
-        linecount += 1
-        if rflines[linecount] == " RELATORIO DE TOTAIS DE AREA\n":
-            while linecount < len(rflines):
-                linecount += 1
-                try:
-                    if rflines[linecount].split()[0] == "TOTAL":
-                        basecase = [
-                            float(rflines[linecount].split()[1]),
-                            float(rflines[linecount + 1].split()[0]),
-                            float(rflines[linecount].split()[3]),
-                            float(rflines[linecount + 1].split()[2]),
-                        ]
-                        flag = False
-                        break
-                except:
-                    pass
+    nnz_df = bint(
+        powerflow,
+    )
+    basecase = btot(
+        powerflow,
+    )
 
-    folder_path = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
+    rtotfolder = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
     files = [
         f
-        for f in listdir(folder_path)
+        for f in listdir(rtotfolder)
         if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
     data = pd.concat(
         [
-            pd.read_csv(folder_path + file, delimiter=";", header=0).assign(
+            pd.read_csv(rtotfolder + file, delimiter=";", header=0).assign(
                 filename=file
             )
             for file in files

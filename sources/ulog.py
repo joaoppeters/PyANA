@@ -24,15 +24,13 @@ def basexlf(
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
-    bxlffolder(powerflow,)
+    bxlffolder(
+        powerflow,
+    )
 
     # Arquivo
     filedir = realpath(
-        powerflow.bxlffolder
-        + powerflow.method
-        + "_"
-        + powerflow.name
-        + ".PWF"
+        powerflow.bxlffolder + powerflow.method + "_" + powerflow.name + ".PWF"
     )
 
     # Manipulacao
@@ -43,7 +41,6 @@ def basexlf(
     elif "NE224" in powerflow.name:
         savfile = powerflow.name + ".SAV"
         case = 1
-    
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
@@ -137,7 +134,9 @@ def basexic(
     )
 
     ## Inicialização
-    bxicfolder(powerflow,)
+    bxicfolder(
+        powerflow,
+    )
     savfile = "SXLF_" + powerflow.name + ".SAV"
     exlf2new(
         exlffolder=powerflow.bxlffolder,
@@ -147,11 +146,7 @@ def basexic(
 
     # Arquivo
     filedir = realpath(
-        powerflow.bxicfolder
-        + powerflow.method
-        + "_"
-        + powerflow.name
-        + ".PWF"
+        powerflow.bxicfolder + powerflow.method + "_" + powerflow.name + ".PWF"
     )
 
     # Manipulacao

@@ -11,7 +11,9 @@ from os.path import dirname
 import re
 
 
-def bint(powerflow,):
+def bint(
+    powerflow,
+):
     """
 
     Args
@@ -22,22 +24,31 @@ def bint(powerflow,):
     import pandas as pd
 
     ## Inicialização
-    rintheaderlong  = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    rintheaderlong = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
     rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
-    
-    relfile = powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+
+    relfile = (
+        powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    )
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()
     rf.close()
-    
+
     areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
-    intercambio = pd.DataFrame(index=areas, columns=areas, dtype='object',)
-        
+    intercambio = pd.DataFrame(
+        index=areas,
+        columns=areas,
+        dtype="object",
+    )
+
     while linecount < len(rflines):
         linecount += 1
         try:
-            if rflines[linecount] == rintheaderlong or rflines[linecount] == rintheadershort:
+            if (
+                rflines[linecount] == rintheaderlong
+                or rflines[linecount] == rintheadershort
+            ):
                 linecount += 3
                 header = rflines[linecount - 1].split()[1:]
                 for row in range(0, 15):
@@ -55,7 +66,8 @@ def bint(powerflow,):
         f"{row}/{col}": intercambio.at[row, col]
         for row in intercambio.index
         for col in intercambio.columns
-        if isinstance(intercambio.at[row, col], tuple) and intercambio.at[row, col] != (0, 0)
+        if isinstance(intercambio.at[row, col], tuple)
+        and intercambio.at[row, col] != (0, 0)
     }
 
     # Convert to a DataFrame with columns as (row, col) pairs and the index as file_index
@@ -65,7 +77,9 @@ def bint(powerflow,):
     return nnz_df
 
 
-def btot(powerflow,):
+def btot(
+    powerflow,
+):
     """
 
     Args
@@ -73,7 +87,9 @@ def btot(powerflow,):
         string:
     """
     ## Inicialização
-    relfile = powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    relfile = (
+        powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    )
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()
@@ -151,27 +167,32 @@ def rxic(folder, relfiles, vsmfile, string=r"C(\d+)\_(\d+)\.REL"):
     return surface
 
 
-def rint(powerflow,):
+def rint(
+    powerflow,
+):
     """
 
     Args
         powerflow (_type_): _description_
         string (str, optional): Defaults to r"MOD(\d+)\.REL".
     """
-    
+
     import pandas as pd
 
     from folder import rintfolder
 
     ## Inicialização
-    rintheaderlong  = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
+    rintheaderlong = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
     rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
-    
-    rintfolder(powerflow,)
+
+    rintfolder(
+        powerflow,
+    )
     areas = powerflow.dbarDF.area.drop_duplicates().sort_values().tolist()
 
     folders = [
-        f for f in listdir(powerflow.exlffolder)
+        f
+        for f in listdir(powerflow.exlffolder)
         if f.startswith("EXLF_" + powerflow.name + "_")
     ]
 
@@ -182,20 +203,32 @@ def rint(powerflow,):
             if f.startswith("EXLF") and f.endswith(".REL")
         ]
 
-        intercambio = pd.DataFrame(index=areas, columns=areas, dtype='object',)
+        intercambio = pd.DataFrame(
+            index=areas,
+            columns=areas,
+            dtype="object",
+        )
         nnz_df = pd.DataFrame()
-        
+
         for relfile in relfiles:
             index = relfile.removesuffix(".REL").split("JPMOD")[-1]
             linecount = 0
-            rf = open(f"{powerflow.exlffolder + folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore")
+            rf = open(
+                f"{powerflow.exlffolder + folder + '/' + relfile}",
+                "r",
+                encoding="utf-8",
+                errors="ignore",
+            )
             rflines = rf.readlines()
             rf.close()
 
             while linecount < len(rflines):
                 linecount += 1
                 try:
-                    if rflines[linecount] == rintheaderlong or rflines[linecount] == rintheadershort:
+                    if (
+                        rflines[linecount] == rintheaderlong
+                        or rflines[linecount] == rintheadershort
+                    ):
                         linecount += 3
                         header = rflines[linecount - 1].split()[1:]
                         for row in range(0, 15):
@@ -213,18 +246,20 @@ def rint(powerflow,):
                 f"{row}/{col}": intercambio.at[row, col]
                 for row in intercambio.index
                 for col in intercambio.columns
-                if isinstance(intercambio.at[row, col], tuple) and intercambio.at[row, col] != (0, 0)
+                if isinstance(intercambio.at[row, col], tuple)
+                and intercambio.at[row, col] != (0, 0)
             }
 
             # Convert to a DataFrame with columns as (row, col) pairs and the index as file_index
-            temp_df = pd.DataFrame([list(nnz_dict.values())], columns=nnz_dict.keys(), index=[index])
+            temp_df = pd.DataFrame(
+                [list(nnz_dict.values())], columns=nnz_dict.keys(), index=[index]
+            )
 
             # Concatenate results
             nnz_df = pd.concat([nnz_df, temp_df], ignore_index=False)
 
         nnz_df.index.name = "CASO"
         nnz_df.to_csv(powerflow.rintfolder + folder + ".txt", sep=";", index=True)
-
 
 
 def rtot(powerflow, string=r"MOD(\d+)\.REL"):
@@ -247,8 +282,7 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
     folders = [
         f
         for f in listdir(powerflow.exlffolder)
-        if f.startswith("EXLF_" + powerflow.name + "_")
-        and f.endswith(".REL")        
+        if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".REL")
     ]
 
     for folder in folders:
@@ -263,11 +297,14 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
             for f in listdir(powerflow.exlffolder + folder)
             if f.startswith("EXLF") and f.endswith(".REL")
         ]
-        
+
         for relfile in relfiles:
             linecount = 0
             rf = open(
-                f"{powerflow.exlffolder + folder + '/' + relfile}", "r", encoding="utf-8", errors="ignore"
+                f"{powerflow.exlffolder + folder + '/' + relfile}",
+                "r",
+                encoding="utf-8",
+                errors="ignore",
             )
             rflines = rf.readlines()
             rf.close()
@@ -294,7 +331,7 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
                                 break
                         except:
                             pass
-                        
+
         # Open and read the file
         with open(powerflow.rtotfolder + folder + ".txt", "r") as f:
             lines = f.readlines()

@@ -30,14 +30,14 @@ from powerflow import PowerFlow
 # system = "2Q2023_R2_C9.pwf" # MAY-AUG 2023
 # system = "3Q2023_R2_C9.pwf" # SEP-DEC 2023
 # system = "1Q2024_R2_C11.pwf" # JAN-APR 2024
-system = "2Q2024_R2_C1.pwf" # MAY-AUG 2024
+system = "2Q2024_R2_C1.pwf"  # MAY-AUG 2024
 # system = "3Q2024_R2_C11.pwf" # SEP-DEC 2024
 # system = "1Q2025_R1_C11.pwf" # JAN-APR 2025
 # system = "2Q2025_R0_C11.pwf" # MAY-AUG 2025
 # system = "NE224-C1.pwf"
 
-method =  "EXLF"  # NEWTON-RAPHSON
-method =  "EXIC"  # CONTINUATION POWER FLOW
+method = "EXLF"  # NEWTON-RAPHSON
+method = "EXIC"  # CONTINUATION POWER FLOW
 # method =  "EXPC" # POINT OF COLLAPSE
 # method =  "EXSI"  # DYNAMIC SIMULATION
 # method =  "BXLF" # NEWTON-RAPHSON (ANAREDE BATCH RUNNING)
@@ -57,7 +57,7 @@ method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "RINT"
 # method =  "RPVCT"
 # method =  "VSM"
-method =  "CXLF"
+method = "CXLF"
 # method =  "CXIC"
 # method =  "CXCT"
 

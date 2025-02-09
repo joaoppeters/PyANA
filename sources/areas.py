@@ -8,6 +8,7 @@
 
 from folder import areasfolder
 
+
 def q2024(
     powerflow,
 ):

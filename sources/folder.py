@@ -65,7 +65,7 @@ def bxlffolder(
     powerflow,
 ):
     """
-    
+
     Args
         powerflow:
     """
@@ -83,7 +83,7 @@ def bxicfolder(
     powerflow,
 ):
     """
-    
+
     Args
         powerflow:
     """
@@ -97,8 +97,6 @@ def bxicfolder(
     powerflow.bxicfolder = powerflow.exicfolder + "BASE\\"
     if exists(powerflow.bxicfolder) is False:
         mkdir(powerflow.bxicfolder)
-
-
 
 
 def convergencefolder(

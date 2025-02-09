@@ -55,7 +55,6 @@ class PowerFlow:
             simulation(
                 self,
             )
-    
 
         else:
             ## ERROR - VERMELHO

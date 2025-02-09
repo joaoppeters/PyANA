@@ -144,7 +144,7 @@ def generator_participation(
 
     else:
         mdger = dger.copy()
-        
+
         # raise ValueError(
         #     f"\033[91mERROR: Ajuste nos dados dos geradores com erro!\033[0m"
         # )
