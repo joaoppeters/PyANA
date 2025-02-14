@@ -13,13 +13,16 @@ import re
 
 def bint(
     powerflow,
+    relfile: str = "",
 ):
     """
 
     Args
         powerflow (_type_): _description_
-        string (str, optional): Defaults to r"MOD(\d+)\.REL".
+        relfile (str, optional): ".
     """
+
+    from folder import bxlffolder
 
     import pandas as pd
 
@@ -27,9 +30,11 @@ def bint(
     rintheaderlong = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
     rintheadershort = " X----X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X-------X\n"
 
-    relfile = (
-        powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    bxlffolder(
+        powerflow,
     )
+    if not relfile:
+        relfile = powerflow.bxlffolder + "EXLF_" + powerflow.name + ".REL"
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()
@@ -79,17 +84,23 @@ def bint(
 
 def btot(
     powerflow,
+    relfile: str = "",
 ):
     """
 
     Args
-        folder:
-        string:
+        powerflow:
+        relfile:
     """
+
+    from folder import bxlffolder
+
     ## Inicialização
-    relfile = (
-        powerflow.maindir + "\\sistemas\\EXLF\\BASE\\EXLF_" + powerflow.name + ".REL"
+    bxlffolder(
+        powerflow,
     )
+    if not relfile:
+        relfile = powerflow.bxlffolder + "EXLF_" + powerflow.name + ".REL"
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
     rflines = rf.readlines()

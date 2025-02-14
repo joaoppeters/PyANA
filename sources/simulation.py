@@ -307,14 +307,84 @@ def simulation(
         )
 
     elif powerflow.method == "CXLF":
+        from areas import q2024, ne224
         from cluster import cxlf
+        from folder import areasfolder
+        from normal import samples
+
+        areasfolder(
+            powerflow,
+        )
+
+        if "NE224" in powerflow.name:
+            ne224(
+                powerflow,
+            )
+        elif "Q2024" in powerflow.name:
+            q2024(
+                powerflow,
+            )
+            powerflow.lmean = powerflow.cargas.demanda_ativa[
+                powerflow.cargas.demanda_ativa > 0
+            ].sum()
+            powerflow.sload = samples(
+                mean=powerflow.lmean,
+                stddev=(15 * 1e-2) * powerflow.lmean,
+                seed=1,
+                samples=1000,
+            )
+            powerflow.wmean = powerflow.nordeste[
+                powerflow.nordeste.nome.str.contains("EOL|EO-")
+                & (powerflow.nordeste.potencia_ativa > 0.0)
+            ].potencia_ativa.sum()
+            powerflow.swind = samples(
+                mean=powerflow.wmean,
+                stddev=(15 * 1e-2) * powerflow.wmean,
+                seed=1,
+                samples=1000,
+            )
 
         cxlf(
             powerflow,
         )
 
     elif powerflow.method == "CXIC":
+        from areas import q2024, ne224
         from cluster import cxic
+        from folder import areasfolder
+        from normal import samples
+
+        areasfolder(
+            powerflow,
+        )
+
+        if "NE224" in powerflow.name:
+            ne224(
+                powerflow,
+            )
+        elif "Q2024" in powerflow.name:
+            q2024(
+                powerflow,
+            )
+            powerflow.lmean = powerflow.cargas.demanda_ativa[
+                powerflow.cargas.demanda_ativa > 0
+            ].sum()
+            powerflow.sload = samples(
+                mean=powerflow.lmean,
+                stddev=(15 * 1e-2) * powerflow.lmean,
+                seed=1,
+                samples=1000,
+            )
+            powerflow.wmean = powerflow.nordeste[
+                powerflow.nordeste.nome.str.contains("EOL|EO-")
+                & (powerflow.nordeste.potencia_ativa > 0.0)
+            ].potencia_ativa.sum()
+            powerflow.swind = samples(
+                mean=powerflow.wmean,
+                stddev=(15 * 1e-2) * powerflow.wmean,
+                seed=1,
+                samples=1000,
+            )
 
         cxic(
             powerflow,

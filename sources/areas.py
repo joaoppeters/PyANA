@@ -187,34 +187,81 @@ def q2024(
         ignore_index=True,
     )
 
-    # # CODIGO PARA FILTRAGEM DE LINHAS DE INTERCONEXAO ENTRE REGIOES GEOELETRICAS DO SISTEMA ELETRICO BRASILEIRO
-    # seco = concat([powerflow.sudeste, powerflow.centro,], axis=0, ignore_index=True)
-    # seco_de = seco.rename(columns={"numero": "de"})
-    # seco_para = seco.rename(columns={"numero": "para"})
+    # CODIGO PARA FILTRAGEM DE LINHAS DE INTERCONEXAO ENTRE REGIOES GEOELETRICAS DO SISTEMA ELETRICO BRASILEIRO
+    seco = concat(
+        [
+            powerflow.sudeste,
+            powerflow.centro,
+        ],
+        axis=0,
+        ignore_index=True,
+    )
+    seco_de = seco.rename(columns={"numero": "de"})
+    seco_para = seco.rename(columns={"numero": "para"})
 
-    # nordeste_de = powerflow.nordeste.rename(columns={"numero": "de"})
-    # nordeste_para = powerflow.nordeste.rename(columns={"numero": "para"})
+    nordeste_de = powerflow.nordeste.rename(columns={"numero": "de"})
+    nordeste_para = powerflow.nordeste.rename(columns={"numero": "para"})
 
-    # norte_de = powerflow.norte.rename(columns={"numero": "de"})
-    # norte_para = powerflow.norte.rename(columns={"numero": "para"})
+    norte_de = powerflow.norte.rename(columns={"numero": "de"})
+    norte_para = powerflow.norte.rename(columns={"numero": "para"})
 
-    # # SECO <-> NORDESTE
-    # secone = merge(powerflow.dlinDF, seco_de, on="de")
-    # secone = merge(secone, nordeste_para, on="para")
-    # neseco = merge(powerflow.dlinDF, nordeste_de, on="de")
-    # neseco = merge(neseco, seco_para, on="para")
+    # SECO <-> NORDESTE
+    secone = merge(powerflow.dlinDF, seco_de, on="de")
+    secone = merge(secone, nordeste_para, on="para")
+    neseco = merge(powerflow.dlinDF, nordeste_de, on="de")
+    neseco = merge(neseco, seco_para, on="para")
     # print("INTERLIGACAO SECO-NORDESTE")
-    # print(secone[["de", "para", "circuito", "area_x", "area_y",]])
-    # print(neseco[["de", "para", "circuito", "area_x", "area_y",]])
+    # print(
+    #     secone[
+    #         [
+    #             "de",
+    #             "para",
+    #             "circuito",
+    #             "area_x",
+    #             "area_y",
+    #         ]
+    #     ]
+    # )
+    # print(
+    #     neseco[
+    #         [
+    #             "de",
+    #             "para",
+    #             "circuito",
+    #             "area_x",
+    #             "area_y",
+    #         ]
+    #     ]
+    # )
 
-    # # NORTE <-> NORDESTE
-    # nne = merge(powerflow.dlinDF, norte_de, on="de")
-    # nne = merge(nne, nordeste_para, on="para")
-    # nen = merge(powerflow.dlinDF, nordeste_de, on="de")
-    # nen = merge(nen, norte_para, on="para")
+    # NORTE <-> NORDESTE
+    nne = merge(powerflow.dlinDF, norte_de, on="de")
+    nne = merge(nne, nordeste_para, on="para")
+    nen = merge(powerflow.dlinDF, nordeste_de, on="de")
+    nen = merge(nen, norte_para, on="para")
     # print("INTERLIGACAO NORTE-NORDESTE")
-    # print(nne[["de", "para", "circuito", "area_x", "area_y",]])
-    # print(nen[["de", "para", "circuito", "area_x", "area_y",]])
+    # print(
+    #     nne[
+    #         [
+    #             "de",
+    #             "para",
+    #             "circuito",
+    #             "area_x",
+    #             "area_y",
+    #         ]
+    #     ]
+    # )
+    # print(
+    #     nen[
+    #         [
+    #             "de",
+    #             "para",
+    #             "circuito",
+    #             "area_x",
+    #             "area_y",
+    #         ]
+    #     ]
+    # )
 
     powerflow.estados = {
         "RS": powerflow.rio_grande_sul,
@@ -586,7 +633,7 @@ def q2024(
 
     powerflow.cargas = powerflow.sao_paulo.copy()
     powerflow.eolicas = powerflow.nordeste[
-        powerflow.nordeste.nome.str.contains("EOL|EO-")
+        powerflow.nordeste.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
     ].copy()
 
 

@@ -203,6 +203,7 @@ Thumbs.db
 *.BIN
 *.bin
 *.zip
+*.csv
 
 
 sistemas/*.txt
@@ -225,6 +226,7 @@ sistemas/ULOG*
 *stats.py
 *sats.py
 *test.py
+*timeseries.py
 
 *BALANCE.txt
 

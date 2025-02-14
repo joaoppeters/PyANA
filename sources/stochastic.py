@@ -16,14 +16,13 @@ def sxlf(
         powerflow:
     """
 
-    from os import listdir, remove
-    from os.path import dirname, exists, isfile, join, realpath
+    from os import remove
+    from os.path import exists, realpath
 
     from anarede import anarede
     from factor import load_participation, loadf, windf
     from folder import sxlffolder
     from normal import loadn, windn
-    from rwstb import rwstb
     from ulog import usxlf
 
     ## Inicialização
@@ -38,8 +37,8 @@ def sxlf(
         )
 
         (
-            lpsamples,
-            lpmean,
+            sload,
+            lmean,
         ) = loadn(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
@@ -48,8 +47,8 @@ def sxlf(
             maindir=powerflow.maindir,
         )
         (
-            wpsamples,
-            wpmean,
+            swind,
+            wmean,
         ) = windn(
             name=powerflow.name,
             nsamples=powerflow.nsamples,
@@ -61,8 +60,8 @@ def sxlf(
         # Factor
         powerflow.mdbar = load_participation(
             name=powerflow.name,
-            lpmean=lpmean,
-            wpmean=wpmean,
+            lmean=lmean,
+            wmean=wmean,
             dbar=powerflow.dbarDF.copy(),
             stateload=powerflow.cargas.copy(),
             stategeneration=powerflow.eolicas.copy(),
@@ -70,15 +69,15 @@ def sxlf(
 
         # Loop de amostras
         powerflow.ones = 0
-        for s in range(0, len(lpsamples)):
+        for s in range(0, len(sload)):
             powerflow.mdbar = loadf(
                 mdbar=powerflow.mdbar,
-                psamples=lpsamples,
+                psamples=sload,
                 s=s,
             )
             powerflow.mdbar = windf(
                 mdbar=powerflow.mdbar,
-                wsamples=wpsamples,
+                wsamples=swind,
                 s=s,
             )
             powerflow.ones += 1
@@ -123,14 +122,9 @@ def sxic(
         powerflow:
     """
     ## Inicialização
-    from os import listdir
-    from os.path import exists, isfile, join
-
     from areas import ne224, q2024
-    from anarede import anarede
     from folder import areasfolder, sxicfolder
-    from rela import rxic
-    from ulog import usxlf, usxic
+    from ulog import usxic
 
     areasfolder(
         powerflow,
@@ -196,31 +190,6 @@ def sxic(
             savfiles,
         )
 
-    # for stddev in range(1, 11, 1):
-    #     folder_path = (
-    #         powerflow.maindir
-    #         + "\\sistemas\\"
-    #         + powerflow.name
-    #         + "_loadstd{}_geolstd{}".format(
-    #             stddev,
-    #             stddev,
-    #         )
-    #     )
-
-    #     # List and filter files by extension
-    #     relfiles = [
-    #         f
-    #         for f in listdir(folder_path)
-    #         if f.startswith("EXIC")
-    #         and f.endswith(".REL")
-    #         and isfile(join(folder_path, f))
-    #     ]
-
-    #     rxic(
-    #         powerflow,
-    #         relfiles,
-    #     )
-
 
 def sxct(
     powerflow,
@@ -235,8 +204,7 @@ def sxct(
     from os import listdir
     from os.path import isfile, join
 
-    from folder import areasfolder, sxctfolder
-    from rela import rxct
+    from folder import sxctfolder
     from ulog import usxct
 
     for stddev in range(1, 11, 1):
@@ -271,31 +239,6 @@ def sxct(
             savfiles,
         )
 
-    # for stddev in range(1, 11, 1):
-    #     folder_path = (
-    #         powerflow.maindir
-    #         + "\\sistemas\\"
-    #         + powerflow.name
-    #         + "_loadstd{}_geolstd{}".format(
-    #             stddev,
-    #             stddev,
-    #         )
-    #     )
-
-    #     # List and filter files by extension
-    #     relfiles = [
-    #         f
-    #         for f in listdir(folder_path)
-    #         if f.startswith("EXCT")
-    #         and f.endswith(".REL")
-    #         and isfile(join(folder_path, f))
-    #     ]
-
-    #     rxct(
-    #         powerflow,
-    #         relfiles,
-    #     )
-
 
 def spvct(
     powerflow,
@@ -311,7 +254,6 @@ def spvct(
     from os.path import isfile, join
 
     from folder import spvctfolder
-    from rela import rpvct
     from ulog import uspvct
 
     for stddev in range(1, 4, 1):
@@ -345,28 +287,3 @@ def spvct(
             folder_path,
             savfiles,
         )
-
-    # for stddev in range(1, 11, 1):
-    #     folder_path = (
-    #         powerflow.maindir
-    #         + "\\sistemas\\"
-    #         + powerflow.name
-    #         + "_loadstd{}_geolstd{}".format(
-    #             stddev,
-    #             stddev,
-    #         )
-    #     )
-
-    #     # List and filter files by extension
-    #     relfiles = [
-    #         f
-    #         for f in listdir(folder_path)
-    #         if f.startswith("EPVCT")
-    #         and f.endswith(".REL")
-    #         and isfile(join(folder_path, f))
-    #     ]
-
-    #     rxpvct(
-    #         powerflow,
-    #         relfiles,
-    #     )

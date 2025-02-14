@@ -220,7 +220,9 @@ def cxlf(
 
     from rela import bint, btot
 
+    import ast
     import matplotlib.pyplot as plt
+    from numpy import array
     import pandas as pd
     from os import listdir
     import seaborn as sns
@@ -230,32 +232,68 @@ def cxlf(
     from yellowbrick.cluster import KElbowVisualizer
 
     ## Inicialização
-    nnz_df = bint(
-        powerflow,
-    )
     basecase = btot(
         powerflow,
     )
 
-    rtotfolder = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
-    files = [
+    rtotfolder = powerflow.exlffolder + "RTOT\\"
+    rtotfile = [
         f
         for f in listdir(rtotfolder)
         if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
-    data = pd.concat(
+    rtot_df = pd.concat(
         [
             pd.read_csv(rtotfolder + file, delimiter=";", header=0).assign(
                 filename=file
             )
-            for file in files
+            for file in rtotfile
         ],
         ignore_index=True,
     )
-    data["x"] = data["pATIVA"] - data["dATIVA"]
-    data["y"] = data["pREATIVA"] - data["dREATIVA"]
-    df = data[["x", "y"]]
+    rtot_df["color"] = "gray"
+    rtot_df["x"] = rtot_df["pATIVA"] - rtot_df["dATIVA"]
+    rtot_df["y"] = rtot_df["pREATIVA"] - rtot_df["dREATIVA"]
+    df = rtot_df[["x", "y"]]
+
+    areas = {
+        "NE_SECO": [
+            "701/351",
+            "701/511",
+            "711/351",
+        ],
+        "NE_N": ["702/882", "771/861", "771/881", "772/862"],
+    }
+    rintfolder = powerflow.exlffolder + "RINT\\"
+    rintfile = [
+        f
+        for f in listdir(rintfolder)
+        if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
+    ]
+    rint_df = pd.read_csv(rintfolder + rintfile[0], delimiter=";", header=0)
+    # Criar as novas colunas com a soma das colunas correspondentes
+    # Função para somar tuplas elemento a elemento
+    for area, cols in areas.items():
+        rint_df[area] = rint_df[cols].apply(
+            lambda row: tuple(
+                sum(x) for x in zip(*(ast.literal_eval(val) for val in row))
+            ),
+            axis=1,
+        )
+
+    # # Filtrar e exibir os casos onde o primeiro valor da tupla é negativo
+    # print("Casos onde o primeiro valor da tupla é negativo:")
+    # print(rint_df[rint_df["NE_SECO"].apply(lambda x: x[0] < 0)][["CASO", "NE_SECO"]])
+    rint_df["NESECOcolor"] = rint_df["NE_SECO"].apply(
+        lambda x: "gray" if x[0] > 0 else "red"
+    )
+    # # Filtrar e exibir os casos onde o primeiro valor da tupla é negativo
+    # print("Casos onde o primeiro valor da tupla é negativo:")
+    # print(rint_df[rint_df["NE_N"].apply(lambda x: x[0] < 0)][["CASO", "NE_N"]])
+    rint_df["NENcolor"] = rint_df["NE_N"].apply(
+        lambda x: "gray" if x[0] > 0 else "blue"
+    )
 
     # ====== 1. PLOTAR PONTOS ORIGINAIS ======
     plt.figure(figsize=(6, 5))
@@ -264,13 +302,55 @@ def cxlf(
         basecase[1] - basecase[3],
         marker="d",
         color="black",
-        s=50,
+        s=75,
         zorder=2,
     )
-    plt.scatter(data["x"], data["y"], s=50, color="gray", alpha=0.7)
+    plt.scatter(rtot_df["x"], rtot_df["y"], s=75, color="gray", alpha=0.7)
     plt.title("Pontos Originais (Antes do Clustering)")
     plt.xlabel("ΔP (MW)")
     plt.ylabel("ΔQ (MVAr)")
+
+    # ====== 2. PLOTAR PONTOS OUTLIERS ======
+    plt.figure(figsize=(6, 5))
+    plt.scatter(
+        basecase[0] - basecase[2],
+        basecase[1] - basecase[3],
+        marker="d",
+        color="black",
+        s=75,
+        zorder=2,
+    )
+    plt.scatter(
+        rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NESECOcolor"], alpha=0.7
+    )
+    plt.title("Pontos Originais (Antes do Clustering) - NESECO")
+    plt.xlabel("ΔP (MW)")
+    plt.ylabel("ΔQ (MVAr)")
+
+    # ====== 3. PLOTAR PONTOS OUTLIERS ======
+    plt.figure(figsize=(6, 5))
+    plt.scatter(
+        basecase[0] - basecase[2],
+        basecase[1] - basecase[3],
+        marker="d",
+        color="black",
+        s=75,
+        zorder=2,
+    )
+    plt.scatter(rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NENcolor"], alpha=0.7)
+    plt.title("Pontos Originais (Antes do Clustering) - NEN")
+    plt.xlabel("ΔP (MW)")
+    plt.ylabel("ΔQ (MVAr)")
+
+    rint_df = rint_df.loc[rint_df["NE_N"].apply(lambda x: x[0] >= 0)].reset_index(
+        drop=True
+    )
+    rint_df = rint_df.loc[rint_df["NE_SECO"].apply(lambda x: x[0] >= 0)].reset_index(
+        drop=True
+    )
+    cvg_cases = array(rint_df.CASO.sort_values().tolist()) - 1
+    powerflow.sload = powerflow.sload[cvg_cases]
+    powerflow.swind = powerflow.swind[cvg_cases]
 
     # Normalizar os dados
     scaler = StandardScaler()
@@ -300,13 +380,13 @@ def cxlf(
         def plot_clusters(method, labels):
             """Gera gráficos de dispersão para visualizar os clusters."""
             plt.figure(figsize=(6, 5))
-            sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=50)
+            sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=75)
             plt.scatter(
                 basecase[0] - basecase[2],
                 basecase[1] - basecase[3],
                 marker="d",
                 color="black",
-                s=50,
+                s=75,
                 zorder=2,
             )
             plt.title(f"{method} Clustering")
@@ -345,32 +425,30 @@ def cxic(
     from ulog import usxic
 
     ## Inicialização
-    nnz_df = bint(
-        powerflow,
-    )
     basecase = btot(
         powerflow,
     )
 
-    rtotfolder = powerflow.maindir + "\\sistemas\\EXLF\\RTOT\\"
-    files = [
+    rtotfolder = powerflow.exlffolder + "RTOT\\"
+    rintfolder = powerflow.exlffolder + "RINT\\"
+    rtotfile = [
         f
         for f in listdir(rtotfolder)
         if f.startswith("EXLF_" + powerflow.name + "_") and f.endswith(".txt")
     ]
 
-    data = pd.concat(
+    rtot_df = pd.concat(
         [
             pd.read_csv(rtotfolder + file, delimiter=";", header=0).assign(
                 filename=file
             )
-            for file in files
+            for file in rtotfile
         ],
         ignore_index=True,
     )
-    data["x"] = data["pATIVA"] - data["dATIVA"]
-    data["y"] = data["pREATIVA"] - data["dREATIVA"]
-    df = data[
+    rtot_df["x"] = rtot_df["pATIVA"] - rtot_df["dATIVA"]
+    rtot_df["y"] = rtot_df["pREATIVA"] - rtot_df["dREATIVA"]
+    df = rtot_df[
         [
             "x",
             "y",
@@ -385,10 +463,10 @@ def cxic(
         basecase[1] - basecase[3],
         marker="d",
         color="black",
-        s=50,
+        s=75,
         zorder=2,
     )
-    plt.scatter(df["x"], df["y"], s=50, color="gray", alpha=0.7)
+    plt.scatter(df["x"], df["y"], s=75, color="gray", alpha=0.7)
     plt.title("Pontos Originais (Antes do Clustering)")
     plt.xlabel("ΔP (MW)")
     plt.ylabel("ΔQ (MVAr)")
@@ -424,7 +502,7 @@ def cxic(
     def plot_clusters(method, labels):
         """Gera gráficos de dispersão para visualizar os clusters."""
         plt.figure(figsize=(6, 5))
-        sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=50)
+        sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=75)
         plt.title(f"{method} Clustering")
         plt.xlabel("x")
         plt.ylabel("y")
@@ -448,8 +526,8 @@ def cxic(
 
     df_centroids = find_closest_points(centroids_original_scale, df)
 
-    # Identificar os pontos correspondentes no dataframe original "data"
-    df_centroids_data = data.merge(
+    # Identificar os pontos correspondentes no dataframe original "rtot_df"
+    df_centroids_data = rtot_df.merge(
         df_centroids[["x", "y", "filename"]], on=["x", "y", "filename"], how="inner"
     )
     print(df_centroids_data)
