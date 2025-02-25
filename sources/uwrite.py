@@ -43,7 +43,7 @@ def uheader(
 def uarq(
     file,
     savfile,
-    case,
+    savcase,
 ):
     """
 
@@ -59,7 +59,7 @@ def uarq(
     file.write("\n")
     file.write("ARQV REST")
     file.write("\n")
-    file.write("{}".format(case))
+    file.write("{}".format(savcase))
     file.write("\n")
 
 
@@ -412,6 +412,7 @@ def uxlftail(
     powerflow,
     file,
     base=False,
+    where="EXLF",
 ):
     """
 
@@ -421,7 +422,7 @@ def uxlftail(
     """
     ## Inicialização
     if base:
-        execute = "EXLF"
+        execute = "EXLF BPSI"
         savfile = "EXLF_" + powerflow.name + ".SAV"
         relfile = "EXLF_" + powerflow.name + ".REL"
     else:
@@ -429,41 +430,42 @@ def uxlftail(
         savfile = "EXLF_" + powerflow.namecase + str(powerflow.ones) + ".SAV"
         relfile = "EXLF_" + powerflow.namecase + str(powerflow.ones) + ".REL"
 
-    file.write("( ")
-    file.write("\n")
+    if where == "EXLF":
+        file.write("( ")
+        file.write("\n")
 
-    file.write(execute)
+        file.write(execute)
 
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
 
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("2")
-    file.write("\n")
-    file.write(savfile)
+        file.write("ULOG")
+        file.write("\n")
+        file.write("(N")
+        file.write("\n")
+        file.write("2")
+        file.write("\n")
+        file.write(savfile)
 
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
 
-    file.write("ARQV INIC IMPR")
-    file.write("\n")
-    file.write("SIM")
+        file.write("ARQV INIC IMPR")
+        file.write("\n")
+        file.write("SIM")
 
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
 
-    file.write("ARQV GRAV IMPR NOVO")
-    file.write("\n")
-    file.write("1")
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
+        file.write("ARQV GRAV IMPR NOVO")
+        file.write("\n")
+        file.write("1")
+        file.write("\n")
+        file.write("(")
+        file.write("\n")
 
     file.write("ULOG")
     file.write("\n")
@@ -505,47 +507,6 @@ def uxictail(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXLF BPSI")
-
-    file.write("\n")
-    file.write("( ")
-    file.write("\n")
-
-    file.write("ULOG")
-    file.write("\n")
-    file.write("(N")
-    file.write("\n")
-    file.write("2")
-    file.write("\n")
-    file.write("EXIC_" + filename + ".SAV")
-
-    file.write("\n")
-    file.write("(")
-    file.write("\n")
-
-    if var == start:
-        file.write("ARQV INIC IMPR")
-        file.write("\n")
-        file.write("SIM")
-
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
-
-        file.write("ARQV GRAV IMPR NOVO")
-        file.write("\n")
-        file.write("1")
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
-    else:
-        file.write("ARQV GRAV IMPR")
-        file.write("\n")
-        file.write("{}".format(var - (start - 1)))
-        file.write("\n")
-        file.write("(")
-        file.write("\n")
-
     file.write("ULOG")
     file.write("\n")
     file.write("(N")
@@ -558,7 +519,81 @@ def uxictail(
     file.write("( ")
     file.write("\n")
 
-    file.write("EXIC BPSI RTOT")
+    file.write("EXIC BPSI GSAV RBAR RINT RTOT")
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("FIM")
+    file.close()
+
+
+def uxcttail(
+    file,
+    filename,
+    value,
+):
+    """
+    
+    Args
+    """
+    ## Inicialização
+    file.write("( ")
+    file.write("\n")
+
+    # file.write("ULOG")
+    # file.write("\n")
+    # file.write("(N")
+    # file.write("\n")
+    # file.write("2")
+    # file.write("\n")
+    # file.write(
+    #     "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".SAV"
+    # )
+
+    # file.write("\n")
+    # file.write("(")
+    # file.write("\n")
+
+    # file.write("ARQV INIC IMPR")
+    # file.write("\n")
+    # file.write("SIM")
+
+    # file.write("\n")
+    # file.write("(")
+    # file.write("\n")
+
+    # file.write("ARQV GRAV IMPR NOVO")
+    # file.write("\n")
+    # file.write("1")
+    # file.write("\n")
+    # file.write("(")
+    # file.write("\n")
+
+    # file.write("( ")
+    # file.write("( ")
+    # file.write("\n")
+
+    file.write("ULOG")
+    file.write("\n")
+    file.write("(N")
+    file.write("\n")
+    file.write("4")
+    file.write("\n")
+    file.write(
+        "EXCT_" + filename + "_" + str(int(value.identificacao)) + ".REL"
+    )
+
+    file.write("\n")
+    file.write("( ")
+    file.write("\n")
+
+    file.write("EXCT GSAV BPSI RBAR RTOT RINT")
+    file.write("\n")
+    file.write("(P Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr Pr")
+    file.write("\n")
+    file.write(f"{value.prioridade:>2}")
 
     file.write("\n")
     file.write("( ")

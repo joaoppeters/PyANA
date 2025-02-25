@@ -35,6 +35,7 @@ system = "2Q2024_R2_C1.pwf"  # MAY-AUG 2024
 # system = "1Q2025_R1_C11.pwf" # JAN-APR 2025
 # system = "2Q2025_R0_C11.pwf" # MAY-AUG 2025
 # system = "NE224-C1.pwf"
+system = "107BARRAS_DCTG.pwf"
 
 # method =  "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW
@@ -60,6 +61,7 @@ method = "SXLF"  # STOCHASTIC (ANAREDE BATCH RUNNING)
 method = "CXLF"
 # method =  "CXIC"
 # method =  "CXCT"
+method = "SNTS"
 
 
 control = [

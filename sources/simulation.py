@@ -147,7 +147,7 @@ def simulation(
     elif powerflow.method == "BXIC":
         from factor import generator_participation
         from strat import strat
-        from ulog import basexic
+        from ulog import multexic
 
         powerflow.mdger = generator_participation(
             name=powerflow.name,
@@ -159,7 +159,7 @@ def simulation(
         #     powerflow,
         # )
 
-        basexic(
+        multexic(
             powerflow,
             start=6,
             stop=15,
@@ -394,5 +394,12 @@ def simulation(
         from cluster import cxct
 
         cxct(
+            powerflow,
+        )
+
+    elif powerflow.method == "SNTS":
+        from  snts import snts
+
+        snts(
             powerflow,
         )

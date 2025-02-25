@@ -63,3 +63,4 @@ def exlf2new(
 
     ## Inicialização
     shutil.copy2(exlffolder + "\\" + savfile, newfolder)
+        

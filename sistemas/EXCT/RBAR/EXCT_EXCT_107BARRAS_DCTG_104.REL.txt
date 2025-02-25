@@ -1,0 +1,1 @@
+numero;nome;tipo;tensao;angulo;potencia_ativa;potencia_reativa;demanda_ativa;demanda_reativa;shunt_barra;area

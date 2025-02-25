@@ -88,15 +88,36 @@ def bxicfolder(
         powerflow:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    bxlffolder(powerflow,)
     powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
     if exists(powerflow.exicfolder) is False:
         mkdir(powerflow.exicfolder)
 
-    powerflow.bxlffolder = powerflow.exlffolder + "BASE\\"
     powerflow.bxicfolder = powerflow.exicfolder + "BASE\\"
     if exists(powerflow.bxicfolder) is False:
         mkdir(powerflow.bxicfolder)
+
+
+def bxctfolder(
+    powerflow,
+    where: str = "EXLF",
+):
+    """
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    bxicfolder(powerflow,)
+    
+    powerflow.exctfolder = dirname(powerflow.dirPWF) + "\\EXCT\\"
+    if exists(powerflow.exctfolder) is False:
+        mkdir(powerflow.exctfolder)
+
+    powerflow.bxctfolder = powerflow.exctfolder + "BASE\\"
+    if exists(powerflow.bxctfolder) is False:
+        mkdir(powerflow.bxctfolder)
+
 
 
 def convergencefolder(
@@ -197,6 +218,28 @@ def reportsfolder(
         mkdir(powerflow.reportsfolder)
 
 
+def rbarfolder(
+    powerflow,
+):
+    """criação de diretório para armazenar resultados de análise de barra
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    bxctfolder(powerflow,)
+    powerflow.rbarxlffolder = powerflow.exlffolder + "RBAR\\"
+    if exists(powerflow.rbarxlffolder) is False:
+        mkdir(powerflow.rbarxlffolder)
+    
+    powerflow.rbarxicfolder = powerflow.exicfolder + "RBAR\\"
+    if exists(powerflow.rbarxicfolder) is False:
+        mkdir(powerflow.rbarxicfolder)
+    
+    powerflow.rbarxctfolder = powerflow.exctfolder + "RBAR\\"
+    if exists(powerflow.rbarxctfolder) is False:
+        mkdir(powerflow.rbarxctfolder)
+
 def rintfolder(
     powerflow,
 ):
@@ -207,8 +250,11 @@ def rintfolder(
     """
     ## Inicialização
     powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
     if exists(powerflow.exlffolder) is False:
         mkdir(powerflow.exlffolder)
+    if exists(powerflow.exicfolder) is False:
+        mkdir(powerflow.exicfolder)
 
     powerflow.rintfolder = powerflow.exlffolder + "RINT\\"
     if exists(powerflow.rintfolder) is False:

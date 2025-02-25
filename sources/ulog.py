@@ -9,6 +9,8 @@
 
 def basexlf(
     powerflow,
+    where="EXLF",
+    time=5,
 ):
     """
 
@@ -16,11 +18,12 @@ def basexlf(
         powerflow (_type_): _description_
     """
 
+    from os import remove
     from os.path import realpath
 
     from anarede import anarede
     from folder import bxlffolder
-    from sav import savmove
+    from move import exlf2new, savmove
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
@@ -29,23 +32,37 @@ def basexlf(
     )
 
     # Arquivo
-    filedir = realpath(
-        powerflow.bxlffolder + powerflow.method + "_" + powerflow.name + ".PWF"
-    )
+    if where == "EXLF":
+        filedir = realpath(
+            powerflow.bxlffolder + "EXLF_" + powerflow.name + ".PWF"
+        )
+        if "Q20" in powerflow.name:
+            savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
+            savcase = powerflow.name.split("_")[-1][1:]
+        else:
+            savfile = powerflow.name + ".SAV"
+            savcase = 1
+
+        savmove(
+            filename=powerflow.maindir + "\\sistemas\\" + savfile,
+            filedir=powerflow.bxlffolder,
+        )
+
+    elif where == "EXIC":
+        savfile = "CONT_" + str(powerflow.premlp//100 + 1).zfill(3) + ".SAV"
+        savcase = powerflow.premlp % 100
+        exlf2new(
+            exlffolder=powerflow.bxicfolder,
+            newfolder=powerflow.bxctfolder,
+            savfile=savfile,
+        )
+        filedir = realpath(
+            powerflow.bxctfolder + "EXLF_" + savfile.removesuffix(".SAV") + "_" + str(savcase) + ".PWF"
+        )
+
 
     # Manipulacao
     file = open(filedir, "w")
-    if "Q20" in powerflow.name:
-        savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
-        case = powerflow.name.split("_")[-1][1:]
-    elif "NE224" in powerflow.name:
-        savfile = powerflow.name + ".SAV"
-        case = 1
-
-    savmove(
-        filename=powerflow.maindir + "\\sistemas\\" + savfile,
-        filedir=powerflow.bxlffolder,
-    )
 
     # Cabecalho
     uheader(
@@ -56,7 +73,7 @@ def basexlf(
     uarq(
         file,
         savfile,
-        case,
+        savcase,
     )
 
     # if powerflow.codes["DBAR"]:
@@ -94,15 +111,102 @@ def basexlf(
         powerflow,
         file,
         base=True,
+        where=where,
     )
 
     anarede(
         file=filedir,
-        time=2,
+        time=time,
+    )
+
+    remove(
+        filedir,
     )
 
 
 def basexic(
+    powerflow,
+    time=7,
+):
+    """
+    
+    Args
+        powerflow:
+    """
+
+    from os import remove
+    from os.path import realpath
+
+    from anarede import anarede
+    from folder import bxicfolder
+    from rwpwf import wdcte
+    from move import exlf2new
+    from uwrite import (
+        uheader,
+        uarq,
+        udinc,
+        uxictail,
+    )
+
+    ## Inicialização
+    bxicfolder(
+        powerflow,
+    )
+    savfile = "EXLF_" + powerflow.name + ".SAV"
+    exlf2new(
+        exlffolder=powerflow.bxlffolder,
+        newfolder=powerflow.bxicfolder,
+        savfile=savfile,
+    )
+
+    # Arquivo
+    filedir = realpath(
+        powerflow.bxicfolder + "EXIC_" + powerflow.name + ".PWF"
+    )
+
+    # Manipulacao
+    file = open(filedir, "w")
+
+    # Cabecalho
+    uheader(
+        file,
+    )
+
+    # Corpo
+    uarq(
+        file,
+        savfile,
+        savcase=1,
+    )
+
+    wdcte(
+        powerflow.dcte,
+        file,
+    )
+
+    udinc(
+        powerflow.dinc,
+        file,
+    )
+
+    uxictail(
+        file,
+        powerflow.name,
+        var=1,
+        start=1,
+    )
+
+    anarede(
+        file=filedir,
+        time=time,
+    )
+
+    remove(
+        filedir,
+    )
+
+
+def multexic(
     powerflow,
     start=3,
     stop=8,
@@ -120,12 +224,13 @@ def basexic(
         mult:
     """
 
+    from os import remove
     from os.path import realpath
 
     from anarede import anarede
     from folder import bxicfolder
     from rwpwf import wdcte
-    from sav import exlf2new
+    from move import exlf2new
     from uwrite import (
         uheader,
         uarq,
@@ -137,7 +242,7 @@ def basexic(
     bxicfolder(
         powerflow,
     )
-    savfile = "SXLF_" + powerflow.name + ".SAV"
+    savfile = "EXLF_" + powerflow.name + ".SAV"
     exlf2new(
         exlffolder=powerflow.bxlffolder,
         newfolder=powerflow.bxicfolder,
@@ -176,7 +281,7 @@ def basexic(
         uarq(
             file,
             savfile,
-            case=1,
+            savcase=1,
         )
 
         wdcte(
@@ -205,6 +310,105 @@ def basexic(
         time=time,
     )
 
+    remove(
+        filedir,
+    )
+
+
+def basexct(
+    powerflow,
+    where="EXLF",
+    time=8,
+):
+    """"
+
+    Args
+        powerflow:
+    """
+
+    from os import remove
+    from os.path import realpath
+
+    from anarede import anarede
+    from folder import bxctfolder
+    from move import exlf2new
+    from uwrite import uheader, uarq, udctg, uxcttail
+
+    ## Inicialização
+    bxctfolder(
+        powerflow,
+        where=where,
+    )
+    
+    if where == "EXLF":
+        savfile = "EXLF_" + powerflow.name + ".SAV"
+        exlf2new(
+            exlffolder=powerflow.bxlffolder,
+            newfolder=powerflow.bxctfolder,
+            savfile=savfile,
+        )
+    
+    elif where == "EXIC":
+        basexlf(
+            powerflow,
+            where=where,
+        )
+        savfile = "CONT_" + str(powerflow.premlp//100 + 1).zfill(3) + ".SAV"
+        savcase = powerflow.premlp % 100
+
+    # Arquivo
+    filedir = realpath(
+        powerflow.bxctfolder + "EXCT_" + powerflow.name + ".PWF"
+    )
+
+    # Manipulacao
+    file = open(filedir, "w")
+
+    # Cabecalho
+    uheader(
+        file,
+    )
+
+    ctg = 0
+    for idx, value in powerflow.dctg1.iterrows():
+        file.write("( Contingencia No{}".format(int(value.identificacao)))
+        file.write("\n")
+        file.write("( ")
+        file.write("\n")
+        # Corpo
+        uarq(
+            file,
+            savfile,
+            savcase=savcase,
+        )
+
+        ctg = udctg(
+            powerflow.dctg,
+            value,
+            ctg,
+            powerflow.dctg2,
+            file,
+        )
+
+        # Saida
+        uxcttail(
+            file,
+            powerflow.name,
+            value,
+        )
+
+    file.write("FIM")
+    file.close()
+
+    anarede(
+        file=filedir,
+        time=time,
+    )
+
+    remove(
+        filedir,
+    )
+
 
 def usxlf(
     powerflow,
@@ -217,7 +421,7 @@ def usxlf(
 
     from os.path import realpath
 
-    from sav import savmove
+    from move import savmove
     from uwrite import uheader, uarq, udbar, udger, udmfl, udmfl_circ, udmte, uxlftail
 
     ## Inicialização
@@ -233,10 +437,10 @@ def usxlf(
     file = open(powerflow.filedir, "w")
     if "Q2024" in powerflow.name:
         savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
-        case = powerflow.name.split("_")[-1][1:]
+        savcase = powerflow.name.split("_")[-1][1:]
     elif "NE224" in powerflow.name:
         savfile = powerflow.name + ".SAV"
-        case = 1
+        savcase = 1
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
@@ -252,7 +456,7 @@ def usxlf(
     uarq(
         file,
         savfile,
-        case,
+        savcase,
     )
 
     if powerflow.codes["DBAR"]:
@@ -316,7 +520,7 @@ def usxic(
 
     from anarede import anarede
     from rwpwf import wdcte
-    from sav import exlf2new
+    from move import exlf2new
     from uwrite import uheader, uarq, sdinc, uxictail
 
     ## Inicialização
@@ -359,7 +563,7 @@ def usxic(
             uarq(
                 file,
                 savfile,
-                case=1,
+                savcase=1,
             )
 
             wdcte(
@@ -411,7 +615,7 @@ def usxct(
     from os.path import exists, realpath
 
     from anarede import anarede
-    from sav import exlf2new
+    from move import exlf2new
     from uwrite import uheader, uarq, udctg
 
     ## Inicialização
@@ -445,7 +649,7 @@ def usxct(
             uarq(
                 file,
                 savfile,
-                case=1,
+                savcase=1,
             )
 
             ctg = udctg(
@@ -539,7 +743,7 @@ def uspvct(
     from os.path import exists, realpath
 
     from anarede import anarede
-    from sav import exlf2new
+    from move import exlf2new
     from uwrite import uheader, uarq, sdinc, udctg
 
     ## Inicialização
@@ -580,7 +784,7 @@ def uspvct(
             uarq(
                 file,
                 savfile,
-                case=1,
+                savcase=1,
             )
 
             sdinc(
