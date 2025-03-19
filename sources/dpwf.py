@@ -1969,7 +1969,7 @@ def dglt(
         powerflow:
     """
     ## Inicialização
-    powerflow.dglt["grupo"] = list()
+    powerflow.dglt["grupo_limite_tensao"] = list()
     powerflow.dglt["limite_minimo"] = list()
     powerflow.dglt["limite_maximo"] = list()
     powerflow.dglt["limite_minimo_E"] = list()
@@ -1979,7 +1979,7 @@ def dglt(
         if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
             pass
         else:
-            powerflow.dglt["grupo"].append(powerflow.lines[powerflow.linecount][:2])
+            powerflow.dglt["grupo_limite_tensao"].append(powerflow.lines[powerflow.linecount][:2])
             powerflow.dglt["limite_minimo"].append(
                 powerflow.lines[powerflow.linecount][3:8]
             )
@@ -2000,7 +2000,7 @@ def dglt(
     powerflow.dgltDF = powerflow.dgltDF.replace(r"^\s*$", "0", regex=True)
     powerflow.dgltDF = powerflow.dgltDF.astype(
         {
-            "grupo": "object",
+            "grupo_limite_tensao": "object",
             "limite_minimo": "float",
             "limite_maximo": "float",
             "limite_minimo_E": "float",
@@ -2016,7 +2016,7 @@ def dglt(
         powerflow.codes["DGLT"] = True
 
         for idx, value in powerflow.dgltDF.iterrows():
-            powerflow.dgltDF.at[idx, "grupo"] = value["grupo"].strip()
+            powerflow.dgltDF.at[idx, "grupo_limite_tensao"] = value["grupo_limite_tensao"].strip()
             if value["limite_minimo"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo"] = 0.8
 
@@ -2025,8 +2025,11 @@ def dglt(
 
             if value["limite_minimo_E"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_minimo_E"] = value["limite_minimo"]
-            elif value["limite_maximo_E"] == 0.0:
+            
+            if value["limite_maximo_E"] == 0.0:
                 powerflow.dgltDF.at[idx, "limite_maximo_E"] = value["limite_maximo"]
+
+        powerflow.dbarDF = powerflow.dbarDF.merge(powerflow.dgltDF, on='grupo_limite_tensao', how='left')
 
 
 def dinc(

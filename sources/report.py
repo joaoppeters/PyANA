@@ -112,7 +112,7 @@ def reportfile(
 
     # relatorio de fluxo de potencia continuado
     if powerflow.method == "EXIC":
-        RXIC(
+        exiconv(
             file,
             powerflow,
         )
@@ -525,7 +525,7 @@ def RSVC(
     file.write("\n\n\n\n")
 
 
-def RXIC(
+def exiconv(
     file,
     powerflow,
 ):

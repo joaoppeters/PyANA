@@ -1,0 +1,4 @@
+numero;nome;tipo;tensao;angulo;potencia_ativa;potencia_reativa;demanda_ativa;demanda_reativa;shunt_barra;area
+964;CAXIAS-RS525; 0;1.02;-43.0;0.0;0.0;0.0;0.0;-312.1;1
+966;GUAIB3CER019; 0;0.947;-43.8;0.0;0.0;0.0;0.0;0.0;1
+970;CFGAR1-RS500; 0;1.069;0.0;0.0;0.0;0.0;0.0;0.0;1
