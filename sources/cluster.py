@@ -306,99 +306,101 @@ def cxlf(
         zorder=2,
     )
     plt.scatter(rtot_df["x"], rtot_df["y"], s=75, color="gray", alpha=0.7)
-    plt.title("Pontos Originais (Antes do Clustering)")
-    plt.xlabel("ΔP (MW)")
-    plt.ylabel("ΔQ (MVAr)")
-
-    # ====== 2. PLOTAR PONTOS OUTLIERS ======
-    plt.figure(figsize=(6, 5))
-    plt.scatter(
-        basecase[0] - basecase[2],
-        basecase[1] - basecase[3],
-        marker="d",
-        color="black",
-        s=75,
-        zorder=2,
-    )
-    plt.scatter(
-        rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NESECOcolor"], alpha=0.7
-    )
-    plt.title("Pontos Originais (Antes do Clustering) - NESECO")
-    plt.xlabel("ΔP (MW)")
-    plt.ylabel("ΔQ (MVAr)")
-
-    # ====== 3. PLOTAR PONTOS OUTLIERS ======
-    plt.figure(figsize=(6, 5))
-    plt.scatter(
-        basecase[0] - basecase[2],
-        basecase[1] - basecase[3],
-        marker="d",
-        color="black",
-        s=75,
-        zorder=2,
-    )
-    plt.scatter(rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NENcolor"], alpha=0.7)
-    plt.title("Pontos Originais (Antes do Clustering) - NEN")
-    plt.xlabel("ΔP (MW)")
-    plt.ylabel("ΔQ (MVAr)")
-
-    rint_df = rint_df.loc[rint_df["NE_N"].apply(lambda x: x[0] >= 0)].reset_index(
-        drop=True
-    )
-    rint_df = rint_df.loc[rint_df["NE_SECO"].apply(lambda x: x[0] >= 0)].reset_index(
-        drop=True
-    )
-    cvg_cases = array(rint_df.CASO.sort_values().tolist()) - 1
-    powerflow.sload = powerflow.sload[cvg_cases]
-    powerflow.swind = powerflow.swind[cvg_cases]
-
-    # Normalizar os dados
-    scaler = StandardScaler()
-    X = scaler.fit_transform(df)
-
-    # Criar um DataFrame para armazenar os resultados
-    df_clusters = df.copy()
-
-    # ====== 2. DEFINIR O NÚMERO ÓTIMO DE CLUSTERS PARA K-MEANS ======
-    fig, ax = plt.subplots(figsize=(6, 4))
-    kmeans_model = KMeans(random_state=42)
-    visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric="distortion", ax=ax)
-    visualizer.fit(X)
-
-    # Número ótimo de clusters
-    optimal_k = visualizer.elbow_value_
-
-    # ====== K-MEANS & K-MEDOIDS ======
-    for nclstr in range(2, 11):
-        kmeans = KMeans(n_clusters=nclstr, random_state=42)
-        df_clusters["KMeans"] = kmeans.fit_predict(X)
-
-        kmedoids = KMedoids(n_clusters=nclstr, metric="manhattan", random_state=42)
-        df_clusters["KMedoids"] = kmedoids.fit_predict(X)
-
-        # ====== FUNÇÃO PARA PLOTAR OS CLUSTERS ======
-        def plot_clusters(method, labels):
-            """Gera gráficos de dispersão para visualizar os clusters."""
-            plt.figure(figsize=(6, 5))
-            sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=75)
-            plt.scatter(
-                basecase[0] - basecase[2],
-                basecase[1] - basecase[3],
-                marker="d",
-                color="black",
-                s=75,
-                zorder=2,
-            )
-            plt.title(f"{method} Clustering")
-            plt.xlabel("x")
-            plt.ylabel("y")
-            plt.legend(title="Cluster")
-
-        # Criando gráficos para cada método
-        plot_clusters("K-Means", df_clusters["KMeans"])
-        plot_clusters("K-Medoids", df_clusters["KMedoids"])
-
+    plt.xlabel("Pperdas (MW)", fontsize=16)
+    plt.ylabel("Qperdas (MVAr)", fontsize=16)
     plt.show()
+    
+
+    # # ====== 2. PLOTAR PONTOS OUTLIERS ======
+    # plt.figure(figsize=(6, 5))
+    # plt.scatter(
+    #     basecase[0] - basecase[2],
+    #     basecase[1] - basecase[3],
+    #     marker="d",
+    #     color="black",
+    #     s=75,
+    #     zorder=2,
+    # )
+    # plt.scatter(
+    #     rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NESECOcolor"], alpha=0.7
+    # )
+    # plt.title("Pontos Originais (Antes do Clustering) - NESECO")
+    # plt.xlabel("ΔP (MW)")
+    # plt.ylabel("ΔQ (MVAr)")
+    # plt.show()
+
+    # # ====== 3. PLOTAR PONTOS OUTLIERS ======
+    # plt.figure(figsize=(6, 5))
+    # plt.scatter(
+    #     basecase[0] - basecase[2],
+    #     basecase[1] - basecase[3],
+    #     marker="d",
+    #     color="black",
+    #     s=75,
+    #     zorder=2,
+    # )
+    # plt.scatter(rtot_df["x"], rtot_df["y"], s=75, color=rint_df["NENcolor"], alpha=0.7)
+    # plt.title("Pontos Originais (Antes do Clustering) - NEN")
+    # plt.xlabel("ΔP (MW)")
+    # plt.ylabel("ΔQ (MVAr)")
+
+    # rint_df = rint_df.loc[rint_df["NE_N"].apply(lambda x: x[0] >= 0)].reset_index(
+    #     drop=True
+    # )
+    # rint_df = rint_df.loc[rint_df["NE_SECO"].apply(lambda x: x[0] >= 0)].reset_index(
+    #     drop=True
+    # )
+    # cvg_cases = array(rint_df.CASO.sort_values().tolist()) - 1
+    # powerflow.sload = powerflow.sload[cvg_cases]
+    # powerflow.swind = powerflow.swind[cvg_cases]
+
+    # # Normalizar os dados
+    # scaler = StandardScaler()
+    # X = scaler.fit_transform(df)
+
+    # # Criar um DataFrame para armazenar os resultados
+    # df_clusters = df.copy()
+
+    # # ====== 2. DEFINIR O NÚMERO ÓTIMO DE CLUSTERS PARA K-MEANS ======
+    # fig, ax = plt.subplots(figsize=(6, 4))
+    # kmeans_model = KMeans(random_state=42)
+    # visualizer = KElbowVisualizer(kmeans_model, k=(1, 10), metric="distortion", ax=ax)
+    # visualizer.fit(X)
+
+    # # Número ótimo de clusters
+    # optimal_k = visualizer.elbow_value_
+
+    # # ====== K-MEANS & K-MEDOIDS ======
+    # for nclstr in range(2, 11):
+    #     kmeans = KMeans(n_clusters=nclstr, random_state=42)
+    #     df_clusters["KMeans"] = kmeans.fit_predict(X)
+
+    #     kmedoids = KMedoids(n_clusters=nclstr, metric="manhattan", random_state=42)
+    #     df_clusters["KMedoids"] = kmedoids.fit_predict(X)
+
+    #     # ====== FUNÇÃO PARA PLOTAR OS CLUSTERS ======
+    #     def plot_clusters(method, labels):
+    #         """Gera gráficos de dispersão para visualizar os clusters."""
+    #         plt.figure(figsize=(6, 5))
+    #         sns.scatterplot(x=df["x"], y=df["y"], hue=labels, palette="tab10", s=75)
+    #         plt.scatter(
+    #             basecase[0] - basecase[2],
+    #             basecase[1] - basecase[3],
+    #             marker="d",
+    #             color="black",
+    #             s=75,
+    #             zorder=2,
+    #         )
+    #         plt.title(f"{method} Clustering")
+    #         plt.xlabel("x")
+    #         plt.ylabel("y")
+    #         plt.legend(title="Cluster")
+
+    #     # Criando gráficos para cada método
+    #     plot_clusters("K-Means", df_clusters["KMeans"])
+    #     plot_clusters("K-Medoids", df_clusters["KMedoids"])
+
+    # plt.show()
 
 
 def cxic(

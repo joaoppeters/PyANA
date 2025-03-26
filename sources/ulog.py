@@ -427,7 +427,7 @@ def usxlf(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.sxlf
+        powerflow.sxlffolder
         + "\\EXLF_"
         + powerflow.namecase
         + "{}.PWF".format(powerflow.ones)
@@ -444,7 +444,7 @@ def usxlf(
 
     savmove(
         filename=powerflow.maindir + "\\sistemas\\" + savfile,
-        filedir=powerflow.sxlf,
+        filedir=powerflow.sxlffolder,
     )
 
     # Cabecalho

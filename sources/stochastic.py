@@ -28,7 +28,7 @@ def sxlf(
     ## Inicialização
     powerflow.nsamples = 200
     for stddev in range(1, 2, 1):
-        loadstd = 9
+        loadstd = 15
         geolstd = 15
         sxlffolder(
             powerflow,
@@ -60,8 +60,8 @@ def sxlf(
         # Factor
         powerflow.mdbar = load_participation(
             name=powerflow.name,
-            lmean=lmean,
-            wmean=wmean,
+            lpmean=lmean,
+            wpmean=wmean,
             dbar=powerflow.dbarDF.copy(),
             stateload=powerflow.cargas.copy(),
             stategeneration=powerflow.eolicas.copy(),
@@ -107,10 +107,10 @@ def sxlf(
                 + "{}.SAV".format(powerflow.ones)
             )
 
-            if exists(savfile):
-                remove(exlfpwf)
-            if not exists(exlfrel):
-                remove(savfile)
+            # if exists(savfile):
+            #     remove(exlfpwf)
+            # if not exists(exlfrel):
+            #     remove(savfile)
 
 
 def sxic(

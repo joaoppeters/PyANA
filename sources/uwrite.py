@@ -75,7 +75,7 @@ def udbar(
     """
     ## Inicialização
     file.write(format(dbar.dbar.iloc[0]))
-    file.write(format(dbar.ruler.iloc[0]))
+    file.write(format(dbar.ruler_x.iloc[0]))
 
     for idx, value in dbar.iterrows():
         if "EOL" not in value.nome:

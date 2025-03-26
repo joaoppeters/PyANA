@@ -197,6 +197,12 @@ def simulation(
                 powerflow,
             )
 
+        powerflow.mdger = generator_participation(
+            name=powerflow.name,
+            dbarDF=powerflow.dbarDF.copy(),
+            dger=powerflow.dger.copy(),
+        )
+
         powerflow.namecase = powerflow.name + "jpmod"
 
         sxlf(
