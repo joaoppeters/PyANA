@@ -26,91 +26,89 @@ def sxlf(
     from ulog import usxlf
 
     ## Inicialização
-    powerflow.nsamples = 200
-    for stddev in range(1, 2, 1):
-        loadstd = 15
-        geolstd = 15
-        sxlffolder(
+    powerflow.nsamples = 1000
+    stddev = 15
+    sxlffolder(
+        powerflow,
+        loadstd=stddev,
+        geolstd=stddev,
+    )
+
+    (
+        sload,
+        lmean,
+    ) = loadn(
+        name=powerflow.name,
+        nsamples=powerflow.nsamples,
+        loadstd=stddev,
+        stateload=powerflow.cargas,
+        maindir=powerflow.maindir,
+    )
+    (
+        swind,
+        wmean,
+    ) = windn(
+        name=powerflow.name,
+        nsamples=powerflow.nsamples,
+        geolstd=stddev,
+        stategeneration=powerflow.eolicas,
+        maindir=powerflow.maindir,
+    )
+
+    # Factor
+    powerflow.mdbar = load_participation(
+        name=powerflow.name,
+        lpmean=lmean,
+        wpmean=wmean,
+        dbar=powerflow.dbarDF.copy(),
+        stateload=powerflow.cargas.copy(),
+        stategeneration=powerflow.eolicas.copy(),
+    )
+
+    # Loop de amostras
+    powerflow.ones = 0
+    for s in range(0, len(sload)):
+        powerflow.mdbar = loadf(
+            mdbar=powerflow.mdbar,
+            psamples=sload,
+            s=s,
+        )
+        powerflow.mdbar = windf(
+            mdbar=powerflow.mdbar,
+            wsamples=swind,
+            s=s,
+        )
+        powerflow.ones += 1
+
+        usxlf(
             powerflow,
-            loadstd=stddev,
-            geolstd=stddev,
         )
 
-        (
-            sload,
-            lmean,
-        ) = loadn(
-            name=powerflow.name,
-            nsamples=powerflow.nsamples,
-            loadstd=stddev,
-            stateload=powerflow.cargas,
-            maindir=powerflow.maindir,
-        )
-        (
-            swind,
-            wmean,
-        ) = windn(
-            name=powerflow.name,
-            nsamples=powerflow.nsamples,
-            geolstd=stddev,
-            stategeneration=powerflow.eolicas,
-            maindir=powerflow.maindir,
-        )
+        anarede(file=powerflow.filedir, time=2)
 
-        # Factor
-        powerflow.mdbar = load_participation(
-            name=powerflow.name,
-            lpmean=lmean,
-            wpmean=wmean,
-            dbar=powerflow.dbarDF.copy(),
-            stateload=powerflow.cargas.copy(),
-            stategeneration=powerflow.eolicas.copy(),
+        exlfpwf = realpath(
+            powerflow.sxlffolder
+            + "\\EXLF_"
+            + powerflow.namecase.upper()
+            + "{}.PWF".format(powerflow.ones)
+        )
+        exlfrel = realpath(
+            powerflow.sxlffolder
+            + "\\EXLF_"
+            + powerflow.namecase.upper()
+            + "{}.REL".format(powerflow.ones)
+        )
+        savfile = realpath(
+            powerflow.sxlffolder
+            + "\\EXLF_"
+            + powerflow.namecase.upper()
+            + "{}.SAV".format(powerflow.ones)
         )
 
-        # Loop de amostras
-        powerflow.ones = 0
-        for s in range(0, len(sload)):
-            powerflow.mdbar = loadf(
-                mdbar=powerflow.mdbar,
-                psamples=sload,
-                s=s,
-            )
-            powerflow.mdbar = windf(
-                mdbar=powerflow.mdbar,
-                wsamples=swind,
-                s=s,
-            )
-            powerflow.ones += 1
-
-            usxlf(
-                powerflow,
-            )
-
-            anarede(file=powerflow.filedir, time=2)
-
-            exlfpwf = realpath(
-                powerflow.sxlffolder
-                + "\\EXLF_"
-                + powerflow.namecase.upper()
-                + "{}.PWF".format(powerflow.ones)
-            )
-            exlfrel = realpath(
-                powerflow.sxlffolder
-                + "\\EXLF_"
-                + powerflow.namecase.upper()
-                + "{}.REL".format(powerflow.ones)
-            )
-            savfile = realpath(
-                powerflow.sxlffolder
-                + "\\EXLF_"
-                + powerflow.namecase.upper()
-                + "{}.SAV".format(powerflow.ones)
-            )
-
-            # if exists(savfile):
-            #     remove(exlfpwf)
-            # if not exists(exlfrel):
-            #     remove(savfile)
+        # if exists(savfile):
+        #     remove(exlfpwf)
+        # if not exists(exlfrel):
+        #     remove(savfile)
 
 
 def sxic(
@@ -207,37 +205,36 @@ def sxct(
     from folder import sxctfolder
     from ulog import usxct
 
-    for stddev in range(1, 11, 1):
-        sxctfolder(
-            powerflow,
-            loadstd=stddev,
-            geolstd=stddev,
-        )
+    # for stddev in range(1, 11, 1):
+    stddev = 15
+    sxctfolder(
+        powerflow,
+        loadstd=stddev,
+        geolstd=stddev,
+    )
 
-        folder_path = (
-            powerflow.sxlffolder
-            + "\\EXLF_"
-            + powerflow.name
-            + "_loadstd{}_geolstd{}".format(
-                stddev,
-                stddev,
-            )
+    folder_path = (
+        powerflow.exlffolder
+        + "\\EXLF_"
+        + powerflow.name
+        + "_loadstd{}_geolstd{}".format(
+            stddev,
+            stddev,
         )
+    )
 
-        # List and filter files by extension
-        savfiles = [
-            f
-            for f in listdir(folder_path)
-            if f.startswith("EXLF_")
-            and f.endswith(".SAV")
-            and isfile(join(folder_path, f))
-        ]
+    # List and filter files by extension
+    savfiles = [
+        f
+        for f in listdir(folder_path)
+        if f.startswith("EXLF_") and f.endswith(".REL") and isfile(join(folder_path, f))
+    ]
 
-        usxct(
-            powerflow,
-            folder_path,
-            savfiles,
-        )
+    usxct(
+        powerflow,
+        folder_path,
+        savfiles,
+    )
 
 
 def spvct(

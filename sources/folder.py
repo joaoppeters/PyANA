@@ -88,7 +88,9 @@ def bxicfolder(
         powerflow:
     """
     ## Inicialização
-    bxlffolder(powerflow,)
+    bxlffolder(
+        powerflow,
+    )
     powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
     if exists(powerflow.exicfolder) is False:
         mkdir(powerflow.exicfolder)
@@ -108,8 +110,10 @@ def bxctfolder(
         powerflow:
     """
     ## Inicialização
-    bxicfolder(powerflow,)
-    
+    bxicfolder(
+        powerflow,
+    )
+
     powerflow.exctfolder = dirname(powerflow.dirPWF) + "\\EXCT\\"
     if exists(powerflow.exctfolder) is False:
         mkdir(powerflow.exctfolder)
@@ -117,7 +121,6 @@ def bxctfolder(
     powerflow.bxctfolder = powerflow.exctfolder + "BASE\\"
     if exists(powerflow.bxctfolder) is False:
         mkdir(powerflow.bxctfolder)
-
 
 
 def convergencefolder(
@@ -227,18 +230,21 @@ def rbarfolder(
         powerflow:
     """
     ## Inicialização
-    bxctfolder(powerflow,)
+    bxctfolder(
+        powerflow,
+    )
     powerflow.rbarxlffolder = powerflow.exlffolder + "RBAR\\"
     if exists(powerflow.rbarxlffolder) is False:
         mkdir(powerflow.rbarxlffolder)
-    
+
     powerflow.rbarxicfolder = powerflow.exicfolder + "RBAR\\"
     if exists(powerflow.rbarxicfolder) is False:
         mkdir(powerflow.rbarxicfolder)
-    
+
     powerflow.rbarxctfolder = powerflow.exctfolder + "RBAR\\"
     if exists(powerflow.rbarxctfolder) is False:
         mkdir(powerflow.rbarxctfolder)
+
 
 def rintfolder(
     powerflow,
@@ -277,6 +283,26 @@ def rtotfolder(
     powerflow.rtotfolder = powerflow.exlffolder + "RTOT\\"
     if exists(powerflow.rtotfolder) is False:
         mkdir(powerflow.rtotfolder)
+
+
+def sagefolder(
+    powerflow,
+    pwffile,
+):
+    """criação de diretório para armazenar resultados de SAGE
+
+    Args
+        powerflow:
+        pwffile:
+    """
+    ## Inicialização
+    sagefolder = dirname(powerflow.dirPWF) + "\\SAGE\\"
+    if exists(sagefolder) is False:
+        mkdir(sagefolder)
+
+    powerflow.sagefolder = sagefolder + pwffile.removesuffix(".PWF") + "\\"
+    if exists(powerflow.sagefolder) is False:
+        mkdir(powerflow.sagefolder)
 
 
 def smoothfolder(

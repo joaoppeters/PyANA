@@ -29,8 +29,8 @@ def convergence(
 
 def bint(
     powerflow,
-    where: str="EXLF",
-    rfile: str="",
+    where: str = "EXLF",
+    rfile: str = "",
 ):
     """
 
@@ -45,7 +45,9 @@ def bint(
 
     ## Inicialização
     rintheader = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
 
     if where == "EXLF":
         bxlffolder(
@@ -59,14 +61,14 @@ def bint(
         )
         relfile = powerflow.bxicfolder + "EXIC_" + powerflow.name + "_1.REL"
 
-    elif where == 'EXCT':
+    elif where == "EXCT":
         bxctfolder(
             powerflow,
         )
         relfile = powerflow.bxctfolder + "EXLF_" + powerflow.name + ".REL"
 
         if rfile:
-            relfile = powerflow.bxctfolder + rfile	
+            relfile = powerflow.bxctfolder + rfile
 
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
@@ -90,9 +92,7 @@ def bint(
                 flag = convergence(rflines, linecount)
                 if not flag:
                     break
-            elif (
-                rflines[linecount] == rintheader
-            ):
+            elif rflines[linecount] == rintheader:
                 linecount += 7
                 header = rflines[linecount - 3].split()[1:]
                 for row in range(0, rts[rt]):
@@ -119,9 +119,9 @@ def bint(
     nnz_df = pd.DataFrame([list(nnz_dict.values())], columns=nnz_dict.keys(), index=[0])
     nnz_df.index.name = "CASO"
     if rfile:
-        nnz_df['filename'] = rfile
+        nnz_df["filename"] = rfile
     else:
-        nnz_df['filename'] = powerflow.name
+        nnz_df["filename"] = powerflow.name
 
     return nnz_df
 
@@ -140,7 +140,9 @@ def btot(
     from folder import bxlffolder
 
     ## Inicialização
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
     bxlffolder(
         powerflow,
     )
@@ -175,7 +177,12 @@ def btot(
     return basecase
 
 
-def exiconv(folder, relfiles, vsmfile, option=0,):
+def exiconv(
+    folder,
+    relfiles,
+    vsmfile,
+    option=0,
+):
     """
 
     Args:
@@ -186,7 +193,10 @@ def exiconv(folder, relfiles, vsmfile, option=0,):
     """
     ## Inicialização
     initstring = " RELATORIO DE EXECUCAO DO FLUXO DE POTENCIA CONTINUADO\n"
-    rxicstring = [" Atingido incremento minimo\n", " **************************** PATAMAR VIOLADO *****************************\n"]
+    rxicstring = [
+        " Atingido incremento minimo\n",
+        " **************************** PATAMAR VIOLADO *****************************\n",
+    ]
 
     base = None
     surface = list()
@@ -235,8 +245,8 @@ def exiconv(folder, relfiles, vsmfile, option=0,):
 
 def mocf(
     powerflow,
-    where: str="EXLF",
-    rfile: str="",
+    where: str = "EXLF",
+    rfile: str = "",
 ):
     """
 
@@ -245,7 +255,7 @@ def mocf(
         where (str, optional): Defaults to "EXLF".
         rfile (str, optional): Defaults to "".
     """
-    
+
     import pandas as pd
 
     from folder import rbarfolder
@@ -254,8 +264,10 @@ def mocf(
     mfctmain = " MONITORACAO DE FLUXOS CORRIGIDOS PELA TENSAO - MFCT\n"
     nomocf = " No foram encontradas violaes de fluxo entre os circuitos monitorados\n"
     yesmocf = " X------------X------------X--X-------X-------X-------X--------X---------------X\n"
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
-    
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
+
     rbarfolder(
         powerflow,
     )
@@ -290,7 +302,7 @@ def mocf(
         "mva_viol": list(),
         "mva_lim": list(),
         "filename": list(),
-    }   
+    }
 
     linecount = 0
     rf = open(f"{relfile}", "r", encoding="utf-8", errors="ignore")
@@ -310,27 +322,37 @@ def mocf(
             elif rflines[linecount + 5] == yesmocf:
                 linecount += 8
                 while rflines[linecount].split()[0] != "--------------------":
-                    flow_violations["numero_de"].append(rflines[linecount-1].split()[0])
-                    flow_violations["nome_de"].append(rflines[linecount].split()[0])    
-                    flow_violations["numero_para"].append(rflines[linecount-1].split()[1])
+                    flow_violations["numero_de"].append(
+                        rflines[linecount - 1].split()[0]
+                    )
+                    flow_violations["nome_de"].append(rflines[linecount].split()[0])
+                    flow_violations["numero_para"].append(
+                        rflines[linecount - 1].split()[1]
+                    )
                     flow_violations["nome_para"].append(rflines[linecount].split()[1])
                     flow_violations["circuito"].append(rflines[linecount].split()[2])
                     flow_violations["mw"].append(float(rflines[linecount].split()[3]))
                     flow_violations["mvar"].append(float(rflines[linecount].split()[4]))
-                    flow_violations["mva/v"].append(float(rflines[linecount].split()[5]))
-                    flow_violations["mva_viol"].append(float(rflines[linecount].split()[6]))
-                    flow_violations["mva_lim"].append(flow_violations["mva/v"][-1] - flow_violations["mva_viol"][-1])
+                    flow_violations["mva/v"].append(
+                        float(rflines[linecount].split()[5])
+                    )
+                    flow_violations["mva_viol"].append(
+                        float(rflines[linecount].split()[6])
+                    )
+                    flow_violations["mva_lim"].append(
+                        flow_violations["mva/v"][-1] - flow_violations["mva_viol"][-1]
+                    )
                     flow_violations["filename"].append(rfile)
                     linecount += 2
                 flag = False
-        
+
     return pd.DataFrame(flow_violations)
 
 
 def moct(
     powerflow,
-    where: str="EXLF",
-    rfile: str="",
+    where: str = "EXLF",
+    rfile: str = "",
 ):
     """
 
@@ -339,7 +361,7 @@ def moct(
         where (str, optional): Defaults to "EXLF".
         rfile (str, optional): Defaults to "".
     """
-    
+
     import pandas as pd
 
     from folder import rbarfolder
@@ -348,8 +370,10 @@ def moct(
     moctmain = " MONITORACAO DE TENSAO\n"
     nomoct = " No foram encontradas violaes de tensao entre as barras monitoradas.\n"
     yesmoct = " X-----X------------X---X------X------X------X--------X--------X--------X---------------X\n"
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
-    
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
+
     rbarfolder(
         powerflow,
     )
@@ -404,21 +428,29 @@ def moct(
                     volt_violations["numero"].append(rflines[linecount].split()[0])
                     volt_violations["nome"].append(rflines[linecount].split()[1])
                     volt_violations["area"].append(rflines[linecount].split()[2])
-                    volt_violations["limite_minimo"].append(float(rflines[linecount].split()[3]))
-                    volt_violations["tensao"].append(float(rflines[linecount].split()[4]))
-                    volt_violations["limite_maximo"].append(float(rflines[linecount].split()[5]))
-                    volt_violations["violacao"].append(float(rflines[linecount].split()[6]))
+                    volt_violations["limite_minimo"].append(
+                        float(rflines[linecount].split()[3])
+                    )
+                    volt_violations["tensao"].append(
+                        float(rflines[linecount].split()[4])
+                    )
+                    volt_violations["limite_maximo"].append(
+                        float(rflines[linecount].split()[5])
+                    )
+                    volt_violations["violacao"].append(
+                        float(rflines[linecount].split()[6])
+                    )
                     volt_violations["filename"].append(rfile)
                     linecount += 1
                 flag = False
-        
+
     return pd.DataFrame(volt_violations)
 
 
 def rbar(
     powerflow,
-    where: str="EXLF",
-    rfile: str="",
+    where: str = "EXLF",
+    rfile: str = "",
 ):
     """
 
@@ -450,7 +482,9 @@ def rbar(
         "area": list(),
     }
 
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
     rbar_header = " RELATORIO DE BARRAS CA DO SISTEMA"
 
     if where == "EXLF":
@@ -467,8 +501,7 @@ def rbar(
         folder = powerflow.bxctfolder
         relfile = folder + "\\EXLF_" + powerflow.name + ".REL"
         rbfolder = powerflow.rbarxctfolder
-    
-    
+
     if rfile:
         relfile = folder + rfile
 
@@ -504,16 +537,19 @@ def rbar(
                         linecount += 1
         except:
             break
-    
+
     rbar = pd.DataFrame(rbar)
     if rfile and flag:
         rbar.to_csv(rbfolder + where + "_" + rfile + ".txt", sep=";", index=False)
         rbar["filename"] = rfile
     elif not rfile and flag:
-        rbar.to_csv(rbfolder + where + "_" + powerflow.name + ".txt", sep=";", index=False)
+        rbar.to_csv(
+            rbfolder + where + "_" + powerflow.name + ".txt", sep=";", index=False
+        )
         rbar["filename"] = powerflow.name
 
     return rbar
+
 
 def rint(
     powerflow,
@@ -531,7 +567,9 @@ def rint(
 
     ## Inicialização
     rintheader = " RELATORIO DE INTERCAMBIO ENTRE AREAS\n"
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
 
     rintfolder(
         powerflow,
@@ -580,9 +618,7 @@ def rint(
                         flag = convergence(rflines, linecount)
                         if not flag:
                             break
-                    elif (
-                        rflines[linecount] == rintheader
-                    ):
+                    elif rflines[linecount] == rintheader:
                         linecount += 7
                         header = rflines[linecount - 3].split()[1:]
                         for row in range(0, rts[rt]):
@@ -629,7 +665,9 @@ def rtot(powerflow, string=r"MOD(\d+)\.REL"):
 
     ## Inicialização
     rtotstring = " RELATORIO DE TOTAIS DE AREA\n"
-    conv_header = " X-----------X------X------X---------------X---------------X---------------X\n"
+    conv_header = (
+        " X-----------X------X------X---------------X---------------X---------------X\n"
+    )
 
     rtotfolder(
         powerflow,

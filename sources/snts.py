@@ -11,10 +11,10 @@ def snts(
     powerflow,
 ):
     """
-    
+
     Args
     ----
-    powerflow : 
+    powerflow :
     """
 
     import matplotlib.pyplot as plt
@@ -28,23 +28,44 @@ def snts(
 
     ## Inicialização
     # basexlf(powerflow,)
-    powerflow.rbar_base = rbar(powerflow, where="EXLF",)
-    powerflow.rint_base = bint(powerflow, where="EXLF",)
+    powerflow.rbar_base = rbar(
+        powerflow,
+        where="EXLF",
+    )
+    powerflow.rint_base = bint(
+        powerflow,
+        where="EXLF",
+    )
 
     # basexic(powerflow,)
-    powerflow.rbar_mlp = rbar(powerflow, where="EXIC",)
-    vsm(powerflow, base=True,)
-    powerflow.rint_vsm = bint(powerflow, where="EXIC",)
+    powerflow.rbar_mlp = rbar(
+        powerflow,
+        where="EXIC",
+    )
+    vsm(
+        powerflow,
+        base=True,
+    )
+    powerflow.rint_vsm = bint(
+        powerflow,
+        where="EXIC",
+    )
 
     # basexct(powerflow, where="EXIC",)
-    powerflow.rbar_premlp = rbar(powerflow, where="EXCT",)
-    powerflow.rint_premlp = bint(powerflow, where="EXCT",)
+    powerflow.rbar_premlp = rbar(
+        powerflow,
+        where="EXCT",
+    )
+    powerflow.rint_premlp = bint(
+        powerflow,
+        where="EXCT",
+    )
     rfiles = [
         f
         for f in listdir(powerflow.bxctfolder)
         if f.startswith("EXCT_" + powerflow.name) and f.endswith(".REL")
     ]
-    
+
     nonconv = list()
     flow_violations = {
         "numero_de": list(),
@@ -58,7 +79,7 @@ def snts(
         "mva_viol": list(),
         "mva_lim": list(),
         "filename": list(),
-    } 
+    }
     flow_violations = pd.DataFrame(flow_violations)
 
     volt_violations = {
@@ -75,27 +96,100 @@ def snts(
     volt_violations_E = volt_violations.copy()
     for rfile in rfiles:
         try:
-            rb = rbar(powerflow, where="EXCT", rfile=rfile,)
-            flow_violations = pd.concat([flow_violations, mocf(powerflow, where="EXCT", rfile=rfile,)], ignore_index=True,)
-            powerflow.rbar_premlp = pd.concat([powerflow.rbar_premlp, rb,], ignore_index=True,)
-            powerflow.rint_premlp = pd.concat([powerflow.rint_premlp, bint(powerflow, where="EXCT", rfile=rfile,)], ignore_index=True,)
-            if (rb.tensao > powerflow.dbarDF.limite_maximo).any() or (rb.tensao < powerflow.dbarDF.limite_minimo).any():
-                volt_violations = pd.concat([volt_violations, moct(powerflow, where="EXCT", rfile=rfile,)], ignore_index=True,)
-                volt_violations_E = pd.concat([volt_violations_E, moct(powerflow, where="EXCT", rfile=rfile,)], ignore_index=True,)
+            rb = rbar(
+                powerflow,
+                where="EXCT",
+                rfile=rfile,
+            )
+            flow_violations = pd.concat(
+                [
+                    flow_violations,
+                    mocf(
+                        powerflow,
+                        where="EXCT",
+                        rfile=rfile,
+                    ),
+                ],
+                ignore_index=True,
+            )
+            powerflow.rbar_premlp = pd.concat(
+                [
+                    powerflow.rbar_premlp,
+                    rb,
+                ],
+                ignore_index=True,
+            )
+            powerflow.rint_premlp = pd.concat(
+                [
+                    powerflow.rint_premlp,
+                    bint(
+                        powerflow,
+                        where="EXCT",
+                        rfile=rfile,
+                    ),
+                ],
+                ignore_index=True,
+            )
+            if (rb.tensao > powerflow.dbarDF.limite_maximo).any() or (
+                rb.tensao < powerflow.dbarDF.limite_minimo
+            ).any():
+                volt_violations = pd.concat(
+                    [
+                        volt_violations,
+                        moct(
+                            powerflow,
+                            where="EXCT",
+                            rfile=rfile,
+                        ),
+                    ],
+                    ignore_index=True,
+                )
+                volt_violations_E = pd.concat(
+                    [
+                        volt_violations_E,
+                        moct(
+                            powerflow,
+                            where="EXCT",
+                            rfile=rfile,
+                        ),
+                    ],
+                    ignore_index=True,
+                )
         except:
             nonconv.append(rfile)
 
     # Criando uma cópia do DataFrame
-    rbar_premlp_volt = powerflow.rbar_premlp[['tensao', 'numero',]].copy()
-    rbar_premlp_volt_volt_violations = volt_violations[['tensao', 'numero',]].copy()
-    rbar_premlp_volt_volt_violations_E = volt_violations_E[['tensao', 'numero',]].copy()
+    rbar_premlp_volt = powerflow.rbar_premlp[
+        [
+            "tensao",
+            "numero",
+        ]
+    ].copy()
+    rbar_premlp_volt_volt_violations = volt_violations[
+        [
+            "tensao",
+            "numero",
+        ]
+    ].copy()
+    rbar_premlp_volt_volt_violations_E = volt_violations_E[
+        [
+            "tensao",
+            "numero",
+        ]
+    ].copy()
     rpv = {}
     rpvv = {}
     rpvvE = {}
-    for numero in rbar_premlp_volt['numero'].unique():
-        rpv[numero] = rbar_premlp_volt.loc[rbar_premlp_volt['numero'] == numero, 'tensao'].values
-        rpvv[numero] = rbar_premlp_volt_volt_violations.loc[rbar_premlp_volt_volt_violations['numero'] == numero, 'tensao'].values
-        rpvvE[numero] = rbar_premlp_volt_volt_violations_E.loc[rbar_premlp_volt_volt_violations_E['numero'] == numero, 'tensao'].values
+    for numero in rbar_premlp_volt["numero"].unique():
+        rpv[numero] = rbar_premlp_volt.loc[
+            rbar_premlp_volt["numero"] == numero, "tensao"
+        ].values
+        rpvv[numero] = rbar_premlp_volt_volt_violations.loc[
+            rbar_premlp_volt_volt_violations["numero"] == numero, "tensao"
+        ].values
+        rpvvE[numero] = rbar_premlp_volt_volt_violations_E.loc[
+            rbar_premlp_volt_volt_violations_E["numero"] == numero, "tensao"
+        ].values
 
     rbar_premlp_volt = pd.DataFrame(rpv)
     rbar_premlp_volt_volt_violations = pd.DataFrame(rpvv)
@@ -107,7 +201,9 @@ def snts(
 
     flow_violations.to_csv(powerflow.bxctfolder + "flow_violations.csv", index=False)
     volt_violations.to_csv(powerflow.bxctfolder + "volt_violations.csv", index=False)
-    volt_violations_E.to_csv(powerflow.bxctfolder + "volt_violations_E.csv", index=False)
+    volt_violations_E.to_csv(
+        powerflow.bxctfolder + "volt_violations_E.csv", index=False
+    )
 
     original = rbar_premlp_volt.iloc[0]
     rbar_premlp_volt = rbar_premlp_volt.tail(-1)
@@ -118,18 +214,53 @@ def snts(
     cols = []
     for coluna in rbar_premlp_volt.columns:
         cols.append(col)
-        plt.scatter([col] * len(rbar_premlp_volt), rbar_premlp_volt[coluna], label=coluna, alpha=0.9)
+        plt.scatter(
+            [col] * len(rbar_premlp_volt),
+            rbar_premlp_volt[coluna],
+            label=coluna,
+            alpha=0.9,
+        )
         col += 2
 
     plt.xticks([])
-    plt.plot(cols, original.values, color='black', linestyle='--', linewidth=2,)
-    plt.plot(cols, powerflow.dbarDF.limite_maximo, color="blue", linestyle='--', linewidth=1,)
-    plt.plot(cols, powerflow.dbarDF.limite_maximo_E, color="red", linestyle='--', linewidth=1,)
-    plt.plot(cols, powerflow.dbarDF.limite_minimo, color="blue", linestyle='--', linewidth=1,)
-    plt.plot(cols, powerflow.dbarDF.limite_minimo_E, color="red", linestyle='--', linewidth=1,)
+    plt.plot(
+        cols,
+        original.values,
+        color="black",
+        linestyle="--",
+        linewidth=2,
+    )
+    plt.plot(
+        cols,
+        powerflow.dbarDF.limite_maximo,
+        color="blue",
+        linestyle="--",
+        linewidth=1,
+    )
+    plt.plot(
+        cols,
+        powerflow.dbarDF.limite_maximo_E,
+        color="red",
+        linestyle="--",
+        linewidth=1,
+    )
+    plt.plot(
+        cols,
+        powerflow.dbarDF.limite_minimo,
+        color="blue",
+        linestyle="--",
+        linewidth=1,
+    )
+    plt.plot(
+        cols,
+        powerflow.dbarDF.limite_minimo_E,
+        color="red",
+        linestyle="--",
+        linewidth=1,
+    )
     plt.xlabel("Barras", fontsize=16)
     plt.ylabel("Variação da magnitude de tensão", fontsize=16)
-    
+
     # # Criando o gráfico de dispersão
     # plt.figure(figsize=(9, 6))
     # col = 0
@@ -149,7 +280,4 @@ def snts(
     # plt.ylabel("Variação da magnitude de tensão")
     plt.show()
 
-
-
     print()
-

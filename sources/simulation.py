@@ -404,8 +404,15 @@ def simulation(
         )
 
     elif powerflow.method == "SNTS":
-        from  snts import snts
+        from snts import snts
 
         snts(
+            powerflow,
+        )
+
+    elif powerflow.method == "SAGE":
+        from sage import sage
+
+        sage(
             powerflow,
         )

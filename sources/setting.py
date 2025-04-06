@@ -33,6 +33,7 @@ def setting(
     # Classe para leitura de arquivo .pwf
     pwf(
         powerflow,
+        powerflow.dirPWF,
     )
 
     # Classe para determinação dos valores padrão das variáveis de tolerância

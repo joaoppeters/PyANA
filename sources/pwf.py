@@ -13,6 +13,7 @@ from dpwf import *
 
 def pwf(
     powerflow,
+    file,
 ):
     """inicialização
 
@@ -38,6 +39,7 @@ def pwf(
     # Leitura
     readfile(
         powerflow,
+        file,
     )
 
     print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
@@ -103,6 +105,7 @@ def codes(
 
 def readfile(
     powerflow,
+    file,
 ):
     """leitura do arquivo .pwf
 
@@ -110,7 +113,7 @@ def readfile(
         powerflow:
     """
     ## Inicialização
-    f = open(f"{powerflow.dirPWF}", "r", encoding="latin-1")
+    f = open(f"{file}", "r", encoding="latin-1")
     powerflow.lines = f.readlines()
     f.close()
 

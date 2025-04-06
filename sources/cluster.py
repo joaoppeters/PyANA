@@ -309,7 +309,6 @@ def cxlf(
     plt.xlabel("Pperdas (MW)", fontsize=16)
     plt.ylabel("Qperdas (MVAr)", fontsize=16)
     plt.show()
-    
 
     # # ====== 2. PLOTAR PONTOS OUTLIERS ======
     # plt.figure(figsize=(6, 5))

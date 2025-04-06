@@ -337,10 +337,9 @@ def q2024(
         & (powerflow.dbarDF.potencia_ativa > 0.0)
     ]
     powerflow.carga_total = powerflow.dbarDF.demanda_ativa.sum()
-    powerflow.cargas = powerflow.dbarDF.loc[powerflow.dbarDF.tipo == 0]
 
-    # AREA REPORT
-    filename = powerflow.infofolder + powerflow.name + ".txt"
+    # FULL REPORT
+    filename = powerflow.infofolder + powerflow.name + "-FULL.txt"
     with open(filename, "w") as file:
         file.write("- FULL SYSTEM REPORT")
         file.write("\n\n")
@@ -414,8 +413,11 @@ def q2024(
         file.write("\n")
         file.write(powerflow.gd.to_string(index=False))
         file.write("\n\n")
+    file.close()
 
-        file.write("\n\n")
+    # STATE REPORT
+    filename = powerflow.infofolder + powerflow.name + "-STATE.txt"
+    with open(filename, "w") as file:
         file.write("- STATE REPORT")
         for key, item in powerflow.estados.items():
             geradores = item.loc[item.potencia_ativa > 0.0]
@@ -522,8 +524,11 @@ def q2024(
                 )
             )
             file.write("\n\n")
+    file.close()
 
-        file.write("\n\n")
+    # SUBREGION REPORT
+    filename = powerflow.infofolder + powerflow.name + "-SUBREGION.txt"
+    with open(filename, "w") as file:
         file.write("- SUBREGION REPORT")
         for key, item in powerflow.regioes.items():
             geradores = item.loc[item.potencia_ativa > 0.0]
@@ -630,10 +635,102 @@ def q2024(
                 )
             )
             file.write("\n\n")
+    file.close()
+
+    # LOADS REPORT
+    filename = powerflow.infofolder + powerflow.name + "-LOADS.txt"
+    with open(filename, "w") as file:
+        file.write("- LOADS REPORT")
+        file.write("\n\n")
+        file.write(
+            "    -- CARGAS: {} unidades, {:.1f} MW".format(
+                powerflow.dbarDF.loc[powerflow.dbarDF.demanda_ativa > 0].shape[0],
+                powerflow.carga_total,
+            )
+        )
+        file.write("\n\n")
+        file.write("- SUBREGION REPORT")
+        for key, item in powerflow.regioes.items():
+            file.write("\n")
+            file.write("    -- {}".format(key))
+            file.write("\n")
+            file.write(
+                "        --- CARGAS: {} unidades, {:.1f} MW".format(
+                    item.loc[item.demanda_ativa > 0].shape[0],
+                    item.demanda_ativa.sum(),
+                )
+            )
+            for dgbt in item.grupo_base_tensao.unique():
+                if (
+                    item.loc[
+                        (item.grupo_base_tensao == dgbt.strip())
+                        & (item.demanda_ativa > 0)
+                    ].demanda_ativa.sum()
+                    < 1
+                ):
+                    continue
+                file.write("\n")
+                file.write(
+                    "            --- DGBT {} kV: {} unidades, {:.1f} MW".format(
+                        powerflow.dgbtDF.loc[
+                            powerflow.dgbtDF.grupo == dgbt.strip(), "tensao"
+                        ].values[0],
+                        item.loc[
+                            (item.grupo_base_tensao == dgbt.strip())
+                            & (item.demanda_ativa > 0)
+                        ].shape[0],
+                        item.loc[
+                            (item.grupo_base_tensao == dgbt.strip())
+                            & (item.demanda_ativa > 0)
+                        ].demanda_ativa.sum(),
+                    )
+                )
+
+            file.write("\n\n")
+        file.write("- STATE REPORT")
+        for key, item in powerflow.estados.items():
+            file.write("\n")
+            file.write("    -- {}".format(key))
+            file.write("\n")
+            file.write(
+                "        --- CARGAS: {} unidades, {:.1f} MW".format(
+                    item.loc[item.demanda_ativa > 0].shape[0],
+                    item.demanda_ativa.sum(),
+                )
+            )
+            for dgbt in item.grupo_base_tensao.unique():
+                if (
+                    item.loc[
+                        (item.grupo_base_tensao == dgbt.strip())
+                        & (item.demanda_ativa > 0)
+                    ].demanda_ativa.sum()
+                    < 1
+                ):
+                    continue
+                file.write("\n")
+                file.write(
+                    "            --- DGBT {} kV: {} unidades, {:.1f} MW".format(
+                        powerflow.dgbtDF.loc[
+                            powerflow.dgbtDF.grupo == dgbt.strip(), "tensao"
+                        ].values[0],
+                        item.loc[
+                            (item.grupo_base_tensao == dgbt.strip())
+                            & (item.demanda_ativa > 0)
+                        ].shape[0],
+                        item.loc[
+                            (item.grupo_base_tensao == dgbt.strip())
+                            & (item.demanda_ativa > 0)
+                        ].demanda_ativa.sum(),
+                    )
+                )
+
+            file.write("\n\n")
+    file.close()
 
     powerflow.cargas = powerflow.sao_paulo.copy()
     powerflow.eolicas = powerflow.nordeste[
-        powerflow.nordeste.nome.str.contains("EOL|EO-") & (item.potencia_ativa > 0.0)
+        powerflow.nordeste.nome.str.contains("EOL|EO-")
+        & (powerflow.nordeste.potencia_ativa > 0.0)
     ].copy()
 
 

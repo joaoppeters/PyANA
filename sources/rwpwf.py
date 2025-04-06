@@ -12,6 +12,7 @@ from datetime import datetime as dt
 
 def rwpwf(
     powerflow,
+    folder,
 ):
     """Inicialização
 
@@ -21,10 +22,7 @@ def rwpwf(
     ## Inicialização
     # Arquivo
     powerflow.filedir = realpath(
-        powerflow.sxlffolder
-        + "\\"
-        + powerflow.namecase
-        + "{}.pwf".format(powerflow.ones)
+        folder + "\\" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
     )
 
     # Manipulacao
@@ -282,8 +280,8 @@ def wtitu(
         file:
     """
     ## Inicialização
-    file.write(format(titu.titu))
-    file.write(format(titu.ruler))
+    file.write(format(titu["titu"]))
+    file.write(format(titu["ruler"]))
 
 
 def wdagr(
@@ -839,7 +837,7 @@ def wdglt(
     file.write(format(dglt.ruler.iloc[0]))
     for idx, value in dglt.iterrows():
         file.write(
-            f"{value['grupo']:2} {str(value['limite_minimo']):>5} {str(value['limite_maximo']):>5} {str(value['limite_minimo_E']):>5} {str(value['limite_maximo_E']):>5}"
+            f"{value['grupo_limite_tensao']:2} {str(value['limite_minimo']):>5} {str(value['limite_maximo']):>5} {str(value['limite_minimo_E']):>5} {str(value['limite_maximo_E']):>5}"
         )
         file.write("\n")
     file.write("99999")

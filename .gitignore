@@ -227,6 +227,8 @@ sistemas/ULOG*
 *sats.py
 *test.py
 *timeseries.py
+*phasor.py
+*rms.py
 
 *BALANCE.txt
 

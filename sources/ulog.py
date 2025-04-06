@@ -33,9 +33,7 @@ def basexlf(
 
     # Arquivo
     if where == "EXLF":
-        filedir = realpath(
-            powerflow.bxlffolder + "EXLF_" + powerflow.name + ".PWF"
-        )
+        filedir = realpath(powerflow.bxlffolder + "EXLF_" + powerflow.name + ".PWF")
         if "Q20" in powerflow.name:
             savfile = "_".join(powerflow.name.split("_")[:-1]) + ".SAV"
             savcase = powerflow.name.split("_")[-1][1:]
@@ -49,7 +47,7 @@ def basexlf(
         )
 
     elif where == "EXIC":
-        savfile = "CONT_" + str(powerflow.premlp//100 + 1).zfill(3) + ".SAV"
+        savfile = "CONT_" + str(powerflow.premlp // 100 + 1).zfill(3) + ".SAV"
         savcase = powerflow.premlp % 100
         exlf2new(
             exlffolder=powerflow.bxicfolder,
@@ -57,9 +55,13 @@ def basexlf(
             savfile=savfile,
         )
         filedir = realpath(
-            powerflow.bxctfolder + "EXLF_" + savfile.removesuffix(".SAV") + "_" + str(savcase) + ".PWF"
+            powerflow.bxctfolder
+            + "EXLF_"
+            + savfile.removesuffix(".SAV")
+            + "_"
+            + str(savcase)
+            + ".PWF"
         )
-
 
     # Manipulacao
     file = open(filedir, "w")
@@ -129,7 +131,7 @@ def basexic(
     time=7,
 ):
     """
-    
+
     Args
         powerflow:
     """
@@ -160,9 +162,7 @@ def basexic(
     )
 
     # Arquivo
-    filedir = realpath(
-        powerflow.bxicfolder + "EXIC_" + powerflow.name + ".PWF"
-    )
+    filedir = realpath(powerflow.bxicfolder + "EXIC_" + powerflow.name + ".PWF")
 
     # Manipulacao
     file = open(filedir, "w")
@@ -320,7 +320,7 @@ def basexct(
     where="EXLF",
     time=8,
 ):
-    """"
+    """ "
 
     Args
         powerflow:
@@ -339,7 +339,7 @@ def basexct(
         powerflow,
         where=where,
     )
-    
+
     if where == "EXLF":
         savfile = "EXLF_" + powerflow.name + ".SAV"
         exlf2new(
@@ -347,19 +347,17 @@ def basexct(
             newfolder=powerflow.bxctfolder,
             savfile=savfile,
         )
-    
+
     elif where == "EXIC":
         basexlf(
             powerflow,
             where=where,
         )
-        savfile = "CONT_" + str(powerflow.premlp//100 + 1).zfill(3) + ".SAV"
+        savfile = "CONT_" + str(powerflow.premlp // 100 + 1).zfill(3) + ".SAV"
         savcase = powerflow.premlp % 100
 
     # Arquivo
-    filedir = realpath(
-        powerflow.bxctfolder + "EXCT_" + powerflow.name + ".PWF"
-    )
+    filedir = realpath(powerflow.bxctfolder + "EXCT_" + powerflow.name + ".PWF")
 
     # Manipulacao
     file = open(filedir, "w")
@@ -620,6 +618,7 @@ def usxct(
 
     ## Inicialização
     for savfile in savfiles:
+        savfile = savfile.removesuffix(".REL") + ".SAV"
         exlf2new(
             exlffolder=folder_path,
             newfolder=powerflow.sxct,
