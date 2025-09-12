@@ -455,17 +455,17 @@ def readfile(
                 )
 
         # Dados de Monitoração de Tensão em Barra CA
-        elif (
-            powerflow.lines[powerflow.linecount].strip() == "DMTE"
-            or powerflow.lines[powerflow.linecount].strip() == "DMTE IMPR"
-        ):
-            powerflow.linecount += 1
-            powerflow.dmte = dict()
-            powerflow.dmte["dmte"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dmte["ruler"] = powerflow.lines[powerflow.linecount][:]
-            dmte(
-                powerflow,
-            )
+        # elif (
+        #     powerflow.lines[powerflow.linecount].strip() == "DMTE"
+        #     or powerflow.lines[powerflow.linecount].strip() == "DMTE IMPR"
+        # ):
+        #     powerflow.linecount += 1
+        #     powerflow.dmte = dict()
+        #     powerflow.dmte["dmte"] = powerflow.lines[powerflow.linecount - 1][:]
+        #     powerflow.dmte["ruler"] = powerflow.lines[powerflow.linecount][:]
+        #     dmte(
+        #         powerflow,
+        #     )
 
         # Dados de Opções de Controle e Execução Padrão
         elif (

@@ -10,7 +10,6 @@ from os.path import dirname, exists, realpath
 from os import mkdir
 
 from ctrl import control
-from monitor import monitor
 from options import options
 from pwf import pwf
 from report import report
@@ -43,11 +42,6 @@ def setting(
 
     # Classe para determinar a realização das opções de controle escolhidas
     control(
-        powerflow,
-    )
-
-    # Classe para determinar a realização de monitoramento de valores
-    monitor(
         powerflow,
     )
 

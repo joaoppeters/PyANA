@@ -1,1 +1,0 @@
-# Relatório de Convergência do Fluxo de Potência - `'RCONV'`

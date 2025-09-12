@@ -1,1 +1,0 @@
-# Monitoramento de Limite de Fluxo de Potência Ativa em Linhas de Transmissão

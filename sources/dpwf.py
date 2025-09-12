@@ -508,9 +508,6 @@ def dbar(
                     powerflow.slackidx = idx
                     powerflow.refgen = powerflow.npv - 1
 
-                elif value["tipo"] == 1:
-                    powerflow.dbarDF.at[idx, "angulo"] = 0.0
-
                 if value["potencia_reativa"] > value["potencia_reativa_maxima"]:
                     powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_maxima"
@@ -520,9 +517,6 @@ def dbar(
                     powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_minima"
                     ]
-
-            elif value["tipo"] == 0:
-                powerflow.dbarDF.at[idx, "angulo"] = 0.0
 
             if value["demanda_ativa"] == 0.0:
                 powerflow.maskLp[idx] = False

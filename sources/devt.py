@@ -6,9 +6,6 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from numpy.linalg import inv
-
-
 def apcb(
     powerflow,
     idx,

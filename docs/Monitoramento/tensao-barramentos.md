@@ -1,1 +1,0 @@
-# Monitoramento de Limite de Magnitude de Tensão de Barramentos

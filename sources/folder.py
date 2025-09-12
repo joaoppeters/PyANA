@@ -267,6 +267,31 @@ def rintfolder(
         mkdir(powerflow.rintfolder)
 
 
+def rlinfolder(
+    powerflow,
+):
+    """criação de diretório para armazenar resultados de análise de linha
+
+    Args
+        powerflow:
+    """
+    ## Inicialização
+    bxctfolder(
+        powerflow,
+    )
+    powerflow.rlinxlffolder = powerflow.exlffolder + "RLIN\\"
+    if exists(powerflow.rlinxlffolder) is False:
+        mkdir(powerflow.rlinxlffolder)
+
+    powerflow.rlinxicfolder = powerflow.exicfolder + "RLIN\\"
+    if exists(powerflow.rlinxicfolder) is False:
+        mkdir(powerflow.rlinxicfolder)
+
+    powerflow.rlinxctfolder = powerflow.exctfolder + "RLIN\\"
+    if exists(powerflow.rlinxctfolder) is False:
+        mkdir(powerflow.rlinxctfolder)
+
+
 def rtotfolder(
     powerflow,
 ):

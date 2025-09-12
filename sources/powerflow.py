@@ -19,7 +19,6 @@ class PowerFlow:
         system: str = "",
         method: str = "EXLF",
         control: list = list(),
-        monitor: list = list(),
         report: list = list(),
     ):
         """initialization
@@ -37,7 +36,6 @@ class PowerFlow:
         self.system = system
         self.method = method
         self.control = control
-        self.monitor = monitor
         self.report = report
 
         if self.system:

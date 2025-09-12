@@ -54,7 +54,7 @@ def rwpwf(
 
     if powerflow.codes["DBAR"]:
         wdbar(
-            powerflow.dbar,
+            powerflow.mdbar,
             file,
         )
 
@@ -81,7 +81,7 @@ def rwpwf(
     if powerflow.codes["DGER"]:
         wdger(
             powerflow.dger,
-            powerflow.dgerDF,
+            powerflow.mdger,
             file,
         )
 
@@ -397,93 +397,22 @@ def wdbar(
     """
     ## Inicialização
     file.write(format(dbar.dbar.iloc[0]))
-    file.write(format(dbar.ruler.iloc[0]))
+    file.write(format(dbar.ruler_x.iloc[0]))
     for idx, value in dbar.iterrows():
-        if value["demanda_ativa"] != 5 * " ":
-            value["demanda_ativa"] = float(value["demanda_ativa"])
-            if value["demanda_ativa"] >= 0.0:
-                if value["demanda_ativa"] / 1e3 >= 1.0:
-                    pl = str(
-                        round(
-                            value["demanda_ativa"],
-                        )
-                    )
-                elif (
-                    value["demanda_ativa"] / 1e3 >= 0.1
-                    and value["demanda_ativa"] / 1e3 < 1.0
-                ):
-                    pl = str(round(value["demanda_ativa"], 1))
-                else:
-                    pl = str(round(value["demanda_ativa"], 1))
-            else:
-                if value["demanda_ativa"] / 1e3 < -0.1:
-                    pl = str(
-                        round(
-                            value["demanda_ativa"],
-                        )
-                    )
-                else:
-                    pl = str(round(value["demanda_ativa"], 1))
+        ag = str(value.angulo)[:4]
+        pg = str(value.potencia_ativa)[:5]
+        qg = str(value.potencia_reativa)[:5]
+        qn = str(value.potencia_reativa_minima)[:5]
+        qx = str(value.potencia_reativa_maxima)[:5]
+        pl = str(value.demanda_ativa)[:5]
+        ql = str(value.demanda_reativa)[:5]
+        sb = str(value.shunt_barra)[:5]
+        if value.barra_controlada == 0.0:
+            bc = 6 * " "
         else:
-            pl = 5 * " "
-
-        if value["demanda_reativa"] != 5 * " ":
-            value["demanda_reativa"] = float(value["demanda_reativa"])
-            if value["demanda_reativa"] >= 0.0:
-                if value["demanda_reativa"] / 1e3 >= 1.0:
-                    ql = str(
-                        round(
-                            value["demanda_reativa"],
-                        )
-                    )
-                elif (
-                    value["demanda_reativa"] / 1e3 >= 0.1
-                    and value["demanda_reativa"] / 1e3 < 1.0
-                ):
-                    ql = str(round(value["demanda_reativa"], 1))
-                else:
-                    ql = str(round(value["demanda_reativa"], 1))
-            else:
-                if value["demanda_reativa"] / 1e3 < -0.1:
-                    ql = str(
-                        round(
-                            value["demanda_reativa"],
-                        )
-                    )
-                else:
-                    ql = str(round(value["demanda_reativa"], 1))
-        else:
-            ql = 5 * " "
-
-        if value["shunt_barra"] != 5 * " ":
-            value["shunt_barra"] = float(value["shunt_barra"])
-            if value["shunt_barra"] >= 0.0:
-                if value["shunt_barra"] / 1e3 >= 1.0:
-                    sb = str(
-                        round(
-                            value["shunt_barra"],
-                        )
-                    )
-                elif (
-                    value["shunt_barra"] / 1e3 >= 0.1
-                    and value["shunt_barra"] / 1e3 < 1.0
-                ):
-                    sb = str(round(value["shunt_barra"], 1))
-                else:
-                    sb = str(round(value["shunt_barra"], 2))
-            else:
-                if value["shunt_barra"] / 1e3 < -0.1:
-                    sb = str(
-                        round(
-                            value["shunt_barra"],
-                        )
-                    )
-                else:
-                    sb = str(round(value["shunt_barra"], 1))
-        else:
-            sb = 5 * " "
+            bc = f"{int(value.barra_controlada):>6}"
         file.write(
-            f"{value['numero']:>5}{value['operacao']:1}{value['estado']:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{value['tensao']:>4}{value['angulo']:>4}{value['potencia_ativa']:>5}{value['potencia_reativa']:>5}{value['potencia_reativa_minima']:>5}{value['potencia_reativa_maxima']:>5}{value['barra_controlada']:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{value['tensao_base']:>4}{value['modo']:1}{value['agreg1']:<3}{value['agreg2']:<3}{value['agreg3']:<3}{value['agreg4']:<3}{value['agreg5']:<3}{value['agreg6']:<3}{value['agreg7']:<3}{value['agreg8']:<3}{value['agreg9']:<3}{value['agreg10']:<3}"
+            f"{value['numero']:>5}{' ':1}{value.estado:1}{value['tipo']:1}{value['grupo_base_tensao']:>2}{value['nome']:^12}{value['grupo_limite_tensao']:>2}{int(value['tensao']):>4}{ag:>4}{pg:>5}{qg:>5}{qn:>5}{qx:>5}{bc:>6}{pl:>5}{ql:>5}{sb:>5}{value['area']:>3}{int(value['tensao_base']):>4}{value['modo']:1}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}{3*' ':<3}"
         )
         file.write("\n")
     file.write("99999")
@@ -671,7 +600,7 @@ def wdcsc(
     file.write(format(dcsc.ruler.iloc[0]))
     for idx, value in dcsc.iterrows():
         file.write(
-            f"{value['de']:>5} {value['operacao']:1}  {value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['bypass']:1}      {value['reatancia_minima']:>6}{value['reatancia_maxima']:>6}{value['reatancia_inicial']:>6}{value['modo_controle']:1} {value['especificado']:>6} {value['extremidade']:>5}{value['estagios']:>3}{value['capacidade_normal']:>4}{value['capacidade_emergencia']:>4}{value['capacidade']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}\n"
+            f"{value['de']:>5} {value['operacao']:1}  {value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['bypass']:1}      {value['reatancia_minima']:>6}{value['reatancia_maxima']:>6}{value['reatancia_inicial']:>6}{value['modo_controle']:1} {value['especificado']:>6} {value['extremidade']:>5}{value['estagios']:>3}{value['capacidade_normal']:>4}{value['capacidade_emergencia']:>4}{value['capacidade']:>4}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}\n"
         )
         # file.write("\n")
     file.write("99999")
@@ -815,7 +744,7 @@ def wdger(
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
         file.write(
-            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {dgerDF.fator_participacao.iloc[idx]:>5.3f} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']:>6}"
+            f"{value['numero']:>5} {value['operacao']:1} {value['potencia_ativa_minima']:>6} {value['potencia_ativa_maxima']:>6} {value['fator_participacao']:>5} {value['fator_participacao_controle_remoto']:>5} {value['fator_potencia_nominal']:>5} {value['fator_servico_armadura']:>4} {value['fator_servico_rotor']:>4} {value['angulo_maximo_carga']:>4} {value['reatancia_maquina']:>5} {value['potencia_aparente_nominal']:>5}{value['estatismo']:>6}"
         )
         file.write("\n")
     file.write("99999")
@@ -903,7 +832,7 @@ def wdlin(
     file.write(format(dlin.ruler.iloc[0]))
     for idx, value in dlin.iterrows():
         file.write(
-            f"{value['de']:>5}{value['abertura_de']:1} {value['operacao']:1} {value['abertura_para']:1}{value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['manobravel']:1}{value['resistencia']:>6}{value['reatancia']:>6}{value['susceptancia']:>6}{value['tap']:>5}{value['tap_minimo']:>5}{value['tap_maximo']:>5}{value['tap_defasagem']:>5}{value['barra_controlada']:>6}{value['capacidade_normal']:>4}{value['capacidade_emergencial']:>4}{value['numero_taps']:>2}{value['capacidade_equipamento']:>4}{value['agreg1']:>3}{value['agreg2']:>3}{value['agreg3']:>3}{value['agreg4']:>3}{value['agreg5']:>3}{value['agreg6']:>3}{value['agreg7']:>3}{value['agreg8']:>3}{value['agreg9']:>3}{value['agreg10']:>3}"
+            f"{value['de']:>5}{value['abertura_de']:1} {value['operacao']:1} {value['abertura_para']:1}{value['para']:>5}{value['circuito']:>2}{value['estado']:1}{value['proprietario']:1}{value['manobravel']:1}{value['resistencia']:>6}{value['reatancia']:>6}{value['susceptancia']:>6}{value['tap']:>5}{value['tap_minimo']:>5}{value['tap_maximo']:>5}{value['tap_defasagem']:>5}{value['barra_controlada']:>6}{value['capacidade_normal']:>4}{value['capacidade_emergencial']:>4}{value['numero_taps']:>2}{value['capacidade_equipamento']:>4}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}{3*' ':>3}"
         )
         file.write("\n")
     file.write("99999")
@@ -1112,7 +1041,7 @@ def wtail(
     file.write("(")
     file.write("\n")
 
-    file.write("EXLF BPSI")
+    file.write("EXLF")
 
     file.write("\n")
     file.write("(")

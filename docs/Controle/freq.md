@@ -1,1 +1,0 @@
-# Controle de Regulação Primária de Frequência
