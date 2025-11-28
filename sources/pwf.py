@@ -12,33 +12,33 @@ from dpwf import *
 
 
 def pwf(
-    powerflow,
+    anarede,
     file,
 ):
     """inicialização
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     t = time.process_time()
 
     # Variáveis
-    powerflow.linecount = 0
+    anarede.linecount = 0
 
     # Funções
     keywords(
-        powerflow,
+        anarede,
     )
 
     # Códigos
     codes(
-        powerflow,
+        anarede,
     )
 
     # Leitura
     readfile(
-        powerflow,
+        anarede,
         file,
     )
 
@@ -46,490 +46,492 @@ def pwf(
 
 
 def keywords(
-    powerflow,
+    anarede,
 ):
     """palavras-chave de arquivo .pwf
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.end_line = "\n"
-    powerflow.end_archive = "FIM"
-    powerflow.end_block = ("9999", "99999", "999999")
-    powerflow.comment = "("
+    anarede.end_line = "\n"
+    anarede.end_archive = "FIM"
+    anarede.end_block = ("9999", "99999", "999999")
+    anarede.comment = "("
 
 
 def codes(
-    powerflow,
+    anarede,
 ):
     """códigos de dados de execução implementados
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.codes = {
-        "TITU": False,
-        "DAGR": False,
-        "DANC": False,
-        "DARE": False,
-        "DBAR": False,
-        "DBSH": False,
-        "DCAR": False,
-        "DCBA": False,
-        "DCCV": False,
-        "DCER": False,
-        "DCLI": False,
-        "DCNV": False,
-        "DCSC": False,
-        "DCTE": False,
-        "DCTG": False,
-        "DCTR": False,
-        "DELO": False,
-        "DGBT": False,
-        "DGER": False,
-        "DGLT": False,
-        "DINC": False,
-        "DINJ": False,
-        "DLIN": False,
-        "DMET": False,
-        "DMFL": False,
-        "DMTE": False,
-        "DOPC": False,
-        "DSHL": False,
-        "DTPF": False,
-    }
+    anarede.pwfblock = dict(
+        {
+            "TITU": False,
+            "DAGR": False,
+            "DANC": False,
+            "DARE": False,
+            "DBAR": False,
+            "DBSH": False,
+            "DCAR": False,
+            "DCBA": False,
+            "DCCV": False,
+            "DCER": False,
+            "DCLI": False,
+            "DCNV": False,
+            "DCSC": False,
+            "DCTE": False,
+            "DCTG": False,
+            "DCTR": False,
+            "DELO": False,
+            "DGBT": False,
+            "DGER": False,
+            "DGLT": False,
+            "DINC": False,
+            "DINJ": False,
+            "DLIN": False,
+            "DMET": False,
+            "DMFL": False,
+            "DMTE": False,
+            "DOPC": False,
+            "DSHL": False,
+            "DTPF": False,
+        }
+    )
 
 
 def readfile(
-    powerflow,
+    anarede,
     file,
 ):
     """leitura do arquivo .pwf
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     f = open(f"{file}", "r", encoding="latin-1")
-    powerflow.lines = f.readlines()
+    anarede.lines = f.readlines()
     f.close()
 
     # Loop de leitura de linhas do `.pwf`
-    while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
+    while anarede.lines[anarede.linecount].strip() != anarede.end_archive:
         # Dados de Agregadores Genericos
         if (
-            powerflow.lines[powerflow.linecount].strip() == "DAGR"
-            or powerflow.lines[powerflow.linecount].strip() == "DAGR IMPR"
+            anarede.lines[anarede.linecount].strip() == "DAGR"
+            or anarede.lines[anarede.linecount].strip() == "DAGR IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dagr = dict()
-            powerflow.dagr1 = dict()
-            powerflow.dagr2 = dict()
-            powerflow.dagr["dagr"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dagr1["ruler"] = powerflow.lines[powerflow.linecount][:]
-            powerflow.dagr2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
+            anarede.linecount += 1
+            anarede.dagr = dict()
+            anarede.dagr1 = dict()
+            anarede.dagr2 = dict()
+            anarede.dagr["dagr"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dagr1["ruler"] = anarede.lines[anarede.linecount][:]
+            anarede.dagr2["ruler"] = anarede.lines[anarede.linecount + 2][:]
             dagr(
-                powerflow,
+                anarede,
             )
 
         # Dados de Alteração do Nível de Carregamento
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DANC"
-            or powerflow.lines[powerflow.linecount].strip() == "DANC IMPR"
-            or powerflow.lines[powerflow.linecount].strip() == "DANC ACLS"
-            or powerflow.lines[powerflow.linecount].strip() == "DANC ACLS IMPR"
+            anarede.lines[anarede.linecount].strip() == "DANC"
+            or anarede.lines[anarede.linecount].strip() == "DANC IMPR"
+            or anarede.lines[anarede.linecount].strip() == "DANC ACLS"
+            or anarede.lines[anarede.linecount].strip() == "DANC ACLS IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.danc = dict()
-            powerflow.danc["danc"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.danc["ruler"] = powerflow.lines[powerflow.linecount][:]
-            if "ACLS" in powerflow.lines[powerflow.linecount - 1].strip():
+            anarede.linecount += 1
+            anarede.danc = dict()
+            anarede.danc["danc"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.danc["ruler"] = anarede.lines[anarede.linecount][:]
+            if "ACLS" in anarede.lines[anarede.linecount - 1].strip():
                 danc_acls(
-                    powerflow,
+                    anarede,
                 )
             else:
                 danc(
-                    powerflow,
+                    anarede,
                 )
 
         # Dados de Intercâmbio de Potência Ativa entre Áreas
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DARE"
-            or powerflow.lines[powerflow.linecount].strip() == "DARE IMPR"
+            anarede.lines[anarede.linecount].strip() == "DARE"
+            or anarede.lines[anarede.linecount].strip() == "DARE IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dare = dict()
-            powerflow.dare["dare"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dare["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dare = dict()
+            anarede.dare["dare"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dare["ruler"] = anarede.lines[anarede.linecount][:]
             dare(
-                powerflow,
+                anarede,
             )
 
         # Dados de Barra
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DBAR"
-            or powerflow.lines[powerflow.linecount].strip() == "DBAR IMPR"
+            anarede.lines[anarede.linecount].strip() == "DBAR"
+            or anarede.lines[anarede.linecount].strip() == "DBAR IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dbar = dict()
-            powerflow.dbar["dbar"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dbar["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dbar = dict()
+            anarede.dbar["dbar"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dbar["ruler"] = anarede.lines[anarede.linecount][:]
             dbar(
-                powerflow,
+                anarede,
             )
 
         # Dados de Bancos de Capacitores e/ou Reatores Individualizados de Barras CA ou de Linhas de Transmissão
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DBSH"
-            or powerflow.lines[powerflow.linecount].strip() == "DBSH IMPR"
+            anarede.lines[anarede.linecount].strip() == "DBSH"
+            or anarede.lines[anarede.linecount].strip() == "DBSH IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dbsh = dict()
-            powerflow.dbsh1 = dict()
-            powerflow.dbsh2 = dict()
-            powerflow.dbsh["dbsh"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dbsh1["ruler"] = powerflow.lines[powerflow.linecount][:]
-            powerflow.dbsh2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
+            anarede.linecount += 1
+            anarede.dbsh = dict()
+            anarede.dbsh1 = dict()
+            anarede.dbsh2 = dict()
+            anarede.dbsh["dbsh"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dbsh1["ruler"] = anarede.lines[anarede.linecount][:]
+            anarede.dbsh2["ruler"] = anarede.lines[anarede.linecount + 2][:]
             dbsh(
-                powerflow,
+                anarede,
             )
 
         # Dados de Args da Curva de Carga
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCAR"
-            or powerflow.lines[powerflow.linecount].strip() == "DCAR IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCAR"
+            or anarede.lines[anarede.linecount].strip() == "DCAR IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcar = dict()
-            powerflow.dcar["dcar"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcar["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcar = dict()
+            anarede.dcar["dcar"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcar["ruler"] = anarede.lines[anarede.linecount][:]
             dcar(
-                powerflow,
+                anarede,
             )
 
         # Dados de Barras CC
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCBA"
-            or powerflow.lines[powerflow.linecount].strip() == "DCBA IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCBA"
+            or anarede.lines[anarede.linecount].strip() == "DCBA IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcba = dict()
-            powerflow.dcba["dcba"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcba["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcba = dict()
+            anarede.dcba["dcba"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcba["ruler"] = anarede.lines[anarede.linecount][:]
             dcba(
-                powerflow,
+                anarede,
             )
 
         # Dados de Controle de Conversor CA/CC
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCCV"
-            or powerflow.lines[powerflow.linecount].strip() == "DCCV IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCCV"
+            or anarede.lines[anarede.linecount].strip() == "DCCV IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dccv = dict()
-            powerflow.dccv["dccv"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dccv["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dccv = dict()
+            anarede.dccv["dccv"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dccv["ruler"] = anarede.lines[anarede.linecount][:]
             dccv(
-                powerflow,
+                anarede,
             )
 
         # Dados de Compensadores Estáticos de Potência Reativa
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCER"
-            or powerflow.lines[powerflow.linecount].strip() == "DCER IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCER"
+            or anarede.lines[anarede.linecount].strip() == "DCER IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcer = dict()
-            powerflow.dcer["dcer"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcer["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcer = dict()
+            anarede.dcer["dcer"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcer["ruler"] = anarede.lines[anarede.linecount][:]
             dcer(
-                powerflow,
+                anarede,
             )
 
         # Dados de Linha CC
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCLI"
-            or powerflow.lines[powerflow.linecount].strip() == "DCLI IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCLI"
+            or anarede.lines[anarede.linecount].strip() == "DCLI IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcli = dict()
-            powerflow.dcli["dcli"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcli["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcli = dict()
+            anarede.dcli["dcli"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcli["ruler"] = anarede.lines[anarede.linecount][:]
             dcli(
-                powerflow,
+                anarede,
             )
 
         # Dados de Conversor CA/CC
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCNV"
-            or powerflow.lines[powerflow.linecount].strip() == "DCNV IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCNV"
+            or anarede.lines[anarede.linecount].strip() == "DCNV IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcnv = dict()
-            powerflow.dcnv["dcnv"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcnv["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcnv = dict()
+            anarede.dcnv["dcnv"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcnv["ruler"] = anarede.lines[anarede.linecount][:]
             dcnv(
-                powerflow,
+                anarede,
             )
 
         # Dados de Compensador Série Controlável
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCSC"
-            or powerflow.lines[powerflow.linecount].strip() == "DCSC IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCSC"
+            or anarede.lines[anarede.linecount].strip() == "DCSC IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcsc = dict()
-            powerflow.dcsc["dcsc"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcsc["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcsc = dict()
+            anarede.dcsc["dcsc"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcsc["ruler"] = anarede.lines[anarede.linecount][:]
             dcsc(
-                powerflow,
+                anarede,
             )
 
         # Dados de Constantes
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCTE"
-            or powerflow.lines[powerflow.linecount].strip() == "DCTE IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCTE"
+            or anarede.lines[anarede.linecount].strip() == "DCTE IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dcte = dict()
-            powerflow.dcte["dcte"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dcte["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dcte = dict()
+            anarede.dcte["dcte"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dcte["ruler"] = anarede.lines[anarede.linecount][:]
             dcte(
-                powerflow,
+                anarede,
             )
 
         # Dados de Contingências
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCTG"
-            or powerflow.lines[powerflow.linecount].strip() == "DCTG IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCTG"
+            or anarede.lines[anarede.linecount].strip() == "DCTG IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dctg = dict()
-            powerflow.dctg1 = dict()
-            powerflow.dctg2 = dict()
-            powerflow.dctg["dctg"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dctg1["ruler"] = powerflow.lines[powerflow.linecount][:]
-            powerflow.dctg2["ruler"] = powerflow.lines[powerflow.linecount + 2][:]
+            anarede.linecount += 1
+            anarede.dctg = dict()
+            anarede.dctg1 = dict()
+            anarede.dctg2 = dict()
+            anarede.dctg["dctg"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dctg1["ruler"] = anarede.lines[anarede.linecount][:]
+            anarede.dctg2["ruler"] = anarede.lines[anarede.linecount + 2][:]
             dctg(
-                powerflow,
+                anarede,
             )
 
         # Dados Complementares de Transformadores
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DCTR"
-            or powerflow.lines[powerflow.linecount].strip() == "DCTR IMPR"
+            anarede.lines[anarede.linecount].strip() == "DCTR"
+            or anarede.lines[anarede.linecount].strip() == "DCTR IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dctr = dict()
-            powerflow.dctr["dctr"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dctr["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dctr = dict()
+            anarede.dctr["dctr"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dctr["ruler"] = anarede.lines[anarede.linecount][:]
             dctr(
-                powerflow,
+                anarede,
             )
 
         # Dados de Elo CC
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DELO"
-            or powerflow.lines[powerflow.linecount].strip() == "DELO IMPR"
+            anarede.lines[anarede.linecount].strip() == "DELO"
+            or anarede.lines[anarede.linecount].strip() == "DELO IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.delo = dict()
-            powerflow.delo["delo"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.delo["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.delo = dict()
+            anarede.delo["delo"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.delo["ruler"] = anarede.lines[anarede.linecount][:]
             delo(
-                powerflow,
+                anarede,
             )
 
         # Dados de Grupo de Base de Tensão de Barras CA
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DGBT"
-            or powerflow.lines[powerflow.linecount].strip() == "DGBT IMPR"
+            anarede.lines[anarede.linecount].strip() == "DGBT"
+            or anarede.lines[anarede.linecount].strip() == "DGBT IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dgbt = dict()
-            powerflow.dgbt["dgbt"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dgbt["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dgbt = dict()
+            anarede.dgbt["dgbt"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dgbt["ruler"] = anarede.lines[anarede.linecount][:]
             dgbt(
-                powerflow,
+                anarede,
             )
 
         # Dados de Geradores
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DGER"
-            or powerflow.lines[powerflow.linecount].strip() == "DGER IMPR"
+            anarede.lines[anarede.linecount].strip() == "DGER"
+            or anarede.lines[anarede.linecount].strip() == "DGER IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dger = dict()
-            powerflow.dger["dger"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dger["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dger = dict()
+            anarede.dger["dger"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dger["ruler"] = anarede.lines[anarede.linecount][:]
             dger(
-                powerflow,
+                anarede,
             )
 
         # Dados de Grupos de Limites de Tensão
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DGLT"
-            or powerflow.lines[powerflow.linecount].strip() == "DGLT IMPR"
+            anarede.lines[anarede.linecount].strip() == "DGLT"
+            or anarede.lines[anarede.linecount].strip() == "DGLT IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dglt = dict()
-            powerflow.dglt["dglt"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dglt["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dglt = dict()
+            anarede.dglt["dglt"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dglt["ruler"] = anarede.lines[anarede.linecount][:]
             dglt(
-                powerflow,
+                anarede,
             )
 
         # Dados de Incremento do Nível de Carregamento
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DINC"
-            or powerflow.lines[powerflow.linecount].strip() == "DINC IMPR"
+            anarede.lines[anarede.linecount].strip() == "DINC"
+            or anarede.lines[anarede.linecount].strip() == "DINC IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dinc = dict()
-            powerflow.dinc["dinc"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dinc["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dinc = dict()
+            anarede.dinc["dinc"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dinc["ruler"] = anarede.lines[anarede.linecount][:]
             dinc(
-                powerflow,
+                anarede,
             )
 
         # Dados de Injeções de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DINJ"
-            or powerflow.lines[powerflow.linecount].strip() == "DINJ IMPR"
+            anarede.lines[anarede.linecount].strip() == "DINJ"
+            or anarede.lines[anarede.linecount].strip() == "DINJ IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dinj = dict()
-            powerflow.dinj["dinj"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dinj["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dinj = dict()
+            anarede.dinj["dinj"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dinj["ruler"] = anarede.lines[anarede.linecount][:]
             dinj(
-                powerflow,
+                anarede,
             )
 
         # Dados de Linha CA
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DLIN"
-            or powerflow.lines[powerflow.linecount].strip() == "DLIN IMPR"
+            anarede.lines[anarede.linecount].strip() == "DLIN"
+            or anarede.lines[anarede.linecount].strip() == "DLIN IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dlin = dict()
-            powerflow.dlin["dlin"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dlin["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dlin = dict()
+            anarede.dlin["dlin"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dlin["ruler"] = anarede.lines[anarede.linecount][:]
             dlin(
-                powerflow,
+                anarede,
             )
 
         # Dados de Monitoração para Estabilidade de Tensão em Barra CA
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DMET"
-            or powerflow.lines[powerflow.linecount].strip() == "DMET IMPR"
+            anarede.lines[anarede.linecount].strip() == "DMET"
+            or anarede.lines[anarede.linecount].strip() == "DMET IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dmet = dict()
-            powerflow.dmet["dmet"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dmet["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dmte = dict()
+            anarede.dmte["dmet"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dmte["ruler"] = anarede.lines[anarede.linecount][:]
             dmet(
-                powerflow,
+                anarede,
             )
 
         # Dados de Monitoração de Fluxo em Circuito CA
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DMFL"
-            or powerflow.lines[powerflow.linecount].strip() == "DMFL IMPR"
-            or powerflow.lines[powerflow.linecount].strip() == "DMFL CIRC"
-            or powerflow.lines[powerflow.linecount].strip() == "DMFL CIRC IMPR"
+            anarede.lines[anarede.linecount].strip() == "DMFL"
+            or anarede.lines[anarede.linecount].strip() == "DMFL IMPR"
+            or anarede.lines[anarede.linecount].strip() == "DMFL CIRC"
+            or anarede.lines[anarede.linecount].strip() == "DMFL CIRC IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dmfl = dict()
-            powerflow.dmfl["dmfl"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dmfl["ruler"] = powerflow.lines[powerflow.linecount][:]
-            if "CIRC" in powerflow.lines[powerflow.linecount - 1].strip():
+            anarede.linecount += 1
+            anarede.dmfl = dict()
+            anarede.dmfl["dmfl"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dmfl["ruler"] = anarede.lines[anarede.linecount][:]
+            if "CIRC" in anarede.lines[anarede.linecount - 1].strip():
                 dmfl_circ(
-                    powerflow,
+                    anarede,
                 )
             else:
                 dmfl(
-                    powerflow,
+                    anarede,
                 )
 
         # Dados de Monitoração de Tensão em Barra CA
         # elif (
-        #     powerflow.lines[powerflow.linecount].strip() == "DMTE"
-        #     or powerflow.lines[powerflow.linecount].strip() == "DMTE IMPR"
+        #     anarede.lines[anarede.linecount].strip() == "DMTE"
+        #     or anarede.lines[anarede.linecount].strip() == "DMTE IMPR"
         # ):
-        #     powerflow.linecount += 1
-        #     powerflow.dmte = dict()
-        #     powerflow.dmte["dmte"] = powerflow.lines[powerflow.linecount - 1][:]
-        #     powerflow.dmte["ruler"] = powerflow.lines[powerflow.linecount][:]
+        #     anarede.linecount += 1
+        #     anarede.dmte = dict()
+        #     anarede.dmte["dmte"] = anarede.lines[anarede.linecount - 1][:]
+        #     anarede.dmte["ruler"] = anarede.lines[anarede.linecount][:]
         #     dmte(
-        #         powerflow,
+        #         anarede,
         #     )
 
         # Dados de Opções de Controle e Execução Padrão
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DOPC"
-            or powerflow.lines[powerflow.linecount].strip() == "DOPC IMPR"
+            anarede.lines[anarede.linecount].strip() == "DOPC"
+            or anarede.lines[anarede.linecount].strip() == "DOPC IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dopc = dict()
-            powerflow.dopc["dopc"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dopc["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dopc = dict()
+            anarede.dopc["dopc"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dopc["ruler"] = anarede.lines[anarede.linecount][:]
             dopc(
-                powerflow,
+                anarede,
             )
 
         # Dados de Dispositivos Shunt de Circuito CA
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DSHL"
-            or powerflow.lines[powerflow.linecount].strip() == "DSHL IMPR"
+            anarede.lines[anarede.linecount].strip() == "DSHL"
+            or anarede.lines[anarede.linecount].strip() == "DSHL IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dshl = dict()
-            powerflow.dshl["dshl"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dshl["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anarede.linecount += 1
+            anarede.dshl = dict()
+            anarede.dshl["dshl"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dshl["ruler"] = anarede.lines[anarede.linecount][:]
             dshl(
-                powerflow,
+                anarede,
             )
 
         # Dados de
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DTPF"
-            or powerflow.lines[powerflow.linecount].strip() == "DTPF IMPR"
-            or powerflow.lines[powerflow.linecount].strip() == "DTPF CIRC"
-            or powerflow.lines[powerflow.linecount].strip() == "DTPF CIRC IMPR"
+            anarede.lines[anarede.linecount].strip() == "DTPF"
+            or anarede.lines[anarede.linecount].strip() == "DTPF IMPR"
+            or anarede.lines[anarede.linecount].strip() == "DTPF CIRC"
+            or anarede.lines[anarede.linecount].strip() == "DTPF CIRC IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.dtpf = dict()
-            powerflow.dtpf["dtpf"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.dtpf["ruler"] = powerflow.lines[powerflow.linecount][:]
-            if "CIRC" in powerflow.lines[powerflow.linecount - 1].strip():
+            anarede.linecount += 1
+            anarede.dtpf = dict()
+            anarede.dtpf["dtpf"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.dtpf["ruler"] = anarede.lines[anarede.linecount][:]
+            if "CIRC" in anarede.lines[anarede.linecount - 1].strip():
                 dtpf_circ(
-                    powerflow,
+                    anarede,
                 )
             else:
                 dtpf(
-                    powerflow,
+                    anarede,
                 )
 
         # Título do Sistema/Caso em Estudo
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "TITU"
-            or powerflow.lines[powerflow.linecount].strip() == "TITU IMPR"
+            anarede.lines[anarede.linecount].strip() == "TITU"
+            or anarede.lines[anarede.linecount].strip() == "TITU IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.titu = dict()
-            powerflow.titu["titu"] = powerflow.lines[powerflow.linecount - 1][:]
-            powerflow.titu["ruler"] = powerflow.lines[powerflow.linecount][:]
-            powerflow.codes["TITU"] = True
+            anarede.linecount += 1
+            anarede.titu = dict()
+            anarede.titu["titu"] = anarede.lines[anarede.linecount - 1][:]
+            anarede.titu["ruler"] = anarede.lines[anarede.linecount][:]
+            anarede.pwfblock["TITU"] = True
 
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     ## SUCESSO NA LEITURA
-    print(f"\033[32mSucesso na leitura de arquivo `{powerflow.anarede}`!\033[0m")
+    print(f"\033[32mSucesso na leitura de arquivo `{anarede.name + '.pwf'}`!\033[0m")
 
     # Checa alteração do nível de carregamento
     checkdanc(
-        powerflow,
+        anarede,
     )

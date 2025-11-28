@@ -11,44 +11,44 @@ from ctrl import controlsch
 
 
 def scheduled(
-    powerflow,
+    anarede,
 ):
     """método para armazenamento dos Args especificados
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Potências ativa e reativa especificadas
-    if powerflow.solution["method"] == "LFDC":
-        powerflow.psch = zeros(powerflow.nbus)
-        powerflow.qsch = zeros(powerflow.nbus)
-        powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
-        powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
+    if anarede.solution["method"] == "LFDC":
+        anarede.psch = zeros(anarede.nbus)
+        anarede.qsch = zeros(anarede.nbus)
+        anarede.psch += anarede.dbarDF["potencia_ativa"].to_numpy()
+        anarede.psch -= anarede.dbarDF["demanda_ativa"].to_numpy()
 
-    elif powerflow.solution["method"] == "EXPC":
-        powerflow.psch = zeros(powerflow.nbus)
-        powerflow.psch += powerflow.solution["potencia_ativa"]
-        powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
-        powerflow.qsch = zeros(powerflow.nbus)
-        powerflow.qsch += powerflow.solution["potencia_reativa"]
-        powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
+    elif anarede.solution["method"] == "EXPC":
+        anarede.psch = zeros(anarede.nbus)
+        anarede.psch += anarede.solution["potencia_ativa"]
+        anarede.psch -= anarede.dbarDF["demanda_ativa"].to_numpy()
+        anarede.qsch = zeros(anarede.nbus)
+        anarede.qsch += anarede.solution["potencia_reativa"]
+        anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
 
-    elif (powerflow.solution["method"] != "EXPC") and (
-        powerflow.solution["method"] != "LFDC"
+    elif (anarede.solution["method"] != "EXPC") and (
+        anarede.solution["method"] != "LFDC"
     ):
-        powerflow.psch = zeros(powerflow.nbus)
-        powerflow.psch += powerflow.dbarDF["potencia_ativa"].to_numpy()
-        powerflow.psch -= powerflow.dbarDF["demanda_ativa"].to_numpy()
-        powerflow.qsch = zeros(powerflow.nbus)
-        powerflow.qsch += powerflow.dbarDF["potencia_reativa"].to_numpy()
-        powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
+        anarede.psch = zeros(anarede.nbus)
+        anarede.psch += anarede.dbarDF["potencia_ativa"].to_numpy()
+        anarede.psch -= anarede.dbarDF["demanda_ativa"].to_numpy()
+        anarede.qsch = zeros(anarede.nbus)
+        anarede.qsch += anarede.dbarDF["potencia_reativa"].to_numpy()
+        anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
 
-    powerflow.psch /= powerflow.options["BASE"]
-    powerflow.qsch /= powerflow.options["BASE"]
+    anarede.psch /= anarede.cte["BASE"]
+    anarede.qsch /= anarede.cte["BASE"]
 
     # Variáveis especificadas de controle ativos
-    if powerflow.controlcount > 0 and powerflow.solution["method"] != "LFDC":
+    if anarede.controlcount > 0 and anarede.solution["method"] != "LFDC":
         controlsch(
-            powerflow,
+            anarede,
         )

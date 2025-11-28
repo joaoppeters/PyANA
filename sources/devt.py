@@ -6,58 +6,53 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
+
 def apcb(
-    powerflow,
+    anatem,
     idx,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
-    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
-    busidx = powerflow.devtDF.iloc[idx].elemento - 1
-    powerflow.Yblc[powerflow.nger + busidx, :] = 0
-    powerflow.Yblc[:, powerflow.nger + busidx] = 0
-    powerflow.Yblc[powerflow.nger + busidx, powerflow.nger + busidx] = 1
+    anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
+    busidx = anatem.devtDF.iloc[idx].elemento - 1
+    anatem.Yblc[anatem.nger + busidx, :] = 0
+    anatem.Yblc[:, anatem.nger + busidx] = 0
+    anatem.Yblc[anatem.nger + busidx, anatem.nger + busidx] = 1
 
 
 def rmgr(
-    powerflow,
+    anatem,
     idx,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     pass
-    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
+    anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
 
 
 def abci(
-    powerflow,
+    anatem,
     idx,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
-    powerflow.solution["eventname"] += str(powerflow.devtDF.iloc[idx].elemento)
-    de = powerflow.devtDF.iloc[idx].elemento - 1
-    para = powerflow.devtDF.iloc[idx].para - 1
+    anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
+    de = anatem.devtDF.iloc[idx].elemento - 1
+    para = anatem.devtDF.iloc[idx].para - 1
 
-    powerflow.Yblc[de, de] += powerflow.Yblc[powerflow.nger + de, powerflow.nger + para]
-    powerflow.Yblc[de, para] -= powerflow.Yblc[
-        powerflow.nger + de, powerflow.nger + para
-    ]
-    powerflow.Yblc[para, de] -= powerflow.Yblc[
-        powerflow.nger + de, powerflow.nger + para
-    ]
-    powerflow.Yblc[para, para] += powerflow.Yblc[
-        powerflow.nger + de, powerflow.nger + para
-    ]
+    anatem.Yblc[de, de] += anatem.Yblc[anatem.nger + de, anatem.nger + para]
+    anatem.Yblc[de, para] -= anatem.Yblc[anatem.nger + de, anatem.nger + para]
+    anatem.Yblc[para, de] -= anatem.Yblc[anatem.nger + de, anatem.nger + para]
+    anatem.Yblc[para, para] += anatem.Yblc[anatem.nger + de, anatem.nger + para]

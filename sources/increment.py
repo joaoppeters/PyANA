@@ -11,76 +11,72 @@ from rwpwf import rwpwf
 
 
 def increment(
-    powerflow,
+    anarede,
 ):
     """realiza incremento no nível de carregamento (e geração)
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    preincrement = sum(powerflow.dbarDF["demanda_ativa"].to_numpy())
+    preincrement = sum(anarede.dbarDF["demanda_ativa"].to_numpy())
 
     ## Point of Collapse Method (Canizares, 1992)
-    if powerflow.solution["method"] == "EXPC":
+    if anarede.solution["method"] == "EXPC":
         # Incremento de carga
-        for idxbar, _ in powerflow.dbarDF.iterrows():
+        for idxbar, _ in anarede.dbarDF.iterrows():
             # Incremento de Carregamento
-            powerflow.dbarDF.at[idxbar, "demanda_ativa"] = powerflow.solution[
+            anarede.dbarDF.at[idxbar, "demanda_ativa"] = anarede.solution[
                 "demanda_ativa"
-            ][idxbar] * (1 + powerflow.solution["lambda"])
-            powerflow.dbarDF.at[idxbar, "demanda_reativa"] = powerflow.solution[
+            ][idxbar] * (1 + anarede.solution["lambda"])
+            anarede.dbarDF.at[idxbar, "demanda_reativa"] = anarede.solution[
                 "demanda_reativa"
-            ][idxbar] * (1 + powerflow.solution["lambda"])
+            ][idxbar] * (1 + anarede.solution["lambda"])
 
     # Prediction-Correction Method (Ajjarapu & Christy, 1992)
-    elif powerflow.solution["method"] == "EXIC":
-        for idxinc, valueinc in powerflow.dincDF.iterrows():
+    elif anarede.solution["method"] == "EXIC":
+        for idxinc, valueinc in anarede.dincDF.iterrows():
             # Incremento de carregamento específico por AREA
             if valueinc["tipo_incremento_1"] == "AREA":
-                for idxbar, valuebar in powerflow.dbarDF.iterrows():
+                for idxbar, valuebar in anarede.dbarDF.iterrows():
                     if valuebar["area"] == valueinc["identificacao_incremento_1"]:
                         # Incremento de Carregamento
-                        powerflow.dbarDF.at[idxbar, "demanda_ativa"] = (
-                            powerflow.solution["demanda_ativa"][idxbar]
-                            * (1 + powerflow.solution["stepsch"])
-                        )
-                        powerflow.dbarDF.at[idxbar, "demanda_reativa"] = (
-                            powerflow.solution["demanda_reativa"][idxbar]
-                            * (1 + powerflow.solution["stepsch"])
-                        )
+                        anarede.dbarDF.at[idxbar, "demanda_ativa"] = anarede.solution[
+                            "demanda_ativa"
+                        ][idxbar] * (1 + anarede.solution["stepsch"])
+                        anarede.dbarDF.at[idxbar, "demanda_reativa"] = anarede.solution[
+                            "demanda_reativa"
+                        ][idxbar] * (1 + anarede.solution["stepsch"])
 
             # Incremento de carregamento específico por BARRA
             elif valueinc["tipo_incremento_1"] == "BARR":
                 # Reconfiguração da variável de índice
                 idxinc = valueinc["identificacao_incremento_1"] - 1
-                powerflow.dbarDF.at[idxinc, "demanda_ativa"] = powerflow.solution[
+                anarede.dbarDF.at[idxinc, "demanda_ativa"] = anarede.solution[
                     "demanda_ativa"
-                ][idxinc] * (1 + powerflow.solution["stepsch"])
-                powerflow.dbarDF.at[idxinc, "demanda_reativa"] = powerflow.solution[
+                ][idxinc] * (1 + anarede.solution["stepsch"])
+                anarede.dbarDF.at[idxinc, "demanda_reativa"] = anarede.solution[
                     "demanda_reativa"
-                ][idxinc] * (1 + powerflow.solution["stepsch"])
+                ][idxinc] * (1 + anarede.solution["stepsch"])
 
-        deltaincrement = (
-            sum(powerflow.dbarDF["demanda_ativa"].to_numpy()) - preincrement
-        )
+        deltaincrement = sum(anarede.dbarDF["demanda_ativa"].to_numpy()) - preincrement
 
         # Incremento de geração
-        if powerflow.codes["DGER"]:
-            for _, valueger in powerflow.dgerDF.iterrows():
+        if anarede.pwfblock["DGER"]:
+            for _, valueger in anarede.dgerDF.iterrows():
                 idx = valueger["numero"] - 1
-                powerflow.dbarDF.at[idx, "potencia_ativa"] = powerflow.dbarDF[
+                anarede.dbarDF.at[idx, "potencia_ativa"] = anarede.dbarDF[
                     "potencia_ativa"
                 ][idx] + (deltaincrement * valueger["fator_participacao"])
 
-            powerflow.solution["potencia_ativa"] = deepcopy(
-                powerflow.dbarDF["potencia_ativa"]
+            anarede.solution["potencia_ativa"] = deepcopy(
+                anarede.dbarDF["potencia_ativa"]
             )
 
         # Condição de atingimento do máximo incremento do nível de carregamento delimitado
         if (
-            powerflow.solution["stepsch"]
-            == powerflow.dincDF.loc[0, "maximo_incremento_potencia_ativa"]
+            anarede.solution["stepsch"]
+            == anarede.dincDF.loc[0, "maximo_incremento_potencia_ativa"]
         ):
-            powerflow.solution["pmc"] = True
+            anarede.solution["pmc"] = True

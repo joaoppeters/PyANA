@@ -19,26 +19,26 @@ from update import updtstt, updtpwr
 
 
 def poc(
-    powerflow,
+    anarede,
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável para armazenamento de solução
-    powerflow.solution.update(
+    anarede.solution.update(
         {
             "method": "EXPC",
             "iter": 0,
             "freq": 1.0,
             "lambda": 0.0,
-            "potencia_ativa": deepcopy(powerflow.solution["active"]),
-            "potencia_reativa": deepcopy(powerflow.solution["reactive"]),
-            "demanda_ativa": deepcopy(powerflow.dbarDF["demanda_ativa"]),
-            "demanda_reativa": deepcopy(powerflow.dbarDF["demanda_reativa"]),
-            "eigen": 1.0 * (powerflow.mask),
+            "potencia_ativa": deepcopy(anarede.solution["active"]),
+            "potencia_reativa": deepcopy(anarede.solution["reactive"]),
+            "demanda_ativa": deepcopy(anarede.dbarDF["demanda_ativa"]),
+            "demanda_reativa": deepcopy(anarede.dbarDF["demanda_reativa"]),
+            "eigen": 1.0 * (anarede.mask),
             "sign": -1.0,
             "cvgprint": False,
         }
@@ -46,49 +46,49 @@ def poc(
 
     # Controles
     controlsol(
-        powerflow,
+        anarede,
     )
 
     while True:
         # Incremento do Nível de Carregamento e Geração
         increment(
-            powerflow,
+            anarede,
         )
 
         # Variáveis Especificadas
         scheduled(
-            powerflow,
+            anarede,
         )
 
         # Resíduos
         residue(
-            powerflow,
+            anarede,
         )
 
         # Matrizes
         matrices(
-            powerflow,
+            anarede,
         )
 
         # expansao total
         expansion(
-            powerflow,
+            anarede,
         )
 
-        powerflow.deltapoc = concatenate(
+        anarede.deltapoc = concatenate(
             (
-                -powerflow.deltaPQY.reshape((sum(powerflow.mask), 1)),
-                powerflow.G,
-                array([[powerflow.H @ powerflow.H - 1]]),
+                -anarede.deltaPQY.reshape((sum(anarede.mask), 1)),
+                anarede.G,
+                array([[anarede.H @ anarede.H - 1]]),
             ),
             axis=0,
         )
 
         try:
             # Your sparse matrix computation using spsolve here
-            powerflow.statevar, residuals, rank, singular = lstsq(
-                powerflow.jacobianpoc,
-                powerflow.deltapoc,
+            anarede.statevar, residuals, rank, singular = lstsq(
+                anarede.jacobianpoc,
+                anarede.deltapoc,
                 rcond=None,
             )
         except LinAlgError:
@@ -98,86 +98,82 @@ def poc(
 
         # Atualização das Variáveis de estado
         updtstt(
-            powerflow,
+            anarede,
         )
 
         # Incremento de iteração
-        powerflow.solution["iter"] += 1
+        anarede.solution["iter"] += 1
 
-        if powerflow.solution["cvgprint"]:
-            print(norm(powerflow.statevar), powerflow.solution["lambda"])
+        if anarede.solution["cvgprint"]:
+            print(norm(anarede.statevar), anarede.solution["lambda"])
 
         # Condição de Divergência por iterações
-        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            powerflow.solution["convergence"] = (
+        if anarede.solution["iter"] > anarede.cte["ACIT"]:
+            anarede.solution["convergence"] = (
                 "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             )
             break
 
-        elif (norm(powerflow.statevar) <= powerflow.options["CTOL"]) and (
-            powerflow.solution["iter"] <= powerflow.options["ACIT"]
+        elif (norm(anarede.statevar) <= anarede.cte["CTOL"]) and (
+            anarede.solution["iter"] <= anarede.cte["ACIT"]
         ):
-            powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+            anarede.solution["convergence"] = "SISTEMA CONVERGENTE"
             break
 
     updtpwr(
-        powerflow,
+        anarede,
     )
 
 
 def expansion(
-    powerflow,
+    anarede,
 ):
     """expansão da matriz jacobiana para o método direto (Canizares, 1993)
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dtf = vstack(
-        (powerflow.solution["demanda_ativa"], powerflow.solution["demanda_reativa"])
+    anarede.dtf = vstack(
+        (anarede.solution["demanda_ativa"], anarede.solution["demanda_reativa"])
     )
-    powerflow.dtf = (
-        powerflow.dtf.reshape((2 * powerflow.nbus, 1)) / powerflow.options["BASE"]
-    )
-    powerflow.dtf = concatenate(
-        (powerflow.dtf, zeros((powerflow.controldim, 1))), axis=0
-    )
+    anarede.dtf = anarede.dtf.reshape((2 * anarede.nbus, 1)) / anarede.cte["BASE"]
+    anarede.dtf = concatenate((anarede.dtf, zeros((anarede.controldim, 1))), axis=0)
 
     # Reducao Total
-    powerflow.dtf = powerflow.dtf[powerflow.mask]
-    powerflow.dwf = zeros((powerflow.mask.shape[0], powerflow.mask.shape[0]))[
-        powerflow.mask, :
-    ][:, powerflow.mask]
+    anarede.dtf = anarede.dtf[anarede.mask]
+    anarede.dwf = zeros((anarede.mask.shape[0], anarede.mask.shape[0]))[
+        anarede.mask, :
+    ][:, anarede.mask]
 
-    powerflow.dtg = zeros(powerflow.dtf.shape)
+    anarede.dtg = zeros(anarede.dtf.shape)
 
-    powerflow.dxh = zeros((1, powerflow.mask.shape[0]))[0, powerflow.mask]
-    powerflow.dwh = 2 * powerflow.solution["eigen"][powerflow.mask]
+    anarede.dxh = zeros((1, anarede.mask.shape[0]))[0, anarede.mask]
+    anarede.dwh = 2 * anarede.solution["eigen"][anarede.mask]
 
-    powerflow.jacobianpoc = concatenate(
-        (powerflow.jacobian, powerflow.dtf, powerflow.dwf),
+    anarede.jacobianpoc = concatenate(
+        (anarede.jacobian, anarede.dtf, anarede.dwf),
         axis=1,
     )
 
-    powerflow.jacobianpoc = concatenate(
+    anarede.jacobianpoc = concatenate(
         (
-            powerflow.jacobianpoc,
+            anarede.jacobianpoc,
             concatenate(
-                (powerflow.hessian, powerflow.dtg, powerflow.jacobian.T),
+                (anarede.hessian, anarede.dtg, anarede.jacobian.T),
                 axis=1,
             ),
         ),
         axis=0,
     )
 
-    powerflow.jacobianpoc = concatenate(
+    anarede.jacobianpoc = concatenate(
         (
-            powerflow.jacobianpoc,
+            anarede.jacobianpoc,
             concatenate(
-                (powerflow.dxh, array([0]), powerflow.dwh),
+                (anarede.dxh, array([0]), anarede.dwh),
                 axis=0,
-            ).reshape((1, powerflow.jacobianpoc.shape[1])),
+            ).reshape((1, anarede.jacobianpoc.shape[1])),
         ),
         axis=0,
     )

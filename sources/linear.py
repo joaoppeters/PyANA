@@ -14,24 +14,24 @@ from update import updtlinear
 
 
 def linear(
-    powerflow,
+    anarede,
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável para armazenamento de solução
-    powerflow.controlcount = 0
-    powerflow.solution = {
+    anarede.controlcount = 0
+    anarede.solution = {
         "method": "LFDC",
-        "system": powerflow.name,
+        "system": anarede.name,
         "iter": 1,
-        "voltage": ones(powerflow.nbus),
-        "theta": zeros(powerflow.nbus),
-        "active": zeros(powerflow.nbus),
-        "reactive": zeros(powerflow.nbus),
+        "voltage": ones(anarede.nbus),
+        "theta": zeros(anarede.nbus),
+        "active": zeros(anarede.nbus),
+        "reactive": zeros(anarede.nbus),
         "freq": array([]),
         "convP": array([]),
         "busP": array([]),
@@ -41,64 +41,64 @@ def linear(
 
     # Variáveis Especificadas
     scheduled(
-        powerflow,
+        anarede,
     )
 
     # Resíduos
     residue(
-        powerflow,
+        anarede,
     )
 
     # Armazenamento da trajetória de convergência
     convergence(
-        powerflow,
+        anarede,
     )
 
     # Matriz B
-    Ybus = powerflow.Yb.A.imag
-    Ybus[powerflow.slackidx, :] = 0
-    Ybus[:, powerflow.slackidx] = 0
-    Ybus[powerflow.slackidx, powerflow.slackidx] = 1
+    Ybus = anarede.Yb.A.imag
+    Ybus[anarede.slackidx, :] = 0
+    Ybus[:, anarede.slackidx] = 0
+    Ybus[anarede.slackidx, anarede.slackidx] = 1
 
     # Variáveis de estado
-    powerflow.statevar = solve(-Ybus, powerflow.psch)
+    anarede.statevar = solve(-Ybus, anarede.psch)
 
     # Atualização das Variáveis de estado
     updtlinear(
-        powerflow,
+        anarede,
     )
 
     # Convergência
-    powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+    anarede.solution["convergence"] = "SISTEMA CONVERGENTE"
 
 
 def residue(
-    powerflow,
+    anarede,
 ):
     """cálculo de resíduos das equações diferenciáveis"""
 
     ## Inicialização
     # Vetores de resíduo
-    powerflow.deltaP = zeros(powerflow.nbus)
-    powerflow.deltaQ = zeros(powerflow.nbus)
+    anarede.deltaP = zeros(anarede.nbus)
+    anarede.deltaQ = zeros(anarede.nbus)
 
 
 def convergence(
-    powerflow,
+    anarede,
 ):
     """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Trajetória de convergência da frequência
-    powerflow.solution["freq"] = append(powerflow.solution["freq"], 0.0)
+    anarede.solution["freq"] = append(anarede.solution["freq"], 0.0)
 
     # Trajetória de convergência da potência ativa
-    powerflow.solution["convP"] = append(powerflow.solution["convP"], 0.0)
-    powerflow.solution["busP"] = append(powerflow.solution["busP"], 0)
+    anarede.solution["convP"] = append(anarede.solution["convP"], 0.0)
+    anarede.solution["busP"] = append(anarede.solution["busP"], 0)
 
     # Trajetória de convergência da potência reativa
-    powerflow.solution["convQ"] = append(powerflow.solution["convQ"], 0.0)
-    powerflow.solution["busQ"] = append(powerflow.solution["busQ"], 0)
+    anarede.solution["convQ"] = append(anarede.solution["convQ"], 0.0)
+    anarede.solution["busQ"] = append(anarede.solution["busQ"], 0)

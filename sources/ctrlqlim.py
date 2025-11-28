@@ -12,191 +12,191 @@ from scipy.sparse import csc_matrix, hstack, vstack
 
 
 def qlimsol(
-    powerflow,
+    anarede,
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis
-    if "qlim_reactive_generation" not in powerflow.solution:
-        powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
-        powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
-        powerflow.slackqlim = False
+    if "qlim_reactive_generation" not in anarede.solution:
+        anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
+        anarede.maskQ = ones(anarede.nbus, dtype=bool)
+        anarede.mask = concatenate((anarede.maskP, anarede.maskQ), axis=0)
+        anarede.slackqlim = False
 
 
 def qlimres(
-    powerflow,
+    anarede,
 ):
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaQLIM = zeros([powerflow.nger])
+    anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Tratamento de limites em barras PV
             if value["tipo"] == 1:
                 if (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     < value["potencia_reativa_maxima"]
                 ) and (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de magnitude de tensão
-                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
+                    anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
+                    anarede.deltaQLIM[nger] *= anarede.cte["BASE"]
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.dbarDF.loc[idx, "tipo"] = -1
+                    anarede.dbarDF.loc[idx, "tipo"] = -1
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.dbarDF.loc[idx, "tipo"] = -1
+                    anarede.dbarDF.loc[idx, "tipo"] = -1
 
             # Tratamento de backoff em barras PQV
             elif value["tipo"] == -1:
                 if (
                     (
-                        powerflow.solution["qlim_reactive_generation"][idx]
+                        anarede.solution["qlim_reactive_generation"][idx]
                         >= value["potencia_reativa_maxima"]
                     )
-                    and (powerflow.solution["voltage"][idx] > value["tensao"] * (1e-3))
+                    and (anarede.solution["voltage"][idx] > value["tensao"] * (1e-3))
                 ) or (
                     (
-                        powerflow.solution["qlim_reactive_generation"][idx]
+                        anarede.solution["qlim_reactive_generation"][idx]
                         <= value["potencia_reativa_minima"]
                     )
-                    and (powerflow.solution["voltage"][idx] < value["tensao"] * (1e-3))
+                    and (anarede.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
                     # Tratamento de backoff de magnitude de tensão
-                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
-                    powerflow.dbarDF.loc[idx, "tipo"] = 1
+                    anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
+                    anarede.deltaQLIM[nger] *= anarede.cte["BASE"]
+                    anarede.dbarDF.loc[idx, "tipo"] = 1
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
-                ) and (powerflow.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
+                ) and (anarede.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
-                ) and (powerflow.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
+                ) and (anarede.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
             # Tratamento de limites de barra SLACK
-            elif (value["tipo"] == 2) and (not powerflow.slackqlim):
+            elif (value["tipo"] == 2) and (not anarede.slackqlim):
                 if (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     < value["potencia_reativa_maxima"]
                 ) and (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de magnitude de tensão
-                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
+                    anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
+                    anarede.deltaQLIM[nger] *= anarede.cte["BASE"]
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.slackqlim = True
+                    anarede.slackqlim = True
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
-                    powerflow.slackqlim = True
+                    anarede.slackqlim = True
 
             # Tratamento de backoff de barra SLACK
-            elif (value["tipo"] == 2) and (powerflow.slackqlim):
+            elif (value["tipo"] == 2) and (anarede.slackqlim):
                 if (
                     (
-                        powerflow.solution["qlim_reactive_generation"][idx]
+                        anarede.solution["qlim_reactive_generation"][idx]
                         >= value["potencia_reativa_maxima"]
                     )
-                    and (powerflow.solution["voltage"][idx] > value["tensao"] * (1e-3))
+                    and (anarede.solution["voltage"][idx] > value["tensao"] * (1e-3))
                 ) or (
                     (
-                        powerflow.solution["qlim_reactive_generation"][idx]
+                        anarede.solution["qlim_reactive_generation"][idx]
                         <= value["potencia_reativa_minima"]
                     )
-                    and (powerflow.solution["voltage"][idx] < value["tensao"] * (1e-3))
+                    and (anarede.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
                     # Tratamento de backoff de magnitude de tensão
-                    powerflow.deltaQLIM[nger] += value["tensao"] * (1e-3)
-                    powerflow.deltaQLIM[nger] -= powerflow.solution["voltage"][idx]
-                    powerflow.deltaQLIM[nger] *= powerflow.options["BASE"]
-                    powerflow.slackqlim = False
+                    anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
+                    anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
+                    anarede.deltaQLIM[nger] *= anarede.cte["BASE"]
+                    anarede.slackqlim = False
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
-                ) and (powerflow.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
+                ) and (anarede.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada máxima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_maxima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
                 elif (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
-                ) and (powerflow.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
+                ) and (anarede.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
                     # Tratamento de limite de potência reativa gerada mínima
-                    powerflow.deltaQLIM[nger] += value["potencia_reativa_minima"]
-                    powerflow.deltaQLIM[nger] -= powerflow.solution[
+                    anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
+                    anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
                     ][idx]
 
@@ -204,17 +204,17 @@ def qlimres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaQLIM /= powerflow.options["BASE"]
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQLIM)
+    anarede.deltaQLIM /= anarede.cte["BASE"]
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaQLIM)
 
 
 def qlimsubjac(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -226,212 +226,209 @@ def qlimsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.dimpreqlim = deepcopy(powerflow.jacobian.shape[0])
+    anarede.dimpreqlim = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
-    powerflow.px = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.qx = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.yx = zeros([powerflow.nger, powerflow.nger])
-    powerflow.yt = zeros([powerflow.nger, powerflow.nbus])
-    powerflow.yv = zeros([powerflow.nger, powerflow.nbus])
+    anarede.px = zeros([anarede.nbus, anarede.nger])
+    anarede.qx = zeros([anarede.nbus, anarede.nger])
+    anarede.yx = zeros([anarede.nger, anarede.nger])
+    anarede.yt = zeros([anarede.nger, anarede.nbus])
+    anarede.yv = zeros([anarede.nger, anarede.nbus])
 
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # dQg/dx
-            powerflow.qx[idx, nger] = -1
+            anarede.qx[idx, nger] = -1
 
-            powerflow.yx[nger, nger] = 1e-10
+            anarede.yx[nger, nger] = 1e-10
 
             # Barras PV
             if (value["tipo"] == 1) or (
-                (value["tipo"] == 2) and (not powerflow.slackqlim)
+                (value["tipo"] == 2) and (not anarede.slackqlim)
             ):
-                powerflow.yv[nger, idx] = 1
+                anarede.yv[nger, idx] = 1
 
             # Barras PQV
             elif (value["tipo"] == -1) or (
-                (value["tipo"] == 2) and (powerflow.slackqlim)
+                (value["tipo"] == 2) and (anarede.slackqlim)
             ):
-                powerflow.yx[nger, nger] = 1
+                anarede.yx[nger, nger] = 1
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
     # Condição
-    if powerflow.controldim != 0:
-        powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
-        powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
+    if anarede.controldim != 0:
+        anarede.extrarow = zeros([anarede.nger, anarede.controldim])
+        anarede.extracol = zeros([anarede.controldim, anarede.nger])
 
         ytv = csc_matrix(
             concatenate(
-                (powerflow.yt, powerflow.yv, powerflow.extrarow),
+                (anarede.yt, anarede.yv, anarede.extrarow),
                 axis=1,
             )
         )
         pqyx = csc_matrix(
             concatenate(
                 (
-                    powerflow.px,
-                    powerflow.qx,
-                    powerflow.extracol,
-                    powerflow.yx,
+                    anarede.px,
+                    anarede.qx,
+                    anarede.extracol,
+                    anarede.yx,
                 ),
                 axis=0,
             )
         )
 
-    elif powerflow.controldim == 0:
-        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
-        pqyx = csc_matrix(
-            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
-        )
+    elif anarede.controldim == 0:
+        ytv = csc_matrix(concatenate((anarede.yt, anarede.yv), axis=1))
+        pqyx = csc_matrix(concatenate((anarede.px, anarede.qx, anarede.yx), axis=0))
 
-    powerflow.jacobian = vstack([powerflow.jacobian, ytv], format="csc")
-    powerflow.jacobian = hstack([powerflow.jacobian, pqyx], format="csc")
+    anarede.jacobian = vstack([anarede.jacobian, ytv], format="csc")
+    anarede.jacobian = hstack([anarede.jacobian, pqyx], format="csc")
 
 
 def qlimupdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Contador
     nger = 0
 
     # Atualização da potência reativa gerada
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += (
-                powerflow.statevar[(powerflow.dimpreqlim + nger)]
-                * powerflow.options["BASE"]
+            anarede.solution["qlim_reactive_generation"][idx] += (
+                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BASE"]
             )
 
             if (value["tipo"] == 1) and (
                 (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 )
                 or (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     < value["potencia_reativa_minima"]
                 )
             ):
-                powerflow.dbarDF.loc[idx, "tipo"] = -1
+                anarede.dbarDF.loc[idx, "tipo"] = -1
 
             if (value["tipo"] == 2) and (
                 (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 )
                 or (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     < value["potencia_reativa_minima"]
                 )
             ):
-                powerflow.slackqlim = True
+                anarede.slackqlim = True
 
             # Incrementa contador
             nger += 1
 
     qlimsch(
-        powerflow,
+        anarede,
     )
 
 
 def qlimsch(
-    powerflow,
+    anarede,
 ):
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.qsch = zeros([powerflow.nbus])
+    anarede.qsch = zeros([anarede.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
-    powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
-    powerflow.qsch /= powerflow.options["BASE"]
+    anarede.qsch += anarede.solution["qlim_reactive_generation"]
+    anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
+    anarede.qsch /= anarede.cte["BASE"]
 
 
 def qlimcorr(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["qlim_reactive_generation"]
+    anarede.solution["qlim_reactive_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
 
 
 def qlimheur(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo
     if any(
         (
-            powerflow.solution["qlim_reactive_generation"]
-            > powerflow.dbarDF["potencia_reativa_maxima"].to_numpy()
+            anarede.solution["qlim_reactive_generation"]
+            > anarede.dbarDF["potencia_reativa_maxima"].to_numpy()
         ),
-        where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
+        where=~anarede.mask[(anarede.nbus) : (2 * anarede.nbus)],
     ):
-        powerflow.controlheur = True
+        anarede.controlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.solution["pmc"])
-        and (powerflow.solution["varstep"] == "lambda")
+        (not anarede.solution["pmc"])
+        and (anarede.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
-            <= powerflow.options["ICMN"]
+            (anarede.cte["LMBD"] * (5e-1 ** anarede.solution["ndiv"]))
+            <= anarede.cte["ICMN"]
         )
     ):
-        powerflow.bifurcation = True
+        anarede.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
-        if powerflow.options["FULL"]:
-            powerflow.dbarDF["true_potencia_reativa_minima"] = powerflow.dbarDF.loc[
+        if anarede.cte["FULL"]:
+            anarede.dbarDF["true_potencia_reativa_minima"] = anarede.dbarDF.loc[
                 :, "potencia_reativa_minima"
             ]
-            for idx, value in powerflow.dbarDF.iterrows():
+            for idx, value in anarede.dbarDF.iterrows():
                 if (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 ):
-                    powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                    anarede.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
                         value["potencia_reativa_maxima"]
                     )
 
 
 def qlimsubhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -446,12 +443,12 @@ def qlimsubhess(
 
 
 def qlimsubjacsym(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     pass

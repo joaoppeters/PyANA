@@ -11,62 +11,59 @@ from datetime import datetime as dt
 
 
 def rwstb(
-    powerflow,
+    anatem,
 ):
     """Inicialização
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     # Arquivo
-    powerflow.filedir = realpath(
-        powerflow.sxlffolder
-        + "\\"
-        + powerflow.namecase
-        + "{}.stb".format(powerflow.ones)
+    anatem.filedir = realpath(
+        anatem.sxlffolder + "\\" + anatem.namecase + "{}.stb".format(anatem.ones)
     )
 
     # Manipulacao
-    file = open(powerflow.filedir, "w")
+    file = open(anatem.filedir, "w")
 
     # Cabecalho
     wheader(
         file,
     )
 
-    if powerflow.codes["DARQ"]:
+    if anatem.stbblock["DARQ"]:
         wdarq(
-            powerflow,
+            anatem,
             file,
         )
 
-    if powerflow.codes["DEVT"]:
+    if anatem.stbblock["DEVT"]:
         wdevt(
-            powerflow,
+            anatem,
             file,
         )
 
-    if powerflow.codes["DMAQ"]:
+    if anatem.stbblock["DMAQ"]:
         wdmaq(
-            powerflow,
+            anatem,
             file,
         )
 
-    if powerflow.codes["DMDG MD01"]:
+    if anatem.stbblock["DMDG MD01"]:
         wdmdg_md01(
-            powerflow,
+            anatem,
             file,
         )
 
-    if powerflow.codes["DSIM"]:
+    if anatem.stbblock["DSIM"]:
         wdsim(
-            powerflow,
+            anatem,
             file,
         )
 
     wtail(
-        powerflow,
+        anatem,
         file,
     )
 
@@ -104,41 +101,41 @@ def wheader(
 
 
 def wdarq(
-    powerflow,
+    anatem,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização
-    file.write(format(powerflow.titu["titu"]))
-    file.write(format(powerflow.titu["ruler"]))
+    file.write(format(anatem.titu["titu"]))
+    file.write(format(anatem.titu["ruler"]))
 
 
 def wdevt(
-    powerflow,
+    anatem,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização
     agr = 0
-    file.write(format(powerflow.dagr.dagr.iloc[0]))
-    for idx, value in powerflow.dagr1.iterrows():
+    file.write(format(anatem.dagr.dagr.iloc[0]))
+    for idx, value in anatem.dagr1.iterrows():
         file.write(value.ruler)
         file.write(f"{value['numero']:>3} {value['descricao']:>36}")
         file.write("\n")
-        file.write(powerflow.dagr2.ruler.iloc[0])
+        file.write(anatem.dagr2.ruler.iloc[0])
         for idx in range(0, value["ndagr2"]):
             file.write(
-                f"{powerflow.dagr2.numero.iloc[idx + agr]:>3} {powerflow.dagr2.operacao.iloc[idx + agr]:1} {powerflow.dagr2.descricao.iloc[idx + agr]:>36}"
+                f"{anatem.dagr2.numero.iloc[idx + agr]:>3} {anatem.dagr2.operacao.iloc[idx + agr]:1} {anatem.dagr2.descricao.iloc[idx + agr]:>36}"
             )
             file.write("\n")
         agr += value["ndagr2"]
@@ -149,22 +146,22 @@ def wdevt(
 
 
 def wdmaq(
-    powerflow,
+    anatem,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização
-    file.write(format(powerflow.danc.danc.iloc[0]))
-    file.write(format(powerflow.danc.ruler.iloc[0]))
-    if "ACLS" in powerflow.danc.danc:
+    file.write(format(anatem.danc.danc.iloc[0]))
+    file.write(format(anatem.danc.ruler.iloc[0]))
+    if "ACLS" in anatem.danc.danc:
         pass
     else:
-        for idx, value in powerflow.danc.iterrows():
+        for idx, value in anatem.danc.iterrows():
             file.write(
                 f"{value['numero']:>3} {value['fator_carga_ativa']:>6} {value['fator_carga_reativa']:>6} {value['fator_shunt_barra']:>6}"
             )
@@ -174,19 +171,19 @@ def wdmaq(
 
 
 def wdmdg_md01(
-    powerflow,
+    anatem,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização
-    file.write(format(powerflow.danc.danc.iloc[0]))
-    file.write(format(powerflow.danc.ruler.iloc[0]))
-    for idx, value in powerflow.danc.iterrows():
+    file.write(format(anatem.danc.danc.iloc[0]))
+    file.write(format(anatem.danc.ruler.iloc[0]))
+    for idx, value in anatem.danc.iterrows():
         file.write(
             f"{value['numero']:>3} {value['fator_carga_ativa']:>6} {value['fator_carga_reativa']:>6} {value['fator_shunt_barra']:>6} {value['ACLS']:>6}"
         )
@@ -196,19 +193,19 @@ def wdmdg_md01(
 
 
 def wdsim(
-    powerflow,
+    anatem,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização
-    file.write(format(powerflow.dare.dare.iloc[0]))
-    file.write(format(powerflow.dare.ruler.iloc[0]))
-    for idx, value in powerflow.dare.iterrows():
+    file.write(format(anatem.dare.dare.iloc[0]))
+    file.write(format(anatem.dare.ruler.iloc[0]))
+    for idx, value in anatem.dare.iterrows():
         file.write(
             f"{value['numero']:3}    {value['intercambio_liquido']:>6}     {value['nome']:^35} {value['intercambio_minimo']:>6} {value['intercambio_maximo']:>6}"
         )
@@ -223,7 +220,7 @@ def wtail(
     """
 
     Args
-        powerflow:
+        anatem:
         file:
     """
     ## Inicialização

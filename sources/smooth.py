@@ -16,26 +16,26 @@ from folder import smoothfolder
 
 
 def qlims(
-    powerflow,
+    anarede,
     idx,
     value,
 ):
     """_summary_
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     seterr(all="ignore")
 
-    powerflow.qlimkeys[value["nome"]] = dict()
-    powerflow.qlimkeys[value["nome"]][0] = list()
+    anarede.qlimkeys[value["nome"]] = dict()
+    anarede.qlimkeys[value["nome"]][0] = list()
 
-    powerflow.qlimsch[idx] = dict()
-    powerflow.qlimsch[idx]["ch1"] = list()
-    powerflow.qlimsch[idx]["ch2"] = list()
-    powerflow.qlimsch[idx]["ch3"] = list()
-    powerflow.qlimsch[idx]["ch4"] = list()
+    anarede.qlimsch[idx] = dict()
+    anarede.qlimsch[idx]["ch1"] = list()
+    anarede.qlimsch[idx]["ch2"] = list()
+    anarede.qlimsch[idx]["ch3"] = list()
+    anarede.qlimsch[idx]["ch4"] = list()
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
@@ -45,92 +45,83 @@ def qlims(
     qgn = Symbol("qgn%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimvar.update(
+    anarede.qlimvar.update(
         {
-            qg: powerflow.solution["qlim_reactive_generation"][idx]
-            / powerflow.options["BASE"],
-            v: powerflow.solution["voltage"][idx],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BASE"],
+            v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
-            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BASE"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BASE"],
         }
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vr + powerflow.options["SIGV"]
-    vliminf = vr - powerflow.options["SIGV"]
+    vlimsup = vr + anarede.cte["SIGV"]
+    vliminf = vr - anarede.cte["SIGV"]
 
     # Limites de Potência Reativa
-    qlimsup = qgx - powerflow.options["SIGQ"]
-    qliminf = qgn + powerflow.options["SIGV"]
+    qlimsup = qgx - anarede.cte["SIGQ"]
+    qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    powerflow.qlimsch[idx]["ch1"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
-    )
+    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
     # Chave Inferior de Potência Reativa
-    powerflow.qlimsch[idx]["ch2"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
-    )
+    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
     # Chave Superior de Tensão
-    powerflow.qlimsch[idx]["ch3"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
-    )
+    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
     # Chave Inferior de Tensão
-    powerflow.qlimsch[idx]["ch4"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
-    )
+    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
     ## Equações de Controle
     # Normal
     Ynormal = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgn)
     )
 
-    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
+    anarede.Y[idx] = [Ynormal, Ysuperior, Yinferior]
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    powerflow.diffyqg[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyqg[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(qg)
 
     # Derivada Parcial de Y por V
-    powerflow.diffyv[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyv[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
-        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
-        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
-        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
-        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+    if anarede.method == "EXPC":
+        anarede.diffyvv[idx] = anarede.diffyv[idx].diff(v)
+        anarede.diffyqgv[idx] = anarede.diffyqg[idx].diff(v)
+        anarede.diffyvqg[idx] = anarede.diffyv[idx].diff(qg)
+        anarede.diffyqgqg[idx] = anarede.diffyqg[idx].diff(qg)
 
 
 def qlimssmooth(
     idx,
-    powerflow,
+    anarede,
     nger,
     case,
 ):
@@ -138,64 +129,63 @@ def qlimssmooth(
 
     Args
         idx: índice da da barra geradora
-        powerflow:
+        anarede:
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
-    if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
-        powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
+    if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
+        anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
     v = Symbol("v%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimvar.update(
+    anarede.qlimvar.update(
         {
-            qg: powerflow.solution["qlim_reactive_generation"][idx]
-            / powerflow.options["BASE"],
-            v: powerflow.solution["voltage"][idx],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BASE"],
+            v: anarede.solution["voltage"][idx],
         }
     )
 
     # Expressão Geral
-    if powerflow.solution["method"] != "EXPC":
-        powerflow.qlimdiff[idx] = array(
+    if anarede.solution["method"] != "EXPC":
+        anarede.qlimdiff[idx] = array(
             [
-                powerflow.diffyv[idx].subs(powerflow.qlimvar),
-                powerflow.diffyqg[idx].subs(powerflow.qlimvar),
+                anarede.diffyv[idx].subs(anarede.qlimvar),
+                anarede.diffyqg[idx].subs(anarede.qlimvar),
             ],
             dtype="float64",
         )
     else:
-        powerflow.qlimdiff[idx] = array(
+        anarede.qlimdiff[idx] = array(
             [
-                powerflow.diffyv[idx].subs(powerflow.qlimvar),
-                powerflow.diffyqg[idx].subs(powerflow.qlimvar),
-                powerflow.diffyvv[idx].subs(powerflow.qlimvar),
-                powerflow.diffyvqg[idx].subs(powerflow.qlimvar),
-                powerflow.diffyqgv[idx].subs(powerflow.qlimvar),
-                powerflow.diffyqgqg[idx].subs(powerflow.qlimvar),
+                anarede.diffyv[idx].subs(anarede.qlimvar),
+                anarede.diffyqg[idx].subs(anarede.qlimvar),
+                anarede.diffyvv[idx].subs(anarede.qlimvar),
+                anarede.diffyvqg[idx].subs(anarede.qlimvar),
+                anarede.diffyqgv[idx].subs(anarede.qlimvar),
+                anarede.diffyqgqg[idx].subs(anarede.qlimvar),
             ],
             dtype="float64",
         )
 
     ## Resíduo
-    powerflow.deltaQLIM[nger] = (
-        -powerflow.Y[idx][0].subs(powerflow.qlimvar)
-        - powerflow.Y[idx][1].subs(powerflow.qlimvar)
-        - powerflow.Y[idx][2].subs(powerflow.qlimvar)
+    anarede.deltaQLIM[nger] = (
+        -anarede.Y[idx][0].subs(anarede.qlimvar)
+        - anarede.Y[idx][1].subs(anarede.qlimvar)
+        - anarede.Y[idx][2].subs(anarede.qlimvar)
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case].append(
+    anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case].append(
         array(
             [
-                powerflow.qlimsch[idx]["ch1"].subs(powerflow.qlimvar),
-                powerflow.qlimsch[idx]["ch2"].subs(powerflow.qlimvar),
-                powerflow.qlimsch[idx]["ch3"].subs(powerflow.qlimvar),
-                powerflow.qlimsch[idx]["ch4"].subs(powerflow.qlimvar),
+                anarede.qlimsch[idx]["ch1"].subs(anarede.qlimvar),
+                anarede.qlimsch[idx]["ch2"].subs(anarede.qlimvar),
+                anarede.qlimsch[idx]["ch3"].subs(anarede.qlimvar),
+                anarede.qlimsch[idx]["ch4"].subs(anarede.qlimvar),
             ]
         )
     )
@@ -203,7 +193,7 @@ def qlimssmooth(
 
 def qlimnsmooth(
     idx,
-    powerflow,
+    anarede,
     nger,
     case,
 ):
@@ -211,46 +201,42 @@ def qlimnsmooth(
 
     Args
         idx: índice da da barra geradora
-        powerflow:
+        anarede:
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
-    if case not in powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]]:
-        powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case] = list()
+    if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
+        anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
     # Variáveis Simbólicas
-    qg = powerflow.solution["qlim_reactive_generation"][idx] / powerflow.options["BASE"]
-    v = powerflow.solution["voltage"][idx]
-    vr = powerflow.dbarDF.loc[idx, "tensao"] * 1e-3
-    qgx = (
-        powerflow.dbarDF.loc[idx, "potencia_reativa_maxima"] / powerflow.options["BASE"]
-    )
-    qgn = (
-        powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] / powerflow.options["BASE"]
-    )
+    qg = anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BASE"]
+    v = anarede.solution["voltage"][idx]
+    vr = anarede.dbarDF.loc[idx, "tensao"] * 1e-3
+    qgx = anarede.dbarDF.loc[idx, "potencia_reativa_maxima"] / anarede.cte["BASE"]
+    qgn = anarede.dbarDF.loc[idx, "potencia_reativa_minima"] / anarede.cte["BASE"]
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vr + powerflow.options["SIGV"]
-    vliminf = vr - powerflow.options["SIGV"]
+    vlimsup = vr + anarede.cte["SIGV"]
+    vliminf = vr - anarede.cte["SIGV"]
 
     # Limites de Potência Reativa
-    qlimsup = qgx - powerflow.options["SIGQ"]
-    qliminf = qgn + powerflow.options["SIGV"]
+    qlimsup = qgx - anarede.cte["SIGQ"]
+    qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    ch1 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (qg - qlimsup)))
+    ch1 = 1 / (1 + npexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
     # Chave Inferior de Poência Reativa
-    ch2 = 1 / (1 + npexp(powerflow.options["SIGK"] * (qg - qliminf)))
+    ch2 = 1 / (1 + npexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
     # Chave Superior de Tensão
-    ch3 = 1 / (1 + npexp(powerflow.options["SIGK"] * (v - vlimsup)))
+    ch3 = 1 / (1 + npexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
     # Chave Inferior de Tensão
-    ch4 = 1 / (1 + npexp(-powerflow.options["SIGK"] * (v - vliminf)))
+    ch4 = 1 / (1 + npexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
     ## Equações de Controle
     # Normal
@@ -264,7 +250,7 @@ def qlimnsmooth(
 
     ## Derivadas
     # Expressão Geral
-    powerflow.qlimdiff[idx] = array(
+    anarede.qlimdiff[idx] = array(
         [
             (1 - ch1 * ch3) * (1 - ch2 * ch4),  # Derivada Parcial de Y por V
             (ch1 * ch3) * (1 - ch2 * ch4)
@@ -274,16 +260,16 @@ def qlimnsmooth(
     )
 
     ## Resíduo
-    powerflow.deltaQLIM[nger] = -Ynormal - Ysuperior - Yinferior
+    anarede.deltaQLIM[nger] = -Ynormal - Ysuperior - Yinferior
 
     ## Armazenamento de valores das chaves
-    powerflow.qlimkeys[powerflow.dbarDF.loc[idx, "nome"]][case].append(
+    anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case].append(
         array([ch1, ch2, ch3, ch4])
     )
 
 
 def svcsQ(
-    powerflow,
+    anarede,
     ncer,
     idxcer,
     idxctrl,
@@ -293,7 +279,7 @@ def svcsQ(
     """_summary_
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     seterr(all="ignore")
@@ -306,61 +292,61 @@ def svcsQ(
     bmin = Symbol("bmn%s" % idxcer)
     bmax = Symbol("bmx%s" % idxcer)
 
-    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = anarede.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (r * bmin * (vk**2))
     vmmin = vmsch + (r * bmax * (vk**2))
 
     # Associação das variáveis
-    powerflow.svcvar.update(
+    anarede.svcvar.update(
         {
-            vk: powerflow.solution["voltage"][idxcer],
-            vm: powerflow.solution["voltage"][idxctrl],
+            vk: anarede.solution["voltage"][idxcer],
+            vm: anarede.solution["voltage"][idxctrl],
             r: value["droop"],
             bmin: value["potencia_reativa_minima"]
             / (
-                powerflow.options["BASE"]
-                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                anarede.cte["BASE"]
+                * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             bmax: value["potencia_reativa_maxima"]
             / (
-                powerflow.options["BASE"]
-                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                anarede.cte["BASE"]
+                * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"],
+            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["BASE"],
         }
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vmmax + powerflow.options["SIGV"]
-    vliminf = vmmin - powerflow.options["SIGV"]
+    vlimsup = vmmax + anarede.cte["SIGV"]
+    vliminf = vmmin - anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa - Região Indutiva
-    powerflow.svcsch[idxcer]["ch1"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup))
+    anarede.svcsch[idxcer]["ch1"] = 1 / (
+        1 + spexp(-anarede.cte["SIGK"] * (vm - vlimsup))
     )
 
     # Chave Inferior de Poência Reativa - Região Capacitiva
-    powerflow.svcsch[idxcer]["ch2"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (vm - vliminf))
+    anarede.svcsch[idxcer]["ch2"] = 1 / (
+        1 + spexp(anarede.cte["SIGK"] * (vm - vliminf))
     )
 
     ## Equações de Controle
     # Região Indutiva
-    Yindutiva = (powerflow.svcsch[idxcer]["ch1"]) * (-(vk**2) * bmin + qgk)
+    Yindutiva = (anarede.svcsch[idxcer]["ch1"]) * (-(vk**2) * bmin + qgk)
 
     # Região Linear
     Ylinear = (
-        (1 - powerflow.svcsch[idxcer]["ch1"])
-        * (1 - powerflow.svcsch[idxcer]["ch2"])
+        (1 - anarede.svcsch[idxcer]["ch1"])
+        * (1 - anarede.svcsch[idxcer]["ch2"])
         * (-vmsch - (r * qgk) + vm)
     )
 
     # Região Capacitiva
-    Ycapacitiva = (powerflow.svcsch[idxcer]["ch2"]) * (-(vk**2) * bmax + qgk)
+    Ycapacitiva = (anarede.svcsch[idxcer]["ch2"]) * (-(vk**2) * bmax + qgk)
 
-    powerflow.Y[idxcer] = [
+    anarede.Y[idxcer] = [
         Yindutiva,
         Ylinear,
         Ycapacitiva,
@@ -368,25 +354,25 @@ def svcsQ(
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    powerflow.diffyvk[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    anarede.diffyvk[idxcer] = (
+        anarede.Y[idxcer][0] + anarede.Y[idxcer][1] + anarede.Y[idxcer][2]
     ).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    powerflow.diffyvm[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    anarede.diffyvm[idxcer] = (
+        anarede.Y[idxcer][0] + anarede.Y[idxcer][1] + anarede.Y[idxcer][2]
     ).diff(vm)
 
     # Derivada Parcial de Y por Qgk
-    powerflow.diffyqgk[idxcer] = (
-        powerflow.Y[idxcer][0] + powerflow.Y[idxcer][1] + powerflow.Y[idxcer][2]
+    anarede.diffyqgk[idxcer] = (
+        anarede.Y[idxcer][0] + anarede.Y[idxcer][1] + anarede.Y[idxcer][2]
     ).diff(qgk)
 
 
 def svcsQsmooth(
     idxcer,
     idxctrl,
-    powerflow,
+    anarede,
     ncer,
     case,
 ):
@@ -396,13 +382,13 @@ def svcsQsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow:
+        anarede:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
-    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
+    if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
+        anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("vk%s" % idxcer)
@@ -412,48 +398,48 @@ def svcsQsmooth(
     bmin = Symbol("bmn%s" % idxcer)
     bmax = Symbol("bmx%s" % idxcer)
     # Associação das variáveis
-    powerflow.svcvar.update(
+    anarede.svcvar.update(
         {
-            vk: powerflow.solution["voltage"][idxcer],
-            vm: powerflow.solution["voltage"][idxctrl],
-            r: powerflow.dcerDF.loc[ncer, "droop"],
-            bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
+            vk: anarede.solution["voltage"][idxcer],
+            vm: anarede.solution["voltage"][idxctrl],
+            r: anarede.dcerDF.loc[ncer, "droop"],
+            bmin: anarede.dcerDF.loc[ncer, "potencia_reativa_minima"]
             / (
-                powerflow.options["BASE"]
-                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                anarede.cte["BASE"]
+                * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
+            bmax: anarede.dcerDF.loc[ncer, "potencia_reativa_maxima"]
             / (
-                powerflow.options["BASE"]
-                * (powerflow.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
+                anarede.cte["BASE"]
+                * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"],
+            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["BASE"],
         }
     )
 
     # Expressão Geral
-    powerflow.svcdiff[idxcer] = array(
+    anarede.svcdiff[idxcer] = array(
         [
-            powerflow.diffyvk[idxcer].subs(powerflow.svcvar),
-            powerflow.diffyvm[idxcer].subs(powerflow.svcvar),
-            powerflow.diffyqgk[idxcer].subs(powerflow.svcvar),
+            anarede.diffyvk[idxcer].subs(anarede.svcvar),
+            anarede.diffyvm[idxcer].subs(anarede.svcvar),
+            anarede.diffyqgk[idxcer].subs(anarede.svcvar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
-    powerflow.deltaSVC[ncer] = (
-        -powerflow.Y[idxcer][0].subs(powerflow.svcvar)
-        - powerflow.Y[idxcer][1].subs(powerflow.svcvar)
-        - powerflow.Y[idxcer][2].subs(powerflow.svcvar)
+    anarede.deltaSVC[ncer] = (
+        -anarede.Y[idxcer][0].subs(anarede.svcvar)
+        - anarede.Y[idxcer][1].subs(anarede.svcvar)
+        - anarede.Y[idxcer][2].subs(anarede.svcvar)
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
+    anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
-                powerflow.svcsch[idxcer]["ch1"].subs(powerflow.svcvar),
-                powerflow.svcsch[idxcer]["ch2"].subs(powerflow.svcvar),
+                anarede.svcsch[idxcer]["ch1"].subs(anarede.svcvar),
+                anarede.svcsch[idxcer]["ch2"].subs(anarede.svcvar),
             ],
             dtype="float",
         )
@@ -461,26 +447,26 @@ def svcsQsmooth(
 
 
 def svcsI(
-    powerflow,
+    anarede,
     idx,
     value,
 ):
     """_summary_
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     seterr(all="ignore")
 
-    powerflow.qlimkeys[value["nome"]] = dict()
-    powerflow.qlimkeys[value["nome"]][0] = list()
+    anarede.qlimkeys[value["nome"]] = dict()
+    anarede.qlimkeys[value["nome"]][0] = list()
 
-    powerflow.qlimsch[idx] = dict()
-    powerflow.qlimsch[idx]["ch1"] = list()
-    powerflow.qlimsch[idx]["ch2"] = list()
-    powerflow.qlimsch[idx]["ch3"] = list()
-    powerflow.qlimsch[idx]["ch4"] = list()
+    anarede.qlimsch[idx] = dict()
+    anarede.qlimsch[idx]["ch1"] = list()
+    anarede.qlimsch[idx]["ch2"] = list()
+    anarede.qlimsch[idx]["ch3"] = list()
+    anarede.qlimsch[idx]["ch4"] = list()
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
@@ -490,93 +476,84 @@ def svcsI(
     qgn = Symbol("qgn%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimvar.update(
+    anarede.qlimvar.update(
         {
-            qg: powerflow.solution["qlim_reactive_generation"][idx]
-            / powerflow.options["BASE"],
-            v: powerflow.solution["voltage"][idx],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BASE"],
+            v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
-            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BASE"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BASE"],
         }
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vr + powerflow.options["SIGV"]
-    vliminf = vr - powerflow.options["SIGV"]
+    vlimsup = vr + anarede.cte["SIGV"]
+    vliminf = vr - anarede.cte["SIGV"]
 
     # Limites de Potência Reativa
-    qlimsup = qgx - powerflow.options["SIGQ"]
-    qliminf = qgn + powerflow.options["SIGV"]
+    qlimsup = qgx - anarede.cte["SIGQ"]
+    qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    powerflow.qlimsch[idx]["ch1"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
-    )
+    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
     # Chave Inferior de Potência Reativa
-    powerflow.qlimsch[idx]["ch2"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
-    )
+    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
     # Chave Superior de Tensão
-    powerflow.qlimsch[idx]["ch3"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
-    )
+    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
     # Chave Inferior de Tensão
-    powerflow.qlimsch[idx]["ch4"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
-    )
+    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
     ## Equações de Controle
     # Normal
     Ynormal = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgn)
     )
 
-    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
+    anarede.Y[idx] = [Ynormal, Ysuperior, Yinferior]
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    powerflow.diffyqg[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyqg[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(qg)
 
     # Derivada Parcial de Y por V
-    powerflow.diffyv[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyv[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
-        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
-        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
-        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
-        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+    if anarede.method == "EXPC":
+        anarede.diffyvv[idx] = anarede.diffyv[idx].diff(v)
+        anarede.diffyqgv[idx] = anarede.diffyqg[idx].diff(v)
+        anarede.diffyvqg[idx] = anarede.diffyv[idx].diff(qg)
+        anarede.diffyqgqg[idx] = anarede.diffyqg[idx].diff(qg)
 
 
 def svcsIsmooth(
     idxcer,
     idxctrl,
-    powerflow,
+    anarede,
     ncer,
     case,
 ):
@@ -586,7 +563,7 @@ def svcsIsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow:
+        anarede:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -594,8 +571,8 @@ def svcsIsmooth(
     seterr(all="ignore")
 
     # Variáveis
-    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
+    if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
+        anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("Vk")
@@ -607,45 +584,37 @@ def svcsIsmooth(
     bmin = Symbol("Bmin")
     bmax = Symbol("Bmax")
 
-    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = anarede.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (r * bmin * vk)
     vmmin = vmsch + (r * bmax * vk)
 
     # Associação das variáveis
-    powerflow.svcivarkey = {
-        vk: powerflow.solution["voltage"][idxcer],
-        vm: powerflow.solution["voltage"][idxctrl],
-        r: powerflow.dcerDF.loc[ncer, "droop"],
-        bmin: powerflow.dcerDF.loc[ncer, "potencia_reativa_minima"]
-        / (
-            powerflow.options["BASE"]
-            * powerflow.dbarDF.loc[idxcer, "tensao_base"]
-            * 1e-3
-        ),
-        bmax: powerflow.dcerDF.loc[ncer, "potencia_reativa_maxima"]
-        / (
-            powerflow.options["BASE"]
-            * powerflow.dbarDF.loc[idxcer, "tensao_base"]
-            * 1e-3
-        ),
+    anarede.svcivarkey = {
+        vk: anarede.solution["voltage"][idxcer],
+        vm: anarede.solution["voltage"][idxctrl],
+        r: anarede.dcerDF.loc[ncer, "droop"],
+        bmin: anarede.dcerDF.loc[ncer, "potencia_reativa_minima"]
+        / (anarede.cte["BASE"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
+        bmax: anarede.dcerDF.loc[ncer, "potencia_reativa_maxima"]
+        / (anarede.cte["BASE"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
     }
 
-    powerflow.svcivar = deepcopy(powerflow.svcivarkey)
-    powerflow.svcivar[ik] = (powerflow.solution["svc_generation"][ncer]) / (
-        powerflow.options["BASE"]
+    anarede.svcivar = deepcopy(anarede.svcivarkey)
+    anarede.svcivar[ik] = (anarede.solution["svc_generation"][ncer]) / (
+        anarede.cte["BASE"]
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vmmax + powerflow.options["SIGV"]
-    vliminf = vmmin - powerflow.options["SIGV"]
+    vlimsup = vmmax + anarede.cte["SIGV"]
+    vliminf = vmmin - anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa - Região Indutiva
-    ch1 = 1 / (1 + spexp(-powerflow.options["SIGK"] * (vm - vlimsup)))
+    ch1 = 1 / (1 + spexp(-anarede.cte["SIGK"] * (vm - vlimsup)))
 
     # Chave Inferior de Poência Reativa - Região Capacitiva
-    ch2 = 1 / (1 + spexp(powerflow.options["SIGK"] * (vm - vliminf)))
+    ch2 = 1 / (1 + spexp(anarede.cte["SIGK"] * (vm - vliminf)))
 
     ## Equações de Controle
     # Região Indutiva
@@ -659,37 +628,37 @@ def svcsIsmooth(
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    anarede.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    anarede.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
 
     # Derivada Parcial de Y por Ik
-    powerflow.diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
+    anarede.diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
 
     # Expressão Geral
-    powerflow.svcdiff[idxcer] = array(
+    anarede.svcdiff[idxcer] = array(
         [
-            powerflow.diffyvk.subs(powerflow.svcivar),
-            powerflow.diffyvm.subs(powerflow.svcivar),
-            powerflow.diffyik.subs(powerflow.svcivar),
+            anarede.diffyvk.subs(anarede.svcivar),
+            anarede.diffyvm.subs(anarede.svcivar),
+            anarede.diffyik.subs(anarede.svcivar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
-    powerflow.deltaSVC[ncer] = (
-        -Yindutiva.subs(powerflow.svcivar)
-        - Ylinear.subs(powerflow.svcivar)
-        - Ycapacitiva.subs(powerflow.svcivar)
+    anarede.deltaSVC[ncer] = (
+        -Yindutiva.subs(anarede.svcivar)
+        - Ylinear.subs(anarede.svcivar)
+        - Ycapacitiva.subs(anarede.svcivar)
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
+    anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
-                ch1.subs(powerflow.svcivarkey),
-                ch2.subs(powerflow.svcivarkey),
+                ch1.subs(anarede.svcivarkey),
+                ch2.subs(anarede.svcivarkey),
             ],
             dtype="float",
         )
@@ -697,26 +666,26 @@ def svcsIsmooth(
 
 
 def svcsA(
-    powerflow,
+    anarede,
     idx,
     value,
 ):
     """_summary_
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     seterr(all="ignore")
 
-    powerflow.qlimkeys[value["nome"]] = dict()
-    powerflow.qlimkeys[value["nome"]][0] = list()
+    anarede.qlimkeys[value["nome"]] = dict()
+    anarede.qlimkeys[value["nome"]][0] = list()
 
-    powerflow.qlimsch[idx] = dict()
-    powerflow.qlimsch[idx]["ch1"] = list()
-    powerflow.qlimsch[idx]["ch2"] = list()
-    powerflow.qlimsch[idx]["ch3"] = list()
-    powerflow.qlimsch[idx]["ch4"] = list()
+    anarede.qlimsch[idx] = dict()
+    anarede.qlimsch[idx]["ch1"] = list()
+    anarede.qlimsch[idx]["ch2"] = list()
+    anarede.qlimsch[idx]["ch3"] = list()
+    anarede.qlimsch[idx]["ch4"] = list()
 
     # Variáveis Simbólicas
     qg = Symbol("qg%s" % idx)
@@ -726,93 +695,84 @@ def svcsA(
     qgn = Symbol("qgn%s" % idx)
 
     # Associação das variáveis
-    powerflow.qlimvar.update(
+    anarede.qlimvar.update(
         {
-            qg: powerflow.solution["qlim_reactive_generation"][idx]
-            / powerflow.options["BASE"],
-            v: powerflow.solution["voltage"][idx],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BASE"],
+            v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / powerflow.options["BASE"],
-            qgn: value["potencia_reativa_minima"] / powerflow.options["BASE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BASE"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BASE"],
         }
     )
 
     ## Limites
     # Limites de Tensão
-    vlimsup = vr + powerflow.options["SIGV"]
-    vliminf = vr - powerflow.options["SIGV"]
+    vlimsup = vr + anarede.cte["SIGV"]
+    vliminf = vr - anarede.cte["SIGV"]
 
     # Limites de Potência Reativa
-    qlimsup = qgx - powerflow.options["SIGQ"]
-    qliminf = qgn + powerflow.options["SIGV"]
+    qlimsup = qgx - anarede.cte["SIGQ"]
+    qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Superior de Potência Reativa
-    powerflow.qlimsch[idx]["ch1"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (qg - qlimsup))
-    )
+    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
     # Chave Inferior de Potência Reativa
-    powerflow.qlimsch[idx]["ch2"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (qg - qliminf))
-    )
+    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
     # Chave Superior de Tensão
-    powerflow.qlimsch[idx]["ch3"] = 1 / (
-        1 + spexp(powerflow.options["SIGK"] * (v - vlimsup))
-    )
+    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
     # Chave Inferior de Tensão
-    powerflow.qlimsch[idx]["ch4"] = 1 / (
-        1 + spexp(-powerflow.options["SIGK"] * (v - vliminf))
-    )
+    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
     ## Equações de Controle
     # Normal
     Ynormal = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (1 - powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - powerflow.qlimsch[idx]["ch1"] * powerflow.qlimsch[idx]["ch3"])
-        * (powerflow.qlimsch[idx]["ch2"] * powerflow.qlimsch[idx]["ch4"])
+        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
+        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
         * (qg - qgn)
     )
 
-    powerflow.Y[idx] = [Ynormal, Ysuperior, Yinferior]
+    anarede.Y[idx] = [Ynormal, Ysuperior, Yinferior]
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    powerflow.diffyqg[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyqg[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(qg)
 
     # Derivada Parcial de Y por V
-    powerflow.diffyv[idx] = (
-        powerflow.Y[idx][0] + powerflow.Y[idx][1] + powerflow.Y[idx][2]
+    anarede.diffyv[idx] = (
+        anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(v)
 
-    if powerflow.method == "EXPC":
-        powerflow.diffyvv[idx] = powerflow.diffyv[idx].diff(v)
-        powerflow.diffyqgv[idx] = powerflow.diffyqg[idx].diff(v)
-        powerflow.diffyvqg[idx] = powerflow.diffyv[idx].diff(qg)
-        powerflow.diffyqgqg[idx] = powerflow.diffyqg[idx].diff(qg)
+    if anarede.method == "EXPC":
+        anarede.diffyvv[idx] = anarede.diffyv[idx].diff(v)
+        anarede.diffyqgv[idx] = anarede.diffyqg[idx].diff(v)
+        anarede.diffyvqg[idx] = anarede.diffyv[idx].diff(qg)
+        anarede.diffyqgqg[idx] = anarede.diffyqg[idx].diff(qg)
 
 
 def svcsAsmooth(
     idxcer,
     idxctrl,
-    powerflow,
+    anarede,
     ncer,
     case,
 ):
@@ -822,7 +782,7 @@ def svcsAsmooth(
     Args
         idxcer: índice da barra do compensador estático de potência reativa
         idxctrl: índice da barra controlada pelo compensador estático de potência reativa
-        powerflow:
+        anarede:
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
@@ -830,8 +790,8 @@ def svcsAsmooth(
     seterr(all="ignore")
 
     # Variáveis
-    if case not in powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]]:
-        powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case] = list()
+    if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
+        anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
     # Variáveis Simbólicas
     vk = Symbol("Vk")
@@ -840,56 +800,51 @@ def svcsAsmooth(
     r = Symbol("r")
     alpha = Symbol("alpha")
 
-    vmsch = powerflow.dbarDF.loc[idxctrl, "tensao"] * 1e-3
+    vmsch = anarede.dbarDF.loc[idxctrl, "tensao"] * 1e-3
     vmmax = vmsch + (
-        powerflow.dcerDF.loc[ncer, "droop"]
-        * powerflow.alphabeq.subs(alpha, pi / 2)
-        * (powerflow.solution["voltage"][idxcer] ** 2)
+        anarede.dcerDF.loc[ncer, "droop"]
+        * anarede.alphabeq.subs(alpha, pi / 2)
+        * (anarede.solution["voltage"][idxcer] ** 2)
     )
     vmmin = vmsch + (
-        powerflow.dcerDF.loc[ncer, "droop"]
-        * powerflow.alphabeq.subs(alpha, pi)
-        * (powerflow.solution["voltage"][idxcer] ** 2)
+        anarede.dcerDF.loc[ncer, "droop"]
+        * anarede.alphabeq.subs(alpha, pi)
+        * (anarede.solution["voltage"][idxcer] ** 2)
     )
 
     # Associação das variáveis
-    powerflow.svcavar = {
-        vk: powerflow.solution["voltage"][idxcer],
-        vm: powerflow.solution["voltage"][idxctrl],
-        r: powerflow.dcerDF.loc[ncer, "droop"],
-        alpha: powerflow.solution["alpha"],
+    anarede.svcavar = {
+        vk: anarede.solution["voltage"][idxcer],
+        vm: anarede.solution["voltage"][idxctrl],
+        r: anarede.dcerDF.loc[ncer, "droop"],
+        alpha: anarede.solution["alpha"],
     }
 
     ## Limites
     # Limites de Ângulo de disparo
-    alphalimsup = pi - powerflow.options["SIGA"]
-    alphaliminf = pi / 2 + powerflow.options["SIGA"]
+    alphalimsup = pi - anarede.cte["SIGA"]
+    alphaliminf = pi / 2 + anarede.cte["SIGA"]
 
     # Limites de Tensão
-    vlimsup = vmmax + powerflow.options["SIGV"]
-    vliminf = vmmin - powerflow.options["SIGV"]
+    vlimsup = vmmax + anarede.cte["SIGV"]
+    vliminf = vmmin - anarede.cte["SIGV"]
 
     ## Chaves
     # Chave Inferior de Ângulo de disparo
     ch1 = 1 / (
-        1
-        + npexp(powerflow.options["SIGK"] * (powerflow.solution["alpha"] - alphaliminf))
+        1 + npexp(anarede.cte["SIGK"] * (anarede.solution["alpha"] - alphaliminf))
     )
 
     # Chave Superior de Ângulo de disparo
     ch2 = 1 / (
-        1
-        + npexp(
-            -powerflow.options["SIGK"] * (powerflow.solution["alpha"] - alphalimsup)
-        )
+        1 + npexp(-anarede.cte["SIGK"] * (anarede.solution["alpha"] - alphalimsup))
     )
 
     # Chave Inferior de Tensão
     ch3 = 1 / (
         1
         + npexp(
-            powerflow.options["SIGK"]
-            * float(powerflow.solution["voltage"][idxctrl] - vliminf)
+            anarede.cte["SIGK"] * float(anarede.solution["voltage"][idxctrl] - vliminf)
         )
     )
 
@@ -897,8 +852,7 @@ def svcsAsmooth(
     ch4 = 1 / (
         1
         + npexp(
-            -powerflow.options["SIGK"]
-            * float(powerflow.solution["voltage"][idxctrl] - vlimsup)
+            -anarede.cte["SIGK"] * float(anarede.solution["voltage"][idxctrl] - vlimsup)
         )
     )
 
@@ -917,75 +871,75 @@ def svcsAsmooth(
         (1 - ch1) * (1 - ch3) * ch4
         + (1 - ch2) * (1 - ch4) * ch3
         + (1 - ch1) * (1 - ch2) * (1 - ch3) * (1 - ch4)
-    ) * (-vmsch - (r * (vk**2) * powerflow.alphabeq) + vm)
+    ) * (-vmsch - (r * (vk**2) * anarede.alphabeq) + vm)
 
     # Região Capacitiva
     Ycapacitiva = ch2 * (1 - ch4) * (alpha - pi)
 
     ## Derivadas
     # Derivada Parcial de Y por Vk
-    powerflow.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
+    anarede.diffyvk = (Yindutiva + Ylinear + Ycapacitiva).diff(vk)
 
     # Derivada Parcial de Y por Vm
-    powerflow.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
+    anarede.diffyvm = (Yindutiva + Ylinear + Ycapacitiva).diff(vm)
 
     # Derivada Parcial de Y por alpha
-    powerflow.diffyalpha = (Yindutiva + Ylinear + Ycapacitiva).diff(alpha)
+    anarede.diffyalpha = (Yindutiva + Ylinear + Ycapacitiva).diff(alpha)
 
-    if powerflow.solution["alpha"] <= pi / 2 + powerflow.options["SIGA"]:
-        # powerflow.solution['alpha'] = pi/2
-        if powerflow.solution["voltage"][idxctrl] <= vmmin:
-            powerflow.solution["voltage"][idxctrl] = deepcopy(vmsch)
-            powerflow.solution["alpha"] = deepcopy(powerflow.solution["alpha0"])
+    if anarede.solution["alpha"] <= pi / 2 + anarede.cte["SIGA"]:
+        # anarede.solution['alpha'] = pi/2
+        if anarede.solution["voltage"][idxctrl] <= vmmin:
+            anarede.solution["voltage"][idxctrl] = deepcopy(vmsch)
+            anarede.solution["alpha"] = deepcopy(anarede.solution["alpha0"])
 
-    elif powerflow.solution["alpha"] >= pi - powerflow.options["SIGA"]:
-        # powerflow.solution['alpha'] = pi
-        if powerflow.solution["voltage"][idxctrl] >= vmmax:
-            powerflow.solution["voltage"][idxctrl] = deepcopy(vmsch)
-            powerflow.solution["alpha"] = deepcopy(powerflow.solution["alpha0"])
+    elif anarede.solution["alpha"] >= pi - anarede.cte["SIGA"]:
+        # anarede.solution['alpha'] = pi
+        if anarede.solution["voltage"][idxctrl] >= vmmax:
+            anarede.solution["voltage"][idxctrl] = deepcopy(vmsch)
+            anarede.solution["alpha"] = deepcopy(anarede.solution["alpha0"])
 
-    powerflow.svcavar = {
-        vk: powerflow.solution["voltage"][idxcer],
-        vm: powerflow.solution["voltage"][idxctrl],
-        r: powerflow.dcerDF["droop"][0],
-        alpha: powerflow.solution["alpha"],
+    anarede.svcavar = {
+        vk: anarede.solution["voltage"][idxcer],
+        vm: anarede.solution["voltage"][idxctrl],
+        r: anarede.dcerDF["droop"][0],
+        alpha: anarede.solution["alpha"],
     }
 
-    powerflow.solution["svc_generation"][ncer] = (
-        (powerflow.solution["voltage"][idxcer] ** 2)
-        * powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"])
-        * powerflow.options["BASE"]
+    anarede.solution["svc_generation"][ncer] = (
+        (anarede.solution["voltage"][idxcer] ** 2)
+        * anarede.alphabeq.subs(alpha, anarede.solution["alpha"])
+        * anarede.cte["BASE"]
     )
 
     # Expressão Geral
-    powerflow.svcdiff[idxcer] = array(
+    anarede.svcdiff[idxcer] = array(
         [
-            powerflow.diffyvk.subs(powerflow.svcavar),
-            powerflow.diffyvm.subs(powerflow.svcavar),
-            powerflow.diffyalpha.subs(powerflow.svcavar),
+            anarede.diffyvk.subs(anarede.svcavar),
+            anarede.diffyvm.subs(anarede.svcavar),
+            anarede.diffyalpha.subs(anarede.svcavar),
         ],
         dtype="float64",
     )
 
     ## Resíduo
-    powerflow.deltaSVC[ncer] = (
+    anarede.deltaSVC[ncer] = (
         -Yindutiva.subs(
             {
-                vm: powerflow.solution["voltage"][idxctrl],
-                alpha: powerflow.solution["alpha"],
+                vm: anarede.solution["voltage"][idxctrl],
+                alpha: anarede.solution["alpha"],
             }
         )
-        - Ylinear.subs(powerflow.svcavar)
+        - Ylinear.subs(anarede.svcavar)
         - Ycapacitiva.subs(
             {
-                vm: powerflow.solution["voltage"][idxctrl],
-                alpha: powerflow.solution["alpha"],
+                vm: anarede.solution["voltage"][idxctrl],
+                alpha: anarede.solution["alpha"],
             }
         )
     )
 
     ## Armazenamento de valores das chaves
-    powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][case].append(
+    anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case].append(
         array(
             [
                 ch1,
@@ -999,42 +953,42 @@ def svcsAsmooth(
 
 
 def qlimspop(
-    powerflow,
+    anarede,
     pop: int = 1,
 ):
-    """deleta última instância salva em variável powerflow.qlimskeys
+    """deleta última instância salva em variável anarede.qlimskeys
 
     Args
-        powerflow:
+        anarede:
         pop: quantidade de ações necessárias
     """
     ## Inicialização
-    for _, value in powerflow.dbarDF.iterrows():
+    for _, value in anarede.dbarDF.iterrows():
         popped = 0
         if value["tipo"] != 0:
             while popped < pop:
-                powerflow.qlimkeys[value["nome"]].popitem()
+                anarede.qlimkeys[value["nome"]].popitem()
                 popped += 1
 
 
 def qlimstorage(
-    powerflow,
+    anarede,
 ):
     """armazenamento e geração de imagens referente a comutação das chaves
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Criação automática de diretório
     smoothfolder(
-        powerflow,
+        anarede,
     )
 
     # Condição de método
-    if powerflow.method == "EXIC":
+    if anarede.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
-        for key, value in powerflow.operationpoint.items():
+        for key, value in anarede.operationpoint.items():
             if key == 0:
                 casekeymin = key
                 casevalmin = mn(abs(value["eigenvalues-QV"]))
@@ -1048,77 +1002,59 @@ def qlimstorage(
                 casevalmin = mn(abs(value["c"]["eigenvalues-QV"]))
 
         # Loop
-        for busname, _ in powerflow.qlimkeys.items():
+        for busname, _ in anarede.qlimkeys.items():
             # Variáveis
-            busidx = powerflow.dbarDF.index[
-                powerflow.dbarDF["nome"] == busname
-            ].tolist()[0]
+            busidx = anarede.dbarDF.index[anarede.dbarDF["nome"] == busname].tolist()[0]
 
-            qgx = powerflow.dbarDF.loc[
-                powerflow.dbarDF["nome"] == busname,
+            qgx = anarede.dbarDF.loc[
+                anarede.dbarDF["nome"] == busname,
                 "potencia_reativa_maxima",
             ].values[0]
-            qgn = powerflow.dbarDF.loc[
-                powerflow.dbarDF["nome"] == busname,
+            qgn = anarede.dbarDF.loc[
+                anarede.dbarDF["nome"] == busname,
                 "potencia_reativa_minima",
             ].values[0]
             vr = (
-                powerflow.dbarDF.loc[
-                    powerflow.dbarDF["nome"] == busname, "tensao"
-                ].values[0]
+                anarede.dbarDF.loc[anarede.dbarDF["nome"] == busname, "tensao"].values[
+                    0
+                ]
                 * 1e-3
             )
 
             ch1space = linspace(
-                start=(qgx - (powerflow.options["SIGQ"] * 1e1)),
-                stop=(qgx + (powerflow.options["SIGQ"] * 1e1)),
+                start=(qgx - (anarede.cte["SIGQ"] * 1e1)),
+                stop=(qgx + (anarede.cte["SIGQ"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
             ch1value = 1 / (
-                1
-                + npexp(
-                    -powerflow.options["SIGK"]
-                    * (ch1space - qgx + powerflow.options["SIGQ"])
-                )
+                1 + npexp(-anarede.cte["SIGK"] * (ch1space - qgx + anarede.cte["SIGQ"]))
             )
 
             ch2space = linspace(
-                start=(qgn - (powerflow.options["SIGQ"] * 1e1)),
-                stop=(qgn + (powerflow.options["SIGQ"] * 1e1)),
+                start=(qgn - (anarede.cte["SIGQ"] * 1e1)),
+                stop=(qgn + (anarede.cte["SIGQ"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
             ch2value = 1 / (
-                1
-                + npexp(
-                    powerflow.options["SIGK"]
-                    * (ch2space - qgn - powerflow.options["SIGQ"])
-                )
+                1 + npexp(anarede.cte["SIGK"] * (ch2space - qgn - anarede.cte["SIGQ"]))
             )
 
             chvspace = linspace(
-                start=(vr - (powerflow.options["SIGV"] * 1e1)),
-                stop=(vr + (powerflow.options["SIGV"] * 1e1)),
+                start=(vr - (anarede.cte["SIGV"] * 1e1)),
+                stop=(vr + (anarede.cte["SIGV"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
             ch3value = 1 / (
-                1
-                + npexp(
-                    powerflow.options["SIGK"]
-                    * (chvspace - vr - powerflow.options["SIGV"])
-                )
+                1 + npexp(anarede.cte["SIGK"] * (chvspace - vr - anarede.cte["SIGV"]))
             )
             ch4value = 1 / (
-                1
-                + npexp(
-                    -powerflow.options["SIGK"]
-                    * (chvspace - vr + powerflow.options["SIGV"])
-                )
+                1 + npexp(-anarede.cte["SIGK"] * (chvspace - vr + anarede.cte["SIGV"]))
             )
 
-            caseitems = powerflow.qlimkeys[busname][casekeymin - 1]
+            caseitems = anarede.qlimkeys[busname][casekeymin - 1]
             smooth1 = [item[0] for item in caseitems][-1]
             smooth2 = [item[1] for item in caseitems][-1]
             smooth3 = [item[2] for item in caseitems][-1]
@@ -1166,7 +1102,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax1.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["reactive"][busidx],
+                anarede.operationpoint[casekeymin]["c"]["reactive"][busidx],
                 smooth1,
                 color="tab:blue",
                 marker="o",
@@ -1213,7 +1149,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax2.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["reactive"][busidx],
+                anarede.operationpoint[casekeymin]["c"]["reactive"][busidx],
                 smooth2,
                 color="tab:orange",
                 marker="o",
@@ -1260,7 +1196,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax3.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["voltage"][busidx],
+                anarede.operationpoint[casekeymin]["c"]["voltage"][busidx],
                 smooth3,
                 color="tab:green",
                 marker="o",
@@ -1307,7 +1243,7 @@ def qlimstorage(
                 alpha=0.75,
             )
             ax4.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["voltage"][busidx],
+                anarede.operationpoint[casekeymin]["c"]["voltage"][busidx],
                 smooth4,
                 color="tab:red",
                 marker="o",
@@ -1316,28 +1252,28 @@ def qlimstorage(
             )
             ax4.set_title("Chave 4 - Volt mínimo", fontsize=8)
 
-            fig.savefig(powerflow.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
+            fig.savefig(anarede.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
             plt.close(fig)
 
 
 def svcstorage(
-    powerflow,
+    anarede,
 ):
     """armazenamento e geração de imagens referente a comutação das chaves
 
     Args:
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Criação automática de diretório
     smoothfolder(
-        powerflow,
+        anarede,
     )
 
     # Condição de método
-    if powerflow.method == "EXIC":
+    if anarede.method == "EXIC":
         # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
-        for key, value in powerflow.operationpoint.items():
+        for key, value in anarede.operationpoint.items():
             if key == 0:
                 casekeymin = key
                 casevalmin = mn(abs(value["eigenvalues-QV"]))
@@ -1350,62 +1286,52 @@ def svcstorage(
                 casekeymin = key
                 casevalmin = mn(abs(value["c"]["eigenvalues-QV"]))
 
-        powerflow.pointkeymin = deepcopy(casekeymin)
+        anarede.pointkeymin = deepcopy(casekeymin)
 
         # Loop
-        for busname, _ in powerflow.svckeys.items():
+        for busname, _ in anarede.svckeys.items():
             # Variáveis
-            busidx = powerflow.dbarDF.index[
-                powerflow.dbarDF["nome"] == busname
+            busidx = anarede.dbarDF.index[anarede.dbarDF["nome"] == busname].tolist()[0]
+            busidxcer = anarede.dcerDF.index[
+                anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[busidx]
             ].tolist()[0]
-            busidxcer = powerflow.dcerDF.index[
-                powerflow.dcerDF["barra"] == powerflow.dbarDF["numero"].iloc[busidx]
-            ].tolist()[0]
-            ctrlbusidxcer = powerflow.dbarDF.index[
-                powerflow.dbarDF["numero"]
-                == powerflow.dcerDF["barra_controlada"].iloc[busidxcer]
+            ctrlbusidxcer = anarede.dbarDF.index[
+                anarede.dbarDF["numero"]
+                == anarede.dcerDF["barra_controlada"].iloc[busidxcer]
             ].tolist()[0]
 
-            bmax = powerflow.dcerDF["potencia_reativa_maxima"].iloc[busidxcer]
-            bmin = powerflow.dcerDF["potencia_reativa_minima"].iloc[busidxcer]
-            vk = powerflow.solution["voltage"][busidx]
-            vmref = powerflow.dbarDF["tensao"].iloc[ctrlbusidxcer] * 1e-3
-            droop = (
-                powerflow.dcerDF["droop"].iloc[busidxcer] / powerflow.options["BASE"]
-            )
+            bmax = anarede.dcerDF["potencia_reativa_maxima"].iloc[busidxcer]
+            bmin = anarede.dcerDF["potencia_reativa_minima"].iloc[busidxcer]
+            vk = anarede.solution["voltage"][busidx]
+            vmref = anarede.dbarDF["tensao"].iloc[ctrlbusidxcer] * 1e-3
+            droop = anarede.dcerDF["droop"].iloc[busidxcer] / anarede.cte["BASE"]
 
             vmmax = vmref + (droop * bmin * (vk**2))
             vmmin = vmref + (droop * bmax * (vk**2))
 
             ch1space = linspace(
-                start=(vmmax - (powerflow.options["SIGV"] * 1e1)),
-                stop=(vmmax + (powerflow.options["SIGV"] * 1e1)),
+                start=(vmmax - (anarede.cte["SIGV"] * 1e1)),
+                stop=(vmmax + (anarede.cte["SIGV"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
             ch1value = 1 / (
                 1
-                + npexp(
-                    -powerflow.options["SIGK"]
-                    * (ch1space - vmmax + powerflow.options["SIGV"])
-                )
+                + npexp(-anarede.cte["SIGK"] * (ch1space - vmmax + anarede.cte["SIGV"]))
             )
 
             ch2space = linspace(
-                start=(vmmin - (powerflow.options["SIGV"] * 1e1)),
-                stop=(vmmin + (powerflow.options["SIGV"] * 1e1)),
+                start=(vmmin - (anarede.cte["SIGV"] * 1e1)),
+                stop=(vmmin + (anarede.cte["SIGV"] * 1e1)),
                 num=10000,
                 endpoint=True,
             )
             ch2value = 1 / (
                 1
-                + npexp(
-                    powerflow.options["SIGK"]
-                    * (ch2space - vmmin - powerflow.options["SIGV"])
-                )
+                + npexp(anarede.cte["SIGK"] * (ch2space - vmmin - anarede.cte["SIGV"]))
             )
 
-            caseitems = powerflow.svckeys[busname][casekeymin - 1]
+            caseitems = anarede.svckeys[busname][casekeymin - 1]
             smooth1 = [item[0] for item in caseitems][-1]
             smooth2 = [item[1] for item in caseitems][-1]
 
@@ -1450,7 +1376,7 @@ def svcstorage(
                 alpha=0.75,
             )
             ax1.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
+                anarede.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
                 smooth1,
                 color="tab:blue",
                 marker="o",
@@ -1497,7 +1423,7 @@ def svcstorage(
                 alpha=0.75,
             )
             ax2.scatter(
-                powerflow.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
+                anarede.operationpoint[casekeymin]["c"]["voltage"][ctrlbusidxcer],
                 smooth2,
                 color="tab:orange",
                 marker="o",
@@ -1506,5 +1432,5 @@ def svcstorage(
             )
             ax2.set_title("Chave 2 - V mínimo", fontsize=8)
 
-            fig.savefig(powerflow.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
+            fig.savefig(anarede.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
             plt.close(fig)

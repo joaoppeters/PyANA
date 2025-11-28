@@ -21,122 +21,116 @@ def eigensens(
     """análise de autovalores e autovetores
 
     Args
-        powerflow:
+        anarede:
         stage: string de identificação da etapa do fluxo de potência continuado
     """
     ## Inicialização
     # Reorganização da Matriz Jacobiana Expandida
-    jacobian = deepcopy(powerflow.jacobian)
+    jacobian = deepcopy(anarede.jacobian)
 
     if case > 0:
         jacobian = jacobian[:-1, :-1]
 
     # Submatrizes Jacobianas
-    pt = deepcopy(jacobian[: (powerflow.Tval), :][:, : (powerflow.Tval)])
+    pt = deepcopy(jacobian[: (anarede.Tval), :][:, : (anarede.Tval)])
     pv = deepcopy(
-        jacobian[: (powerflow.Tval), :][
+        jacobian[: (anarede.Tval), :][
             :,
-            (powerflow.Tval) : (powerflow.Tval + powerflow.Vval + powerflow.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
         ]
     )
     qt = deepcopy(
         jacobian[
-            (powerflow.Tval) : (powerflow.Tval + powerflow.Vval + powerflow.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
             :,
-        ][:, : (powerflow.Tval)]
+        ][:, : (anarede.Tval)]
     )
     qv = deepcopy(
         jacobian[
-            (powerflow.Tval) : (powerflow.Tval + powerflow.Vval + powerflow.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
             :,
         ][
             :,
-            (powerflow.Tval) : (powerflow.Tval + powerflow.Vval + powerflow.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
         ]
     )
 
     try:
         # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-        rightvalues, rightvector = eig(powerflow.jacobian)
-        powerflow.jacpfactor = zeros(powerflow.jacobian.shape)
+        rightvalues, rightvector = eig(anarede.jacobian)
+        anarede.jacpfactor = zeros(anarede.jacobian.shape)
 
         # Jacobiana reduzida - sensibilidade QV
-        powerflow.jacQV = qv - qt @ inv(pt) @ pv
-        rightvaluesQV, rightvectorQV = eig(powerflow.jacQV)
+        anarede.jacQV = qv - qt @ inv(pt) @ pv
+        rightvaluesQV, rightvectorQV = eig(anarede.jacQV)
         rightvaluesQV = absolute(rightvaluesQV)
-        powerflow.jacQVpfactor = zeros(qv.shape)
+        anarede.jacQVpfactor = zeros(qv.shape)
         for row in range(0, qv.shape[0]):
             for col in range(0, qv.shape[1]):
-                powerflow.jacQVpfactor[col, row] = (
+                anarede.jacQVpfactor[col, row] = (
                     rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
                 )
 
         # Condição
         if stage == None:
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.operationpoint[case]["jacobian"] = powerflow.jacobian
+            anarede.operationpoint[case]["jacobian"] = anarede.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.operationpoint[case]["determinant"] = det(powerflow.jacobian)
+            anarede.operationpoint[case]["determinant"] = det(anarede.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.operationpoint[case]["eigenvalues"] = rightvalues
-            powerflow.operationpoint[case]["eigenvectors"] = rightvector
+            anarede.operationpoint[case]["eigenvalues"] = rightvalues
+            anarede.operationpoint[case]["eigenvectors"] = rightvector
 
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.operationpoint[case][
-                "participation_factor"
-            ] = powerflow.jacpfactor
+            anarede.operationpoint[case]["participation_factor"] = anarede.jacpfactor
 
             # Armazenamento da matriz de sensibilidade QV
-            powerflow.operationpoint[case]["jacobian-QV"] = powerflow.jacQV
+            anarede.operationpoint[case]["jacobian-QV"] = anarede.jacQV
 
             # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.operationpoint[case]["determinant-QV"] = det(powerflow.jacQV)
+            anarede.operationpoint[case]["determinant-QV"] = det(anarede.jacQV)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.operationpoint[case]["eigenvalues-QV"] = rightvaluesQV
-            powerflow.operationpoint[case]["eigenvectors-QV"] = rightvectorQV
+            anarede.operationpoint[case]["eigenvalues-QV"] = rightvaluesQV
+            anarede.operationpoint[case]["eigenvectors-QV"] = rightvectorQV
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.operationpoint[case][
+            anarede.operationpoint[case][
                 "participationfactor-QV"
-            ] = powerflow.jacQVpfactor
+            ] = anarede.jacQVpfactor
 
         elif stage != None:
             # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
-            powerflow.operationpoint[case][stage]["jacobian"] = powerflow.jacobian
+            anarede.operationpoint[case][stage]["jacobian"] = anarede.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
-            powerflow.operationpoint[case][stage]["determinant"] = det(
-                powerflow.jacobian
-            )
+            anarede.operationpoint[case][stage]["determinant"] = det(anarede.jacobian)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
-            powerflow.operationpoint[case][stage]["eigenvalues"] = rightvalues
-            powerflow.operationpoint[case][stage]["eigenvectors"] = rightvector
+            anarede.operationpoint[case][stage]["eigenvalues"] = rightvalues
+            anarede.operationpoint[case][stage]["eigenvectors"] = rightvector
 
             # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
-            powerflow.operationpoint[case][stage][
+            anarede.operationpoint[case][stage][
                 "participationfactor"
-            ] = powerflow.jacpfactor
+            ] = anarede.jacpfactor
 
             # Armazenamento da matriz de sensibilidade QV
-            powerflow.operationpoint[case][stage]["jacobian-QV"] = powerflow.jacQV
+            anarede.operationpoint[case][stage]["jacobian-QV"] = anarede.jacQV
 
             # Armazenamento do determinante da matriz de sensibilidade QV
-            powerflow.operationpoint[case][stage]["determinant-QV"] = det(
-                powerflow.jacQV
-            )
+            anarede.operationpoint[case][stage]["determinant-QV"] = det(anarede.jacQV)
 
             # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
-            powerflow.operationpoint[case][stage]["eigenvalues-QV"] = rightvaluesQV
-            powerflow.operationpoint[case][stage]["eigenvectors-QV"] = rightvectorQV
+            anarede.operationpoint[case][stage]["eigenvalues-QV"] = rightvaluesQV
+            anarede.operationpoint[case][stage]["eigenvectors-QV"] = rightvectorQV
 
             # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
-            powerflow.operationpoint[case][stage][
+            anarede.operationpoint[case][stage][
                 "participationfactor-QV"
-            ] = powerflow.jacQVpfactor
+            ] = anarede.jacQVpfactor
 
     # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa
     # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
@@ -144,7 +138,7 @@ def eigensens(
         # self.active_heuristic = True
 
         # Reconfiguração do caso
-        auxdiv = deepcopy(powerflow.solution["ndiv"]) + 1
+        auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
         case -= 1
         controlpop(
             powerflow,
@@ -166,16 +160,14 @@ def eigensens(
             "demanda_reativa",
             "stepmax",
         }
-        powerflow.solution = {
-            key: deepcopy(powerflow.operationpoint[case]["c"][key])
-            for key in powerflow.solution.keys() & cpfkeys
+        anarede.solution = {
+            key: deepcopy(anarede.operationpoint[case]["c"][key])
+            for key in anarede.solution.keys() & cpfkeys
         }
-        powerflow.solution["ndiv"] = auxdiv
+        anarede.solution["ndiv"] = auxdiv
 
         # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
-        powerflow.solution["voltage"] = deepcopy(
-            powerflow.operationpoint[case]["c"]["voltage"]
+        anarede.solution["voltage"] = deepcopy(
+            anarede.operationpoint[case]["c"]["voltage"]
         )
-        powerflow.solution["theta"] = deepcopy(
-            powerflow.operationpoint[case]["c"]["theta"]
-        )
+        anarede.solution["theta"] = deepcopy(anarede.operationpoint[case]["c"]["theta"])

@@ -13,71 +13,71 @@ from smooth import qlims, qlimssmooth, qlimspop
 
 
 def qlimssol(
-    powerflow,
+    anarede,
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis
-    if "qlim_reactive_generation" not in powerflow.solution:
-        powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
-        powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
+    if "qlim_reactive_generation" not in anarede.solution:
+        anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
+        anarede.maskQ = ones(anarede.nbus, dtype=bool)
+        anarede.mask = concatenate((anarede.maskP, anarede.maskQ), axis=0)
 
-        powerflow.Y = dict()
-        powerflow.qlimsch = dict()
-        powerflow.qlimkeys = dict()
-        powerflow.qlimdiff = dict()
-        powerflow.qlimvar = dict()
-        powerflow.diffyqg = dict()
-        powerflow.diffyv = dict()
+        anarede.Y = dict()
+        anarede.qlimsch = dict()
+        anarede.qlimkeys = dict()
+        anarede.qlimdiff = dict()
+        anarede.qlimvar = dict()
+        anarede.diffyqg = dict()
+        anarede.diffyv = dict()
 
-        if powerflow.method == "EXPC":
-            powerflow.diffyqgqg = dict()
-            powerflow.diffyvqg = dict()
-            powerflow.diffyqgv = dict()
-            powerflow.diffyvv = dict()
+        if anarede.method == "EXPC":
+            anarede.diffyqgqg = dict()
+            anarede.diffyvqg = dict()
+            anarede.diffyqgv = dict()
+            anarede.diffyvv = dict()
 
         # Inicialização sigmoides
-        for idx, value in powerflow.dbarDF.iterrows():
+        for idx, value in anarede.dbarDF.iterrows():
             if value["tipo"] != 0:
                 qlims(
-                    powerflow,
+                    anarede,
                     idx,
                     value,
                 )
 
-        powerflow.mask = concatenate(
-            (powerflow.mask, ones(powerflow.nger, dtype=bool)), axis=0
+        anarede.mask = concatenate(
+            (anarede.mask, ones(anarede.nger, dtype=bool)), axis=0
         )
 
 
 def qlimsres(
-    powerflow,
+    anarede,
     case,
 ):
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaQLIM = zeros([powerflow.nger])
+    anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             qlimssmooth(
                 idx,
-                powerflow,
+                anarede,
                 nger,
                 case,
             )
@@ -86,16 +86,16 @@ def qlimsres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQLIM)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaQLIM)
 
 
 def qlimssubjac(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -107,49 +107,49 @@ def qlimssubjac(
     #
 
     # Submatrizes
-    px = zeros([powerflow.nbus, powerflow.nger])
-    qx = zeros([powerflow.nbus, powerflow.nger])
-    yx = zeros([powerflow.nger, powerflow.nger])
-    yt = zeros([powerflow.nger, powerflow.nbus])
-    yv = zeros([powerflow.nger, powerflow.nbus])
+    px = zeros([anarede.nbus, anarede.nger])
+    qx = zeros([anarede.nbus, anarede.nger])
+    yx = zeros([anarede.nger, anarede.nger])
+    yt = zeros([anarede.nger, anarede.nbus])
+    yv = zeros([anarede.nger, anarede.nbus])
 
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # dQg/dx
             qx[idx, nger] = -1
 
             # Barras PV
-            yv[nger, idx] = powerflow.qlimdiff[idx][0]
+            yv[nger, idx] = anarede.qlimdiff[idx][0]
 
             # # Barras PQV
             # if (
-            #     powerflow.solution["qlim_reactive_generation"][idx]
-            #     > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+            #     anarede.solution["qlim_reactive_generation"][idx]
+            #     > value["potencia_reativa_maxima"] - anarede.cte["SIGQ"]
             # ) or (
-            #     powerflow.solution["qlim_reactive_generation"][idx]
-            #     < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+            #     anarede.solution["qlim_reactive_generation"][idx]
+            #     < value["potencia_reativa_minima"] + anarede.cte["SIGQ"]
             # ):
-            yx[nger, nger] = powerflow.qlimdiff[idx][1]
+            yx[nger, nger] = anarede.qlimdiff[idx][1]
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
-    if powerflow.controldim != 0:
-        extrarow = zeros([powerflow.nger, powerflow.controldim])
-        extracol = zeros([powerflow.controldim, powerflow.nger])
+    if anarede.controldim != 0:
+        extrarow = zeros([anarede.nger, anarede.controldim])
+        extracol = zeros([anarede.controldim, anarede.nger])
 
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        yt[:, powerflow.maskP],
-                        yv[:, powerflow.maskQ],
+                        yt[:, anarede.maskP],
+                        yv[:, anarede.maskQ],
                         extrarow,
                     ),
                     axis=1,
@@ -157,13 +157,13 @@ def qlimssubjac(
             ),
             axis=0,
         )
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP, :],
-                        qx[powerflow.maskQ, :],
+                        px[anarede.maskP, :],
+                        qx[anarede.maskQ, :],
                         extracol,
                         yx,
                     ),
@@ -173,27 +173,27 @@ def qlimssubjac(
             axis=1,
         )
 
-    elif powerflow.controldim == 0:
-        powerflow.jacobian = concatenate(
+    elif anarede.controldim == 0:
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        yt[:, powerflow.maskP],
-                        yv[:, powerflow.maskQ],
+                        yt[:, anarede.maskP],
+                        yv[:, anarede.maskQ],
                     ),
                     axis=1,
                 ),
             ),
             axis=0,
         )
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP, :],
-                        qx[powerflow.maskQ, :],
+                        px[anarede.maskP, :],
+                        qx[anarede.maskQ, :],
                         yx,
                     ),
                     axis=0,
@@ -204,181 +204,177 @@ def qlimssubjac(
 
 
 def qlimsupdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dimpreqlim = powerflow.jacobian.shape[0] - powerflow.controldim
+    anarede.dimpreqlim = anarede.jacobian.shape[0] - anarede.controldim
 
     # Contador
     nger = 0
 
     # Atualização da potência reativa gerada
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += powerflow.solution[
+            anarede.solution["qlim_reactive_generation"][idx] += anarede.solution[
                 "sign"
-            ] * (
-                powerflow.statevar[(powerflow.dimpreqlim + nger)]
-                * powerflow.options["BASE"]
-            )
+            ] * (anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BASE"])
 
             # Incrementa contador
             nger += 1
 
     qlimssch(
-        powerflow,
+        anarede,
     )
 
 
 def qlimssch(
-    powerflow,
+    anarede,
 ):
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.qsch = zeros([powerflow.nbus])
+    anarede.qsch = zeros([anarede.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
-    powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
-    powerflow.qsch /= powerflow.options["BASE"]
+    anarede.qsch += anarede.solution["qlim_reactive_generation"]
+    anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
+    anarede.qsch /= anarede.cte["BASE"]
 
 
 def qlimscorr(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Variável
-    powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["qlim_reactive_generation"]
+    anarede.solution["qlim_reactive_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
 
 
 def qlimsheur(
-    powerflow,
+    anarede,
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-    # powerflow.dbarDF['potencia_reativa_maxima'].to_numpy()
+    # anarede.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
         (
-            powerflow.solution["qlim_reactive_generation"]
-            > powerflow.dbarDF["potencia_reativa_maxima"].to_numpy()
-            - powerflow.options["SIGQ"]
+            anarede.solution["qlim_reactive_generation"]
+            > anarede.dbarDF["potencia_reativa_maxima"].to_numpy() - anarede.cte["SIGQ"]
         ),
-        where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
+        where=~anarede.mask[(anarede.nbus) : (2 * anarede.nbus)],
     ):
-        powerflow.controlheur = True
+        anarede.controlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.solution["pmc"])
-        and (powerflow.solution["varstep"] == "lambda")
+        (not anarede.solution["pmc"])
+        and (anarede.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
-            <= powerflow.options["ICMN"]
+            (anarede.cte["LMBD"] * (5e-1 ** anarede.solution["ndiv"]))
+            <= anarede.cte["ICMN"]
         )
     ):
-        powerflow.bifurcation = True
+        anarede.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
-        if powerflow.options["FULL"]:
-            powerflow.dbarDF["true_potencia_reativa_minima"] = powerflow.dbarDF.loc[
+        if anarede.cte["FULL"]:
+            anarede.dbarDF["true_potencia_reativa_minima"] = anarede.dbarDF.loc[
                 :, "potencia_reativa_minima"
             ]
-            for idx, value in powerflow.dbarDF.iterrows():
+            for idx, value in anarede.dbarDF.iterrows():
                 if (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 ) and (value["tipo"] != 0):
-                    powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                    anarede.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
                         value["potencia_reativa_maxima"]
                     )
 
 
 def qlimspop(
-    powerflow,
+    anarede,
     pop: int = 1,
 ):
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
             atua diretamente na variável de controle associada à opção de controle QLIMs
 
     Args
-        powerflow:
+        anarede:
         pop: quantidade de ações necessárias
     """
     ## Inicialização
     qlimspop(
-        powerflow,
+        anarede,
         pop=pop,
     )
 
 
 def qlimscpf(
-    powerflow,
+    anarede,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.solution["qlim_reactive_generation"]
+    anarede.solution["qlim_reactive_generation"] = deepcopy(
+        anarede.solution["qlim_reactive_generation"]
     )
 
 
 def qlimssolcpf(
-    powerflow,
+    anarede,
     case,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Condição
     precase = case - 1
     if case == 1:
-        powerflow.solution["qlim_reactive_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["qlim_reactive_generation"]
+        anarede.solution["qlim_reactive_generation"] = deepcopy(
+            anarede.operationpoint[precase]["qlim_reactive_generation"]
         )
 
     elif case > 1:
-        powerflow.solution["qlim_reactive_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["p"]["qlim_reactive_generation"]
+        anarede.solution["qlim_reactive_generation"] = deepcopy(
+            anarede.operationpoint[precase]["p"]["qlim_reactive_generation"]
         )
 
 
 def qlimssubhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz hessiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # hessiana - LEMBRANDO QUE A MATRIZ HESSIANA É CONSTRUÍDA COM A *TRANSPOSTA* DA JACOBIANA
@@ -389,58 +385,58 @@ def qlimssubhess(
     #
 
     # Submatrizes
-    px = zeros([powerflow.nger, powerflow.nbus])
-    qx = zeros([powerflow.nger, powerflow.nbus])
-    yx = zeros([powerflow.nger, powerflow.nger])
-    yt = zeros([powerflow.nbus, powerflow.nger])
-    yv = zeros([powerflow.nbus, powerflow.nger])
+    px = zeros([anarede.nger, anarede.nbus])
+    qx = zeros([anarede.nger, anarede.nbus])
+    yx = zeros([anarede.nger, anarede.nger])
+    yt = zeros([anarede.nbus, anarede.nger])
+    yv = zeros([anarede.nbus, anarede.nger])
 
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.hessian[powerflow.Tval + idx, powerflow.Tval + idx] -= (
-                powerflow.qlimdiff[idx][2]
-                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+            anarede.hessian[anarede.Tval + idx, anarede.Tval + idx] -= (
+                anarede.qlimdiff[idx][2]
+                * anarede.solution["eigen"][2 * anarede.nbus + nger]
             )
             yv[idx, nger] = -(
-                powerflow.qlimdiff[idx][3]
-                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+                anarede.qlimdiff[idx][3]
+                * anarede.solution["eigen"][2 * anarede.nbus + nger]
             )
 
             # # Barras PQV
             # if (
-            #     powerflow.solution["qlim_reactive_generation"][idx]
-            #     > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+            #     anarede.solution["qlim_reactive_generation"][idx]
+            #     > value["potencia_reativa_maxima"] - anarede.cte["SIGQ"]
             # ) or (
-            #     powerflow.solution["qlim_reactive_generation"][idx]
-            #     < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+            #     anarede.solution["qlim_reactive_generation"][idx]
+            #     < value["potencia_reativa_minima"] + anarede.cte["SIGQ"]
             # ):
             qx[nger, idx] = -(
-                powerflow.qlimdiff[idx][4]
-                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+                anarede.qlimdiff[idx][4]
+                * anarede.solution["eigen"][2 * anarede.nbus + nger]
             )
             yx[nger, nger] = -(
-                powerflow.qlimdiff[idx][5]
-                * powerflow.solution["eigen"][2 * powerflow.nbus + nger]
+                anarede.qlimdiff[idx][5]
+                * anarede.solution["eigen"][2 * anarede.nbus + nger]
             )
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
-    if powerflow.controldim != 0:
-        extrarow = zeros([powerflow.nger, powerflow.controldim])
-        extracol = zeros([powerflow.controldim, powerflow.nger])
-        powerflow.hessian = concatenate(
+    if anarede.controldim != 0:
+        extrarow = zeros([anarede.nger, anarede.controldim])
+        extracol = zeros([anarede.controldim, anarede.nger])
+        anarede.hessian = concatenate(
             (
-                powerflow.hessian,
+                anarede.hessian,
                 concatenate(
                     (
-                        px[:, powerflow.maskP],
-                        qx[:, powerflow.maskQ],
+                        px[:, anarede.maskP],
+                        qx[:, anarede.maskQ],
                         extrarow,
                     ),
                     axis=1,
@@ -448,13 +444,13 @@ def qlimssubhess(
             ),
             axis=0,
         )
-        powerflow.hessian = concatenate(
+        anarede.hessian = concatenate(
             (
-                powerflow.hessian,
+                anarede.hessian,
                 concatenate(
                     (
-                        yt[powerflow.maskP, :],
-                        yv[powerflow.maskQ, :],
+                        yt[anarede.maskP, :],
+                        yv[anarede.maskQ, :],
                         extracol,
                         yx,
                     ),
@@ -464,27 +460,27 @@ def qlimssubhess(
             axis=1,
         )
 
-    elif powerflow.controldim == 0:
-        powerflow.hessian = concatenate(
+    elif anarede.controldim == 0:
+        anarede.hessian = concatenate(
             (
-                powerflow.hessian,
+                anarede.hessian,
                 concatenate(
                     (
-                        px[:, powerflow.maskP],
-                        qx[:, powerflow.maskQ],
+                        px[:, anarede.maskP],
+                        qx[:, anarede.maskQ],
                     ),
                     axis=1,
                 ),
             ),
             axis=0,
         )
-        powerflow.hessian = concatenate(
+        anarede.hessian = concatenate(
             (
-                powerflow.hessian,
+                anarede.hessian,
                 concatenate(
                     (
-                        yt[powerflow.maskP, :],
-                        yv[powerflow.maskQ, :],
+                        yt[anarede.maskP, :],
+                        yv[anarede.maskQ, :],
                         yx,
                     ),
                     axis=0,

@@ -33,109 +33,103 @@ from update import updttm
 
 
 def dynamic(
-    powerflow,
+    anatem,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     # Variável para armazenamento de solução
-    powerflow.solution.update(
+    anatem.solution.update(
         {
             "method": "EXSI",
-            "active": powerflow.solution["active"] * 1e-2,
+            "active": anatem.solution["active"] * 1e-2,
             "eventname": "",
         }
     )
 
     # Transformação das cargas para impedância constante e expansao da matriz admitância
     # load2ycte(
-    #     powerflow,
+    #     anatem,
     # )
     postflow(
-        powerflow,
+        anatem,
     )
 
     # Estado SEP após fluxo de potência
-    V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Yb @ V
+    V = anatem.solution["voltage"] * exp(1j * anatem.solution["theta"])
+    I = anatem.Yb @ V
 
-    Ig = append(I[~powerflow.maskQ], zeros((powerflow.nbus), dtype=complex))
-    Eg = inv(powerflow.Yblc.A) @ Ig
+    Ig = append(I[~anatem.maskQ], zeros((anatem.nbus), dtype=complex))
+    Eg = inv(anatem.Yblc.A) @ Ig
 
-    Eg = Eg[: powerflow.nger]
+    Eg = Eg[: anatem.nger]
     delta = arctan(Eg.imag / Eg.real)
     Eg = abs(Eg) * exp(1j * delta)
 
-    powerflow.solution["fem"] = abs(Eg)
-    powerflow.solution["delta"] = delta  # - deltaref
-    powerflow.solution["omega"] = zeros(powerflow.nger)
+    anatem.solution["fem"] = abs(Eg)
+    anatem.solution["delta"] = delta  # - deltaref
+    anatem.solution["omega"] = zeros(anatem.nger)
 
-    powerflow.solution["fem0"] = deepcopy(powerflow.solution["fem"])
-    powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
-    powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
-    powerflow.solution["theta0"] = deepcopy(powerflow.solution["theta"])
-    powerflow.solution["voltage0"] = deepcopy(powerflow.solution["voltage"])
+    anatem.solution["fem0"] = deepcopy(anatem.solution["fem"])
+    anatem.solution["delta0"] = deepcopy(anatem.solution["delta"])
+    anatem.solution["omega0"] = deepcopy(anatem.solution["omega"])
+    anatem.solution["theta0"] = deepcopy(anatem.solution["theta"])
+    anatem.solution["voltage0"] = deepcopy(anatem.solution["voltage"])
 
     y = list()
     event = 0
-    powerflow.YblcOG = deepcopy(powerflow.Yblc)
+    anatem.YblcOG = deepcopy(anatem.Yblc)
 
     t = arange(
         0.0,
-        powerflow.dsimDF.tmax.values[0] + powerflow.dsimDF.step.values[0],
-        powerflow.dsimDF.step.values[0],
+        anatem.dsimDF.tmax.values[0] + anatem.dsimDF.step.values[0],
+        anatem.dsimDF.step.values[0],
     )
 
     for _, tempo in enumerate(t):
         try:
-            if tempo in powerflow.devtDF.tempo.tolist():
-                allevents = powerflow.devtDF.loc[
-                    powerflow.devtDF.tempo == tempo, "tipo"
+            if tempo in anatem.devtDF.tempo.tolist():
+                allevents = anatem.devtDF.loc[
+                    anatem.devtDF.tempo == tempo, "tipo"
                 ].tolist()
                 for event in allevents:
                     if event == "APCB":
-                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
-                        powerflow.solution["eventname"] += "APCB"
+                        anatem.Yblc = deepcopy(anatem.YblcOG)
+                        anatem.solution["eventname"] += "APCB"
                         apcb(
-                            powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
-                                0
-                            ],
+                            anatem,
+                            anatem.devtDF.loc[anatem.devtDF.tipo == event].index[0],
                         )
                     elif event == "RMCB":
-                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
-                        powerflow.solution["eventname"] += "RMCB"
+                        anatem.Yblc = deepcopy(anatem.YblcOG)
+                        anatem.solution["eventname"] += "RMCB"
                     elif event == "RMGR":
-                        powerflow.Yblc = deepcopy(powerflow.YblcOG)
-                        powerflow.solution["eventname"] += "RMGR"
+                        anatem.Yblc = deepcopy(anatem.YblcOG)
+                        anatem.solution["eventname"] += "RMGR"
                         rmgr(
-                            powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
-                                0
-                            ],
+                            anatem,
+                            anatem.devtDF.loc[anatem.devtDF.tipo == event].index[0],
                         )
                     elif event == "ABCI":
-                        powerflow.solution["eventname"] += "ABCI"
+                        anatem.solution["eventname"] += "ABCI"
                         abci(
-                            powerflow,
-                            powerflow.devtDF.loc[powerflow.devtDF.tipo == event].index[
-                                0
-                            ],
+                            anatem,
+                            anatem.devtDF.loc[anatem.devtDF.tipo == event].index[0],
                         )
 
                 timenewt(
-                    powerflow,
+                    anatem,
                 )
 
             elif (
-                tempo not in powerflow.devtDF.tempo.tolist()
-                and tempo > powerflow.devtDF.tempo.tolist()[0]
+                tempo not in anatem.devtDF.tempo.tolist()
+                and tempo > anatem.devtDF.tempo.tolist()[0]
             ):
                 timenewt(
-                    powerflow,
+                    anatem,
                 )
 
         except:
@@ -145,66 +139,66 @@ def dynamic(
             concatenate(
                 (
                     [tempo],
-                    powerflow.solution["delta"],
-                    powerflow.solution["omega"],
-                    powerflow.solution["theta"],
-                    powerflow.solution["voltage"],
+                    anatem.solution["delta"],
+                    anatem.solution["omega"],
+                    anatem.solution["theta"],
+                    anatem.solution["voltage"],
                 )
             )
         )
-        powerflow.solution["delta0"] = deepcopy(powerflow.solution["delta"])
-        powerflow.solution["omega0"] = deepcopy(powerflow.solution["omega"])
-        powerflow.solution["theta0"] = deepcopy(powerflow.solution["theta"])
-        powerflow.solution["voltage0"] = deepcopy(powerflow.solution["voltage"])
+        anatem.solution["delta0"] = deepcopy(anatem.solution["delta"])
+        anatem.solution["omega0"] = deepcopy(anatem.solution["omega"])
+        anatem.solution["theta0"] = deepcopy(anatem.solution["theta"])
+        anatem.solution["voltage0"] = deepcopy(anatem.solution["voltage"])
 
     y = array(y)
     timeplot(
-        powerflow,
+        anatem,
         y,
     )
 
 
 def timenewt(
-    powerflow,
+    anatem,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
-    powerflow.solution["iter"] = 0
-    powerflow.deltagen = zeros((2 * (2 * powerflow.nger + powerflow.nbus)))
+    anatem.solution["iter"] = 0
+    anatem.deltagen = zeros((2 * (2 * anatem.nger + anatem.nbus)))
 
     while True:
         gen = 0
-        for generator in powerflow.generator:
-            if powerflow.generator[generator][0] == "MD01":
+        for generator in anatem.generator:
+            if anatem.generator[generator][0] == "MD01":
                 md01residue(
-                    powerflow,
+                    anatem,
                     generator,
                     gen,
                 )
                 md01jacob(
-                    powerflow,
+                    anatem,
                     generator,
                     gen,
                 )
             gen += 1
 
         resexsi(
-            powerflow,
+            anatem,
         )
 
         jacexsi(
-            powerflow,
+            anatem,
         )
 
         try:
             # Your sparse matrix computation using spsolve here
-            powerflow.timestatevar, residuals, rank, singular = lstsq(
-                powerflow.jacobiangen,
-                -powerflow.deltagen,
+            anatem.timestatevar, residuals, rank, singular = lstsq(
+                anatem.jacobiangen,
+                -anatem.deltagen,
                 rcond=None,
             )
         except LinAlgError:
@@ -214,37 +208,37 @@ def timenewt(
 
         # Atualização das Variáveis de estado
         updttm(
-            powerflow,
+            anatem,
         )
 
         # Incremento de iteração
-        powerflow.solution["iter"] += 1
+        anatem.solution["iter"] += 1
 
         # Condição de Divergência por iterações
-        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            powerflow.solution["convergence"] = (
+        if anatem.solution["iter"] > anatem.options["ACIT"]:
+            anatem.solution["convergence"] = (
                 "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             )
             break
 
-        elif (norm(powerflow.timestatevar) <= powerflow.options["CTOL"]) and (
-            powerflow.solution["iter"] <= powerflow.options["ACIT"]
+        elif (norm(anatem.timestatevar) <= anatem.options["CTOL"]) and (
+            anatem.solution["iter"] <= anatem.options["ACIT"]
         ):
             break
 
 
 def timeplot(
-    powerflow,
+    anatem,
     y,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
         y:
     """
     ## Inicialização
-    # savetxt(powerflow.maindir + "\\sistemas\\" + powerflow.name + powerflow.solution["eventname"] + '.txt', y, fmt='%.4f')
+    # savetxt(anatem.maindir + "\\sistemas\\" + anatem.name + anatem.solution["eventname"] + '.txt', y, fmt='%.4f')
 
     linestyles = [
         "--",
@@ -254,7 +248,7 @@ def timeplot(
         "-",
     ]
 
-    for gen in range(0, powerflow.nger):
+    for gen in range(0, anatem.nger):
         plt.figure(1)
         plt.plot(
             y[:, 0],
@@ -269,7 +263,7 @@ def timeplot(
         plt.figure(2)
         plt.plot(
             y[:, 0],
-            y[:, gen + powerflow.nger + 1],
+            y[:, gen + anatem.nger + 1],
             label="Gerador {}".format(gen + 1),
             linestyle=linestyles[gen],
         )

@@ -13,165 +13,158 @@ from ctrl import controlupdt
 
 
 def updtstt(
-    powerflow,
+    anarede,
     case: int = 0,
     stage: str = None,
 ):
     """atualização das variáveis de estado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     if stage == None:
-        powerflow.statevar = powerflow.statevar.reshape(
-            powerflow.statevar.size,
+        anarede.statevar = anarede.statevar.reshape(
+            anarede.statevar.size,
         )
 
         # configuração reduzida
-        powerflow.solution["theta"][powerflow.maskP] += (
-            powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
+        anarede.solution["theta"][anarede.maskP] += (
+            anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
         )
-        powerflow.solution["voltage"][powerflow.maskQ] += (
-            powerflow.solution["sign"]
-            * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+        anarede.solution["voltage"][anarede.maskQ] += (
+            anarede.solution["sign"]
+            * anarede.statevar[(anarede.Tval) : (anarede.Tval + anarede.Vval)]
         )
 
         # Atualização das variáveis de estado adicionais para controles ativos
-        if powerflow.controlcount > 0:
+        if anarede.controlcount > 0:
             controlupdt(
-                powerflow,
+                anarede,
             )
 
-        if powerflow.solution["method"] == "EXPC":
-            powerflow.solution["lambda"] += (
-                powerflow.solution["sign"]
-                * powerflow.statevar[
-                    (powerflow.Tval + powerflow.Vval + powerflow.controldim)
-                ]
+        if anarede.solution["method"] == "EXPC":
+            anarede.solution["lambda"] += (
+                anarede.solution["sign"]
+                * anarede.statevar[(anarede.Tval + anarede.Vval + anarede.controldim)]
             )
-            powerflow.solution["eigen"][powerflow.mask] += (
-                powerflow.solution["sign"]
-                * powerflow.statevar[
-                    (powerflow.Tval + powerflow.Vval + powerflow.controldim + 1) :
+            anarede.solution["eigen"][anarede.mask] += (
+                anarede.solution["sign"]
+                * anarede.statevar[
+                    (anarede.Tval + anarede.Vval + anarede.controldim + 1) :
                 ]
             )
 
     # Condição de previsão
     elif stage == "p":
-        powerflow.solution["theta"][powerflow.maskP] += (
-            powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
+        anarede.solution["theta"][anarede.maskP] += (
+            anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
         )
         # Condição de variável de passo
-        if powerflow.solution["varstep"] == "lambda":
-            powerflow.solution["voltage"][powerflow.maskQ] += (
-                powerflow.solution["sign"]
-                * powerflow.statevar[
-                    (powerflow.Tval) : (powerflow.Tval + powerflow.Vval)
-                ]
+        if anarede.solution["varstep"] == "lambda":
+            anarede.solution["voltage"][anarede.maskQ] += (
+                anarede.solution["sign"]
+                * anarede.statevar[(anarede.Tval) : (anarede.Tval + anarede.Vval)]
             )
-            powerflow.solution["stepsch"] += powerflow.statevar[-1]
+            anarede.solution["stepsch"] += anarede.statevar[-1]
 
-        elif powerflow.solution["varstep"] == "volt":
-            powerflow.solution["step"] += powerflow.statevar[-1]
-            powerflow.solution["stepsch"] += powerflow.statevar[-1]
-            powerflow.solution["vsch"] = (
-                powerflow.solution["voltage"][powerflow.nodevarvolt]
-                + powerflow.statevar[(powerflow.nbus + powerflow.nodevarvolt)]
+        elif anarede.solution["varstep"] == "volt":
+            anarede.solution["step"] += anarede.statevar[-1]
+            anarede.solution["stepsch"] += anarede.statevar[-1]
+            anarede.solution["vsch"] = (
+                anarede.solution["voltage"][anarede.nodevarvolt]
+                + anarede.statevar[(anarede.nbus + anarede.nodevarvolt)]
             )
 
         # Verificação do Ponto de Máximo Carregamento
         if case > 0:
             if case == 1:
-                powerflow.solution["stepmax"] = deepcopy(powerflow.solution["stepsch"])
+                anarede.solution["stepmax"] = deepcopy(anarede.solution["stepsch"])
 
             elif case != 1:
                 if (
-                    powerflow.solution["stepsch"]
-                    > powerflow.operationpoint[case - 1]["c"]["step"]
-                ) and (not powerflow.solution["pmc"]):
-                    powerflow.solution["stepmax"] = deepcopy(
-                        powerflow.solution["stepsch"]
-                    )
+                    anarede.solution["stepsch"]
+                    > anarede.operationpoint[case - 1]["c"]["step"]
+                ) and (not anarede.solution["pmc"]):
+                    anarede.solution["stepmax"] = deepcopy(anarede.solution["stepsch"])
 
                 elif (
-                    powerflow.solution["stepsch"]
-                    < powerflow.operationpoint[case - 1]["c"]["step"]
-                ) and (not powerflow.solution["pmc"]):
-                    powerflow.solution["pmc"] = True
-                    powerflow.pmcidx = deepcopy(case)
+                    anarede.solution["stepsch"]
+                    < anarede.operationpoint[case - 1]["c"]["step"]
+                ) and (not anarede.solution["pmc"]):
+                    anarede.solution["pmc"] = True
+                    anarede.pmcidx = deepcopy(case)
 
     # Condição de correção
     elif stage == "c":
-        powerflow.solution["theta"][powerflow.maskP] += (
-            powerflow.solution["sign"] * powerflow.statevar[0 : (powerflow.Tval)]
+        anarede.solution["theta"][anarede.maskP] += (
+            anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
         )
-        powerflow.solution["voltage"][powerflow.maskQ] += (
-            powerflow.solution["sign"]
-            * powerflow.statevar[(powerflow.Tval) : (powerflow.Tval + powerflow.Vval)]
+        anarede.solution["voltage"][anarede.maskQ] += (
+            anarede.solution["sign"]
+            * anarede.statevar[(anarede.Tval) : (anarede.Tval + anarede.Vval)]
         )
-        powerflow.solution["step"] += powerflow.statevar[-1]
+        anarede.solution["step"] += anarede.statevar[-1]
 
-        if powerflow.solution["varstep"] == "volt":
-            powerflow.solution["stepsch"] += powerflow.statevar[-1]
+        if anarede.solution["varstep"] == "volt":
+            anarede.solution["stepsch"] += anarede.statevar[-1]
 
     # Atualização das variáveis de estado adicionais para controles ativos
-    if powerflow.controlcount > 0 and stage != None:
+    if anarede.controlcount > 0 and stage != None:
         controlupdt(
-            powerflow,
+            anarede,
         )
 
 
 def updtpwr(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
-    I = powerflow.Yb @ V
+    V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
+    I = anarede.Yb @ V
     S = diag(V) @ conj(I)
 
-    powerflow.solution["active"] = (
-        S.real * powerflow.options["BASE"] + powerflow.dbarDF["demanda_ativa"].tolist()
+    anarede.solution["active"] = (
+        S.real * anarede.cte["BASE"] + anarede.dbarDF["demanda_ativa"].tolist()
     )
-    powerflow.solution["reactive"] = (
-        S.imag * powerflow.options["BASE"]
-        + powerflow.dbarDF["demanda_reativa"].tolist()
+    anarede.solution["reactive"] = (
+        S.imag * anarede.cte["BASE"] + anarede.dbarDF["demanda_reativa"].tolist()
     )
 
 
 def updtlinear(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Atualização dos ângulos dos barramentos
-    powerflow.solution["theta"] = deepcopy(powerflow.statevar)
+    anarede.solution["theta"] = deepcopy(anarede.statevar)
 
 
 def updttm(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Atualização das variaveis dinamicas tempo
-    powerflow.solution["delta"] += powerflow.timestatevar[0 : 2 * powerflow.nger : 2]
-    powerflow.solution["omega"] += powerflow.timestatevar[1 : 2 * powerflow.nger : 2]
-    powerflow.solution["theta"] += powerflow.timestatevar[
-        3 * powerflow.nger : 3 * powerflow.nger + powerflow.nbus
+    anarede.solution["delta"] += anarede.timestatevar[0 : 2 * anarede.nger : 2]
+    anarede.solution["omega"] += anarede.timestatevar[1 : 2 * anarede.nger : 2]
+    anarede.solution["theta"] += anarede.timestatevar[
+        3 * anarede.nger : 3 * anarede.nger + anarede.nbus
     ]
-    powerflow.solution["voltage"] += powerflow.timestatevar[
-        4 * powerflow.nger + powerflow.nbus :
+    anarede.solution["voltage"] += anarede.timestatevar[
+        4 * anarede.nger + anarede.nbus :
     ]

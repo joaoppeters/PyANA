@@ -13,62 +13,62 @@ from folder import convergencefolder, statevarfolder
 
 
 def convergence(
-    powerflow,
+    anarede,
 ):
     """inicialização
 
     Args
-        powerflow:
+        anarede:
         setting: self do arquivo setting.py
     """
     ## Inicialização
     # Criação de pasta
     convergencefolder(
-        powerflow,
+        anarede,
     )
 
     # # Convergência de Potência Ativa
     # convP(
-    #     powerflow,
+    #     anarede,
     # )
 
     # # Convergência de Potência Reativa
     # convQ(
-    #     powerflow,
+    #     anarede,
     # )
 
     # # Condição
-    # if powerflow.control:
+    # if anarede.control:
     #     # Convergência de Equações de Controle Adicionais
     #     convY(
-    #         powerflow,
+    #         anarede,
     #     )
 
 
 def convP(
-    powerflow,
+    anarede,
 ):
     """trajetória de convergência de equação de potência ativa
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
-    if powerflow.solution["convergence"] == "SISTEMA CONVERGENTE":
+    if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convP"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convP"] * anarede.cte["BASE"]),
             color="C0",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convP"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convP"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -77,18 +77,18 @@ def convP(
             zorder=3,
         )
 
-    elif powerflow.solution["convergence"] == "SISTEMA DIVERGENTE":
+    elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convP"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convP"] * anarede.cte["BASE"]),
             color="C0",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convP"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convP"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -100,7 +100,7 @@ def convP(
     # Label
     ax.set_title("Trajetória de Convergência de Potência Ativa")
     ax.set_xlabel("Iterações")
-    ax.set_xticks(arange(0, powerflow.solution["iter"] + 1))
+    ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
     ax.set_ylabel("Resíduo de Potência Ativa [MW]")
     ax.legend(
         [
@@ -115,35 +115,35 @@ def convP(
 
     # Save
     fig.savefig(
-        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaP.png",
+        anarede.nbusconvergencefolder + anarede.name + "-trajconv-deltaP.png",
         dpi=400,
     )
 
 
 def convQ(
-    powerflow,
+    anarede,
 ):
     """trajetória de convergência de equação de potência reativa
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
-    if powerflow.solution["convergence"] == "SISTEMA CONVERGENTE":
+    if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convQ"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convQ"] * anarede.cte["BASE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convQ"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convQ"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -152,18 +152,18 @@ def convQ(
             zorder=3,
         )
 
-    elif powerflow.solution["convergence"] == "SISTEMA DIVERGENTE":
+    elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convQ"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convQ"] * anarede.cte["BASE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convQ"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convQ"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -175,7 +175,7 @@ def convQ(
     # Label
     ax.set_title("Trajetória de Convergência de Potência Reativa")
     ax.set_xlabel("Iterações")
-    ax.set_xticks(arange(0, powerflow.solution["iter"] + 1))
+    ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
     ax.set_ylabel("Resíduo de Potência Reativa [MVAr]")
     ax.legend(
         [
@@ -190,35 +190,35 @@ def convQ(
 
     # Save
     fig.savefig(
-        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaQ.png",
+        anarede.nbusconvergencefolder + anarede.name + "-trajconv-deltaQ.png",
         dpi=400,
     )
 
 
 def convY(
-    powerflow,
+    anarede,
 ):
     """trajetória de convergência de equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
-    if powerflow.solution["convergence"] == "SISTEMA CONVERGENTE":
+    if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convY"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convY"] * anarede.cte["BASE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"] + 1),
-            (powerflow.solution["convY"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"] + 1),
+            (anarede.solution["convY"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -227,18 +227,18 @@ def convY(
             zorder=3,
         )
 
-    elif powerflow.solution["convergence"] == "SISTEMA DIVERGENTE":
+    elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convY"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convY"] * anarede.cte["BASE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
             zorder=2,
         )
         mark = ax.scatter(
-            arange(0, powerflow.solution["iter"]),
-            (powerflow.solution["convY"] * powerflow.options["BASE"]),
+            arange(0, anarede.solution["iter"]),
+            (anarede.solution["convY"] * anarede.cte["BASE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -250,7 +250,7 @@ def convY(
     # Label
     ax.set_title("Trajetória de Convergência de Potência Reativa")
     ax.set_xlabel("Iterações")
-    ax.set_xticks(arange(0, powerflow.solution["iter"] + 1))
+    ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
     ax.set_ylabel("Resíduo de Variável de Controle")
     ax.legend(
         [
@@ -265,47 +265,47 @@ def convY(
 
     # Save
     fig.savefig(
-        powerflow.nbusconvergencefolder + powerflow.name + "-trajconv-deltaY.png",
+        anarede.nbusconvergencefolder + anarede.name + "-trajconv-deltaY.png",
         dpi=400,
     )
 
 
 def statevar(
-    powerflow,
+    anarede,
 ):
     """inicialização
 
     Args
-        powerflow:
+        anarede:
         setting: self do arquivo setting.py
     """
     ## Inicialização
     # Criação de pasta
     statevarfolder(
-        powerflow,
+        anarede,
     )
 
     # # Resultado final de convergência das magnitudes e ângulos de tensão
     # stateVT(
-    #     powerflow,
+    #     anarede,
     # )
 
     # # Condição
-    # if powerflow.control:
+    # if anarede.control:
     #     # Resultado final de convergência das variáveis de estado adicionais
     #     stateY(
-    #         powerflow,
+    #         anarede,
     #     )
 
 
 def stateVT(
     self,
-    powerflow,
+    anarede,
 ):
     """resultado final de convergência das magnitudes e ângulos de tensão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     fig, ax = plt.subplots(
@@ -313,15 +313,15 @@ def stateVT(
     )
 
     # Referência
-    self.thetaref = powerflow.solution["theta"][
-        powerflow.dbarDF.loc[powerflow.dbarDF["tipo"] == 2].index[0]
+    self.thetaref = anarede.solution["theta"][
+        anarede.dbarDF.loc[anarede.dbarDF["tipo"] == 2].index[0]
     ]
 
     # Plots
-    colors = plt.cm.viridis(arange(powerflow.nbus) / powerflow.nbus)
+    colors = plt.cm.viridis(arange(anarede.nbus) / anarede.nbus)
     bars = ax.bar(
-        powerflow.solution["theta"],
-        powerflow.solution["voltage"],
+        anarede.solution["theta"],
+        anarede.solution["voltage"],
         width=0.005,
         bottom=0.0,
         color=colors,
@@ -350,7 +350,7 @@ def stateVT(
             360,
             endpoint=False,
         ),
-        powerflow.options["vmax"] * ones(360),
+        anarede.cte["vmax"] * ones(360),
         linestyle="--",
         color=(1.0, 0.8, 0.7961),
         alpha=1.0,
@@ -363,7 +363,7 @@ def stateVT(
             360,
             endpoint=False,
         ),
-        powerflow.options["vmin"] * ones(360),
+        anarede.cte["vmin"] * ones(360),
         linestyle="--",
         color=(1.0, 0.8, 0.7961),
         alpha=1.0,
@@ -371,9 +371,9 @@ def stateVT(
     )
 
     for theta, rotation, label in zip(
-        powerflow.solution["theta"],
-        degrees(powerflow.solution["theta"]),
-        powerflow.dbarDF["nome"].values,
+        anarede.solution["theta"],
+        degrees(anarede.solution["theta"]),
+        anarede.dbarDF["nome"].values,
     ):
         ax.text(
             theta,
@@ -388,8 +388,8 @@ def stateVT(
 
     # Label
     ax.set_title("Magnitude e Ângulo de Tensão dos Barramentos")
-    ax.set_thetamax(max(degrees(powerflow.solution["theta"])) + 5)
-    ax.set_thetamin(min(degrees(powerflow.solution["theta"])) - 5)
+    ax.set_thetamax(max(degrees(anarede.solution["theta"])) + 5)
+    ax.set_thetamin(min(degrees(anarede.solution["theta"])) - 5)
     ax.set_rticks(
         [
             1.0,
@@ -398,7 +398,7 @@ def stateVT(
     ax.set_yticklabels({"1 p.u."})
     ax.legend(
         bars,
-        powerflow.dbarDF["nome"].values.tolist(),
+        anarede.dbarDF["nome"].values.tolist(),
         frameon=False,
         loc="upper center",
         bbox_to_anchor=(0.5, -0.025),
@@ -410,19 +410,19 @@ def stateVT(
 
     # Save
     fig.savefig(
-        powerflow.nbusstatevarfolder + powerflow.name + "-stateVT.png",
+        anarede.nbusstatevarfolder + anarede.name + "-stateVT.png",
         dpi=400,
     )
 
 
 def stateY(
     self,
-    powerflow,
+    anarede,
 ):
     """resultado final de convergência das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     pass

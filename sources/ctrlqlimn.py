@@ -14,44 +14,44 @@ from smooth import qlimnsmooth, qlimspop
 
 
 def qlimnsol(
-    powerflow,
+    anarede,
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis
-    if "qlim_reactive_generation" not in powerflow.solution:
-        powerflow.solution["qlim_reactive_generation"] = zeros([powerflow.nbus])
-        powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
+    if "qlim_reactive_generation" not in anarede.solution:
+        anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
+        anarede.maskQ = ones(anarede.nbus, dtype=bool)
+        anarede.mask = concatenate((anarede.maskP, anarede.maskQ), axis=0)
 
 
 def qlimnres(
-    powerflow,
+    anarede,
     case,
 ):
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaQLIM = zeros([powerflow.nger])
+    anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             qlimnsmooth(
                 idx,
-                powerflow,
+                anarede,
                 nger,
                 case,
             )
@@ -60,16 +60,16 @@ def qlimnres(
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQLIM)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaQLIM)
 
 
 def qlimnsubjac(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -81,209 +81,205 @@ def qlimnsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.dimpreqlim = deepcopy(powerflow.jacobian.shape[0])
+    anarede.dimpreqlim = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
-    powerflow.px = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.qx = zeros([powerflow.nbus, powerflow.nger])
-    powerflow.yx = zeros([powerflow.nger, powerflow.nger])
-    powerflow.yt = zeros([powerflow.nger, powerflow.nbus])
-    powerflow.yv = zeros([powerflow.nger, powerflow.nbus])
+    anarede.px = zeros([anarede.nbus, anarede.nger])
+    anarede.qx = zeros([anarede.nbus, anarede.nger])
+    anarede.yx = zeros([anarede.nger, anarede.nger])
+    anarede.yt = zeros([anarede.nger, anarede.nbus])
+    anarede.yv = zeros([anarede.nger, anarede.nbus])
 
     # Contador
     nger = 0
 
     # Submatrizes QX YV YX
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # dQg/dx
-            powerflow.qx[idx, nger] = -1
+            anarede.qx[idx, nger] = -1
 
             # Barras PV
-            powerflow.yv[nger, idx] = powerflow.qlimdiff[idx][0]
-            # powerflow.yx[nger, nger] = 1E-10
+            anarede.yv[nger, idx] = anarede.qlimdiff[idx][0]
+            # anarede.yx[nger, nger] = 1E-10
 
             # Barras PQV
             if (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                > value["potencia_reativa_maxima"] - powerflow.options["SIGQ"]
+                anarede.solution["qlim_reactive_generation"][idx]
+                > value["potencia_reativa_maxima"] - anarede.cte["SIGQ"]
             ) or (
-                powerflow.solution["qlim_reactive_generation"][idx]
-                < value["potencia_reativa_minima"] + powerflow.options["SIGQ"]
+                anarede.solution["qlim_reactive_generation"][idx]
+                < value["potencia_reativa_minima"] + anarede.cte["SIGQ"]
             ):
-                powerflow.yx[nger, nger] = powerflow.qlimdiff[idx][1]
+                anarede.yx[nger, nger] = anarede.qlimdiff[idx][1]
 
             # Incrementa contador
             nger += 1
 
     ## Montagem Jacobiana
     # Condição
-    if powerflow.controldim != 0:
-        powerflow.extrarow = zeros([powerflow.nger, powerflow.controldim])
-        powerflow.extracol = zeros([powerflow.controldim, powerflow.nger])
+    if anarede.controldim != 0:
+        anarede.extrarow = zeros([anarede.nger, anarede.controldim])
+        anarede.extracol = zeros([anarede.controldim, anarede.nger])
 
         ytv = csc_matrix(
             concatenate(
-                (powerflow.yt, powerflow.yv, powerflow.extrarow),
+                (anarede.yt, anarede.yv, anarede.extrarow),
                 axis=1,
             )
         )
         pqyx = csc_matrix(
             concatenate(
                 (
-                    powerflow.px,
-                    powerflow.qx,
-                    powerflow.extracol,
-                    powerflow.yx,
+                    anarede.px,
+                    anarede.qx,
+                    anarede.extracol,
+                    anarede.yx,
                 ),
                 axis=0,
             )
         )
 
-    elif powerflow.controldim == 0:
-        ytv = csc_matrix(concatenate((powerflow.yt, powerflow.yv), axis=1))
-        pqyx = csc_matrix(
-            concatenate((powerflow.px, powerflow.qx, powerflow.yx), axis=0)
-        )
+    elif anarede.controldim == 0:
+        ytv = csc_matrix(concatenate((anarede.yt, anarede.yv), axis=1))
+        pqyx = csc_matrix(concatenate((anarede.px, anarede.qx, anarede.yx), axis=0))
 
-    powerflow.jacobian = vstack([powerflow.jacobian, ytv], format="csc")
-    powerflow.jacobian = hstack([powerflow.jacobian, pqyx], format="csc")
+    anarede.jacobian = vstack([anarede.jacobian, ytv], format="csc")
+    anarede.jacobian = hstack([anarede.jacobian, pqyx], format="csc")
 
 
 def qlimnupdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Contador
     nger = 0
 
     # Atualização da potência reativa gerada
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            powerflow.solution["qlim_reactive_generation"][idx] += (
-                powerflow.statevar[(powerflow.dimpreqlim + nger)]
-                * powerflow.options["BASE"]
+            anarede.solution["qlim_reactive_generation"][idx] += (
+                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BASE"]
             )
 
             # Incrementa contador
             nger += 1
 
     qlimnsch(
-        powerflow,
+        anarede,
     )
 
 
 def qlimnsch(
-    powerflow,
+    anarede,
 ):
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.qsch = zeros([powerflow.nbus])
+    anarede.qsch = zeros([anarede.nbus])
 
     # Atualização da potência reativa especificada
-    powerflow.qsch += powerflow.solution["qlim_reactive_generation"]
-    powerflow.qsch -= powerflow.dbarDF["demanda_reativa"].to_numpy()
-    powerflow.qsch /= powerflow.options["BASE"]
+    anarede.qsch += anarede.solution["qlim_reactive_generation"]
+    anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
+    anarede.qsch /= anarede.cte["BASE"]
 
 
 def qlimncorr(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Variável
-    powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["qlim_reactive_generation"]
+    anarede.solution["qlim_reactive_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
 
 
 def qlimnheur(
-    powerflow,
+    anarede,
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
-    # powerflow.dbarDF['potencia_reativa_maxima'].to_numpy()
+    # anarede.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
         (
-            powerflow.solution["qlim_reactive_generation"]
-            > powerflow.dbarDF["potencia_reativa_maxima"].to_numpy()
-            - powerflow.options["SIGQ"]
+            anarede.solution["qlim_reactive_generation"]
+            > anarede.dbarDF["potencia_reativa_maxima"].to_numpy() - anarede.cte["SIGQ"]
         ),
-        where=~powerflow.mask[(powerflow.nbus) : (2 * powerflow.nbus)],
+        where=~anarede.mask[(anarede.nbus) : (2 * anarede.nbus)],
     ):
-        powerflow.controlheur = True
+        anarede.controlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.solution["pmc"])
-        and (powerflow.solution["varstep"] == "lambda")
+        (not anarede.solution["pmc"])
+        and (anarede.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
-            <= powerflow.options["ICMN"]
+            (anarede.cte["LMBD"] * (5e-1 ** anarede.solution["ndiv"]))
+            <= anarede.cte["ICMN"]
         )
     ):
-        powerflow.bifurcation = True
+        anarede.bifurcation = True
         # Condição de curva completa do fluxo de potência continuado
-        if powerflow.options["FULL"]:
-            powerflow.dbarDF["true_potencia_reativa_minima"] = powerflow.dbarDF.loc[
+        if anarede.cte["FULL"]:
+            anarede.dbarDF["true_potencia_reativa_minima"] = anarede.dbarDF.loc[
                 :, "potencia_reativa_minima"
             ]
-            for idx, value in powerflow.dbarDF.iterrows():
+            for idx, value in anarede.dbarDF.iterrows():
                 if (
-                    powerflow.solution["qlim_reactive_generation"][idx]
+                    anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_maxima"]
                 ) and (value["tipo"] != 0):
-                    powerflow.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
+                    anarede.dbarDF.loc[idx, "potencia_reativa_minima"] = deepcopy(
                         value["potencia_reativa_maxima"]
                     )
 
 
 def qlimnpop(
-    powerflow,
+    anarede,
     pop: int = 1,
 ):
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
             atua diretamente na variável de controle associada à opção de controle QLIMn
 
     Args
-        powerflow:
+        anarede:
         pop: quantidade de ações necessárias
     """
     ## Inicialização
     qlimspop(
-        powerflow,
+        anarede,
         pop=pop,
     )
 
 
 def qlimnsubhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz hessiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -298,12 +294,12 @@ def qlimnsubhess(
 
 
 def qlimnsubjacsym(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
 

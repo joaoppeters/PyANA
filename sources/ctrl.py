@@ -17,132 +17,106 @@ from ctrlqlimn import *
 from ctrlsvcs import *
 
 
-def control(
-    powerflow,
-):
-    """inicialização
-
-    Args
-        powerflow:
-    """
-    ## Inicialização
-    if powerflow.control:
-        powerflow.maskctrlcount = 0
-        print("\033[96mOpções de controle escolhidas: ", end="")
-        for k in powerflow.control:
-            if (k == "SVCs") and (not powerflow.codes["DCER"]):
-                continue
-            if k == "FREQ":
-                powerflow.freqjcount = 0
-            else:
-                print(f"{k}", end=" ")
-        print("\033[0m")
-
-    else:
-        powerflow.control = dict()
-        print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
-
-
 def controlsol(
-    powerflow,
+    anarede,
 ):
     """altera variável de armazenamento de solução do fluxo de potência em função do controle ativo
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    if not hasattr(powerflow, "ctrlcount"):
-        powerflow.controlcount = 0
-        powerflow.totaldevicescontrol = 0
-        powerflow.controlorder = dict()
+    if not hasattr(anarede, "ctrlcount"):
+        anarede.controlcount = 0
+        anarede.totaldevicescontrol = 0
+        anarede.controlorder = dict()
 
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "CREM"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "CREM"
             pass
         # controle secundário de tensão
         elif value == "CST":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "CST"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "CST"
             pass
         # controle de tap variável de transformador
         elif value == "CTAP":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "CTAP"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "CTAP"
             pass
         # controle de ângulo de transformador defasador
         elif value == "CTAPd":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "CTAPd"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "CTAPd"
             pass
         # controle de regulação primária de frequência
         elif value == "FREQ":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "FREQ"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "FREQ"
             freqsol(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
-            powerflow.controlcount += 1
-            powerflow.totaldevicescontrol += powerflow.nger
-            powerflow.controlorder[powerflow.controlcount] = "QLIM"
+            anarede.controlcount += 1
+            anarede.totaldevicescontrol += anarede.nger
+            anarede.controlorder[anarede.controlcount] = "QLIM"
             qlimsol(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
-            powerflow.controlcount += 1
-            powerflow.totaldevicescontrol += powerflow.nger
-            powerflow.controlorder[powerflow.controlcount] = "QLIMs"
+            anarede.controlcount += 1
+            anarede.totaldevicescontrol += anarede.nger
+            anarede.controlorder[anarede.controlcount] = "QLIMs"
             qlimssol(
-                powerflow,
+                anarede,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
-            powerflow.controlcount += 1
-            powerflow.totaldevicescontrol += powerflow.nger
-            powerflow.controlorder[powerflow.controlcount] = "QLIMn"
+            anarede.controlcount += 1
+            anarede.totaldevicescontrol += anarede.nger
+            anarede.controlorder[anarede.controlcount] = "QLIMn"
             qlimnsol(
-                powerflow,
+                anarede,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
-            powerflow.controlcount += 1
-            powerflow.totaldevicescontrol += powerflow.ncer
-            powerflow.controlorder[powerflow.controlcount] = "SVCs"
+            anarede.controlcount += 1
+            anarede.totaldevicescontrol += anarede.ncer
+            anarede.controlorder[anarede.controlcount] = "SVCs"
             svcssol(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
-            powerflow.controlcount += 1
-            powerflow.controlorder[powerflow.controlcount] = "VCTRL"
+            anarede.controlcount += 1
+            anarede.controlorder[anarede.controlcount] = "VCTRL"
             pass
 
-    powerflow.Tval = sum(powerflow.maskP)
-    powerflow.Vval = sum(powerflow.maskQ)
+    anarede.Tval = sum(anarede.maskP)
+    anarede.Vval = sum(anarede.maskQ)
 
-    if not powerflow.controlcount:
-        powerflow.controldim = 0
+    if not anarede.controlcount:
+        anarede.controldim = 0
 
 
 def controlsch(
-    powerflow,
+    anarede,
 ):
     """adiciona variáveis especificadas de controles ativos
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -158,27 +132,27 @@ def controlsch(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             freqsch(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimsch(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimssch(
-                powerflow,
+                anarede,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnsch(
-                powerflow,
+                anarede,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcsch(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
@@ -186,22 +160,22 @@ def controlsch(
 
 
 def controlres(
-    powerflow,
+    anarede,
     case: int = 0,
 ):
     """adiciona resíduos de equações de controle de controles ativos
 
     Args
-        powerflow:
+        anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
             valor padrão igual a zero -> Newton-Raphson
     """
     ## Inicialização
     # Variável
-    powerflow.deltaY = array([])
+    anarede.deltaY = array([])
 
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -217,55 +191,55 @@ def controlres(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             freqres(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimres(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimsres(
-                powerflow,
+                anarede,
                 case,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnres(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcres(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
 
-    if powerflow.deltaY.size == 0:
-        powerflow.deltaY = array([])
+    if anarede.deltaY.size == 0:
+        anarede.deltaY = array([])
 
 
 def controljac(
-    powerflow,
+    anarede,
 ):
     """submatrizes referentes aos controles ativos
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.truedim = deepcopy(powerflow.jacobian.shape[0])
+    anarede.truedim = deepcopy(anarede.jacobian.shape[0])
 
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # Dimensão
-        powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
+        anarede.controldim = anarede.jacobian.shape[0] - anarede.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -282,54 +256,54 @@ def controljac(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             freqsubjac(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimsubjac(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimssubjac(
-                powerflow,
+                anarede,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnsubjac(
-                powerflow,
+                anarede,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcsubjac(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
 
     # Dimensão
-    powerflow.controldim = powerflow.jacobian.shape[0] - powerflow.truedim
+    anarede.controldim = anarede.jacobian.shape[0] - anarede.truedim
 
     # Atualização da Máscara da Jacobiana
-    if (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] != "EXPC"):
-        powerflow.maskctrlcount += 1
+    if (anarede.maskctrlcount == 0) and (anarede.solution["method"] != "EXPC"):
+        anarede.maskctrlcount += 1
 
-    elif (powerflow.maskctrlcount == 0) and (powerflow.solution["method"] == "EXPC"):
-        powerflow.maskctrlcount += 1
+    elif (anarede.maskctrlcount == 0) and (anarede.solution["method"] == "EXPC"):
+        anarede.maskctrlcount += 1
 
 
 def controlupdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais por controle ativo
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -345,27 +319,27 @@ def controlupdt(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             frequpdt(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimupdt(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimsupdt(
-                powerflow,
+                anarede,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnupdt(
-                powerflow,
+                anarede,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcupdt(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
@@ -373,18 +347,18 @@ def controlupdt(
 
 
 def controlcorrsol(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização das variáveis de controle para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -400,31 +374,31 @@ def controlcorrsol(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             freqcorr(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimcorr(
-                powerflow,
+                anarede,
                 case,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimscorr(
-                powerflow,
+                anarede,
                 case,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimncorr(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svccorr(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de magnitude de tensão de barramentos
@@ -433,27 +407,27 @@ def controlcorrsol(
 
 
 def controlheuristics(
-    powerflow,
+    anarede,
 ):
     """aplicação de heurísticas das variáveis de controle para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.controlheur = False
-    if not hasattr(powerflow, "bifurcation"):
-        powerflow.bifurcation = False
+    anarede.controlheur = False
+    if not hasattr(anarede, "bifurcation"):
+        anarede.bifurcation = False
 
     # Loop
-    for value in powerflow.control:
-        if (powerflow.controlheur) or (
-            (powerflow.bifurcation) and (not powerflow.options["FULL"])
+    for value in anarede.control:
+        if (anarede.controlheur) or (
+            (anarede.bifurcation) and (not anarede.cte["FULL"])
         ):
             break
 
-        elif (not powerflow.controlheur) and (not powerflow.solution["pmc"]):
+        elif (not anarede.controlheur) and (not anarede.solution["pmc"]):
             # controle remoto de tensão
             if value == "CREM":
                 pass
@@ -472,22 +446,22 @@ def controlheuristics(
             # controle de limite de geração de potência reativa
             elif value == "QLIM":
                 qlimheur(
-                    powerflow,
+                    anarede,
                 )
             # controle suave de limite de geração de potência reativa
             elif value == "QLIMs":
                 qlimsheur(
-                    powerflow,
+                    anarede,
                 )
             # controle suave de limite de geração de potência reativa
             elif value == "QLIMn":
                 qlimnheur(
-                    powerflow,
+                    anarede,
                 )
             # controle de compensadores estáticos de potência reativa
             elif value == "SVCs":
                 svcheur(
-                    powerflow,
+                    anarede,
                 )
             # controle de magnitude de tensão de barramentos
             elif value == "VCTRL":
@@ -495,18 +469,18 @@ def controlheuristics(
 
 
 def controlpop(
-    powerflow,
+    anarede,
     pop: int = 1,
 ):
     """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
 
     Args
-        powerflow:
+        anarede:
         pop: quantidade de ações necessárias
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -527,10 +501,10 @@ def controlpop(
             pass
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
-            qlimspop(powerflow, pop=pop)
+            qlimspop(anarede, pop=pop)
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
-            qlimnpop(powerflow, pop=pop)
+            qlimnpop(anarede, pop=pop)
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             pass
@@ -540,16 +514,16 @@ def controlpop(
 
 
 def controlcpf(
-    powerflow,
+    anarede,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -577,7 +551,7 @@ def controlcpf(
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svccpf(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
@@ -585,18 +559,18 @@ def controlcpf(
 
 
 def controlsolcpf(
-    powerflow,
+    anarede,
     case,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -618,7 +592,7 @@ def controlsolcpf(
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimssolcpf(
-                powerflow,
+                anarede,
                 case,
             )
         # controle suave numerico de limite de geração de potência reativa
@@ -627,7 +601,7 @@ def controlsolcpf(
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcsolcpf(
-                powerflow,
+                anarede,
                 case,
             )
         # controle de magnitude de tensão de barramentos
@@ -636,12 +610,12 @@ def controlsolcpf(
 
 
 def controldelta(
-    powerflow,
+    anarede,
 ):
     """checagem da variação dos resíduos durante método iterativo de newton-raphson
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
@@ -649,7 +623,7 @@ def controldelta(
     ctrl = 0
 
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -665,48 +639,41 @@ def controldelta(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["TEPA"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["TEPA"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["TEPR"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["TEPR"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["ASTP"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["ASTP"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["QLST"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["QLST"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["QLST"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["QLST"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.nger])
-                > powerflow.options["QLST"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.nger]) > anarede.cte["QLST"]
             )
-            ctrl += powerflow.nger
+            ctrl += anarede.nger
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             boollist.append(
-                norm(powerflow.deltaY[ctrl : ctrl + powerflow.ncer])
-                > powerflow.options["QLST"]
+                norm(anarede.deltaY[ctrl : ctrl + anarede.ncer]) > anarede.cte["QLST"]
             )
-            ctrl += powerflow.ncer
+            ctrl += anarede.ncer
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
@@ -715,18 +682,18 @@ def controldelta(
 
 
 def controlhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes referentes aos controles ativos
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Loop
-    for value in powerflow.control:
+    for value in anarede.control:
         # Dimensão
-        powerflow.controldim = powerflow.hessian.shape[0] - powerflow.truedim
+        anarede.controldim = anarede.hessian.shape[0] - anarede.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -743,31 +710,31 @@ def controlhess(
         # controle de regulação primária de frequência
         elif value == "FREQ":
             freqsubhess(
-                powerflow,
+                anarede,
             )
         # controle de limite de geração de potência reativa
         elif value == "QLIM":
             qlimsubhess(
-                powerflow,
+                anarede,
             )
         # controle suave simbolico de limite de geração de potência reativa
         elif value == "QLIMs":
             qlimssubhess(
-                powerflow,
+                anarede,
             )
         # controle suave numerico de limite de geração de potência reativa
         elif value == "QLIMn":
             qlimnsubhess(
-                powerflow,
+                anarede,
             )
         # controle de compensadores estáticos de potência reativa
         elif value == "SVCs":
             svcsubhess(
-                powerflow,
+                anarede,
             )
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
 
     # Dimensão
-    powerflow.controldim = powerflow.hessian.shape[0] - powerflow.truedim
+    anarede.controldim = anarede.hessian.shape[0] - anarede.truedim

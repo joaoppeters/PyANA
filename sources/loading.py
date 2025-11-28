@@ -13,203 +13,199 @@ from folder import continuationfolder
 
 
 def loading(
-    powerflow,
+    anarede,
 ):
     """inicialização
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Criação automática de diretório
     continuationfolder(
-        powerflow,
+        anarede,
     )
 
     # Variáveis para geração dos gráficos de fluxo de potência continuado
     var(
-        powerflow,
+        anarede,
     )
 
     # # Gráficos de variáveis de estado e controle em função do carregamento
     # self.pqvt(
-    #     powerflow,
+    #     anarede,
     # )
 
     # # Gráfico de rootlocus
-    # self.ruthe(powerflow,)
+    # self.ruthe(anarede,)
 
 
 def var(
-    powerflow,
+    anarede,
 ):
     """variáveis para geração dos gráficos de fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.pqtv = {}
-    powerflow.MW = array([])
-    powerflow.MVAr = array([])
-    powerflow.nbuseigenvalues = array([])
-    powerflow.nbuseigenvaluesPT = array([])
-    powerflow.nbuseigenvaluesQV = array([])
-    if "FREQ" in powerflow.control:
-        powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])] = array([])
+    anarede.pqtv = {}
+    anarede.MW = array([])
+    anarede.MVAr = array([])
+    anarede.nbuseigenvalues = array([])
+    anarede.nbuseigenvaluesPT = array([])
+    anarede.nbuseigenvaluesQV = array([])
+    if "FREQ" in anarede.control:
+        anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = array([])
 
     # Loop de Inicialização da Variável
-    for _, value in powerflow.dbarDF.iterrows():
+    for _, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Variável de Armazenamento de Potência Ativa
-            powerflow.pqtv["P-" + value["nome"]] = array([])
+            anarede.pqtv["P-" + value["nome"]] = array([])
 
             # Variável de Armazenamento de Potência Reativa
-            powerflow.pqtv["Q-" + value["nome"]] = array([])
+            anarede.pqtv["Q-" + value["nome"]] = array([])
 
         elif (value["tipo"] == 0) and (
-            ("SVCs" in powerflow.control)
-            and (value["numero"] in powerflow.dcerDF["barra"].to_numpy())
+            ("SVCs" in anarede.control)
+            and (value["numero"] in anarede.dcerDF["barra"].to_numpy())
         ):
             # Variável de Armazenamento de Potência Reativa
-            powerflow.pqtv["Q-" + value["nome"]] = array([])
+            anarede.pqtv["Q-" + value["nome"]] = array([])
 
         # Variável de Armazenamento de Magnitude de Tensão Corrigida
-        powerflow.pqtv["Vcorr-" + value["nome"]] = array([])
+        anarede.pqtv["Vcorr-" + value["nome"]] = array([])
 
         # Variável de Armazenamento de Defasagem Angular Corrigida
-        powerflow.pqtv["Tcorr-" + value["nome"]] = array([])
+        anarede.pqtv["Tcorr-" + value["nome"]] = array([])
 
     # Loop de Armazenamento
-    for key, item in powerflow.operationpoint.items():
+    for key, item in anarede.operationpoint.items():
         # Condição
         if key == 0:
-            aux = powerflow.dbarDF["nome"][0]  # usado no loop seguinte
+            aux = anarede.dbarDF["nome"][0]  # usado no loop seguinte
             for value in range(0, item["voltage"].shape[0]):
-                if powerflow.dbarDF["tipo"][value] != 0:
+                if anarede.dbarDF["tipo"][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["P-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["P-" + anarede.dbarDF["nome"][value]],
                         item["active"][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["reactive"][value],
                     )
 
-                elif (powerflow.dbarDF["tipo"][value] == 0) and (
-                    ("SVCs" in powerflow.control)
+                elif (anarede.dbarDF["tipo"][value] == 0) and (
+                    ("SVCs" in anarede.control)
                     and (
-                        powerflow.dbarDF["numero"][value]
-                        in powerflow.dcerDF["barra"].to_numpy()
+                        anarede.dbarDF["numero"][value]
+                        in anarede.dcerDF["barra"].to_numpy()
                     )
                 ):
-                    busidxcer = powerflow.dcerDF.index[
-                        powerflow.dcerDF["barra"]
-                        == powerflow.dbarDF["numero"].iloc[value]
+                    busidxcer = anarede.dcerDF.index[
+                        anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["svc_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão
-                powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]] = append(
-                    powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]],
+                anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]] = append(
+                    anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]],
                     item["voltage"][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular
-                powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]] = append(
-                    powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]],
+                anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]] = append(
+                    anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]],
                     degrees(item["theta"][value]),
                 )
 
             # Demanda
-            powerflow.MW = append(
-                powerflow.MW, sum(powerflow.solution["demanda_ativa"])
-            )
-            powerflow.MVAr = append(
-                powerflow.MVAr, sum(powerflow.solution["demanda_reativa"])
+            anarede.MW = append(anarede.MW, sum(anarede.solution["demanda_ativa"]))
+            anarede.MVAr = append(
+                anarede.MVAr, sum(anarede.solution["demanda_reativa"])
             )
 
             # Determinante e Autovalores
-            if powerflow.solution["eigencalculation"]:
-                powerflow.nbuseigenvalues = append(
-                    powerflow.nbuseigenvalues, item["eigenvalues"]
+            if anarede.solution["eigencalculation"]:
+                anarede.nbuseigenvalues = append(
+                    anarede.nbuseigenvalues, item["eigenvalues"]
                 )
-                powerflow.nbuseigenvaluesQV = append(
-                    powerflow.nbuseigenvaluesQV, item["eigenvalues-QV"]
+                anarede.nbuseigenvaluesQV = append(
+                    anarede.nbuseigenvaluesQV, item["eigenvalues-QV"]
                 )
 
             # Frequência
-            if "FREQ" in powerflow.control:
-                powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])] = append(
-                    powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])],
-                    item["freq"] * powerflow.options["FBASE"],
+            if "FREQ" in anarede.control:
+                anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
+                    anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
+                    item["freq"] * anarede.cte["FBSE"],
                 )
 
         elif key > 0:
             for value in range(0, item["c"]["voltage"].shape[0]):
-                if powerflow.dbarDF["tipo"][value] != 0:
+                if anarede.dbarDF["tipo"][value] != 0:
                     # Armazenamento de Potência Ativa
-                    powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["P-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["P-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["P-" + anarede.dbarDF["nome"][value]],
                         item["c"]["active"][value],
                     )
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["c"]["reactive"][value],
                     )
 
-                elif (powerflow.dbarDF["tipo"][value] == 0) and (
-                    ("SVCs" in powerflow.control)
+                elif (anarede.dbarDF["tipo"][value] == 0) and (
+                    ("SVCs" in anarede.control)
                     and (
-                        powerflow.dbarDF["numero"][value]
-                        in powerflow.dcerDF["barra"].to_numpy()
+                        anarede.dbarDF["numero"][value]
+                        in anarede.dcerDF["barra"].to_numpy()
                     )
                 ):
-                    busidxcer = powerflow.dcerDF.index[
-                        powerflow.dcerDF["barra"]
-                        == powerflow.dbarDF["numero"].iloc[value]
+                    busidxcer = anarede.dcerDF.index[
+                        anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
                     # Armazenamento de Potência Reativa
-                    powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]] = append(
-                        powerflow.pqtv["Q-" + powerflow.dbarDF["nome"][value]],
+                    anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
+                        anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["c"]["svc_generation"][busidxcer],
                     )
 
                 # Armazenamento de Magnitude de Tensão Corrigida
-                powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]] = append(
-                    powerflow.pqtv["Vcorr-" + powerflow.dbarDF["nome"][value]],
+                anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]] = append(
+                    anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]],
                     item["c"]["voltage"][value],
                 )
 
                 # Variável de Armazenamento de Defasagem Angular Corrigida
-                powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]] = append(
-                    powerflow.pqtv["Tcorr-" + powerflow.dbarDF["nome"][value]],
+                anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]] = append(
+                    anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]],
                     degrees(item["c"]["theta"][value]),
                 )
 
             # Demanda
-            totalmw = sum(powerflow.solution["demanda_ativa"])
-            totalmvar = sum(powerflow.solution["demanda_reativa"])
-            for _, valueinc in powerflow.dincDF.iterrows():
+            totalmw = sum(anarede.solution["demanda_ativa"])
+            totalmvar = sum(anarede.solution["demanda_reativa"])
+            for _, valueinc in anarede.dincDF.iterrows():
                 if valueinc["tipo_incremento_1"] == "AREA":
                     # MW
                     areamw = (1 + item["c"]["step"]) * sum(
                         array(
                             [
-                                powerflow.solution["demanda_ativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
+                                anarede.solution["demanda_ativa"][idxarea]
+                                for idxarea, valuearea in anarede.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -218,8 +214,8 @@ def var(
                     totalmw += areamw - sum(
                         array(
                             [
-                                powerflow.solution["demanda_ativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
+                                anarede.solution["demanda_ativa"][idxarea]
+                                for idxarea, valuearea in anarede.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -230,8 +226,8 @@ def var(
                     areamvar = (1 + item["c"]["step"]) * sum(
                         array(
                             [
-                                powerflow.solution["demanda_reativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
+                                anarede.solution["demanda_reativa"][idxarea]
+                                for idxarea, valuearea in anarede.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
@@ -240,70 +236,70 @@ def var(
                     totalmvar += areamvar - sum(
                         array(
                             [
-                                powerflow.solution["demanda_reativa"][idxarea]
-                                for idxarea, valuearea in powerflow.dbarDF.iterrows()
+                                anarede.solution["demanda_reativa"][idxarea]
+                                for idxarea, valuearea in anarede.dbarDF.iterrows()
                                 if valuearea["area"]
                                 == valueinc["identificacao_incremento_1"]
                             ]
                         )
                     )
 
-                elif powerflow.dincDF.loc[0, "tipo_incremento_1"] == "BARR":
+                elif anarede.dincDF.loc[0, "tipo_incremento_1"] == "BARR":
                     # MW
-                    barramw = (1 + item["c"]["step"]) * powerflow.solution[
+                    barramw = (1 + item["c"]["step"]) * anarede.solution[
                         "demanda_ativa"
-                    ][powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1]
+                    ][anarede.dincDF.loc[0, "identificacao_incremento_1"] - 1]
                     totalmw += (
                         barramw
-                        - powerflow.solution["demanda_ativa"][
-                            powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1
+                        - anarede.solution["demanda_ativa"][
+                            anarede.dincDF.loc[0, "identificacao_incremento_1"] - 1
                         ]
                     )
 
                     # MVAr
-                    barramvar = (1 + item["c"]["step"]) * powerflow.solution[
+                    barramvar = (1 + item["c"]["step"]) * anarede.solution[
                         "demanda_reativa"
-                    ][powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1]
+                    ][anarede.dincDF.loc[0, "identificacao_incremento_1"] - 1]
                     totalmvar += (
                         barramvar
-                        - powerflow.solution["demanda_reativa"][
-                            powerflow.dincDF.loc[0, "identificacao_incremento_1"] - 1
+                        - anarede.solution["demanda_reativa"][
+                            anarede.dincDF.loc[0, "identificacao_incremento_1"] - 1
                         ]
                     )
 
-            powerflow.MW = append(powerflow.MW, totalmw)
-            powerflow.MVAr = append(powerflow.MVAr, totalmvar)
+            anarede.MW = append(anarede.MW, totalmw)
+            anarede.MVAr = append(anarede.MVAr, totalmvar)
 
             # Determinante e Autovalores
-            if powerflow.solution["eigencalculation"]:
-                powerflow.nbuseigenvalues = append(
-                    powerflow.nbuseigenvalues, item["c"]["eigenvalues"]
+            if anarede.solution["eigencalculation"]:
+                anarede.nbuseigenvalues = append(
+                    anarede.nbuseigenvalues, item["c"]["eigenvalues"]
                 )
-                powerflow.nbuseigenvaluesQV = append(
-                    powerflow.nbuseigenvaluesQV, item["c"]["eigenvalues-QV"]
+                anarede.nbuseigenvaluesQV = append(
+                    anarede.nbuseigenvaluesQV, item["c"]["eigenvalues-QV"]
                 )
 
             # Frequência
-            if "FREQ" in powerflow.control:
-                powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])] = append(
-                    powerflow.pqtv["FREQbase" + str(powerflow.options["FBASE"])],
-                    item["c"]["freq"] * powerflow.options["FBASE"],
+            if "FREQ" in anarede.control:
+                anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
+                    anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
+                    item["c"]["freq"] * anarede.cte["FBSE"],
                 )
 
 
 def pqvt(
     self,
-    powerflow,
+    anarede,
 ):
     """geração e armazenamento de gráficos de variáveis de estado e controle em função do carregamento
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Geração de Gráfico
     color = 0
-    for key, item in powerflow.pqtv.items():
+    for key, item in anarede.pqtv.items():
         if (key[:5] != "Vprev") and (key[:5] != "Tprev"):
             fig, ax = plt.subplots(nrows=1, ncols=1)
 
@@ -321,8 +317,8 @@ def pqvt(
 
             # Plot
             (line,) = ax.plot(
-                powerflow.MW[: powerflow.nbuspmcidx + 1],
-                item[: powerflow.nbuspmcidx + 1],
+                anarede.MW[: anarede.nbuspmcidx + 1],
+                item[: anarede.nbuspmcidx + 1],
                 color=f"C{color}",
                 linestyle="solid",
                 linewidth=2,
@@ -331,10 +327,10 @@ def pqvt(
                 zorder=2,
             )
 
-            if powerflow.options["FULL"]:
+            if anarede.cte["FULL"]:
                 (dashed,) = ax.plot(
-                    powerflow.MW[(powerflow.nbuspmcidx + 1) : (powerflow.nbusv2lidx)],
-                    item[(powerflow.nbuspmcidx + 1) : (powerflow.nbusv2lidx)],
+                    anarede.MW[(anarede.nbuspmcidx + 1) : (anarede.nbusv2lidx)],
+                    item[(anarede.nbuspmcidx + 1) : (anarede.nbusv2lidx)],
                     color=f"C{color}",
                     linestyle="dashed",
                     linewidth=2,
@@ -343,8 +339,8 @@ def pqvt(
                     zorder=2,
                 )
                 (dotted,) = ax.plot(
-                    powerflow.MW[powerflow.nbusv2lidx :],
-                    item[powerflow.nbusv2lidx :],
+                    anarede.MW[anarede.nbusv2lidx :],
+                    item[anarede.nbusv2lidx :],
                     color=f"C{color}",
                     linestyle="dotted",
                     linewidth=2,
@@ -354,7 +350,7 @@ def pqvt(
                 )
                 ax.legend([(line, dashed, dotted)], [busname])
 
-            elif not powerflow.options["FULL"]:
+            elif not anarede.cte["FULL"]:
                 ax.legend([(line,)], [busname])
 
             # Labels
@@ -388,11 +384,7 @@ def pqvt(
 
         # Save
         fig.savefig(
-            powerflow.nbussystemcontinuationfolderimag
-            + key[0]
-            + "-"
-            + busname
-            + ".png",
+            anarede.nbussystemcontinuationfolderimag + key[0] + "-" + busname + ".png",
             dpi=400,
         )
         plt.close(fig)
@@ -400,46 +392,46 @@ def pqvt(
 
 def ruthe(
     self,
-    powerflow,
+    anarede,
 ):
     """geração e armazenamento de gráfico rootlocus
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis
-    rows = list(powerflow.operationpoint.keys())[-1]
-    cols = sum(powerflow.mask)
-    colsP = sum(powerflow.maskP)
-    colsQ = sum(powerflow.maskQ)
+    rows = list(anarede.operationpoint.keys())[-1]
+    cols = sum(anarede.mask)
+    colsP = sum(anarede.maskP)
+    colsQ = sum(anarede.maskQ)
 
     # Reconfiguração
-    powerflow.nbuseigenvalues = powerflow.nbuseigenvalues.reshape(rows, cols).T.astype(
+    anarede.nbuseigenvalues = anarede.nbuseigenvalues.reshape(rows, cols).T.astype(
         dtype=complex
     )
-    powerflow.nbuseigenvaluesPT = powerflow.nbuseigenvaluesPT.reshape(
-        rows, colsP
-    ).T.astype(dtype=complex)
-    powerflow.nbuseigenvaluesQV = powerflow.nbuseigenvaluesQV.reshape(
-        rows, colsQ
-    ).T.astype(dtype=complex)
+    anarede.nbuseigenvaluesPT = anarede.nbuseigenvaluesPT.reshape(rows, colsP).T.astype(
+        dtype=complex
+    )
+    anarede.nbuseigenvaluesQV = anarede.nbuseigenvaluesQV.reshape(rows, colsQ).T.astype(
+        dtype=complex
+    )
 
     # Geração de Gráfico - Autovalores da matriz Jacobiana Reduzida
     fig, ax = plt.subplots(nrows=1, ncols=1)
     color = 0
     for eigen in range(0, cols):
         ax.scatter(
-            -powerflow.nbuseigenvalues.real[eigen, 0],
-            powerflow.nbuseigenvalues.imag[eigen, 0],
+            -anarede.nbuseigenvalues.real[eigen, 0],
+            anarede.nbuseigenvalues.imag[eigen, 0],
             marker="x",
             color=f"C{color}",
             alpha=1,
             zorder=3,
         )
         ax.plot(
-            -powerflow.nbuseigenvalues.real[eigen, :],
-            powerflow.nbuseigenvalues.imag[eigen, :],
+            -anarede.nbuseigenvalues.real[eigen, :],
+            anarede.nbuseigenvalues.imag[eigen, :],
             color=f"C{color}",
             linewidth=2,
             alpha=0.85,
@@ -456,9 +448,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbussystemcontinuationfolder
-        + powerflow.name
-        + "-rootlocus-Jacobian.png",
+        anarede.nbussystemcontinuationfolder + anarede.name + "-rootlocus-Jacobian.png",
         dpi=400,
     )
     plt.close(fig)
@@ -468,16 +458,16 @@ def ruthe(
     color = 0
     for eigen in range(0, colsP):
         ax.scatter(
-            -powerflow.nbuseigenvaluesPT.real[eigen, 0],
-            powerflow.nbuseigenvaluesPT.imag[eigen, 0],
+            -anarede.nbuseigenvaluesPT.real[eigen, 0],
+            anarede.nbuseigenvaluesPT.imag[eigen, 0],
             marker="x",
             color=f"C{color}",
             alpha=1,
             zorder=3,
         )
         ax.plot(
-            -powerflow.nbuseigenvaluesPT.real[eigen, :],
-            powerflow.nbuseigenvaluesPT.imag[eigen, :],
+            -anarede.nbuseigenvaluesPT.real[eigen, :],
+            anarede.nbuseigenvaluesPT.imag[eigen, :],
             color=f"C{color}",
             linewidth=2,
             alpha=0.85,
@@ -494,9 +484,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbussystemcontinuationfolder
-        + powerflow.name
-        + "-rootlocus-PTsens.png",
+        anarede.nbussystemcontinuationfolder + anarede.name + "-rootlocus-PTsens.png",
         dpi=400,
     )
     plt.close(fig)
@@ -506,16 +494,16 @@ def ruthe(
     color = 0
     for eigen in range(0, colsQ):
         ax.scatter(
-            -powerflow.nbuseigenvaluesQV.real[eigen, 0],
-            powerflow.nbuseigenvaluesQV.imag[eigen, 0],
+            -anarede.nbuseigenvaluesQV.real[eigen, 0],
+            anarede.nbuseigenvaluesQV.imag[eigen, 0],
             marker="x",
             color=f"C{color}",
             alpha=1,
             zorder=3,
         )
         ax.plot(
-            -powerflow.nbuseigenvaluesQV.real[eigen, :],
-            powerflow.nbuseigenvaluesQV.imag[eigen, :],
+            -anarede.nbuseigenvaluesQV.real[eigen, :],
+            anarede.nbuseigenvaluesQV.imag[eigen, :],
             color=f"C{color}",
             linewidth=2,
             alpha=0.85,
@@ -532,9 +520,7 @@ def ruthe(
 
     # Save
     fig.savefig(
-        powerflow.nbussystemcontinuationfolder
-        + powerflow.name
-        + "-rootlocus-QVsens.png",
+        anarede.nbussystemcontinuationfolder + anarede.name + "-rootlocus-QVsens.png",
         dpi=400,
     )
     plt.close(fig)

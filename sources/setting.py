@@ -6,106 +6,61 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from os.path import dirname, exists, realpath
-from os import mkdir
-
-from ctrl import control
-from options import options
+from options import optionspwf, optionsstb
+from path import pathpwf, pathstb
 from pwf import pwf
-from report import report
+from stb import stb
 
 
-def setting(
-    powerflow,
+def pwfsetting(
+    anarede,
 ):
-    """initialization
+    """configurações iniciais para simulação estática de fluxo de potência
 
     Args
-        powerflow: powerflow do arquivo powerflow.py
+        anarede:  objeto da classe PowerFlowContainer
     """
     ## Inicialização
     # Verificação de diretório
     pathpwf(
-        powerflow,
+        anarede,
     )
 
     # Classe para leitura de arquivo .pwf
     pwf(
-        powerflow,
-        powerflow.dirPWF,
+        anarede,
+        anarede.dirPWF,
     )
 
     # Classe para determinação dos valores padrão das variáveis de tolerância
-    options(
-        powerflow,
-    )
-
-    # Classe para determinar a realização das opções de controle escolhidas
-    control(
-        powerflow,
-    )
-
-    # Classe para determinar a geração de relatórios
-    report(
-        powerflow,
+    optionspwf(
+        anarede,
     )
 
 
-def pathpwf(
-    powerflow,
+def stbsetting(
+    anarede,
+    anatem,
 ):
-    """verificação automática de diretório sistemas
+    """configurações iniciais para simulação dinâmica de fluxo de potência
 
     Args
-        powerflow: powerflow do arquivo powerflow.py
+        anarede: objeto da classe PowerFlowContainer
+        anatem:  objeto da classe PowerFlowContainer
     """
     ## Inicialização
-    powerflow.anarede = powerflow.system
+    # Verificação de diretório
+    pathstb(
+        anarede,
+        anatem,
+    )
 
-    # Variável de diretório principal
-    powerflow.maindir = dirname(dirname(__file__))
+    # Classe para leitura de arquivo .stb
+    stb(
+        anatem,
+    )
 
-    # Variável de nome do SEP em estudo
-    powerflow.name = powerflow.anarede.split(".")[0]
-
-    if exists(powerflow.maindir + "\\sistemas\\") is True:
-        if exists(powerflow.maindir + "\\sistemas\\" + powerflow.anarede) is True:
-            powerflow.dirPWF = realpath(
-                powerflow.maindir + "\\sistemas\\" + powerflow.anarede
-            )
-            print(
-                f"\033[93mArquivo `{powerflow.anarede}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"
-            )
-        else:
-            raise ValueError(
-                f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{powerflow.anarede}` do SEP informado.\nInsira o arquivo `{powerflow.anarede}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
-            )
-
-    else:
-        mkdir(powerflow.maindir + "\\sistemas\\")
-        raise ValueError(
-            f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{powerflow.anarede}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
-        )
-
-
-def pathstb(
-    powerflow,
-):
-    """verificação automática de diretório sistemas
-
-    Args
-        powerflow: powerflow do arquivo powerflow.py
-    """
-    ## Inicialização
-    powerflow.anatem = powerflow.name + ".stb"
-    if exists(powerflow.maindir + "\\sistemas\\" + powerflow.anatem) is True:
-        powerflow.dirSTB = realpath(
-            dirname(dirname(__file__)) + "\\sistemas\\" + powerflow.anatem
-        )
-        print(
-            f"\033[93mArquivo `{powerflow.anatem}` contendo dados do SEP encontrado dentro de pasta `PyANA/sistemas/` conforme solicitado!\033[0m"
-        )
-    else:
-        raise ValueError(
-            f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{powerflow.anatem}` do SEP informado.\nInsira o arquivo `{powerflow.anatem}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
-        )
+    # Classe para determinação dos valores padrão das variáveis de tolerância
+    optionsstb(
+        anatem,
+    )

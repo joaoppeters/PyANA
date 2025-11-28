@@ -11,228 +11,230 @@ from datetime import datetime as dt
 
 
 def rwpwf(
-    powerflow,
+    anarede,
     folder,
 ):
     """Inicialização
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Arquivo
-    powerflow.filedir = realpath(
-        folder + "\\" + powerflow.namecase + "{}.pwf".format(powerflow.ones)
+    anarede.filedir = realpath(
+        folder + "\\" + anarede.namecase + "{}.pwf".format(anarede.ones)
     )
 
     # Manipulacao
-    file = open(powerflow.filedir, "w")
+    file = open(anarede.filedir, "w")
 
     # Cabecalho
     wheader(
         file,
     )
 
-    if powerflow.codes["TITU"]:
+    if anarede.pwfblock["TITU"]:
         wtitu(
-            powerflow.titu,
+            anarede.titu,
             file,
         )
 
-    if powerflow.codes["DOPC"]:
+    if anarede.pwfblock["DOPC"]:
         wdopc(
-            powerflow.dopc,
-            powerflow.dopcDF,
+            anarede.dopc,
+            anarede.dopcDF,
             file,
         )
 
-    if powerflow.codes["DCTE"]:
+    if anarede.pwfblock["DCTE"]:
         wdcte(
-            powerflow.dcte,
+            anarede.dcte,
             file,
         )
 
-    if powerflow.codes["DBAR"]:
+    if anarede.pwfblock["DBAR"]:
         wdbar(
-            powerflow.mdbar,
+            anarede.mdbar,
             file,
         )
 
-    if powerflow.codes["DLIN"]:
+    if anarede.pwfblock["DLIN"]:
         wdlin(
-            powerflow.dlin,
+            anarede.dlin,
             file,
         )
 
-    if powerflow.codes["DCSC"]:
+    if anarede.pwfblock["DCSC"]:
         wdcsc(
-            powerflow.dcsc,
+            anarede.dcsc,
             file,
         )
 
-    if powerflow.codes["DBSH"]:
+    if anarede.pwfblock["DBSH"]:
         wdbsh(
-            powerflow.dbsh,
-            powerflow.dbsh1,
-            powerflow.dbsh2,
+            anarede.dbsh,
+            anarede.dbsh1,
+            anarede.dbsh2,
             file,
         )
 
-    if powerflow.codes["DGER"]:
+    if anarede.pwfblock["DGER"]:
         wdger(
-            powerflow.dger,
-            powerflow.mdger,
+            anarede.dger,
+            anarede.mdger,
             file,
         )
 
-    if powerflow.codes["DCER"]:
+    if anarede.pwfblock["DCER"]:
         wdcer(
-            powerflow.dcer,
+            anarede.dcer,
             file,
         )
 
-    if powerflow.codes["DCTR"]:
+    if anarede.pwfblock["DCTR"]:
         wdctr(
-            powerflow.dctr,
+            anarede.dctr,
             file,
         )
 
-    if powerflow.codes["DGLT"]:
+    if anarede.pwfblock["DGLT"]:
         wdglt(
-            powerflow.dglt,
+            anarede.dglt,
             file,
         )
 
-    if powerflow.codes["DARE"]:
+    if anarede.pwfblock["DARE"]:
         wdare(
-            powerflow.dare,
+            anarede.dare,
             file,
         )
 
-    if powerflow.codes["DTPF"]:
-        if "CIRC" in powerflow.dtpf.dtpf.iloc[0]:
+    if anarede.pwfblock["DTPF"]:
+        if "CIRC" in anarede.dtpf.dtpf.iloc[0]:
             wdtpf_circ(
-                powerflow.dtpf,
+                anarede.dtpf,
                 file,
             )
         else:
             wdtpf(
-                powerflow.dtpf,
+                anarede.dtpf,
                 file,
             )
 
-    if powerflow.codes["DELO"]:
+    if anarede.pwfblock["DELO"]:
         wdelo(
-            powerflow.delo,
+            anarede.delo,
             file,
         )
 
-    if powerflow.codes["DCBA"]:
+    if anarede.pwfblock["DCBA"]:
         wdcba(
-            powerflow.dcba,
+            anarede.dcba,
             file,
         )
 
-    if powerflow.codes["DCLI"]:
+    if anarede.pwfblock["DCLI"]:
         wdcli(
-            powerflow.dcli,
+            anarede.dcli,
             file,
         )
 
-    if powerflow.codes["DCNV"]:
+    if anarede.pwfblock["DCNV"]:
         wdcnv(
-            powerflow.dcnv,
+            anarede.dcnv,
             file,
         )
 
-    if powerflow.codes["DCCV"]:
+    if anarede.pwfblock["DCCV"]:
         wdccv(
-            powerflow.dccv,
+            anarede.dccv,
             file,
         )
 
-    if powerflow.codes["DGBT"]:
+    if anarede.pwfblock["DGBT"]:
         wdgbt(
-            powerflow.dgbt,
+            anarede.dgbt,
             file,
         )
 
-    if powerflow.codes["DAGR"]:
+    if anarede.pwfblock["DAGR"]:
         wdagr(
-            powerflow.dagr,
-            powerflow.dagr1,
-            powerflow.dagr2,
+            anarede.dagr,
+            anarede.dagr1,
+            anarede.dagr2,
             file,
         )
 
-    if powerflow.codes["DANC"]:
-        if "ACLS" in powerflow.danc.danc.iloc[0]:
+    if anarede.pwfblock["DANC"]:
+        if "ACLS" in anarede.danc.danc.iloc[0]:
             wdanc_acls(
-                powerflow.danc,
+                anarede.danc,
                 file,
             )
         else:
             wdanc(
-                powerflow.danc,
+                anarede.danc,
                 file,
             )
 
-    if powerflow.codes["DCAR"]:
+    if anarede.pwfblock["DCAR"]:
         wdcar(
-            powerflow.dcar,
+            anarede.dcar,
             file,
         )
 
-    if powerflow.codes["DINC"]:
+    if anarede.pwfblock["DINC"]:
         wdinc(
-            powerflow.dinc,
+            anarede.dinc,
             file,
         )
 
-    if powerflow.codes["DMET"]:
+    if anarede.pwfblock["DMET"]:
         wdmet(
-            powerflow.dmet,
+            anarede.dmte,
             file,
         )
 
-    if powerflow.codes["DINJ"]:
+    if anarede.pwfblock["DINJ"]:
         wdinj(
-            powerflow.dinj,
+            anarede.dinj,
             file,
         )
 
-    if powerflow.codes["DSHL"]:
+    if anarede.pwfblock["DSHL"]:
         wdshl(
-            powerflow.dshl,
+            anarede.dshl,
             file,
         )
 
-    if powerflow.codes["DCTG"]:
+    if anarede.pwfblock["DCTG"]:
         wdctg(
-            powerflow.dctg,
+            anarede.dctg,
+            anarede.dctg1,
+            anarede.dctg2,
             file,
         )
 
-    if powerflow.codes["DMFL"]:
-        if "CIRC" in powerflow.dmfl.dmfl.iloc[0]:
+    if anarede.pwfblock["DMFL"]:
+        if "CIRC" in anarede.dmfl.dmfl.iloc[0]:
             wdmfl_circ(
-                powerflow.dmfl,
+                anarede.dmfl,
                 file,
             )
         else:
             wdmfl(
-                powerflow.dmfl,
+                anarede.dmfl,
                 file,
             )
 
-    if powerflow.codes["DMTE"]:
+    if anarede.pwfblock["DMTE"]:
         wdmte(
-            powerflow.dmte,
+            anarede.dmte,
             file,
         )
 
     wtail(
-        powerflow,
+        anarede,
         file,
     )
 
@@ -276,7 +278,7 @@ def wtitu(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -293,7 +295,7 @@ def wdagr(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -323,7 +325,7 @@ def wdanc(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -348,7 +350,7 @@ def wdanc_acls(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -370,7 +372,7 @@ def wdare(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -392,7 +394,7 @@ def wdbar(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -428,7 +430,7 @@ def wdbsh(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -460,7 +462,7 @@ def wdcar(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -482,7 +484,7 @@ def wdcba(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -504,7 +506,7 @@ def wdccv(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -526,7 +528,7 @@ def wdcer(
     """
 
     Args:
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -548,7 +550,7 @@ def wdcli(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -570,7 +572,7 @@ def wdcnv(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -592,7 +594,7 @@ def wdcsc(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -614,7 +616,7 @@ def wdcte(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -639,7 +641,7 @@ def wdctg(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -671,7 +673,7 @@ def wdctr(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -693,7 +695,7 @@ def wdelo(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -715,7 +717,7 @@ def wdgbt(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -736,7 +738,7 @@ def wdger(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -758,7 +760,7 @@ def wdglt(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -780,7 +782,7 @@ def wdinc(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -802,7 +804,7 @@ def wdinj(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -824,7 +826,7 @@ def wdlin(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -846,7 +848,7 @@ def wdmet(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -868,7 +870,7 @@ def wdmfl(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -890,7 +892,7 @@ def wdmfl_circ(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -915,7 +917,7 @@ def wdmte(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -939,7 +941,7 @@ def wdopc(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -964,7 +966,7 @@ def wdshl(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -986,7 +988,7 @@ def wdtpf(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -1009,7 +1011,7 @@ def wdtpf_circ(
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização
@@ -1028,13 +1030,13 @@ def wdtpf_circ(
 
 
 def wtail(
-    powerflow,
+    anarede,
     file,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
         file:
     """
     ## Inicialização

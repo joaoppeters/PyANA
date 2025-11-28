@@ -25,12 +25,12 @@ from scipy.sparse import issparse, csr_matrix as sparse
 
 
 def admittance(
-    powerflow,
+    anarede,
 ):
     """Método para cálculo dos Args da matriz Admitância
 
     Args
-        powerflow:
+        anarede:
 
     Builds the bus admittance matrix and branch admittance matrices.
 
@@ -49,109 +49,107 @@ def admittance(
     """
     ## Inicialização
     Ysr = 1 / vectorize(complex)(
-        powerflow.dlinDF["resistencia"], powerflow.dlinDF["reatancia"]
+        anarede.dlinDF["resistencia"], anarede.dlinDF["reatancia"]
     )
-    Ysh = vectorize(complex)(
-        0, powerflow.dbarDF["shunt_barra"] / powerflow.options["BASE"]
-    )
+    Ysh = vectorize(complex)(0, anarede.dbarDF["shunt_barra"] / anarede.cte["BASE"])
 
-    Ytt = Ysr + vectorize(complex)(0, powerflow.dlinDF["susceptancia"])
+    Ytt = Ysr + vectorize(complex)(0, anarede.dlinDF["susceptancia"])
     Yff = Ytt / (
-        vectorize(complex)(powerflow.dlinDF["tap"] * conj(powerflow.dlinDF["tap"]))
+        vectorize(complex)(anarede.dlinDF["tap"] * conj(anarede.dlinDF["tap"]))
     )
-    Yft = -Ysr / vectorize(complex)(conj(powerflow.dlinDF["tap"]))
-    Ytf = -Ysr / vectorize(complex)(powerflow.dlinDF["tap"])
+    Yft = -Ysr / vectorize(complex)(conj(anarede.dlinDF["tap"]))
+    Ytf = -Ysr / vectorize(complex)(anarede.dlinDF["tap"])
 
-    f = (powerflow.dlinDF["de-idx"]).values
-    t = (powerflow.dlinDF["para-idx"]).values
+    f = (anarede.dlinDF["de-idx"]).values
+    t = (anarede.dlinDF["para-idx"]).values
 
     ## connection matrix for line & from buses
     Cf = sparse(
-        (ones(powerflow.nlin), (range(powerflow.nlin), f)),
-        (powerflow.nlin, powerflow.nbus),
+        (ones(anarede.nlin), (range(anarede.nlin), f)),
+        (anarede.nlin, anarede.nbus),
     )
     ## connection matrix for line & to buses
     Ct = sparse(
-        (ones(powerflow.nlin), (range(powerflow.nlin), t)),
-        (powerflow.nlin, powerflow.nbus),
+        (ones(anarede.nlin), (range(anarede.nlin), t)),
+        (anarede.nlin, anarede.nbus),
     )
 
     ## build Yf and Yt such that Yf * V is the vector of complex branch currents injected
     ## at each branch's "from" bus, and Yt is the same for the "to" bus end
-    i = r_[range(powerflow.nlin), range(powerflow.nlin)]  ## double set of row indices
+    i = r_[range(anarede.nlin), range(anarede.nlin)]  ## double set of row indices
 
-    Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
-    Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (powerflow.nlin, powerflow.nbus))
+    Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (anarede.nlin, anarede.nbus))
+    Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (anarede.nlin, anarede.nbus))
 
     ## build Ybus
-    powerflow.Yb = sparse(
+    anarede.Yb = sparse(
         Cf.T @ Yf
         + Ct.T @ Yt
         + sparse(
-            (Ysh, (range(powerflow.nbus), range(powerflow.nbus))),
-            (powerflow.nbus, powerflow.nbus),
+            (Ysh, (range(anarede.nbus), range(anarede.nbus))),
+            (anarede.nbus, anarede.nbus),
         )
     )
 
 
 def matrices(
-    powerflow,
+    anarede,
 ):
     """jacobian and hessian matrices
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    V = powerflow.solution["voltage"] * exp(1j * powerflow.solution["theta"])
+    V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
 
     # Jacobiana
-    dS_dVm, dS_dVa = dSbus_dV(powerflow.Yb, V)
-    A11 = (dS_dVa.A[powerflow.maskP, :][:, powerflow.maskP]).real  # dP_dAngV
-    A12 = (dS_dVm.A[powerflow.maskP, :][:, powerflow.maskQ]).real  # dP_dMagV
-    A21 = (dS_dVa.A[powerflow.maskQ, :][:, powerflow.maskP]).imag  # dQ_AngV
-    A22 = (dS_dVm.A[powerflow.maskQ, :][:, powerflow.maskQ]).imag  # dQ_MagV
-    powerflow.jacobian = concatenate(
+    dS_dVm, dS_dVa = dSbus_dV(anarede.Yb, V)
+    A11 = (dS_dVa.A[anarede.maskP, :][:, anarede.maskP]).real  # dP_dAngV
+    A12 = (dS_dVm.A[anarede.maskP, :][:, anarede.maskQ]).real  # dP_dMagV
+    A21 = (dS_dVa.A[anarede.maskQ, :][:, anarede.maskP]).imag  # dQ_AngV
+    A22 = (dS_dVm.A[anarede.maskQ, :][:, anarede.maskQ]).imag  # dQ_MagV
+    anarede.jacobian = concatenate(
         (concatenate((A11, A21), axis=0), concatenate((A12, A22), axis=0)), axis=1
     )
 
-    if powerflow.controlcount > 0:
+    if anarede.controlcount > 0:
         from ctrl import controljac
 
         controljac(
-            powerflow,
+            anarede,
         )
 
-    if powerflow.solution["method"] == "EXPC":
+    if anarede.solution["method"] == "EXPC":
         # Vetor Jacobiana-Lambda
-        powerflow.G = powerflow.jacobian.T @ powerflow.solution["eigen"][
-            powerflow.mask
-        ].reshape((sum(powerflow.mask), 1))
-        powerflow.H = powerflow.solution["eigen"][powerflow.mask]
+        anarede.G = anarede.jacobian.T @ anarede.solution["eigen"][
+            anarede.mask
+        ].reshape((sum(anarede.mask), 1))
+        anarede.H = anarede.solution["eigen"][anarede.mask]
 
         # Hessiana
         Gpaa, Gpav, Gpva, Gpvv = d2Sbus_dV2(
-            powerflow.Yb, V, powerflow.solution["eigen"][: powerflow.nbus]
+            anarede.Yb, V, anarede.solution["eigen"][: anarede.nbus]
         )
         Gqaa, Gqav, Gqva, Gqvv = d2Sbus_dV2(
-            powerflow.Yb,
+            anarede.Yb,
             V,
-            powerflow.solution["eigen"][powerflow.nbus : 2 * powerflow.nbus],
+            anarede.solution["eigen"][anarede.nbus : 2 * anarede.nbus],
         )
 
         M1 = concatenate(
             (
                 concatenate(
                     (
-                        Gpaa.A[powerflow.maskP, :][:, powerflow.maskP],
-                        Gpva.A[powerflow.maskQ, :][:, powerflow.maskP],
+                        Gpaa.A[anarede.maskP, :][:, anarede.maskP],
+                        Gpva.A[anarede.maskQ, :][:, anarede.maskP],
                     ),
                     axis=0,
                 ),
                 concatenate(
                     (
-                        Gpav.A[powerflow.maskP, :][:, powerflow.maskQ],
-                        Gpvv.A[powerflow.maskQ, :][:, powerflow.maskQ],
+                        Gpav.A[anarede.maskP, :][:, anarede.maskQ],
+                        Gpvv.A[anarede.maskQ, :][:, anarede.maskQ],
                     ),
                     axis=0,
                 ),
@@ -162,15 +160,15 @@ def matrices(
             (
                 concatenate(
                     (
-                        Gqaa.A[powerflow.maskP, :][:, powerflow.maskP],
-                        Gqva.A[powerflow.maskQ, :][:, powerflow.maskP],
+                        Gqaa.A[anarede.maskP, :][:, anarede.maskP],
+                        Gqva.A[anarede.maskQ, :][:, anarede.maskP],
                     ),
                     axis=0,
                 ),
                 concatenate(
                     (
-                        Gqav.A[powerflow.maskP, :][:, powerflow.maskQ],
-                        Gqvv.A[powerflow.maskQ, :][:, powerflow.maskQ],
+                        Gqav.A[anarede.maskP, :][:, anarede.maskQ],
+                        Gqvv.A[anarede.maskQ, :][:, anarede.maskQ],
                     ),
                     axis=0,
                 ),
@@ -178,14 +176,14 @@ def matrices(
             axis=1,
         )
 
-        powerflow.hessian = M1.real + M2.imag
+        anarede.hessian = M1.real + M2.imag
 
         # Submatrizes de controles ativos
-        if powerflow.controlcount > 0:
+        if anarede.controlcount > 0:
             from ctrl import controlhess
 
             controlhess(
-                powerflow,
+                anarede,
             )
 
 
@@ -303,148 +301,134 @@ def d2Sbus_dV2(
 
 
 def load2ycte(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     load2ycte = diag(
         (
-            powerflow.dbarDF.demanda_ativa.values
-            - 1j * powerflow.dbarDF.demanda_reativa.values
+            anarede.dbarDF.demanda_ativa.values
+            - 1j * anarede.dbarDF.demanda_reativa.values
         )
         * 1e-2
-        / powerflow.solution["voltage"] ** 2
+        / anarede.solution["voltage"] ** 2
     )
-    powerflow.Yb.A = powerflow.Yb.A + load2ycte
+    anarede.Yb.A = anarede.Yb.A + load2ycte
 
 
 def md01jacob(
-    powerflow,
+    anatem,
     generator,
     gen,
 ):
     """matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     if gen == 0:
-        powerflow.jacobiangenoffright = zeros(
-            (2 * powerflow.nger, 2 * (powerflow.nger + powerflow.nbus))
+        anarede.jacobiangenoffright = zeros(
+            (2 * anarede.nger, 2 * (anarede.nger + anarede.nbus))
         )
-        powerflow.jacobiangenoffdown = zeros(
-            (2 * (powerflow.nger + powerflow.nbus), 2 * powerflow.nger)
+        anarede.jacobiangenoffdown = zeros(
+            (2 * (anarede.nger + anarede.nbus), 2 * anarede.nger)
         )
-        powerflow.jacobiangen = zeros((2, 2))
-        powerflow.jacobiangen[0, 0] = 1
-        powerflow.jacobiangen[0, 1] = -powerflow.dsimDF.step.values[0] * 0.5
-        powerflow.jacobiangen[1, 0] = (
-            (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
-            * powerflow.solution["fem"][gen]
-            * powerflow.solution["voltage"][generator - 1]
+        anarede.jacobiangen = zeros((2, 2))
+        anarede.jacobiangen[0, 0] = 1
+        anarede.jacobiangen[0, 1] = -anarede.dsimDF.step.values[0] * 0.5
+        anarede.jacobiangen[1, 0] = (
+            (anarede.dsimDF.step.values[0] * 0.5 / anarede.generator[generator][1])
+            * anarede.solution["fem"][gen]
+            * anarede.solution["voltage"][generator - 1]
             * cos(
-                powerflow.solution["delta"][gen]
-                - powerflow.solution["theta"][generator - 1]
+                anarede.solution["delta"][gen]
+                - anarede.solution["theta"][generator - 1]
             )
-            / powerflow.generator[generator][3]
+            / anarede.generator[generator][3]
         )
-        powerflow.jacobiangen[1, 1] = (
+        anarede.jacobiangen[1, 1] = (
             1
-            + powerflow.dsimDF.step.values[0]
+            + anarede.dsimDF.step.values[0]
             * 0.5
-            * powerflow.generator[generator][2]
-            / powerflow.generator[generator][1]
+            * anarede.generator[generator][2]
+            / anarede.generator[generator][1]
         )
 
     else:
-        powerflow.jacobiangen = concatenate(
-            (powerflow.jacobiangen, zeros((powerflow.jacobiangen.shape[0], 2))), axis=1
+        anarede.jacobiangen = concatenate(
+            (anarede.jacobiangen, zeros((anarede.jacobiangen.shape[0], 2))), axis=1
         )
-        powerflow.jacobiangen = concatenate(
-            (powerflow.jacobiangen, zeros((2, powerflow.jacobiangen.shape[1]))), axis=0
+        anarede.jacobiangen = concatenate(
+            (anarede.jacobiangen, zeros((2, anarede.jacobiangen.shape[1]))), axis=0
         )
 
-        powerflow.jacobiangen[2 * gen, 2 * gen] = 1
-        powerflow.jacobiangen[2 * gen, 2 * gen + 1] = (
-            -powerflow.dsimDF.step.values[0] * 0.5
-        )
-        powerflow.jacobiangen[2 * gen + 1, 2 * gen] = (
-            (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
-            * powerflow.solution["fem"][gen]
-            * powerflow.solution["voltage"][generator - 1]
+        anarede.jacobiangen[2 * gen, 2 * gen] = 1
+        anarede.jacobiangen[2 * gen, 2 * gen + 1] = -anarede.dsimDF.step.values[0] * 0.5
+        anarede.jacobiangen[2 * gen + 1, 2 * gen] = (
+            (anarede.dsimDF.step.values[0] * 0.5 / anarede.generator[generator][1])
+            * anarede.solution["fem"][gen]
+            * anarede.solution["voltage"][generator - 1]
             * cos(
-                powerflow.solution["delta"][gen]
-                - powerflow.solution["theta"][generator - 1]
+                anarede.solution["delta"][gen]
+                - anarede.solution["theta"][generator - 1]
             )
-            / powerflow.generator[generator][3]
+            / anarede.generator[generator][3]
         )
-        powerflow.jacobiangen[2 * gen + 1, 2 * gen + 1] = (
+        anarede.jacobiangen[2 * gen + 1, 2 * gen + 1] = (
             1
-            + powerflow.dsimDF.step.values[0]
+            + anarede.dsimDF.step.values[0]
             * 0.5
-            * powerflow.generator[generator][2]
-            / powerflow.generator[generator][1]
+            * anarede.generator[generator][2]
+            / anarede.generator[generator][1]
         )
 
-    powerflow.jacobiangenoffright[2 * gen + 1, generator - 1] = (
-        (-powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
-        * powerflow.solution["fem"][gen]
-        * powerflow.solution["voltage"][generator - 1]
-        * cos(
-            powerflow.solution["delta"][gen]
-            - powerflow.solution["theta"][generator - 1]
-        )
-        / powerflow.generator[generator][3]
+    anarede.jacobiangenoffright[2 * gen + 1, generator - 1] = (
+        (-anarede.dsimDF.step.values[0] * 0.5 / anarede.generator[generator][1])
+        * anarede.solution["fem"][gen]
+        * anarede.solution["voltage"][generator - 1]
+        * cos(anarede.solution["delta"][gen] - anarede.solution["theta"][generator - 1])
+        / anarede.generator[generator][3]
     )
-    powerflow.jacobiangenoffright[2 * gen + 1, powerflow.nbus + generator - 1] = (
-        (powerflow.dsimDF.step.values[0] * 0.5 / powerflow.generator[generator][1])
-        * powerflow.solution["fem"][gen]
-        * sin(
-            powerflow.solution["delta"][gen]
-            - powerflow.solution["theta"][generator - 1]
-        )
-        / powerflow.generator[generator][3]
+    anarede.jacobiangenoffright[2 * gen + 1, anarede.nbus + generator - 1] = (
+        (anarede.dsimDF.step.values[0] * 0.5 / anarede.generator[generator][1])
+        * anarede.solution["fem"][gen]
+        * sin(anarede.solution["delta"][gen] - anarede.solution["theta"][generator - 1])
+        / anarede.generator[generator][3]
     )
-    powerflow.jacobiangenoffdown[generator - 1, 2 * gen] = (
-        powerflow.solution["fem"][gen]
-        * powerflow.solution["voltage"][generator - 1]
-        * cos(
-            powerflow.solution["delta"][gen]
-            - powerflow.solution["theta"][generator - 1]
-        )
-        / powerflow.generator[generator][3]
+    anarede.jacobiangenoffdown[generator - 1, 2 * gen] = (
+        anarede.solution["fem"][gen]
+        * anarede.solution["voltage"][generator - 1]
+        * cos(anarede.solution["delta"][gen] - anarede.solution["theta"][generator - 1])
+        / anarede.generator[generator][3]
     )
-    powerflow.jacobiangenoffdown[generator - 1 + powerflow.nbus, 2 * gen] = (
-        -powerflow.solution["fem"][gen]
-        * powerflow.solution["voltage"][generator - 1]
-        * sin(
-            powerflow.solution["delta"][gen]
-            - powerflow.solution["theta"][generator - 1]
-        )
-        / powerflow.generator[generator][3]
+    anarede.jacobiangenoffdown[generator - 1 + anarede.nbus, 2 * gen] = (
+        -anarede.solution["fem"][gen]
+        * anarede.solution["voltage"][generator - 1]
+        * sin(anarede.solution["delta"][gen] - anarede.solution["theta"][generator - 1])
+        / anarede.generator[generator][3]
     )
 
 
 def jacexsi(
-    powerflow,
+    anatem,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     dS_dVm, dS_dVa = dSbus_dV(
-        powerflow.Yblc,
-        concatenate((powerflow.solution["fem"], powerflow.solution["voltage"]), axis=0),
+        anarede.Yblc,
+        concatenate((anarede.solution["fem"], anarede.solution["voltage"]), axis=0),
     )
 
-    powerflow.jacobian = concatenate(
+    anarede.jacobian = concatenate(
         (
             concatenate((dS_dVa.A.real, dS_dVa.A.imag), axis=0),
             concatenate((dS_dVm.A.real, dS_dVm.A.imag), axis=0),
@@ -452,10 +436,10 @@ def jacexsi(
         axis=1,
     )
 
-    powerflow.jacobiangen = concatenate(
+    anarede.jacobiangen = concatenate(
         (
-            concatenate((powerflow.jacobiangen, powerflow.jacobiangenoffright), axis=1),
-            concatenate((powerflow.jacobiangenoffdown, powerflow.jacobian), axis=1),
+            concatenate((anarede.jacobiangen, anarede.jacobiangenoffright), axis=1),
+            concatenate((anarede.jacobiangenoffdown, anarede.jacobian), axis=1),
         ),
         axis=0,
     )

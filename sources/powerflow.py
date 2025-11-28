@@ -7,8 +7,9 @@
 # ------------------------------------- #
 
 from folder import folder
-from simulation import simulation
-from setting import setting
+from os.path import dirname, exists
+from simulation import *
+from setting import pwfsetting, stbsetting
 
 
 class PowerFlow:
@@ -18,42 +19,47 @@ class PowerFlow:
         self,
         system: str = "",
         method: str = "EXLF",
-        control: list = list(),
-        report: list = list(),
     ):
-        """initialization
+        # ---- create two objects of the SAME PowerFlow class ----
+        self.anarede = PowerFlowContainer()
+        self.anarede.system = system
+        self.anarede.method = method
 
-        Args:
-            system: str, optional, default ''
-            method: str, optional, default 'EXLF'
-            control: list, optional, default None
-            monitor: list, optional, default None
-            report: list, optional, default None
-        """
+        self.anatem = PowerFlowContainer()
+        self.anatem.system = system
+        self.anatem.method = method
 
-        ## Inicialization
-        # Variables
-        self.system = system
-        self.method = method
-        self.control = control
-        self.report = report
+        # --- Safe system type detection ---
+        if exists(dirname(dirname(__file__)) + "\\sistemas\\") is True:
+            if exists(dirname(dirname(__file__)) + "\\sistemas\\" + system) is True:
+                parts = system.split(".")
+                sys_type = parts[1].casefold() if len(parts) > 1 else ""
 
-        if self.system:
-            # Data setting
-            setting(
-                self,
-            )
+                if sys_type == "pwf":
+                    pwfsetting(self.anarede)
+                    exlf(self.anarede) if method == "EXLF" else None
+                    exic(self.anarede) if method == "EXIC" else None
+                    expc(self.anarede) if method == "EXPC" else None
+                    if method == "EXSI":
+                        stbsetting(self.anarede, self.anatem)
+                        exsi(self.anarede)
+                    else:
+                        raise ValueError(f"Unknown method: {method}")
 
-            # Armazenamento dos resultados
-            folder(
-                self,
-            )
+                elif sys_type == "stb":
+                    pwfsetting(self.anarede)
+                    stbsetting(self.anarede, self.anatem)
+                    if method != "EXSI":
+                        raise ValueError(f"Unknown method: {method}")
+                    exsi(self.anatem)
 
-            # Numerical Method
-            simulation(
-                self,
-            )
-
+            else:
+                raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
         else:
-            ## ERROR - VERMELHO
-            raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
+            raise ValueError("\033[91mA pasta 'sistemas' não foi encontrada.\033[0m")
+
+
+# Container class inherits the SAME base class, but skips its __init__
+class PowerFlowContainer(PowerFlow):
+    def __init__(self):
+        pass

@@ -12,115 +12,111 @@ from pandas import DataFrame as DF
 
 
 def dagr(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de agregadores genéricos
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dagr1["numero"] = list()
-    powerflow.dagr1["descricao"] = list()
-    powerflow.dagr1["ndagr2"] = list()
-    powerflow.dagr2["numero"] = list()
-    powerflow.dagr2["operacao"] = list()
-    powerflow.dagr2["descricao"] = list()
+    anarede.dagr1["numero"] = list()
+    anarede.dagr1["descricao"] = list()
+    anarede.dagr1["ndagr2"] = list()
+    anarede.dagr2["numero"] = list()
+    anarede.dagr2["operacao"] = list()
+    anarede.dagr2["descricao"] = list()
     idx = 0
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dagr1["ruler"]:
-            powerflow.dagr1["numero"].append(powerflow.lines[powerflow.linecount][:3])
-            powerflow.dagr1["descricao"].append(
-                powerflow.lines[powerflow.linecount][4:40]
-            )
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dagr2["ruler"]:
-            powerflow.dagr1["ndagr2"].append(0)
-            while powerflow.lines[powerflow.linecount].strip() != "FAGR":
-                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dagr1["ruler"]:
+            anarede.dagr1["numero"].append(anarede.lines[anarede.linecount][:3])
+            anarede.dagr1["descricao"].append(anarede.lines[anarede.linecount][4:40])
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dagr2["ruler"]:
+            anarede.dagr1["ndagr2"].append(0)
+            while anarede.lines[anarede.linecount].strip() != "FAGR":
+                if anarede.lines[anarede.linecount][0] == anarede.comment:
                     pass
                 else:
-                    powerflow.dagr2["numero"].append(
-                        powerflow.lines[powerflow.linecount][:3]
+                    anarede.dagr2["numero"].append(anarede.lines[anarede.linecount][:3])
+                    anarede.dagr2["operacao"].append(
+                        anarede.lines[anarede.linecount][4]
                     )
-                    powerflow.dagr2["operacao"].append(
-                        powerflow.lines[powerflow.linecount][4]
+                    anarede.dagr2["descricao"].append(
+                        anarede.lines[anarede.linecount][6:42]
                     )
-                    powerflow.dagr2["descricao"].append(
-                        powerflow.lines[powerflow.linecount][6:42]
-                    )
-                powerflow.dagr1["ndagr2"][idx] += 1
-                powerflow.linecount += 1
+                anarede.dagr1["ndagr2"][idx] += 1
+                anarede.linecount += 1
             idx += 1
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Agregadores Genericos
-    powerflow.dagr1DF = DF(data=powerflow.dagr1)
-    powerflow.dagr1 = deepcopy(powerflow.dagr1DF)
-    powerflow.dagr1DF = powerflow.dagr1DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dagr1DF = powerflow.dagr1DF.astype(
+    anarede.dagr1DF = DF(data=anarede.dagr1)
+    anarede.dagr1 = deepcopy(anarede.dagr1DF)
+    anarede.dagr1DF = anarede.dagr1DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dagr1DF = anarede.dagr1DF.astype(
         {
             "numero": "int",
             "descricao": "str",
         }
     )
 
-    powerflow.dagr2DF = DF(data=powerflow.dagr2)
-    powerflow.dagr2 = deepcopy(powerflow.dagr2DF)
-    powerflow.dagr2DF = powerflow.dagr2DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dagr2DF = powerflow.dagr2DF.astype(
+    anarede.dagr2DF = DF(data=anarede.dagr2)
+    anarede.dagr2 = deepcopy(anarede.dagr2DF)
+    anarede.dagr2DF = anarede.dagr2DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dagr2DF = anarede.dagr2DF.astype(
         {
             "numero": "int",
             "operacao": "object",
             "descricao": "str",
         }
     )
-    if powerflow.dagr1DF.empty or powerflow.dagr2DF.empty:
+    if anarede.dagr1DF.empty or anarede.dagr2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DAGR`!\033[0m"
         )
     else:
-        powerflow.codes["DAGR"] = True
+        anarede.pwfblock["DAGR"] = True
 
 
 def danc(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de alteração do nível de carregamento
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.danc["area"] = list()
-    powerflow.danc["fator_carga_ativa"] = list()
-    powerflow.danc["fator_carga_reativa"] = list()
-    powerflow.danc["fator_shunt_barra"] = list()
+    anarede.danc["area"] = list()
+    anarede.danc["fator_carga_ativa"] = list()
+    anarede.danc["fator_carga_reativa"] = list()
+    anarede.danc["fator_shunt_barra"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.danc["area"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.danc["fator_carga_ativa"].append(
-                powerflow.lines[powerflow.linecount][5:12]
+            anarede.danc["area"].append(anarede.lines[anarede.linecount][:5])
+            anarede.danc["fator_carga_ativa"].append(
+                anarede.lines[anarede.linecount][5:12]
             )
-            powerflow.danc["fator_carga_reativa"].append(
-                powerflow.lines[powerflow.linecount][12:19]
+            anarede.danc["fator_carga_reativa"].append(
+                anarede.lines[anarede.linecount][12:19]
             )
-            powerflow.danc["fator_shunt_barra"].append(
-                powerflow.lines[powerflow.linecount][19:24]
+            anarede.danc["fator_shunt_barra"].append(
+                anarede.lines[anarede.linecount][19:24]
             )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Alteração do Nível de Carregamento
-    powerflow.dancDF = DF(data=powerflow.danc)
-    powerflow.danc = deepcopy(powerflow.dancDF)
-    powerflow.dancDF = powerflow.dancDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dancDF = powerflow.dancDF.astype(
+    anarede.dancDF = DF(data=anarede.danc)
+    anarede.danc = deepcopy(anarede.dancDF)
+    anarede.dancDF = anarede.dancDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dancDF = anarede.dancDF.astype(
         {
             "area": "int",
             "fator_carga_ativa": "float",
@@ -128,92 +124,92 @@ def danc(
             "fator_shunt_barra": "float",
         }
     )
-    if powerflow.dancDF.empty:
+    if anarede.dancDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
         )
     else:
-        powerflow.codes["DANC"] = True
+        anarede.pwfblock["DANC"] = True
 
 
 def danc_acls(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de alteração do nível de carregamento
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.danc["tipo_elemento_1"] = list()
-    powerflow.danc["identificacao_elemento_1"] = list()
-    powerflow.danc["condicao_elemento_1"] = list()
-    powerflow.danc["tipo_elemento_2"] = list()
-    powerflow.danc["identificacao_elemento_2"] = list()
-    powerflow.danc["condicao_elemento_2"] = list()
-    powerflow.danc["tipo_elemento_3"] = list()
-    powerflow.danc["identificacao_elemento_3"] = list()
-    powerflow.danc["condicao_elemento_3"] = list()
-    powerflow.danc["tipo_elemento_4"] = list()
-    powerflow.danc["identificacao_elemento_4"] = list()
-    powerflow.danc["fator_carga_ativa"] = list()
-    powerflow.danc["fator_carga_reativa"] = list()
-    powerflow.danc["fator_shunt_barra"] = list()
+    anarede.danc["tipo_elemento_1"] = list()
+    anarede.danc["identificacao_elemento_1"] = list()
+    anarede.danc["condicao_elemento_1"] = list()
+    anarede.danc["tipo_elemento_2"] = list()
+    anarede.danc["identificacao_elemento_2"] = list()
+    anarede.danc["condicao_elemento_2"] = list()
+    anarede.danc["tipo_elemento_3"] = list()
+    anarede.danc["identificacao_elemento_3"] = list()
+    anarede.danc["condicao_elemento_3"] = list()
+    anarede.danc["tipo_elemento_4"] = list()
+    anarede.danc["identificacao_elemento_4"] = list()
+    anarede.danc["fator_carga_ativa"] = list()
+    anarede.danc["fator_carga_reativa"] = list()
+    anarede.danc["fator_shunt_barra"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.danc["tipo_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.danc["tipo_incremento_1"].append(
+                anarede.lines[anarede.linecount][:4]
             )
-            powerflow.danc["identificacao_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.danc["identificacao_incremento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.danc["condicao_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.danc["condicao_incremento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.danc["tipo_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.danc["tipo_incremento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.danc["identificacao_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.danc["identificacao_incremento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.danc["condicao_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.danc["condicao_incremento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.danc["tipo_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.danc["tipo_incremento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.danc["identificacao_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.danc["identificacao_incremento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.danc["condicao_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.danc["condicao_incremento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.danc["tipo_incremento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.danc["tipo_incremento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.danc["identificacao_incremento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
+            anarede.danc["identificacao_incremento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.danc["fator_carga_ativa"].append(
-                powerflow.lines[powerflow.linecount][50:56]
+            anarede.danc["fator_carga_ativa"].append(
+                anarede.lines[anarede.linecount][50:56]
             )
-            powerflow.danc["fator_carga_reativa"].append(
-                powerflow.lines[powerflow.linecount][57:63]
+            anarede.danc["fator_carga_reativa"].append(
+                anarede.lines[anarede.linecount][57:63]
             )
-            powerflow.danc["fator_shunt_barra"].append(
-                powerflow.lines[powerflow.linecount][64:70]
+            anarede.danc["fator_shunt_barra"].append(
+                anarede.lines[anarede.linecount][64:70]
             )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos dados de Alteração do Nível de Carregamento
-    powerflow.dancDF = DF(data=powerflow.danc)
-    powerflow.dancDF = deepcopy(powerflow.dancDF)
-    powerflow.dancDF = powerflow.dancDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dancDF = powerflow.dancDF.astype(
+    anarede.dancDF = DF(data=anarede.danc)
+    anarede.dancDF = deepcopy(anarede.dancDF)
+    anarede.dancDF = anarede.dancDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dancDF = anarede.dancDF.astype(
         {
             "tipo_incremento_1": "int",
             "identificacao_incremento_1": "int",
@@ -231,83 +227,78 @@ def danc_acls(
             "fator_shunt_barra": "float",
         }
     )
-    if powerflow.dancDF.empty:
+    if anarede.dancDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
         )
     else:
-        powerflow.codes["DANC"] = True
+        anarede.pwfblock["DANC"] = True
 
 
 def checkdanc(
-    powerflow,
+    anarede,
 ):
     """checa alteração no nível de carregamento
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    if powerflow.codes["DANC"]:
-        for area in powerflow.dancDF["area"].values:
-            for idx, value in powerflow.dbarDF.iterrows():
+    if anarede.pwfblock["DANC"]:
+        for area in anarede.dancDF["area"].values:
+            for idx, value in anarede.dbarDF.iterrows():
                 if value["area"] == area:
-                    powerflow.dbarDF.loc[idx, "demanda_ativa"] *= (
-                        1
-                        + powerflow.dancDF["fator_carga_ativa"][0]
-                        / powerflow.options["BASE"]
+                    anarede.dbarDF.loc[idx, "demanda_ativa"] *= (
+                        1 + anarede.dancDF["fator_carga_ativa"][0] / anarede.cte["BASE"]
                     )
-                    powerflow.dbarDF.loc[idx, "demanda_reativa"] *= (
+                    anarede.dbarDF.loc[idx, "demanda_reativa"] *= (
                         1
-                        + powerflow.dancDF["fator_carga_reativa"][0]
-                        / powerflow.options["BASE"]
+                        + anarede.dancDF["fator_carga_reativa"][0] / anarede.cte["BASE"]
                     )
-                    powerflow.dbarDF.loc[idx, "shunt_barra"] *= (
-                        1
-                        + powerflow.dancDF["fator_shunt_barra"][0]
-                        / powerflow.options["BASE"]
+                    anarede.dbarDF.loc[idx, "shunt_barra"] *= (
+                        1 + anarede.dancDF["fator_shunt_barra"][0] / anarede.cte["BASE"]
                     )
 
 
 def dare(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de intercâmbio de potência ativa entre áreas
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dare["numero"] = list()
-    powerflow.dare["intercambio_liquido"] = list()
-    powerflow.dare["nome"] = list()
-    powerflow.dare["intercambio_minimo"] = list()
-    powerflow.dare["intercambio_maximo"] = list()
+    anarede.dare["numero"] = list()
+    anarede.dare["intercambio_liquido"] = list()
+    anarede.dare["nome"] = list()
+    anarede.dare["intercambio_minimo"] = list()
+    anarede.dare["intercambio_maximo"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dare["numero"].append(powerflow.lines[powerflow.linecount][:3])
-            powerflow.dare["intercambio_liquido"].append(
-                powerflow.lines[powerflow.linecount][7:13]
+            anarede.dare["numero"].append(anarede.lines[anarede.linecount][:3])
+            anarede.dare["intercambio_liquido"].append(
+                anarede.lines[anarede.linecount][7:13]
             )
-            powerflow.dare["nome"].append(powerflow.lines[powerflow.linecount][18:54])
-            powerflow.dare["intercambio_minimo"].append(
-                powerflow.lines[powerflow.linecount][55:61]
+            anarede.dare["nome"].append(anarede.lines[anarede.linecount][18:54])
+            anarede.dare["intercambio_minimo"].append(
+                anarede.lines[anarede.linecount][55:61]
             )
-            powerflow.dare["intercambio_maximo"].append(
-                powerflow.lines[powerflow.linecount][62:68]
+            anarede.dare["intercambio_maximo"].append(
+                anarede.lines[anarede.linecount][62:68]
             )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
-    powerflow.dareDF = DF(data=powerflow.dare)
-    powerflow.dare = deepcopy(powerflow.dareDF)
-    powerflow.dareDF = powerflow.dareDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dareDF = powerflow.dareDF.astype(
+    anarede.dareDF = DF(data=anarede.dare)
+    anarede.dare = deepcopy(anarede.dareDF)
+    anarede.dareDF = anarede.dareDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dareDF = anarede.dareDF.astype(
         {
             "numero": "int",
             "intercambio_liquido": "float",
@@ -316,132 +307,120 @@ def dare(
             "intercambio_maximo": "float",
         }
     )
-    if powerflow.dareDF.empty:
+    if anarede.dareDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DARE`!\033[0m"
         )
     else:
-        powerflow.codes["DARE"] = True
+        anarede.pwfblock["DARE"] = True
 
         # Numero de Areas
-        powerflow.narea = powerflow.dareDF.shape[0]
-        powerflow.areas = sorted(powerflow.dareDF["numero"].unique())
+        anarede.narea = anarede.dareDF.shape[0]
+        anarede.areas = sorted(anarede.dareDF["numero"].unique())
 
 
 def dbar(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de barra
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dbar["numero"] = list()
-    powerflow.dbar["operacao"] = list()
-    powerflow.dbar["estado"] = list()
-    powerflow.dbar["tipo"] = list()
-    powerflow.dbar["grupo_base_tensao"] = list()
-    powerflow.dbar["nome"] = list()
-    powerflow.dbar["grupo_limite_tensao"] = list()
-    powerflow.dbar["tensao"] = list()
-    powerflow.dbar["angulo"] = list()
-    powerflow.dbar["potencia_ativa"] = list()
-    powerflow.dbar["potencia_reativa"] = list()
-    powerflow.dbar["potencia_reativa_minima"] = list()
-    powerflow.dbar["potencia_reativa_maxima"] = list()
-    powerflow.dbar["barra_controlada"] = list()
-    powerflow.dbar["demanda_ativa"] = list()
-    powerflow.dbar["demanda_reativa"] = list()
-    powerflow.dbar["shunt_barra"] = list()
-    powerflow.dbar["area"] = list()
-    powerflow.dbar["tensao_base"] = list()
-    powerflow.dbar["modo"] = list()
-    powerflow.dbar["agreg1"] = list()
-    powerflow.dbar["agreg2"] = list()
-    powerflow.dbar["agreg3"] = list()
-    powerflow.dbar["agreg4"] = list()
-    powerflow.dbar["agreg5"] = list()
-    powerflow.dbar["agreg6"] = list()
-    powerflow.dbar["agreg7"] = list()
-    powerflow.dbar["agreg8"] = list()
-    powerflow.dbar["agreg9"] = list()
-    powerflow.dbar["agreg10"] = list()
+    anarede.dbar["numero"] = list()
+    anarede.dbar["operacao"] = list()
+    anarede.dbar["estado"] = list()
+    anarede.dbar["tipo"] = list()
+    anarede.dbar["grupo_base_tensao"] = list()
+    anarede.dbar["nome"] = list()
+    anarede.dbar["grupo_limite_tensao"] = list()
+    anarede.dbar["tensao"] = list()
+    anarede.dbar["angulo"] = list()
+    anarede.dbar["potencia_ativa"] = list()
+    anarede.dbar["potencia_reativa"] = list()
+    anarede.dbar["potencia_reativa_minima"] = list()
+    anarede.dbar["potencia_reativa_maxima"] = list()
+    anarede.dbar["barra_controlada"] = list()
+    anarede.dbar["demanda_ativa"] = list()
+    anarede.dbar["demanda_reativa"] = list()
+    anarede.dbar["shunt_barra"] = list()
+    anarede.dbar["area"] = list()
+    anarede.dbar["tensao_base"] = list()
+    anarede.dbar["modo"] = list()
+    anarede.dbar["agreg1"] = list()
+    anarede.dbar["agreg2"] = list()
+    anarede.dbar["agreg3"] = list()
+    anarede.dbar["agreg4"] = list()
+    anarede.dbar["agreg5"] = list()
+    anarede.dbar["agreg6"] = list()
+    anarede.dbar["agreg7"] = list()
+    anarede.dbar["agreg8"] = list()
+    anarede.dbar["agreg9"] = list()
+    anarede.dbar["agreg10"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dbar["numero"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dbar["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dbar["estado"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dbar["tipo"].append(powerflow.lines[powerflow.linecount][7])
-            powerflow.dbar["grupo_base_tensao"].append(
-                powerflow.lines[powerflow.linecount][8:10]
+            anarede.dbar["numero"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dbar["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dbar["estado"].append(anarede.lines[anarede.linecount][6])
+            anarede.dbar["tipo"].append(anarede.lines[anarede.linecount][7])
+            anarede.dbar["grupo_base_tensao"].append(
+                anarede.lines[anarede.linecount][8:10]
             )
-            powerflow.dbar["nome"].append(
-                powerflow.lines[powerflow.linecount][10:22].split(" ")[0]
+            anarede.dbar["nome"].append(
+                anarede.lines[anarede.linecount][10:22].split(" ")[0]
             )
-            powerflow.dbar["grupo_limite_tensao"].append(
-                powerflow.lines[powerflow.linecount][22:24]
+            anarede.dbar["grupo_limite_tensao"].append(
+                anarede.lines[anarede.linecount][22:24]
             )
-            powerflow.dbar["tensao"].append(powerflow.lines[powerflow.linecount][24:28])
-            powerflow.dbar["angulo"].append(powerflow.lines[powerflow.linecount][28:32])
-            powerflow.dbar["potencia_ativa"].append(
-                powerflow.lines[powerflow.linecount][32:37]
+            anarede.dbar["tensao"].append(anarede.lines[anarede.linecount][24:28])
+            anarede.dbar["angulo"].append(anarede.lines[anarede.linecount][28:32])
+            anarede.dbar["potencia_ativa"].append(
+                anarede.lines[anarede.linecount][32:37]
             )
-            powerflow.dbar["potencia_reativa"].append(
-                powerflow.lines[powerflow.linecount][37:42]
+            anarede.dbar["potencia_reativa"].append(
+                anarede.lines[anarede.linecount][37:42]
             )
-            powerflow.dbar["potencia_reativa_minima"].append(
-                powerflow.lines[powerflow.linecount][42:47]
+            anarede.dbar["potencia_reativa_minima"].append(
+                anarede.lines[anarede.linecount][42:47]
             )
-            powerflow.dbar["potencia_reativa_maxima"].append(
-                powerflow.lines[powerflow.linecount][47:52]
+            anarede.dbar["potencia_reativa_maxima"].append(
+                anarede.lines[anarede.linecount][47:52]
             )
-            powerflow.dbar["barra_controlada"].append(
-                powerflow.lines[powerflow.linecount][52:58]
+            anarede.dbar["barra_controlada"].append(
+                anarede.lines[anarede.linecount][52:58]
             )
-            powerflow.dbar["demanda_ativa"].append(
-                powerflow.lines[powerflow.linecount][58:63]
+            anarede.dbar["demanda_ativa"].append(
+                anarede.lines[anarede.linecount][58:63]
             )
-            powerflow.dbar["demanda_reativa"].append(
-                powerflow.lines[powerflow.linecount][63:68]
+            anarede.dbar["demanda_reativa"].append(
+                anarede.lines[anarede.linecount][63:68]
             )
-            powerflow.dbar["shunt_barra"].append(
-                powerflow.lines[powerflow.linecount][68:73]
-            )
-            powerflow.dbar["area"].append(powerflow.lines[powerflow.linecount][73:76])
-            powerflow.dbar["tensao_base"].append(
-                powerflow.lines[powerflow.linecount][76:80]
-            )
-            powerflow.dbar["modo"].append(powerflow.lines[powerflow.linecount][80])
-            powerflow.dbar["agreg1"].append(powerflow.lines[powerflow.linecount][81:84])
-            powerflow.dbar["agreg2"].append(powerflow.lines[powerflow.linecount][84:87])
-            powerflow.dbar["agreg3"].append(powerflow.lines[powerflow.linecount][87:90])
-            powerflow.dbar["agreg4"].append(powerflow.lines[powerflow.linecount][90:93])
-            powerflow.dbar["agreg5"].append(powerflow.lines[powerflow.linecount][93:96])
-            powerflow.dbar["agreg6"].append(powerflow.lines[powerflow.linecount][96:99])
-            powerflow.dbar["agreg7"].append(
-                powerflow.lines[powerflow.linecount][99:102]
-            )
-            powerflow.dbar["agreg8"].append(
-                powerflow.lines[powerflow.linecount][102:105]
-            )
-            powerflow.dbar["agreg9"].append(
-                powerflow.lines[powerflow.linecount][105:108]
-            )
-            powerflow.dbar["agreg10"].append(
-                powerflow.lines[powerflow.linecount][108:111]
-            )
-        powerflow.linecount += 1
+            anarede.dbar["shunt_barra"].append(anarede.lines[anarede.linecount][68:73])
+            anarede.dbar["area"].append(anarede.lines[anarede.linecount][73:76])
+            anarede.dbar["tensao_base"].append(anarede.lines[anarede.linecount][76:80])
+            anarede.dbar["modo"].append(anarede.lines[anarede.linecount][80])
+            anarede.dbar["agreg1"].append(anarede.lines[anarede.linecount][81:84])
+            anarede.dbar["agreg2"].append(anarede.lines[anarede.linecount][84:87])
+            anarede.dbar["agreg3"].append(anarede.lines[anarede.linecount][87:90])
+            anarede.dbar["agreg4"].append(anarede.lines[anarede.linecount][90:93])
+            anarede.dbar["agreg5"].append(anarede.lines[anarede.linecount][93:96])
+            anarede.dbar["agreg6"].append(anarede.lines[anarede.linecount][96:99])
+            anarede.dbar["agreg7"].append(anarede.lines[anarede.linecount][99:102])
+            anarede.dbar["agreg8"].append(anarede.lines[anarede.linecount][102:105])
+            anarede.dbar["agreg9"].append(anarede.lines[anarede.linecount][105:108])
+            anarede.dbar["agreg10"].append(anarede.lines[anarede.linecount][108:111])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Barra
-    powerflow.dbarDF = DF(data=powerflow.dbar)
-    powerflow.dbar = deepcopy(powerflow.dbarDF)
-    powerflow.dbarDF = powerflow.dbarDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbarDF = powerflow.dbarDF.astype(
+    anarede.dbarDF = DF(data=anarede.dbar)
+    anarede.dbar = deepcopy(anarede.dbarDF)
+    anarede.dbarDF = anarede.dbarDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dbarDF = anarede.dbarDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -475,178 +454,166 @@ def dbar(
             "agreg10": "object",
         }
     )
-    if powerflow.dbarDF.empty:
+    if anarede.dbarDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m"
         )
     else:
-        powerflow.codes["DBAR"] = True
+        anarede.pwfblock["DBAR"] = True
 
         # Número de barras do sistema
-        powerflow.nbus = len(powerflow.dbarDF.tipo.values)
+        anarede.nbus = len(anarede.dbarDF.tipo.values)
 
         # Barras geradoras: número & máscara
-        powerflow.npv = 0
-        powerflow.maskP = ones(powerflow.nbus, dtype=bool)
-        powerflow.maskLp = ones(powerflow.nbus, dtype=bool)
-        powerflow.maskQ = ones(powerflow.nbus, dtype=bool)
-        powerflow.maskLq = ones(powerflow.nbus, dtype=bool)
-        for idx, value in powerflow.dbarDF.iterrows():
-            powerflow.dbarDF.at[idx, "grupo_base_tensao"] = value[
+        anarede.npv = 0
+        anarede.maskP = ones(anarede.nbus, dtype=bool)
+        anarede.maskLp = ones(anarede.nbus, dtype=bool)
+        anarede.maskQ = ones(anarede.nbus, dtype=bool)
+        anarede.maskLq = ones(anarede.nbus, dtype=bool)
+        for idx, value in anarede.dbarDF.iterrows():
+            anarede.dbarDF.at[idx, "grupo_base_tensao"] = value[
                 "grupo_base_tensao"
             ].strip()
-            powerflow.dbarDF.at[idx, "grupo_limite_tensao"] = value[
+            anarede.dbarDF.at[idx, "grupo_limite_tensao"] = value[
                 "grupo_limite_tensao"
             ].strip()
             if (value["tipo"] == 2) or (value["tipo"] == 1):
-                powerflow.npv += 1
-                powerflow.maskQ[idx] = False
+                anarede.npv += 1
+                anarede.maskQ[idx] = False
 
                 if value["tipo"] == 2:
-                    powerflow.maskP[idx] = False
-                    powerflow.slackidx = idx
-                    powerflow.refgen = powerflow.npv - 1
+                    anarede.maskP[idx] = False
+                    anarede.slackidx = idx
+                    anarede.refgen = anarede.npv - 1
 
                 if value["potencia_reativa"] > value["potencia_reativa_maxima"]:
-                    powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
+                    anarede.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_maxima"
                     ]
 
                 elif value["potencia_reativa"] < value["potencia_reativa_minima"]:
-                    powerflow.dbarDF.at[idx, "potencia_reativa"] = value[
+                    anarede.dbarDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_minima"
                     ]
 
             if value["demanda_ativa"] == 0.0:
-                powerflow.maskLp[idx] = False
+                anarede.maskLp[idx] = False
 
             if value["demanda_reativa"] == 0.0:
-                powerflow.maskLq[idx] = False
+                anarede.maskLq[idx] = False
 
             if value["grupo_base_tensao"] == "0":
-                powerflow.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
+                anarede.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
 
-        powerflow.mask = concatenate((powerflow.maskP, powerflow.maskQ), axis=0)
+        anarede.mask = concatenate((anarede.maskP, anarede.maskQ), axis=0)
 
         # Número de barras PV
-        powerflow.nger = powerflow.npv
+        anarede.nger = anarede.npv
 
         # Número de barras PQ
-        powerflow.npq = powerflow.nbus - powerflow.npv
+        anarede.npq = anarede.nbus - anarede.npv
 
         # Tensao Base
-        powerflow.dbarDF.loc[powerflow.dbarDF["tensao_base"] == 0.0, "tensao_base"] = (
-            1000.0
-        )
+        anarede.dbarDF.loc[anarede.dbarDF["tensao_base"] == 0.0, "tensao_base"] = 1000.0
 
-        powerflow.dbarDF = powerflow.dbarDF.reset_index()
+        anarede.dbarDF = anarede.dbarDF.reset_index()
 
 
 def dbsh(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dbsh1["from"] = list()
-    powerflow.dbsh1["operacao"] = list()
-    powerflow.dbsh1["to"] = list()
-    powerflow.dbsh1["circuito"] = list()
-    powerflow.dbsh1["modo_controle"] = list()
-    powerflow.dbsh1["tensao_minima"] = list()
-    powerflow.dbsh1["tensao_maxima"] = list()
-    powerflow.dbsh1["barra_controlada"] = list()
-    powerflow.dbsh1["injecao_reativa_inicial"] = list()
-    powerflow.dbsh1["tipo_controle"] = list()
-    powerflow.dbsh1["apagar"] = list()
-    powerflow.dbsh1["extremidade"] = list()
-    powerflow.dbsh1["ndbsh2"] = list()
-    powerflow.dbsh2["grupo_banco"] = list()
-    powerflow.dbsh2["operacao"] = list()
-    powerflow.dbsh2["estado"] = list()
-    powerflow.dbsh2["unidades"] = list()
-    powerflow.dbsh2["unidades_operacao"] = list()
-    powerflow.dbsh2["capacitor_reator"] = list()
-    powerflow.dbsh2["manobravel"] = list()
+    anarede.dbsh1["from"] = list()
+    anarede.dbsh1["operacao"] = list()
+    anarede.dbsh1["to"] = list()
+    anarede.dbsh1["circuito"] = list()
+    anarede.dbsh1["modo_controle"] = list()
+    anarede.dbsh1["tensao_minima"] = list()
+    anarede.dbsh1["tensao_maxima"] = list()
+    anarede.dbsh1["barra_controlada"] = list()
+    anarede.dbsh1["injecao_reativa_inicial"] = list()
+    anarede.dbsh1["tipo_controle"] = list()
+    anarede.dbsh1["apagar"] = list()
+    anarede.dbsh1["extremidade"] = list()
+    anarede.dbsh1["ndbsh2"] = list()
+    anarede.dbsh2["grupo_banco"] = list()
+    anarede.dbsh2["operacao"] = list()
+    anarede.dbsh2["estado"] = list()
+    anarede.dbsh2["unidades"] = list()
+    anarede.dbsh2["unidades_operacao"] = list()
+    anarede.dbsh2["capacitor_reator"] = list()
+    anarede.dbsh2["manobravel"] = list()
     idx = 0
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh1["ruler"]:
-            powerflow.dbsh1["from"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dbsh1["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dbsh1["to"].append(powerflow.lines[powerflow.linecount][8:13])
-            powerflow.dbsh1["circuito"].append(
-                powerflow.lines[powerflow.linecount][14:16]
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dbsh1["ruler"]:
+            anarede.dbsh1["from"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dbsh1["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dbsh1["to"].append(anarede.lines[anarede.linecount][8:13])
+            anarede.dbsh1["circuito"].append(anarede.lines[anarede.linecount][14:16])
+            anarede.dbsh1["modo_controle"].append(anarede.lines[anarede.linecount][17])
+            anarede.dbsh1["tensao_minima"].append(
+                anarede.lines[anarede.linecount][19:23]
             )
-            powerflow.dbsh1["modo_controle"].append(
-                powerflow.lines[powerflow.linecount][17]
+            anarede.dbsh1["tensao_maxima"].append(
+                anarede.lines[anarede.linecount][24:28]
             )
-            powerflow.dbsh1["tensao_minima"].append(
-                powerflow.lines[powerflow.linecount][19:23]
+            anarede.dbsh1["barra_controlada"].append(
+                anarede.lines[anarede.linecount][29:34]
             )
-            powerflow.dbsh1["tensao_maxima"].append(
-                powerflow.lines[powerflow.linecount][24:28]
+            anarede.dbsh1["injecao_reativa_inicial"].append(
+                anarede.lines[anarede.linecount][35:41]
             )
-            powerflow.dbsh1["barra_controlada"].append(
-                powerflow.lines[powerflow.linecount][29:34]
-            )
-            powerflow.dbsh1["injecao_reativa_inicial"].append(
-                powerflow.lines[powerflow.linecount][35:41]
-            )
-            powerflow.dbsh1["tipo_controle"].append(
-                powerflow.lines[powerflow.linecount][42]
-            )
-            powerflow.dbsh1["apagar"].append(powerflow.lines[powerflow.linecount][44])
-            powerflow.dbsh1["extremidade"].append(
-                powerflow.lines[powerflow.linecount][46:51]
-            )
+            anarede.dbsh1["tipo_controle"].append(anarede.lines[anarede.linecount][42])
+            anarede.dbsh1["apagar"].append(anarede.lines[anarede.linecount][44])
+            anarede.dbsh1["extremidade"].append(anarede.lines[anarede.linecount][46:51])
 
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dbsh2["ruler"]:
-            powerflow.dbsh1["ndbsh2"].append(0)
-            while powerflow.lines[powerflow.linecount].strip() != "FBAN":
-                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dbsh2["ruler"]:
+            anarede.dbsh1["ndbsh2"].append(0)
+            while anarede.lines[anarede.linecount].strip() != "FBAN":
+                if anarede.lines[anarede.linecount][0] == anarede.comment:
                     pass
                 else:
-                    powerflow.dbsh2["grupo_banco"].append(
-                        powerflow.lines[powerflow.linecount][:2]
+                    anarede.dbsh2["grupo_banco"].append(
+                        anarede.lines[anarede.linecount][:2]
                     )
-                    powerflow.dbsh2["operacao"].append(
-                        powerflow.lines[powerflow.linecount][4]
+                    anarede.dbsh2["operacao"].append(
+                        anarede.lines[anarede.linecount][4]
                     )
-                    powerflow.dbsh2["estado"].append(
-                        powerflow.lines[powerflow.linecount][6]
+                    anarede.dbsh2["estado"].append(anarede.lines[anarede.linecount][6])
+                    anarede.dbsh2["unidades"].append(
+                        anarede.lines[anarede.linecount][8:11]
                     )
-                    powerflow.dbsh2["unidades"].append(
-                        powerflow.lines[powerflow.linecount][8:11]
+                    anarede.dbsh2["unidades_operacao"].append(
+                        anarede.lines[anarede.linecount][12:15]
                     )
-                    powerflow.dbsh2["unidades_operacao"].append(
-                        powerflow.lines[powerflow.linecount][12:15]
-                    )
-                    powerflow.dbsh2["capacitor_reator"].append(
-                        powerflow.lines[powerflow.linecount][16:22]
+                    anarede.dbsh2["capacitor_reator"].append(
+                        anarede.lines[anarede.linecount][16:22]
                     )
                     try:
-                        powerflow.dbsh2["manobravel"].append(
-                            powerflow.lines[powerflow.linecount][23]
+                        anarede.dbsh2["manobravel"].append(
+                            anarede.lines[anarede.linecount][23]
                         )
                     except:
-                        powerflow.dbsh2["manobravel"].append(" ")
-                powerflow.dbsh1["ndbsh2"][idx] += 1
-                powerflow.linecount += 1
+                        anarede.dbsh2["manobravel"].append(" ")
+                anarede.dbsh1["ndbsh2"][idx] += 1
+                anarede.linecount += 1
             idx += 1
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Agregadores Genericos
-    powerflow.dbsh1DF = DF(data=powerflow.dbsh1)
-    powerflow.dbsh1 = deepcopy(powerflow.dbsh1DF)
-    powerflow.dbsh1DF = powerflow.dbsh1DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbsh1DF = powerflow.dbsh1DF.astype(
+    anarede.dbsh1DF = DF(data=anarede.dbsh1)
+    anarede.dbsh1 = deepcopy(anarede.dbsh1DF)
+    anarede.dbsh1DF = anarede.dbsh1DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dbsh1DF = anarede.dbsh1DF.astype(
         {
             "from": "int",
             "operacao": "object",
@@ -663,10 +630,10 @@ def dbsh(
         }
     )
 
-    powerflow.dbsh2DF = DF(data=powerflow.dbsh2)
-    powerflow.dbsh2 = deepcopy(powerflow.dbsh2DF)
-    powerflow.dbsh2DF = powerflow.dbsh2DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dbsh2DF = powerflow.dbsh2DF.astype(
+    anarede.dbsh2DF = DF(data=anarede.dbsh2)
+    anarede.dbsh2 = deepcopy(anarede.dbsh2DF)
+    anarede.dbsh2DF = anarede.dbsh2DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dbsh2DF = anarede.dbsh2DF.astype(
         {
             "grupo_banco": "int",
             "operacao": "object",
@@ -677,110 +644,100 @@ def dbsh(
             "manobravel": "object",
         }
     )
-    if powerflow.dbsh1DF.empty or powerflow.dbsh2DF.empty:
+    if anarede.dbsh1DF.empty or anarede.dbsh2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DBSH`!\033[0m"
         )
     else:
-        powerflow.codes["DBSH"] = True
+        anarede.pwfblock["DBSH"] = True
 
-        for idx, value in powerflow.dbsh1DF.iterrows():
+        for idx, value in anarede.dbsh1DF.iterrows():
             if value["circuito"] == 0:
-                powerflow.dbsh1DF.at[idx, "circuito"] = 1
+                anarede.dbsh1DF.at[idx, "circuito"] = 1
             if value["apagar"] == "0":
-                powerflow.dbsh1DF.at[idx, "apagar"] = " "
+                anarede.dbsh1DF.at[idx, "apagar"] = " "
 
 
 def dcar(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcar["tipo_elemento_1"] = list()
-    powerflow.dcar["identificacao_elemento_1"] = list()
-    powerflow.dcar["condicao_elemento_1"] = list()
-    powerflow.dcar["tipo_elemento_2"] = list()
-    powerflow.dcar["identificacao_elemento_2"] = list()
-    powerflow.dcar["condicao_elemento_2"] = list()
-    powerflow.dcar["tipo_elemento_3"] = list()
-    powerflow.dcar["identificacao_elemento_3"] = list()
-    powerflow.dcar["condicao_elemento_3"] = list()
-    powerflow.dcar["tipo_elemento_4"] = list()
-    powerflow.dcar["identificacao_elemento_4"] = list()
-    powerflow.dcar["operacao"] = list()
-    powerflow.dcar["parametro_A"] = list()
-    powerflow.dcar["parametro_B"] = list()
-    powerflow.dcar["parametro_C"] = list()
-    powerflow.dcar["parametro_D"] = list()
-    powerflow.dcar["tensao_limite"] = list()
+    anarede.dcar["tipo_elemento_1"] = list()
+    anarede.dcar["identificacao_elemento_1"] = list()
+    anarede.dcar["condicao_elemento_1"] = list()
+    anarede.dcar["tipo_elemento_2"] = list()
+    anarede.dcar["identificacao_elemento_2"] = list()
+    anarede.dcar["condicao_elemento_2"] = list()
+    anarede.dcar["tipo_elemento_3"] = list()
+    anarede.dcar["identificacao_elemento_3"] = list()
+    anarede.dcar["condicao_elemento_3"] = list()
+    anarede.dcar["tipo_elemento_4"] = list()
+    anarede.dcar["identificacao_elemento_4"] = list()
+    anarede.dcar["operacao"] = list()
+    anarede.dcar["parametro_A"] = list()
+    anarede.dcar["parametro_B"] = list()
+    anarede.dcar["parametro_C"] = list()
+    anarede.dcar["parametro_D"] = list()
+    anarede.dcar["tensao_limite"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcar["tipo_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dcar["tipo_elemento_1"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dcar["identificacao_elemento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dcar["identificacao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dcar["condicao_elemento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dcar["condicao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dcar["tipo_elemento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dcar["tipo_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dcar["identificacao_elemento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dcar["identificacao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dcar["condicao_elemento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dcar["condicao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dcar["tipo_elemento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dcar["tipo_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dcar["identificacao_elemento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dcar["identificacao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dcar["condicao_elemento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dcar["condicao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dcar["tipo_elemento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dcar["tipo_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dcar["identificacao_elemento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dcar["identificacao_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
+            anarede.dcar["operacao"].append(anarede.lines[anarede.linecount][50])
+            anarede.dcar["parametro_A"].append(anarede.lines[anarede.linecount][52:55])
+            anarede.dcar["parametro_B"].append(anarede.lines[anarede.linecount][56:59])
+            anarede.dcar["parametro_C"].append(anarede.lines[anarede.linecount][60:63])
+            anarede.dcar["parametro_D"].append(anarede.lines[anarede.linecount][64:67])
+            anarede.dcar["tensao_limite"].append(
+                anarede.cte["VFLD"]
+                if anarede.lines[anarede.linecount][68:72] == 4 * " "
+                else anarede.lines[anarede.linecount][68:72]
             )
-            powerflow.dcar["operacao"].append(powerflow.lines[powerflow.linecount][50])
-            powerflow.dcar["parametro_A"].append(
-                powerflow.lines[powerflow.linecount][52:55]
-            )
-            powerflow.dcar["parametro_B"].append(
-                powerflow.lines[powerflow.linecount][56:59]
-            )
-            powerflow.dcar["parametro_C"].append(
-                powerflow.lines[powerflow.linecount][60:63]
-            )
-            powerflow.dcar["parametro_D"].append(
-                powerflow.lines[powerflow.linecount][64:67]
-            )
-            powerflow.dcar["tensao_limite"].append(
-                powerflow.options["VFLD"]
-                if powerflow.lines[powerflow.linecount][68:72] == 4 * " "
-                else powerflow.lines[powerflow.linecount][68:72]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos dados de Variação do Tipo de Carga
-    powerflow.dcarDF = DF(data=powerflow.dcar)
-    powerflow.dcarDF = deepcopy(powerflow.dcarDF)
-    powerflow.dcarDF = powerflow.dcarDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcarDF = powerflow.dcarDF.astype(
+    anarede.dcarDF = DF(data=anarede.dcar)
+    anarede.dcarDF = deepcopy(anarede.dcarDF)
+    anarede.dcarDF = anarede.dcarDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcarDF = anarede.dcarDF.astype(
         {
             "tipo_elemento_1": "object",
             "identificacao_elemento_1": "int",
@@ -801,60 +758,60 @@ def dcar(
             "tensao_limite": "float",
         }
     )
-    if powerflow.dcarDF.empty:
+    if anarede.dcarDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCAR`!\033[0m"
         )
     else:
-        powerflow.codes["DCAR"] = True
+        anarede.pwfblock["DCAR"] = True
 
 
 def dcba(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de barra CC
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcba["numero"] = list()
-    powerflow.dcba["operacao"] = list()
-    powerflow.dcba["tipo"] = list()
-    powerflow.dcba["polaridade"] = list()
-    powerflow.dcba["nome"] = list()
-    powerflow.dcba["grupo_limite_tensao"] = list()
-    powerflow.dcba["tensao"] = list()
-    powerflow.dcba["eletrodo_terra"] = list()
-    powerflow.dcba["numero_elo_cc"] = list()
+    anarede.dcba["numero"] = list()
+    anarede.dcba["operacao"] = list()
+    anarede.dcba["tipo"] = list()
+    anarede.dcba["polaridade"] = list()
+    anarede.dcba["nome"] = list()
+    anarede.dcba["grupo_limite_tensao"] = list()
+    anarede.dcba["tensao"] = list()
+    anarede.dcba["eletrodo_terra"] = list()
+    anarede.dcba["numero_elo_cc"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcba["numero"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.dcba["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dcba["tipo"].append(powerflow.lines[powerflow.linecount][7])
-            powerflow.dcba["polaridade"].append(powerflow.lines[powerflow.linecount][8])
-            powerflow.dcba["nome"].append(powerflow.lines[powerflow.linecount][9:21])
-            powerflow.dcba["grupo_limite_tensao"].append(
-                powerflow.lines[powerflow.linecount][21:23]
+            anarede.dcba["numero"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dcba["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dcba["tipo"].append(anarede.lines[anarede.linecount][7])
+            anarede.dcba["polaridade"].append(anarede.lines[anarede.linecount][8])
+            anarede.dcba["nome"].append(anarede.lines[anarede.linecount][9:21])
+            anarede.dcba["grupo_limite_tensao"].append(
+                anarede.lines[anarede.linecount][21:23]
             )
-            powerflow.dcba["tensao"].append(powerflow.lines[powerflow.linecount][23:28])
-            powerflow.dcba["eletrodo_terra"].append(
-                powerflow.lines[powerflow.linecount][66:71]
+            anarede.dcba["tensao"].append(anarede.lines[anarede.linecount][23:28])
+            anarede.dcba["eletrodo_terra"].append(
+                anarede.lines[anarede.linecount][66:71]
             )
-            powerflow.dcba["numero_elo_cc"].append(
-                powerflow.lines[powerflow.linecount][71:75]
+            anarede.dcba["numero_elo_cc"].append(
+                anarede.lines[anarede.linecount][71:75]
             )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Barra CC
-    powerflow.dcbaDF = DF(data=powerflow.dcba)
-    powerflow.dcba = deepcopy(powerflow.dcbaDF)
-    powerflow.dcbaDF = powerflow.dcbaDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcbaDF = powerflow.dcbaDF.astype(
+    anarede.dcbaDF = DF(data=anarede.dcba)
+    anarede.dcba = deepcopy(anarede.dcbaDF)
+    anarede.dcbaDF = anarede.dcbaDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcbaDF = anarede.dcbaDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -867,98 +824,94 @@ def dcba(
             "numero_elo_cc": "int",
         }
     )
-    if powerflow.dcbaDF.empty:
+    if anarede.dcbaDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCBA`!\033[0m"
         )
     else:
-        powerflow.codes["DCBA"] = True
+        anarede.pwfblock["DCBA"] = True
 
 
 def dccv(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de controle de conversores CA/CC
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dccv["numero"] = list()
-    powerflow.dccv["operacao"] = list()
-    powerflow.dccv["folga"] = list()
-    powerflow.dccv["modo_controle_inversor"] = list()
-    powerflow.dccv["tipo_controle_conversor"] = list()
-    powerflow.dccv["valor_especificado"] = list()
-    powerflow.dccv["margem_corrente"] = list()
-    powerflow.dccv["maxima_sobrecorrente"] = list()
-    powerflow.dccv["angulo_conversor"] = list()
-    powerflow.dccv["angulo_conversor_minimo"] = list()
-    powerflow.dccv["angulo_conversor_maximo"] = list()
-    powerflow.dccv["tap_transformador_minimo"] = list()
-    powerflow.dccv["tap_transformador_maximo"] = list()
-    powerflow.dccv["tap_transformador_numero"] = list()
-    powerflow.dccv["tensao_cc_minima"] = list()
-    powerflow.dccv["tap_high"] = list()
-    powerflow.dccv["tap_reduzido"] = list()
+    anarede.dccv["numero"] = list()
+    anarede.dccv["operacao"] = list()
+    anarede.dccv["folga"] = list()
+    anarede.dccv["modo_controle_inversor"] = list()
+    anarede.dccv["tipo_controle_conversor"] = list()
+    anarede.dccv["valor_especificado"] = list()
+    anarede.dccv["margem_corrente"] = list()
+    anarede.dccv["maxima_sobrecorrente"] = list()
+    anarede.dccv["angulo_conversor"] = list()
+    anarede.dccv["angulo_conversor_minimo"] = list()
+    anarede.dccv["angulo_conversor_maximo"] = list()
+    anarede.dccv["tap_transformador_minimo"] = list()
+    anarede.dccv["tap_transformador_maximo"] = list()
+    anarede.dccv["tap_transformador_numero"] = list()
+    anarede.dccv["tensao_cc_minima"] = list()
+    anarede.dccv["tap_high"] = list()
+    anarede.dccv["tap_reduzido"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dccv["numero"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.dccv["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dccv["folga"].append(powerflow.lines[powerflow.linecount][7])
-            powerflow.dccv["modo_controle_inversor"].append(
-                powerflow.lines[powerflow.linecount][8]
+            anarede.dccv["numero"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dccv["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dccv["folga"].append(anarede.lines[anarede.linecount][7])
+            anarede.dccv["modo_controle_inversor"].append(
+                anarede.lines[anarede.linecount][8]
             )
-            powerflow.dccv["tipo_controle_conversor"].append(
-                powerflow.lines[powerflow.linecount][9]
+            anarede.dccv["tipo_controle_conversor"].append(
+                anarede.lines[anarede.linecount][9]
             )
-            powerflow.dccv["valor_especificado"].append(
-                powerflow.lines[powerflow.linecount][11:16]
+            anarede.dccv["valor_especificado"].append(
+                anarede.lines[anarede.linecount][11:16]
             )
-            powerflow.dccv["margem_corrente"].append(
-                powerflow.lines[powerflow.linecount][17:22]
+            anarede.dccv["margem_corrente"].append(
+                anarede.lines[anarede.linecount][17:22]
             )
-            powerflow.dccv["maxima_sobrecorrente"].append(
-                powerflow.lines[powerflow.linecount][23:28]
+            anarede.dccv["maxima_sobrecorrente"].append(
+                anarede.lines[anarede.linecount][23:28]
             )
-            powerflow.dccv["angulo_conversor"].append(
-                powerflow.lines[powerflow.linecount][29:34]
+            anarede.dccv["angulo_conversor"].append(
+                anarede.lines[anarede.linecount][29:34]
             )
-            powerflow.dccv["angulo_conversor_minimo"].append(
-                powerflow.lines[powerflow.linecount][35:40]
+            anarede.dccv["angulo_conversor_minimo"].append(
+                anarede.lines[anarede.linecount][35:40]
             )
-            powerflow.dccv["angulo_conversor_maximo"].append(
-                powerflow.lines[powerflow.linecount][41:46]
+            anarede.dccv["angulo_conversor_maximo"].append(
+                anarede.lines[anarede.linecount][41:46]
             )
-            powerflow.dccv["tap_transformador_minimo"].append(
-                powerflow.lines[powerflow.linecount][47:52]
+            anarede.dccv["tap_transformador_minimo"].append(
+                anarede.lines[anarede.linecount][47:52]
             )
-            powerflow.dccv["tap_transformador_maximo"].append(
-                powerflow.lines[powerflow.linecount][53:58]
+            anarede.dccv["tap_transformador_maximo"].append(
+                anarede.lines[anarede.linecount][53:58]
             )
-            powerflow.dccv["tap_transformador_numero"].append(
-                powerflow.lines[powerflow.linecount][59:61]
+            anarede.dccv["tap_transformador_numero"].append(
+                anarede.lines[anarede.linecount][59:61]
             )
-            powerflow.dccv["tensao_cc_minima"].append(
-                powerflow.lines[powerflow.linecount][62:66]
+            anarede.dccv["tensao_cc_minima"].append(
+                anarede.lines[anarede.linecount][62:66]
             )
-            powerflow.dccv["tap_high"].append(
-                powerflow.lines[powerflow.linecount][67:72]
-            )
-            powerflow.dccv["tap_reduzido"].append(
-                powerflow.lines[powerflow.linecount][73:78]
-            )
-        powerflow.linecount += 1
+            anarede.dccv["tap_high"].append(anarede.lines[anarede.linecount][67:72])
+            anarede.dccv["tap_reduzido"].append(anarede.lines[anarede.linecount][73:78])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Controle de Conversores de Tensão CC
-    powerflow.dccvDF = DF(data=powerflow.dccv)
-    powerflow.dccv = deepcopy(powerflow.dccvDF)
-    powerflow.dccvDF = powerflow.dccvDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dccvDF = powerflow.dccvDF.astype(
+    anarede.dccvDF = DF(data=anarede.dccv)
+    anarede.dccv = deepcopy(anarede.dccvDF)
+    anarede.dccvDF = anarede.dccvDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dccvDF = anarede.dccvDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -980,74 +933,70 @@ def dccv(
         }
     )
 
-    if powerflow.dccvDF.empty:
+    if anarede.dccvDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCCV`!\033[0m"
         )
     else:
-        powerflow.codes["DCCV"] = True
+        anarede.pwfblock["DCCV"] = True
 
 
 def dcer(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de compensadores estáticos de potência reativa
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcer["barra"] = list()
-    powerflow.dcer["operacao"] = list()
-    powerflow.dcer["grupo_base"] = list()
-    powerflow.dcer["unidades"] = list()
-    powerflow.dcer["barra_controlada"] = list()
-    powerflow.dcer["droop"] = list()
-    powerflow.dcer["potencia_reativa"] = list()
-    powerflow.dcer["potencia_reativa_minima"] = list()
-    powerflow.dcer["potencia_reativa_maxima"] = list()
-    powerflow.dcer["controle"] = list()
-    powerflow.dcer["estado"] = list()
-    powerflow.dcer["modo_correcao_limites"] = list()
+    anarede.dcer["barra"] = list()
+    anarede.dcer["operacao"] = list()
+    anarede.dcer["grupo_base"] = list()
+    anarede.dcer["unidades"] = list()
+    anarede.dcer["barra_controlada"] = list()
+    anarede.dcer["droop"] = list()
+    anarede.dcer["potencia_reativa"] = list()
+    anarede.dcer["potencia_reativa_minima"] = list()
+    anarede.dcer["potencia_reativa_maxima"] = list()
+    anarede.dcer["controle"] = list()
+    anarede.dcer["estado"] = list()
+    anarede.dcer["modo_correcao_limites"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcer["barra"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dcer["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dcer["grupo_base"].append(
-                powerflow.lines[powerflow.linecount][8:10]
+            anarede.dcer["barra"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dcer["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dcer["grupo_base"].append(anarede.lines[anarede.linecount][8:10])
+            anarede.dcer["unidades"].append(anarede.lines[anarede.linecount][11:13])
+            anarede.dcer["barra_controlada"].append(
+                anarede.lines[anarede.linecount][14:19]
             )
-            powerflow.dcer["unidades"].append(
-                powerflow.lines[powerflow.linecount][11:13]
+            anarede.dcer["droop"].append(anarede.lines[anarede.linecount][20:26])
+            anarede.dcer["potencia_reativa"].append(
+                anarede.lines[anarede.linecount][27:32]
             )
-            powerflow.dcer["barra_controlada"].append(
-                powerflow.lines[powerflow.linecount][14:19]
+            anarede.dcer["potencia_reativa_minima"].append(
+                anarede.lines[anarede.linecount][32:37]
             )
-            powerflow.dcer["droop"].append(powerflow.lines[powerflow.linecount][20:26])
-            powerflow.dcer["potencia_reativa"].append(
-                powerflow.lines[powerflow.linecount][27:32]
+            anarede.dcer["potencia_reativa_maxima"].append(
+                anarede.lines[anarede.linecount][37:42]
             )
-            powerflow.dcer["potencia_reativa_minima"].append(
-                powerflow.lines[powerflow.linecount][32:37]
+            anarede.dcer["controle"].append(anarede.lines[anarede.linecount][43])
+            anarede.dcer["estado"].append(anarede.lines[anarede.linecount][45])
+            anarede.dcer["modo_correcao_limites"].append(
+                anarede.lines[anarede.linecount][47]
             )
-            powerflow.dcer["potencia_reativa_maxima"].append(
-                powerflow.lines[powerflow.linecount][37:42]
-            )
-            powerflow.dcer["controle"].append(powerflow.lines[powerflow.linecount][43])
-            powerflow.dcer["estado"].append(powerflow.lines[powerflow.linecount][45])
-            powerflow.dcer["modo_correcao_limites"].append(
-                powerflow.lines[powerflow.linecount][47]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
-    powerflow.dcerDF = DF(data=powerflow.dcer)
-    powerflow.dcer = deepcopy(powerflow.dcerDF)
-    powerflow.dcerDF = powerflow.dcerDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcerDF = powerflow.dcerDF.astype(
+    anarede.dcerDF = DF(data=anarede.dcer)
+    anarede.dcer = deepcopy(anarede.dcerDF)
+    anarede.dcerDF = anarede.dcerDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcerDF = anarede.dcerDF.astype(
         {
             "barra": "int",
             "operacao": "object",
@@ -1062,19 +1011,19 @@ def dcer(
             "estado": "object",
         }
     )
-    if powerflow.dcerDF.empty:
+    if anarede.dcerDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m"
         )
     else:
-        powerflow.codes["DCER"] = True
+        anarede.pwfblock["DCER"] = True
 
         # Número de Compensadores Estáticos de Potência Reativa
-        powerflow.ncer = 0
-        for idx, value in powerflow.dcerDF.iterrows():
+        anarede.ncer = 0
+        for idx, value in anarede.dcerDF.iterrows():
             if value["estado"] == "D":
-                powerflow.dcerDF = powerflow.dcerDF.drop(
+                anarede.dcerDF = anarede.dcerDF.drop(
                     labels=idx,
                     axis=0,
                 )
@@ -1084,86 +1033,76 @@ def dcer(
                 or (value["controle"] == "P")
                 or (value["controle"] == "I")
             ):
-                powerflow.ncer += 1
-                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (
+                anarede.ncer += 1
+                anarede.dcerDF.at[idx, "droop"] = -value["droop"] / (
                     1e2 * value["unidades"]
                 )
 
                 if value["barra_controlada"] == 0:
-                    powerflow.dcerDF.at[idx, "barra_controlada"] = value["barra"]
+                    anarede.dcerDF.at[idx, "barra_controlada"] = value["barra"]
 
                 if value["potencia_reativa"] > value["potencia_reativa_maxima"]:
-                    powerflow.dcerDF.at[idx, "potencia_reativa"] = value[
+                    anarede.dcerDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_maxima"
                     ]
 
                 elif value["potencia_reativa"] < value["potencia_reativa_minima"]:
-                    powerflow.dcerDF.at[idx, "potencia_reativa"] = value[
+                    anarede.dcerDF.at[idx, "potencia_reativa"] = value[
                         "potencia_reativa_minima"
                     ]
 
                 if value["controle"] == "0":
-                    powerflow.dcerDF.at[idx, "controle"] = "P"
+                    anarede.dcerDF.at[idx, "controle"] = "P"
 
             elif ((value["estado"] == "0") or (value["estado"] == "L")) and (
                 value["controle"] == "A"
             ):
-                powerflow.ncer += 1
-                powerflow.dcerDF.at[idx, "droop"] = -value["droop"] / (
+                anarede.ncer += 1
+                anarede.dcerDF.at[idx, "droop"] = -value["droop"] / (
                     1e2 * value["unidades"]
                 )
 
                 if value["barra_controlada"] == 0:
-                    powerflow.dcerDF.at[idx, "barra_controlada"] = value["barra"]
+                    anarede.dcerDF.at[idx, "barra_controlada"] = value["barra"]
 
 
 def dcli(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de linhas de transmissão CC
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcli["de"] = list()
-    powerflow.dcli["operacao"] = list()
-    powerflow.dcli["para"] = list()
-    powerflow.dcli["circuito"] = list()
-    powerflow.dcli["proprietario"] = list()
-    powerflow.dcli["resistencia"] = list()
-    powerflow.dcli["indutancia"] = list()
-    powerflow.dcli["capacidade"] = list()
+    anarede.dcli["de"] = list()
+    anarede.dcli["operacao"] = list()
+    anarede.dcli["para"] = list()
+    anarede.dcli["circuito"] = list()
+    anarede.dcli["proprietario"] = list()
+    anarede.dcli["resistencia"] = list()
+    anarede.dcli["indutancia"] = list()
+    anarede.dcli["capacidade"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcli["de"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.dcli["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dcli["para"].append(powerflow.lines[powerflow.linecount][8:12])
-            powerflow.dcli["circuito"].append(
-                powerflow.lines[powerflow.linecount][12:14]
-            )
-            powerflow.dcli["proprietario"].append(
-                powerflow.lines[powerflow.linecount][15]
-            )
-            powerflow.dcli["resistencia"].append(
-                powerflow.lines[powerflow.linecount][17:23]
-            )
-            powerflow.dcli["indutancia"].append(
-                powerflow.lines[powerflow.linecount][23:29]
-            )
-            powerflow.dcli["capacidade"].append(
-                powerflow.lines[powerflow.linecount][60:64]
-            )
-        powerflow.linecount += 1
+            anarede.dcli["de"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dcli["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dcli["para"].append(anarede.lines[anarede.linecount][8:12])
+            anarede.dcli["circuito"].append(anarede.lines[anarede.linecount][12:14])
+            anarede.dcli["proprietario"].append(anarede.lines[anarede.linecount][15])
+            anarede.dcli["resistencia"].append(anarede.lines[anarede.linecount][17:23])
+            anarede.dcli["indutancia"].append(anarede.lines[anarede.linecount][23:29])
+            anarede.dcli["capacidade"].append(anarede.lines[anarede.linecount][60:64])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Linhas de Transmissão CC
-    powerflow.dcliDF = DF(data=powerflow.dcli)
-    powerflow.dcli = deepcopy(powerflow.dcliDF)
-    powerflow.dcliDF = powerflow.dcliDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcliDF = powerflow.dcliDF.astype(
+    anarede.dcliDF = DF(data=anarede.dcli)
+    anarede.dcli = deepcopy(anarede.dcliDF)
+    anarede.dcliDF = anarede.dcliDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcliDF = anarede.dcliDF.astype(
         {
             "de": "int",
             "operacao": "object",
@@ -1176,90 +1115,76 @@ def dcli(
         }
     )
 
-    if powerflow.dcliDF.empty:
+    if anarede.dcliDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCLI`!\033[0m"
         )
     else:
-        powerflow.codes["DCLI"] = True
+        anarede.pwfblock["DCLI"] = True
 
 
 def dcnv(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de conversores CA/CC
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcnv["numero"] = list()
-    powerflow.dcnv["operacao"] = list()
-    powerflow.dcnv["barra_CA"] = list()
-    powerflow.dcnv["barra_CC"] = list()
-    powerflow.dcnv["barra_neutra"] = list()
-    powerflow.dcnv["modo_operacao"] = list()
-    powerflow.dcnv["pontes"] = list()
-    powerflow.dcnv["corrente"] = list()
-    powerflow.dcnv["reatancia_comutacao"] = list()
-    powerflow.dcnv["tensao_secundario"] = list()
-    powerflow.dcnv["potencia_transformador"] = list()
-    powerflow.dcnv["resistencia_reator"] = list()
-    powerflow.dcnv["indutancia_reator"] = list()
-    powerflow.dcnv["capacitancia"] = list()
-    powerflow.dcnv["frequencia"] = list()
+    anarede.dcnv["numero"] = list()
+    anarede.dcnv["operacao"] = list()
+    anarede.dcnv["barra_CA"] = list()
+    anarede.dcnv["barra_CC"] = list()
+    anarede.dcnv["barra_neutra"] = list()
+    anarede.dcnv["modo_operacao"] = list()
+    anarede.dcnv["pontes"] = list()
+    anarede.dcnv["corrente"] = list()
+    anarede.dcnv["reatancia_comutacao"] = list()
+    anarede.dcnv["tensao_secundario"] = list()
+    anarede.dcnv["potencia_transformador"] = list()
+    anarede.dcnv["resistencia_reator"] = list()
+    anarede.dcnv["indutancia_reator"] = list()
+    anarede.dcnv["capacitancia"] = list()
+    anarede.dcnv["frequencia"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcnv["numero"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.dcnv["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dcnv["barra_CA"].append(
-                powerflow.lines[powerflow.linecount][7:12]
+            anarede.dcnv["numero"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dcnv["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dcnv["barra_CA"].append(anarede.lines[anarede.linecount][7:12])
+            anarede.dcnv["barra_CC"].append(anarede.lines[anarede.linecount][13:17])
+            anarede.dcnv["barra_neutra"].append(anarede.lines[anarede.linecount][18:22])
+            anarede.dcnv["modo_operacao"].append(anarede.lines[anarede.linecount][23])
+            anarede.dcnv["pontes"].append(anarede.lines[anarede.linecount][25])
+            anarede.dcnv["corrente"].append(anarede.lines[anarede.linecount][27:32])
+            anarede.dcnv["reatancia_comutacao"].append(
+                anarede.lines[anarede.linecount][33:38]
             )
-            powerflow.dcnv["barra_CC"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dcnv["tensao_secundario"].append(
+                anarede.lines[anarede.linecount][39:44]
             )
-            powerflow.dcnv["barra_neutra"].append(
-                powerflow.lines[powerflow.linecount][18:22]
+            anarede.dcnv["potencia_transformador"].append(
+                anarede.lines[anarede.linecount][45:50]
             )
-            powerflow.dcnv["modo_operacao"].append(
-                powerflow.lines[powerflow.linecount][23]
+            anarede.dcnv["resistencia_reator"].append(
+                anarede.lines[anarede.linecount][51:56]
             )
-            powerflow.dcnv["pontes"].append(powerflow.lines[powerflow.linecount][25])
-            powerflow.dcnv["corrente"].append(
-                powerflow.lines[powerflow.linecount][27:32]
+            anarede.dcnv["indutancia_reator"].append(
+                anarede.lines[anarede.linecount][57:62]
             )
-            powerflow.dcnv["reatancia_comutacao"].append(
-                powerflow.lines[powerflow.linecount][33:38]
-            )
-            powerflow.dcnv["tensao_secundario"].append(
-                powerflow.lines[powerflow.linecount][39:44]
-            )
-            powerflow.dcnv["potencia_transformador"].append(
-                powerflow.lines[powerflow.linecount][45:50]
-            )
-            powerflow.dcnv["resistencia_reator"].append(
-                powerflow.lines[powerflow.linecount][51:56]
-            )
-            powerflow.dcnv["indutancia_reator"].append(
-                powerflow.lines[powerflow.linecount][57:62]
-            )
-            powerflow.dcnv["capacitancia"].append(
-                powerflow.lines[powerflow.linecount][63:68]
-            )
-            powerflow.dcnv["frequencia"].append(
-                powerflow.lines[powerflow.linecount][69:71]
-            )
-        powerflow.linecount += 1
+            anarede.dcnv["capacitancia"].append(anarede.lines[anarede.linecount][63:68])
+            anarede.dcnv["frequencia"].append(anarede.lines[anarede.linecount][69:71])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Conversores CA/CC
-    powerflow.dcnvDF = DF(data=powerflow.dcnv)
-    powerflow.dcnv = deepcopy(powerflow.dcnvDF)
-    powerflow.dcnvDF = powerflow.dcnvDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcnvDF = powerflow.dcnvDF.astype(
+    anarede.dcnvDF = DF(data=anarede.dcnv)
+    anarede.dcnv = deepcopy(anarede.dcnvDF)
+    anarede.dcnvDF = anarede.dcnvDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcnvDF = anarede.dcnvDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -1279,116 +1204,100 @@ def dcnv(
         }
     )
 
-    if powerflow.dcnvDF.empty:
+    if anarede.dcnvDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCNV`!\033[0m"
         )
     else:
-        powerflow.codes["DCNV"] = True
+        anarede.pwfblock["DCNV"] = True
 
 
 def dcsc(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de compensador série controlável
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcsc["de"] = list()
-    powerflow.dcsc["operacao"] = list()
-    powerflow.dcsc["para"] = list()
-    powerflow.dcsc["circuito"] = list()
-    powerflow.dcsc["estado"] = list()
-    powerflow.dcsc["proprietario"] = list()
-    powerflow.dcsc["bypass"] = list()
-    powerflow.dcsc["reatancia_minima"] = list()
-    powerflow.dcsc["reatancia_maxima"] = list()
-    powerflow.dcsc["reatancia_inicial"] = list()
-    powerflow.dcsc["modo_controle"] = list()
-    powerflow.dcsc["especificado"] = list()
-    powerflow.dcsc["extremidade"] = list()
-    powerflow.dcsc["estagios"] = list()
-    powerflow.dcsc["capacidade_normal"] = list()
-    powerflow.dcsc["capacidade_emergencia"] = list()
-    powerflow.dcsc["capacidade"] = list()
-    powerflow.dcsc["agreg1"] = list()
-    powerflow.dcsc["agreg2"] = list()
-    powerflow.dcsc["agreg3"] = list()
-    powerflow.dcsc["agreg4"] = list()
-    powerflow.dcsc["agreg5"] = list()
-    powerflow.dcsc["agreg6"] = list()
-    powerflow.dcsc["agreg7"] = list()
-    powerflow.dcsc["agreg8"] = list()
-    powerflow.dcsc["agreg9"] = list()
-    powerflow.dcsc["agreg10"] = list()
+    anarede.dcsc["de"] = list()
+    anarede.dcsc["operacao"] = list()
+    anarede.dcsc["para"] = list()
+    anarede.dcsc["circuito"] = list()
+    anarede.dcsc["estado"] = list()
+    anarede.dcsc["proprietario"] = list()
+    anarede.dcsc["bypass"] = list()
+    anarede.dcsc["reatancia_minima"] = list()
+    anarede.dcsc["reatancia_maxima"] = list()
+    anarede.dcsc["reatancia_inicial"] = list()
+    anarede.dcsc["modo_controle"] = list()
+    anarede.dcsc["especificado"] = list()
+    anarede.dcsc["extremidade"] = list()
+    anarede.dcsc["estagios"] = list()
+    anarede.dcsc["capacidade_normal"] = list()
+    anarede.dcsc["capacidade_emergencia"] = list()
+    anarede.dcsc["capacidade"] = list()
+    anarede.dcsc["agreg1"] = list()
+    anarede.dcsc["agreg2"] = list()
+    anarede.dcsc["agreg3"] = list()
+    anarede.dcsc["agreg4"] = list()
+    anarede.dcsc["agreg5"] = list()
+    anarede.dcsc["agreg6"] = list()
+    anarede.dcsc["agreg7"] = list()
+    anarede.dcsc["agreg8"] = list()
+    anarede.dcsc["agreg9"] = list()
+    anarede.dcsc["agreg10"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcsc["de"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dcsc["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dcsc["para"].append(powerflow.lines[powerflow.linecount][9:14])
-            powerflow.dcsc["circuito"].append(
-                powerflow.lines[powerflow.linecount][14:16]
+            anarede.dcsc["de"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dcsc["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dcsc["para"].append(anarede.lines[anarede.linecount][9:14])
+            anarede.dcsc["circuito"].append(anarede.lines[anarede.linecount][14:16])
+            anarede.dcsc["estado"].append(anarede.lines[anarede.linecount][16])
+            anarede.dcsc["proprietario"].append(anarede.lines[anarede.linecount][17])
+            anarede.dcsc["bypass"].append(anarede.lines[anarede.linecount][18])
+            anarede.dcsc["reatancia_minima"].append(
+                anarede.lines[anarede.linecount][25:31]
             )
-            powerflow.dcsc["estado"].append(powerflow.lines[powerflow.linecount][16])
-            powerflow.dcsc["proprietario"].append(
-                powerflow.lines[powerflow.linecount][17]
+            anarede.dcsc["reatancia_maxima"].append(
+                anarede.lines[anarede.linecount][31:37]
             )
-            powerflow.dcsc["bypass"].append(powerflow.lines[powerflow.linecount][18])
-            powerflow.dcsc["reatancia_minima"].append(
-                powerflow.lines[powerflow.linecount][25:31]
+            anarede.dcsc["reatancia_inicial"].append(
+                anarede.lines[anarede.linecount][37:43]
             )
-            powerflow.dcsc["reatancia_maxima"].append(
-                powerflow.lines[powerflow.linecount][31:37]
+            anarede.dcsc["modo_controle"].append(anarede.lines[anarede.linecount][43])
+            anarede.dcsc["especificado"].append(anarede.lines[anarede.linecount][45:51])
+            anarede.dcsc["extremidade"].append(anarede.lines[anarede.linecount][52:57])
+            anarede.dcsc["estagios"].append(anarede.lines[anarede.linecount][57:60])
+            anarede.dcsc["capacidade_normal"].append(
+                anarede.lines[anarede.linecount][60:64]
             )
-            powerflow.dcsc["reatancia_inicial"].append(
-                powerflow.lines[powerflow.linecount][37:43]
+            anarede.dcsc["capacidade_emergencia"].append(
+                anarede.lines[anarede.linecount][64:68]
             )
-            powerflow.dcsc["modo_controle"].append(
-                powerflow.lines[powerflow.linecount][43]
-            )
-            powerflow.dcsc["especificado"].append(
-                powerflow.lines[powerflow.linecount][45:51]
-            )
-            powerflow.dcsc["extremidade"].append(
-                powerflow.lines[powerflow.linecount][52:57]
-            )
-            powerflow.dcsc["estagios"].append(
-                powerflow.lines[powerflow.linecount][57:60]
-            )
-            powerflow.dcsc["capacidade_normal"].append(
-                powerflow.lines[powerflow.linecount][60:64]
-            )
-            powerflow.dcsc["capacidade_emergencia"].append(
-                powerflow.lines[powerflow.linecount][64:68]
-            )
-            powerflow.dcsc["capacidade"].append(
-                powerflow.lines[powerflow.linecount][68:72]
-            )
-            powerflow.dcsc["agreg1"].append(powerflow.lines[powerflow.linecount][72:75])
-            powerflow.dcsc["agreg2"].append(powerflow.lines[powerflow.linecount][75:78])
-            powerflow.dcsc["agreg3"].append(powerflow.lines[powerflow.linecount][78:81])
-            powerflow.dcsc["agreg4"].append(powerflow.lines[powerflow.linecount][81:84])
-            powerflow.dcsc["agreg5"].append(powerflow.lines[powerflow.linecount][84:87])
-            powerflow.dcsc["agreg6"].append(powerflow.lines[powerflow.linecount][87:90])
-            powerflow.dcsc["agreg7"].append(powerflow.lines[powerflow.linecount][90:93])
-            powerflow.dcsc["agreg8"].append(powerflow.lines[powerflow.linecount][93:96])
-            powerflow.dcsc["agreg9"].append(powerflow.lines[powerflow.linecount][96:99])
-            powerflow.dcsc["agreg10"].append(
-                powerflow.lines[powerflow.linecount][99:102]
-            )
-        powerflow.linecount += 1
+            anarede.dcsc["capacidade"].append(anarede.lines[anarede.linecount][68:72])
+            anarede.dcsc["agreg1"].append(anarede.lines[anarede.linecount][72:75])
+            anarede.dcsc["agreg2"].append(anarede.lines[anarede.linecount][75:78])
+            anarede.dcsc["agreg3"].append(anarede.lines[anarede.linecount][78:81])
+            anarede.dcsc["agreg4"].append(anarede.lines[anarede.linecount][81:84])
+            anarede.dcsc["agreg5"].append(anarede.lines[anarede.linecount][84:87])
+            anarede.dcsc["agreg6"].append(anarede.lines[anarede.linecount][87:90])
+            anarede.dcsc["agreg7"].append(anarede.lines[anarede.linecount][90:93])
+            anarede.dcsc["agreg8"].append(anarede.lines[anarede.linecount][93:96])
+            anarede.dcsc["agreg9"].append(anarede.lines[anarede.linecount][96:99])
+            anarede.dcsc["agreg10"].append(anarede.lines[anarede.linecount][99:102])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Compensador Série Controlável
-    powerflow.dcscDF = DF(data=powerflow.dcsc)
-    powerflow.dcsc = deepcopy(powerflow.dcscDF)
-    powerflow.dcscDF = powerflow.dcscDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcscDF = powerflow.dcscDF.astype(
+    anarede.dcscDF = DF(data=anarede.dcsc)
+    anarede.dcsc = deepcopy(anarede.dcscDF)
+    anarede.dcscDF = anarede.dcscDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcscDF = anarede.dcscDF.astype(
         {
             "de": "int",
             "operacao": "object",
@@ -1420,193 +1329,175 @@ def dcsc(
         }
     )
 
-    if powerflow.dcscDF.empty:
+    if anarede.dcscDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCSC`!\033[0m"
         )
     else:
-        powerflow.codes["DCSC"] = True
+        anarede.pwfblock["DCSC"] = True
 
 
 def dcte(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de constantes
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dcte["constante"] = list()
-    powerflow.dcte["valor_constante"] = list()
+    anarede.dcte["constante"] = list()
+    anarede.dcte["valor_constante"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dcte["constante"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][5:11]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][5:11]
             )
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][12:16]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][12:16])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][17:23]
             )
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][17:23]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][24:28])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][29:35]
             )
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][24:28]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][36:40])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][41:47]
             )
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][29:35]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][48:52])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][53:59]
             )
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][36:40]
+            anarede.dcte["constante"].append(anarede.lines[anarede.linecount][60:64])
+            anarede.dcte["valor_constante"].append(
+                anarede.lines[anarede.linecount][65:71]
             )
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][41:47]
-            )
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][48:52]
-            )
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][53:59]
-            )
-            powerflow.dcte["constante"].append(
-                powerflow.lines[powerflow.linecount][60:64]
-            )
-            powerflow.dcte["valor_constante"].append(
-                powerflow.lines[powerflow.linecount][65:71]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Constantes
-    powerflow.dcteDF = DF(data=powerflow.dcte)
-    powerflow.dcte = deepcopy(powerflow.dcteDF)
-    powerflow.dcteDF = powerflow.dcteDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dcteDF = powerflow.dcteDF.astype(
+    anarede.dcteDF = DF(data=anarede.dcte)
+    anarede.dcte = deepcopy(anarede.dcteDF)
+    anarede.dcteDF = anarede.dcteDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dcteDF = anarede.dcteDF.astype(
         {
             "constante": "object",
             "valor_constante": "float",
         }
     )
-    if powerflow.dcteDF.empty:
+    if anarede.dcteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m"
         )
     else:
-        powerflow.codes["DCTE"] = True
+        anarede.pwfblock["DCTE"] = True
 
-        powerflow.dcteDF["constante"] = powerflow.dcteDF["constante"].replace("0", nan)
-        powerflow.dcteDF = powerflow.dcteDF.dropna(axis=0, subset=["constante"])
-        powerflow.dcteDF = powerflow.dcteDF.drop_duplicates(
+        anarede.dcteDF["constante"] = anarede.dcteDF["constante"].replace("0", nan)
+        anarede.dcteDF = anarede.dcteDF.dropna(axis=0, subset=["constante"])
+        anarede.dcteDF = anarede.dcteDF.drop_duplicates(
             subset=["constante"], keep="last"
         ).reset_index(drop=True)
 
 
 def dctg(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de lista de casos de contingência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dctg1["identificacao"] = list()
-    powerflow.dctg1["operacao"] = list()
-    powerflow.dctg1["prioridade"] = list()
-    powerflow.dctg1["nome"] = list()
-    powerflow.dctg1["ndctg2"] = list()
-    powerflow.dctg2["tipo"] = list()
-    powerflow.dctg2["de"] = list()
-    powerflow.dctg2["para"] = list()
-    powerflow.dctg2["circuito"] = list()
-    powerflow.dctg2["extremidade"] = list()
-    powerflow.dctg2["variacao_geracao_ativa"] = list()
-    powerflow.dctg2["variacao_geracao_ativa_minima"] = list()
-    powerflow.dctg2["variacao_geracao_ativa_maxima"] = list()
-    powerflow.dctg2["variacao_geracao_reativa"] = list()
-    powerflow.dctg2["variacao_geracao_reativa_minima"] = list()
-    powerflow.dctg2["variacao_geracao_reativa_maxima"] = list()
-    powerflow.dctg2["variacao_fator_participacao"] = list()
-    powerflow.dctg2["grupo"] = list()
-    powerflow.dctg2["unidades"] = list()
+    anarede.dctg1["identificacao"] = list()
+    anarede.dctg1["operacao"] = list()
+    anarede.dctg1["prioridade"] = list()
+    anarede.dctg1["nome"] = list()
+    anarede.dctg1["ndctg2"] = list()
+    anarede.dctg2["tipo"] = list()
+    anarede.dctg2["de"] = list()
+    anarede.dctg2["para"] = list()
+    anarede.dctg2["circuito"] = list()
+    anarede.dctg2["extremidade"] = list()
+    anarede.dctg2["variacao_geracao_ativa"] = list()
+    anarede.dctg2["variacao_geracao_ativa_minima"] = list()
+    anarede.dctg2["variacao_geracao_ativa_maxima"] = list()
+    anarede.dctg2["variacao_geracao_reativa"] = list()
+    anarede.dctg2["variacao_geracao_reativa_minima"] = list()
+    anarede.dctg2["variacao_geracao_reativa_maxima"] = list()
+    anarede.dctg2["variacao_fator_participacao"] = list()
+    anarede.dctg2["grupo"] = list()
+    anarede.dctg2["unidades"] = list()
     idx = 0
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dctg1["ruler"]:
-            powerflow.dctg1["identificacao"].append(
-                powerflow.lines[powerflow.linecount][:4]
-            )
-            powerflow.dctg1["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.dctg1["prioridade"].append(
-                powerflow.lines[powerflow.linecount][7:9]
-            )
-            powerflow.dctg1["nome"].append(powerflow.lines[powerflow.linecount][10:56])
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dctg1["ruler"]:
+            anarede.dctg1["identificacao"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dctg1["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.dctg1["prioridade"].append(anarede.lines[anarede.linecount][7:9])
+            anarede.dctg1["nome"].append(anarede.lines[anarede.linecount][10:56])
 
-        elif powerflow.lines[powerflow.linecount - 1][:] == powerflow.dctg2["ruler"]:
-            powerflow.dctg1["ndctg2"].append(0)
-            while powerflow.lines[powerflow.linecount].strip() != "FCAS":
-                if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+        elif anarede.lines[anarede.linecount - 1][:] == anarede.dctg2["ruler"]:
+            anarede.dctg1["ndctg2"].append(0)
+            while anarede.lines[anarede.linecount].strip() != "FCAS":
+                if anarede.lines[anarede.linecount][0] == anarede.comment:
                     pass
                 else:
-                    powerflow.dctg2["tipo"].append(
-                        powerflow.lines[powerflow.linecount][:4]
+                    anarede.dctg2["tipo"].append(anarede.lines[anarede.linecount][:4])
+                    anarede.dctg2["de"].append(anarede.lines[anarede.linecount][5:10])
+                    anarede.dctg2["para"].append(
+                        anarede.lines[anarede.linecount][11:16]
                     )
-                    powerflow.dctg2["de"].append(
-                        powerflow.lines[powerflow.linecount][5:10]
+                    anarede.dctg2["circuito"].append(
+                        anarede.lines[anarede.linecount][17:19]
                     )
-                    powerflow.dctg2["para"].append(
-                        powerflow.lines[powerflow.linecount][11:16]
+                    anarede.dctg2["extremidade"].append(
+                        anarede.lines[anarede.linecount][20:25]
                     )
-                    powerflow.dctg2["circuito"].append(
-                        powerflow.lines[powerflow.linecount][17:19]
+                    anarede.dctg2["variacao_geracao_ativa"].append(
+                        anarede.lines[anarede.linecount][26:31]
                     )
-                    powerflow.dctg2["extremidade"].append(
-                        powerflow.lines[powerflow.linecount][20:25]
+                    anarede.dctg2["variacao_geracao_ativa_minima"].append(
+                        anarede.lines[anarede.linecount][32:37]
                     )
-                    powerflow.dctg2["variacao_geracao_ativa"].append(
-                        powerflow.lines[powerflow.linecount][26:31]
+                    anarede.dctg2["variacao_geracao_ativa_maxima"].append(
+                        anarede.lines[anarede.linecount][38:43]
                     )
-                    powerflow.dctg2["variacao_geracao_ativa_minima"].append(
-                        powerflow.lines[powerflow.linecount][32:37]
+                    anarede.dctg2["variacao_geracao_reativa"].append(
+                        anarede.lines[anarede.linecount][44:49]
                     )
-                    powerflow.dctg2["variacao_geracao_ativa_maxima"].append(
-                        powerflow.lines[powerflow.linecount][38:43]
+                    anarede.dctg2["variacao_geracao_reativa_minima"].append(
+                        anarede.lines[anarede.linecount][50:55]
                     )
-                    powerflow.dctg2["variacao_geracao_reativa"].append(
-                        powerflow.lines[powerflow.linecount][44:49]
+                    anarede.dctg2["variacao_geracao_reativa_maxima"].append(
+                        anarede.lines[anarede.linecount][56:61]
                     )
-                    powerflow.dctg2["variacao_geracao_reativa_minima"].append(
-                        powerflow.lines[powerflow.linecount][50:55]
+                    anarede.dctg2["variacao_fator_participacao"].append(
+                        anarede.lines[anarede.linecount][62:67]
                     )
-                    powerflow.dctg2["variacao_geracao_reativa_maxima"].append(
-                        powerflow.lines[powerflow.linecount][56:61]
+                    anarede.dctg2["grupo"].append(
+                        anarede.lines[anarede.linecount][68:70]
                     )
-                    powerflow.dctg2["variacao_fator_participacao"].append(
-                        powerflow.lines[powerflow.linecount][62:67]
+                    anarede.dctg2["unidades"].append(
+                        anarede.lines[anarede.linecount][71:74]
                     )
-                    powerflow.dctg2["grupo"].append(
-                        powerflow.lines[powerflow.linecount][68:70]
-                    )
-                    powerflow.dctg2["unidades"].append(
-                        powerflow.lines[powerflow.linecount][71:74]
-                    )
-                powerflow.dctg1["ndctg2"][idx] += 1
-                powerflow.linecount += 1
+                anarede.dctg1["ndctg2"][idx] += 1
+                anarede.linecount += 1
             idx += 1
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Agregadores Genericos
-    powerflow.dctg1DF = DF(data=powerflow.dctg1)
-    powerflow.dctg1 = deepcopy(powerflow.dctg1DF)
-    powerflow.dctg1DF = powerflow.dctg1DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dctg1DF = powerflow.dctg1DF.astype(
+    anarede.dctg1DF = DF(data=anarede.dctg1)
+    anarede.dctg1 = deepcopy(anarede.dctg1DF)
+    anarede.dctg1DF = anarede.dctg1DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dctg1DF = anarede.dctg1DF.astype(
         {
             "identificacao": "int",
             "operacao": "object",
@@ -1615,10 +1506,10 @@ def dctg(
         }
     )
 
-    powerflow.dctg2DF = DF(data=powerflow.dctg2)
-    powerflow.dctg2 = deepcopy(powerflow.dctg2DF)
-    powerflow.dctg2DF = powerflow.dctg2DF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dctg2DF = powerflow.dctg2DF.astype(
+    anarede.dctg2DF = DF(data=anarede.dctg2)
+    anarede.dctg2 = deepcopy(anarede.dctg2DF)
+    anarede.dctg2DF = anarede.dctg2DF.replace(r"^\s*$", "0", regex=True)
+    anarede.dctg2DF = anarede.dctg2DF.astype(
         {
             "tipo": "object",
             "de": "int",
@@ -1634,84 +1525,70 @@ def dctg(
             "variacao_fator_participacao": "float",
         }
     )
-    if powerflow.dctg1DF.empty or powerflow.dctg2DF.empty:
+    if anarede.dctg1DF.empty or anarede.dctg2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCTG`!\033[0m"
         )
     else:
-        powerflow.codes["DCTG"] = True
+        anarede.pwfblock["DCTG"] = True
 
 
 def dctr(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados complementares de transformadores
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dctr["de"] = list()
-    powerflow.dctr["operacao"] = list()
-    powerflow.dctr["para"] = list()
-    powerflow.dctr["circuito"] = list()
-    powerflow.dctr["tensao_minima"] = list()
-    powerflow.dctr["tensao_maxima"] = list()
-    powerflow.dctr["tipo_controle_1"] = list()
-    powerflow.dctr["modo_controle"] = list()
-    powerflow.dctr["fase_minima"] = list()
-    powerflow.dctr["fase_maxima"] = list()
-    powerflow.dctr["tipo_controle_2"] = list()
-    powerflow.dctr["valor_especificado"] = list()
-    powerflow.dctr["extremidade"] = list()
-    powerflow.dctr["taps"] = list()
+    anarede.dctr["de"] = list()
+    anarede.dctr["operacao"] = list()
+    anarede.dctr["para"] = list()
+    anarede.dctr["circuito"] = list()
+    anarede.dctr["tensao_minima"] = list()
+    anarede.dctr["tensao_maxima"] = list()
+    anarede.dctr["tipo_controle_1"] = list()
+    anarede.dctr["modo_controle"] = list()
+    anarede.dctr["fase_minima"] = list()
+    anarede.dctr["fase_maxima"] = list()
+    anarede.dctr["tipo_controle_2"] = list()
+    anarede.dctr["valor_especificado"] = list()
+    anarede.dctr["extremidade"] = list()
+    anarede.dctr["taps"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dctr["de"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dctr["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dctr["para"].append(powerflow.lines[powerflow.linecount][8:13])
-            powerflow.dctr["circuito"].append(
-                powerflow.lines[powerflow.linecount][14:16]
+            anarede.dctr["de"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dctr["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dctr["para"].append(anarede.lines[anarede.linecount][8:13])
+            anarede.dctr["circuito"].append(anarede.lines[anarede.linecount][14:16])
+            anarede.dctr["tensao_minima"].append(
+                anarede.lines[anarede.linecount][17:21]
             )
-            powerflow.dctr["tensao_minima"].append(
-                powerflow.lines[powerflow.linecount][17:21]
+            anarede.dctr["tensao_maxima"].append(
+                anarede.lines[anarede.linecount][22:26]
             )
-            powerflow.dctr["tensao_maxima"].append(
-                powerflow.lines[powerflow.linecount][22:26]
+            anarede.dctr["tipo_controle_1"].append(anarede.lines[anarede.linecount][27])
+            anarede.dctr["modo_controle"].append(anarede.lines[anarede.linecount][29])
+            anarede.dctr["fase_minima"].append(anarede.lines[anarede.linecount][31:37])
+            anarede.dctr["fase_maxima"].append(anarede.lines[anarede.linecount][38:44])
+            anarede.dctr["tipo_controle_2"].append(anarede.lines[anarede.linecount][45])
+            anarede.dctr["valor_especificado"].append(
+                anarede.lines[anarede.linecount][47:53]
             )
-            powerflow.dctr["tipo_controle_1"].append(
-                powerflow.lines[powerflow.linecount][27]
-            )
-            powerflow.dctr["modo_controle"].append(
-                powerflow.lines[powerflow.linecount][29]
-            )
-            powerflow.dctr["fase_minima"].append(
-                powerflow.lines[powerflow.linecount][31:37]
-            )
-            powerflow.dctr["fase_maxima"].append(
-                powerflow.lines[powerflow.linecount][38:44]
-            )
-            powerflow.dctr["tipo_controle_2"].append(
-                powerflow.lines[powerflow.linecount][45]
-            )
-            powerflow.dctr["valor_especificado"].append(
-                powerflow.lines[powerflow.linecount][47:53]
-            )
-            powerflow.dctr["extremidade"].append(
-                powerflow.lines[powerflow.linecount][54:59]
-            )
-            powerflow.dctr["taps"].append(powerflow.lines[powerflow.linecount][60:62])
-        powerflow.linecount += 1
+            anarede.dctr["extremidade"].append(anarede.lines[anarede.linecount][54:59])
+            anarede.dctr["taps"].append(anarede.lines[anarede.linecount][60:62])
+        anarede.linecount += 1
 
     # DataFrame dos Dados Complementares de Transformadores
-    powerflow.dctrDF = DF(data=powerflow.dctr)
-    powerflow.dctr = deepcopy(powerflow.dctrDF)
-    powerflow.dctrDF = powerflow.dctrDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dctrDF = powerflow.dctrDF.astype(
+    anarede.dctrDF = DF(data=anarede.dctr)
+    anarede.dctr = deepcopy(anarede.dctrDF)
+    anarede.dctrDF = anarede.dctrDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dctrDF = anarede.dctrDF.astype(
         {
             "de": "int",
             "operacao": "object",
@@ -1730,50 +1607,50 @@ def dctr(
         }
     )
 
-    if powerflow.dctrDF.empty:
+    if anarede.dctrDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DCTR`!\033[0m"
         )
     else:
-        powerflow.codes["DCTR"] = True
+        anarede.pwfblock["DCTR"] = True
 
 
 def delo(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de elo CC
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.delo["numero"] = list()
-    powerflow.delo["operacao"] = list()
-    powerflow.delo["tensao"] = list()
-    powerflow.delo["base"] = list()
-    powerflow.delo["nome"] = list()
-    powerflow.delo["modo_high"] = list()
-    powerflow.delo["estado"] = list()
+    anarede.delo["numero"] = list()
+    anarede.delo["operacao"] = list()
+    anarede.delo["tensao"] = list()
+    anarede.delo["base"] = list()
+    anarede.delo["nome"] = list()
+    anarede.delo["modo_high"] = list()
+    anarede.delo["estado"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.delo["numero"].append(powerflow.lines[powerflow.linecount][:4])
-            powerflow.delo["operacao"].append(powerflow.lines[powerflow.linecount][5])
-            powerflow.delo["tensao"].append(powerflow.lines[powerflow.linecount][7:12])
-            powerflow.delo["base"].append(powerflow.lines[powerflow.linecount][13:18])
-            powerflow.delo["nome"].append(powerflow.lines[powerflow.linecount][19:39])
-            powerflow.delo["modo_high"].append(powerflow.lines[powerflow.linecount][40])
-            powerflow.delo["estado"].append(powerflow.lines[powerflow.linecount][42])
-        powerflow.linecount += 1
+            anarede.delo["numero"].append(anarede.lines[anarede.linecount][:4])
+            anarede.delo["operacao"].append(anarede.lines[anarede.linecount][5])
+            anarede.delo["tensao"].append(anarede.lines[anarede.linecount][7:12])
+            anarede.delo["base"].append(anarede.lines[anarede.linecount][13:18])
+            anarede.delo["nome"].append(anarede.lines[anarede.linecount][19:39])
+            anarede.delo["modo_high"].append(anarede.lines[anarede.linecount][40])
+            anarede.delo["estado"].append(anarede.lines[anarede.linecount][42])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Elo CC
-    powerflow.deloDF = DF(data=powerflow.delo)
-    powerflow.delo = deepcopy(powerflow.deloDF)
-    powerflow.deloDF = powerflow.deloDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.deloDF = powerflow.deloDF.astype(
+    anarede.deloDF = DF(data=anarede.delo)
+    anarede.delo = deepcopy(anarede.deloDF)
+    anarede.deloDF = anarede.deloDF.replace(r"^\s*$", "0", regex=True)
+    anarede.deloDF = anarede.deloDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -1785,128 +1662,126 @@ def delo(
         }
     )
 
-    if powerflow.deloDF.empty:
+    if anarede.deloDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DELO`!\033[0m"
         )
     else:
-        powerflow.codes["DELO"] = True
+        anarede.pwfblock["DELO"] = True
 
 
 def dgbt(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de grupos de base de tensão de barras CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dgbt["grupo"] = list()
-    powerflow.dgbt["tensao"] = list()
+    anarede.dgbt["grupo"] = list()
+    anarede.dgbt["tensao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dgbt["grupo"].append(powerflow.lines[powerflow.linecount][:2])
-            powerflow.dgbt["tensao"].append(powerflow.lines[powerflow.linecount][3:8])
-        powerflow.linecount += 1
+            anarede.dgbt["grupo"].append(anarede.lines[anarede.linecount][:2])
+            anarede.dgbt["tensao"].append(anarede.lines[anarede.linecount][3:8])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
-    powerflow.dgbtDF = DF(data=powerflow.dgbt)
-    powerflow.dgbt = deepcopy(powerflow.dgbtDF)
-    powerflow.dgbtDF = powerflow.dgbtDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dgbtDF = powerflow.dgbtDF.astype(
+    anarede.dgbtDF = DF(data=anarede.dgbt)
+    anarede.dgbt = deepcopy(anarede.dgbtDF)
+    anarede.dgbtDF = anarede.dgbtDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dgbtDF = anarede.dgbtDF.astype(
         {
             "grupo": "object",
             "tensao": "float",
         }
     )
-    if powerflow.dgbtDF.empty:
+    if anarede.dgbtDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DGBT`!\033[0m"
         )
     else:
-        powerflow.codes["DGBT"] = True
+        anarede.pwfblock["DGBT"] = True
 
-        for idx, value in powerflow.dgbtDF.iterrows():
-            powerflow.dgbtDF.at[idx, "grupo"] = value["grupo"].strip()
+        for idx, value in anarede.dgbtDF.iterrows():
+            anarede.dgbtDF.at[idx, "grupo"] = value["grupo"].strip()
             if value["tensao"] == 0.0:
-                powerflow.dgbtDF.at[idx, "tensao"] = 1.0
+                anarede.dgbtDF.at[idx, "tensao"] = 1.0
 
 
 def dger(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de geradores
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dger["numero"] = list()
-    powerflow.dger["operacao"] = list()
-    powerflow.dger["potencia_ativa_minima"] = list()
-    powerflow.dger["potencia_ativa_maxima"] = list()
-    powerflow.dger["fator_participacao"] = list()
-    powerflow.dger["fator_participacao_controle_remoto"] = list()
-    powerflow.dger["fator_potencia_nominal"] = list()
-    powerflow.dger["fator_servico_armadura"] = list()
-    powerflow.dger["fator_servico_rotor"] = list()
-    powerflow.dger["angulo_maximo_carga"] = list()
-    powerflow.dger["reatancia_maquina"] = list()
-    powerflow.dger["potencia_aparente_nominal"] = list()
-    powerflow.dger["estatismo"] = list()
+    anarede.dger["numero"] = list()
+    anarede.dger["operacao"] = list()
+    anarede.dger["potencia_ativa_minima"] = list()
+    anarede.dger["potencia_ativa_maxima"] = list()
+    anarede.dger["fator_participacao"] = list()
+    anarede.dger["fator_participacao_controle_remoto"] = list()
+    anarede.dger["fator_potencia_nominal"] = list()
+    anarede.dger["fator_servico_armadura"] = list()
+    anarede.dger["fator_servico_rotor"] = list()
+    anarede.dger["angulo_maximo_carga"] = list()
+    anarede.dger["reatancia_maquina"] = list()
+    anarede.dger["potencia_aparente_nominal"] = list()
+    anarede.dger["estatismo"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dger["numero"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dger["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dger["potencia_ativa_minima"].append(
-                powerflow.lines[powerflow.linecount][8:14]
+            anarede.dger["numero"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dger["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dger["potencia_ativa_minima"].append(
+                anarede.lines[anarede.linecount][8:14]
             )
-            powerflow.dger["potencia_ativa_maxima"].append(
-                powerflow.lines[powerflow.linecount][15:21]
+            anarede.dger["potencia_ativa_maxima"].append(
+                anarede.lines[anarede.linecount][15:21]
             )
-            powerflow.dger["fator_participacao"].append(
-                powerflow.lines[powerflow.linecount][22:27]
+            anarede.dger["fator_participacao"].append(
+                anarede.lines[anarede.linecount][22:27]
             )
-            powerflow.dger["fator_participacao_controle_remoto"].append(
-                powerflow.lines[powerflow.linecount][28:33]
+            anarede.dger["fator_participacao_controle_remoto"].append(
+                anarede.lines[anarede.linecount][28:33]
             )
-            powerflow.dger["fator_potencia_nominal"].append(
-                powerflow.lines[powerflow.linecount][34:39]
+            anarede.dger["fator_potencia_nominal"].append(
+                anarede.lines[anarede.linecount][34:39]
             )
-            powerflow.dger["fator_servico_armadura"].append(
-                powerflow.lines[powerflow.linecount][40:44]
+            anarede.dger["fator_servico_armadura"].append(
+                anarede.lines[anarede.linecount][40:44]
             )
-            powerflow.dger["fator_servico_rotor"].append(
-                powerflow.lines[powerflow.linecount][45:49]
+            anarede.dger["fator_servico_rotor"].append(
+                anarede.lines[anarede.linecount][45:49]
             )
-            powerflow.dger["angulo_maximo_carga"].append(
-                powerflow.lines[powerflow.linecount][50:54]
+            anarede.dger["angulo_maximo_carga"].append(
+                anarede.lines[anarede.linecount][50:54]
             )
-            powerflow.dger["reatancia_maquina"].append(
-                powerflow.lines[powerflow.linecount][55:60]
+            anarede.dger["reatancia_maquina"].append(
+                anarede.lines[anarede.linecount][55:60]
             )
-            powerflow.dger["potencia_aparente_nominal"].append(
-                powerflow.lines[powerflow.linecount][61:66]
+            anarede.dger["potencia_aparente_nominal"].append(
+                anarede.lines[anarede.linecount][61:66]
             )
-            powerflow.dger["estatismo"].append(
-                powerflow.lines[powerflow.linecount][66:72]
-            )
-        powerflow.linecount += 1
+            anarede.dger["estatismo"].append(anarede.lines[anarede.linecount][66:72])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Geradores
-    powerflow.dgerDF = DF(data=powerflow.dger)
-    powerflow.dger = deepcopy(powerflow.dgerDF)
-    powerflow.dgerDF = powerflow.dgerDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dgerDF = powerflow.dgerDF.astype(
+    anarede.dgerDF = DF(data=anarede.dger)
+    anarede.dger = deepcopy(anarede.dgerDF)
+    anarede.dgerDF = anarede.dgerDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dgerDF = anarede.dgerDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -1923,20 +1798,20 @@ def dger(
             "estatismo": "float",
         }
     )
-    if powerflow.dgerDF.empty:  # or (powerflow.dgerDF.shape[0] != powerflow.nger):
+    if anarede.dgerDF.empty:  # or (anarede.dgerDF.shape[0] != anarede.nger):
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m"
         )
     else:
-        powerflow.codes["DGER"] = True
+        anarede.pwfblock["DGER"] = True
 
-        if powerflow.dgerDF["fator_participacao"].sum() == 0:
+        if anarede.dgerDF["fator_participacao"].sum() == 0:
             import pandas as pd
 
             geradores = pd.merge(
-                powerflow.dgerDF[["numero"]],
-                powerflow.dbarDF,
+                anarede.dgerDF[["numero"]],
+                anarede.dbarDF,
                 on="numero",
             )
             geradores["fator_participacao"] = (
@@ -1944,57 +1819,51 @@ def dger(
             )
 
             geradores.set_index("numero", inplace=True)
-            powerflow.dgerDF.set_index("numero", inplace=True)
+            anarede.dgerDF.set_index("numero", inplace=True)
 
-            powerflow.dgerDF["fator_participacao"].update(
-                geradores["fator_participacao"]
-            )
-            powerflow.dgerDF.reset_index(inplace=True)
+            anarede.dgerDF["fator_participacao"].update(geradores["fator_participacao"])
+            anarede.dgerDF.reset_index(inplace=True)
 
-        powerflow.nger = powerflow.dgerDF.shape[0]
+        anarede.nger = anarede.dgerDF.shape[0]
 
 
 def dglt(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de grupos de limites de tensão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dglt["grupo_limite_tensao"] = list()
-    powerflow.dglt["limite_minimo"] = list()
-    powerflow.dglt["limite_maximo"] = list()
-    powerflow.dglt["limite_minimo_E"] = list()
-    powerflow.dglt["limite_maximo_E"] = list()
+    anarede.dglt["grupo_limite_tensao"] = list()
+    anarede.dglt["limite_minimo"] = list()
+    anarede.dglt["limite_maximo"] = list()
+    anarede.dglt["limite_minimo_E"] = list()
+    anarede.dglt["limite_maximo_E"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dglt["grupo_limite_tensao"].append(
-                powerflow.lines[powerflow.linecount][:2]
+            anarede.dglt["grupo_limite_tensao"].append(
+                anarede.lines[anarede.linecount][:2]
             )
-            powerflow.dglt["limite_minimo"].append(
-                powerflow.lines[powerflow.linecount][3:8]
+            anarede.dglt["limite_minimo"].append(anarede.lines[anarede.linecount][3:8])
+            anarede.dglt["limite_maximo"].append(anarede.lines[anarede.linecount][9:14])
+            anarede.dglt["limite_minimo_E"].append(
+                anarede.lines[anarede.linecount][15:20]
             )
-            powerflow.dglt["limite_maximo"].append(
-                powerflow.lines[powerflow.linecount][9:14]
+            anarede.dglt["limite_maximo_E"].append(
+                anarede.lines[anarede.linecount][21:26]
             )
-            powerflow.dglt["limite_minimo_E"].append(
-                powerflow.lines[powerflow.linecount][15:20]
-            )
-            powerflow.dglt["limite_maximo_E"].append(
-                powerflow.lines[powerflow.linecount][21:26]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
-    powerflow.dgltDF = DF(data=powerflow.dglt)
-    powerflow.dglt = deepcopy(powerflow.dgltDF)
-    powerflow.dgltDF = powerflow.dgltDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dgltDF = powerflow.dgltDF.astype(
+    anarede.dgltDF = DF(data=anarede.dglt)
+    anarede.dglt = deepcopy(anarede.dgltDF)
+    anarede.dgltDF = anarede.dgltDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dgltDF = anarede.dgltDF.astype(
         {
             "grupo_limite_tensao": "object",
             "limite_minimo": "float",
@@ -2003,128 +1872,128 @@ def dglt(
             "limite_maximo_E": "float",
         }
     )
-    if powerflow.dgltDF.empty:
+    if anarede.dgltDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DGLT`!\033[0m"
         )
     else:
-        powerflow.codes["DGLT"] = True
+        anarede.pwfblock["DGLT"] = True
 
-        for idx, value in powerflow.dgltDF.iterrows():
-            powerflow.dgltDF.at[idx, "grupo_limite_tensao"] = value[
+        for idx, value in anarede.dgltDF.iterrows():
+            anarede.dgltDF.at[idx, "grupo_limite_tensao"] = value[
                 "grupo_limite_tensao"
             ].strip()
             if value["limite_minimo"] == 0.0:
-                powerflow.dgltDF.at[idx, "limite_minimo"] = 0.8
+                anarede.dgltDF.at[idx, "limite_minimo"] = 0.8
 
             if value["limite_maximo"] == 0.0:
-                powerflow.dgltDF.at[idx, "limite_maximo"] = 1.2
+                anarede.dgltDF.at[idx, "limite_maximo"] = 1.2
 
             if value["limite_minimo_E"] == 0.0:
-                powerflow.dgltDF.at[idx, "limite_minimo_E"] = value["limite_minimo"]
+                anarede.dgltDF.at[idx, "limite_minimo_E"] = value["limite_minimo"]
 
             if value["limite_maximo_E"] == 0.0:
-                powerflow.dgltDF.at[idx, "limite_maximo_E"] = value["limite_maximo"]
+                anarede.dgltDF.at[idx, "limite_maximo_E"] = value["limite_maximo"]
 
-        powerflow.dbarDF = powerflow.dbarDF.merge(
-            powerflow.dgltDF, on="grupo_limite_tensao", how="left"
+        anarede.dbarDF = anarede.dbarDF.merge(
+            anarede.dgltDF, on="grupo_limite_tensao", how="left"
         )
 
 
 def dinc(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de incremento do nível de carregamento
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dinc["tipo_incremento_1"] = list()
-    powerflow.dinc["identificacao_incremento_1"] = list()
-    powerflow.dinc["condicao_incremento_1"] = list()
-    powerflow.dinc["tipo_incremento_2"] = list()
-    powerflow.dinc["identificacao_incremento_2"] = list()
-    powerflow.dinc["condicao_incremento_2"] = list()
-    powerflow.dinc["tipo_incremento_3"] = list()
-    powerflow.dinc["identificacao_incremento_3"] = list()
-    powerflow.dinc["condicao_incremento_3"] = list()
-    powerflow.dinc["tipo_incremento_4"] = list()
-    powerflow.dinc["identificacao_incremento_4"] = list()
-    powerflow.dinc["condicao_incremento_4"] = list()
-    powerflow.dinc["passo_incremento_potencia_ativa"] = list()
-    powerflow.dinc["passo_incremento_potencia_reativa"] = list()
-    powerflow.dinc["maximo_incremento_potencia_ativa"] = list()
-    powerflow.dinc["maximo_incremento_potencia_reativa"] = list()
-    powerflow.dinc["tratamento_incremento_potencia_ativa"] = list()
-    powerflow.dinc["tratamento_incremento_potencia_reativa"] = list()
+    anarede.dinc["tipo_incremento_1"] = list()
+    anarede.dinc["identificacao_incremento_1"] = list()
+    anarede.dinc["condicao_incremento_1"] = list()
+    anarede.dinc["tipo_incremento_2"] = list()
+    anarede.dinc["identificacao_incremento_2"] = list()
+    anarede.dinc["condicao_incremento_2"] = list()
+    anarede.dinc["tipo_incremento_3"] = list()
+    anarede.dinc["identificacao_incremento_3"] = list()
+    anarede.dinc["condicao_incremento_3"] = list()
+    anarede.dinc["tipo_incremento_4"] = list()
+    anarede.dinc["identificacao_incremento_4"] = list()
+    anarede.dinc["condicao_incremento_4"] = list()
+    anarede.dinc["passo_incremento_potencia_ativa"] = list()
+    anarede.dinc["passo_incremento_potencia_reativa"] = list()
+    anarede.dinc["maximo_incremento_potencia_ativa"] = list()
+    anarede.dinc["maximo_incremento_potencia_reativa"] = list()
+    anarede.dinc["tratamento_incremento_potencia_ativa"] = list()
+    anarede.dinc["tratamento_incremento_potencia_reativa"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dinc["tipo_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dinc["tipo_incremento_1"].append(
+                anarede.lines[anarede.linecount][:4]
             )
-            powerflow.dinc["identificacao_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dinc["identificacao_incremento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dinc["condicao_incremento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dinc["condicao_incremento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dinc["tipo_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dinc["tipo_incremento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dinc["identificacao_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dinc["identificacao_incremento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dinc["condicao_incremento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dinc["condicao_incremento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dinc["tipo_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dinc["tipo_incremento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dinc["identificacao_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dinc["identificacao_incremento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dinc["condicao_incremento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dinc["condicao_incremento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dinc["tipo_incremento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dinc["tipo_incremento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dinc["identificacao_incremento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
+            anarede.dinc["identificacao_incremento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dinc["condicao_incremento_4"].append(
-                powerflow.lines[powerflow.linecount][50]
+            anarede.dinc["condicao_incremento_4"].append(
+                anarede.lines[anarede.linecount][50]
             )
-            powerflow.dinc["passo_incremento_potencia_ativa"].append(
-                powerflow.lines[powerflow.linecount][52:57]
+            anarede.dinc["passo_incremento_potencia_ativa"].append(
+                anarede.lines[anarede.linecount][52:57]
             )
-            powerflow.dinc["passo_incremento_potencia_reativa"].append(
-                powerflow.lines[powerflow.linecount][58:63]
+            anarede.dinc["passo_incremento_potencia_reativa"].append(
+                anarede.lines[anarede.linecount][58:63]
             )
-            powerflow.dinc["maximo_incremento_potencia_ativa"].append(
-                powerflow.lines[powerflow.linecount][64:69]
+            anarede.dinc["maximo_incremento_potencia_ativa"].append(
+                anarede.lines[anarede.linecount][64:69]
             )
-            powerflow.dinc["maximo_incremento_potencia_reativa"].append(
-                powerflow.lines[powerflow.linecount][70:75]
+            anarede.dinc["maximo_incremento_potencia_reativa"].append(
+                anarede.lines[anarede.linecount][70:75]
             )
-            powerflow.dinc["tratamento_incremento_potencia_ativa"].append(
-                False if powerflow.lines[powerflow.linecount][64:69] != "" else True
+            anarede.dinc["tratamento_incremento_potencia_ativa"].append(
+                False if anarede.lines[anarede.linecount][64:69] != "" else True
             )
-            powerflow.dinc["tratamento_incremento_potencia_reativa"].append(
-                False if powerflow.lines[powerflow.linecount][70:75] != "" else True
+            anarede.dinc["tratamento_incremento_potencia_reativa"].append(
+                False if anarede.lines[anarede.linecount][70:75] != "" else True
             )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos dados de Incremento do Nível de Carregamento
-    powerflow.dincDF = DF(data=powerflow.dinc)
-    powerflow.dinc = deepcopy(powerflow.dincDF)
-    powerflow.dincDF = powerflow.dincDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dincDF = powerflow.dincDF.astype(
+    anarede.dincDF = DF(data=anarede.dinc)
+    anarede.dinc = deepcopy(anarede.dincDF)
+    anarede.dincDF = anarede.dincDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dincDF = anarede.dincDF.astype(
         {
             "tipo_incremento_1": "object",
             "identificacao_incremento_1": "int",
@@ -2146,69 +2015,67 @@ def dinc(
             "tratamento_incremento_potencia_reativa": "bool",
         }
     )
-    if powerflow.dincDF.empty:
+    if anarede.dincDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m"
         )
     else:
-        powerflow.codes["DINC"] = True
+        anarede.pwfblock["DINC"] = True
 
-        for idx, value in powerflow.dincDF.iterrows():
-            powerflow.dincDF.at[idx, "passo_incremento_potencia_ativa"] *= 1e-2
+        for idx, value in anarede.dincDF.iterrows():
+            anarede.dincDF.at[idx, "passo_incremento_potencia_ativa"] *= 1e-2
             if value["tratamento_incremento_potencia_ativa"]:
-                powerflow.dincDF.at[idx, "maximo_incremento_potencia_ativa"] = 99.99
+                anarede.dincDF.at[idx, "maximo_incremento_potencia_ativa"] = 99.99
             else:
-                powerflow.dincDF.at[idx, "maximo_incremento_potencia_ativa"] *= 1e-2
+                anarede.dincDF.at[idx, "maximo_incremento_potencia_ativa"] *= 1e-2
 
-            powerflow.dincDF.at[idx, "passo_incremento_potencia_reativa"] *= 1e-2
+            anarede.dincDF.at[idx, "passo_incremento_potencia_reativa"] *= 1e-2
             if value["tratamento_incremento_potencia_reativa"]:
-                powerflow.dincDF.at[idx, "maximo_incremento_potencia_reativa"] = 99.99
+                anarede.dincDF.at[idx, "maximo_incremento_potencia_reativa"] = 99.99
             else:
-                powerflow.dincDF.at[idx, "maximo_incremento_potencia_reativa"] *= 1e-2
+                anarede.dincDF.at[idx, "maximo_incremento_potencia_reativa"] *= 1e-2
 
 
 def dinj(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dinj["numero"] = list()
-    powerflow.dinj["operacao"] = list()
-    powerflow.dinj["injecao_ativa_eq"] = list()
-    powerflow.dinj["injecao_reativa_eq"] = list()
-    powerflow.dinj["shunt_eq"] = list()
-    powerflow.dinj["fator_participacao_eq"] = list()
+    anarede.dinj["numero"] = list()
+    anarede.dinj["operacao"] = list()
+    anarede.dinj["injecao_ativa_eq"] = list()
+    anarede.dinj["injecao_reativa_eq"] = list()
+    anarede.dinj["shunt_eq"] = list()
+    anarede.dinj["fator_participacao_eq"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dinj["numero"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dinj["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dinj["injecao_ativa_eq"].append(
-                powerflow.lines[powerflow.linecount][8:15]
+            anarede.dinj["numero"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dinj["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dinj["injecao_ativa_eq"].append(
+                anarede.lines[anarede.linecount][8:15]
             )
-            powerflow.dinj["injecao_reativa_eq"].append(
-                powerflow.lines[powerflow.linecount][15:22]
+            anarede.dinj["injecao_reativa_eq"].append(
+                anarede.lines[anarede.linecount][15:22]
             )
-            powerflow.dinj["shunt_eq"].append(
-                powerflow.lines[powerflow.linecount][22:29]
+            anarede.dinj["shunt_eq"].append(anarede.lines[anarede.linecount][22:29])
+            anarede.dinj["fator_participacao_eq"].append(
+                anarede.lines[anarede.linecount][29:36]
             )
-            powerflow.dinj["fator_participacao_eq"].append(
-                powerflow.lines[powerflow.linecount][29:36]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Injeção de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
-    powerflow.dinjDF = DF(data=powerflow.dinj)
-    powerflow.dinj = deepcopy(powerflow.dinjDF)
-    powerflow.dinjDF = powerflow.dinjDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dinjDF = powerflow.dinjDF.astype(
+    anarede.dinjDF = DF(data=anarede.dinj)
+    anarede.dinj = deepcopy(anarede.dinjDF)
+    anarede.dinjDF = anarede.dinjDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dinjDF = anarede.dinjDF.astype(
         {
             "numero": "int",
             "operacao": "object",
@@ -2218,163 +2085,135 @@ def dinj(
             "fator_participacao_eq": "float",
         }
     )
-    if powerflow.dinjDF.empty:
+    if anarede.dinjDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DINJ`!\033[0m"
         )
     else:
-        powerflow.codes["DINJ"] = True
+        anarede.pwfblock["DINJ"] = True
         # precision = lambda x: tuple(len(p) for p in str(x).split("."))
 
-        # for idx, value in powerflow.dinjDF.iterrows():
-        #     precision(powerflow.dinj.injecao_ativa_eq[idx])
-        #     precision(powerflow.dinj.injecao_reativa_eq[idx])
-        #     precision(powerflow.dinj.shunt_eq[idx])
-        #     powerflow.dbarDF.loc[
-        #         powerflow.dbarDF["numero"] == value["numero"], "demanda_ativa"
+        # for idx, value in anarede.dinjDF.iterrows():
+        #     precision(anarede.dinj.injecao_ativa_eq[idx])
+        #     precision(anarede.dinj.injecao_reativa_eq[idx])
+        #     precision(anarede.dinj.shunt_eq[idx])
+        #     anarede.dbarDF.loc[
+        #         anarede.dbarDF["numero"] == value["numero"], "demanda_ativa"
         #     ] += -value["injecao_ativa_eq"]
 
-        #     powerflow.dbarDF.loc[
-        #         powerflow.dbarDF["numero"] == value["numero"], "demanda_reativa"
+        #     anarede.dbarDF.loc[
+        #         anarede.dbarDF["numero"] == value["numero"], "demanda_reativa"
         #     ] += (-value["injecao_reativa_eq"] + value["shunt_eq"])
 
-        #     # powerflow.dbarDF.loc[
-        #     #     powerflow.dbarDF["numero"] == value["numero"], "shunt_barra"
+        #     # anarede.dbarDF.loc[
+        #     #     anarede.dbarDF["numero"] == value["numero"], "shunt_barra"
         #     # ] += round(value["shunt_eq"])
 
-        #     if powerflow.codes["DGER"]:
-        #         powerflow.dgerDF.loc[
-        #             powerflow.dbarDF["numero"] == value["numero"],
+        #     if anarede.pwfblock["DGER"]:
+        #         anarede.dgerDF.loc[
+        #             anarede.dbarDF["numero"] == value["numero"],
         #             "fator_participacao",
         #         ] += value["fator_participacao_eq"]
 
-        # powerflow.dbar.demanda_ativa = powerflow.dbarDF.demanda_ativa.values
-        # powerflow.dbar.demanda_reativa = powerflow.dbarDF.demanda_reativa.values
-        # powerflow.dbar.shunt_barra = powerflow.dbarDF.shunt_barra.values
+        # anarede.dbar.demanda_ativa = anarede.dbarDF.demanda_ativa.values
+        # anarede.dbar.demanda_reativa = anarede.dbarDF.demanda_reativa.values
+        # anarede.dbar.shunt_barra = anarede.dbarDF.shunt_barra.values
 
 
 def dlin(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de linha de transmissão CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dlin["de"] = list()
-    powerflow.dlin["abertura_de"] = list()
-    powerflow.dlin["operacao"] = list()
-    powerflow.dlin["abertura_para"] = list()
-    powerflow.dlin["para"] = list()
-    powerflow.dlin["circuito"] = list()
-    powerflow.dlin["estado"] = list()
-    powerflow.dlin["proprietario"] = list()
-    powerflow.dlin["manobravel"] = list()
-    powerflow.dlin["resistencia"] = list()
-    powerflow.dlin["reatancia"] = list()
-    powerflow.dlin["susceptancia"] = list()
-    powerflow.dlin["tap"] = list()
-    powerflow.dlin["tap_minimo"] = list()
-    powerflow.dlin["tap_maximo"] = list()
-    powerflow.dlin["tap_defasagem"] = list()
-    powerflow.dlin["barra_controlada"] = list()
-    powerflow.dlin["capacidade_normal"] = list()
-    powerflow.dlin["capacidade_emergencial"] = list()
-    powerflow.dlin["numero_taps"] = list()
-    powerflow.dlin["capacidade_equipamento"] = list()
-    powerflow.dlin["agreg1"] = list()
-    powerflow.dlin["agreg2"] = list()
-    powerflow.dlin["agreg3"] = list()
-    powerflow.dlin["agreg4"] = list()
-    powerflow.dlin["agreg5"] = list()
-    powerflow.dlin["agreg6"] = list()
-    powerflow.dlin["agreg7"] = list()
-    powerflow.dlin["agreg8"] = list()
-    powerflow.dlin["agreg9"] = list()
-    powerflow.dlin["agreg10"] = list()
+    anarede.dlin["de"] = list()
+    anarede.dlin["abertura_de"] = list()
+    anarede.dlin["operacao"] = list()
+    anarede.dlin["abertura_para"] = list()
+    anarede.dlin["para"] = list()
+    anarede.dlin["circuito"] = list()
+    anarede.dlin["estado"] = list()
+    anarede.dlin["proprietario"] = list()
+    anarede.dlin["manobravel"] = list()
+    anarede.dlin["resistencia"] = list()
+    anarede.dlin["reatancia"] = list()
+    anarede.dlin["susceptancia"] = list()
+    anarede.dlin["tap"] = list()
+    anarede.dlin["tap_minimo"] = list()
+    anarede.dlin["tap_maximo"] = list()
+    anarede.dlin["tap_defasagem"] = list()
+    anarede.dlin["barra_controlada"] = list()
+    anarede.dlin["capacidade_normal"] = list()
+    anarede.dlin["capacidade_emergencial"] = list()
+    anarede.dlin["numero_taps"] = list()
+    anarede.dlin["capacidade_equipamento"] = list()
+    anarede.dlin["agreg1"] = list()
+    anarede.dlin["agreg2"] = list()
+    anarede.dlin["agreg3"] = list()
+    anarede.dlin["agreg4"] = list()
+    anarede.dlin["agreg5"] = list()
+    anarede.dlin["agreg6"] = list()
+    anarede.dlin["agreg7"] = list()
+    anarede.dlin["agreg8"] = list()
+    anarede.dlin["agreg9"] = list()
+    anarede.dlin["agreg10"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dlin["de"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dlin["abertura_de"].append(
-                powerflow.lines[powerflow.linecount][5]
+            anarede.dlin["de"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dlin["abertura_de"].append(anarede.lines[anarede.linecount][5])
+            anarede.dlin["operacao"].append(anarede.lines[anarede.linecount][7])
+            anarede.dlin["abertura_para"].append(anarede.lines[anarede.linecount][9])
+            anarede.dlin["para"].append(anarede.lines[anarede.linecount][10:15])
+            anarede.dlin["circuito"].append(anarede.lines[anarede.linecount][15:17])
+            anarede.dlin["estado"].append(anarede.lines[anarede.linecount][17])
+            anarede.dlin["proprietario"].append(anarede.lines[anarede.linecount][18])
+            anarede.dlin["manobravel"].append(anarede.lines[anarede.linecount][19])
+            anarede.dlin["resistencia"].append(anarede.lines[anarede.linecount][20:26])
+            anarede.dlin["reatancia"].append(anarede.lines[anarede.linecount][26:32])
+            anarede.dlin["susceptancia"].append(anarede.lines[anarede.linecount][32:38])
+            anarede.dlin["tap"].append(anarede.lines[anarede.linecount][38:43])
+            anarede.dlin["tap_minimo"].append(anarede.lines[anarede.linecount][43:48])
+            anarede.dlin["tap_maximo"].append(anarede.lines[anarede.linecount][48:53])
+            anarede.dlin["tap_defasagem"].append(
+                anarede.lines[anarede.linecount][53:58]
             )
-            powerflow.dlin["operacao"].append(powerflow.lines[powerflow.linecount][7])
-            powerflow.dlin["abertura_para"].append(
-                powerflow.lines[powerflow.linecount][9]
+            anarede.dlin["barra_controlada"].append(
+                anarede.lines[anarede.linecount][58:64]
             )
-            powerflow.dlin["para"].append(powerflow.lines[powerflow.linecount][10:15])
-            powerflow.dlin["circuito"].append(
-                powerflow.lines[powerflow.linecount][15:17]
+            anarede.dlin["capacidade_normal"].append(
+                anarede.lines[anarede.linecount][64:68]
             )
-            powerflow.dlin["estado"].append(powerflow.lines[powerflow.linecount][17])
-            powerflow.dlin["proprietario"].append(
-                powerflow.lines[powerflow.linecount][18]
+            anarede.dlin["capacidade_emergencial"].append(
+                anarede.lines[anarede.linecount][68:72]
             )
-            powerflow.dlin["manobravel"].append(
-                powerflow.lines[powerflow.linecount][19]
+            anarede.dlin["numero_taps"].append(anarede.lines[anarede.linecount][72:74])
+            anarede.dlin["capacidade_equipamento"].append(
+                anarede.lines[anarede.linecount][74:78]
             )
-            powerflow.dlin["resistencia"].append(
-                powerflow.lines[powerflow.linecount][20:26]
-            )
-            powerflow.dlin["reatancia"].append(
-                powerflow.lines[powerflow.linecount][26:32]
-            )
-            powerflow.dlin["susceptancia"].append(
-                powerflow.lines[powerflow.linecount][32:38]
-            )
-            powerflow.dlin["tap"].append(powerflow.lines[powerflow.linecount][38:43])
-            powerflow.dlin["tap_minimo"].append(
-                powerflow.lines[powerflow.linecount][43:48]
-            )
-            powerflow.dlin["tap_maximo"].append(
-                powerflow.lines[powerflow.linecount][48:53]
-            )
-            powerflow.dlin["tap_defasagem"].append(
-                powerflow.lines[powerflow.linecount][53:58]
-            )
-            powerflow.dlin["barra_controlada"].append(
-                powerflow.lines[powerflow.linecount][58:64]
-            )
-            powerflow.dlin["capacidade_normal"].append(
-                powerflow.lines[powerflow.linecount][64:68]
-            )
-            powerflow.dlin["capacidade_emergencial"].append(
-                powerflow.lines[powerflow.linecount][68:72]
-            )
-            powerflow.dlin["numero_taps"].append(
-                powerflow.lines[powerflow.linecount][72:74]
-            )
-            powerflow.dlin["capacidade_equipamento"].append(
-                powerflow.lines[powerflow.linecount][74:78]
-            )
-            powerflow.dlin["agreg1"].append(powerflow.lines[powerflow.linecount][78:81])
-            powerflow.dlin["agreg2"].append(powerflow.lines[powerflow.linecount][81:84])
-            powerflow.dlin["agreg3"].append(powerflow.lines[powerflow.linecount][84:87])
-            powerflow.dlin["agreg4"].append(powerflow.lines[powerflow.linecount][87:90])
-            powerflow.dlin["agreg5"].append(powerflow.lines[powerflow.linecount][90:93])
-            powerflow.dlin["agreg6"].append(powerflow.lines[powerflow.linecount][93:96])
-            powerflow.dlin["agreg7"].append(powerflow.lines[powerflow.linecount][96:99])
-            powerflow.dlin["agreg8"].append(
-                powerflow.lines[powerflow.linecount][99:102]
-            )
-            powerflow.dlin["agreg9"].append(
-                powerflow.lines[powerflow.linecount][102:105]
-            )
-            powerflow.dlin["agreg10"].append(
-                powerflow.lines[powerflow.linecount][105:108]
-            )
-        powerflow.linecount += 1
+            anarede.dlin["agreg1"].append(anarede.lines[anarede.linecount][78:81])
+            anarede.dlin["agreg2"].append(anarede.lines[anarede.linecount][81:84])
+            anarede.dlin["agreg3"].append(anarede.lines[anarede.linecount][84:87])
+            anarede.dlin["agreg4"].append(anarede.lines[anarede.linecount][87:90])
+            anarede.dlin["agreg5"].append(anarede.lines[anarede.linecount][90:93])
+            anarede.dlin["agreg6"].append(anarede.lines[anarede.linecount][93:96])
+            anarede.dlin["agreg7"].append(anarede.lines[anarede.linecount][96:99])
+            anarede.dlin["agreg8"].append(anarede.lines[anarede.linecount][99:102])
+            anarede.dlin["agreg9"].append(anarede.lines[anarede.linecount][102:105])
+            anarede.dlin["agreg10"].append(anarede.lines[anarede.linecount][105:108])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Linha
-    powerflow.dlinDF = DF(data=powerflow.dlin)
-    powerflow.dlin = deepcopy(powerflow.dlinDF)
-    powerflow.dlinDF = powerflow.dlinDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dlinDF = powerflow.dlinDF.astype(
+    anarede.dlinDF = DF(data=anarede.dlin)
+    anarede.dlin = deepcopy(anarede.dlinDF)
+    anarede.dlinDF = anarede.dlinDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dlinDF = anarede.dlinDF.astype(
         {
             "de": "int",
             "abertura_de": "object",
@@ -2409,118 +2248,114 @@ def dlin(
             "agreg10": "object",
         }
     )
-    if powerflow.dlinDF.empty:
+    if anarede.dlinDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m"
         )
     else:
-        powerflow.codes["DLIN"] = True
+        anarede.pwfblock["DLIN"] = True
 
-        powerflow.dlinDF["resistencia"] *= 1e-2
-        powerflow.dlinDF["reatancia"] *= 1e-2
-        powerflow.dlinDF["susceptancia"] /= (
+        anarede.dlinDF["resistencia"] *= 1e-2
+        anarede.dlinDF["reatancia"] *= 1e-2
+        anarede.dlinDF["susceptancia"] /= (
             2
-            * powerflow.dcteDF.loc[
-                powerflow.dcteDF.constante == "BASE"
-            ].valor_constante[0]
+            * anarede.dcteDF.loc[anarede.dcteDF.constante == "BASE"].valor_constante[0]
         )
 
-        powerflow.dlinDF["circuito"] = powerflow.dlinDF["circuito"].replace("0", "1")
+        anarede.dlinDF["circuito"] = anarede.dlinDF["circuito"].replace("0", "1")
 
-        powerflow.dlinDF["estado"] = (powerflow.dlinDF["estado"] == "0") | (
-            powerflow.dlinDF["estado"] == "L"
+        anarede.dlinDF["estado"] = (anarede.dlinDF["estado"] == "0") | (
+            anarede.dlinDF["estado"] == "L"
         )
-        powerflow.dlinDF["transf"] = (
-            powerflow.dlinDF["tap"] != 0.0
-        ) & powerflow.dlinDF["estado"]
+        anarede.dlinDF["transf"] = (anarede.dlinDF["tap"] != 0.0) & anarede.dlinDF[
+            "estado"
+        ]
 
-        powerflow.dlinDF["tap"] = powerflow.dlinDF["tap"].tolist() + 1 * (
-            ~powerflow.dlinDF["transf"].values
+        anarede.dlinDF["tap"] = anarede.dlinDF["tap"].tolist() + 1 * (
+            ~anarede.dlinDF["transf"].values
         )
-        powerflow.dlinDF["tapp"] = deepcopy(powerflow.dlinDF["tap"])
-        powerflow.dlinDF["tap"] = powerflow.dlinDF["tap"] * exp(
-            1j * pi / 180 * powerflow.dlinDF["tap_defasagem"]
+        anarede.dlinDF["tapp"] = deepcopy(anarede.dlinDF["tap"])
+        anarede.dlinDF["tap"] = anarede.dlinDF["tap"] * exp(
+            1j * pi / 180 * anarede.dlinDF["tap_defasagem"]
         )  ## add phase shifters
 
         # Número de barras do sistema
-        powerflow.nlin = len(powerflow.dlinDF.de.values)
+        anarede.nlin = len(anarede.dlinDF.de.values)
 
-        powerflow.dlinDF["de-idx"] = powerflow.dlinDF["de"].map(
-            powerflow.dbarDF.set_index("numero")["index"]
+        anarede.dlinDF["de-idx"] = anarede.dlinDF["de"].map(
+            anarede.dbarDF.set_index("numero")["index"]
         )
-        powerflow.dlinDF["para-idx"] = powerflow.dlinDF["para"].map(
-            powerflow.dbarDF.set_index("numero")["index"]
+        anarede.dlinDF["para-idx"] = anarede.dlinDF["para"].map(
+            anarede.dbarDF.set_index("numero")["index"]
         )
 
 
 def dmet(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de monitoração para estabilidade de tensão em barra CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dmet["tipo_elemento_1"] = list()
-    powerflow.dmet["identificacao_elemento_1"] = list()
-    powerflow.dmet["condicao_elemento_1"] = list()
-    powerflow.dmet["tipo_elemento_2"] = list()
-    powerflow.dmet["identificacao_elemento_2"] = list()
-    powerflow.dmet["condicao_elemento_2"] = list()
-    powerflow.dmet["tipo_elemento_3"] = list()
-    powerflow.dmet["identificacao_elemento_3"] = list()
-    powerflow.dmet["condicao_elemento_3"] = list()
-    powerflow.dmet["tipo_elemento_4"] = list()
-    powerflow.dmet["identificacao_elemento_4"] = list()
-    powerflow.dmet["operacao"] = list()
+    anarede.dmte["tipo_elemento_1"] = list()
+    anarede.dmte["identificacao_elemento_1"] = list()
+    anarede.dmte["condicao_elemento_1"] = list()
+    anarede.dmte["tipo_elemento_2"] = list()
+    anarede.dmte["identificacao_elemento_2"] = list()
+    anarede.dmte["condicao_elemento_2"] = list()
+    anarede.dmte["tipo_elemento_3"] = list()
+    anarede.dmte["identificacao_elemento_3"] = list()
+    anarede.dmte["condicao_elemento_3"] = list()
+    anarede.dmte["tipo_elemento_4"] = list()
+    anarede.dmte["identificacao_elemento_4"] = list()
+    anarede.dmte["operacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dmet["tipo_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dmte["tipo_elemento_1"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dmte["identificacao_elemento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dmet["identificacao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dmte["condicao_elemento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dmet["condicao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dmte["tipo_elemento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dmet["tipo_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dmte["identificacao_elemento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dmet["identificacao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dmte["condicao_elemento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dmet["condicao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dmte["tipo_elemento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dmet["tipo_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dmte["identificacao_elemento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dmet["identificacao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dmte["condicao_elemento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dmet["condicao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dmte["tipo_elemento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dmet["tipo_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dmte["identificacao_elemento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dmet["identificacao_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
-            )
-            powerflow.dmet["operacao"].append(powerflow.lines[powerflow.linecount][50])
-        powerflow.linecount += 1
+            anarede.dmte["operacao"].append(anarede.lines[anarede.linecount][50])
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Monitoração para Estabilidade de Tensão em Barra CA
-    powerflow.dmetDF = DF(data=powerflow.dmet)
-    powerflow.dmet = deepcopy(powerflow.dmetDF)
-    powerflow.dmetDF = powerflow.dmetDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dmetDF = powerflow.dmetDF.astype(
+    anarede.dmteDF = DF(data=anarede.dmte)
+    anarede.dmte = deepcopy(anarede.dmteDF)
+    anarede.dmteDF = anarede.dmteDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dmteDF = anarede.dmteDF.astype(
         {
             "tipo_elemento_1": "object",
             "identificacao_elemento_1": "int",
@@ -2536,86 +2371,82 @@ def dmet(
             "operacao": "object",
         }
     )
-    if powerflow.dmetDF.empty:
+    if anarede.dmteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DMET`!\033[0m"
         )
     else:
-        powerflow.codes["DMET"] = True
+        anarede.pwfblock["DMET"] = True
 
 
 def dmfl(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de monitoração de fluxo em circuito CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dmfl["tipo_elemento_1"] = list()
-    powerflow.dmfl["identificacao_elemento_1"] = list()
-    powerflow.dmfl["condicao_elemento_1"] = list()
-    powerflow.dmfl["tipo_elemento_2"] = list()
-    powerflow.dmfl["identificacao_elemento_2"] = list()
-    powerflow.dmfl["condicao_elemento_2"] = list()
-    powerflow.dmfl["tipo_elemento_3"] = list()
-    powerflow.dmfl["identificacao_elemento_3"] = list()
-    powerflow.dmfl["condicao_elemento_3"] = list()
-    powerflow.dmfl["tipo_elemento_4"] = list()
-    powerflow.dmfl["identificacao_elemento_4"] = list()
-    powerflow.dmfl["operacao"] = list()
-    powerflow.dmfl["interligacao"] = list()
+    anarede.dmfl["tipo_elemento_1"] = list()
+    anarede.dmfl["identificacao_elemento_1"] = list()
+    anarede.dmfl["condicao_elemento_1"] = list()
+    anarede.dmfl["tipo_elemento_2"] = list()
+    anarede.dmfl["identificacao_elemento_2"] = list()
+    anarede.dmfl["condicao_elemento_2"] = list()
+    anarede.dmfl["tipo_elemento_3"] = list()
+    anarede.dmfl["identificacao_elemento_3"] = list()
+    anarede.dmfl["condicao_elemento_3"] = list()
+    anarede.dmfl["tipo_elemento_4"] = list()
+    anarede.dmfl["identificacao_elemento_4"] = list()
+    anarede.dmfl["operacao"] = list()
+    anarede.dmfl["interligacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dmfl["tipo_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dmfl["tipo_elemento_1"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dmfl["identificacao_elemento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dmfl["identificacao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dmfl["condicao_elemento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dmfl["condicao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dmfl["tipo_elemento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dmfl["tipo_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dmfl["identificacao_elemento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dmfl["identificacao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dmfl["condicao_elemento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dmfl["condicao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dmfl["tipo_elemento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dmfl["tipo_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dmfl["identificacao_elemento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dmfl["identificacao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dmfl["condicao_elemento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dmfl["condicao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dmfl["tipo_elemento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dmfl["tipo_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dmfl["identificacao_elemento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dmfl["identificacao_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
-            )
-            powerflow.dmfl["operacao"].append(powerflow.lines[powerflow.linecount][50])
-            powerflow.dmfl["interligacao"].append(
-                powerflow.lines[powerflow.linecount][52]
-            )
-        powerflow.linecount += 1
+            anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][50])
+            anarede.dmfl["interligacao"].append(anarede.lines[anarede.linecount][52])
+        anarede.linecount += 1
 
     # DataFrame dos dados de Monitoração de Fluxo em Circuito CA
-    powerflow.dmflDF = DF(data=powerflow.dmfl)
-    powerflow.dmfl = deepcopy(powerflow.dmflDF)
-    powerflow.dmflDF = powerflow.dmflDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dmflDF = powerflow.dmflDF.astype(
+    anarede.dmflDF = DF(data=anarede.dmfl)
+    anarede.dmfl = deepcopy(anarede.dmflDF)
+    anarede.dmflDF = anarede.dmflDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dmflDF = anarede.dmflDF.astype(
         {
             "tipo_elemento_1": "object",
             "identificacao_elemento_1": "int",
@@ -2632,94 +2463,64 @@ def dmfl(
             "interligacao": "float",
         }
     )
-    if powerflow.dmflDF.empty:
+    if anarede.dmflDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
         )
     else:
-        powerflow.codes["DMFL"] = True
+        anarede.pwfblock["DMFL"] = True
 
 
 def dmfl_circ(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de monitoração de fluxo em circuito CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dmfl["de"] = list()
-    powerflow.dmfl["para"] = list()
-    powerflow.dmfl["circuito"] = list()
-    powerflow.dmfl["operacao"] = list()
+    anarede.dmfl["de"] = list()
+    anarede.dmfl["para"] = list()
+    anarede.dmfl["circuito"] = list()
+    anarede.dmfl["operacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
             try:
-                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][:5])
-                powerflow.dmfl["para"].append(
-                    powerflow.lines[powerflow.linecount][6:11]
-                )
-                powerflow.dmfl["circuito"].append(
-                    powerflow.lines[powerflow.linecount][12:14]
-                )
-                powerflow.dmfl["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][15:20])
-                powerflow.dmfl["para"].append(
-                    powerflow.lines[powerflow.linecount][21:26]
-                )
-                powerflow.dmfl["circuito"].append(
-                    powerflow.lines[powerflow.linecount][27:29]
-                )
-                powerflow.dmfl["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][30:35])
-                powerflow.dmfl["para"].append(
-                    powerflow.lines[powerflow.linecount][36:41]
-                )
-                powerflow.dmfl["circuito"].append(
-                    powerflow.lines[powerflow.linecount][42:44]
-                )
-                powerflow.dmfl["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][45:50])
-                powerflow.dmfl["para"].append(
-                    powerflow.lines[powerflow.linecount][51:56]
-                )
-                powerflow.dmfl["circuito"].append(
-                    powerflow.lines[powerflow.linecount][57:59]
-                )
-                powerflow.dmfl["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dmfl["de"].append(powerflow.lines[powerflow.linecount][60:65])
-                powerflow.dmfl["para"].append(
-                    powerflow.lines[powerflow.linecount][66:71]
-                )
-                powerflow.dmfl["circuito"].append(
-                    powerflow.lines[powerflow.linecount][72:74]
-                )
-                powerflow.dmfl["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
+                anarede.dmfl["de"].append(anarede.lines[anarede.linecount][:5])
+                anarede.dmfl["para"].append(anarede.lines[anarede.linecount][6:11])
+                anarede.dmfl["circuito"].append(anarede.lines[anarede.linecount][12:14])
+                anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dmfl["de"].append(anarede.lines[anarede.linecount][15:20])
+                anarede.dmfl["para"].append(anarede.lines[anarede.linecount][21:26])
+                anarede.dmfl["circuito"].append(anarede.lines[anarede.linecount][27:29])
+                anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dmfl["de"].append(anarede.lines[anarede.linecount][30:35])
+                anarede.dmfl["para"].append(anarede.lines[anarede.linecount][36:41])
+                anarede.dmfl["circuito"].append(anarede.lines[anarede.linecount][42:44])
+                anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dmfl["de"].append(anarede.lines[anarede.linecount][45:50])
+                anarede.dmfl["para"].append(anarede.lines[anarede.linecount][51:56])
+                anarede.dmfl["circuito"].append(anarede.lines[anarede.linecount][57:59])
+                anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dmfl["de"].append(anarede.lines[anarede.linecount][60:65])
+                anarede.dmfl["para"].append(anarede.lines[anarede.linecount][66:71])
+                anarede.dmfl["circuito"].append(anarede.lines[anarede.linecount][72:74])
+                anarede.dmfl["operacao"].append(anarede.lines[anarede.linecount][75])
             except:
-                powerflow.dmfl["de"] = powerflow.dmfl["de"][:-1]
+                anarede.dmfl["de"] = anarede.dmfl["de"][:-1]
                 break
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Constantes
-    powerflow.dmflDF = DF(data=powerflow.dmfl)
-    powerflow.dmfl = deepcopy(powerflow.dmflDF)
-    powerflow.dmflDF = powerflow.dmflDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dmflDF = powerflow.dmflDF.astype(
+    anarede.dmflDF = DF(data=anarede.dmfl)
+    anarede.dmfl = deepcopy(anarede.dmflDF)
+    anarede.dmflDF = anarede.dmflDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dmflDF = anarede.dmflDF.astype(
         {
             "de": "int",
             "para": "int",
@@ -2728,86 +2529,82 @@ def dmfl_circ(
         }
     )
 
-    if powerflow.dmflDF.empty:
+    if anarede.dmflDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
         )
     else:
-        powerflow.codes["DMFL"] = True
+        anarede.pwfblock["DMFL"] = True
 
 
 def dmte(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de monitoração de tensão em barra CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dmte["tipo_elemento_1"] = list()
-    powerflow.dmte["identificacao_elemento_1"] = list()
-    powerflow.dmte["condicao_elemento_1"] = list()
-    powerflow.dmte["tipo_elemento_2"] = list()
-    powerflow.dmte["identificacao_elemento_2"] = list()
-    powerflow.dmte["condicao_elemento_2"] = list()
-    powerflow.dmte["tipo_elemento_3"] = list()
-    powerflow.dmte["identificacao_elemento_3"] = list()
-    powerflow.dmte["condicao_elemento_3"] = list()
-    powerflow.dmte["tipo_elemento_4"] = list()
-    powerflow.dmte["identificacao_elemento_4"] = list()
-    powerflow.dmte["operacao"] = list()
-    powerflow.dmte["interligacao"] = list()
+    anarede.dmte["tipo_elemento_1"] = list()
+    anarede.dmte["identificacao_elemento_1"] = list()
+    anarede.dmte["condicao_elemento_1"] = list()
+    anarede.dmte["tipo_elemento_2"] = list()
+    anarede.dmte["identificacao_elemento_2"] = list()
+    anarede.dmte["condicao_elemento_2"] = list()
+    anarede.dmte["tipo_elemento_3"] = list()
+    anarede.dmte["identificacao_elemento_3"] = list()
+    anarede.dmte["condicao_elemento_3"] = list()
+    anarede.dmte["tipo_elemento_4"] = list()
+    anarede.dmte["identificacao_elemento_4"] = list()
+    anarede.dmte["operacao"] = list()
+    anarede.dmte["interligacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dmte["tipo_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dmte["tipo_elemento_1"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dmte["identificacao_elemento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dmte["identificacao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dmte["condicao_elemento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dmte["condicao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dmte["tipo_elemento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dmte["tipo_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dmte["identificacao_elemento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dmte["identificacao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dmte["condicao_elemento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dmte["condicao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dmte["tipo_elemento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dmte["tipo_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dmte["identificacao_elemento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dmte["identificacao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dmte["condicao_elemento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dmte["condicao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dmte["tipo_elemento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dmte["tipo_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dmte["identificacao_elemento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dmte["identificacao_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
-            )
-            powerflow.dmte["operacao"].append(powerflow.lines[powerflow.linecount][50])
-            powerflow.dmte["interligacao"].append(
-                powerflow.lines[powerflow.linecount][52]
-            )
-        powerflow.linecount += 1
+            anarede.dmte["operacao"].append(anarede.lines[anarede.linecount][50])
+            anarede.dmte["interligacao"].append(anarede.lines[anarede.linecount][52])
+        anarede.linecount += 1
 
     # DataFrame dos dados de Monitoração de Tensão em Circuito CA
-    powerflow.dmteDF = DF(data=powerflow.dmte)
-    powerflow.dmte = deepcopy(powerflow.dmteDF)
-    powerflow.dmteDF = powerflow.dmteDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dmteDF = powerflow.dmteDF.astype(
+    anarede.dmteDF = DF(data=anarede.dmte)
+    anarede.dmte = deepcopy(anarede.dmteDF)
+    anarede.dmteDF = anarede.dmteDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dmteDF = anarede.dmteDF.astype(
         {
             "tipo_elemento_1": "object",
             "identificacao_elemento_1": "int",
@@ -2824,165 +2621,123 @@ def dmte(
             "interligacao": "float",
         }
     )
-    if powerflow.dmteDF.empty:
+    if anarede.dmteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DMTE`!\033[0m"
         )
     else:
-        powerflow.codes["DMTE"] = True
+        anarede.pwfblock["DMTE"] = True
 
 
 def dopc(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de código de opções de controle e execução padrão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dopc["opcao"] = list()
-    powerflow.dopc["padrao"] = list()
+    anarede.dopc["opcao"] = list()
+    anarede.dopc["padrao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
             try:
-                powerflow.dopc["opcao"].append(powerflow.lines[powerflow.linecount][:4])
-                powerflow.dopc["padrao"].append(powerflow.lines[powerflow.linecount][5])
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][7:11]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][12]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][14:18]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][19]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][21:25]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][26]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][28:32]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][33]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][35:39]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][40]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][42:46]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][47]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][49:53]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][54]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][56:60]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][61]
-                )
-                powerflow.dopc["opcao"].append(
-                    powerflow.lines[powerflow.linecount][63:67]
-                )
-                powerflow.dopc["padrao"].append(
-                    powerflow.lines[powerflow.linecount][68]
-                )
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][:4])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][5])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][7:11])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][12])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][14:18])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][19])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][21:25])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][26])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][28:32])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][33])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][35:39])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][40])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][42:46])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][47])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][49:53])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][54])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][56:60])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][61])
+                anarede.dopc["opcao"].append(anarede.lines[anarede.linecount][63:67])
+                anarede.dopc["padrao"].append(anarede.lines[anarede.linecount][68])
             except:
-                powerflow.dopc["opcao"] = powerflow.dopc["opcao"][:-1]
+                anarede.dopc["opcao"] = anarede.dopc["opcao"][:-1]
                 break
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Constantes
-    powerflow.dopcDF = DF(data=powerflow.dopc)
-    powerflow.dopc = deepcopy(powerflow.dopcDF)
-    powerflow.dopcDF = powerflow.dopcDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dopcDF = powerflow.dopcDF.astype(
+    anarede.dopcDF = DF(data=anarede.dopc)
+    anarede.dopc = deepcopy(anarede.dopcDF)
+    anarede.dopcDF = anarede.dopcDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dopcDF = anarede.dopcDF.astype(
         {
             "opcao": "object",
             "padrao": "object",
         }
     )
-    if powerflow.dopcDF.empty:
+    if anarede.dopcDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DOPC`!\033[0m"
         )
     else:
-        powerflow.codes["DOPC"] = True
+        anarede.pwfblock["DOPC"] = True
 
-        powerflow.dopcDF["opcao"] = powerflow.dopcDF["opcao"].replace("0", nan)
-        powerflow.dopcDF = powerflow.dopcDF.dropna(axis=0, subset=["opcao"])
-        powerflow.dopcDF = powerflow.dopcDF.drop_duplicates(
+        anarede.dopcDF["opcao"] = anarede.dopcDF["opcao"].replace("0", nan)
+        anarede.dopcDF = anarede.dopcDF.dropna(axis=0, subset=["opcao"])
+        anarede.dopcDF = anarede.dopcDF.drop_duplicates(
             subset=["opcao"], keep="last"
         ).reset_index(drop=True)
 
 
 def dshl(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de dispositivos shunt de circuito CA
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dshl["from"] = list()
-    powerflow.dshl["operacao"] = list()
-    powerflow.dshl["to"] = list()
-    powerflow.dshl["circuito"] = list()
-    powerflow.dshl["shunt_from"] = list()
-    powerflow.dshl["shunt_to"] = list()
-    powerflow.dshl["estado_shunt_from"] = list()
-    powerflow.dshl["estado_shunt_to"] = list()
+    anarede.dshl["from"] = list()
+    anarede.dshl["operacao"] = list()
+    anarede.dshl["to"] = list()
+    anarede.dshl["circuito"] = list()
+    anarede.dshl["shunt_from"] = list()
+    anarede.dshl["shunt_to"] = list()
+    anarede.dshl["estado_shunt_from"] = list()
+    anarede.dshl["estado_shunt_to"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dshl["from"].append(powerflow.lines[powerflow.linecount][:5])
-            powerflow.dshl["operacao"].append(powerflow.lines[powerflow.linecount][6])
-            powerflow.dshl["to"].append(powerflow.lines[powerflow.linecount][9:14])
-            powerflow.dshl["circuito"].append(
-                powerflow.lines[powerflow.linecount][14:16]
+            anarede.dshl["from"].append(anarede.lines[anarede.linecount][:5])
+            anarede.dshl["operacao"].append(anarede.lines[anarede.linecount][6])
+            anarede.dshl["to"].append(anarede.lines[anarede.linecount][9:14])
+            anarede.dshl["circuito"].append(anarede.lines[anarede.linecount][14:16])
+            anarede.dshl["shunt_from"].append(anarede.lines[anarede.linecount][17:23])
+            anarede.dshl["shunt_to"].append(anarede.lines[anarede.linecount][23:29])
+            anarede.dshl["estado_shunt_from"].append(
+                anarede.lines[anarede.linecount][30:32]
             )
-            powerflow.dshl["shunt_from"].append(
-                powerflow.lines[powerflow.linecount][17:23]
+            anarede.dshl["estado_shunt_to"].append(
+                anarede.lines[anarede.linecount][33:35]
             )
-            powerflow.dshl["shunt_to"].append(
-                powerflow.lines[powerflow.linecount][23:29]
-            )
-            powerflow.dshl["estado_shunt_from"].append(
-                powerflow.lines[powerflow.linecount][30:32]
-            )
-            powerflow.dshl["estado_shunt_to"].append(
-                powerflow.lines[powerflow.linecount][33:35]
-            )
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos Dados de Constantes
-    powerflow.dshlDF = DF(data=powerflow.dshl)
-    powerflow.dshl = deepcopy(powerflow.dshlDF)
-    powerflow.dshlDF = powerflow.dshlDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dshlDF = powerflow.dshlDF.astype(
+    anarede.dshlDF = DF(data=anarede.dshl)
+    anarede.dshl = deepcopy(anarede.dshlDF)
+    anarede.dshlDF = anarede.dshlDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dshlDF = anarede.dshlDF.astype(
         {
             "from": "int",
             "operacao": "object",
@@ -2994,86 +2749,82 @@ def dshl(
             "estado_shunt_to": "object",
         }
     )
-    if powerflow.dshlDF.empty:
+    if anarede.dshlDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DSHL`!\033[0m"
         )
     else:
-        powerflow.codes["DSHL"] = True
+        anarede.pwfblock["DSHL"] = True
 
 
 def dtpf(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dtpf["tipo_elemento_1"] = list()
-    powerflow.dtpf["identificacao_elemento_1"] = list()
-    powerflow.dtpf["condicao_elemento_1"] = list()
-    powerflow.dtpf["tipo_elemento_2"] = list()
-    powerflow.dtpf["identificacao_elemento_2"] = list()
-    powerflow.dtpf["condicao_elemento_2"] = list()
-    powerflow.dtpf["tipo_elemento_3"] = list()
-    powerflow.dtpf["identificacao_elemento_3"] = list()
-    powerflow.dtpf["condicao_elemento_3"] = list()
-    powerflow.dtpf["tipo_elemento_4"] = list()
-    powerflow.dtpf["identificacao_elemento_4"] = list()
-    powerflow.dtpf["operacao"] = list()
-    powerflow.dtpf["interligacao"] = list()
+    anarede.dtpf["tipo_elemento_1"] = list()
+    anarede.dtpf["identificacao_elemento_1"] = list()
+    anarede.dtpf["condicao_elemento_1"] = list()
+    anarede.dtpf["tipo_elemento_2"] = list()
+    anarede.dtpf["identificacao_elemento_2"] = list()
+    anarede.dtpf["condicao_elemento_2"] = list()
+    anarede.dtpf["tipo_elemento_3"] = list()
+    anarede.dtpf["identificacao_elemento_3"] = list()
+    anarede.dtpf["condicao_elemento_3"] = list()
+    anarede.dtpf["tipo_elemento_4"] = list()
+    anarede.dtpf["identificacao_elemento_4"] = list()
+    anarede.dtpf["operacao"] = list()
+    anarede.dtpf["interligacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
-            powerflow.dtpf["tipo_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][:4]
+            anarede.dtpf["tipo_elemento_1"].append(anarede.lines[anarede.linecount][:4])
+            anarede.dtpf["identificacao_elemento_1"].append(
+                anarede.lines[anarede.linecount][5:10]
             )
-            powerflow.dtpf["identificacao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][5:10]
+            anarede.dtpf["condicao_elemento_1"].append(
+                anarede.lines[anarede.linecount][11]
             )
-            powerflow.dtpf["condicao_elemento_1"].append(
-                powerflow.lines[powerflow.linecount][11]
+            anarede.dtpf["tipo_elemento_2"].append(
+                anarede.lines[anarede.linecount][13:17]
             )
-            powerflow.dtpf["tipo_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][13:17]
+            anarede.dtpf["identificacao_elemento_2"].append(
+                anarede.lines[anarede.linecount][18:23]
             )
-            powerflow.dtpf["identificacao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][18:23]
+            anarede.dtpf["condicao_elemento_2"].append(
+                anarede.lines[anarede.linecount][24]
             )
-            powerflow.dtpf["condicao_elemento_2"].append(
-                powerflow.lines[powerflow.linecount][24]
+            anarede.dtpf["tipo_elemento_3"].append(
+                anarede.lines[anarede.linecount][26:30]
             )
-            powerflow.dtpf["tipo_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][26:30]
+            anarede.dtpf["identificacao_elemento_3"].append(
+                anarede.lines[anarede.linecount][31:36]
             )
-            powerflow.dtpf["identificacao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][31:36]
+            anarede.dtpf["condicao_elemento_3"].append(
+                anarede.lines[anarede.linecount][37]
             )
-            powerflow.dtpf["condicao_elemento_3"].append(
-                powerflow.lines[powerflow.linecount][37]
+            anarede.dtpf["tipo_elemento_4"].append(
+                anarede.lines[anarede.linecount][39:43]
             )
-            powerflow.dtpf["tipo_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][39:43]
+            anarede.dtpf["identificacao_elemento_4"].append(
+                anarede.lines[anarede.linecount][44:49]
             )
-            powerflow.dtpf["identificacao_elemento_4"].append(
-                powerflow.lines[powerflow.linecount][44:49]
-            )
-            powerflow.dtpf["operacao"].append(powerflow.lines[powerflow.linecount][50])
-            powerflow.dtpf["interligacao"].append(
-                powerflow.lines[powerflow.linecount][52]
-            )
-        powerflow.linecount += 1
+            anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][50])
+            anarede.dtpf["interligacao"].append(anarede.lines[anarede.linecount][52])
+        anarede.linecount += 1
 
     # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
-    powerflow.dtpfDF = DF(data=powerflow.dtpf)
-    powerflow.dtpf = deepcopy(powerflow.dtpfDF)
-    powerflow.dtpfDF = powerflow.dtpfDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dtpfDF = powerflow.dtpfDF.astype(
+    anarede.dtpfDF = DF(data=anarede.dtpf)
+    anarede.dtpf = deepcopy(anarede.dtpfDF)
+    anarede.dtpfDF = anarede.dtpfDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dtpfDF = anarede.dtpfDF.astype(
         {
             "tipo_elemento_1": "object",
             "identificacao_elemento_1": "int",
@@ -3090,94 +2841,64 @@ def dtpf(
             "interligacao": "float",
         }
     )
-    if powerflow.dtpfDF.empty:
+    if anarede.dtpfDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
         )
     else:
-        powerflow.codes["DTPF"] = True
+        anarede.pwfblock["DTPF"] = True
 
 
 def dtpf_circ(
-    powerflow,
+    anarede,
 ):
     """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.dtpf["de"] = list()
-    powerflow.dtpf["para"] = list()
-    powerflow.dtpf["circuito"] = list()
-    powerflow.dtpf["operacao"] = list()
+    anarede.dtpf["de"] = list()
+    anarede.dtpf["para"] = list()
+    anarede.dtpf["circuito"] = list()
+    anarede.dtpf["operacao"] = list()
 
-    while powerflow.lines[powerflow.linecount].strip() not in powerflow.end_block:
-        if powerflow.lines[powerflow.linecount][0] == powerflow.comment:
+    while anarede.lines[anarede.linecount].strip() not in anarede.end_block:
+        if anarede.lines[anarede.linecount][0] == anarede.comment:
             pass
         else:
             try:
-                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][:5])
-                powerflow.dtpf["para"].append(
-                    powerflow.lines[powerflow.linecount][6:11]
-                )
-                powerflow.dtpf["circuito"].append(
-                    powerflow.lines[powerflow.linecount][12:14]
-                )
-                powerflow.dtpf["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][15:20])
-                powerflow.dtpf["para"].append(
-                    powerflow.lines[powerflow.linecount][21:26]
-                )
-                powerflow.dtpf["circuito"].append(
-                    powerflow.lines[powerflow.linecount][27:29]
-                )
-                powerflow.dtpf["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][30:35])
-                powerflow.dtpf["para"].append(
-                    powerflow.lines[powerflow.linecount][36:41]
-                )
-                powerflow.dtpf["circuito"].append(
-                    powerflow.lines[powerflow.linecount][42:44]
-                )
-                powerflow.dtpf["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][45:50])
-                powerflow.dtpf["para"].append(
-                    powerflow.lines[powerflow.linecount][51:56]
-                )
-                powerflow.dtpf["circuito"].append(
-                    powerflow.lines[powerflow.linecount][57:59]
-                )
-                powerflow.dtpf["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
-                powerflow.dtpf["de"].append(powerflow.lines[powerflow.linecount][60:65])
-                powerflow.dtpf["para"].append(
-                    powerflow.lines[powerflow.linecount][66:71]
-                )
-                powerflow.dtpf["circuito"].append(
-                    powerflow.lines[powerflow.linecount][72:74]
-                )
-                powerflow.dtpf["operacao"].append(
-                    powerflow.lines[powerflow.linecount][75]
-                )
+                anarede.dtpf["de"].append(anarede.lines[anarede.linecount][:5])
+                anarede.dtpf["para"].append(anarede.lines[anarede.linecount][6:11])
+                anarede.dtpf["circuito"].append(anarede.lines[anarede.linecount][12:14])
+                anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dtpf["de"].append(anarede.lines[anarede.linecount][15:20])
+                anarede.dtpf["para"].append(anarede.lines[anarede.linecount][21:26])
+                anarede.dtpf["circuito"].append(anarede.lines[anarede.linecount][27:29])
+                anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dtpf["de"].append(anarede.lines[anarede.linecount][30:35])
+                anarede.dtpf["para"].append(anarede.lines[anarede.linecount][36:41])
+                anarede.dtpf["circuito"].append(anarede.lines[anarede.linecount][42:44])
+                anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dtpf["de"].append(anarede.lines[anarede.linecount][45:50])
+                anarede.dtpf["para"].append(anarede.lines[anarede.linecount][51:56])
+                anarede.dtpf["circuito"].append(anarede.lines[anarede.linecount][57:59])
+                anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][75])
+                anarede.dtpf["de"].append(anarede.lines[anarede.linecount][60:65])
+                anarede.dtpf["para"].append(anarede.lines[anarede.linecount][66:71])
+                anarede.dtpf["circuito"].append(anarede.lines[anarede.linecount][72:74])
+                anarede.dtpf["operacao"].append(anarede.lines[anarede.linecount][75])
             except:
-                powerflow.dtpf["de"] = powerflow.dtpf["de"][:-1]
+                anarede.dtpf["de"] = anarede.dtpf["de"][:-1]
                 break
-        powerflow.linecount += 1
+        anarede.linecount += 1
 
     # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
-    powerflow.dtpfDF = DF(data=powerflow.dtpf)
-    powerflow.dtpf = deepcopy(powerflow.dtpfDF)
-    powerflow.dtpfDF = powerflow.dtpfDF.replace(r"^\s*$", "0", regex=True)
-    powerflow.dtpfDF = powerflow.dtpfDF.astype(
+    anarede.dtpfDF = DF(data=anarede.dtpf)
+    anarede.dtpf = deepcopy(anarede.dtpfDF)
+    anarede.dtpfDF = anarede.dtpfDF.replace(r"^\s*$", "0", regex=True)
+    anarede.dtpfDF = anarede.dtpfDF.astype(
         {
             "de": "int",
             "para": "int",
@@ -3185,10 +2906,10 @@ def dtpf_circ(
             "operacao": "object",
         }
     )
-    if powerflow.dtpfDF.empty:
+    if anarede.dtpfDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
             "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
         )
     else:
-        powerflow.codes["DTPF"] = True
+        anarede.pwfblock["DTPF"] = True

@@ -14,225 +14,217 @@ from calc import pcalc, qcalc
 
 def freqsol(
     self,
-    powerflow,
+    anarede,
 ):
     """adiciona variáveis narea solução para caso controle de regulação primária de frequência esteja ativado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.nare = 1
+    anarede.nare = 1
 
     # Condição
-    if (powerflow.control["FREQ"]) and (powerflow.codes["DGER"]):
+    if (anarede.control["FREQ"]) and (anarede.pwfblock["DGER"]):
         # Variáveis
-        powerflow.solution["active_generation"] = zeros(powerflow.nger)
-        powerflow.solution["qlim_reactive_generation"] = zeros(powerflow.nger)
-        powerflow.fesp = 1
+        anarede.solution["active_generation"] = zeros(anarede.nger)
+        anarede.solution["qlim_reactive_generation"] = zeros(anarede.nger)
+        anarede.fesp = 1
 
         # Loop
         nger = 0
-        for idx, value in powerflow.dbarDF.iterrows():
+        for idx, value in anarede.dbarDF.iterrows():
             # Barra tipo VT ou PV
             if value["tipo"] != 0:
-                powerflow.solution["active_generation"][nger] = (
-                    value["potencia_ativa"] / powerflow.options["BASE"]
+                anarede.solution["active_generation"][nger] = (
+                    value["potencia_ativa"] / anarede.cte["BASE"]
                 )
-                powerflow.solution["qlim_reactive_generation"][nger] = (
-                    value["potencia_reativa"] / powerflow.options["BASE"]
+                anarede.solution["qlim_reactive_generation"][nger] = (
+                    value["potencia_reativa"] / anarede.cte["BASE"]
                 )
                 nger += 1
         # Frequências máxima e mínima por gerador
         freqgerlim(
-            powerflow,
+            anarede,
         )
 
     # DGER não ativado
     else:
-        powerflow.control["FREQ"] = False
+        anarede.control["FREQ"] = False
         print(
-            "\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{}`!\033[0m".format(
-                powerflow.anarede
-            )
+            f"\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{anarede.system}`!\033[0m"
         )
 
 
 def freqgerlim(
-    powerflow,
+    anarede,
 ):
     """cálculo das frequências máximas e mínimas de operação de cada gerador
 
     Args
-        powerflow: self do arquivo powerflowl.py
+        anarede:  self do arquivo powerflowl.py
     """
     ## Inicialização
     # Variáveis
-    powerflow.freqger = {
-        "max": zeros(powerflow.nger),
-        "min": zeros(powerflow.nger),
+    anarede.freqger = {
+        "max": zeros(anarede.nger),
+        "min": zeros(anarede.nger),
     }
-    powerflow.dgerorder = dict()
+    anarede.dgerorder = dict()
 
     # Loop
-    for idx, value in powerflow.dgerDF.iterrows():
+    for idx, value in anarede.dgerDF.iterrows():
         # Armazenamento da barra por ordem de entrada de dados dos geradores
-        powerflow.dgerorder[idx] = powerflow.dbarDF["nome"][value["numero"] - 1]
+        anarede.dgerorder[idx] = anarede.dbarDF["nome"][value["numero"] - 1]
         # Frequência máxima gerador `idx`
-        powerflow.freqger["max"][idx] = (
-            powerflow.fesp
+        anarede.freqger["max"][idx] = (
+            anarede.fesp
             + value["estatismo"]
             * 1e-2
             * (
-                powerflow.dbarDF["potencia_ativa"][value["numero"] - 1]
+                anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_minima"]
             )
-            / powerflow.options["BASE"]
+            / anarede.cte["BASE"]
         )
         # Frequência mínima gerador `idx`
-        powerflow.freqger["min"][idx] = (
-            powerflow.fesp
+        anarede.freqger["min"][idx] = (
+            anarede.fesp
             + value["estatismo"]
             * 1e-2
             * (
-                powerflow.dbarDF["potencia_ativa"][value["numero"] - 1]
+                anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_maxima"]
             )
-            / powerflow.options["BASE"]
+            / anarede.cte["BASE"]
         )
 
 
 def freqsch(
-    powerflow,
+    anarede,
 ):
     """armazenamento de Args especificados das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis adicionais
-    powerflow.pqsch["potencia_ativa_gerada_especificada"] = zeros(powerflow.nger)
-    powerflow.pqsch["potencia_reativa_gerada_especificada"] = zeros(powerflow.nger)
-    powerflow.pqsch["magnitude_tensao_especificada"] = zeros(powerflow.nbus)
-    powerflow.pqsch["defasagem_angular_especificada"] = zeros(powerflow.nbus)
+    anarede.pqsch["potencia_ativa_gerada_especificada"] = zeros(anarede.nger)
+    anarede.pqsch["potencia_reativa_gerada_especificada"] = zeros(anarede.nger)
+    anarede.pqsch["magnitude_tensao_especificada"] = zeros(anarede.nbus)
+    anarede.pqsch["defasagem_angular_especificada"] = zeros(anarede.nbus)
 
     # Contador de geradores
     nger = 0
 
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Potência ativa gerada
-            powerflow.pqsch["potencia_ativa_gerada_especificada"][nger] = value[
+            anarede.pqsch["potencia_ativa_gerada_especificada"][nger] = value[
                 "potencia_ativa"
             ]
             # Potência reativa gerada
-            powerflow.pqsch["potencia_reativa_gerada_especificada"][nger] = value[
+            anarede.pqsch["potencia_reativa_gerada_especificada"][nger] = value[
                 "potencia_reativa"
             ]
             # Magnitude de tensão
-            powerflow.pqsch["magnitude_tensao_especificada"][idx] = (
-                value["tensao"] * 1e-3
-            )
+            anarede.pqsch["magnitude_tensao_especificada"][idx] = value["tensao"] * 1e-3
             # Condição - slack
             if value["tipo"] == 2:
                 # Defasagem angular
-                powerflow.pqsch["defasagem_angular_especificada"][idx] = radians(
+                anarede.pqsch["defasagem_angular_especificada"][idx] = radians(
                     value["angulo"]
                 )
             # Incrementa contador
             nger += 1
 
     # Tratamento
-    powerflow.pqsch["potencia_ativa_gerada_especificada"] /= powerflow.options["BASE"]
-    powerflow.pqsch["potencia_reativa_gerada_especificada"] /= powerflow.options["BASE"]
+    anarede.pqsch["potencia_ativa_gerada_especificada"] /= anarede.cte["BASE"]
+    anarede.pqsch["potencia_reativa_gerada_especificada"] /= anarede.cte["BASE"]
 
 
 def freqres(
-    powerflow,
+    anarede,
 ):
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaPger = zeros([powerflow.nger])
-    powerflow.deltaQger = zeros([powerflow.nger])
-    powerflow.deltaTger = zeros([powerflow.nare])
+    anarede.deltaPger = zeros([anarede.nger])
+    anarede.deltaQger = zeros([anarede.nger])
+    anarede.deltaTger = zeros([anarede.nare])
 
     # Contador
     nger = 0
 
     # Loop
-    for idx, value in powerflow.dbarDF.iterrows():
+    for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Cálculo do resíduo DeltaP
-            powerflow.deltaP[idx] = powerflow.solution["active_generation"][nger]
-            powerflow.deltaP[idx] -= value["demanda_ativa"] / powerflow.options["BASE"]
-            powerflow.deltaP[idx] -= pcalc(
-                powerflow,
+            anarede.deltaP[idx] = anarede.solution["active_generation"][nger]
+            anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["BASE"]
+            anarede.deltaP[idx] -= pcalc(
+                anarede,
                 idx,
             )
 
             # Cálculo do resíduo DeltaQ
-            powerflow.deltaQ[idx] = powerflow.solution["qlim_reactive_generation"][nger]
-            powerflow.deltaQ[idx] -= (
-                value["demanda_reativa"] / powerflow.options["BASE"]
-            )
-            powerflow.deltaQ[idx] -= qcalc(
-                powerflow,
+            anarede.deltaQ[idx] = anarede.solution["qlim_reactive_generation"][nger]
+            anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["BASE"]
+            anarede.deltaQ[idx] -= qcalc(
+                anarede,
                 idx,
             )
 
             # Tratamento de limite de potência ativa
-            if (powerflow.solution["freq"] >= powerflow.freqger["max"][nger]) or (
-                powerflow.solution["freq"] <= powerflow.freqger["min"][nger]
+            if (anarede.solution["freq"] >= anarede.freqger["max"][nger]) or (
+                anarede.solution["freq"] <= anarede.freqger["min"][nger]
             ):
-                powerflow.deltaPger[nger] = 0.0
+                anarede.deltaPger[nger] = 0.0
             else:
-                powerflow.deltaPger[nger] += powerflow.pqsch[
+                anarede.deltaPger[nger] += anarede.pqsch[
                     "potencia_ativa_gerada_especificada"
                 ][nger]
-                powerflow.deltaPger[nger] -= powerflow.solution["active_generation"][
-                    nger
-                ]
-                powerflow.deltaPger[nger] -= (
-                    1 / (powerflow.dgerDF["estatismo"][nger] * 1e-2)
-                ) * (powerflow.solution["freq"] - powerflow.fesp)
+                anarede.deltaPger[nger] -= anarede.solution["active_generation"][nger]
+                anarede.deltaPger[nger] -= (
+                    1 / (anarede.dgerDF["estatismo"][nger] * 1e-2)
+                ) * (anarede.solution["freq"] - anarede.fesp)
 
             # Tratamento de limite de magnitude de tensão
-            powerflow.deltaQger[nger] += powerflow.pqsch[
-                "magnitude_tensao_especificada"
-            ][idx]
-            powerflow.deltaQger[nger] -= powerflow.solution["voltage"][idx]
+            anarede.deltaQger[nger] += anarede.pqsch["magnitude_tensao_especificada"][
+                idx
+            ]
+            anarede.deltaQger[nger] -= anarede.solution["voltage"][idx]
 
             # Condição - slack
             if value["tipo"] == 2:
                 # Tratamento de limite de
-                powerflow.deltaTger += powerflow.pqsch[
-                    "defasagem_angular_especificada"
-                ][idx]
-                powerflow.deltaTger -= powerflow.solution["theta"][idx]
+                anarede.deltaTger += anarede.pqsch["defasagem_angular_especificada"][
+                    idx
+                ]
+                anarede.deltaTger -= anarede.solution["theta"][idx]
 
             # Incrementa contador
             nger += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaPger)
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaQger)
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaTger)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaPger)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaQger)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaTger)
 
 
 def freqsubjac(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -246,98 +238,98 @@ def freqsubjac(
     #
 
     # Variável
-    powerflow.dimprefreq = deepcopy(powerflow.jacobian.shape[0])
+    anarede.dimprefreq = deepcopy(anarede.jacobian.shape[0])
 
     # Condição
-    if powerflow.freqjcount == 0:
+    if anarede.freqjcount == 0:
         # Variável
-        powerflow.freqjcount += 1
+        anarede.freqjcount += 1
 
         # Submatrizes
-        powerflow.pxp = zeros([powerflow.nbus, powerflow.nger])  # -> APG
-        powerflow.pxq = zeros([powerflow.nbus, powerflow.nger])
-        powerflow.pxx = zeros([powerflow.nbus, powerflow.nare])
+        anarede.pxp = zeros([anarede.nbus, anarede.nger])  # -> APG
+        anarede.pxq = zeros([anarede.nbus, anarede.nger])
+        anarede.pxx = zeros([anarede.nbus, anarede.nare])
 
-        powerflow.qxp = zeros([powerflow.nbus, powerflow.nger])
-        powerflow.qxq = zeros([powerflow.nbus, powerflow.nger])  # -> BQG
-        powerflow.qxx = zeros([powerflow.nbus, powerflow.nare])
+        anarede.qxp = zeros([anarede.nbus, anarede.nger])
+        anarede.qxq = zeros([anarede.nbus, anarede.nger])  # -> BQG
+        anarede.qxx = zeros([anarede.nbus, anarede.nare])
 
-        powerflow.ypt = zeros([powerflow.nger, powerflow.nbus])
-        powerflow.ypv = zeros([powerflow.nger, powerflow.nbus])
-        powerflow.ypp = zeros([powerflow.nger, powerflow.nger])  # -> CPG
-        powerflow.ypq = zeros([powerflow.nger, powerflow.nger])
-        powerflow.ypx = zeros([powerflow.nger, powerflow.nare])  # -> CF
+        anarede.ypt = zeros([anarede.nger, anarede.nbus])
+        anarede.ypv = zeros([anarede.nger, anarede.nbus])
+        anarede.ypp = zeros([anarede.nger, anarede.nger])  # -> CPG
+        anarede.ypq = zeros([anarede.nger, anarede.nger])
+        anarede.ypx = zeros([anarede.nger, anarede.nare])  # -> CF
 
-        powerflow.yqt = zeros([powerflow.nger, powerflow.nbus])
-        powerflow.yqv = zeros([powerflow.nger, powerflow.nbus])  # -> EQG
-        powerflow.yqp = zeros([powerflow.nger, powerflow.nger])
-        powerflow.yqq = zeros([powerflow.nger, powerflow.nger])
-        powerflow.yqx = zeros([powerflow.nger, powerflow.nare])
+        anarede.yqt = zeros([anarede.nger, anarede.nbus])
+        anarede.yqv = zeros([anarede.nger, anarede.nbus])  # -> EQG
+        anarede.yqp = zeros([anarede.nger, anarede.nger])
+        anarede.yqq = zeros([anarede.nger, anarede.nger])
+        anarede.yqx = zeros([anarede.nger, anarede.nare])
 
-        powerflow.yxt = zeros([powerflow.nare, powerflow.nbus])  # -> FT
-        powerflow.yxv = zeros([powerflow.nare, powerflow.nbus])
-        powerflow.yxp = zeros([powerflow.nare, powerflow.nger])
-        powerflow.yxq = zeros([powerflow.nare, powerflow.nger])
-        powerflow.yxx = zeros([powerflow.nare, powerflow.nare])
+        anarede.yxt = zeros([anarede.nare, anarede.nbus])  # -> FT
+        anarede.yxv = zeros([anarede.nare, anarede.nbus])
+        anarede.yxp = zeros([anarede.nare, anarede.nger])
+        anarede.yxq = zeros([anarede.nare, anarede.nger])
+        anarede.yxx = zeros([anarede.nare, anarede.nare])
 
         # Contadores
         nger = 0
         nare = 0
 
         # Submatrizes PXP QXP YQV YXT
-        for idx, value in powerflow.dbarDF.iterrows():
+        for idx, value in anarede.dbarDF.iterrows():
             if value["tipo"] != 0:
-                powerflow.pxp[idx, nger] = -1.0
-                powerflow.qxq[idx, nger] = -1.0
-                powerflow.yqv[nger, idx] = 1.0
+                anarede.pxp[idx, nger] = -1.0
+                anarede.qxq[idx, nger] = -1.0
+                anarede.yqv[nger, idx] = 1.0
                 nger += 1
 
                 if value["tipo"] == 2:
-                    powerflow.yxt[nare, idx] = 1.0
+                    anarede.yxt[nare, idx] = 1.0
 
         # Submatrizes YPP YPX
-        for idx, value in powerflow.dgerDF.iterrows():
-            powerflow.ypp[idx, idx] = 1.0
-            powerflow.ypx[idx, nare] = 1.0 / (value["estatismo"] * 1e-2)
+        for idx, value in anarede.dgerDF.iterrows():
+            anarede.ypp[idx, idx] = 1.0
+            anarede.ypx[idx, nare] = 1.0 / (value["estatismo"] * 1e-2)
 
     ## Montagem Jacobiana
     # Condição
-    if powerflow.controldim != 0:
-        powerflow.extrarowp = zeros([powerflow.nger, powerflow.controldim])
-        powerflow.extrarowq = zeros([powerflow.nger, powerflow.controldim])
-        powerflow.extrarowy = zeros([powerflow.nger, powerflow.controldim])
+    if anarede.controldim != 0:
+        anarede.extrarowp = zeros([anarede.nger, anarede.controldim])
+        anarede.extrarowq = zeros([anarede.nger, anarede.controldim])
+        anarede.extrarowy = zeros([anarede.nger, anarede.controldim])
 
-        powerflow.extracolp = zeros([powerflow.controldim, powerflow.nger])
-        powerflow.extracolq = zeros([powerflow.controldim, powerflow.nger])
-        powerflow.extracoly = zeros([powerflow.controldim, powerflow.nger])
+        anarede.extracolp = zeros([anarede.controldim, anarede.nger])
+        anarede.extracolq = zeros([anarede.controldim, anarede.nger])
+        anarede.extracoly = zeros([anarede.controldim, anarede.nger])
 
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
                         concatenate(
                             (
-                                powerflow.ypt,
-                                powerflow.ypv,
-                                powerflow.extrarowp,
+                                anarede.ypt,
+                                anarede.ypv,
+                                anarede.extrarowp,
                             ),
                             axis=1,
                         ),
                         concatenate(
                             (
-                                powerflow.yqt,
-                                powerflow.yqv,
-                                powerflow.extrarowq,
+                                anarede.yqt,
+                                anarede.yqv,
+                                anarede.extrarowq,
                             ),
                             axis=1,
                         ),
                         concatenate(
                             (
-                                powerflow.yxt,
-                                powerflow.yxv,
-                                powerflow.extrarowy,
+                                anarede.yxt,
+                                anarede.yxv,
+                                anarede.extrarowy,
                             ),
                             axis=1,
                         ),
@@ -349,17 +341,17 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxp,
-                        powerflow.qxp,
-                        powerflow.extracolp,
-                        powerflow.ypp,
-                        powerflow.yqp,
-                        powerflow.yxp,
+                        anarede.pxp,
+                        anarede.qxp,
+                        anarede.extracolp,
+                        anarede.ypp,
+                        anarede.yqp,
+                        anarede.yxp,
                     ),
                     axis=0,
                 ),
@@ -368,17 +360,17 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxq,
-                        powerflow.qxq,
-                        powerflow.extracolq,
-                        powerflow.ypq,
-                        powerflow.yqq,
-                        powerflow.yxq,
+                        anarede.pxq,
+                        anarede.qxq,
+                        anarede.extracolq,
+                        anarede.ypq,
+                        anarede.yqq,
+                        anarede.yxq,
                     ),
                     axis=0,
                 ),
@@ -387,17 +379,17 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxx,
-                        powerflow.qxx,
-                        powerflow.extracoly,
-                        powerflow.ypx,
-                        powerflow.yqx,
-                        powerflow.yxx,
+                        anarede.pxx,
+                        anarede.qxx,
+                        anarede.extracoly,
+                        anarede.ypx,
+                        anarede.yqx,
+                        anarede.yxx,
                     ),
                     axis=0,
                 ),
@@ -405,16 +397,16 @@ def freqsubjac(
             axis=1,
         )
 
-    elif powerflow.controldim == 0:
+    elif anarede.controldim == 0:
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        concatenate((powerflow.ypt, powerflow.ypv), axis=1),
-                        concatenate((powerflow.yqt, powerflow.yqv), axis=1),
-                        concatenate((powerflow.yxt, powerflow.yxv), axis=1),
+                        concatenate((anarede.ypt, anarede.ypv), axis=1),
+                        concatenate((anarede.yqt, anarede.yqv), axis=1),
+                        concatenate((anarede.yxt, anarede.yxv), axis=1),
                     ),
                     axis=0,
                 ),
@@ -423,16 +415,16 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv + pxp-qxp-ypp-yqp-yxp
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxp,
-                        powerflow.qxp,
-                        powerflow.ypp,
-                        powerflow.yqp,
-                        powerflow.yxp,
+                        anarede.pxp,
+                        anarede.qxp,
+                        anarede.ypp,
+                        anarede.yqp,
+                        anarede.yxp,
                     ),
                     axis=0,
                 ),
@@ -441,16 +433,16 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp + pxq-qxq-ypq-yqq-yxq
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxq,
-                        powerflow.qxq,
-                        powerflow.ypq,
-                        powerflow.yqq,
-                        powerflow.yxq,
+                        anarede.pxq,
+                        anarede.qxq,
+                        anarede.ypq,
+                        anarede.yqq,
+                        anarede.yxq,
                     ),
                     axis=0,
                 ),
@@ -459,16 +451,16 @@ def freqsubjac(
         )
 
         # H-M-ypt-yqt-yxt N-L-ypv-yqv-yxv pxp-qxp-ypp-yqp-yxp pxq-qxq-ypq-yqq-yxq + pxx-qxx-ypx-yqx-yxx
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        powerflow.pxx,
-                        powerflow.qxx,
-                        powerflow.ypx,
-                        powerflow.yqx,
-                        powerflow.yxx,
+                        anarede.pxx,
+                        anarede.qxx,
+                        anarede.ypx,
+                        anarede.yqx,
+                        anarede.yxx,
                     ),
                     axis=0,
                 ),
@@ -478,72 +470,70 @@ def freqsubjac(
 
 
 def frequpdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Atualização da potência ativa gerada
-    powerflow.solution["active_generation"] += powerflow.statevar[
-        (powerflow.dimprefreq) : (powerflow.dimprefreq + powerflow.nger)
+    anarede.solution["active_generation"] += anarede.statevar[
+        (anarede.dimprefreq) : (anarede.dimprefreq + anarede.nger)
     ]
     # Atualização da potência reativa gerada
-    powerflow.solution["qlim_reactive_generation"] += powerflow.statevar[
-        (powerflow.dimprefreq + powerflow.nger) : (
-            powerflow.dimprefreq + 2 * powerflow.nger
-        )
+    anarede.solution["qlim_reactive_generation"] += anarede.statevar[
+        (anarede.dimprefreq + anarede.nger) : (anarede.dimprefreq + 2 * anarede.nger)
     ]
     # Atualização da defasagem angular
-    powerflow.solution["freq"] += powerflow.statevar[
-        (powerflow.dimprefreq + 2 * powerflow.nger)
+    anarede.solution["freq"] += anarede.statevar[
+        (anarede.dimprefreq + 2 * anarede.nger)
     ]
 
     # Tratamento de limite de potência ativa
-    for idx, value in powerflow.dgerDF.iterrows():
-        if powerflow.solution["freq"] >= powerflow.freqger["max"][idx]:
-            powerflow.solution["active_generation"][idx] = (
-                value["potencia_ativa_minima"] / powerflow.options["BASE"]
+    for idx, value in anarede.dgerDF.iterrows():
+        if anarede.solution["freq"] >= anarede.freqger["max"][idx]:
+            anarede.solution["active_generation"][idx] = (
+                value["potencia_ativa_minima"] / anarede.cte["BASE"]
             )
-            powerflow.ypp[idx][idx] = infty
-        elif powerflow.solution["freq"] <= powerflow.freqger["min"][idx]:
-            powerflow.solution["active_generation"][idx] = (
-                value["potencia_ativa_maxima"] / powerflow.options["BASE"]
+            anarede.ypp[idx][idx] = infty
+        elif anarede.solution["freq"] <= anarede.freqger["min"][idx]:
+            anarede.solution["active_generation"][idx] = (
+                value["potencia_ativa_maxima"] / anarede.cte["BASE"]
             )
-            powerflow.ypp[idx][idx] = infty
+            anarede.ypp[idx][idx] = infty
         else:
-            powerflow.ypp[idx][idx] = 1
+            anarede.ypp[idx][idx] = 1
 
 
 def freqcorr(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização dos valores de frequência para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável
-    powerflow.solution["freq"] = deepcopy(powerflow.operationpoint[case]["p"]["freq"])
-    powerflow.solution["active_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["active_generation"]
+    anarede.solution["freq"] = deepcopy(anarede.operationpoint[case]["p"]["freq"])
+    anarede.solution["active_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["active_generation"]
     )
-    powerflow.solution["qlim_reactive_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["qlim_reactive_generation"]
+    anarede.solution["qlim_reactive_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
 
 
 def freqsubhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -560,12 +550,12 @@ def freqsubhess(
 
 
 def freqsubjacsym(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     pass

@@ -11,26 +11,26 @@ from numpy import cos, sin, zeros
 
 
 def lineflow(
-    powerflow,
+    anarede,
 ):
     """cálculo do fluxo de potência nas linhas de transmissão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.solution.update(
+    anarede.solution.update(
         {
-            "active_flow_F2": zeros(powerflow.nlin),
-            "reactive_flow_F2": zeros(powerflow.nlin),
-            "active_flow_2F": zeros(powerflow.nlin),
-            "reactive_flow_2F": zeros(powerflow.nlin),
+            "active_flow_F2": zeros(anarede.nlin),
+            "reactive_flow_F2": zeros(anarede.nlin),
+            "active_flow_2F": zeros(anarede.nlin),
+            "reactive_flow_2F": zeros(anarede.nlin),
         }
     )
 
-    for idx, value in powerflow.dlinDF.iterrows():
-        k = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["de"]][0]
-        m = powerflow.dbarDF.index[powerflow.dbarDF["numero"] == value["para"]][0]
+    for idx, value in anarede.dlinDF.iterrows():
+        k = anarede.dbarDF.index[anarede.dbarDF["numero"] == value["de"]][0]
+        m = anarede.dbarDF.index[anarede.dbarDF["numero"] == value["para"]][0]
         yline = 1 / ((value["resistencia"] / 100) + 1j * (value["reatancia"] / 100))
 
         # Verifica presença de transformadores com tap != 1.
@@ -38,67 +38,67 @@ def lineflow(
             yline /= value["tap"]
 
         # Potência ativa k -> m
-        powerflow.solution["active_flow_F2"][idx] = yline.real * (
-            powerflow.solution["voltage"][k] ** 2
-        ) - powerflow.solution["voltage"][k] * powerflow.solution["voltage"][m] * (
+        anarede.solution["active_flow_F2"][idx] = yline.real * (
+            anarede.solution["voltage"][k] ** 2
+        ) - anarede.solution["voltage"][k] * anarede.solution["voltage"][m] * (
             yline.real
-            * cos(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * cos(anarede.solution["theta"][k] - anarede.solution["theta"][m])
             + yline.imag
-            * sin(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
         # Potência reativa k -> m
-        powerflow.solution["reactive_flow_F2"][idx] = -(
-            (value["susceptancia"] / (2 * powerflow.options["BASE"])) + yline.imag
-        ) * (powerflow.solution["voltage"][k] ** 2) + powerflow.solution["voltage"][
+        anarede.solution["reactive_flow_F2"][idx] = -(
+            (value["susceptancia"] / (2 * anarede.cte["BASE"])) + yline.imag
+        ) * (anarede.solution["voltage"][k] ** 2) + anarede.solution["voltage"][
             k
-        ] * powerflow.solution[
+        ] * anarede.solution[
             "voltage"
         ][
             m
         ] * (
             yline.imag
-            * cos(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * cos(anarede.solution["theta"][k] - anarede.solution["theta"][m])
             - yline.real
-            * sin(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
         # Potência ativa m -> k
-        powerflow.solution["active_flow_2F"][idx] = yline.real * (
-            powerflow.solution["voltage"][m] ** 2
-        ) - powerflow.solution["voltage"][k] * powerflow.solution["voltage"][m] * (
+        anarede.solution["active_flow_2F"][idx] = yline.real * (
+            anarede.solution["voltage"][m] ** 2
+        ) - anarede.solution["voltage"][k] * anarede.solution["voltage"][m] * (
             yline.real
-            * cos(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * cos(anarede.solution["theta"][k] - anarede.solution["theta"][m])
             - yline.imag
-            * sin(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
         # Potência reativa m -> k
-        powerflow.solution["reactive_flow_2F"][idx] = -(
-            (value["susceptancia"] / (2 * powerflow.options["BASE"])) + yline.imag
-        ) * (powerflow.solution["voltage"][m] ** 2) + powerflow.solution["voltage"][
+        anarede.solution["reactive_flow_2F"][idx] = -(
+            (value["susceptancia"] / (2 * anarede.cte["BASE"])) + yline.imag
+        ) * (anarede.solution["voltage"][m] ** 2) + anarede.solution["voltage"][
             k
-        ] * powerflow.solution[
+        ] * anarede.solution[
             "voltage"
         ][
             m
         ] * (
             yline.imag
-            * cos(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * cos(anarede.solution["theta"][k] - anarede.solution["theta"][m])
             + yline.real
-            * sin(powerflow.solution["theta"][k] - powerflow.solution["theta"][m])
+            * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
     # Active Flow
-    powerflow.solution["active_flow_F2"] *= powerflow.options["BASE"]
-    powerflow.solution["active_flow_2F"] *= powerflow.options["BASE"]
-    powerflow.solution["active_flow_loss"] = deepcopy(
-        powerflow.solution["active_flow_F2"] + powerflow.solution["active_flow_2F"]
+    anarede.solution["active_flow_F2"] *= anarede.cte["BASE"]
+    anarede.solution["active_flow_2F"] *= anarede.cte["BASE"]
+    anarede.solution["active_flow_loss"] = deepcopy(
+        anarede.solution["active_flow_F2"] + anarede.solution["active_flow_2F"]
     )
 
     # Reactive Flow
-    powerflow.solution["reactive_flow_F2"] *= powerflow.options["BASE"]
-    powerflow.solution["reactive_flow_2F"] *= powerflow.options["BASE"]
-    powerflow.solution["reactive_flow_loss"] = deepcopy(
-        powerflow.solution["reactive_flow_F2"] + powerflow.solution["reactive_flow_2F"]
+    anarede.solution["reactive_flow_F2"] *= anarede.cte["BASE"]
+    anarede.solution["reactive_flow_2F"] *= anarede.cte["BASE"]
+    anarede.solution["reactive_flow_loss"] = deepcopy(
+        anarede.solution["reactive_flow_F2"] + anarede.solution["reactive_flow_2F"]
     )

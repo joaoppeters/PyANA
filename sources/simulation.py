@@ -7,103 +7,127 @@
 # ------------------------------------- #
 
 
-def simulation(
-    powerflow,
+def exlf(
+    anarede,
 ):
-    """chamada automática do método de solução selecionado
-
+    """chamada automática do método de solução numérico newton-raphson não-linear
     Args
-        powerflow:
+        anarede: objeto da classe PowerFlowContainer
     """
     ## Inicialização
-    # Chamada específica método de Newton-Raphson Não-Linear
-    if powerflow.method == "EXLF":
-        from matrices import admittance
-        from newton import newton
-        from report import reportfile
+    from matrices import admittance
+    from newton import newton
+    from report import reportfile
 
-        admittance(
-            powerflow,
-        )
+    admittance(
+        anarede,
+    )
 
-        newton(
-            powerflow,
-        )
+    newton(
+        anarede,
+    )
 
-        reportfile(
-            powerflow,
-        )
+    reportfile(
+        anarede,
+    )
 
-    # Chamada específica método Continuado
-    elif powerflow.method == "EXIC":
-        from matrices import admittance
-        from continuation import prediction_correction
-        from newton import newton
-        from report import reportfile
 
-        admittance(
-            powerflow,
-        )
+def exic(
+    anarede,
+):
+    """chamada automática do método de solução de fluxo de potência continuado utilizando predição-correção e solução numérica newton-raphson não-linear
+    aplicação do método desenvolvildo por V. Ajjarapu e C. Christy (1992)
 
-        newton(
-            powerflow,
-        )
+    Args
+        anarede: objeto da classe PowerFlowContainer
+    """
+    ## Inicialização
 
-        prediction_correction(
-            powerflow,
-        )
+    from matrices import admittance
+    from continuation import prediction_correction
+    from newton import newton
+    from report import reportfile
 
-        reportfile(
-            powerflow,
-        )
+    admittance(
+        anarede,
+    )
 
-    # Chamada especifica metodo direto (Canizares, 1993)
-    elif powerflow.method == "EXPC":
-        from matrices import admittance
-        from newton import newton
-        from poc import poc
-        from report import reportfile
+    newton(
+        anarede,
+    )
 
-        admittance(
-            powerflow,
-        )
+    prediction_correction(
+        anarede,
+    )
 
-        newton(
-            powerflow,
-        )
+    reportfile(
+        anarede,
+    )
 
-        poc(
-            powerflow,
-        )
 
-        reportfile(
-            powerflow,
-        )
+def expc(
+    anarede,
+):
+    """chamada automática do método de solução do ponto de colapso
+    aplicação do método desenvolvido por C. Canizares et al (1998)
 
-    # Chamada Específica para simulação dinâmica
-    elif powerflow.method == "EXSI":
-        from matrices import admittance
-        from dynamic import dynamic
-        from newton import newton
-        from setting import pathstb
-        from stb import stb
+    Args
+        anarede: objeto da classe PowerFlowContainer
+    """
+    ## Inicialização
+    from matrices import admittance
+    from newton import newton
+    from poc import poc
+    from report import reportfile
 
-        pathstb(
-            powerflow,
-        )
+    admittance(
+        anarede,
+    )
 
-        stb(
-            powerflow,
-        )
+    newton(
+        anarede,
+    )
 
-        admittance(
-            powerflow,
-        )
+    poc(
+        anarede,
+    )
 
-        newton(
-            powerflow,
-        )
+    reportfile(
+        anarede,
+    )
 
-        dynamic(
-            powerflow,
-        )
+
+def exsi(
+    anatem,
+):
+    """chamada automática do método de simulação dinâmica
+
+    Args
+        anatem: objeto da classe PowerFlowContainer
+    """
+    ## Inicialização
+    from matrices import admittance
+    from dynamic import dynamic
+    from newton import newton
+    from path import pathstb
+    from stb import stb
+
+    pathstb(
+        anatem,
+    )
+
+    stb(
+        anatem,
+    )
+
+    # admittance(
+    #     anatem,
+    # )
+
+    # newton(
+    #     anatem,
+    # )
+
+    # dynamic(
+    #     anatem,
+    # )

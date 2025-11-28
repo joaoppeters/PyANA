@@ -11,47 +11,47 @@ from numpy.linalg import norm
 
 
 def convergence(
-    powerflow,
+    anarede,
 ):
     """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Trajetória de convergência da frequência
-    powerflow.solution["freqiter"] = append(
-        powerflow.solution["freqiter"],
-        powerflow.solution["freq"] * powerflow.options["FBASE"],
+    anarede.solution["freqiter"] = append(
+        anarede.solution["freqiter"],
+        anarede.solution["freq"] * anarede.cte["FBSE"],
     )
 
     # Trajetória de convergência da potência ativa
-    powerflow.solution["convP"] = append(
-        powerflow.solution["convP"], norm(powerflow.deltaP[powerflow.maskP])
+    anarede.solution["convP"] = append(
+        anarede.solution["convP"], norm(anarede.deltaP[anarede.maskP])
     )
-    powerflow.solution["busP"] = append(
-        powerflow.solution["busP"], argmax(abs(powerflow.deltaP[powerflow.maskP]))
+    anarede.solution["busP"] = append(
+        anarede.solution["busP"], argmax(abs(anarede.deltaP[anarede.maskP]))
     )
 
     # Trajetória de convergência da potência reativa
-    powerflow.solution["convQ"] = append(
-        powerflow.solution["convQ"], norm(powerflow.deltaQ[powerflow.maskQ])
+    anarede.solution["convQ"] = append(
+        anarede.solution["convQ"], norm(anarede.deltaQ[anarede.maskQ])
     )
     try:
-        powerflow.solution["busQ"] = append(
-            powerflow.solution["busQ"], argmax(abs(powerflow.deltaQ[powerflow.maskQ]))
+        anarede.solution["busQ"] = append(
+            anarede.solution["busQ"], argmax(abs(anarede.deltaQ[anarede.maskQ]))
         )
     except:
-        powerflow.solution["busQ"] = append(powerflow.solution["busQ"], [0.0])
+        anarede.solution["busQ"] = append(anarede.solution["busQ"], [0.0])
 
     # Trajetória de convergência referente a cada equação de controle adicional
-    if powerflow.deltaY.size != 0:
-        powerflow.solution["convY"] = append(
-            powerflow.solution["convY"], norm(powerflow.deltaY)
+    if anarede.deltaY.size != 0:
+        anarede.solution["convY"] = append(
+            anarede.solution["convY"], norm(anarede.deltaY)
         )
-        powerflow.solution["busY"] = append(
-            powerflow.solution["busY"], argmax(abs(powerflow.deltaY))
+        anarede.solution["busY"] = append(
+            anarede.solution["busY"], argmax(abs(anarede.deltaY))
         )
     else:
-        powerflow.solution["convY"] = append(powerflow.solution["convY"], 0.0)
-        powerflow.solution["busY"] = append(powerflow.solution["busY"], 0.0)
+        anarede.solution["convY"] = append(anarede.solution["convY"], 0.0)
+        anarede.solution["busY"] = append(anarede.solution["busY"], 0.0)

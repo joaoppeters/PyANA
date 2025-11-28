@@ -11,565 +11,605 @@ from os import mkdir
 
 
 def folder(
-    powerflow,
+    anarede,
 ):
     """inicialização
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Diretório de Sistemas
-    dirSistemas = dirname(powerflow.dirPWF)
+    dirSistemas = dirname(anarede.dirPWF)
 
     # Criação de diretório Resultados
-    powerflow.resultsfolder = dirname(dirSistemas) + "\\resultados\\"
-    if exists(powerflow.resultsfolder) is False:
-        mkdir(powerflow.resultsfolder)
+    anarede.resultsfolder = dirname(dirSistemas) + "\\resultados\\"
+    if exists(anarede.resultsfolder) is False:
+        mkdir(anarede.resultsfolder)
 
 
 def areasfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de análise de área
 
     Args
-        powerflow:
+        anarede:
         name: nome do diretório
     """
     ## Inicialização
-    powerflow.infofolder = powerflow.resultsfolder + "iNFO\\"
-    if exists(powerflow.infofolder) is False:
-        mkdir(powerflow.infofolder)
+    anarede.infofolder = anarede.resultsfolder + "iNFO\\"
+    if exists(anarede.infofolder) is False:
+        mkdir(anarede.infofolder)
 
 
 def admittancefolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de matriz admitância
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.admittancefolder = powerflow.resultsfolder + "MatrizAdmitancia\\"
-    if exists(powerflow.admittancefolder) is False:
-        mkdir(powerflow.admittancefolder)
+    anarede.admittancefolder = anarede.resultsfolder + "MatrizAdmitancia\\"
+    if exists(anarede.admittancefolder) is False:
+        mkdir(anarede.admittancefolder)
 
-    powerflow.admittancefolder = powerflow.admittancefolder + powerflow.name + "\\"
-    if exists(powerflow.admittancefolder) is False:
-        mkdir(powerflow.admittancefolder)
+    anarede.admittancefolder = anarede.admittancefolder + anarede.name + "\\"
+    if exists(anarede.admittancefolder) is False:
+        mkdir(anarede.admittancefolder)
 
 
 def bxlffolder(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
-        mkdir(powerflow.exlffolder)
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
+        mkdir(anarede.exlffolder)
 
-    powerflow.bxlffolder = powerflow.exlffolder + "BASE\\"
-    if exists(powerflow.bxlffolder) is False:
-        mkdir(powerflow.bxlffolder)
+    anarede.bxlffolder = anarede.exlffolder + "BASE\\"
+    if exists(anarede.bxlffolder) is False:
+        mkdir(anarede.bxlffolder)
 
 
 def bxicfolder(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     bxlffolder(
-        powerflow,
+        anarede,
     )
-    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
-    if exists(powerflow.exicfolder) is False:
-        mkdir(powerflow.exicfolder)
+    anarede.exicfolder = dirname(anarede.dirPWF) + "\\EXIC\\"
+    if exists(anarede.exicfolder) is False:
+        mkdir(anarede.exicfolder)
 
-    powerflow.bxicfolder = powerflow.exicfolder + "BASE\\"
-    if exists(powerflow.bxicfolder) is False:
-        mkdir(powerflow.bxicfolder)
+    anarede.bxicfolder = anarede.exicfolder + "BASE\\"
+    if exists(anarede.bxicfolder) is False:
+        mkdir(anarede.bxicfolder)
 
 
 def bxctfolder(
-    powerflow,
+    anarede,
     where: str = "EXLF",
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     bxicfolder(
-        powerflow,
+        anarede,
     )
 
-    powerflow.exctfolder = dirname(powerflow.dirPWF) + "\\EXCT\\"
-    if exists(powerflow.exctfolder) is False:
-        mkdir(powerflow.exctfolder)
+    anarede.exctfolder = dirname(anarede.dirPWF) + "\\EXCT\\"
+    if exists(anarede.exctfolder) is False:
+        mkdir(anarede.exctfolder)
 
-    powerflow.bxctfolder = powerflow.exctfolder + "BASE\\"
-    if exists(powerflow.bxctfolder) is False:
-        mkdir(powerflow.bxctfolder)
+    anarede.bxctfolder = anarede.exctfolder + "BASE\\"
+    if exists(anarede.bxctfolder) is False:
+        mkdir(anarede.bxctfolder)
 
 
 def convergencefolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados da trajetória de convergência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.convergencefolder = powerflow.resultsfolder + "TrajetoriaConvergencia\\"
-    if exists(powerflow.convergencefolder) is False:
-        mkdir(powerflow.convergencefolder)
+    anarede.convergencefolder = anarede.resultsfolder + "TrajetoriaConvergencia\\"
+    if exists(anarede.convergencefolder) is False:
+        mkdir(anarede.convergencefolder)
 
-    powerflow.convergencefolder = powerflow.convergencefolder + powerflow.name + "\\"
-    if exists(powerflow.convergencefolder) is False:
-        mkdir(powerflow.convergencefolder)
+    anarede.convergencefolder = anarede.convergencefolder + anarede.name + "\\"
+    if exists(anarede.convergencefolder) is False:
+        mkdir(anarede.convergencefolder)
 
 
 def continuationfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.continuationfolder = powerflow.resultsfolder + "Continuado\\"
-    if exists(powerflow.continuationfolder) is False:
-        mkdir(powerflow.continuationfolder)
+    anarede.continuationfolder = anarede.resultsfolder + "Continuado\\"
+    if exists(anarede.continuationfolder) is False:
+        mkdir(anarede.continuationfolder)
 
-    powerflow.systemcontinuationfolder = (
-        powerflow.continuationfolder + powerflow.name + "\\"
+    anarede.systemcontinuationfolder = anarede.continuationfolder + anarede.name + "\\"
+    if exists(anarede.systemcontinuationfolder) is False:
+        mkdir(anarede.systemcontinuationfolder)
+
+    anarede.systemcontinuationfolderimag = (
+        anarede.systemcontinuationfolder + "imagens\\"
     )
-    if exists(powerflow.systemcontinuationfolder) is False:
-        mkdir(powerflow.systemcontinuationfolder)
+    if exists(anarede.systemcontinuationfolderimag) is False:
+        mkdir(anarede.systemcontinuationfolderimag)
 
-    powerflow.systemcontinuationfolderimag = (
-        powerflow.systemcontinuationfolder + "imagens\\"
-    )
-    if exists(powerflow.systemcontinuationfolderimag) is False:
-        mkdir(powerflow.systemcontinuationfolderimag)
-
-    powerflow.systemcontinuationfoldertxt = powerflow.systemcontinuationfolder + "txt\\"
-    if exists(powerflow.systemcontinuationfoldertxt) is False:
-        mkdir(powerflow.systemcontinuationfoldertxt)
+    anarede.systemcontinuationfoldertxt = anarede.systemcontinuationfolder + "txt\\"
+    if exists(anarede.systemcontinuationfoldertxt) is False:
+        mkdir(anarede.systemcontinuationfoldertxt)
 
 
 def jacobifolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.jacobifolder = powerflow.resultsfolder + "MatrizJacobiana\\"
-    if exists(powerflow.jacobifolder) is False:
-        mkdir(powerflow.jacobifolder)
+    anarede.jacobifolder = anarede.resultsfolder + "MatrizJacobiana\\"
+    if exists(anarede.jacobifolder) is False:
+        mkdir(anarede.jacobifolder)
 
-    powerflow.jacobifolder = powerflow.jacobifolder + powerflow.name + "\\"
-    if exists(powerflow.jacobifolder) is False:
-        mkdir(powerflow.jacobifolder)
+    anarede.jacobifolder = anarede.jacobifolder + anarede.name + "\\"
+    if exists(anarede.jacobifolder) is False:
+        mkdir(anarede.jacobifolder)
+
+
+def logfolder(
+    logfolder,
+):
+    """criação de diretório para armazenar arquivos de log
+
+    Args
+        directory:
+    """
+    ## Inicialização
+    if exists(logfolder) is False:
+        mkdir(logfolder)
+    return logfolder
+
+
+def outfolder(
+    outfolder,
+):
+    """criação de diretório para armazenar arquivos de saída
+
+    Args
+        directory:
+    """
+    ## Inicialização
+    if exists(outfolder) is False:
+        mkdir(outfolder)
+    return outfolder
+
+
+def pltfolder(
+    pltfolder,
+):
+    """criação de diretório para armazenar arquivos de plotagem
+
+    Args
+        directory:
+    """
+    ## Inicialização
+    if exists(pltfolder) is False:
+        mkdir(pltfolder)
+    return pltfolder
 
 
 def pssefolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados no formato do PSSe
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.pssefolder = dirname(powerflow.dirPWF) + "\\PSSe\\"
-    if exists(powerflow.pssefolder) is False:
-        mkdir(powerflow.pssefolder)
+    anarede.pssefolder = dirname(anarede.dirPWF) + "\\PSSe\\"
+    if exists(anarede.pssefolder) is False:
+        mkdir(anarede.pssefolder)
 
 
 def reportsfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de relatórios
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.reportsfolder = powerflow.resultsfolder + "Relatorios\\"
-    if exists(powerflow.reportsfolder) is False:
-        mkdir(powerflow.reportsfolder)
+    anarede.reportsfolder = anarede.resultsfolder + "Relatorios\\"
+    if exists(anarede.reportsfolder) is False:
+        mkdir(anarede.reportsfolder)
 
-    powerflow.reportsfolder = powerflow.reportsfolder + powerflow.name + "\\"
-    if exists(powerflow.reportsfolder) is False:
-        mkdir(powerflow.reportsfolder)
+    anarede.reportsfolder = anarede.reportsfolder + anarede.name + "\\"
+    if exists(anarede.reportsfolder) is False:
+        mkdir(anarede.reportsfolder)
 
 
 def rbarfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de análise de barra
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     bxctfolder(
-        powerflow,
+        anarede,
     )
-    powerflow.rbarxlffolder = powerflow.exlffolder + "RBAR\\"
-    if exists(powerflow.rbarxlffolder) is False:
-        mkdir(powerflow.rbarxlffolder)
+    anarede.rbarxlffolder = anarede.exlffolder + "RBAR\\"
+    if exists(anarede.rbarxlffolder) is False:
+        mkdir(anarede.rbarxlffolder)
 
-    powerflow.rbarxicfolder = powerflow.exicfolder + "RBAR\\"
-    if exists(powerflow.rbarxicfolder) is False:
-        mkdir(powerflow.rbarxicfolder)
+    anarede.rbarxicfolder = anarede.exicfolder + "RBAR\\"
+    if exists(anarede.rbarxicfolder) is False:
+        mkdir(anarede.rbarxicfolder)
 
-    powerflow.rbarxctfolder = powerflow.exctfolder + "RBAR\\"
-    if exists(powerflow.rbarxctfolder) is False:
-        mkdir(powerflow.rbarxctfolder)
+    anarede.rbarxctfolder = anarede.exctfolder + "RBAR\\"
+    if exists(anarede.rbarxctfolder) is False:
+        mkdir(anarede.rbarxctfolder)
 
 
 def rintfolder(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
-    if exists(powerflow.exlffolder) is False:
-        mkdir(powerflow.exlffolder)
-    if exists(powerflow.exicfolder) is False:
-        mkdir(powerflow.exicfolder)
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    anarede.exicfolder = dirname(anarede.dirPWF) + "\\EXIC\\"
+    if exists(anarede.exlffolder) is False:
+        mkdir(anarede.exlffolder)
+    if exists(anarede.exicfolder) is False:
+        mkdir(anarede.exicfolder)
 
-    powerflow.rintfolder = powerflow.exlffolder + "RINT\\"
-    if exists(powerflow.rintfolder) is False:
-        mkdir(powerflow.rintfolder)
+    anarede.rintfolder = anarede.exlffolder + "RINT\\"
+    if exists(anarede.rintfolder) is False:
+        mkdir(anarede.rintfolder)
 
 
 def rlinfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de análise de linha
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     bxctfolder(
-        powerflow,
+        anarede,
     )
-    powerflow.rlinxlffolder = powerflow.exlffolder + "RLIN\\"
-    if exists(powerflow.rlinxlffolder) is False:
-        mkdir(powerflow.rlinxlffolder)
+    anarede.rlinxlffolder = anarede.exlffolder + "RLIN\\"
+    if exists(anarede.rlinxlffolder) is False:
+        mkdir(anarede.rlinxlffolder)
 
-    powerflow.rlinxicfolder = powerflow.exicfolder + "RLIN\\"
-    if exists(powerflow.rlinxicfolder) is False:
-        mkdir(powerflow.rlinxicfolder)
+    anarede.rlinxicfolder = anarede.exicfolder + "RLIN\\"
+    if exists(anarede.rlinxicfolder) is False:
+        mkdir(anarede.rlinxicfolder)
 
-    powerflow.rlinxctfolder = powerflow.exctfolder + "RLIN\\"
-    if exists(powerflow.rlinxctfolder) is False:
-        mkdir(powerflow.rlinxctfolder)
+    anarede.rlinxctfolder = anarede.exctfolder + "RLIN\\"
+    if exists(anarede.rlinxctfolder) is False:
+        mkdir(anarede.rlinxctfolder)
 
 
 def rtotfolder(
-    powerflow,
+    anarede,
 ):
     """
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
-        mkdir(powerflow.exlffolder)
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
+        mkdir(anarede.exlffolder)
 
-    powerflow.rtotfolder = powerflow.exlffolder + "RTOT\\"
-    if exists(powerflow.rtotfolder) is False:
-        mkdir(powerflow.rtotfolder)
+    anarede.rtotfolder = anarede.exlffolder + "RTOT\\"
+    if exists(anarede.rtotfolder) is False:
+        mkdir(anarede.rtotfolder)
 
 
 def sagefolder(
-    powerflow,
+    anarede,
     pwffile,
 ):
     """criação de diretório para armazenar resultados de SAGE
 
     Args
-        powerflow:
+        anarede:
         pwffile:
     """
     ## Inicialização
-    sagefolder = dirname(powerflow.dirPWF) + "\\SAGE\\"
+    sagefolder = dirname(anarede.dirPWF) + "\\SAGE\\"
     if exists(sagefolder) is False:
         mkdir(sagefolder)
 
-    powerflow.sagefolder = sagefolder + pwffile.removesuffix(".PWF") + "\\"
-    if exists(powerflow.sagefolder) is False:
-        mkdir(powerflow.sagefolder)
+    anarede.sagefolder = sagefolder + pwffile.removesuffix(".PWF") + "\\"
+    if exists(anarede.sagefolder) is False:
+        mkdir(anarede.sagefolder)
 
 
 def smoothfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados suaves
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Condição de método
-    if powerflow.method == "EXLF":
-        powerflow.dirsmooth = powerflow.resultsfolder + "Smooth\\"
-        if exists(powerflow.dirsmooth) is False:
-            mkdir(powerflow.dirsmooth)
+    if anarede.method == "EXLF":
+        anarede.dirsmooth = anarede.resultsfolder + "Smooth\\"
+        if exists(anarede.dirsmooth) is False:
+            mkdir(anarede.dirsmooth)
 
-        powerflow.dirsmoothsys = powerflow.dirsmooth + powerflow.name + "\\"
-        if exists(powerflow.dirsmoothsys) is False:
-            mkdir(powerflow.dirsmoothsys)
+        anarede.dirsmoothsys = anarede.dirsmooth + anarede.name + "\\"
+        if exists(anarede.dirsmoothsys) is False:
+            mkdir(anarede.dirsmoothsys)
 
-    elif powerflow.method == "EXIC":
-        powerflow.dirsmoothsys = powerflow.systemcontinuationfolder + "smooth\\"
-        if exists(powerflow.dirsmoothsys) is False:
-            mkdir(powerflow.dirsmoothsys)
+    elif anarede.method == "EXIC":
+        anarede.dirsmoothsys = anarede.systemcontinuationfolder + "smooth\\"
+        if exists(anarede.dirsmoothsys) is False:
+            mkdir(anarede.dirsmoothsys)
 
 
 def sxlffolder(
-    powerflow,
+    anarede,
     loadstd,
     geolstd,
 ):
     """criação de diretório para armazenar dados de simulação estocástica
 
     Args
-        powerflow:
+        anarede:
         loadstd:
         geolstd:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
-        mkdir(powerflow.exlffolder)
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
+        mkdir(anarede.exlffolder)
 
     if geolstd > 0 and loadstd > 0:
-        powerflow.sxlffolder = (
-            powerflow.exlffolder
+        anarede.sxlffolder = (
+            anarede.exlffolder
             + "EXLF_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
                 geolstd,
             )
         )
     elif loadstd > 0:
-        powerflow.sxlffolder = (
-            powerflow.exlffolder
+        anarede.sxlffolder = (
+            anarede.exlffolder
             + "EXLF_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.sxlffolder) is False:
-        mkdir(powerflow.sxlffolder)
+    if exists(anarede.sxlffolder) is False:
+        mkdir(anarede.sxlffolder)
 
 
 def sxicfolder(
-    powerflow,
+    anarede,
     loadstd,
     geolstd,
 ):
     """criação de diretório para armazenar dados de simulação estocástica
 
     Args
-        powerflow:
+        anarede:
         loadstd:
         geolstd:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    powerflow.exicfolder = dirname(powerflow.dirPWF) + "\\EXIC\\"
-    if exists(powerflow.exicfolder) is False:
-        mkdir(powerflow.exicfolder)
+    anarede.exicfolder = dirname(anarede.dirPWF) + "\\EXIC\\"
+    if exists(anarede.exicfolder) is False:
+        mkdir(anarede.exicfolder)
 
     if geolstd > 0 and loadstd > 0:
-        powerflow.sxic = (
-            powerflow.exicfolder
+        anarede.sxic = (
+            anarede.exicfolder
             + "\\EXIC_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
                 geolstd,
             )
         )
     elif loadstd > 0:
-        powerflow.sxic = (
-            powerflow.exicfolder
+        anarede.sxic = (
+            anarede.exicfolder
             + "\\EXIC_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.sxic) is False:
-        mkdir(powerflow.sxic)
+    if exists(anarede.sxic) is False:
+        mkdir(anarede.sxic)
 
 
 def sxctfolder(
-    powerflow,
+    anarede,
     loadstd,
     geolstd,
 ):
     """criação de diretório para armazenar dados de simulação estocástica
 
     Args
-        powerflow:
+        anarede:
         loadstd:
         geolstd:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    powerflow.exctfolder = dirname(powerflow.dirPWF) + "\\EXCT\\"
-    if exists(powerflow.exctfolder) is False:
-        mkdir(powerflow.exctfolder)
+    anarede.exctfolder = dirname(anarede.dirPWF) + "\\EXCT\\"
+    if exists(anarede.exctfolder) is False:
+        mkdir(anarede.exctfolder)
 
     if geolstd > 0 and loadstd > 0:
-        powerflow.sxct = (
-            powerflow.exctfolder
+        anarede.sxct = (
+            anarede.exctfolder
             + "\\EXCT_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
                 geolstd,
             )
         )
     elif loadstd > 0:
-        powerflow.sxct = (
-            powerflow.exctfolder
+        anarede.sxct = (
+            anarede.exctfolder
             + "\\EXCT_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.sxct) is False:
-        mkdir(powerflow.sxct)
+    if exists(anarede.sxct) is False:
+        mkdir(anarede.sxct)
 
 
 def spvctfolder(
-    powerflow,
+    anarede,
     loadstd,
     geolstd,
 ):
     """criação de diretório para armazenar dados de simulação estocástica
 
     Args
-        powerflow:
+        anarede:
         loadstd:
         geolstd:
     """
     ## Inicialização
-    powerflow.exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
-    if exists(powerflow.exlffolder) is False:
+    anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
+    if exists(anarede.exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    powerflow.pvctfolder = dirname(powerflow.dirPWF) + "\\PVCT\\"
-    if exists(powerflow.pvctfolder) is False:
-        mkdir(powerflow.pvctfolder)
+    anarede.pvctfolder = dirname(anarede.dirPWF) + "\\PVCT\\"
+    if exists(anarede.pvctfolder) is False:
+        mkdir(anarede.pvctfolder)
 
     if geolstd > 0:
-        powerflow.spvct = (
-            powerflow.pvctfolder
+        anarede.spvct = (
+            anarede.pvctfolder
             + "\\PVCT_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}_geolstd{}".format(
                 loadstd,
                 geolstd,
             )
         )
     else:
-        powerflow.spvct = (
-            powerflow.pvctfolder
+        anarede.spvct = (
+            anarede.pvctfolder
             + "\\PVCT_"
-            + powerflow.name
+            + anarede.name
             + "_loadstd{}".format(
                 loadstd,
             )
         )
-    if exists(powerflow.spvct) is False:
-        mkdir(powerflow.spvct)
+    if exists(anarede.spvct) is False:
+        mkdir(anarede.spvct)
 
 
 def statevarfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados finais de convergência das variáveis de estado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.statevarfolder = powerflow.resultsfolder + "VariaveisEstado\\"
-    if exists(powerflow.statevarfolder) is False:
-        mkdir(powerflow.statevarfolder)
+    anarede.statevarfolder = anarede.resultsfolder + "VariaveisEstado\\"
+    if exists(anarede.statevarfolder) is False:
+        mkdir(anarede.statevarfolder)
 
-    powerflow.statevarfolder = powerflow.statevarfolder + powerflow.name + "\\"
-    if exists(powerflow.statevarfolder) is False:
-        mkdir(powerflow.statevarfolder)
+    anarede.statevarfolder = anarede.statevarfolder + anarede.name + "\\"
+    if exists(anarede.statevarfolder) is False:
+        mkdir(anarede.statevarfolder)
 
 
 def vsmfolder(
-    powerflow,
+    anarede,
 ):
     """criação de diretório para armazenar resultados de análise de sensibilidade de tensão
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    exlffolder = dirname(powerflow.dirPWF) + "\\EXLF\\"
+    exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(exlffolder) is False:
         raise ValueError(
             f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
         )
 
-    exicfolder = dirname(powerflow.dirPWF) + "\\EXIC"
+    exicfolder = dirname(anarede.dirPWF) + "\\EXIC"
     if exists(exicfolder) is False:
         mkdir(exicfolder)
 
-    powerflow.vsmfolder = exicfolder + "\\VSM"
-    if exists(powerflow.vsmfolder) is False:
-        mkdir(powerflow.vsmfolder)
+    anarede.vsmfolder = exicfolder + "\\VSM"
+    if exists(anarede.vsmfolder) is False:
+        mkdir(anarede.vsmfolder)

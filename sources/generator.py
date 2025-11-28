@@ -10,49 +10,49 @@ from numpy import append, array, concatenate, cos, pi, sin, zeros
 
 
 def postflow(
-    powerflow,
+    anatem,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
-    Ya = zeros([powerflow.nger, powerflow.nger], dtype=complex)
-    Yb = zeros([powerflow.nger, powerflow.nbus], dtype=complex)
-    Yd = zeros([powerflow.nbus, powerflow.nbus], dtype=complex)
+    Ya = zeros([anatem.nger, anatem.nger], dtype=complex)
+    Yb = zeros([anatem.nger, anatem.nbus], dtype=complex)
+    Yd = zeros([anatem.nbus, anatem.nbus], dtype=complex)
 
-    powerflow.generator = dict()
-    for idx, value in powerflow.dmaqDF.iterrows():
-        gen = powerflow.dbarDF.loc[
-            powerflow.dbarDF["numero"] == value["numero"], "numero"
+    anatem.generator = dict()
+    for idx, value in anatem.dmaqDF.iterrows():
+        gen = anatem.dbarDF.loc[
+            anatem.dbarDF["numero"] == value["numero"], "numero"
         ].values[0]
-        powerflow.generator[gen] = list()
-        dmdg = powerflow.dmdgDF.loc[powerflow.dmdgDF["numero"] == value["gerador"]]
+        anatem.generator[gen] = list()
+        dmdg = anatem.dmdgDF.loc[anatem.dmdgDF["numero"] == value["gerador"]]
         if dmdg.tipo.values[0] == "MD01":
             md01(
-                powerflow,
+                anatem,
                 gen,
                 dmdg,
             )
 
-            Ya[idx, idx] = 1 / (1j * powerflow.generator[gen][3])
-            Yb[idx, value["numero"] - 1] = -1 / (1j * powerflow.generator[gen][3])
+            Ya[idx, idx] = 1 / (1j * anatem.generator[gen][3])
+            Yb[idx, value["numero"] - 1] = -1 / (1j * anatem.generator[gen][3])
             Yd[value["numero"] - 1, value["numero"] - 1] += 1 / (
-                1j * powerflow.generator[gen][3]
+                1j * anatem.generator[gen][3]
             )
 
-    powerflow.Yblc = concatenate(
+    anatem.Yblc = concatenate(
         (
             concatenate((Ya, Yb), axis=1),
-            concatenate((Yb.T, powerflow.Yb + Yd), axis=1),
+            concatenate((Yb.T, anatem.Yb + Yd), axis=1),
         ),
         axis=0,
     )
 
 
 def md01(
-    powerflow,
+    anatem,
     gen,
     dmdg,
 ):
@@ -64,44 +64,44 @@ def md01(
     Posicao 4: resistencia
 
     Args
-        powerflow:
+        anatem:
         gen: indice do gerador
         dmdg: informacoes obtidas do dmdgDF
     """
     ## Inicialização
-    powerflow.generator[gen].append("MD01")
-    powerflow.generator[gen].append(
-        dmdg["inercia"].values[0] / (pi * powerflow.options["FBASE"])
+    anatem.generator[gen].append("MD01")
+    anatem.generator[gen].append(
+        dmdg["inercia"].values[0] / (pi * anatem.options["FBSE"])
     )
-    powerflow.generator[gen].append(dmdg["amortecimento"].values[0])
-    powerflow.generator[gen].append(
-        dmdg["l-transitoria"].values[0] * 2 * pi * powerflow.options["FBASE"]
+    anatem.generator[gen].append(dmdg["amortecimento"].values[0])
+    anatem.generator[gen].append(
+        dmdg["l-transitoria"].values[0] * 2 * pi * anatem.options["FBSE"]
     )
-    powerflow.generator[gen].append(dmdg["r-armadura"].values[0])
+    anatem.generator[gen].append(dmdg["r-armadura"].values[0])
 
 
 # def md01peut(
-#     powerflow,
+#     anatem,
 #     delta,
 #     gen,
 # ):
 #     """equação de potência eletrica do modelo clássico do gerador
 
 #     Args
-#         powerflow:
+#         anatem:
 #     """
 
 #     ## Inicialização
 #     return (
-#         powerflow.solution["fem"][gen]
+#         anatem.solution["fem"][gen]
 #         * array(
 #             [
-#                 powerflow.solution["fem"][j]
+#                 anatem.solution["fem"][j]
 #                 * (
 #                     Yred[gen, j].imag * sin(delta[gen] - delta[j])
 #                     + Yred[gen, j].real * cos(delta[gen] - delta[j])
 #                 )
-#                 for j in range(powerflow.nger)
+#                 for j in range(anatem.nger)
 #             ]
 #         ).sum()
 #     )

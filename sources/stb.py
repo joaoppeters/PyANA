@@ -8,140 +8,199 @@
 
 import time
 
+from darq import rdarq
 from dstb import *
 
 
 def stb(
-    powerflow,
+    anatem,
 ):
     """
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     t = time.process_time()
 
     # Variáveis
-    powerflow.linecount = 0
+    anatem.linecount = 0
+
+    # Funções
+    keywords(
+        anatem,
+    )
 
     # Funções
     codes(
-        powerflow,
+        anatem,
     )
 
     # Leitura
     rstb(
-        powerflow,
+        anatem,
     )
 
-    if powerflow.method == "EXSI":
-        rdarq(
-            powerflow,
-        )
+    rdarq(
+        anatem,
+    )
 
     print(f"Leitura dos dados em {time.process_time() - t:2.3f}[s].")
 
 
+def keywords(
+    anatem,
+):
+    """palavras-chave de arquivo .pwf
+
+    Args
+        anarede:
+    """
+    ## Inicialização
+    anatem.end_line = "\n"
+    anatem.end_archive = "FIM"
+    anatem.end_block = (
+        "9999",
+        "99999",
+        "999999",
+    )
+    anatem.comment = "("
+
+
 def codes(
-    powerflow,
+    anatem,
 ):
     """códigos de dados de execução implementados
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     # Variável
-    powerflow.codes.update(
+    anatem.stbblock = dict(
         {
+            "TITU": False,
             "DARQ": False,
+            "DCAR": False,
+            "DCTE": False,
             "DEVT": False,
-            "DMAQ": False,
-            "DMDG MD01": False,
+            "DOPC": False,
+            "DPLT": False,
             "DSIM": False,
         }
     )
 
 
 def rstb(
-    powerflow,
+    anatem,
 ):
     """leitura de arquivo .stb
 
     Args
-        powerflow:
+        anatem:
     """
     ## Inicialização
     # Variáveis
-    f = open(f"{powerflow.dirSTB}", "r", encoding="latin-1")
-    powerflow.lines = f.readlines()
+    f = open(f"{anatem.dirSTB}", "r", encoding="latin-1")
+    anatem.lines = f.readlines()
     f.close()
 
     # Loop de leitura de linhas do `.stb`
-    while powerflow.lines[powerflow.linecount].strip() != powerflow.end_archive:
+    while anatem.lines[anatem.linecount].strip() != anatem.end_archive:
         # Dados de Arquivos de Entrada e Saida
-        if powerflow.lines[powerflow.linecount].strip() == "DARQ":
-            powerflow.linecount += 1
-            powerflow.darq = dict()
-            powerflow.darq["ruler"] = powerflow.lines[powerflow.linecount][:]
+        if anatem.lines[anatem.linecount].strip() == "DARQ":
+            anatem.linecount += 1
+            anatem.darq = dict()
+            anatem.darq["ruler"] = anatem.lines[anatem.linecount][:]
             darq(
-                powerflow,
+                anatem,
+            )
+
+        # Dados de Cargas Funcionais Estáticas
+        elif (
+            anatem.lines[anatem.linecount].strip() == "DCAR"
+            or anatem.lines[anatem.linecount].strip() == "DCAR IMPR"
+        ):
+            anatem.linecount += 1
+            anatem.dcar = dict()
+            anatem.dcar["dcar"] = anatem.lines[anatem.linecount - 1][:]
+            anatem.dcar["ruler"] = anatem.lines[anatem.linecount][:]
+            dcar(
+                anatem,
+            )
+
+        # Dados de Controle de Execução do Programa
+        elif (
+            anatem.lines[anatem.linecount].strip() == "DCTE"
+            or anatem.lines[anatem.linecount].strip() == "DCTE IMPR"
+        ):
+            anatem.linecount += 1
+            anatem.dcte = dict()
+            anatem.dcte["dcte"] = anatem.lines[anatem.linecount - 1][:]
+            anatem.dcte["ruler"] = anatem.lines[anatem.linecount][:]
+            dcte(
+                anatem,
             )
 
         # Dados de Eventos
         elif (
-            powerflow.lines[powerflow.linecount].strip() == "DEVT"
-            or powerflow.lines[powerflow.linecount].strip() == "DEVT IMPR"
+            anatem.lines[anatem.linecount].strip() == "DEVT"
+            or anatem.lines[anatem.linecount].strip() == "DEVT IMPR"
         ):
-            powerflow.linecount += 1
-            powerflow.devt = dict()
-            powerflow.devt["ruler"] = powerflow.lines[powerflow.linecount][:]
+            anatem.linecount += 1
+            anatem.devt = dict()
+            anatem.devt["ruler"] = anatem.lines[anatem.linecount][:]
             devt(
-                powerflow,
+                anatem,
             )
+
+        # Dados de Opções de Controle e Execução Padrão
+        elif (
+            anatem.lines[anatem.linecount].strip() == "DOPC"
+            or anatem.lines[anatem.linecount].strip() == "DOPC IMPR"
+        ):
+            anatem.linecount += 1
+            anatem.dopc = dict()
+            anatem.dopc["dopc"] = anatem.lines[anatem.linecount - 1][:]
+            anatem.dopc["ruler"] = anatem.lines[anatem.linecount][:]
+            dopc(
+                anatem,
+            )
+
+        # Dados de Variáveis para Plotagem
+        elif (
+            anatem.lines[anatem.linecount].strip() == "DPLT"
+            or anatem.lines[anatem.linecount].strip() == "DPLT IMPR"
+        ):
+            anatem.linecount += 1
+            anatem.dplt = dict()
+            anatem.dplt["dplt"] = anatem.lines[anatem.linecount - 1][:]
+            anatem.dplt["ruler"] = anatem.lines[anatem.linecount][:]
+            # dplt(
+            #     anatem,
+            # )
 
         # Dados de Controle da Simulação
-        elif powerflow.lines[powerflow.linecount].strip() == "DSIM":
-            powerflow.linecount += 1
-            powerflow.dsim = dict()
-            powerflow.dsim["ruler"] = powerflow.lines[powerflow.linecount][:]
+        elif anatem.lines[anatem.linecount].strip() == "DSIM":
+            anatem.linecount += 1
+            anatem.dsim = dict()
+            anatem.dsim["ruler"] = anatem.lines[anatem.linecount][:]
             dsim(
-                powerflow,
+                anatem,
             )
 
-        powerflow.linecount += 1
+        # Título do Sistema/Caso em Estudo
+        elif (
+            anatem.lines[anatem.linecount].strip() == "TITU"
+            or anatem.lines[anatem.linecount].strip() == "TITU IMPR"
+        ):
+            anatem.linecount += 1
+            anatem.titu = dict()
+            anatem.titu["titu"] = anatem.lines[anatem.linecount - 1][:]
+            anatem.titu["ruler"] = anatem.lines[anatem.linecount][:]
+            anatem.stbblock["TITU"] = True
+
+        anatem.linecount += 1
 
     ## SUCESSO NA LEITURA
-    print(f"\033[32mSucesso na leitura de arquivo `{powerflow.anatem}`!\033[0m")
-
-
-def rdarq(
-    powerflow,
-):
-    """leitura de arquivos .dat e .blt associados ao dado de entrada DARQ
-
-    Args
-        powerflow:
-    """
-
-    for idx, value in powerflow.darqDF.iterrows():
-        if value["tipo"].split()[0] == "DAT":
-            arquivo, arquivoname = checktem(powerflow, value["nome"])
-            if value["nome"].split("-")[1].strip().lower() == "dmaq.dat":
-                dmaq(
-                    powerflow,
-                    arquivo,
-                    arquivoname,
-                )
-        if value["tipo"].split()[0] == "BLT":
-            arquivo, arquivoname = checktem(
-                powerflow,
-                value["nome"],
-            )
-            if value["nome"].split("-")[1].strip().lower() == "uheute.blt":
-                blt(
-                    powerflow,
-                    arquivo,
-                    arquivoname,
-                )
+    print(f"\033[32mSucesso na leitura de arquivo `{anatem.system}`!\033[0m")

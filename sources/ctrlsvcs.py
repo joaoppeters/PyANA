@@ -17,52 +17,52 @@ from smooth import svcsA, svcsAsmooth, svcsI, svcsIsmooth, svcsQ, svcsQsmooth
 
 
 def svcssol(
-    powerflow,
+    anarede,
 ):
     """variável de estado adicional para o problema de fluxo de potência
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variáveis
-    if "svc_generation" not in powerflow.solution:
-        powerflow.solution["svc_generation"] = zeros([powerflow.ncer])
+    if "svc_generation" not in anarede.solution:
+        anarede.solution["svc_generation"] = zeros([anarede.ncer])
 
-        powerflow.Y = dict()
-        powerflow.svcsch = dict()
-        powerflow.svckeys = dict()
-        powerflow.svcdiff = dict()
-        powerflow.svcvar = dict()
-        powerflow.diffyqgk = dict()
-        powerflow.diffyvk = dict()
-        powerflow.diffyvm = dict()
-        powerflow.diffyalpha = dict()
+        anarede.Y = dict()
+        anarede.svcsch = dict()
+        anarede.svckeys = dict()
+        anarede.svcdiff = dict()
+        anarede.svcvar = dict()
+        anarede.diffyqgk = dict()
+        anarede.diffyvk = dict()
+        anarede.diffyvm = dict()
+        anarede.diffyalpha = dict()
 
-        for idx, value in powerflow.dcerDF.iterrows():
-            idxcer = powerflow.dbarDF.index[
-                powerflow.dbarDF["numero"] == value["barra"]
+        for idx, value in anarede.dcerDF.iterrows():
+            idxcer = anarede.dbarDF.index[
+                anarede.dbarDF["numero"] == value["barra"]
             ].tolist()[0]
-            idxctrl = powerflow.dbarDF.index[
-                powerflow.dbarDF["numero"] == value["barra_controlada"]
+            idxctrl = anarede.dbarDF.index[
+                anarede.dbarDF["numero"] == value["barra_controlada"]
             ].tolist()[0]
 
-            powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]] = dict()
-            powerflow.svckeys[powerflow.dbarDF.loc[idxcer, "nome"]][0] = list()
+            anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]] = dict()
+            anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][0] = list()
 
-            powerflow.svcsch[idxcer] = dict()
-            powerflow.svcsch[idxcer]["ch1"] = list()
-            powerflow.svcsch[idxcer]["ch2"] = list()
+            anarede.svcsch[idxcer] = dict()
+            anarede.svcsch[idxcer]["ch1"] = list()
+            anarede.svcsch[idxcer]["ch2"] = list()
 
             if value["controle"] == "A":
-                powerflow.svcsch[idxcer]["ch3"] = list()
-                powerflow.svcsch[idxcer]["ch4"] = list()
-                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
+                anarede.svcsch[idxcer]["ch3"] = list()
+                anarede.svcsch[idxcer]["ch4"] = list()
+                anarede.solution["svc_generation"][idx] = value["potencia_reativa"]
                 alphavar(
-                    powerflow,
+                    anarede,
                 )
                 svcsA(
-                    powerflow,
+                    anarede,
                     idx,
                     idxcer,
                     idxctrl,
@@ -70,9 +70,9 @@ def svcssol(
                 )
 
             elif value["controle"] == "I":
-                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
+                anarede.solution["svc_generation"][idx] = value["potencia_reativa"]
                 svcsI(
-                    powerflow,
+                    anarede,
                     idx,
                     idxcer,
                     idxctrl,
@@ -80,40 +80,38 @@ def svcssol(
                 )
 
             elif value["controle"] == "P":
-                powerflow.solution["svc_generation"][idx] = value["potencia_reativa"]
+                anarede.solution["svc_generation"][idx] = value["potencia_reativa"]
                 svcsQ(
-                    powerflow,
+                    anarede,
                     idx,
                     idxcer,
                     idxctrl,
                     value,
                 )
 
-    powerflow.mask = concatenate(
-        (powerflow.mask, ones(powerflow.ncer, dtype=bool)), axis=0
-    )
+    anarede.mask = concatenate((anarede.mask, ones(anarede.ncer, dtype=bool)), axis=0)
 
 
 def alphavar(
-    powerflow,
+    anarede,
 ):
     """calculo dos Args para metodologia alpha do compensador estatico de potencia reativa
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.alphaxc = (powerflow.options["BASE"]) / (
-        powerflow.dcerDF["potencia_reativa_maxima"][0]
+    anarede.alphaxc = (anarede.cte["BASE"]) / (
+        anarede.dcerDF["potencia_reativa_maxima"][0]
     )
-    powerflow.alphaxl = (
-        (powerflow.options["BASE"]) / (powerflow.dcerDF["potencia_reativa_maxima"][0])
+    anarede.alphaxl = (
+        (anarede.cte["BASE"]) / (anarede.dcerDF["potencia_reativa_maxima"][0])
     ) / (
         1
-        - (powerflow.dcerDF["potencia_reativa_minima"][0])
-        / (powerflow.dcerDF["potencia_reativa_maxima"][0])
+        - (anarede.dcerDF["potencia_reativa_minima"][0])
+        / (anarede.dcerDF["potencia_reativa_maxima"][0])
     )
-    powerflow.solution["alpha"] = roots(
+    anarede.solution["alpha"] = roots(
         [
             (8 / 1856156927625),
             0,
@@ -134,102 +132,99 @@ def alphavar(
             (4 / 3),
             0,
             0,
-            -(2 * pi) + ((powerflow.alphaxl * pi) / powerflow.alphaxc),
+            -(2 * pi) + ((anarede.alphaxl * pi) / anarede.alphaxc),
         ]
     )
-    powerflow.solution["alpha"] = powerflow.solution["alpha"][
-        isreal(powerflow.solution["alpha"])
+    anarede.solution["alpha"] = anarede.solution["alpha"][
+        isreal(anarede.solution["alpha"])
     ][0].real
-    powerflow.solution["alpha0"] = deepcopy(powerflow.solution["alpha"])
+    anarede.solution["alpha0"] = deepcopy(anarede.solution["alpha"])
 
     # Variáveis Simbólicas
     global alpha
     alpha = Symbol("alpha")
-    powerflow.alphabeq = -(
-        (powerflow.alphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha))
-        - powerflow.alphaxl
-    ) / (powerflow.alphaxc * powerflow.alphaxl)
+    anarede.alphabeq = -(
+        (anarede.alphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha)) - anarede.alphaxl
+    ) / (anarede.alphaxc * anarede.alphaxl)
 
     # Potência Reativa
-    idxcer = powerflow.dbarDF.index[
-        powerflow.dbarDF["numero"] == powerflow.dcerDF["barra"][0]
+    idxcer = anarede.dbarDF.index[
+        anarede.dbarDF["numero"] == anarede.dcerDF["barra"][0]
     ].tolist()[0]
-    powerflow.solution["svc_generation"][0] = (
-        powerflow.solution["voltage"][idxcer] ** 2
-    ) * powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"])
+    anarede.solution["svc_generation"][0] = (
+        anarede.solution["voltage"][idxcer] ** 2
+    ) * anarede.alphabeq.subs(alpha, anarede.solution["alpha"])
 
 
 def svcres(
-    powerflow,
+    anarede,
     case,
 ):
     """cálculo de resíduos das equações de controle adicionais
 
     Args
-        powerflow:
+        anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
     ## Inicialização
     # Vetor de resíduos
-    powerflow.deltaSVC = zeros([powerflow.ncer])
+    anarede.deltaSVC = zeros([anarede.ncer])
 
     # Contador
     ncer = 0
 
     # Loop
-    for _, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarDF.index[
-            powerflow.dbarDF["numero"] == value["barra"]
+    for _, value in anarede.dcerDF.iterrows():
+        idxcer = anarede.dbarDF.index[
+            anarede.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
-        idxctrl = powerflow.dbarDF.index[
-            powerflow.dbarDF["numero"] == value["barra_controlada"]
+        idxctrl = anarede.dbarDF.index[
+            anarede.dbarDF["numero"] == value["barra_controlada"]
         ].tolist()[0]
 
         if value["controle"] == "A":
             svcsAsmooth(
                 idxcer,
                 idxctrl,
-                powerflow,
+                anarede,
                 ncer,
                 case,
             )
-            powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_generation"][ncer])
-                / powerflow.options["BASE"]
+            anarede.deltaQ[idxcer] = (
+                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["BASE"]
             )
 
         elif value["controle"] == "I":
             svcsIsmooth(
                 idxcer,
                 idxctrl,
-                powerflow,
+                anarede,
                 ncer,
                 case,
             )
-            powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_generation"][ncer])
-                * powerflow.solution["voltage"][idxcer]
-                / powerflow.options["BASE"]
+            anarede.deltaQ[idxcer] = (
+                deepcopy(anarede.solution["svc_generation"][ncer])
+                * anarede.solution["voltage"][idxcer]
+                / anarede.cte["BASE"]
             )
 
         elif value["controle"] == "P":
             svcsQsmooth(
                 idxcer,
                 idxctrl,
-                powerflow,
+                anarede,
                 ncer,
                 case,
             )
-            powerflow.deltaQ[idxcer] = (
-                deepcopy(powerflow.solution["svc_generation"][ncer])
-                / powerflow.options["BASE"]
+            anarede.deltaQ[idxcer] = (
+                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["BASE"]
             )
 
-        powerflow.deltaQ[idxcer] -= (
-            powerflow.dbarDF["demanda_reativa"][idxcer] / powerflow.options["BASE"]
+        anarede.deltaQ[idxcer] -= (
+            anarede.dbarDF["demanda_reativa"][idxcer] / anarede.cte["BASE"]
         )
-        # powerflow.deltaQ[idxcer] -= qcalc(
-        #     powerflow,
+        # anarede.deltaQ[idxcer] -= qcalc(
+        #     anarede,
         #     idxcer,
         # )
 
@@ -237,16 +232,16 @@ def svcres(
         ncer += 1
 
     # Resíduo de equação de controle
-    powerflow.deltaY = append(powerflow.deltaY, powerflow.deltaSVC)
+    anarede.deltaY = append(anarede.deltaY, anarede.deltaSVC)
 
 
 def svcsubjac(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -258,59 +253,57 @@ def svcsubjac(
     #
 
     # Dimensão da matriz Jacobiana
-    powerflow.dimpresvc = deepcopy(powerflow.jacobian.shape[0])
+    anarede.dimpresvc = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
-    px = zeros([powerflow.nbus, powerflow.ncer])
-    qx = zeros([powerflow.nbus, powerflow.ncer])
-    yx = zeros([powerflow.ncer, powerflow.ncer])
-    yt = zeros([powerflow.ncer, powerflow.nbus])
-    yv = zeros([powerflow.ncer, powerflow.nbus])
+    px = zeros([anarede.nbus, anarede.ncer])
+    qx = zeros([anarede.nbus, anarede.ncer])
+    yx = zeros([anarede.ncer, anarede.ncer])
+    yt = zeros([anarede.ncer, anarede.nbus])
+    yv = zeros([anarede.ncer, anarede.nbus])
 
     # Contador
     ncer = 0
 
     # Submatrizes PXP QXP YQV YXT
-    for idx, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarDF.index[
-            powerflow.dbarDF["numero"] == value["barra"]
+    for idx, value in anarede.dcerDF.iterrows():
+        idxcer = anarede.dbarDF.index[
+            anarede.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
-        idxctrl = powerflow.dbarDF.index[
-            powerflow.dbarDF["numero"] == value["barra_controlada"]
+        idxctrl = anarede.dbarDF.index[
+            anarede.dbarDF["numero"] == value["barra_controlada"]
         ].tolist()[0]
 
         if value["barra"] != value["barra_controlada"]:
             # Derivada Vk
-            yv[ncer, idxcer] = powerflow.svcdiff[idxcer][0]
+            yv[ncer, idxcer] = anarede.svcdiff[idxcer][0]
 
             # Derivada Vm
-            yv[ncer, idxctrl] = powerflow.svcdiff[idxcer][1]
+            yv[ncer, idxctrl] = anarede.svcdiff[idxcer][1]
 
         elif value["barra"] == value["barra_controlada"]:
             # Derivada Vk + Vm
-            yv[ncer, idxcer] = (
-                powerflow.svcdiff[idxcer][0] + powerflow.svcdiff[idxcer][1]
-            )
+            yv[ncer, idxcer] = anarede.svcdiff[idxcer][0] + anarede.svcdiff[idxcer][1]
 
         # Derivada Equação de Controle Adicional por Variável de Estado Adicional
-        yx[ncer, ncer] = powerflow.svcdiff[idxcer][2]
+        yx[ncer, ncer] = anarede.svcdiff[idxcer][2]
 
         # Derivada Qk
         if value["controle"] == "A":
-            powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
+            anarede.jacobian[anarede.nbus + idxcer, anarede.nbus + idxcer] -= (
                 2
-                * powerflow.solution["voltage"][idxcer]
-                * float(powerflow.alphabeq.subs(alpha, powerflow.solution["alpha"]))
+                * anarede.solution["voltage"][idxcer]
+                * float(anarede.alphabeq.subs(alpha, anarede.solution["alpha"]))
             )
-            qx[idxcer, ncer] = -(powerflow.solution["voltage"][idxcer] ** 2) * float(
-                powerflow.alphabeq.diff(alpha).subs(alpha, powerflow.solution["alpha"])
+            qx[idxcer, ncer] = -(anarede.solution["voltage"][idxcer] ** 2) * float(
+                anarede.alphabeq.diff(alpha).subs(alpha, anarede.solution["alpha"])
             )
 
         elif value["controle"] == "I":
-            powerflow.jacobian[powerflow.nbus + idxcer, powerflow.nbus + idxcer] -= (
-                powerflow.solution["svc_generation"][ncer]
-            ) / powerflow.options["BASE"]
-            qx[idxcer, ncer] = -powerflow.solution["voltage"][idxcer]
+            anarede.jacobian[anarede.nbus + idxcer, anarede.nbus + idxcer] -= (
+                anarede.solution["svc_generation"][ncer]
+            ) / anarede.cte["BASE"]
+            qx[idxcer, ncer] = -anarede.solution["voltage"][idxcer]
 
         elif value["controle"] == "P":
             qx[idxcer, ncer] = -1
@@ -320,17 +313,17 @@ def svcsubjac(
 
     ## Montagem Jacobiana
     # Condição
-    if powerflow.controldim != 0:
-        extrarow = zeros([powerflow.nger, powerflow.controldim])
-        extracol = zeros([powerflow.controldim, powerflow.nger])
+    if anarede.controldim != 0:
+        extrarow = zeros([anarede.nger, anarede.controldim])
+        extracol = zeros([anarede.controldim, anarede.nger])
 
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        yt[:, powerflow.maskP],
-                        yv[:, powerflow.maskQ],
+                        yt[:, anarede.maskP],
+                        yv[:, anarede.maskQ],
                         extrarow,
                     ),
                     axis=1,
@@ -338,13 +331,13 @@ def svcsubjac(
             ),
             axis=0,
         )
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP, :],
-                        qx[powerflow.maskQ, :],
+                        px[anarede.maskP, :],
+                        qx[anarede.maskQ, :],
                         extracol,
                         yx,
                     ),
@@ -354,27 +347,27 @@ def svcsubjac(
             axis=1,
         )
 
-    elif powerflow.controldim == 0:
-        powerflow.jacobian = concatenate(
+    elif anarede.controldim == 0:
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        yt[:, powerflow.maskP],
-                        yv[:, powerflow.maskQ],
+                        yt[:, anarede.maskP],
+                        yv[:, anarede.maskQ],
                     ),
                     axis=1,
                 ),
             ),
             axis=0,
         )
-        powerflow.jacobian = concatenate(
+        anarede.jacobian = concatenate(
             (
-                powerflow.jacobian,
+                anarede.jacobian,
                 concatenate(
                     (
-                        px[powerflow.maskP, :],
-                        qx[powerflow.maskQ, :],
+                        px[anarede.maskP, :],
+                        qx[anarede.maskQ, :],
                         yx,
                     ),
                     axis=0,
@@ -385,34 +378,30 @@ def svcsubjac(
 
 
 def svcupdt(
-    powerflow,
+    anarede,
 ):
     """atualização das variáveis de estado adicionais
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Contador
     ncer = 0
 
     # Atualização da potência reativa gerada
-    for _, value in powerflow.dcerDF.iterrows():
+    for _, value in anarede.dcerDF.iterrows():
         if value["controle"] == "A":
-            powerflow.solution["alpha"] += powerflow.statevar[
-                (powerflow.dimpresvc + ncer)
-            ]
+            anarede.solution["alpha"] += anarede.statevar[(anarede.dimpresvc + ncer)]
 
         elif value["controle"] == "I":
-            powerflow.solution["svc_generation"][ncer] += (
-                powerflow.statevar[(powerflow.dimpresvc + ncer)]
-                * powerflow.options["BASE"]
+            anarede.solution["svc_generation"][ncer] += (
+                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["BASE"]
             )
 
         elif value["controle"] == "P":
-            powerflow.solution["svc_generation"][ncer] += (
-                powerflow.statevar[(powerflow.dimpresvc + ncer)]
-                * powerflow.options["BASE"]
+            anarede.solution["svc_generation"][ncer] += (
+                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["BASE"]
             )
 
         # Incrementa contador
@@ -420,120 +409,118 @@ def svcupdt(
 
 
 def svcsch(
-    powerflow,
+    anarede,
 ):
     """atualização do valor de potência reativa especificada
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Atualização da potência reativa especificada
     ncer = 0
-    for _, value in powerflow.dcerDF.iterrows():
-        idxcer = powerflow.dbarDF.index[
-            powerflow.dbarDF["numero"] == value["barra"]
+    for _, value in anarede.dcerDF.iterrows():
+        idxcer = anarede.dbarDF.index[
+            anarede.dbarDF["numero"] == value["barra"]
         ].tolist()[0]
-        if (powerflow.dcerDF["controle"][0] == "A") or (
-            powerflow.dcerDF["controle"][0] == "P"
+        if (anarede.dcerDF["controle"][0] == "A") or (
+            anarede.dcerDF["controle"][0] == "P"
         ):
-            powerflow.qsch[idxcer] += (
-                powerflow.solution["svc_generation"][ncer] / powerflow.options["BASE"]
+            anarede.qsch[idxcer] += (
+                anarede.solution["svc_generation"][ncer] / anarede.cte["BASE"]
             )
 
-        elif powerflow.dcerDF["controle"][0] == "I":
-            powerflow.qsch[idxcer] += (
-                powerflow.solution["svc_generation"][ncer]
-                * powerflow.solution["voltage"][idxcer]
-            ) / powerflow.options["BASE"]
+        elif anarede.dcerDF["controle"][0] == "I":
+            anarede.qsch[idxcer] += (
+                anarede.solution["svc_generation"][ncer]
+                * anarede.solution["voltage"][idxcer]
+            ) / anarede.cte["BASE"]
 
         # Incrementa contador
         ncer += 1
 
 
 def svccorr(
-    powerflow,
+    anarede,
     case,
 ):
     """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Variável
-    powerflow.solution["svc_generation"] = deepcopy(
-        powerflow.operationpoint[case]["p"]["svc_generation"]
+    anarede.solution["svc_generation"] = deepcopy(
+        anarede.operationpoint[case]["p"]["svc_generation"]
     )
 
 
 def svcheur(
-    powerflow,
+    anarede,
 ):
     """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
-        (not powerflow.solution["pmc"])
-        and (powerflow.solution["varstep"] == "lambda")
+        (not anarede.solution["pmc"])
+        and (anarede.solution["varstep"] == "lambda")
         and (
-            (powerflow.options["LMBD"] * (5e-1 ** powerflow.solution["ndiv"]))
-            <= powerflow.options["icmn"]
+            (anarede.cte["LMBD"] * (5e-1 ** anarede.solution["ndiv"]))
+            <= anarede.cte["icmn"]
         )
     ):
-        powerflow.nbusbifurcation = True
+        anarede.nbusbifurcation = True
 
 
 def svccpf(
-    powerflow,
+    anarede,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
-    powerflow.solution["svc_generation"] = deepcopy(
-        powerflow.solution["svc_generation"]
-    )
+    anarede.solution["svc_generation"] = deepcopy(anarede.solution["svc_generation"])
 
 
 def svcsolcpf(
-    powerflow,
+    anarede,
     case,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
 
     Args
-        powerflow:
+        anarede:
         case: etapa do fluxo de potência continuado analisada
     """
     ## Inicialização
     # Condição
     precase = case - 1
     if case == 1:
-        powerflow.solution["svc_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["svc_generation"]
+        anarede.solution["svc_generation"] = deepcopy(
+            anarede.operationpoint[precase]["svc_generation"]
         )
 
     elif case > 1:
-        powerflow.solution["svc_generation"] = deepcopy(
-            powerflow.operationpoint[precase]["p"]["svc_generation"]
+        anarede.solution["svc_generation"] = deepcopy(
+            anarede.operationpoint[precase]["p"]["svc_generation"]
         )
 
 
 def svcsubhess(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #
@@ -548,12 +535,12 @@ def svcsubhess(
 
 
 def svcsubjacsym(
-    powerflow,
+    anarede,
 ):
     """submatrizes da matriz jacobiana
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     #

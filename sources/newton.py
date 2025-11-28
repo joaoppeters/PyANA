@@ -22,23 +22,23 @@ from update import updtpwr, updtstt
 
 
 def newton(
-    powerflow,
+    anarede,
 ):
     """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
 
     Args
-        powerflow:
+        anarede:
     """
     ## Inicialização
     # Variável para armazenamento de solução
-    powerflow.solution = {
-        "system": powerflow.name,
+    anarede.solution = {
+        "system": anarede.name,
         "method": "EXLF",
         "iter": 0,
-        "voltage": array(powerflow.dbarDF["tensao"] * 1e-3),
-        "theta": array(radians(powerflow.dbarDF["angulo"])),
-        "active": zeros(powerflow.nbus),
-        "reactive": zeros(powerflow.nbus),
+        "voltage": array(anarede.dbarDF["tensao"] * 1e-3),
+        "theta": array(radians(anarede.dbarDF["angulo"])),
+        "active": zeros(anarede.nbus),
+        "reactive": zeros(anarede.nbus),
         "freq": 1.0,
         "freqiter": array([]),
         "convP": array([]),
@@ -52,107 +52,107 @@ def newton(
 
     # Controles
     controlsol(
-        powerflow,
+        anarede,
     )
 
     # Variáveis Especificadas
     scheduled(
-        powerflow,
+        anarede,
     )
 
     # Resíduos
     residue(
-        powerflow,
+        anarede,
     )
 
     while (
         norm(
-            powerflow.deltaP[powerflow.maskP],
+            anarede.deltaP[anarede.maskP],
         )
-        > powerflow.options["TEPA"]
+        > anarede.cte["TEPA"]
         or norm(
-            powerflow.deltaQ[powerflow.maskQ],
+            anarede.deltaQ[anarede.maskQ],
         )
-        > powerflow.options["TEPR"]
+        > anarede.cte["TEPR"]
         or controldelta(
-            powerflow,
+            anarede,
         )
     ):
         # Armazenamento da trajetória de convergência
         convergence(
-            powerflow,
+            anarede,
         )
 
         # Matriz Jacobiana
         matrices(
-            powerflow,
+            anarede,
         )
 
         # Variáveis de estado
-        powerflow.statevar, residuals, rank, singular = lstsq(
-            powerflow.jacobian,
-            powerflow.deltaPQY,
+        anarede.statevar, residuals, rank, singular = lstsq(
+            anarede.jacobian,
+            anarede.deltaPQY,
             rcond=None,
         )
 
         # Atualização das Variáveis de estado
         updtstt(
-            powerflow,
+            anarede,
         )
 
         # Atualização das potências
         updtpwr(
-            powerflow,
+            anarede,
         )
 
         # Atualização dos resíduos
         residue(
-            powerflow,
+            anarede,
         )
 
         # Incremento de iteração
-        powerflow.solution["iter"] += 1
+        anarede.solution["iter"] += 1
 
         # Condição Divergência por iterações
-        if powerflow.solution["iter"] > powerflow.options["ACIT"]:
-            powerflow.solution["convergence"] = (
+        if anarede.solution["iter"] > anarede.cte["ACIT"]:
+            anarede.solution["convergence"] = (
                 "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
             )
             break
 
     # Iteração Adicional
-    if powerflow.solution["iter"] <= powerflow.options["ACIT"]:
+    if anarede.solution["iter"] <= anarede.cte["ACIT"]:
         # Armazenamento da trajetória de convergência
         convergence(
-            powerflow,
+            anarede,
         )
 
         # Matriz Jacobiana
         matrices(
-            powerflow,
+            anarede,
         )
 
         # Variáveis de estado
-        powerflow.statevar, residuals, rank, singular = lstsq(
-            powerflow.jacobian,
-            powerflow.deltaPQY,
+        anarede.statevar, residuals, rank, singular = lstsq(
+            anarede.jacobian,
+            anarede.deltaPQY,
             rcond=None,
         )
 
         # Atualização das variáveis de estado
         updtstt(
-            powerflow,
+            anarede,
         )
 
         # Atualização das potências
         updtpwr(
-            powerflow,
+            anarede,
         )
 
         # Atualização dos resíduos
         residue(
-            powerflow,
+            anarede,
         )
 
         # Convergência
-        powerflow.solution["convergence"] = "SISTEMA CONVERGENTE"
+        anarede.solution["convergence"] = "SISTEMA CONVERGENTE"
