@@ -162,7 +162,7 @@ def dcdu(
 
             # ncdu ruler: cria novo ncdu
             if prev_line[:] in anatem.dcdu.get("ncdu_ruler", ""):
-                ncdu = safe_slice(line, 0, 6)
+                ncdu = safe_slice(line, 0, 6).strip()
                 anatem.dcdu[ncdu] = {
                     "nome": safe_slice(line, 7, 19),
                     "defpar": list(),
@@ -191,49 +191,49 @@ def dcdu(
                 }
 
             # DEFPAR
-            elif prev_line[:] == anatem.dcdu.get("defpar_ruler", "") or (
+            elif  prev_line[:] in anatem.dcdu.get("defpar_ruler", "") or (
                 line.split()[0] == "DEFPAR" if line.split() else False
             ):
-                anatem.dcdu[ncdu]["defpar"].append(safe_slice(line, 0, 6))
-                anatem.dcdu[ncdu]["defpar_nome"].append(safe_slice(line, 7, 13))
-                anatem.dcdu[ncdu]["defpar_valor"].append(safe_slice(line, 14, 32))
+                anatem.dcdu[ncdu]["defpar"].append(safe_slice(line, 0, 6).strip())
+                anatem.dcdu[ncdu]["defpar_nome"].append(safe_slice(line, 7, 13).strip())
+                anatem.dcdu[ncdu]["defpar_valor"].append(safe_slice(line, 14, 32).strip())
 
             # DEFVAL
-            elif prev_line[:] == anatem.dcdu.get("defval_ruler", "") or (
+            elif  prev_line[:] in anatem.dcdu.get("defval_ruler", "") or (
                 line.split()[0] == "DEFVAL" if line.split() else False
             ):
-                anatem.dcdu[ncdu]["defval"].append(safe_slice(line, 0, 6))
-                anatem.dcdu[ncdu]["defval_subtipo"].append(safe_slice(line, 7, 13))
-                anatem.dcdu[ncdu]["defval_variavel"].append(safe_slice(line, 14, 20))
+                anatem.dcdu[ncdu]["defval"].append(safe_slice(line, 0, 6).strip())
+                anatem.dcdu[ncdu]["defval_subtipo"].append(safe_slice(line, 7, 13).strip())
+                anatem.dcdu[ncdu]["defval_variavel"].append(safe_slice(line, 14, 20).strip())
                 # para parâmetros curtos, você pode exigir fatia completa: require_full=True
                 anatem.dcdu[ncdu]["defval_parametro_d1"].append(
                     safe_slice(line, 21, 27, default=DEFAULT, require_full=False)
                 )
                 # caractere único: use slice 27:28 (seguro)
-                anatem.dcdu[ncdu]["defval_exclusao"].append(safe_slice(line, 27, 28))
+                anatem.dcdu[ncdu]["defval_exclusao"].append(safe_slice(line, 27, 28).strip())
                 anatem.dcdu[ncdu]["defval_parametro_d2"].append(
-                    safe_slice(line, 28, 34)
+                    safe_slice(line, 28, 34).strip()
                 )
 
             # bloco padrão (outras linhas)
             else:
-                anatem.dcdu[ncdu]["bloco_numero"].append(safe_slice(line, 0, 4))
-                anatem.dcdu[ncdu]["bloco_inicializacao"].append(safe_slice(line, 4, 5))
-                anatem.dcdu[ncdu]["bloco_tipo"].append(safe_slice(line, 5, 11))
-                anatem.dcdu[ncdu]["bloco_omitir"].append(safe_slice(line, 11, 12))
-                anatem.dcdu[ncdu]["bloco_subtipo"].append(safe_slice(line, 12, 18))
-                anatem.dcdu[ncdu]["bloco_sinal"].append(safe_slice(line, 18, 19))
-                anatem.dcdu[ncdu]["bloco_entrada"].append(safe_slice(line, 19, 25))
-                anatem.dcdu[ncdu]["bloco_saida"].append(safe_slice(line, 26, 32))
-                anatem.dcdu[ncdu]["bloco_parametro1"].append(safe_slice(line, 33, 39))
-                anatem.dcdu[ncdu]["bloco_parametro2"].append(safe_slice(line, 39, 45))
-                anatem.dcdu[ncdu]["bloco_parametro3"].append(safe_slice(line, 45, 51))
-                anatem.dcdu[ncdu]["bloco_parametro4"].append(safe_slice(line, 51, 57))
+                anatem.dcdu[ncdu]["bloco_numero"].append(safe_slice(line, 0, 4).strip())
+                anatem.dcdu[ncdu]["bloco_inicializacao"].append(safe_slice(line, 4, 5).strip())
+                anatem.dcdu[ncdu]["bloco_tipo"].append(safe_slice(line, 5, 11).strip())
+                anatem.dcdu[ncdu]["bloco_omitir"].append(safe_slice(line, 11, 12).strip())
+                anatem.dcdu[ncdu]["bloco_subtipo"].append(safe_slice(line, 12, 18).strip())
+                anatem.dcdu[ncdu]["bloco_sinal"].append(safe_slice(line, 18, 19).strip())
+                anatem.dcdu[ncdu]["bloco_entrada"].append(safe_slice(line, 19, 25).strip())
+                anatem.dcdu[ncdu]["bloco_saida"].append(safe_slice(line, 26, 32).strip())
+                anatem.dcdu[ncdu]["bloco_parametro1"].append(safe_slice(line, 33, 39).strip())
+                anatem.dcdu[ncdu]["bloco_parametro2"].append(safe_slice(line, 39, 45).strip())
+                anatem.dcdu[ncdu]["bloco_parametro3"].append(safe_slice(line, 45, 51).strip())
+                anatem.dcdu[ncdu]["bloco_parametro4"].append(safe_slice(line, 51, 57).strip())
                 anatem.dcdu[ncdu]["bloco_limite_minimo"].append(
-                    safe_slice(line, 58, 64)
+                    safe_slice(line, 58, 64).strip()
                 )
                 anatem.dcdu[ncdu]["bloco_limite_maximo"].append(
-                    safe_slice(line, 64, 70)
+                    safe_slice(line, 64, 70).strip()
                 )
 
             anatem.linecount += 1
@@ -270,8 +270,8 @@ def dcst(
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
         # se a linha anterior é o ruler, cria novo registro
-        if prev_line[:] == anatem.dcst.get("ruler", ""):
-            nbus = safe_slice(line, 0, 4)
+        if  prev_line[:] in anatem.dcst.get("ruler", ""):
+            nbus = safe_slice(line, 0, 4).strip()
             anatem.dcst[nbus] = {
                 "tipo": safe_slice(line, 7, 8),
                 "parametro_1": safe_slice(line, 9, 17),
@@ -436,6 +436,54 @@ def devt(
         anatem.stbblock["DEVT"] = True
 
 
+def dfnt(
+    anatem,
+):
+    """inicialização para leitura de dados de fontes shunt controladas
+    
+    Args
+        anatem:
+    """
+    ## Inicialização
+    innit = False
+    # loop protegido
+    while (
+        0 <= anatem.linecount < len(anatem.lines)
+        and anatem.lines[anatem.linecount].strip() not in anatem.end_block
+    ):
+        line = anatem.lines[anatem.linecount].rstrip("\n")
+
+        # pular comentário/linha vazia
+        if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
+            anatem.linecount += 1
+            continue
+
+        prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
+
+        if  prev_line[:] in anatem.dfnt.get("ruler", "") or innit:
+            innit = True
+            nbus = safe_slice(line, 0, 5)
+            anatem.dfnt[nbus] = {
+                "grupo": safe_slice(line, 8, 10),
+                "tipo": safe_slice(line, 11, 12),
+                "fator_p": safe_slice(line, 13, 18),
+                "fator_q": safe_slice(line, 19, 24),
+                "unidades": safe_slice(line, 25, 28),
+                "modelo_fonte": safe_slice(line, 29, 35),
+                "modelo_fonte_u": safe_slice(line, 36, 37),
+                "equivalente_real": safe_slice(line, 37, 45),
+                "equivalente_imaginario": safe_slice(line, 46, 54),
+                "potencia_base": safe_slice(line, 55, 61),
+            }
+            # consome esta linha e segue
+            anatem.linecount += 1
+            continue
+
+        # caso não seja o início do bloco, avança
+        anatem.linecount += 1
+
+
+
 def dger(
     anatem,
 ):
@@ -506,6 +554,62 @@ def dger(
         anatem.linecount += 1
 
 
+def dmaq(
+    anatem,
+):
+    """inicialização para leitura de dados de modelos predefinidos de máquinas síncronas
+
+    Args
+        anatem:
+    """
+    ## Inicialização
+    innit = False
+    # loop protegido
+    while (
+        0 <= anatem.linecount < len(anatem.lines)
+        and anatem.lines[anatem.linecount].strip() not in anatem.end_block
+    ):
+        line = anatem.lines[anatem.linecount].rstrip("\n")
+
+        # pular comentário/linha vazia
+        if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
+            anatem.linecount += 1
+            continue
+
+        prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
+
+        if  prev_line[:] in anatem.dmaq.get("ruler", "") or innit:
+            innit = True
+            nbus = safe_slice(line, 0, 5)
+
+            registro = {
+                "grupo": safe_slice(line, 8, 10).strip(),
+                "fator_p": safe_slice(line, 11, 14).strip(),
+                "fator_q": safe_slice(line, 15, 18).strip(),
+                "unidades": safe_slice(line, 19, 22).strip(),
+                "modelo_gerador": safe_slice(line, 23, 29).strip(),
+                "modelo_regulador_tensao": safe_slice(line, 30, 36).strip(),
+                "modelo_regulador_tensao_u": safe_slice(line, 36, 37),
+                "modelo_regulador_velocidade": safe_slice(line, 37, 43).strip(),
+                "modelo_regulador_velocidade_u": safe_slice(line, 43, 44),
+                "modelo_estabilizador": safe_slice(line, 44, 50).strip(),
+                "modelo_estabilizador_u": safe_slice(line, 50, 51),
+                "reatancia_compensacao": safe_slice(line, 51, 56).strip(),
+                "barra_controlada": safe_slice(line, 56, 61).strip(),
+            }
+
+            if nbus not in anatem.dmaq:
+                anatem.dmaq[nbus] = []
+
+            anatem.dmaq[nbus].append(registro)
+            # consome esta linha e segue
+            anatem.linecount += 1
+            continue
+
+        # caso não seja o início do bloco, avança
+        anatem.linecount += 1
+
+
 def dmdgmd01(
     anatem,
 ):
@@ -529,7 +633,7 @@ def dmdgmd01(
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        if prev_line[:] == anatem.dmdg.get("md01_ruler", ""):
+        if prev_line[:] in anatem.dmdg.get("md01_ruler", ""):
             nbus = safe_slice(line, 0, 4)
             anatem.dmdg[nbus] = {
                 "modelo": "MD01",
@@ -569,7 +673,7 @@ def dmdgmd02(
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        if prev_line[:] == anatem.dmdg.get("md02_ruler", ""):
+        if prev_line[:] in anatem.dmdg.get("md02_ruler", ""):
             # garantir existência das linhas seguintes (linha atual +2)
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
@@ -580,7 +684,7 @@ def dmdgmd02(
             nbus = safe_slice(line, 0, 4)
             anatem.dmdg[nbus] = {
                 "modelo": "MD02",
-                "curva_saturacao": safe_slice(line, 7, 11),
+                "curva_saturacao": safe_slice(line, 7, 11).strip(),
                 "l_d": safe_slice(line, 12, 17),
                 "l_q": safe_slice(line, 17, 22),
                 "l_d_prime": safe_slice(line, 22, 27),
@@ -589,7 +693,6 @@ def dmdgmd02(
                 "tau_d0_prime": safe_slice(line, 42, 47),
                 "tau_d0_double_prime": safe_slice(line, 52, 57),
                 "tau_q0_double_prime": safe_slice(line, 57, 62),
-                # parâmetros vindos de line+2 (segurança: line2 pode ser "")
                 "resistencia_armadura": safe_slice(line2, 7, 12),
                 "inercia": safe_slice(line2, 12, 17),
                 "amortecimento": safe_slice(line2, 17, 22),
@@ -624,7 +727,7 @@ def dmdgmd03(
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        if prev_line[:] == anatem.dmdg.get("md03_ruler", ""):
+        if prev_line[:] in anatem.dmdg.get("md03_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -754,7 +857,7 @@ def drgvmd01(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md01_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md01_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD01",
@@ -802,13 +905,13 @@ def drgvmd02(
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD02",
-                "estatismo": safe_slice(line, 7, 12),
-                "cte_tempo_regulador": safe_slice(line, 12, 17),
-                "cte_tempo_1": safe_slice(line, 17, 22),
-                "cte_tempo_reaquecimento": safe_slice(line, 22, 27),
-                "limite_minimo": safe_slice(line, 27, 32),
-                "limite_maximo": safe_slice(line, 32, 37),
-                "amortecimento_turbina": safe_slice(line, 37, 42),
+                "estatismo": safe_slice(line, 7, 12).strip(),
+                "cte_tempo_regulador": safe_slice(line, 12, 17).strip(),
+                "cte_tempo_1": safe_slice(line, 17, 22).strip(),
+                "cte_tempo_reaquecimento": safe_slice(line, 22, 27).strip(),
+                "limite_minimo": safe_slice(line, 27, 32).strip(),
+                "limite_maximo": safe_slice(line, 32, 37).strip(),
+                "amortecimento_turbina": safe_slice(line, 37, 42).strip(),
                 "tipo": safe_slice(line, 42, 43),
             }
             anatem.linecount += 1
@@ -836,20 +939,20 @@ def drgvmd03(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md03_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md03_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD03",
-                "bp": safe_slice(line, 7, 12),
-                "bt": safe_slice(line, 12, 17),
-                "cte_tempo_v": safe_slice(line, 17, 22),
-                "cte_tempo_1": safe_slice(line, 22, 27),
-                "cte_tempo_2": safe_slice(line, 27, 32),
-                "cte_tempo_agua": safe_slice(line, 32, 37),
-                "limite_minimo": safe_slice(line, 37, 42),
-                "limite_maximo": safe_slice(line, 42, 47),
-                "cte_tempo_maxima": safe_slice(line, 47, 52),
-                "amortecimento_turbina": safe_slice(line, 52, 57),
+                "bp": safe_slice(line, 7, 12).strip(),
+                "bt": safe_slice(line, 12, 17).strip(),
+                "cte_tempo_v": safe_slice(line, 17, 22).strip(),
+                "cte_tempo_1": safe_slice(line, 22, 27).strip(),
+                "cte_tempo_2": safe_slice(line, 27, 32).strip(),
+                "cte_tempo_agua": safe_slice(line, 32, 37).strip(),
+                "limite_minimo": safe_slice(line, 37, 42).strip(),
+                "limite_maximo": safe_slice(line, 42, 47).strip(),
+                "cte_tempo_maxima": safe_slice(line, 47, 52).strip(),
+                "amortecimento_turbina": safe_slice(line, 52, 57).strip(),
             }
             anatem.linecount += 1
             continue
@@ -876,7 +979,7 @@ def drgvmd04(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md04_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md04_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -927,7 +1030,7 @@ def drgvmd05(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md05_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md05_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD05",
@@ -967,7 +1070,7 @@ def drgvmd06(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md06_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md06_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -1026,7 +1129,7 @@ def drgvmd07(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if prev_line[:] == anatem.drgv.get("md07_ruler", ""):
+        if  prev_line[:] in anatem.drgv.get("md07_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -1126,206 +1229,4 @@ def safe_slice(
     if require_full and len(val) < (end - start):
         return default
     return val
-
-
-# def dmaq(
-#     anatem,
-#     arquivo,
-#     arquivoname,
-# ):
-#     """inicialização para leitura de dados
-
-#     Args
-#         anatem:
-#     """
-#     ## Inicialização
-#     anatem.linecount = 0
-#     f = open(f"{arquivo}", "r", encoding="latin-1")
-#     anatem.lines = f.readlines()
-#     f.close()
-
-#     anatem.dmaq = dict()
-#     anatem.dmaq["numero"] = list()
-#     anatem.dmaq["grupo"] = list()
-#     anatem.dmaq["percentual-ativa"] = list()
-#     anatem.dmaq["percentual-reativa"] = list()
-#     anatem.dmaq["unidades"] = list()
-#     anatem.dmaq["gerador"] = list()
-#     anatem.dmaq["tensao"] = list()
-#     anatem.dmaq["user-tensao"] = list()
-#     anatem.dmaq["velocidade"] = list()
-#     anatem.dmaq["user-velocidade"] = list()
-#     anatem.dmaq["estabilizador"] = list()
-#     anatem.dmaq["user-estabilizador"] = list()
-#     anatem.dmaq["reatancia-compensacao"] = list()
-#     anatem.dmaq["barra-controlada"] = list()
-
-#     anatem.linecount += 1
-#     anatem.dmaq["ruler"] = anatem.lines[anatem.linecount][:]
-
-#     # Loop de leitura de linhas do `.stb`
-#     while anatem.lines[anatem.linecount].strip() != anatem.end_archive:
-#         # Dados de Arquivos de Máquina
-#         while anatem.lines[anatem.linecount].strip() not in anatem.end_block:
-#             if anatem.lines[anatem.linecount][0] == anatem.comment:
-#                 pass
-#             else:
-#                 anatem.dmaq["numero"].append(anatem.lines[anatem.linecount][:5])
-#                 anatem.dmaq["grupo"].append(anatem.lines[anatem.linecount][8:10])
-#                 anatem.dmaq["percentual-ativa"].append(
-#                     anatem.lines[anatem.linecount][11:14]
-#                 )
-#                 anatem.dmaq["percentual-reativa"].append(
-#                     anatem.lines[anatem.linecount][15:18]
-#                 )
-#                 anatem.dmaq["unidades"].append(anatem.lines[anatem.linecount][19:22])
-#                 anatem.dmaq["gerador"].append(anatem.lines[anatem.linecount][23:29])
-#                 anatem.dmaq["tensao"].append(anatem.lines[anatem.linecount][30:36])
-#                 anatem.dmaq["user-tensao"].append(anatem.lines[anatem.linecount][36])
-#                 anatem.dmaq["velocidade"].append(anatem.lines[anatem.linecount][37:43])
-#                 anatem.dmaq["user-velocidade"].append(
-#                     anatem.lines[anatem.linecount][43]
-#                 )
-#                 anatem.dmaq["estabilizador"].append(
-#                     anatem.lines[anatem.linecount][44:50]
-#                 )
-#                 anatem.dmaq["user-estabilizador"].append(
-#                     anatem.lines[anatem.linecount][50]
-#                 )
-#                 anatem.dmaq["reatancia-compensacao"].append(
-#                     anatem.lines[anatem.linecount][51:56]
-#                 )
-#                 anatem.dmaq["barra-controlada"].append(
-#                     anatem.lines[anatem.linecount][56:61]
-#                 )
-#             anatem.linecount += 1
-#         anatem.linecount += 1
-
-#     ## SUCESSO NA LEITURA
-#     print(f"\033[32mSucesso na leitura de arquivo `{arquivoname}`!\033[0m")
-
-#     # DataFrame dos Dados de Agregadores Genericos
-#     anatem.dmaqDF = DF(data=anatem.dmaq)
-#     anatem.dmaq = deepcopy(anatem.dmaqDF)
-#     anatem.dmaqDF = anatem.dmaqDF.replace(r"^\s*$", "0", regex=True)
-#     anatem.dmaqDF = anatem.dmaqDF.astype(
-#         {
-#             "numero": "int",
-#             "grupo": "int",
-#             "percentual-ativa": "float",
-#             "percentual-reativa": "float",
-#             "unidades": "int",
-#             "gerador": "int",
-#             "tensao": "int",
-#             "user-tensao": "object",
-#             "velocidade": "int",
-#             "user-velocidade": "object",
-#             "estabilizador": "int",
-#             "user-estabilizador": "object",
-#             "reatancia-compensacao": "float",
-#             "barra-controlada": "int",
-#         }
-#     )
-#     if anatem.dmaqDF.empty:
-#         ## ERROR - VERMELHO
-#         raise ValueError(
-#             "\033[91mERROR: Falha na leitura de código de execução `DMAQ`!\033[0m"
-#         )
-#     else:
-#         anatem.stbblock["DMAQ"] = True
-
-#         anatem.dmaqDF = anatem.dmaqDF.sort_values(by=["numero"], ascending=True)
-
-
-# def blt(
-#     anatem,
-#     arquivo,
-#     arquivoname,
-# ):
-#     """inicialização para leitura de dados
-
-#     Args
-#         anatem:
-#     """
-#     ## Inicialização
-#     anatem.linecount = 0
-#     f = open(f"{arquivo}", "r", encoding="latin-1")
-#     anatem.lines = f.readlines()
-#     f.close()
-
-#     # # Loop de leitura de linhas do `.stb`
-#     # while anatem.lines[anatem.linecount].strip() != anatem.end_archive:
-#     # Dados de Arquivos de Entrada e Saida
-#     while anatem.lines[anatem.linecount].strip() not in anatem.end_block:
-#         if anatem.lines[anatem.linecount].strip() == "DMDG MD01":
-#             anatem.linecount += 1
-#             anatem.dmdg = dict()
-#             anatem.dmdg["ruler"] = anatem.lines[anatem.linecount][:]
-#             md01(
-#                 anatem,
-#             )
-#             anatem.linecount -= 1
-#         anatem.linecount += 1
-
-#     ## SUCESSO NA LEITURA
-#     print(f"\033[32mSucesso na leitura de arquivo `{arquivoname}`!\033[0m")
-
-
-# def md01(
-#     anatem,
-# ):
-#     """ "
-
-#     Args
-#         anatem:
-#     """
-#     ## Inicialização
-#     anatem.dmdg["tipo"] = list()
-#     anatem.dmdg["numero"] = list()
-#     anatem.dmdg["l-transitoria"] = list()
-#     anatem.dmdg["r-armadura"] = list()
-#     anatem.dmdg["inercia"] = list()
-#     anatem.dmdg["amortecimento"] = list()
-#     anatem.dmdg["aparente"] = list()
-#     anatem.dmdg["freq-sincrona"] = list()
-#     anatem.dmdg["freq-correcao"] = list()
-
-#     while anatem.lines[anatem.linecount].strip() not in anatem.end_block:
-#         if anatem.lines[anatem.linecount][0] == anatem.comment:
-#             pass
-#         else:
-#             anatem.dmdg["tipo"].append("MD01")
-#             anatem.dmdg["numero"].append(anatem.lines[anatem.linecount][:4])
-#             anatem.dmdg["l-transitoria"].append(anatem.lines[anatem.linecount][7:12])
-#             anatem.dmdg["r-armadura"].append(anatem.lines[anatem.linecount][12:17])
-#             anatem.dmdg["inercia"].append(anatem.lines[anatem.linecount][17:22])
-#             anatem.dmdg["amortecimento"].append(anatem.lines[anatem.linecount][22:27])
-#             anatem.dmdg["aparente"].append(anatem.lines[anatem.linecount][27:32])
-#             anatem.dmdg["freq-sincrona"].append(anatem.lines[anatem.linecount][32:34])
-#             anatem.dmdg["freq-correcao"].append(anatem.lines[anatem.linecount][35])
-#         anatem.linecount += 1
-
-#     # DataFrame dos Dados de Alteração do Nível de Carregamento
-#     anatem.dmdgDF = DF(data=anatem.dmdg)
-#     anatem.dmdg = deepcopy(anatem.dmdgDF)
-#     anatem.dmdgDF = anatem.dmdgDF.replace(r"^\s*$", "0", regex=True)
-#     anatem.dmdgDF = anatem.dmdgDF.astype(
-#         {
-#             "tipo": "object",
-#             "numero": "int",
-#             "l-transitoria": "float",
-#             "r-armadura": "float",
-#             "inercia": "float",
-#             "amortecimento": "float",
-#             "aparente": "float",
-#             "freq-sincrona": "float",
-#             "freq-correcao": "object",
-#         }
-#     )
-#     if anatem.dmdgDF.empty:
-#         ## ERROR - VERMELHO
-#         raise ValueError(
-#             "\033[91mERROR: Falha na leitura de código de execução `DMDG MD01`!\033[0m"
-#         )
-#     else:
-#         anatem.stbblock["DMDG MD01"] = True
+    return val

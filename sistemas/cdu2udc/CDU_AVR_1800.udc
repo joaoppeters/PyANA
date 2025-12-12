@@ -1,0 +1,27 @@
+ UDC type #mod #out name author
+ OUT blockname
+!ncdu) ( nome cdu )
+!
+!EFPAR (nome) (     valor      )
+   #KA   = PARAM(      100.00000)
+   #TA   = PARAM(        0.05000)
+   #KF   = PARAM(        0.30000)
+   #TF   = PARAM(        3.00000)
+   #TE   = PARAM(        1.50000)
+   #KE   = PARAM(        1.00000)
+!
+! Not recognized: variable         , Function:   0 AVR 
+Vref     = CONST(???)
+Vt       = INPXXX() !IMPORT
+Vsad     = INPXXX() !IMPORT
+! Not recognized: variable       V3, Function:     SOMA
+! Not recognized: variable       V4, Function:     SOMA
+VR       = COMP6(0,    V4,   #KA,   0.0,   1.0,   #TA,  Lmax,  Lmin)
+! Not recognized: variable      V70, Function:     SOMA
+Efd      = COMP6(0,   V70,   1.0,   0.0,   0.0,   #TE,9999. ,-9999.)
+VF       = COMP6(0,   Efd,   0.0,   #KF,   1.0,   #TF,9999. ,-9999.)
+! Not recognized: variable      V72, Function:    GANHO
+!
+!EFVAL (stip) (vdef) ( d1 )o( d2 )
+!
+ END 

@@ -1,0 +1,24 @@
+ UDC type #mod #out name author
+ OUT blockname
+!ncdu) ( nome cdu )
+!
+!EFPAR (nome) (     valor      )
+  #TW1   = PARAM(        3.00000)
+  #TN1   = PARAM(        0.39842)
+  #TD1   = PARAM(        0.02780)
+  #KP1   = PARAM(        7.22980)
+ #LMIN   = PARAM(       -0.10000)
+ #LMAX   = PARAM(        0.10000)
+!
+! Not recognized: variable         , Function:   1 PSS1
+X1       = INPXXX() !IMPORT
+X2       = COMP6(0,    X1,   0.0,  #TW1,     1,  #TW1,9999. ,-9999.)
+X3       = COMP6(0,    X2,     1,  #TN1,     1,  #TD1,9999. ,-9999.)
+X4       = COMP6(0,    X3,     1,  #TN1,     1,  #TD1,9999. ,-9999.)
+X5       = COMP6(0,    X4,     1,  #TN1,     1,  #TD1,9999. ,-9999.)
+! Not recognized: variable       X6, Function:    GANHO
+X7       = LIMIT3(    X6,  LMAX,  LMIN)
+!
+!EFVAL (stip) (vdef) ( d1 )o( d2 )
+!
+ END 

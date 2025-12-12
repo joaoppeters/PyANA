@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from folder import folder
+from converter import worg
 from os.path import dirname, exists
 from simulation import *
 from setting import pwfsetting, stbsetting
@@ -49,7 +49,12 @@ class PowerFlow:
                 elif sys_type == "stb":
                     pwfsetting(self.anarede)
                     stbsetting(self.anarede, self.anatem)
-                    if method != "EXSI":
+                    if method == "ORGA":
+                        self.organon = PowerFlowContainer()
+                        self.organon.system = system
+                        self.organon.method = method
+                        worg(self.anarede, self.anatem, self.organon)
+                    elif method != "EXSI":
                         raise ValueError(f"Unknown method: {method}")
                     exsi(self.anatem)
 

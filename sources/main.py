@@ -14,6 +14,7 @@ method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "EXPC"  # POINT OF COLLAPSE
 method = "EXSI"  # DYNAMIC SIMULATION
+# method = "ORGA"  # ORGANON
 
 # control = [
 #     # "CREM",
