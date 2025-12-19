@@ -9,7 +9,6 @@
 from copy import deepcopy
 from unittest.mock import DEFAULT
 from numpy import nan
-from os.path import dirname, exists
 from pandas import DataFrame as DF
 
 DEFAULT = ""
@@ -127,96 +126,139 @@ def dcdu(
         anatem:
     """
     ## Inicialização
-    # proteção: se linecount for maior que número de linhas, sai
+    if not hasattr(anatem, "dcdu_raw"):
+        anatem.dcdu_raw = []
+
+    raw_index = 0
+    ncdu = None
+
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
+
+        raw_entry = {
+            "raw": line,
+            "kind": None,
+            "ncdu": None,
+            "index": raw_index,
+        }
+        raw_index += 1
+
+        # linha em branco
         if line == "":
-            # linha vazia: apenas avança
+            raw_entry["kind"] = "blank"
+            anatem.dcdu_raw.append(raw_entry)
             anatem.linecount += 1
             continue
 
+        # comentário
         if line[0] == anatem.comment:
-            # comentário: apenas avança
+            raw_entry["kind"] = "comment"
+            anatem.dcdu_raw.append(raw_entry)
             anatem.linecount += 1
             continue
 
-        # bloco interno: lê até "FIMCDU" ou até acabar as linhas
+        # bloco interno
         while (
             0 <= anatem.linecount < len(anatem.lines)
             and anatem.lines[anatem.linecount].strip() != "FIMCDU"
         ):
             line = anatem.lines[anatem.linecount].rstrip("\n")
 
-            # comentário
+            raw_entry = {
+                "raw": line,
+                "kind": None,
+                "ncdu": ncdu,
+                "index": raw_index,
+            }
+            raw_index += 1
+
+            # comentário ou linha vazia dentro do bloco
             if line == "" or line[0] == anatem.comment:
+                raw_entry["kind"] = "comment" if line else "blank"
+                anatem.dcdu_raw.append(raw_entry)
                 anatem.linecount += 1
                 continue
 
-            # cuidado com anatem.linecount == 0 quando acessar linha anterior
             prev_line = (
-                anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
+                anatem.lines[anatem.linecount - 1]
+                if anatem.linecount > 0
+                else ""
             )
 
-            # ncdu ruler: cria novo ncdu
+            # ncdu
             if prev_line[:] in anatem.dcdu.get("ncdu_ruler", ""):
                 ncdu = safe_slice(line, 0, 6).strip()
+
+                raw_entry["kind"] = "ncdu"
+                raw_entry["ncdu"] = ncdu
+                anatem.dcdu_raw.append(raw_entry)
+
                 anatem.dcdu[ncdu] = {
                     "nome": safe_slice(line, 7, 19),
-                    "defpar": list(),
-                    "defpar_nome": list(),
-                    "defpar_valor": list(),
-                    "bloco_numero": list(),
-                    "bloco_inicializacao": list(),
-                    "bloco_tipo": list(),
-                    "bloco_omitir": list(),
-                    "bloco_subtipo": list(),
-                    "bloco_sinal": list(),
-                    "bloco_entrada": list(),
-                    "bloco_saida": list(),
-                    "bloco_parametro1": list(),
-                    "bloco_parametro2": list(),
-                    "bloco_parametro3": list(),
-                    "bloco_parametro4": list(),
-                    "bloco_limite_minimo": list(),
-                    "bloco_limite_maximo": list(),
-                    "defval": list(),
-                    "defval_subtipo": list(),
-                    "defval_variavel": list(),
-                    "defval_parametro_d1": list(),
-                    "defval_exclusao": list(),
-                    "defval_parametro_d2": list(),
+                    "defpar": [],
+                    "defpar_nome": [],
+                    "defpar_valor": [],
+                    "bloco_numero": [],
+                    "bloco_inicializacao": [],
+                    "bloco_tipo": [],
+                    "bloco_omitir": [],
+                    "bloco_subtipo": [],
+                    "bloco_sinal": [],
+                    "bloco_entrada": [],
+                    "bloco_saida": [],
+                    "bloco_parametro1": [],
+                    "bloco_parametro2": [],
+                    "bloco_parametro3": [],
+                    "bloco_parametro4": [],
+                    "bloco_limite_minimo": [],
+                    "bloco_limite_maximo": [],
+                    "defval": [],
+                    "defval_subtipo": [],
+                    "defval_variavel": [],
+                    "defval_parametro_d1": [],
+                    "defval_exclusao": [],
+                    "defval_parametro_d2": [],
                 }
 
             # DEFPAR
-            elif  prev_line[:] in anatem.dcdu.get("defpar_ruler", "") or (
-                line.split()[0] == "DEFPAR" if line.split() else False
+            elif prev_line[:] in anatem.dcdu.get("defpar_ruler", "") or (
+                line.split() and line.split()[0] == "DEFPAR"
             ):
+                raw_entry["kind"] = "defpar"
+                anatem.dcdu_raw.append(raw_entry)
+
                 anatem.dcdu[ncdu]["defpar"].append(safe_slice(line, 0, 6).strip())
                 anatem.dcdu[ncdu]["defpar_nome"].append(safe_slice(line, 7, 13).strip())
                 anatem.dcdu[ncdu]["defpar_valor"].append(safe_slice(line, 14, 32).strip())
 
             # DEFVAL
-            elif  prev_line[:] in anatem.dcdu.get("defval_ruler", "") or (
-                line.split()[0] == "DEFVAL" if line.split() else False
+            elif prev_line[:] in anatem.dcdu.get("defval_ruler", "") or (
+                line.split() and line.split()[0] == "DEFVAL"
             ):
+                raw_entry["kind"] = "defval"
+                anatem.dcdu_raw.append(raw_entry)
+
                 anatem.dcdu[ncdu]["defval"].append(safe_slice(line, 0, 6).strip())
                 anatem.dcdu[ncdu]["defval_subtipo"].append(safe_slice(line, 7, 13).strip())
                 anatem.dcdu[ncdu]["defval_variavel"].append(safe_slice(line, 14, 20).strip())
-                # para parâmetros curtos, você pode exigir fatia completa: require_full=True
                 anatem.dcdu[ncdu]["defval_parametro_d1"].append(
                     safe_slice(line, 21, 27, default=DEFAULT, require_full=False)
                 )
-                # caractere único: use slice 27:28 (seguro)
-                anatem.dcdu[ncdu]["defval_exclusao"].append(safe_slice(line, 27, 28).strip())
+                anatem.dcdu[ncdu]["defval_exclusao"].append(
+                    safe_slice(line, 27, 28).strip()
+                )
                 anatem.dcdu[ncdu]["defval_parametro_d2"].append(
                     safe_slice(line, 28, 34).strip()
                 )
 
-            # bloco padrão (outras linhas)
+            # bloco padrão
             else:
+                raw_entry["kind"] = "bloco"
+                anatem.dcdu_raw.append(raw_entry)
+
                 anatem.dcdu[ncdu]["bloco_numero"].append(safe_slice(line, 0, 4).strip())
                 anatem.dcdu[ncdu]["bloco_inicializacao"].append(safe_slice(line, 4, 5).strip())
                 anatem.dcdu[ncdu]["bloco_tipo"].append(safe_slice(line, 5, 11).strip())
@@ -229,20 +271,25 @@ def dcdu(
                 anatem.dcdu[ncdu]["bloco_parametro2"].append(safe_slice(line, 39, 45).strip())
                 anatem.dcdu[ncdu]["bloco_parametro3"].append(safe_slice(line, 45, 51).strip())
                 anatem.dcdu[ncdu]["bloco_parametro4"].append(safe_slice(line, 51, 57).strip())
-                anatem.dcdu[ncdu]["bloco_limite_minimo"].append(
-                    safe_slice(line, 58, 64).strip()
-                )
-                anatem.dcdu[ncdu]["bloco_limite_maximo"].append(
-                    safe_slice(line, 64, 70).strip()
-                )
+                anatem.dcdu[ncdu]["bloco_limite_minimo"].append(safe_slice(line, 58, 64).strip())
+                anatem.dcdu[ncdu]["bloco_limite_maximo"].append(safe_slice(line, 64, 70).strip())
 
             anatem.linecount += 1
 
-        # avança além do marcador FIMCDU (se estiver dentro dos limites)
+        # FIMCDU
+        fim_line = anatem.lines[anatem.linecount].rstrip("\n")
+        anatem.dcdu_raw.append({
+            "raw": fim_line,
+            "kind": "fimcdu",
+            "ncdu": ncdu,
+            "index": raw_index,
+        })
+        raw_index += 1
+
         anatem.linecount += 1
-        # proteção: evita loop infinito se ultrapassar número de linhas
         if anatem.linecount >= len(anatem.lines):
             break
+
 
 
 def dcst(

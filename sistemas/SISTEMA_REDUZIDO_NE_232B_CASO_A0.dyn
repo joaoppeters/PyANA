@@ -1,379 +1,411 @@
 !
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5000.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5001.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5002.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5003.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5004.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5005.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PV5006.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37992.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37993.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37994.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38031.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38002.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37998.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38023.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37990.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38042.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38041.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38004.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37988.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37987.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37991.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38000.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38014.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38010.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38011.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38019.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37999.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38001.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38005.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38007.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38028.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38008.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38009.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38035.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38038.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37986.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38046.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT39213.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT39331.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT39526.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT39527.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38045.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37989.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37995.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37996.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37997.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38006.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38015.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38025.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38027.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38026.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38017.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38018.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38021.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38022.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38024.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38012.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38037.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38020.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38034.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38036.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38043.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38032.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38044.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT37984.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\WT38047.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1200.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1202.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1203.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1204.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1205.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1206.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1207.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1208.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1210.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1211.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1213.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1215.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1217.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1219.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1221.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1223.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1224.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1315.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1316.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR1800.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR2100.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR2300.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR2700.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR2900.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR3100.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR3101.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR3300.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4814.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4813.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4818.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4815.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4816.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR4817.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR5400.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR5910.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR5911.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR6914.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR6913.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\AVR7100.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS901.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS902.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS903.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS904.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS905.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS906.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS907.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS908.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS909.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS910.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS911.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS912.udc'
+MDF 'C:\Users\JoaoPedroPetersBarbo\Documents\github\PyANA\sistemas\cdu2udc\PSS914.udc'
 SM04 PAF1-1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          1       10     AVR04     PSS01                                   GOV04              1         0.00         0.00        0.00                                  /
+          1       10   AVR1200    PSS909                                   GOV04              1         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.54000 0.20400  0.20000 0.39200 0.00000  0.20000 0.02056     61.20 0.17750    0.0  5.7800   0.0305  0.0000 6.6900 1.0000   0.0590 0.0267000 7.2500000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2092917 .2092917 .07716236 .07716236     3. 5.0 -0.1 0.1   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 5.52385 0.20590      1.      0.   0.05      0.001      -99.       99.    0.001      -99.       99.     0.5       0.0      1.001 1.8000  1.2     0.10  /
 !
 !
 SM04 PAF2A1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          4       10     AVR04     PSS01                                   GOV04              4         0.00         0.00        0.00                                  /
+          4       10   AVR1202    PSS907                                   GOV04              4         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.58200 0.28450  0.24250 0.42000 0.00000  0.24250 0.00625     69.52 0.21550    0.0  5.0000   0.0352  0.0000 5.9100 1.0000   0.0520 0.0267000 6.6090000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2400132 .2400132 .06331884 .06331884     3. 5.0 -0.1 0.1   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 4.87982 0.18190      1.      0.   0.05      0.001      -99.       99.    0.001      -99.       99.     0.5       0.0      1.014 1.8000  1.2     0.10  /
 !
 !
 SM04 PAF2A2UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          5       10     AVR04     PSS01                                   GOV04              5         0.00         0.00        0.00                                  /
+          5       10   AVR1203    PSS906                                   GOV04              5         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.58200 0.28450  0.24250 0.42000 0.00000  0.24250 0.00625     69.52 0.21550    0.0  5.0000   0.0352  0.0000 5.9100 1.0000   0.0520 0.0267000 6.6090000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .239441 .239441 .06443059 .06443059     3. 5.0 -0.1 0.1   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 4.87982 0.18190      1.      0.   0.05      0.001      -99.       99.    0.001      -99.       99.     0.5       0.0      1.100 1.8000  1.2     0.10  /
 !
 !
 SM04 PAF2A3UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          6       10     AVR04     PSS01                                   GOV04              6         0.00         0.00        0.00                                  /
+          6       10   AVR1204    PSS904                                   GOV04              6         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.58200 0.28450  0.24250 0.42000 0.00000  0.24250 0.00625     69.52 0.21550    0.0  5.0000   0.0352  0.0000 5.9100 1.0000   0.0520 0.0267000 6.6090000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2217253 .2217253 .0734572 .0734572     3. 5.0 -0.1 0.1   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 4.87982 0.18190      1.      0.   0.05      0.001      -99.       99.    0.001      -99.       99.     0.5       0.0      1.014 1.8000  1.2     0.10  /
 !
 !
 SM04 PAF2B1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          7       10     AVR04                                             GOV04              7         0.00         0.00        0.00                                  /
+          7       10   AVR1205                                             GOV04              7         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.83440 0.28000  0.21000 0.55000 0.00000  0.21000 0.00700     80.00 0.18800    0.0  5.5000   0.0400  0.0000 5.4200 1.0000   0.0786 0.0022700 11.2000000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.04 5.95208 0.11113      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      0.1      0.0      0.958 2.3100  1.218    0.11 /
 !
 !
 SM04 PAF2B2UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          8       10     AVR04                                             GOV04              8         0.00         0.00        0.00                                  /
+          8       10   AVR1206                                             GOV04              8         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.83440 0.28000  0.21000 0.55000 0.00000  0.21000 0.00700     80.00 0.18800    0.0  5.5000   0.0400  0.0000 5.4200 1.0000   0.0786 0.0022700 11.2000000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.04 5.95208 0.11113      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      0.1      0.0      0.958 2.3100  1.218    0.11 /
 !
 !
 SM04 PAF2B3UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-          9       10     AVR04                                             GOV04              9         0.00         0.00        0.00                                  /
+          9       10   AVR1207                                             GOV04              9         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.83440 0.28000  0.21000 0.55000 0.00000  0.21000 0.00700     80.00 0.18800    0.0  5.5000   0.0400  0.0000 5.4200 1.0000   0.0786 0.0022700 11.2000000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.04 5.95208 0.11113      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      0.1      0.0      1.100 2.3100  1.218    0.11 /
 !
 !
 SM04 PAF3-1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         10       10     AVR04     PSS01                                   GOV04             10         0.00         0.00        0.00                                  /
+         10       10   AVR1208    PSS911                                   GOV04             10         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.90000 0.24810  0.17390 0.57000 0.00000  0.17390 0.00369    209.00 0.11000    0.0  4.6200   0.0485  0.0000 4.9500 1.0000   0.0984 0.0530940 5.5767560 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .3984229 .3984229 .0278045 .0278045     3. 7.2298 -0.1 0.1   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 2.73481 0.28722      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      0.1      0.0      0.961 1.2500  1.250    0.10 /
 !
 !
 SM04 PAF3-2UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         11       10     AVR04                                             GOV04             11         0.00         0.00        0.00                                  /
+         11       10   AVR1210                                             GOV04             11         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.90000 0.24810  0.17390 0.57000 0.00000  0.17390 0.00369    209.00 0.11000    0.0  4.6200   0.0485  0.0000 4.9500 1.0000   0.0984 0.0530940 5.5767560 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 2.73481 0.28722      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      0.1      0.0      0.961 1.2500  1.250    0.10 /
 !
 !
 SM04 PAF4-1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         14       10     AVR04                                                               14         0.00         0.00        0.00                                  /
+         14       10   AVR1211                                                               14         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.86640 0.25990  0.23260 0.66580 0.00000  0.23260 0.00200    456.00 0.20520    0.0  6.6300   0.0640  0.0000 4.4600 0.2500   0.1320 0.0377000 6.6000000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-         10.0     0.05   1.00   1.50                   0.30   3.00     -20.      20.                                                   /
 !
 !
 SM04 ASALE1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         28       10     AVR04                                             GOV04             28         0.00         0.00        0.00                                  /
+         28       10   AVR1213                                             GOV04             28         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.76500 0.22500  0.15500 0.54500 0.00000  0.15500 0.00300    122.00 0.13420    0.0  4.4000   0.0435  0.0000 4.0500 1.0000   0.1055 0.0000000 0.0000000 0.0000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.10 3.55427 0.11389      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      1.5      0.0      0.853 1.9000  1.250    0.20 /
 !
 !
 SM04 ASALE2UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         29       10     AVR04                                             GOV04             29         0.00         0.00        0.00                                  /
+         29       10   AVR1215                                             GOV04             29         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.76500 0.22500  0.15500 0.54500 0.00000  0.15500 0.00300    122.00 0.13420    0.0  4.4000   0.0435  0.0000 4.0500 1.0000   0.1055 0.0000000 0.0000000 0.0000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.10 3.55427 0.11389      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.      1.5      0.0      0.823 1.9000  1.250    0.20 /
 !
 !
 SM04 LGONZ1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         33       10     AVR04                                             GOV04             33         0.00         0.00        0.00                                  /
+         33       10   AVR1217                                             GOV04             33         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.98000 0.29000  0.26000 0.55900 0.00000  0.26000 0.00200    274.00 0.15000    0.0  5.3500   0.0440  0.0000 3.8500 0.2500   0.0890 0.0195000 7.4650000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.04 4.57297 0.07115      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.     0.29      0.0      0.915 2.4700  1.320    0.09 /
 !
 !
 SM04 LGONZ2UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         34       10     AVR04                                             GOV04             34         0.00         0.00        0.00                                  /
+         34       10   AVR1219                                             GOV04             34         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.90000 0.33000  0.26000 0.66000 0.00000  0.26000 0.00200    274.00 0.15000    0.0  5.4000   0.0480  0.0000 4.0600 0.2500   0.1100 0.0087700 8.9588000 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.04 4.82241 0.07503      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.     0.29      0.0      0.915 2.4700  1.320    0.09 /
 !
 !
 SM04 XINGO1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         89       10     AVR04                                                               89         0.00         0.00        0.00                                  /
+         89       10   AVR1221                                                               89         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.89000 0.36000  0.29000 0.66000 0.00000  0.29000 0.00190    520.00 0.20000    0.0  5.4000   0.0600  0.0000 4.5180 0.2500   0.0940 0.0294060 5.4211200 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !
 !
 SM04 SOBRA1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         21       10     AVR04                                             GOV04             21         0.00         0.00        0.00                                  /
+         21       10   AVR1223                                             GOV04             21         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.80000 0.32000  0.23000 0.55000 0.00000  0.23000 0.00200    194.50 0.13000    0.0  5.4000   0.0600  0.0000 4.2500 1.0000   0.1000 0.0247300 6.5095600 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 4.41038 0.09414      1.      0.    0.05     0.001      -99.       99.    0.001      -99.       99.     0.50      0.0      0.902 2.2000  1.520    0.11 /
 !
 !
 SM04 N.VE.GUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13029       20     AVR04                                             GOV09          13029         0.00         0.00        0.00                                  /
+      13029       20   AVR1224                                             GOV09          13029         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.91110 0.32000  0.25000 0.63000 0.00000  0.25000 0.00661     10.84 0.13000    0.0  3.6000   0.0256  0.0000 2.6300 1.0000   0.0300 0.0232474 4.3773440 0.5500000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 N.VE.GUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13029       10     AVR04                                             GOV09          13029         0.00         0.00        0.00                                  /
+      13029       10   AVR4817                                             GOV09          13029         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.87000 0.23500  0.17500 1.77000 0.42500  0.17500 0.00260    208.00 0.13000    0.0  7.0000   0.0400  0.5500 5.1400 1.0000   0.0810 0.0535311 0.6096972 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 MARA3GUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13016       10     AVR04                                             GOV09          13016         0.00         0.00        0.00                                  /
+      13016       10   AVR1315                                             GOV09          13016         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.87000 0.23500  0.17500 1.77000 0.42500  0.17500 0.00260    208.00 0.13000    0.0  7.0000   0.0400  0.5500 5.1400 1.0000   0.0810 0.0535311 0.6096972 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 VDOACUUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-        433       10     AVR04     PSS01                                                    433         0.00         0.00        0.00                                  /
+        433       10   AVR1800    PSS903                                                    433         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.85000 0.22500  0.17000 1.76000 0.42000  0.17000 0.00270    204.40 0.15000    0.0  6.7000   0.0390  0.5500 5.5500 1.0000   0.0810 0.0799901 0.1414014 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2797686 .2797686 .04139715 .04139715     3. 1.2 -0.1 0.1   /
 !
 !
 SM04 ITAPE1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         95       10     AVR04                                             GOV04             95         0.00         0.00        0.00                                  /
+         95       10   AVR2100                                             GOV04             95         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        0.97000 0.30000  0.22000 0.65000 0.00000  0.22000 0.00317    160.00 0.15000    0.0  5.4500   0.0305  0.0000 3.0800 1.0000   0.0590 0.0215323 9.3529270 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 2.07640 0.12952      1.      0.   0.50      0.001      -99.       99.    0.001      -99.       99.    0.50       0.0      0.984 1.5000  1.20    0.15  /
 !
 !
 SM05 TERCEGUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-        339       10     AVR04                                             GOV09            339         0.00         0.00        0.00                                  /
+        339       10   AVR2700                                             GOV09            339         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        2.35000 0.24500  0.18100 2.15000 0.35000  0.18100 0.00000    300.20 0.15000    0.0  9.6700   0.0500  2.9500 1.7870 1.0000   0.0500 0.0031303 0.0061628 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      5.0     -5.0    0.0    5.0 /
 !
 !
 SM05 FORTAGUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-        327       10     AVR04                                             GOV09            327         0.00         0.00        0.00                                  /
+        327       10   AVR2900                                             GOV09            327         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.81000 0.18300  0.13800 1.68000 0.30000  0.13800 0.00000    131.60 0.12000    0.0  7.8900   0.0180  0.7600 8.1500 1.0000   0.0270 0.0694439 0.3138888 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.5     -1.0    0.0    5.0 /
 !
 !
 SM05 TERPEGUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-        160       10     AVR04                                             GOV09            160         0.00         0.00        0.00                                  /
+        160       10   AVR3100                                             GOV09            160         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.91800 0.23500  0.17800 1.82500 0.43200  0.17800 0.00162    211.70 0.13500    0.0  6.6890   0.0390  0.5620 5.3500 1.0000   0.0810 0.0571386 0.4411919 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      5.0     -5.0    0.0    5.0 /
 !
 !
 SM05 TERPEVUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-        161       10     AVR04                                             GOV09            161         0.00         0.00        0.00                                  /
+        161       10   AVR3101                                             GOV09            161         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.71200 0.24700  0.19400 1.65200 0.44500  0.19400 0.00138    284.60 0.14700    0.0  5.5240   0.0370  0.5040 4.9750 1.0000   0.0740 0.0509290 0.3087808 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM04 PCAVA1UHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         48       10     AVR04                                             GOV04             48         0.00         0.00        0.00                                  /
+         48       10   AVR3300                                             GOV04             48         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        1.02000 0.32000  0.28000 0.67000 0.00000  0.28000 0.00000     90.00 0.18000    0.0  6.2900   0.0700  0.0000 2.1700 1.0000   0.1700 0.0252939 7.5413110 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!GOV04 (-Rp-) (-Kp-) (-Ki-) (-Kd-) (-Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+!GOV04 (-Rp-) (--Kp-) (--Ki-) (--Kd-) (--Td-) (-Tp1-) (-Tp2>0-) (-G1min-) (-G1max-) (-Tv>0-) (-G2min-) (-G2max-) (-Tq>0-) (-G3min-) (-G3max-) (-Tw-) (-At-) (-qnl-)
+         0.05 1.13683 0.13754      1.      0.   0.5       0.001      -99.       99.    0.001      -99.       99.    0.15       0.0      1.000 1.1900  1.667   0.20  /
 !
 !
 SM05 PPECE2UTE020
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      11010       10     AVR04     PSS01                                   GOV09          11010         0.00         0.00        0.00                                  /
+      11010       10   AVR4814    PSS910                                   GOV09          11010         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        2.07000 0.42120  0.31780 2.04200 0.58740  0.31780 0.00265    435.00 0.26230    0.0  7.1370   0.0470  0.7930 3.4600 1.0000   0.0670 0.1052412 0.3912298 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2642097 .2642097 .04152561 .04152561     3. 5.0 -0.1 0.1   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 PPECE1UTE020
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      11001       10     AVR04     PSS01                                                  11001         0.00         0.00        0.00                                  /
+      11001       10   AVR4813    PSS914                                                  11001         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        2.07000 0.42120  0.31780 2.04200 0.58740  0.31780 0.00265    435.00 0.26230    0.0  7.1370   0.0470  0.7930 3.4600 1.0000   0.0670 0.1052412 0.3912298 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       2.481207 2.481207 .008873825 .008873825     3. .4474349 -0.1 0.1   /
 !
 !
 SM05 MARA4GUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13003       10     AVR04                                             GOV09          13003         0.00         0.00        0.00                                  /
+      13003       10   AVR4815                                             GOV09          13003         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.87000 0.23500  0.17500 1.77000 0.42500  0.17500 0.00260    208.00 0.13000    0.0  7.0000   0.0400  0.5500 5.1400 1.0000   0.0810 0.0535311 0.6096972 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 MARA5GUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13008       10     AVR04                                             GOV09          13008         0.00         0.00        0.00                                  /
+      13008       10   AVR4816                                             GOV09          13008         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.87000 0.23500  0.17500 1.77000 0.42500  0.17500 0.00260    208.00 0.13000    0.0  7.0000   0.0400  0.5500 5.1400 1.0000   0.0810 0.0535311 0.6096972 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05   0.50      1.0     -1.0    0.0    5.0 /
 !
 !
 SM04 ESTREIUHE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-         80       10     AVR04     PSS01                                                     80         0.00         0.00        0.00                                  /
+         80       10   AVR5400    PSS912                                                     80         0.00         0.00        0.00                                  /
 !SM04  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (---Ag-) (---Bg-) (---Cg-)
        1.03500 0.35300  0.30100 0.69600 0.00000  0.30100 0.00000    151.80 0.14000    0.0  7.5000   0.0700  0.0000 3.5500 1.0000   0.1100 0.0060800 8.6033200 0.8000000 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       2.002646 2.002646 .01332682 .01332682     3. 1.248127 -0.1 0.1   /
 !
 !
 SM05 PSER1VUTE024
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      11149       10     AVR04                                             GOV09          11149         0.00         0.00        0.00                                  /
+      11149       10   AVR6914                                             GOV09          11149         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        2.07000 0.28000  0.27000 2.03000 0.47000  0.27000 0.00128    720.00 0.20000    0.0  4.6200   0.0170  0.5900 5.0170 1.0000   0.0280 0.0254387 0.1106388 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
 !GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
        0.05    0.5      1.0     -1.0    0.0    5.0 /
 !
 !
 SM05 PSER1GUTE025
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      11150       10     AVR04     PSS01                                                  11150         0.00         0.00        0.00                                  /
+      11150       10   AVR6913    PSS908                                                  11150         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        1.92000 0.30000  0.23500 1.85000 0.49000  0.23500 0.00160    422.00 0.18000    0.0  6.6000   0.0370  0.5400 4.5990 1.0000   0.0660 0.0490882 0.0861956 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!PSS01 (-T1-) (-T2-) (-T3-) (-T4-) (-T5-) (-T6-) (-Tw-) (-K1-) (-Vmin-) (-Vmax-) (-Type-)
-       .2675867 .2675867 .04560434 .04560434     3. 5.0 -0.1 0.1   /
 !
 !
 SM05 PARNAVUTE013
 ! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
-      13033       10     AVR04                                                            13033         0.00         0.00        0.00                                  /
+      13033       10   AVR7100                                                            13033         0.00         0.00        0.00                                  /
 !SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
        2.06000 0.32000  0.24500 1.98000 0.51500  0.24500 0.00300    490.00 0.19500    0.0  6.7000   0.0360  0.5700 5.5600 0.2000   0.0620 0.0489014 0.4105325 /
-!AVR04 (-Ka-) (-Ta>0-) (-Ke-) (-Te-) (-Tc-) (-Tb>0-) (-Kf-) (-Tf-) (-Vmin-) (-Vmax-) (-E1-) (-S[E1]-) (-E2-) (-S[E2]-) (-Tc1-) (-Tb1-)
-        100.0     0.05   1.00   1.50                   0.30   3.00      -4.       8.                                                   /
-!
-!
-SM01 RG-CO1CAP500
-! (--Bus--) (--ID--) (--Gov--) (--Bus Name--)
-        407       10                         
-!SM01  (-Xld-) (-Ra-) (-Sb-) (-Xt-)   (-H-) (-D-)
-         0.320  0.000 100.00  0.000 100.000 0.000 /
-!
-!
-SM01 RG-CO2CAP500
-! (--Bus--) (--ID--) (--Gov--) (--Bus Name--)
-        453       10                         
-!SM01  (-Xld-) (-Ra-) (-Sb-) (-Xt-)   (-H-) (-D-)
-         0.320  0.000 100.00  0.000 100.000 0.000 /
 !
 !

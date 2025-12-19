@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from converter import worg
+from worg import worg
 from os.path import dirname, exists
 from simulation import *
 from setting import pwfsetting, stbsetting

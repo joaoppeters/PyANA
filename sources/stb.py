@@ -36,11 +36,12 @@ def stb(
         anatem,
     )
 
-    # Leitura
+    # Leitura do arquivo .stb
     rstb(
         anatem,
     )
 
+    # Leitura dos dados de entrada DARQ
     rdarq(
         anatem,
     )
@@ -104,6 +105,9 @@ def rstb(
     f = open(f"{anatem.dirSTB}", "r", encoding="latin-1")
     anatem.lines = f.readlines()
     f.close()
+
+    # salvar linhas com comentários
+    anatem.full_stb = anatem.lines.copy()
 
     # Loop de leitura de linhas do `.stb`
     while anatem.lines[anatem.linecount].strip() != anatem.end_archive:

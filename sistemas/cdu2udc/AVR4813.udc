@@ -1,0 +1,40 @@
+UDC AVR 4813 1 AVR4813 '@joaoppeters'
+OUT EFD
+!  4813 AVR
+!(----------------------------------------------------------------------
+!(      (nome) (     valor      )
+!(----------------------------------------------------------------------
+#KA    = PARAM(             100.0)
+#TA    = PARAM(              0.05)
+#KF    = PARAM(              0.30)
+#TF    = PARAM(              3.00)
+#TE    = PARAM(              1.50)
+#KE    = PARAM(              1.00)
+!(nb) (tipo) (stip)s(vent) (vsai) ( p1 )( p2 )( p3 )( p4 ) (vmin) (vmax)
+TMSTP  =INPSTEP()
+Vref  =REF(0.0)
+Vt    =INPGVC()
+Vsad  =INPPSS()
+V3     =ADD(-1.0, Vt, 1.0, Vref, 1.0, Vsad)
+V4     =ADD(1.0, V3, -1.0, VF)
+VR     =COMP6(0.0, V4, #KA, 0.0, 1.0, #TA, Lmax, Lmin)
+V70    =ADD(1.0, VR, -1.0, V72)
+Efd1   =FRAC(V70, 1.0, #TE)
+Efd2   =INTEG8(0.0, Efd1, 1.0)
+Efd3   =FRAC(V70, 0.0, #TE)
+Efd    =ADD(1.0, Efd2, 1.0, Efd3)
+VF1    =FRAC(Efd, #KF, #TF)
+VF2    =LPASS1(0.0, Efd, #TF, 1.0)
+VF3    =FRAC(VF2, #KF, #TF)
+VF     =ADD(1.0, VF1, -1.0, VF3)
+V72    =GAIN(0.0, Efd, #KE)
+EFD1   =EXPORT(Efd)
+!(
+!(
+!(----------------------------------------------------------------------
+!(DEFVA (stip) (vdef) ( d1 )
+!(----------------------------------------------------------------------
+Lmin   = PARAM(               -4.)
+Lmax   = PARAM(                8.)
+!
+END

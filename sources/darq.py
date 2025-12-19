@@ -19,7 +19,7 @@ def rdarq(
         anatem:
     """
     ## Inicialização
-    anatem.dblt = dict()
+    anatem.cdcdu = dict()
     anatem.dcdu = dict()
     pathdarq(
         anatem,

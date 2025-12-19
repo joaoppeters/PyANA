@@ -1,0 +1,432 @@
+UDC RNG 5006 2 PV5006 '@joaoppeters'
+OUT ITRFNT ITIFNT
+! 5006  PV    
+!( 
+!(======================================================================= 
+!( SELECTION OF THE CONTROL MODE
+!(======================================================================= 
+!(
+#FLG_Q = PARAM(               1.0)
+#FLG_V = PARAM(               0.0)
+#FLG_F = PARAM(               0.0)
+!( 
+!(======================================================================= 
+!( MODEL PARAMETERS
+!(======================================================================= 
+!(
+#MBASE = PARAM(             550.0)
+#NMAQ  = PARAM(                 1)
+!(P/Q controller
+#PFLG0 = PARAM(               1.0)
+#VFLG1 = PARAM(               1.0)
+#VFLG0 = PARAM(               0.0)
+#QFLG1 = PARAM(               1.0)
+#QFLG0 = PARAM(               0.0)
+#TP_1  = PARAM(              0.01)
+#KQI   = PARAM(              10.0)
+#KQP   = PARAM(               1.0)
+#KVI   = PARAM(              10.0)
+#KVP   = PARAM(               1.0)
+#TIQ   = PARAM(               8.0)
+#TPORD = PARAM(              0.05)
+#VDIP  = PARAM(              0.85)
+#VFRZ  = PARAM(              0.70)
+#VUP   = PARAM(              1.20)
+#TRV   = PARAM(              0.01)
+#DBD1  = PARAM(             -0.05)
+#DBD2  = PARAM(              0.05)
+#KQV   = PARAM(               0.8)
+#IQH1  = PARAM(              0.75)
+#IQL1  = PARAM(             -0.75)
+!(Plant level control model
+#TFLTR = PARAM(              0.01)
+#TFT   = PARAM(               0.0)
+#TFV   = PARAM(              0.15)
+#KPV   = PARAM(              18.0)
+#KIV   = PARAM(               5.0)
+#DBL   = PARAM(          -0.00333)
+#DBU   = PARAM(           0.00333)
+!(Current limiter 
+#IMAX  = PARAM(              1.11)
+#PQPRI = PARAM(               1.0)
+!(VDL1 Curve
+#VQ1   = PARAM(               0.0)
+#IQ1   = PARAM(              0.75)
+#VQ2   = PARAM(               0.2)
+#IQ2   = PARAM(          0.750001)
+#VQ3   = PARAM(               0.5)
+#IQ3   = PARAM(          0.750002)
+#VQ4   = PARAM(               1.0)
+#IQ4   = PARAM(          0.750003)
+!(VDL2 Curve
+#VP1   = PARAM(               0.2)
+#IP1   = PARAM(              1.11)
+#VP2   = PARAM(               0.5)
+#IP2   = PARAM(          1.110001)
+#VP3   = PARAM(              0.75)
+#IP3   = PARAM(          1.110002)
+#VP4   = PARAM(               1.0)
+#IP4   = PARAM(          1.110003)
+!(Converter
+#TG    = PARAM(              0.02)
+#TFTR  = PARAM(              0.02)
+!(High Voltage Reactive Current Management
+#KHV   = PARAM(               1.5)
+#IOLIM = PARAM(              -1.3)
+#VOLIM = PARAM(               1.2)
+!(Low Voltage Active Current Management
+#LVPT1 = PARAM(               0.2)
+#LVPT0 = PARAM(              0.05)
+!(
+!( =======================================================================
+!( NETWORK MEASUREMENTS
+!( =======================================================================
+!(
+TMSTP  =INPSTEP()
+PGENPU  =INPWMW()
+PGENMW =MULT(PGENPU, SBASE)
+P1GW   =FRAC(PGENMW, 1.E6, #NMAQ)
+P1GPU  =FRAC(P1GW, 1.E-6, #MBASE)
+QGENPU  =INPWMVAR()
+QGENMA =MULT(QGENPU, SBASE)
+Q1GVAR =FRAC(QGENMA, 1.E6, #NMAQ)
+Q1GPU  =FRAC(Q1GVAR, 1.E-6, #MBASE)
+QELEC  =GAIN(0.0, Q1GPU, 1.0)
+VS  =INPGVT()
+VTERM  =GAIN(0.0, VS, 1.0)
+AVS  =INPVANG()
+SBASE  =INIT(100.)
+DT    =TDELAY(, TMSTP)
+UM  =REF(0.0)
+ZERO  =REF(0.0)
+INF  =REF(0.0)
+!(
+COSAVS =COS(AVS)
+SINAVS =SIN(AVS)
+P0  =REF(0.0)
+Q0  =REF(0.0)
+V0  =REF(0.0)
+!( ============================================================================ 
+!( Plant level control model (repc_a)
+!( ============================================================================
+!(
+VT_FIL1 =ADD(1.0, VT_FIL, -1.0, VT_FIL2)
+VT_FIL3 =FRAC(VT_FIL1, 1.0, #TFLTR)
+VT_FIL4 =INTEG8(0.0, VT_FIL3, 1.0)
+VT_FIL2 =GAIN(0.0, VT_FIL4, 1.0)
+VT_FIL5 =GAIN(0.0, VT_FIL4, #TFLTR)
+VT_FIL6 =GAIN(0.0, VT_FIL4, 1.0)
+VT_FIL7 =FRAC(VT_FIL5, 1.0, )
+VT_FIL8 =ADD(1.0, VT_FIL6, -1.0, VT_FIL7)
+VT_FIL9 =ADD(1.0, VTERM, -1.0, VT_FIL8)
+VT_FIL =FRAC(VT_FIL9, , #TFLTR)
+VSP  =REF(0.0)
+X0607  =ADD(-1.0, VT_FIL, 1.0, VSP)
+!(
+QREF   =GAIN(0.0, Q0, 1.0)
+QELEC11 =ADD(1.0, QELEC1, -1.0, QELEC12)
+QELEC13 =FRAC(QELEC11, 1.0, #TFLTR)
+QELEC14 =INTEG8(0.0, QELEC13, 1.0)
+QELEC12 =GAIN(0.0, QELEC14, 1.0)
+QELEC15 =GAIN(0.0, QELEC14, #TFLTR)
+QELEC16 =GAIN(0.0, QELEC14, 1.0)
+QELEC17 =FRAC(QELEC15, 1.0, )
+QELEC18 =ADD(1.0, QELEC16, -1.0, QELEC17)
+QELEC19 =ADD(1.0, QELEC, -1.0, QELEC18)
+QELEC1 =FRAC(QELEC19, , #TFLTR)
+QSPX5  =ADD(-1.0, QELEC1, 1.0, QREF)
+!(                   
+OP1    =GAIN(0.0, X0607, #FLG_V)
+OP2    =GAIN(0.0, QSPX5, #FLG_Q)
+!(                   
+QSPX4  =ADD(1.0, OP1, 1.0, OP2)
+!(
+X0608  =DDBND3(QSPX4, #DBL, #DBU)
+X0609  =GAIN(0.0, X0608, #KPV)
+X07701 =FRAC(X0608, #KIV, 1.0)
+X07702 =INTEG8(0.0, X07701, 1.0)
+X07703 =FRAC(X0608, , 1.0)
+X0770  =ADD(1.0, X07702, 1.0, X07703)
+QSPX   =ADD(1.0, X0609, 1.0, X0770)
+QSPXY  =THOLD(QSPX, X340)
+QSPX2  =LIMIT(0.0, QSPXY, #QMAX, #QMIN)
+QEXT11 =ADD(1.0, QEXT1, -1.0, QEXT12)
+QEXT13 =FRAC(QEXT11, 1.0, #TFV)
+QEXT14 =INTEG8(0.0, QEXT13, 1.0)
+QEXT12 =GAIN(0.0, QEXT14, 1.0)
+QEXT15 =GAIN(0.0, QEXT14, #TFV)
+QEXT16 =GAIN(0.0, QEXT14, 1.0)
+QEXT17 =FRAC(QEXT15, 1.0, #TFT)
+QEXT18 =ADD(1.0, QEXT16, -1.0, QEXT17)
+QEXT19 =ADD(1.0, QSPX2, -1.0, QEXT18)
+QEXT1  =FRAC(QEXT19, #TFT, #TFV)
+QEXT   =GAIN(0.0, QEXT1, #PFLG0)
+!(
+!(Determining Voltage_frz
+!(
+X310   =LT(VTERM, VFRZ)
+X330   =OR( X310, ZERO)
+!( 
+!(
+!( ============================================================================ 
+!( P/Q Control model (reec_a)
+!( ============================================================================
+!(
+!( Iqcmd (IQ_SP)
+!(
+X340   =NOT(X330)
+VFRZ  =REF(0.0)
+PREFF  =LIMIT(0.0, P0, #INF, #ZPZZ1)
+TANFI  =DIVIDE(QREF, PREFF)
+PELEC11 =ADD(1.0, PELEC1, -1.0, PELEC12)
+PELEC13 =FRAC(PELEC11, 1.0, #TP_1)
+PELEC14 =INTEG8(0.0, PELEC13, 1.0)
+PELEC12 =GAIN(0.0, PELEC14, 1.0)
+PELEC15 =GAIN(0.0, PELEC14, #TP_1)
+PELEC16 =GAIN(0.0, PELEC14, 1.0)
+PELEC17 =FRAC(PELEC15, 1.0, )
+PELEC18 =ADD(1.0, PELEC16, -1.0, PELEC17)
+PELEC19 =ADD(1.0, P0, -1.0, PELEC18)
+PELEC1 =FRAC(PELEC19, , #TP_1)
+X0854  =MULT(TANFI, PELEC1)
+!(
+OP3    =GAIN(0.0, X0854, #FLG_F)
+!(
+X0889  =ADD(1.0, OP3, 1.0, QEXT)
+X1890  =ADD(1.0, X0889, 1.0, VREF1)
+!(
+X1891  =GAIN(0.0, X1890, #VFLG0)
+X0890  =LIMIT(0.0, X0889, #QMAX, #QMIN)
+QSPA   =ADD(1.0, X0890, -1.0, QELEC)
+QSPA1  =GAIN(0.0, QSPA, #KQP)
+QSPA21 =FRAC(QSPA, #KQI, 1.0)
+QSPA22 =INTEG8(0.0, QSPA21, 1.0)
+QSPA23 =FRAC(QSPA, , 1.0)
+QSPA2  =ADD(1.0, QSPA22, 1.0, QSPA23)
+QSPA3  =ADD(1.0, QSPA1, 1.0, QSPA2)
+QSPA5  =THOLD(QSPA3, X34)
+!(
+QSPA4  =LIMIT(0.0, QSPA5, #VMXCL, #VMNCL)
+X1892  =GAIN(0.0, QSPA4, #VFLG1)
+!(
+X1893  =ADD(1.0, X1891, 1.0, X1892)
+X1894  =LIMIT(0.0, X1893, #VMXCL, #VMNCL)
+X1531  =ADD(1.0, X1894, -1.0, VTLIM)
+X1533  =GAIN(0.0, X1531, #KVP)
+X1534  =ADD(1.0, X1533, 1.0, X1532)
+X1558  =THOLD(X1534, X34)
+!(
+IQ2    =LIMIT(0.0, X1558, #IQMX, #IQMN)
+IQ3    =GAIN(0.0, IQ2, #QFLG1)
+X1545  =DIVIDE(X0889, VTLIM)
+!(
+X15461 =ADD(1.0, X1546, -1.0, X15462)
+X15463 =FRAC(X15461, 1.0, #TIQ)
+X15464 =INTEG8(0.0, X15463, 1.0)
+X15462 =GAIN(0.0, X15464, 1.0)
+X15465 =GAIN(0.0, X15464, #TIQ)
+X15466 =GAIN(0.0, X15464, 1.0)
+X15467 =FRAC(X15465, 1.0, )
+X15468 =ADD(1.0, X15466, -1.0, X15467)
+X15469 =ADD(1.0, X1545, -1.0, X15468)
+X1546  =FRAC(X15469, , #TIQ)
+X1547  =GAIN(0.0, X1546, #QFLG0)
+X1548  =ADD(1.0, X1547, 1.0, IQ3)
+X1553  =ADD(1.0, X1548, 1.0, IQINJ)
+!(
+!(Determining Voltage_dip
+!(
+X1549  =LIMIT(0.0, X1553, #IQMX, #IQMN)
+IQ_SP  =GAIN(0.0, X1549, 1.0)
+X31    =LT(VTERM, VDIP)
+X32    =GT(VTERM, VUP)
+!( 
+!(Iqinj control
+X33    =OR( X31, X32)
+X34    =NOT(X33)
+X201   =ADD(1.0, X20, -1.0, X202)
+X203   =FRAC(X201, 1.0, #TRV)
+X204   =INTEG8(0.0, X203, 1.0)
+X202   =GAIN(0.0, X204, 1.)
+X205   =GAIN(0.0, X204, #TRV)
+X206   =GAIN(0.0, X204, 1.)
+X207   =FRAC(X205, 1., 0.)
+X208   =ADD(1.0, X206, -1.0, X207)
+X209   =ADD(1.0, VTERM, -1.0, X208)
+X20    =FRAC(X209, 0., #TRV)
+X21    =ADD(1.0, V0, -1.0, X20)
+X22    =DDBND4(X21, #DBD1, 1., #DBD2, 1.)
+X23    =MULT(X21, X22)
+!(          
+X24    =GAIN(0.0, X23, #KQV)
+X25    =LIMIT(0.0, X24, #IQH1, #IQL1)
+IQINJ  =MULT(X25, X31)
+QMIN  =REF(0.0)
+QMAX  =REF(0.0)
+VMNCL  =REF(0.0)
+VMXCL  =REF(0.0)
+VREF1  =REF(0.0)
+VTLIM  =LIMIT(0.0, VS, #INF, #VTMIN)
+VTMIN  =REF(0.0)
+XIQMIN  =REF(0.0)
+!(
+!( Ipcmd (IP_SP)
+!(
+XIQMAX  =REF(0.0)
+VDIP  =REF(0.0)
+VUP  =REF(0.0)
+IQL1  =REF(0.0)
+IQH1  =REF(0.0)
+PREF  =REF(0.0)
+X0001  =ADD(1.0, PREF, -1.0, X0337)
+X0002  =LIMIT(0.0, X0001, #RPMAX, #RPMIN)
+X0003  =ADD(1.0, X0002, 1.0, X0337)
+RPMAX  =MULT(DT, RPMAXX)
+RPMIN  =MULT(DT, RPMINX)
+PSP1   =COMP6(0.0, X0003, 1.0, , 1.0, #TPORD, PMX, PMN)
+PSP    =THOLD(PSP1, X34)
+X1519  =DIVIDE(PSP, VTLIM)
+IP1    =LIMIT(0.0, X1519, #IPMX, #IPMN)
+!(
+!( Current limiter 
+!( 
+IP_SP  =GAIN(0.0, IP1, 1.0)
+RPMINX  =REF(0.0)
+RPMAXX  =REF(0.0)
+PMN  =REF(0.0)
+PMX  =REF(0.0)
+X62    =LFPP(VT_FIL, #VQ1, #IQ1, #VQ2, #IQ2, #VQ3, #IQ3, #VQ4, #IQ4)
+X63    =LFPP(VT_FIL, #VP1, #IP1, #VP2, #IP2, #VP3, #IP3, #VP4, #IP4)
+X64    =SQR(IMAX)
+X65    =SQR(IP_SP)
+X66    =SQR(IQ_SP)
+X67    =ADD(1.0, X64, -1.0, X66)
+X68    =ADD(1.0, X64, -1.0, X65)
+X69    =SQRT(X67)
+X70    =SQRT(X68)
+IQMX   =SEL(X71, X73, PQPRI, 0.0)
+!(
+!( ============================================================================
+!( Modelo do conversor/gerador (regc_a)
+!( ============================================================================
+!( Controle da corrente IQ 
+!(
+X76    =SEL(X72, X74, PQPRI, 0.0)
+IQMN   =GAIN(0.0, IQMX, -1.0)
+X78    =GAIN(0.0, X76, -1.0)
+IPMN   =GAIN(0.0, X78, 1.0)
+!(
+!( High voltage reactive current managenent
+!(
+IPMX   =GAIN(0.0, X76, 1.0)
+IMAX  =REF(0.0)
+PQPRI  =REF(0.0)
+X5011  =ADD(1.0, X501, -1.0, X5012)
+X5013  =FRAC(X5011, 1.0, #TG)
+X5014  =INTEG8(0.0, X5013, 1.0)
+X5012  =GAIN(0.0, X5014, 1.0)
+X5015  =GAIN(0.0, X5014, #TG)
+X5016  =GAIN(0.0, X5014, 1.0)
+X5017  =FRAC(X5015, 1.0, )
+X5018  =ADD(1.0, X5016, -1.0, X5017)
+X5019  =ADD(1.0, IQ_SP, -1.0, X5018)
+X501   =FRAC(X5019, , #TG)
+IQX    =LIMIT(0.0, X501, #LIMQX, #LIMQN)
+LIMQX  =SEL(INF, IQRMX, Q0, 0.0)
+LIMQN  =SEL(IQRMN, INFNEG, Q0, 0.0)
+X018   =MULT(IQX, VTERM)
+X019   =ADD(1.0, VTERM, -1.0, VOLIM)
+X020   =GAIN(0.0, X019, #KHV)
+X021   =LIMIT(0.0, X020, #INF, #ZERO)
+X022   =GT(VTERM, VOLIM)
+!(
+!( Controle da corrente IP                                  
+!(
+X023   =SEL(ZERO, X021, X022, 0.0)
+X024   =ADD(1.0, X018, -1.0, X023)
+X025   =LIMIT(0.0, X024, #INF, #IOLIM)
+!(
+!( Low voltage active current management 
+!(
+IQ     =DIVIDE(X025, VTERM)
+VOLIM  =REF(0.0)
+IOLIM  =REF(0.0)
+X509   =COMP6(0.0, IP_SP, 1.0, , 1.0, #TG, RRPWR, INFNEG)
+X015   =LIMIT(0.0, X509, #LVPL, #INFNEG)
+X5191  =ADD(1.0, X519, -1.0, X5192)
+X5193  =FRAC(X5191, 1.0, #TFTR)
+X5194  =INTEG8(0.0, X5193, 1.0)
+X5192  =GAIN(0.0, X5194, 1.0)
+X5195  =GAIN(0.0, X5194, #TFTR)
+X5196  =GAIN(0.0, X5194, 1.0)
+X5197  =FRAC(X5195, 1.0, )
+X5198  =ADD(1.0, X5196, -1.0, X5197)
+X5199  =ADD(1.0, VTERM, -1.0, X5198)
+X519   =FRAC(X5199, , #TFTR)
+!(
+!( Transformada e export
+!( 
+X521   =LFPP(X519, 0.0, 0.01, 0.500, 0.000, 0.900, 1.200, 0.901, 999.0)
+LVPL   =LIMIT(0.0, X521, #INF, #ZERO)
+X016   =RAMP(X016, #LVPT0, 0., #LVPT1, 1.)
+IP     =MULT(X015, X016)
+INFNEG  =REF(0.0)
+RRPWR  =REF(0.0)
+IQRMN  =REF(0.0)
+IQRMX  =REF(0.0)
+IXFINJ =GAIN(0.0, IP, 1.0)
+X1203  =MULT(IXFINJ, SINAVS)
+X1205  =MULT(IXFINJ, COSAVS)
+!(
+IX_COR =ADD(1.0, X1205, -1.0, X1229)
+!(
+IY_COR =ADD(1.0, X1203, 1.0, X1231)
+X1211  =GAIN(0.0, IX_COR, #MBASE)
+!(
+X1213  =GAIN(0.0, IY_COR, #MBASE)
+X1215  =DIVIDE(X1211, SBASE)
+ITRFNX =GAIN(0.0, X1215, #NMAQ)
+ITRFNX =EXPORT(ITRFNT)
+!(                   
+!(----------------------------------------------------------------------
+!( Definicao dos valores iniciais de variaveis
+!(----------------------------------------------------------------------                                           
+!(
+UM     = PARAM(               1.0)
+ZERO   = PARAM(               0.0)
+INF    = PARAM(             9999.)
+INFNEG = PARAM(            -9999.)
+P0     = PARAM(             P1GPU)
+PREF   = PARAM(             P1GPU)
+VREF1  = PARAM(              ZERO)
+Q0     = PARAM(             Q1GPU)
+V0     = PARAM(             VTERM)
+VSP    = PARAM(            VT_FIL)
+ZPZZ1  = PARAM(             0.001)
+RPMINX = PARAM(             -0.45)
+RPMAXX = PARAM(              0.45)
+PMN    = PARAM(              0.04)
+PMX    = PARAM(              1.10)
+PSP    = PARAM(                P0)
+QMIN   = PARAM(            -0.436)
+QMAX   = PARAM(             0.296)
+VMNCL  = PARAM(               0.8)
+VMXCL  = PARAM(               1.2)
+RRPWR  = PARAM(             10.00)
+IQRMN  = PARAM(              -1.0)
+IQRMX  = PARAM(               1.0)
+VTMIN  = PARAM(             0.050)
+XIQMIN = PARAM(              -0.5)
+XIQMAX = PARAM(               0.4)
+IOLIM  = PARAM(            #IOLIM)
+VOLIM  = PARAM(            #VOLIM)
+PQPRI  = PARAM(            #PQPRI)
+IMAX   = PARAM(             #IMAX)
+VDIP   = PARAM(             #VDIP)
+VUP    = PARAM(              #VUP)
+IQH1   = PARAM(             #IQH1)
+IQL1   = PARAM(             #IQL1)
+VFRZ   = PARAM(            #VFRZ )
+!(
+!
+END

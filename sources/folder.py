@@ -123,6 +123,21 @@ def bxctfolder(
         mkdir(anarede.bxctfolder)
 
 
+def cdufolder(
+    anarede,
+):
+    """criação de diretório para armazenar arquivos CDU
+
+    Args
+        none
+    """
+    ## Inicialização
+    cdufolder = dirname(dirname(__file__)) + "\\sistemas\\cdu2udc\\"
+    if not exists(cdufolder):
+        mkdir(cdufolder)
+    return cdufolder
+
+
 def convergencefolder(
     anarede,
 ):
