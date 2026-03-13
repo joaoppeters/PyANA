@@ -1,160 +1,103 @@
-# Fluxo de Potência ANAREDE via Python
+# Fluxo de Potência CEPEL via Python
 
-O objetivo deste projeto é fornecer um código Python Open-Source para `auxiliar estudantes e pesquisadores` em estudos de `análise de regime permanente de Sistemas Elétricos de Potência`. As simulações aqui realizadas dependem da leitura de dados de `arquivos ANAREDE (.pwf)`.
+Ferramenta Python de código aberto projetada para auxiliar estudantes e pesquisadores na análise de **Sistemas Elétricos de Potência (SEP)** em regime permanente, com suporte à leitura de arquivos padrão CEPEL (`.pwf`, `.stb`, `.dat`, `.cdu`, `.blt`, `.sav` e `.his`).
 
-> **ESTE É UM REPOSITÓRIO EM DESENVOLVIMENTO.**
+> **REPOSITÓRIO EM DESENVOLVIMENTO.**
+> Atualmente focado em simulações de fluxo de potência em regime permanente e análise de estabilidade de tensão (curva P-V).
 
-## Requisitos Mínimos
-`Bibliotecas de Python` empregadas no projeto e necessárias para o correto funcionamento das ferramentas:
-```
-matplotlib
-numpy
-pandas
-scipy
-sympy
-```
+## 🚀 Funcionalidades Implementadas
 
-> **AO BAIXAR ESSE REPOSITÓRIO, RODAR O SEGUINTE COMANDO ABAIXO**
-```cmd
-pip install requirements.txt
-```
+1. **Fluxo de Potência Newton-Raphson (EXLF):** Análise convencional de redes em regime permanente.
+2. **Fluxo de Potência Continuado (EXIC):** Variação dinâmica de carga para traçar curvas P-V (baseado no comando `DINC`).
+3. **Método Direto do Ponto de Colapso (EXPC):** Cálculo direto do limite máximo de carregamento.
 
+---
 
-A estrutura desse repositório está dividida em 5 etapas
+## 🛠️ Instalação e Requisitos
 
+O projeto utiliza bibliotecas científicas padrão. Certifique-se de ter o Python instalado e execute os comandos abaixo:
 
-## I. Leitura de Dados
-Os dados do Sistema Elétrico de Potência em estudo devem estar organizados em um arquivo `.pwf`.
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/nome-do-repo.git
 
-Utilize a pasta entitulada [sistemas](sistemas) para armazenar os arquivos `.pwf` que contém os `dados de SEPs` que pretende de estudar/analisar.
+# Instale as dependências
+pip install -r requirements.txt
 
-Um exemplo de inicialização de variável para leitura de dados do arquivo `.pwf` é mostrado abaixo:
-
-```Python
-system = 'ieee14.pwf'
 ```
 
-> **AO INICIALIZAR A VARIÁVEL COM O NOME DO SISTEMA QUE GOSTARIA DE ANALISAR, CERTIFIQUE-SE QUE O ARQUIVO `.pwf` DESTE SISTEMA ESTÁ CONTIDO NA PASTA [sistemas](sistemas/).**
+**Bibliotecas principais:** `numpy`, `pandas`, `scipy`, `matplotlib`, `sympy`.
 
+---
 
+## 📂 Estrutura de Uso
 
-## II. Métodos de Solução
-- [EXLF: Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newtonraphson.md)
+### 1. Preparação dos Dados
 
-<!-- - [Solução de Fluxo de Potência Não-Linear via Método de Gauss-Seidel](docs/Metodos/gauss-seidel.md) -->
+Coloque seus arquivos `.pwf`, `.stb`, `.dat`, `.cdu`, `.blt`, `.sav` e/ou `.his` na pasta [/sistemas](sistemas/). O código fará a leitura automática a partir deste diretório.
 
-<!-- - [Solução do Fluxo de Potência Linearizado](docs/Metodos/linear.md) -->
+### 2. Métodos Disponíveis
 
-<!-- - [Solução de Fluxo de Potência Desacoplado](docs/Metodos/decoup.md)
+| Código | Método | Referência |
+| --- | --- | --- |
+| **EXLF** | Newton-Raphson Não-Linear | Convencional |
+| **EXIC** | Fluxo Continuado (Previsão/Correção) | Ajjarapu & Christy (1992) |
+| **EXPC** | Método Direto (Ponto de Colapso) | Canizares (1992) |
 
-- [Solução de Fluxo de Potência Desacoplado Rápido](docs/Metodos/fast-decoup.md) -->
+---
 
-- [EXIC: Solução do Fluxo de Potência Continuado - Previsão x Correção (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
+## 💻 Exemplo de Execução
 
-- [EXPC: Solução do Fluxo de Potência pelo Método Direto do cálculo do Ponto de Colapso (CANIZARES, 1992)](docs/Metodos/pointofcollapse.md)
+A interface principal é feita através da classe `PowerFlow`. Abaixo, um exemplo de configuração completa:
 
-> **OUTRAS METODOLOGIAS AINDA SERÃO IMPLEMENTADAS NESSE PROGRAMA**
-
-
-### Matriz Admitância
-Para mais detalhes sobre o cálculo e montagem dessa matriz, [clique aqui](docs/Admitancia/admitancia.md).
-
-
-### Matriz Jacobiana
-A construção da matriz jacobiana é feita de forma diferente nesse [programa](docs/Jacobiana/reduzida.md), em comparação com a do [ANAREDE](docs/Jacobiana/alternada.md). Essa última formulação não foi implementada nesse programa.
-
-
-## III. Opções de Controle
-
-## IV. Opções de Monitoração
-
-## V. Opções de Relatório
-
-
-## Conclusão
-Para realizar a análise de fluxo de potência em regime permanente, `utilize a chamada da classe PowerFlow()` e passe os `Args da classe` que gostaria de analisar.
-
-```Python
+```python
 from powerflow import PowerFlow
 
-PowerFlow(
-    system=system, 
-    method=method, 
-    control=control, 
-    monitor=monitor, 
-    report=report,
-)
+# Configurações da simulação
+config = {
+    "system": "ieee14.pwf",
+    "method": "EXLF",
+    "control": ["FREQ", "QLIM", "SVCs"],
+    "monitor": ["VMON", "PFLOW"],
+    "report": ["RBAR", "RLIN", "RGER"]
+}
+
+# Execução
+PowerFlow(**config)
+
 ```
-- `system: str, obrigatório, valor padrão ''`
-    - **Variável que indica o nome do arquivo do SEP em estudo.**
-    - **Utilize e adicione arquivos `.pwf` dentro da pasta [sistemas](sistemas).**
 
-- `method: str, obrigatório, valor padrão 'EXLF'`
-    - **Apenas uma opção poder ser escolhida por vez.**
-    - **Opções:**
-        - `'EXLF'` - [Solução do Fluxo de Potência Não-Linear via Método de Newton-Raphson](docs/Metodos/newtonraphson.md)
-        <!-- - `'GAUSS'` - [soluciona o SEP através do método de Gauss-Seidel.](docs/Metodos/gauss-seidel.md) -->
-        <!-- - `'LINEAR'` - [soluciona o SEP através do método de Newton Raphson Linearizado.](docs/Metodos/linear.md) -->
-        <!-- - `'DECOUP'` - [soluciona o SEP através do método Desacoplado.](docs/Metodos/decoup.md)
-        - `'fDECOUP'` - [soluciona o SEP através do método Desacoplado Rápido.](docs/Metodos/fast-decoup.md) -->
-        - `'EXIC'` - [Solução do Fluxo de Potência Continuado - Previsão x Correção (AJJARAPU; CHRISTY, 1992)](docs/Metodos/continuation.md)
-        - `'EXPC'` - [Solução do Fluxo de Potência pelo Método Direto do cálculo do Ponto de Colapso (CANIZARES, 1992)](docs/Metodos/pointofcollapse.md)
+---
 
-- `control: list, opcional, valor padrão list()`
-    - **Os controles só serão aplicados caso seja selecionado o método de Newton-Raphson.**
-    - **Opções:**
-        <!-- - `'CREM'` - [controle remoto de magnitude de tensão de barras remotas.](docs/Controle/controle-remoto-tensao.md)
-        - `'CST'` - [controle secundário de tensão de magnitude de tensão de barras remotas.](docs/Controle/controle-secundario-tensao.md)
-        - `'CTAP'` - [controle automático de taps de transformadores em fase.](docs/Controle/controle-transformador-tap-variavel.md)
-        - `'CTAPd'` - [controle automático de taps de transformadores defasadores.](docs/Controle/controle-transformador-defasador.md) -->
-        - `'FREQ'` - [regulação primária de frequência.](docs/Controle/controle-regulacao-primaria-frequencia.md)
-        - `'QLIM'` - [tratamento de limite de geração de potência reativa.](docs/Controle/controle-limite-potencia-reativa-geradores.md)
-        - `'SVCs'` - [controle de magnitude de tensão por meio de compensador estático de potência reativa.](docs/Controle/controle-compensador-estatico-CER-SVCs.md)
-        
+## ⚙️ Parâmetros da Classe `PowerFlow()`
 
-- `monitor: list, opcional, valor padrão list()`
-    - **Opções:**
-        - `'PFLOW'` - [monitoramento do fluxo de potência ativa nas linhas de transmissão.](docs/Monitoramento/fluxo-potencia-ativa-LT.md)
-        - `'PGMON'` - [monitoramento do fluxo de potência ativa gerado por geradores.](docs/Monitoramento/geracao-potencia-ativa-PV.md)
-        - `'QGMON'` - [monitoramento do fluxo de potência reativa gerado por geradores.](docs/Monitoramento/geracao-potencia-reativa-PV.md)
-        - `'VMON'` - [monitoramento da magnitude de tensão de barras do SEP.](docs/Monitoramento/tensao-barramentos.md)
+### Argumentos Principais
 
-- `report: list, opcional, valor padrão list()`
-    - **Determina o conjunto de relatórios a serem gerados.**
-    - **Apresentação de 1, 2 ou mesmo todas as opções de relatório.**
-    - **Os relatórios serão salvos automaticamente em pasta gerada dentro da pasta [sistemas](/sistemas).**
-    - **Opções:**
-        - `'RBAR'` - [gera o relatório de Dados de Barra em caso Convergente ou Divergente.](docs/Relatorios/RBAR.md)
+* `system` (str): Nome do arquivo `.pwf` dentro da pasta `/sistemas`.
+* `method` (str): Escolha entre `EXLF`, `EXIC` ou `EXPC`.
 
-        - `'RLIN'` - [gera o relatório de Dados de Linha em caso Convergente ou Divergente.](docs/Relatorios/RLIN.md)
+### Opções de Controle (`control`)
 
-        - `'RGER'` - [gera o relatório de Dados de Barras Geradoras em caso Convergente ou Divergente.](docs/Relatorios/RGER.md)
+* `'FREQ'`: Regulação primária de frequência.
+* `'QLIM'`: Limites de geração de potência reativa.
+* `'SVCs'`: Controle de tensão via Compensadores Estáticos.
 
-        - `'RSVC'` - [gera o relatório de Dados de Compensadores Estáticos de Potência Reativa (SVCs) em caso Convergente ou Divergente.](docs/Relatorios/rsvc.md)
+### Monitoração e Relatórios (`monitor` & `report`)
 
+* `'VMON'`: Magnitude de tensão nas barras.
+* `'PFLOW'`: Fluxo de potência ativa nas linhas.
+* `'RBAR'`: Relatório completo de dados de barra (salvo em `/sistemas`).
 
-> **PASSE OS Args DA CLASSE `PowerFlow()` DA FORMA COMO MELHOR DESEJAR.** 
+---
 
-> **O CÓDIGO ABAIXO SE TRATA DE UM EXEMPLO, NÃO CONDIZ COM A REAL APLICAÇÃO PRÁTICA DEVIDO AO FATO QUE NEM TODAS AS OPÇÕES DE CONTROLE PODEM SER ATRIBUÍDAS AO MESMO TEMPO.**  
+## 📖 Documentação Técnica
 
-```Python
-from powerflow import PowerFlow
+Para detalhes sobre a implementação das matrizes e algoritmos, consulte:
 
-system='ieee14.pwf', 
-    
-method='EXLF', 
+* [Cálculo da Matriz Admitância](docs/matrizes/admitancia.md)
+* [Formulação da Matriz Jacobiana Reduzida](docs/matrizes/jreduzida.md)
+* [Detalhes do Método de Newton-Raphson](docs/numerical/newtonraphson.md)
 
-control=['CREM', 'CST', 'CTAP', 'CTAPd', 'FREQ', 'QLIM', 'SVCs', 'VCTRL']
+---
 
-monitor=['PFLOW', 'PGMON', 'QGMON', 'VMON']
-    
-report=['RBAR', 'RLIN', 'RGER', 'RSVC', 'RXIC']
-
-PowerFlow(
-    system=system, 
-    method=method,  
-    control=control, 
-    monitor=monitor, 
-    report=report,
-)
-```
+**Gostaria que eu gerasse o conteúdo de algum dos outros arquivos de documentação listados no seu projeto?**
