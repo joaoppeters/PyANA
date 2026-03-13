@@ -1,0 +1,26 @@
+TITU
+LIB CAUSED BY SVC CAPACITY LIMIT
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+   1   2  SLACK         1050  0           -999999999                       11000
+   2      CARGA         1000                               10   5          11000
+99999
+DLIN
+(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+   1         2  1           50.
+99999
+DMET
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
+AREA    1
+99999
+DCER
+(No ) O Gr Un (Kb ) (Incl) ( Qg)( Qn)( Qm) C E
+2        1  1   2     5.    0.  -100. 100. P L
+99999
+DINC
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
+BARR    2                                            10.   10.
+99999
+EXLF NEWT QLIM 
+EXIC NEWT QLIM
+FIM

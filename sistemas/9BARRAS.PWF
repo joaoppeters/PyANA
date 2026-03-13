@@ -1,0 +1,97 @@
+(
+( Gravacao de .PWF - CART
+( Versao do Anarede: 11.07.02
+( Data e Hora da Gravacao: 03/06/2024 - 13:54:09                                                           
+(
+TITU
+Sistema 9 Barras com gerador swing adicional                                    
+DOPC IMPR
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+NEWT L RCVG L RMON L NOVO L MFCT L
+99999
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
+BASE   100. DASE   100. TEPA  .1E-5 EXST     .4 TETP     5. TBPA     5.
+TLPP     1. TEPR  .1E-5 QLST     .4 TLPR     1. TLPQ     2. TSBZ    .01
+TSBA     5. ASTP    .05 VSTP     5. TLVC     .5 TLTC    .01 TSFR  .1E-7
+ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
+PGER    30. TPST     .2 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
+ACIT     30 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+PDIT     10 LCRT     96 LPRT     60 CSTP     5. ASDC     1.
+ICIT   9000 DMAX      5 FDIV     2. ICMN  .1E-4 VART     5. TSTP     33
+ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.
+VPVT     2. VPVF     5. VPMF    10. VSVF    20. VINF     1. VSUP     1.
+TLSI     0. NDIR     8. STTR     1. TRPT   100. STIR    10. BFPO     1.
+LFPO     .1 TLMT     0. TLMF     0. TLMG     0. PARS    10.            
+99999
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+    1 L2  Barra 1      11040  0.71.6427.05-130.130.4                       11000                                   
+    2 L1  Barra 2      110259.28 163.6.654-101.101.2     7                 11000                                   
+    3 L1  Barra 3      110254.66  85.-10.9-67.4 67.4     9                 11000                                   
+    4 L   Barra 4      11026-2.2                                           11000                                   
+    5 L   Barra 5      1 996 -4.                           125.  50.       11000                                   
+    6 L   Barra 6      11013-3.7                            90.  30.       11000                                   
+    7 L   Barra 7      110783.72                                           11000                                   
+    8 L   Barra 8      11016.728                           100.  35.       11000                                   
+    9 L   Barra 9      110831.97                                           11000                                   
+99999
+DLIN
+(De )d O d(Pa )NcEPM( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+    1         4 1 T         5.76         1.                     250.250.  250.                                
+    2         7 1 T         6.25         1.                     200.200.  200.                                
+    3         9 1 T         5.86         1.                     300.300.  300.                                
+    4         5 1 T     1.   8.5  17.6                          300.300.  300.                                
+    4         6 1 T    1.7   9.2  15.8                          200.200.  200.                                
+    6         9 1 T    3.9   17.  35.8                          200.200.  200.                                
+    7         5 1 T    3.2  16.1  30.6                          300.300.  300.                                
+    7         8 1 T    .85   7.2  14.9                          300.300.  300.                                
+    8         9 1 T   1.19 10.08  20.9                          300.300.  300.                                
+99999
+DGER
+(No ) O (Pmn ) (Pmx ) ( Fp) (FpR) (FPn) (Fa) (Fr) (Ag) ( Xq) (Sno) (Est)
+    1       0.  210.4    0.  100.                                0   0.
+    2       0.  163.2    0.  100.                                0   0.
+    3       0.  108.8    0.  100.                                0   0.
+99999
+DGLT
+(G (Vmn) (Vmx) (Vmne (Vmxe
+ 1    .9   1.1    .9   1.1
+99999
+DARE
+(Ar    (Xchg)     (      Identificacao da area       ) (Xmin) (Xmax)
+  1        0.     Area 1                                             
+99999
+DCTG
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   1    1 LT_4_5_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     4     5  1                                                       
+FCAS
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   2    1 LT_4_6_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     4     6  1                                                       
+FCAS
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   3    1 LT_6_9_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     6     9  1                                                       
+FCAS
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   4    1 LT_7_5_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     7     5  1                                                       
+FCAS
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   5    1 LT_7_8_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     7     8  1                                                       
+FCAS
+(Nc) O Pr (       IDENTIFICACAO DA CONTINGENCIA        )
+   6    1 LT_8_9_1                                      
+(Tp) (El ) (Pa ) Nc (Ext) (DV1) (DV2) (DV3) (DV4) (DV5) (DV6) (DV7) Gr Und
+CIRC     8     9  1                                                       
+FCAS
+99999
+FIM

@@ -1,0 +1,52 @@
+TITU
+ * * * SISTEMA TESTE 5 BARRAS - DOBSON,LU(1993) * * *
+DOPC IMPR
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+QLIM L CREM D CTAP D STEP L NEWT L MOCT D MOCG L MOCF L 
+RCVG L RMON L RBAR L
+FILE L
+99999
+DCTE
+(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)
+BASE   100  
+TEPA  1E-6  TEPR  1E-6  QLST  1E-6
+ICIT   9999 DMAX   9999 FDIV     2  ICMN   1e-9 
+ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.
+99999
+DBAR
+(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+    1  2  SLACK         1040 0.0          -999999999                       11000
+    2     CARGA-2                                          115.  60.       11000
+    3  1  GERADOR       1020      110         0 250.                       11000
+    4     CARGA-4                                           70.  30.       11000
+    5     CARGA-5                                           70.  30.       11000
+99999
+DLIN
+(De )d O d(Pa )NcEPM( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10
+   1          2 1     4.2   16.8
+   1          5 1     3.1   12.6 
+   2          3 1     3.1   12.6
+   3          4 1     8.4   33.6
+   3          5 1     5.3   21.0
+   4          5 1    7.37  27.11
+99999
+DARE
+(Ar    (Xchg)     (      Identificacao da area       ) (Xmin) (Xmax)
+  1                 * AREA 1 *
+99999
+DMET
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
+AREA    1
+99999
+DINC
+(tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
+(BARR     2                                          3.513 .055
+(BARR     4                                          7.160 -.326
+(BARR     5                                          3.570 .074
+AREA     1                                           0.5   0.5
+99999
+
+EXLF 
+EXIC
+
+FIM

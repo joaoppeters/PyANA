@@ -90,6 +90,7 @@ def worg(
         # LOSSLESS WRITE FROM RAW TABLE
         # ------------------------------------------------------
         for entry in anatem.dcdu_raw:
+            print(entry)
             if entry["ncdu"] not in (None, key):
                 continue
 
@@ -131,10 +132,30 @@ def worg(
                     f"{anatem.dcdu[key]['defval_exclusao'][i_defval]:1}"
                     f"{anatem.dcdu[key]['defval_parametro_d2'][i_defval]:>6}\n"
                 )
-                organon.file.write(
-                    f"{anatem.dcdu[key]['defval_variavel'][i_defval].strip():<6} = "
-                    f"PARAM({anatem.dcdu[key]['defval_parametro_d1'][i_defval]:>18})\n",
-                ) 
+                
+                try:
+                    float(anatem.dcdu[key]['defval_parametro_d1'][i_defval])
+                    organon.file.write(
+                        f"{anatem.dcdu[key]['defval_variavel'][i_defval].strip():<6} = "
+                        f"CONST({anatem.dcdu[key]['defval_parametro_d1'][i_defval]:>18})\n",
+                    )
+                except:
+                    if "#" in anatem.dcdu[key]['defval_parametro_d1'][i_defval]:
+                        defval_variable = anatem.dcdu[key]['defval_parametro_d1'][i_defval]
+                        for j, defpar_nome in enumerate(anatem.dcdu[key]['defpar_nome']):
+                            if defpar_nome.strip() == defval_variable: 
+                                defval_value = anatem.dcdu[key]['defpar_valor'][j]
+
+                        organon.file.write(
+                            f"{anatem.dcdu[key]['defval_variavel'][i_defval].strip():<6} = "
+                            f"CONST({defval_value:>18})\n",
+                        )
+                    else:
+                        organon.file.write(
+                            f"{anatem.dcdu[key]['defval_variavel'][i_defval].strip():<6} = "
+                            f"INIT({anatem.dcdu[key]['defval_parametro_d1'][i_defval]:>18})\n",
+                        )
+
                 i_defval += 1
                 continue
 
@@ -166,10 +187,11 @@ def worg(
                     ia_bloco += 1
                     continue
 
-                if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'ENTRAD' and anatem.dcdu[key]['bloco_tipo'][io_bloco] not in anatem.dcdu[key]['defpar_nome']:
+                if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'ENTRAD' and \
+                    anatem.dcdu[key]['bloco_saida'][io_bloco] not in anatem.dcdu[key]['defpar_nome'] and \
+                        anatem.dcdu[key]['bloco_saida'][io_bloco] not in anatem.dcdu[key]['defval_variavel']:
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
                     organon.file.write(f"{saida}  =REF(0.0)\n")
-
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'IMPORT' and anatem.dcdu[key]['bloco_subtipo'][io_bloco] == 'VTR':
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
                     organon.file.write(f"{saida}    =INPGVC()\n")
@@ -197,7 +219,7 @@ def worg(
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'IMPORT' and anatem.dcdu[key]['bloco_subtipo'][io_bloco] == 'DT':
                     entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
-                    organon.file.write(f"{saida}    =TDELAY({entrada}, {dtdelay})\n")
+                    organon.file.write(f"{saida}    =CONST({dtdelay})\n")
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'COMPAR' and anatem.dcdu[key]['bloco_subtipo'][io_bloco] == '.GT.':
                     entrada = [anatem.dcdu[key]['bloco_entrada'][io_bloco], anatem.dcdu[key]['bloco_entrada'][io_bloco+1]]
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
@@ -317,31 +339,12 @@ def worg(
 
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'LEDLAG':
                     abcd = [anatem.dcdu[key]['bloco_parametro1'][io_bloco], anatem.dcdu[key]['bloco_parametro2'][io_bloco], anatem.dcdu[key]['bloco_parametro3'][io_bloco], anatem.dcdu[key]['bloco_parametro4'][io_bloco]]
+                    abcd = ['0' if item == '' else item for item in abcd]
                     xn = [anatem.dcdu[key]['bloco_limite_maximo'][io_bloco], anatem.dcdu[key]['bloco_limite_minimo'][io_bloco]]
+                    xn = ['99.99', '-99.99'] if xn == ['', ''] else xn
                     entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
-                    if xn[0]:
-                        organon.file.write(f"{saida:<6} =COMP6(0.0, {entrada}, {abcd[0]}, {abcd[1]}, {abcd[2]}, {abcd[3]}, {xn[0]}, {xn[1]})\n")
-                    else:
-                        extra1 = saida + '1'
-                        extra2 = saida + '2'
-                        extra3 = saida + '3'
-                        extra4 = saida + '4'
-                        extra5 = saida + '5'
-                        extra6 = saida + '6'
-                        extra7 = saida + '7'
-                        extra8 = saida + '8'
-                        extra9 = saida + '9'
-                        organon.file.write(f"{extra1:<6} =ADD(1.0, {saida}, -1.0, {extra2})\n")
-                        organon.file.write(f"{extra3:<6} =FRAC({extra1}, 1.0, {abcd[3]})\n")
-                        organon.file.write(f"{extra4:<6} =INTEG8(0.0, {extra3}, 1.0)\n")
-                        organon.file.write(f"{extra2:<6} =GAIN(0.0, {extra4}, {abcd[0]})\n")
-                        organon.file.write(f"{extra5:<6} =GAIN(0.0, {extra4}, {abcd[3]})\n")
-                        organon.file.write(f"{extra6:<6} =GAIN(0.0, {extra4}, {abcd[2]})\n")
-                        organon.file.write(f"{extra7:<6} =FRAC({extra5}, {abcd[0]}, {abcd[1]})\n")
-                        organon.file.write(f"{extra8:<6} =ADD(1.0, {extra6}, -1.0, {extra7})\n")
-                        organon.file.write(f"{extra9:<6} =ADD(1.0, {entrada}, -1.0, {extra8})\n")
-                        organon.file.write(f"{saida:<6} =FRAC({extra9}, {abcd[1]}, {abcd[3]})\n")
+                    organon.file.write(f"{saida:<6} =COMP6(0.0, {entrada}, {abcd[0]}, {abcd[1]}, {abcd[2]}, {abcd[3]}, {xn[0]}, {xn[1]})\n")
                 
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'LIMITA':
                     xn = [anatem.dcdu[key]['bloco_limite_maximo'][io_bloco], anatem.dcdu[key]['bloco_limite_minimo'][io_bloco]]
@@ -437,7 +440,25 @@ def worg(
                             organon.file.write(f"{entrada}, ")
                         else:
                             organon.file.write(f"{entrada})\n")
+                if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'LOGIC' and anatem.dcdu[key]['bloco_subtipo'][io_bloco] == '.NOT.':
+                    entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
+                    saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
+                    organon.file.write(f"{saida:<6} =NOT({entrada})\n")
+
+                if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'MAX':
+                    entrada = [anatem.dcdu[key]['bloco_entrada'][io_bloco], anatem.dcdu[key]['bloco_entrada'][io_bloco+1]]
+                    saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
+                    organon.file.write(f"{saida:<6} =MAX({entrada[0]}, {entrada[1]})\n")
+                    terms = 2
+                    io_bloco += 1                   
                 
+                if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'MIN':                    
+                    entrada = [anatem.dcdu[key]['bloco_entrada'][io_bloco], anatem.dcdu[key]['bloco_entrada'][io_bloco+1]]
+                    saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
+                    organon.file.write(f"{saida:<6} =MIN({entrada[0]}, {entrada[1]})\n")
+                    terms = 2
+                    io_bloco += 1                   
+                                
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'MULTPL':
                     try:
                         while anatem.dcdu[key]['bloco_tipo'][io_bloco + terms] == '':
@@ -461,22 +482,12 @@ def worg(
 
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'PROINT':
                     abc = [anatem.dcdu[key]['bloco_parametro1'][io_bloco], anatem.dcdu[key]['bloco_parametro2'][io_bloco], anatem.dcdu[key]['bloco_parametro3'][io_bloco]]
+                    abc = ['0' if item == '' else item for item in abc]
                     xn = [anatem.dcdu[key]['bloco_limite_maximo'][io_bloco], anatem.dcdu[key]['bloco_limite_minimo'][io_bloco]]
+                    xn = ['99.99', '-99.99'] if xn == ['', ''] else xn
                     entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
-                    if xn[0]:
-                        pass
-                    else:
-                        extra1 = saida + '1'
-                        extra2 = saida + '2'
-                        extra3 = saida + '3'
-                        organon.file.write(f"{extra1:<6} =FRAC({entrada}, {abc[0]}, {abc[2]})\n")
-                        if abc[1] != '0.0' or abc[1] != '':
-                            organon.file.write(f"{extra2:<6} =INTEG8(0.0, {extra1}, 1.0)\n")
-                            organon.file.write(f"{extra3:<6} =FRAC({entrada}, {abc[1]}, {abc[2]})\n")
-                            organon.file.write(f"{saida:<6} =ADD(1.0, {extra2}, 1.0, {extra3})\n")
-                        else: 
-                            organon.file.write(f"{saida:<6} =INTEG8(0.0, {extra1}, 1.0)\n")
+                    organon.file.write(f"{saida:<6} =COMP6(0.0, {entrada}, {abc[0]}, {abc[1]}, {abc[2]}, {0.0}, {xn[0]}, {xn[1]})\n")
 
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'SELET2':
                     entrada = [anatem.dcdu[key]['bloco_entrada'][io_bloco], anatem.dcdu[key]['bloco_entrada'][io_bloco+1], anatem.dcdu[key]['bloco_entrada'][io_bloco+2]]
@@ -510,28 +521,13 @@ def worg(
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'WSHOUT':
                     abc = [anatem.dcdu[key]['bloco_parametro1'][io_bloco], anatem.dcdu[key]['bloco_parametro2'][io_bloco], anatem.dcdu[key]['bloco_parametro3'][io_bloco]]
                     xn = [anatem.dcdu[key]['bloco_limite_maximo'][io_bloco], anatem.dcdu[key]['bloco_limite_minimo'][io_bloco]]
+                    xn = ['99.99', '-99.99'] if xn == ['', ''] else xn
                     entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
                     saida = anatem.dcdu[key]['bloco_saida'][io_bloco]
-                    if xn[0]:
-                        organon.file.write(f"{saida:<6} =WASHOUT3(0.0, {entrada}, {abc[2]}, {abc[0]}, {xn[0]}, {xn[1]})\n") 
-                    else:
-                        extra1 = saida + '1'
-                        extra2 = saida + '2'
-                        extra3 = saida + '3'
-                        organon.file.write(f"{extra1:<6} =FRAC({entrada}, {abc[0]}, {abc[2]})\n")
-                        organon.file.write(f"{extra2:<6} =LPASS1(0.0, {entrada}, {abc[2]}, 1.0)\n")
-                        organon.file.write(f"{extra3:<6} =FRAC({extra2}, {abc[0]}, {abc[2]})\n")
-                        organon.file.write(f"{saida:<6} =ADD(1.0, {extra1}, -1.0, {extra3})\n")
+                    organon.file.write(f"{saida:<6} =COMP6(0.0, {entrada}, {0.0}, {abc[0]}, {abc[1]}, {abc[2]}, {xn[0]}, {xn[1]})\n")
         
                 if anatem.dcdu[key]['bloco_tipo'][io_bloco] == 'EXPORT':
-                    entrada = anatem.dcdu[key]['bloco_entrada'][io_bloco]
-                    if 'AVR' in nome:
-                        saida = 'EFD'
-                    elif 'PSS' in nome:
-                        saida = 'VPSS'
-                    if re.fullmatch(re.escape(entrada), saida, flags=re.IGNORECASE):
-                        saida = saida + '1'
-                    organon.file.write(f"{saida:<6} =EXPORT({entrada})\n")
+                    pass
 
                 ia_bloco += 1
                 io_bloco += 1
@@ -582,9 +578,10 @@ def wdsm(
     """
     ## Inicialização
     organon.file.write("!\n")
-
     for file in organonfiles:
-        organon.file.write(f"MDF '{file}'\n")
+        f = file.split('\\')[-1]
+        organon.file.write(f"MDF {f}\n")
+    organon.file.write("!\n")
 
     for idx, value in enumerate(anatem.dmaq):
         if value != 'dmaq' and value != 'ruler':
