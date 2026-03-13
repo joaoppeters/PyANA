@@ -53,8 +53,6 @@ system = 'ieee14.pwf'
 PowerFlow(
     system=system, 
     method='EXLF', 
-    control=['QLIM', 'SVCs'], # Controles opcionais
-    monitor=['VMON', 'PFLOW'] # Monitoramentos opcionais
 )
 
 ```

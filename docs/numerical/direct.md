@@ -54,8 +54,6 @@ from powerflow import PowerFlow
 PowerFlow(
     system='ieee14.pwf', 
     method='EXPC',      # Método Direto (Canizares)
-    monitor=['VMON'],   # Monitora as tensões no limite de estabilidade
-    report=['RBAR']     # Relatório das condições críticas do sistema
 )
 
 ```

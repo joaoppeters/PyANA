@@ -82,7 +82,8 @@ def optionspwf(
             # novas constantes adicionadas por JP
             "FBSE": 60.0,  # frequencia base do sep (criado por JP)
             "SIGA": 1e-6,  # tolerância da chave sigmóide SVC-A (criado por JP)
-            "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e SVC-I, QLIM (criado por JP)
+            "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e QLIM (criado por JP)
+            "SIGI": 1e-6,  # tolerância da chave sigmóide SVC-I (criado por JP)
             "SIGV": 1e-6,  # tolerância da chave sigmóide referente à variável de tensão (criado por JP)
             "SIGK": 1e8,  # variável de inclinação da chave sigmóide (criado por JP)
             "FULL": 0,  # Curva completa do fluxo de potência continuado (criado por JP)

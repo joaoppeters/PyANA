@@ -16,23 +16,6 @@ method = "EXLF"  # NEWTON-RAPHSON
 method = "EXSI"  # DYNAMIC SIMULATION
 method = "ORGA"  # ORGANON
 
-# control = [
-#     # "CREM",
-#     # "CTAP",
-#     # "CTAPd",
-#     # "FREQ",
-#     # "QLIM",
-#     # "QLIMs",
-#     # "SVCs",
-# ]
-
-# report = [
-#     "RBAR",
-#     # "RLIN",
-#     # "RGER",
-#     # "RCER",
-# ]
-
 PowerFlow(
     system=system,
     method=method,

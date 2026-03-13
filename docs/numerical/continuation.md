@@ -59,8 +59,6 @@ from powerflow import PowerFlow
 PowerFlow(
     system='ieee14.pwf', 
     method='EXIC',      # Algoritmo de Ajjarapu & Christy
-    monitor=['VMON'],   # Monitora queda de tensão por incremento de lambda
-    report=['RBAR']     # Relatórios das condições de carregamento
 )
 
 ```
