@@ -6,18 +6,17 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from folder import cdufolder
+from folder import cdufolder, pssefolder
 from os.path import realpath
-import re
 from numpy import exp
 
 
-def worg(
+def orwudc(
     anarede,
     anatem,
     organon,
 ):
-    """Inicialização
+    """escrita de controladores definidos pelo usuário no formato ORGANON (.cdu -> .udc)
 
     Args
         anatem:
@@ -545,25 +544,11 @@ def worg(
 
         anatemfiles.append(cdufile)
         organonfiles.append(udcfile)
+
+    return anatemfiles, organonfiles
     
-    # Arquivo
-    organon.filedir = realpath(
-        anarede.maindir + "\\sistemas\\" + anarede.name + ".dyn",
-    )
-
-    # Manipulacao
-    organon.file = open(organon.filedir, "w")
-    wdsm(
-        anarede=anarede,
-        anatem=anatem,
-        organon=organon,
-        anatemfiles=anatemfiles,
-        organonfiles=organonfiles,
-    )
-    organon.file.close()
-
-
-def wdsm(
+    
+def orwdyn(
     anarede,
     anatem,
     organon,
@@ -577,6 +562,11 @@ def wdsm(
         organon:        
     """
     ## Inicialização
+    # Arquivo
+    organon.filedir = realpath(
+        anarede.maindir + "\\sistemas\\" + anarede.name + ".dyn",
+    )
+    organon.file = open(organon.filedir, "w")
     organon.file.write("!\n")
     for file in organonfiles:
         f = file.split('\\')[-1]
@@ -752,4 +742,58 @@ def wdsm(
                 ndmaq += 1
                 
     pass
+
+
+def prwraw(
+    anarede,
+    psse,
+):
+    """escrita de dados de máquina síncrona no formato PSS/E (.pwf -> .raw)
     
+    Args:
+        anarede:
+    """
+    pssepath = pssefolder(anarede,)
+
+    rawfile = realpath(pssepath + anarede.system[:-4] + ".raw")
+    psse.file = open(rawfile, "w", encoding="latin-1")
+    psse.file.write(f"{0:>6d},{anarede.cte['BASE']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n")
+    psse.file.write(f" {anarede.titu['ruler'].strip():>60}") if len(anarede.titu['ruler'].strip()) <= 60 else psse.file.write(f" {anarede.titu['ruler'].strip()[:60]}\n {anarede.titu['ruler'].strip()[60:120]}\n")
+
+    loaddata = ""
+    fixedshunt = ""
+    for idx, value in anarede.dbarDF.iterrows():
+        dgbt = anarede.dgbtDF[anarede.dgbtDF.grupo == value.grupo_base_tensao].tensao.values[0]
+        code = (
+            1 if value.tipo == 0 and value.estado == 'L'
+            else 2 if value.tipo == 1 and value.estado == 'L'
+            else 3 if value.tipo == 2 and value.estado == 'L'
+            else 4 if value.estado == 'D' else None
+        )
+        psse.file.write(f"{value.numero:>6d},'{value.nome:<12}',{dgbt:>9.4f},{code:>3d},{value.area:>5d},{1:>5d},{1:>5d},{value.tensao*1e-3:>11.6f},{value.angulo:>11.4f}\n")
+        loaddata = loaddata + f"{value.numero:>6d},'1 ',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f}{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n" if value.demanda_ativa !=0 or value.demanda_reativa != 0 else None
+        fixedshunt = fixedshunt + f"{value.numero:>6d},' 1 ',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n" if value.susceptancia_shunt != 0 else None
+    psse.file.write(" 0  / END OF BUS DATA, BEGIN LOAD DATA\n")
+    psse.file.write(loaddata)
+    psse.file.write(" 0  / END OF LOAD DATA, BEGIN FIXED SHUNT DATA\n")
+    psse.file.write(fixedshunt)
+    psse.file.write(" 0  / END OF FIXED SHUNT DATA, BEGIN GENERATOR DATA\n")
+    psse.file.write(" 0  / END OF GENERATOR DATA, BEGIN BRANCH DATA\n")
+    psse.file.write(" 0  / END OF BRANCH DATA, BEGIN TRANSFORMER DATA\n")
+    psse.file.close()
+    pass
+
+
+def prwdyr(
+    anarede,
+    anatem,
+    psse,
+):
+    """escrita de dados de máquina síncrona no formato PSS/E (.stb -> .dyr)
+    
+    Args:
+        anarede:
+        anatem
+        psse
+    """
+    pass

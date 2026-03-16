@@ -41,7 +41,8 @@ As opções de controle e monitoração são extraídas diretamente das flags e 
 * **`'QLIM'`**: Tratamento de limites de potência reativa de geradores.
 
 > **Modelagem por Sigmoide:** Ao ativar a opção de controle `SMTH L` no código de execução ou no `DOPC` do arquivo, o controle de `QLIM` passa a utilizar modelagem sigmóide para suavização das não-linearidades, melhorando a convergência em cenários críticos. O mesmo é válido para o caso de simulação de sistemas com código de execução `DCER` presente no arquivo `.pwf`. Para detalhes e mais informações, consulte a página de [documentação deste repositório sobre suavização](docs/smooth/sigmoid.md) e leia a [dissertação de mestrado de João P. Peters](https://repositorio.ufjf.br/jspui/handle/ufjf/15471).
-> **SMTH L** No caso de ativação desta opção de controle, alterar as informações das seguintes outras opções de controle: `SIGA`, `SIGV`, `SIGQ`, `SIGI`, `SIGK` (verificar documentação).
+
+> **SMTH L:** No caso de ativação desta opção de controle, alterar as informações das seguintes outras opções de controle: `SIGA`, `SIGV`, `SIGQ`, `SIGI`, `SIGK` (verificar documentação [qlim](docs/smooth/qlim.md) e [svc](docs/smooth/svc.md) para saber mais).
 
 ### 2. Opções de Monitoração
 

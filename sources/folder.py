@@ -253,9 +253,10 @@ def pssefolder(
         anarede:
     """
     ## Inicialização
-    anarede.pssefolder = dirname(anarede.dirPWF) + "\\PSSe\\"
+    anarede.pssefolder = dirname(dirname(__file__)) + "\\sistemas\\psse\\"
     if exists(anarede.pssefolder) is False:
         mkdir(anarede.pssefolder)
+    return anarede.pssefolder
 
 
 def reportsfolder(

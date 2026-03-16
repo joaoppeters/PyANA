@@ -1,4 +1,4 @@
-# Tratamento de Limites de Reativo via Funções Sigmoides (SPF-Generators)
+# SPF-Qlim
 
 Esta seção descreve a formulação de **Fluxo de Potência Suavizado (SPF)** aplicada aos limites de geração de potência reativa ($Q_G$). Diferente da abordagem tradicional que realiza o chaveamento de barras (PV $\leftrightarrow$ PQ), esta metodologia utiliza chaves sigmoides para manter a diferenciabilidade do sistema de equações e permitir uma transição suave entre os regimes de operação.
 
@@ -32,9 +32,32 @@ Monitoram o desvio da tensão em relação à referência ($V_{ref}$), permitind
 
 ---
 
-## 3. Equação de Controle Equivalente
+## 3. Parâmetros de Ajuste das Sigmoides (SIGK, SIGV e SIGQ)
 
-As chaves são combinadas logicamente (utilizando lógica de tabelas de verdade) em uma única equação de controle $y$, que substitui a restrição de tensão ou reativo:
+A precisão e a suavidade da transição entre os estados operativos são controladas por três parâmetros fundamentais. Eles definem o comportamento numérico da função sigmoide $sw(x)$:
+
+* **SIGK ($k$):** Define a **declividade** (ganho) da função. Valores elevados aproximam a sigmoide de uma função degrau, garantindo que a transição ocorra de forma abrupta nos limites.
+* **SIGQ ($\epsilon_q$):** Parâmetro de precisão para as chaves de **potência reativa** ($sw1$ e $sw2$).
+* **SIGV ($\epsilon_v$):** Parâmetro de precisão para as chaves de **tensão** ($sw3$ e $sw4$).
+
+A forma genérica da função utilizada é:
+
+
+$$sw(x) = \frac{1}{1 + e^{-SIGK \cdot (x - x_{lim} + \epsilon)}}$$
+
+### Valores Típicos
+
+Para garantir que o modelo represente fielmente o comportamento físico sem introduzir erros significativos na solução do fluxo de potência, utilizam-se os seguintes valores:
+
+* **SIGK = 1e8**
+* **SIGQ = 1e-6**
+* **SIGV = 1e-6**
+
+---
+
+## 4. Equação de Controle Equivalente
+
+As chaves são combinadas logicamente em uma única equação de controle $y$, que substitui a restrição de tensão ou reativo:
 
 $$y = (sw1 \cdot sw3) \cdot (1 - sw2 \cdot sw4) \cdot (Q_{G,gen} - Q_{G}^{max})$$
 
@@ -52,27 +75,25 @@ $$+ (1 - sw1 \cdot sw3) \cdot (sw2 \cdot sw4) \cdot (Q_{G,gen} - Q_{G}^{min})$$
 | **4** | *Backoff* de Limite Inferior | $V_{ref} - V$ |
 | **5** | Violação de Limite Inferior | $Q_{G}^{min} - Q_{G,gen}$ |
 
-A rotina de **backoff** é o grande diferencial: ela permite que um gerador que atingiu o limite de reativo retorne automaticamente ao modo de controle de tensão assim que as condições do sistema permitirem, sem necessidade de lógicas externas de "religa/desliga".
-
 ---
 
-## 4. Integração na Matriz Jacobiana
+## 5. Integração na Matriz Jacobiana
 
 A inclusão da variável $Q_{G,gen}$ e da equação de controle $y$ adiciona novos termos diferenciais à Jacobiana. A estrutura aumentada segue o padrão:
 
-$$\begin{bmatrix} \Delta P \\ \Delta Q \\ \Delta y \end{bmatrix} = 
-\begin{bmatrix} 
-H & N & \frac{\partial P}{\partial Q_{G}} \\
-M & L & \frac{\partial Q}{\partial Q_{G}} \\
+$$\begin{bmatrix} \Delta P \ \Delta Q \ \Delta y \end{bmatrix} =
+\begin{bmatrix}
+H & N & \frac{\partial P}{\partial Q_{G}} \
+M & L & \frac{\partial Q}{\partial Q_{G}} \
 \frac{\partial y}{\partial \theta} & \frac{\partial y}{\partial V} & \frac{\partial y}{\partial Q_{G}}
 \end{bmatrix}
-\begin{bmatrix} \Delta \theta \\ \Delta V \\ \Delta Q_{G} \end{bmatrix}$$
+\begin{bmatrix} \Delta \theta \ \Delta V \ \Delta Q_{G} \end{bmatrix}$$
 
-## 5. Vantagens da Metodologia
+## 6. Vantagens da Metodologia
 
 1. **Eliminação do Chaveamento de Barras:** Evita instabilidades numéricas e ciclos infinitos entre PV e PQ.
 2. **Diferenciabilidade:** Essencial para métodos de continuação (`EXIC`) e métodos diretos (`EXPC`).
-3. **Estabilidade de Tensão:** Permite transformar limites de indução em bifurcações sela-nó (SNB), provendo diagnósticos mais precisos sobre o colapso de tensão.
+3. **Controle Paramétrico:** O uso de **SIGK**, **SIGV** e **SIGQ** permite ajustar a rigidez numérica do problema de acordo com a necessidade de precisão do estudo.
 
 ---
 

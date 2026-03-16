@@ -6,11 +6,10 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from worg import worg
 from os.path import dirname, exists
 from simulation import *
 from setting import pwfsetting, stbsetting
-
+from transcript import orwudc, orwdyn, prwraw, prwdyr
 
 class PowerFlow:
     """powerflow class"""
@@ -32,8 +31,7 @@ class PowerFlow:
         # --- Safe system type detection ---
         if exists(dirname(dirname(__file__)) + "\\sistemas\\") is True:
             if exists(dirname(dirname(__file__)) + "\\sistemas\\" + system) is True:
-                parts = system.split(".")
-                sys_type = parts[1].casefold() if len(parts) > 1 else ""
+                sys_type = system[-3:].casefold()
 
                 if sys_type == "pwf":
                     pwfsetting(self.anarede)
@@ -43,17 +41,25 @@ class PowerFlow:
                     if method == "EXSI":
                         stbsetting(self.anarede, self.anatem)
                         exsi(self.anarede)
+                    elif method == "PSSEt":
+                        self.psse = PowerFlowContainer()
+                        prwraw(self.anarede, self.psse)
                     else:
                         raise ValueError(f"Unknown method: {method}")
 
                 elif sys_type == "stb":
                     pwfsetting(self.anarede)
                     stbsetting(self.anarede, self.anatem)
-                    if method == "ORGA":
+                    if method == "ORGAt":
                         self.organon = PowerFlowContainer()
                         self.organon.system = system
                         self.organon.method = method
-                        worg(self.anarede, self.anatem, self.organon)
+                        anatemfiles, organonfiles = orwudc(self.anarede, self.anatem, self.organon)
+                        orwdyn(self.anarede, self.anatem, self.organon, anatemfiles, organonfiles)
+                    elif method == "PSSEt":
+                        self.psse = PowerFlowContainer()
+                        prwraw(self.anarede, self.psse)
+                        prwdyr(self.anarede, self.anatem, self.psse)
                     elif method != "EXSI":
                         raise ValueError(f"Unknown method: {method}")
                     exsi(self.anatem)
