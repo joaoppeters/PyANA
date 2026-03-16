@@ -1,7 +1,3 @@
-Esta documentação técnica detalha a implementação da modelagem sigmoide para o tratamento de limites de potência reativa de geradores no projeto **PyANA**, conforme a metodologia proposta em sua dissertação (EESC-USP, 2024).
-
----
-
 # Tratamento de Limites de Reativo via Funções Sigmoides (SPF-Generators)
 
 Esta seção descreve a formulação de **Fluxo de Potência Suavizado (SPF)** aplicada aos limites de geração de potência reativa ($Q_G$). Diferente da abordagem tradicional que realiza o chaveamento de barras (PV $\leftrightarrow$ PQ), esta metodologia utiliza chaves sigmoides para manter a diferenciabilidade do sistema de equações e permitir uma transição suave entre os regimes de operação.

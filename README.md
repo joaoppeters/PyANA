@@ -3,7 +3,6 @@
 Ferramenta Python de código aberto projetada para auxiliar estudantes e pesquisadores na análise de **Sistemas Elétricos de Potência (SEP)** em regime permanente. O projeto foca na compatibilidade com o padrão CEPEL, permitindo a leitura de arquivos `.pwf`, `.stb`, `.dat`, `.cdu`, `.blt` e `.sav`.
 
 > **REPOSITÓRIO EM DESENVOLVIMENTO!**
-> Foco atual: Simulações de fluxo de potência convencional e análise de estabilidade de tensão (Curva P-V).
 
 ---
 
