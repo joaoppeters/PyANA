@@ -762,6 +762,7 @@ def prwraw(
 
     loaddata = ""
     fixedshunt = ""
+    generators = ""
     for idx, value in anarede.dbarDF.iterrows():
         dgbt = anarede.dgbtDF[anarede.dgbtDF.grupo == value.grupo_base_tensao].tensao.values[0]
         code = (
@@ -773,6 +774,7 @@ def prwraw(
         psse.file.write(f"{value.numero:>6d},'{value.nome:<12}',{dgbt:>9.4f},{code:>3d},{value.area:>5d},{1:>5d},{1:>5d},{value.tensao*1e-3:>11.6f},{value.angulo:>11.4f}\n")
         loaddata = loaddata + f"{value.numero:>6d},'1 ',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f}{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n" if value.demanda_ativa !=0 or value.demanda_reativa != 0 else None
         fixedshunt = fixedshunt + f"{value.numero:>6d},' 1 ',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n" if value.susceptancia_shunt != 0 else None
+        generators = generators + f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['BASE']:>11.3f}
     psse.file.write(" 0  / END OF BUS DATA, BEGIN LOAD DATA\n")
     psse.file.write(loaddata)
     psse.file.write(" 0  / END OF LOAD DATA, BEGIN FIXED SHUNT DATA\n")
@@ -780,6 +782,19 @@ def prwraw(
     psse.file.write(" 0  / END OF FIXED SHUNT DATA, BEGIN GENERATOR DATA\n")
     psse.file.write(" 0  / END OF GENERATOR DATA, BEGIN BRANCH DATA\n")
     psse.file.write(" 0  / END OF BRANCH DATA, BEGIN TRANSFORMER DATA\n")
+    psse.file.write(" 0  / END OF TRANSFORMER DATA, BEGIN AREA DATA\n")
+    psse.file.write(" 0  / END OF AREA DATA, BEGIN TWO-TERMINAL DC DATA\n")
+    psse.file.write(" 0  / END OF TWO-TERMINAL DC DATA, BEGIN VSC DATA\n")
+    psse.file.write(" 0  / END OF VSC DATA, BEGIN IMPEDANCE CORRECTION DATA\n")
+    psse.file.write(" 0 / END OF IMPEDANCE CORRECTION DATA, BEGIN MULTI-TERMINAL DC DATA\n")
+    psse.file.write(" 0 / END OF MULTI-TERMINAL DC DATA, BEGIN MULTI-SECTION LINE DATA\n")
+    psse.file.write(" 0 / END OF MULTI-SECTION LINE DATA, BEGIN ZONE DATA\n")
+    psse.file.write(" 0 / END OF ZONE DATA, BEGIN INTER-AREA TRANSFER DATA\n")
+    psse.file.write(" 0 / END OF INTER-AREA TRANSFER DATA, BEGIN OWNER DATA\n")
+    psse.file.write(" 0 / END OF OWNER DATA, BEGIN FACTS CONTROL DEVICE DATA\n")
+    psse.file.write(" 0 / END OF FACTS CONTROL DEVICE DATA, BEGIN SWITCHED SHUNT DATA\n")
+    psse.file.write(" 0 / END OF SWITCHED SHUNT DATA\n")
+    psse.file.write("Q / END OF DATA\n")
     psse.file.close()
     pass
 
