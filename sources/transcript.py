@@ -6,7 +6,7 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from folder import cdufolder, pssefolder
+from folder import organonfolder, pssefolder
 from os.path import realpath
 from numpy import exp
 
@@ -24,7 +24,7 @@ def orwudc(
     ## Inicialização    
     anatemfiles = list()
     organonfiles = list()
-    cdupath = cdufolder(anarede,)
+    cdupath = organonfolder(anarede,)
 
     for key in anatem.dcdu.keys():
         if key in [
@@ -740,8 +740,6 @@ def orwdyn(
                 organon.file.write("!\n")
                 organon.file.write("!\n")
                 ndmaq += 1
-                
-    pass
 
 
 def prwraw(
@@ -754,15 +752,14 @@ def prwraw(
         anarede:
     """
     pssepath = pssefolder(anarede,)
-
     rawfile = realpath(pssepath + anarede.system[:-4] + ".raw")
     psse.file = open(rawfile, "w", encoding="latin-1")
     psse.file.write(f"{0:>6d},{anarede.cte['BASE']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n")
     psse.file.write(f" {anarede.titu['ruler'].strip():>60}") if len(anarede.titu['ruler'].strip()) <= 60 else psse.file.write(f" {anarede.titu['ruler'].strip()[:60]}\n {anarede.titu['ruler'].strip()[60:120]}\n")
 
     loaddata = ""
-    fixedshunt = ""
-    generators = ""
+    fixedshuntdata = ""
+    generatorsdata = ""
     for idx, value in anarede.dbarDF.iterrows():
         dgbt = anarede.dgbtDF[anarede.dgbtDF.grupo == value.grupo_base_tensao].tensao.values[0]
         code = (
@@ -772,17 +769,44 @@ def prwraw(
             else 4 if value.estado == 'D' else None
         )
         psse.file.write(f"{value.numero:>6d},'{value.nome:<12}',{dgbt:>9.4f},{code:>3d},{value.area:>5d},{1:>5d},{1:>5d},{value.tensao*1e-3:>11.6f},{value.angulo:>11.4f}\n")
-        loaddata = loaddata + f"{value.numero:>6d},'1 ',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f}{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n" if value.demanda_ativa !=0 or value.demanda_reativa != 0 else None
-        fixedshunt = fixedshunt + f"{value.numero:>6d},' 1 ',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n" if value.susceptancia_shunt != 0 else None
-        generators = generators + f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['BASE']:>11.3f}
+        loaddata += f"{value.numero:>6d},'1 ',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f},{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n" if value.demanda_ativa != 0 or value.demanda_reativa != 0 else ""
+        fixedshuntdata += f"{value.numero:>6d},' 1 ',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n" if value.shunt_barra != 0 else ""
+        generatorsdata += f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['BASE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n" if code != 1 else ""
     psse.file.write(" 0  / END OF BUS DATA, BEGIN LOAD DATA\n")
     psse.file.write(loaddata)
     psse.file.write(" 0  / END OF LOAD DATA, BEGIN FIXED SHUNT DATA\n")
-    psse.file.write(fixedshunt)
+    psse.file.write(fixedshuntdata)
     psse.file.write(" 0  / END OF FIXED SHUNT DATA, BEGIN GENERATOR DATA\n")
+    psse.file.write(generatorsdata)
     psse.file.write(" 0  / END OF GENERATOR DATA, BEGIN BRANCH DATA\n")
+    transformersdata = ""
+    for idx, value in anarede.dlinDF.iterrows():
+        st = 1 if value.estado == 'L' else 0
+        if value.barra_controlada < 0 and abs(value.barra_controlada) == value.de:
+            bc = value.para
+        elif value.barra_controlada < 0 and abs(value.barra_controlada) == value.para:
+            bc = value.de
+        elif value.barra_controlada > 0:
+            bc = value.barra_controlada
+        else:
+            bc = 0
+        tn = value.tap_minimo if value.tap_minimo != 0 else value.tap.real
+        tx = value.tap_maximo if value.tap_maximo != 0 else value.tap.real
+        td = value.tap_defasagem if value.tap_defasagem != 0 else 0
+        cod1 = 1 if bc != 0 else 0
+        cont1 = bc if bc != 0 else 0
+        vx = anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] if bc != 0 else 0
+        vn = anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] if bc != 0 else 0
+        nome_de = anarede.dbarDF[anarede.dbarDF.numero == value.de].nome.values[0]
+        if value.de == 70019:
+            print()
+        psse.file.write(f"{value.de:>6d},{value.para:>6d},'{value.circuito:02d}',{value.resistencia:>12.4E},{value.reatancia:>13.4E},{value.susceptancia*2:>10.4f},{value.capacidade_normal:>12.2f},{value.capacidade_emergencial:>12.2f},{value.capacidade_equipamento:>12.2f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{1:>3d},{1:>3d},{0:>9.2f},{1:>4d},{1:>9.4f}\n") if value.estado and value.tap.real == 0 else ""
+        transformersdata += f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{1:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['BASE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n" if value.estado and value.tap.real != 0 else ""
     psse.file.write(" 0  / END OF BRANCH DATA, BEGIN TRANSFORMER DATA\n")
+    psse.file.write(transformersdata)
     psse.file.write(" 0  / END OF TRANSFORMER DATA, BEGIN AREA DATA\n")
+    for idx, value in anarede.dareDF.iterrows():
+        psse.file.write(f"{value.numero:>6d},{0:>6d},{0:>10.3f},{10:>10.3f}, '{value.nome[:10]:10}'\n")
     psse.file.write(" 0  / END OF AREA DATA, BEGIN TWO-TERMINAL DC DATA\n")
     psse.file.write(" 0  / END OF TWO-TERMINAL DC DATA, BEGIN VSC DATA\n")
     psse.file.write(" 0  / END OF VSC DATA, BEGIN IMPEDANCE CORRECTION DATA\n")
@@ -796,7 +820,6 @@ def prwraw(
     psse.file.write(" 0 / END OF SWITCHED SHUNT DATA\n")
     psse.file.write("Q / END OF DATA\n")
     psse.file.close()
-    pass
 
 
 def prwdyr(
@@ -811,4 +834,58 @@ def prwdyr(
         anatem
         psse
     """
+    pssepath = pssefolder(anarede,)
+    rawfile = realpath(pssepath + anarede.system[:-4] + ".dyr")
+    psse.file = open(rawfile, "w", encoding="latin-1")
+    psse.file.write("@! PSSE Generator Models\n")
+    psse.file.write("@!\n")
+    gencls = ""
+    gensae = ""
+    genroe = ""
+    excitation = ""
+    governor = ""
+    stabilizer = ""
+    for key in anatem.dmaq.keys():
+        try:
+            barra = int(key)
+            gerador = anatem.dmaq[key][0]['modelo_gerador']
+            gendata = anatem.dmdg[gerador]
+            modelo = anatem.dmdg[gerador]['modelo']
+            amortecimento = 0 if gendata['amortecimento'].strip() == "" else float(gendata['amortecimento'])
+            saturacao = gendata['curva_saturacao']
+            sat1 = float(saturacao['parametro_1'] * exp(saturacao['parametro_2']-saturacao['parametro_2']*saturacao['parametro_3'])) 
+            sat12 = float(saturacao['parametro_1'] * exp(saturacao['parametro_2']*1.2-saturacao['parametro_2']*saturacao['parametro_3'])) 
+            avr = anatem.dmaq[key][0]['modelo_regulador_tensao']
+            gov = anatem.dmaq[key][0]['modelo_regulador_velocidade']
+            pss = anatem.dmaq[key][0]['modelo_estabilizador']
+            if modelo == "MD01":
+                gencls += f"{barra:>7d} 'GENCLS' '1' {float(gendata['inercia'])}  {amortecimento} /\n"
+            elif modelo == "MD02":
+                gensae += f"{barra:>7d} 'GENSAE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
+            elif modelo == "MD03":
+                genroe += f"{barra:>7d} 'GENROE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_q_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
+        except:
+            pass
+    if gencls != "":
+        psse.file.write("@! GENCLS\n")
+        psse.file.write(gencls)
+    if gensae != "":
+        psse.file.write("@! GENSAE\n")
+        psse.file.write(gensae)
+    if genroe != "":
+        psse.file.write("@! GENROE\n")
+        psse.file.write(genroe)
+    psse.file.write("@! PSSE Excitation System Models\n")
+
+    psse.file.write("@! PSSE Governor Models\n")
+    psse.file.write("@! PSSE PSSModels\n")
+    wind = ""
+    psse.file.write("@! PSSE RE Generator Models\n")
+    psse.file.write("@! PSSE RE Electrical Control Models\n")
+    psse.file.write("@! PSSE RE PPC Models\n")
+    psse.file.write("@! PSSE Generic Torque controller for Type 3 wind machines Models\n")
+    psse.file.write("@! PSSE Generic Pitch Control Model for Type 3 Wind Generator Models\n")
+    psse.file.write("@! PSSE Generic Aerodynamic Model for Type 3 wind machine Models\n")
+    psse.file.write("@! PSSE Generic Drive Train Model for Type 3 and Type 4 Wind Machines Models\n")
+
     pass

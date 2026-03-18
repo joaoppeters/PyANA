@@ -8,7 +8,7 @@
 
 from powerflow import PowerFlow
 
-system = "SISTEMA_REDUZIDO_NE_232B_CASO_A0.pwf"
+system = "SISTEMA_REDUZIDO_NE_232B_CASO_A0.stb"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW

@@ -76,7 +76,7 @@ def check_line_range_differences(folder_path: str, pattern: str, start: int, end
     return is_identical, hash_map
 
 # --- Configuração ---
-TARGET_FOLDER = 'C:\\Users\\JoaoPedroPetersBarbo\\Documents\\github\\PyANA\\sistemas\\cdu2udc' 
+TARGET_FOLDER = 'C:\\Users\\JoaoPedroPetersBarbo\\Documents\\github\\PyANA\\sistemas\\organon' 
 FILE_PATTERN = 'CDU_AVR_*.cdu' 
 START_LINE = 12 # Começa na Linha 12 (inclusiva)
 END_LINE = 30   # Termina na Linha 30 (inclusiva)

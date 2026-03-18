@@ -2263,7 +2263,7 @@ def dlin(
             * anarede.dcteDF.loc[anarede.dcteDF.constante == "BASE"].valor_constante[0]
         )
 
-        anarede.dlinDF["circuito"] = anarede.dlinDF["circuito"].replace("0", "1")
+        anarede.dlinDF["circuito"] = anarede.dlinDF["circuito"].replace("0", "1").astype(int)
 
         anarede.dlinDF["estado"] = (anarede.dlinDF["estado"] == "0") | (
             anarede.dlinDF["estado"] == "L"
@@ -2272,9 +2272,7 @@ def dlin(
             "estado"
         ]
 
-        anarede.dlinDF["tap"] = anarede.dlinDF["tap"].tolist() + 1 * (
-            ~anarede.dlinDF["transf"].values
-        )
+        anarede.dlinDF["numero_taps"] = anarede.dlinDF["numero_taps"].replace(0, 33)
         anarede.dlinDF["tapp"] = deepcopy(anarede.dlinDF["tap"])
         anarede.dlinDF["tap"] = anarede.dlinDF["tap"] * exp(
             1j * pi / 180 * anarede.dlinDF["tap_defasagem"]
