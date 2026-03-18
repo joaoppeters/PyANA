@@ -62,7 +62,7 @@ class PowerFlow:
                         prwdyr(self.anarede, self.anatem, self.psse)
                     elif method != "EXSI":
                         raise ValueError(f"Unknown method: {method}")
-                    exsi(self.anatem)
+                    # exsi(self.anatem)
 
             else:
                 raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")

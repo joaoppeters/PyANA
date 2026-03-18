@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import append, concatenate, infty, radians, zeros
+from numpy import append, concatenate, inf, radians, zeros
 
 from calc import pcalc, qcalc
 
@@ -497,12 +497,12 @@ def frequpdt(
             anarede.solution["active_generation"][idx] = (
                 value["potencia_ativa_minima"] / anarede.cte["BASE"]
             )
-            anarede.ypp[idx][idx] = infty
+            anarede.ypp[idx][idx] = inf
         elif anarede.solution["freq"] <= anarede.freqger["min"][idx]:
             anarede.solution["active_generation"][idx] = (
                 value["potencia_ativa_maxima"] / anarede.cte["BASE"]
             )
-            anarede.ypp[idx][idx] = infty
+            anarede.ypp[idx][idx] = inf
         else:
             anarede.ypp[idx][idx] = 1
 

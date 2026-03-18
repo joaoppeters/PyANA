@@ -850,20 +850,30 @@ def prwdyr(
             barra = int(key)
             gerador = anatem.dmaq[key][0]['modelo_gerador']
             gendata = anatem.dmdg[gerador]
-            modelo = anatem.dmdg[gerador]['modelo']
+            genmodel= anatem.dmdg[gerador]['modelo']
             amortecimento = 0 if gendata['amortecimento'].strip() == "" else float(gendata['amortecimento'])
             saturacao = gendata['curva_saturacao']
-            sat1 = float(saturacao['parametro_1'] * exp(saturacao['parametro_2']-saturacao['parametro_2']*saturacao['parametro_3'])) 
-            sat12 = float(saturacao['parametro_1'] * exp(saturacao['parametro_2']*1.2-saturacao['parametro_2']*saturacao['parametro_3'])) 
+            sat1 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3'])) 
+            sat12 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])*1.2-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3']))
             avr = anatem.dmaq[key][0]['modelo_regulador_tensao']
             gov = anatem.dmaq[key][0]['modelo_regulador_velocidade']
+            if gov.strip() and anatem.dmaq[key][0]['modelo_regulador_velocidade_u'] != 'u':
+                govmodel = anatem.drgv[gov]['modelo']
+                if govmodel == 'MD01':
+                    governor += f"{barra:>7d} 'HYGOV' '1' /\n"
+                elif govmodel == 'MD02':
+                    governor += f"{barra:>7d} 'TGOV1' '1' /\n"
             pss = anatem.dmaq[key][0]['modelo_estabilizador']
-            if modelo == "MD01":
+            if genmodel== "MD01":
                 gencls += f"{barra:>7d} 'GENCLS' '1' {float(gendata['inercia'])}  {amortecimento} /\n"
-            elif modelo == "MD02":
+            elif genmodel== "MD02":
                 gensae += f"{barra:>7d} 'GENSAE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
-            elif modelo == "MD03":
+            elif genmodel== "MD03":
                 genroe += f"{barra:>7d} 'GENROE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_q_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
+            if anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'] == 1:
+                excitation  += f"{barra:>7d} 'IEEET1' '1' 0.00  100  0.05  8.00  -4.00  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
+            elif anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'] == 2:
+                excitation  += f"{barra:>7d} 'IEEET1' '1' 0.00  100  0.05  20  -20  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
         except:
             pass
     if gencls != "":
