@@ -517,7 +517,7 @@ def dfnt(
                 "fator_q": safe_slice(line, 19, 24),
                 "unidades": safe_slice(line, 25, 28),
                 "modelo_fonte": safe_slice(line, 29, 35),
-                "modelo_fonte_u": safe_slice(line, 36, 37),
+                "modelo_fonte_u": safe_slice(line, 35, 36),
                 "equivalente_real": safe_slice(line, 37, 45),
                 "equivalente_imaginario": safe_slice(line, 46, 54),
                 "potencia_base": safe_slice(line, 55, 61),

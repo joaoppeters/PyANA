@@ -89,7 +89,7 @@ def orwudc(
         # LOSSLESS WRITE FROM RAW TABLE
         # ------------------------------------------------------
         for entry in anatem.dcdu_raw:
-            print(entry)
+            # print(entry)
             if entry["ncdu"] not in (None, key):
                 continue
 
@@ -798,8 +798,6 @@ def prwraw(
         vx = anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] if bc != 0 else 0
         vn = anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] if bc != 0 else 0
         nome_de = anarede.dbarDF[anarede.dbarDF.numero == value.de].nome.values[0]
-        if value.de == 70019:
-            print()
         psse.file.write(f"{value.de:>6d},{value.para:>6d},'{value.circuito:02d}',{value.resistencia:>12.4E},{value.reatancia:>13.4E},{value.susceptancia*2:>10.4f},{value.capacidade_normal:>12.2f},{value.capacidade_emergencial:>12.2f},{value.capacidade_equipamento:>12.2f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{1:>3d},{1:>3d},{0:>9.2f},{1:>4d},{1:>9.4f}\n") if value.estado and value.tap.real == 0 else ""
         transformersdata += f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{1:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['BASE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n" if value.estado and value.tap.real != 0 else ""
     psse.file.write(" 0  / END OF BRANCH DATA, BEGIN TRANSFORMER DATA\n")
@@ -853,26 +851,37 @@ def prwdyr(
             genmodel= anatem.dmdg[gerador]['modelo']
             amortecimento = 0 if gendata['amortecimento'].strip() == "" else float(gendata['amortecimento'])
             saturacao = gendata['curva_saturacao']
-            sat1 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3'])) 
-            sat12 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])*1.2-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3']))
-            avr = anatem.dmaq[key][0]['modelo_regulador_tensao']
-            gov = anatem.dmaq[key][0]['modelo_regulador_velocidade']
-            if gov.strip() and anatem.dmaq[key][0]['modelo_regulador_velocidade_u'] != 'u':
-                govmodel = anatem.drgv[gov]['modelo']
-                if govmodel == 'MD01':
-                    governor += f"{barra:>7d} 'HYGOV' '1' /\n"
-                elif govmodel == 'MD02':
-                    governor += f"{barra:>7d} 'TGOV1' '1' /\n"
-            pss = anatem.dmaq[key][0]['modelo_estabilizador']
+            if saturacao.strip():
+                sat1 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3'])) 
+                sat12 = float(anatem.dcst[saturacao]['parametro_1']) * exp(float(anatem.dcst[saturacao]['parametro_2'])*1.2-float(anatem.dcst[saturacao]['parametro_2'])*float(anatem.dcst[saturacao]['parametro_3']))
+            else:
+                sat1 = 0.105
+                sat12 = 0.318
             if genmodel== "MD01":
                 gencls += f"{barra:>7d} 'GENCLS' '1' {float(gendata['inercia'])}  {amortecimento} /\n"
             elif genmodel== "MD02":
                 gensae += f"{barra:>7d} 'GENSAE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
             elif genmodel== "MD03":
                 genroe += f"{barra:>7d} 'GENROE' '1' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_q_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
-            if anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'] == 1:
+            avr = anatem.dmaq[key][0]['modelo_regulador_tensao']
+            gov = anatem.dmaq[key][0]['modelo_regulador_velocidade']
+            if gov.strip() and anatem.dmaq[key][0]['modelo_regulador_velocidade_u'] != 'u':
+                govdata = anatem.drgv[gov]
+                if anatem.drgv[gov]['modelo'].strip() == 'MD01':
+                    governor += f"{barra:>7d} 'HYGOV' '1' {float(govdata['estatismo'])}  {float(govdata['estatismo_transitorio'])}  {float(govdata['cte_tempo_regulador'])}  {float(govdata['cte_tempo_filtragem'])}  {float(govdata['cte_tempo_servomotor'])}  {0.}  {float(govdata['limite_maximo'])}  {float(govdata['limite_minimo'])}  {float(govdata['cte_tempo_agua'])}  {float(govdata['ganho_turbina'])}  {float(govdata['amortecimento_turbina'])}  {float(govdata['vazao_noload'])} /\n"
+                elif anatem.drgv[gov]['modelo'].strip() == 'MD02':
+                    governor += f"{barra:>7d} 'TGOV1' '1' {float(govdata['estatismo'])}  {float(govdata['cte_tempo_regulador'])}  {float(govdata['limite_maximo'])}  {float(govdata['limite_minimo'])}  {float(govdata['cte_tempo_1'])}  {float(govdata['cte_tempo_reaquecimento'])}  {float(govdata['amortecimento_turbina'])} /\n"
+            else:
+                pass
+            pss = anatem.dmaq[key][0]['modelo_estabilizador']
+            if pss.strip() and anatem.dmaq[key][0]['modelo_estabilizador_u'] != 'u':
+                pass
+            elif pss.strip() and anatem.dmaq[key][0]['modelo_estabilizador_u'] == 'u':
+                stabilizer += f"{barra:>7d} 'IEEEST' '1' {1}  {0}  {0}  {0}  {0}  {0}  {0}  {0}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#KP1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMAX')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMIN')])}  {0}  {0} /\n"
+            
+            if anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'].values[0] == 1:
                 excitation  += f"{barra:>7d} 'IEEET1' '1' 0.00  100  0.05  8.00  -4.00  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
-            elif anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'] == 2:
+            elif anarede.dbarDF.loc[anarede.dbarDF.numero == barra, 'tipo'].values[0] == 2:
                 excitation  += f"{barra:>7d} 'IEEET1' '1' 0.00  100  0.05  20  -20  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
         except:
             pass
@@ -886,16 +895,44 @@ def prwdyr(
         psse.file.write("@! GENROE\n")
         psse.file.write(genroe)
     psse.file.write("@! PSSE Excitation System Models\n")
-
+    psse.file.write(excitation)
     psse.file.write("@! PSSE Governor Models\n")
+    psse.file.write(governor)
     psse.file.write("@! PSSE PSSModels\n")
-    wind = ""
+    psse.file.write(stabilizer)
+    regc = ""
+    reec = ""
+    repc = ""
+    torque = ""
+    pitch = ""
+    aerodynamic = ""
+    drivetrain = ""
+    for key in anatem.dfnt.keys():
+        try:
+            barra = int(key)
+            if anatem.dfnt[key]['modelo_fonte_u']:
+                # gendata = anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]
+                regc += f"{barra:>7d} 'REGCA1' '1' 1  0.02  99  0.90  0.50  1.20  1.20  0.2  0.05  -1.30  0.02  1.50  99  -99  1 /\n"
+                reec += f"{barra:>7d} 'REECA1' '1' 0  0  1  1  0  1  0.85  1.2  0.01  -0.05  0.05  0.8  0.75  -0.75  0  0  0  0  0.05  0.436  -0.436  1.2  0.8  1  10  1  10  0  8  99  -99  1.2  0.04  1.11  0.02  0  0.75  0.2  0.750001  0.5  0.750002  1  0.750003  0.2  1.11  0.5  1.110001  0.75  1.110002  1  1.110003 /\n"
+                repc += f"{barra:>7d} 'REPCA1' '1'   55443  55443  55412  '01'  0  0 0  0.02  18.0  5.00  0.00  0.05  0.70  0.00  0.00  0.00  0.10  -0.10  -0.00333  0.00333  0.436  -0.436  0.00  0.00  0.02  -0.0006  0.0006  999  -999  1  0  0.00  0.00  0.00 /\n"
+                torque += f"{barra:>7d} 'WTTQA1' '1' 1  3.00  0.60  0.05  30  1.20  0.08  0.20  0.69  0.40  0.78  0.60  0.98  0.74  1.20  0 /\n" if 'WT3' in anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]['nome'] else ""
+                pitch += f"{barra:>7d} 'WTPTA1' '1' 5.00  150  30.0  3.00  0.00  0.30  27.0  0.00  10.0  -10.0 /\n" if 'WT3' in anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]['nome'] else ""
+                aerodynamic += f"{barra:>7d} 'WTARA1' '1' 0.007  0.00 /\n" if 'WT3' in anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]['nome'] else ""
+                drivetrain += f"{barra:>7d} 'WTDTA1' '1' 4.754  0  0.869  37.35  1.5 /\n" if 'WT3' in anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]['nome'] else ""
+        except:
+            pass
     psse.file.write("@! PSSE RE Generator Models\n")
+    psse.file.write(regc)
     psse.file.write("@! PSSE RE Electrical Control Models\n")
+    psse.file.write(reec)
     psse.file.write("@! PSSE RE PPC Models\n")
+    psse.file.write(repc)
     psse.file.write("@! PSSE Generic Torque controller for Type 3 wind machines Models\n")
+    psse.file.write(torque)
     psse.file.write("@! PSSE Generic Pitch Control Model for Type 3 Wind Generator Models\n")
+    psse.file.write(pitch)
     psse.file.write("@! PSSE Generic Aerodynamic Model for Type 3 wind machine Models\n")
+    psse.file.write(aerodynamic)
     psse.file.write("@! PSSE Generic Drive Train Model for Type 3 and Type 4 Wind Machines Models\n")
-
-    pass
+    psse.file.write(drivetrain)
+    psse.file.close()

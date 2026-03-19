@@ -234,7 +234,8 @@ def rdat(
                 anatem.dfnt = dict()
                 anatem.dfnt["dfnt"] = anatem.lines[anatem.linecount - 1][:]
                 anatem.dfnt["ruler"] = (
-                    "( Nb)   Gr T (FP%) (FQ%)(Und)( Mc )u (R ou G) (X ou B) (Sbas)\n"
+                    "( Nb)   Gr T (FP%) (FQ%)(Und)( Mc )u (R ou G) (X ou B) (Sbas)\n",
+                    "( Nb)   Gr T (FP%) (FQ%) Und ( Mc )u (R ou G) (X ou B) (Sbas)\n"
                 )
             dfnt(
                 anatem,

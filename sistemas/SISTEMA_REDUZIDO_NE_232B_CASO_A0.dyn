@@ -14,6 +14,7 @@ MDF WT38002.udc
 MDF WT37998.udc
 MDF WT38023.udc
 MDF WT37990.udc
+MDF WT38033.udc
 MDF WT38042.udc
 MDF WT38041.udc
 MDF WT38004.udc
@@ -65,6 +66,7 @@ MDF WT38032.udc
 MDF WT38044.udc
 MDF WT37984.udc
 MDF WT38047.udc
+MDF AVR9577.udc
 MDF AVR1200.udc
 MDF AVR1202.udc
 MDF AVR1203.udc
@@ -422,5 +424,14 @@ SM01 RG-CO2CAP500
         453       10       GOV               
 !SM01  (-Xld-) (-Ra-) (-Sb-) (-Xt-)   (-H-) (-D-)
          0.320  0.000 100.00  0.000 100.000 0.000 /
+!
+!
+SM05 MARA3VUTE013
+! (--Bus--) (--ID--) (--AVR--) (--PSS--) (--UEL--) (--OEL--) (--SCL--) (--Gov--) (--Ctrl Bus--) (--Rc(pu)--) (--Xc(pu)--) (--Tr(s)--) (--Bus Name--) (--CtrBus-Name--)
+      13022       10   AVR9577                                             GOV09          13022         0.00         0.00        0.00                                  /
+!SM05  (--Xd-) (-Xld-) (-Xlld-) (--Xq-) (-Xlq-) (-Xllq-) (--Ra-) (-Sbase-) (--Xl-) (-Xt-) (-Tld-) (-Tlld-) (-Tlq-) (-H-) (-D-) (-Tllq-) (-S1.0-) (-S1.2-)
+       2.02000 0.25000  0.19000 1.90000 0.45000  0.19000 0.00000    224.00 0.14000    0.0  7.0000   0.0400  0.5700 4.5070 1.0000   0.0800 0.0391757 0.4513917 /
+!GOV09 (-R-) (-T1-) (-Pmax-) (-Pmin-) (-T2-) (-T3-)
+       0.05   0.50      1.5     -1.0    0.0    5.0 /
 !
 !
