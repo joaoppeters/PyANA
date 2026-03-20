@@ -257,7 +257,8 @@ sistemas/ULOG*
 !nordicoB.pwf
 !nordicoA-SVC.pwf
 
-
+*.raw
+*.dyr
 *.dat
 *.blt
 *.cdu

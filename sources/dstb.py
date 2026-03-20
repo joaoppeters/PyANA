@@ -183,9 +183,7 @@ def dcdu(
                 continue
 
             prev_line = (
-                anatem.lines[anatem.linecount - 1]
-                if anatem.linecount > 0
-                else ""
+                anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
             )
 
             # ncdu
@@ -232,7 +230,9 @@ def dcdu(
 
                 anatem.dcdu[ncdu]["defpar"].append(safe_slice(line, 0, 6).strip())
                 anatem.dcdu[ncdu]["defpar_nome"].append(safe_slice(line, 7, 13).strip())
-                anatem.dcdu[ncdu]["defpar_valor"].append(safe_slice(line, 14, 32).strip())
+                anatem.dcdu[ncdu]["defpar_valor"].append(
+                    safe_slice(line, 14, 32).strip()
+                )
 
             # DEFVAL
             elif prev_line[:] in anatem.dcdu.get("defval_ruler", "") or (
@@ -242,8 +242,12 @@ def dcdu(
                 anatem.dcdu_raw.append(raw_entry)
 
                 anatem.dcdu[ncdu]["defval"].append(safe_slice(line, 0, 6).strip())
-                anatem.dcdu[ncdu]["defval_subtipo"].append(safe_slice(line, 7, 13).strip())
-                anatem.dcdu[ncdu]["defval_variavel"].append(safe_slice(line, 14, 20).strip())
+                anatem.dcdu[ncdu]["defval_subtipo"].append(
+                    safe_slice(line, 7, 13).strip()
+                )
+                anatem.dcdu[ncdu]["defval_variavel"].append(
+                    safe_slice(line, 14, 20).strip()
+                )
                 anatem.dcdu[ncdu]["defval_parametro_d1"].append(
                     safe_slice(line, 21, 27, default=DEFAULT, require_full=False)
                 )
@@ -260,36 +264,61 @@ def dcdu(
                 anatem.dcdu_raw.append(raw_entry)
 
                 anatem.dcdu[ncdu]["bloco_numero"].append(safe_slice(line, 0, 4).strip())
-                anatem.dcdu[ncdu]["bloco_inicializacao"].append(safe_slice(line, 4, 5).strip())
+                anatem.dcdu[ncdu]["bloco_inicializacao"].append(
+                    safe_slice(line, 4, 5).strip()
+                )
                 anatem.dcdu[ncdu]["bloco_tipo"].append(safe_slice(line, 5, 11).strip())
-                anatem.dcdu[ncdu]["bloco_omitir"].append(safe_slice(line, 11, 12).strip())
-                anatem.dcdu[ncdu]["bloco_subtipo"].append(safe_slice(line, 12, 18).strip())
-                anatem.dcdu[ncdu]["bloco_sinal"].append(safe_slice(line, 18, 19).strip())
-                anatem.dcdu[ncdu]["bloco_entrada"].append(safe_slice(line, 19, 25).strip())
-                anatem.dcdu[ncdu]["bloco_saida"].append(safe_slice(line, 26, 32).strip())
-                anatem.dcdu[ncdu]["bloco_parametro1"].append(safe_slice(line, 33, 39).strip())
-                anatem.dcdu[ncdu]["bloco_parametro2"].append(safe_slice(line, 39, 45).strip())
-                anatem.dcdu[ncdu]["bloco_parametro3"].append(safe_slice(line, 45, 51).strip())
-                anatem.dcdu[ncdu]["bloco_parametro4"].append(safe_slice(line, 51, 57).strip())
-                anatem.dcdu[ncdu]["bloco_limite_minimo"].append(safe_slice(line, 58, 64).strip())
-                anatem.dcdu[ncdu]["bloco_limite_maximo"].append(safe_slice(line, 64, 70).strip())
+                anatem.dcdu[ncdu]["bloco_omitir"].append(
+                    safe_slice(line, 11, 12).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_subtipo"].append(
+                    safe_slice(line, 12, 18).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_sinal"].append(
+                    safe_slice(line, 18, 19).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_entrada"].append(
+                    safe_slice(line, 19, 25).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_saida"].append(
+                    safe_slice(line, 26, 32).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_parametro1"].append(
+                    safe_slice(line, 33, 39).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_parametro2"].append(
+                    safe_slice(line, 39, 45).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_parametro3"].append(
+                    safe_slice(line, 45, 51).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_parametro4"].append(
+                    safe_slice(line, 51, 57).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_limite_minimo"].append(
+                    safe_slice(line, 58, 64).strip()
+                )
+                anatem.dcdu[ncdu]["bloco_limite_maximo"].append(
+                    safe_slice(line, 64, 70).strip()
+                )
 
             anatem.linecount += 1
 
         # FIMCDU
         fim_line = anatem.lines[anatem.linecount].rstrip("\n")
-        anatem.dcdu_raw.append({
-            "raw": fim_line,
-            "kind": "fimcdu",
-            "ncdu": ncdu,
-            "index": raw_index,
-        })
+        anatem.dcdu_raw.append(
+            {
+                "raw": fim_line,
+                "kind": "fimcdu",
+                "ncdu": ncdu,
+                "index": raw_index,
+            }
+        )
         raw_index += 1
 
         anatem.linecount += 1
         if anatem.linecount >= len(anatem.lines):
             break
-
 
 
 def dcst(
@@ -317,7 +346,7 @@ def dcst(
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
         # se a linha anterior é o ruler, cria novo registro
-        if  prev_line[:] in anatem.dcst.get("ruler", ""):
+        if prev_line[:] in anatem.dcst.get("ruler", ""):
             nbus = safe_slice(line, 0, 4).strip()
             anatem.dcst[nbus] = {
                 "tipo": safe_slice(line, 7, 8),
@@ -487,7 +516,7 @@ def dfnt(
     anatem,
 ):
     """inicialização para leitura de dados de fontes shunt controladas
-    
+
     Args
         anatem:
     """
@@ -507,7 +536,7 @@ def dfnt(
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        if  prev_line[:] in anatem.dfnt.get("ruler", "") or innit:
+        if prev_line[:] in anatem.dfnt.get("ruler", "") or innit:
             innit = True
             nbus = safe_slice(line, 0, 5)
             anatem.dfnt[nbus] = {
@@ -528,7 +557,6 @@ def dfnt(
 
         # caso não seja o início do bloco, avança
         anatem.linecount += 1
-
 
 
 def dger(
@@ -625,7 +653,7 @@ def dmaq(
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        if  prev_line[:] in anatem.dmaq.get("ruler", "") or innit:
+        if prev_line[:] in anatem.dmaq.get("ruler", "") or innit:
             innit = True
             nbus = safe_slice(line, 0, 5)
 
@@ -904,7 +932,7 @@ def drgvmd01(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md01_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md01_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD01",
@@ -986,7 +1014,7 @@ def drgvmd03(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md03_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md03_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD03",
@@ -1026,7 +1054,7 @@ def drgvmd04(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md04_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md04_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -1077,7 +1105,7 @@ def drgvmd05(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md05_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md05_ruler", ""):
             nrgv = safe_slice(line, 0, 4)
             anatem.drgv[nrgv] = {
                 "modelo": "MD05",
@@ -1117,7 +1145,7 @@ def drgvmd06(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md06_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md06_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -1176,7 +1204,7 @@ def drgvmd07(
             continue
 
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
-        if  prev_line[:] in anatem.drgv.get("md07_ruler", ""):
+        if prev_line[:] in anatem.drgv.get("md07_ruler", ""):
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)

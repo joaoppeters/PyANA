@@ -2263,7 +2263,9 @@ def dlin(
             * anarede.dcteDF.loc[anarede.dcteDF.constante == "BASE"].valor_constante[0]
         )
 
-        anarede.dlinDF["circuito"] = anarede.dlinDF["circuito"].replace("0", "1").astype(int)
+        anarede.dlinDF["circuito"] = (
+            anarede.dlinDF["circuito"].replace("0", "1").astype(int)
+        )
 
         anarede.dlinDF["estado"] = (anarede.dlinDF["estado"] == "0") | (
             anarede.dlinDF["estado"] == "L"

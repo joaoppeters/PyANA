@@ -8,14 +8,14 @@
 
 from powerflow import PowerFlow
 
-system = "SISTEMA_REDUZIDO_NE_232B_CASO_A0.stb"
+system = "SISTEMA_REDUZIDO_NE_232B_B1.stb"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "EXPC"  # POINT OF COLLAPSE
 # method = "EXSI"  # DYNAMIC SIMULATION
 method = "ORGAt"  # ORGANON DATA TRANSCRIPTION
-method = "PSSEt" # PSSE DATA TRANSCRIPTION
+# method = "PSSEt"  # PSSE DATA TRANSCRIPTION
 
 PowerFlow(
     system=system,

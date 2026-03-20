@@ -11,6 +11,7 @@ from simulation import *
 from setting import pwfsetting, stbsetting
 from transcript import orwudc, orwdyn, prwraw, prwdyr
 
+
 class PowerFlow:
     """powerflow class"""
 
@@ -54,8 +55,16 @@ class PowerFlow:
                         self.organon = PowerFlowContainer()
                         self.organon.system = system
                         self.organon.method = method
-                        anatemfiles, organonfiles = orwudc(self.anarede, self.anatem, self.organon)
-                        orwdyn(self.anarede, self.anatem, self.organon, anatemfiles, organonfiles)
+                        anatemfiles, organonfiles = orwudc(
+                            self.anarede, self.anatem, self.organon
+                        )
+                        orwdyn(
+                            self.anarede,
+                            self.anatem,
+                            self.organon,
+                            anatemfiles,
+                            organonfiles,
+                        )
                     elif method == "PSSEt":
                         self.psse = PowerFlowContainer()
                         prwraw(self.anarede, self.psse)

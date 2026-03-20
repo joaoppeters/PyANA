@@ -51,7 +51,10 @@ def rblt(
             if not hasattr(anatem, "dcst"):
                 anatem.dcst = dict()
                 anatem.dcst["dcst"] = anatem.lines[anatem.linecount - 1][:]
-                anatem.dcst["ruler"] = ("(No)   T (  Y1  ) (  Y2  ) (  X1  )\n", "(Nc)   T (  P1  ) (  P2  ) (  P3  )\n")
+                anatem.dcst["ruler"] = (
+                    "(No)   T (  Y1  ) (  Y2  ) (  X1  )\n",
+                    "(Nc)   T (  P1  ) (  P2  ) (  P3  )\n",
+                )
             dcst(
                 anatem,
             )
@@ -62,22 +65,23 @@ def rblt(
                 anatem.dmdg = dict()
                 anatem.dmdg["dmdg"] = anatem.lines[anatem.linecount - 1][:]
             if anatem.lines[anatem.linecount - 1].strip()[5:9] == "MD01":
-                anatem.dmdg["md01_ruler"] = "(No)   (L\'d)(Ra )( H )( D )(MVA)Fr C\n"
+                anatem.dmdg["md01_ruler"] = "(No)   (L'd)(Ra )( H )( D )(MVA)Fr C\n"
                 dmdgmd01(
                     anatem,
                 )
             elif anatem.lines[anatem.linecount - 1].strip()[5:9] == "MD02":
                 anatem.dmdg["md02_ruler"] = (
-                    "(No)   (CS) (Xd )(Xq )(X\'d)     (X\"d)(Xl )(T\'d)     (T\"d)(T\"q)\n",
-                    "(No)   (CS) (Ld )(Lq )(L\'d)     (L\"d)(Ll )(T\'d)     (T\"d)(T\"q)\n",
+                    '(No)   (CS) (Xd )(Xq )(X\'d)     (X"d)(Xl )(T\'d)     (T"d)(T"q)\n',
+                    '(No)   (CS) (Ld )(Lq )(L\'d)     (L"d)(Ll )(T\'d)     (T"d)(T"q)\n',
                 )
                 dmdgmd02(
                     anatem,
                 )
-            elif anatem.lines[anatem.linecount - 1].strip()[5:9] == "MD03":                
+            elif anatem.lines[anatem.linecount - 1].strip()[5:9] == "MD03":
                 anatem.dmdg["md03_ruler"] = (
-                    "(No)   (CS) (Xd )(Xq )(X\'d)(X\'q)(X\"d)(Xl )(T\'d)(T\'q)(T\"d)(T\"q)\n",
-                    "(No)   (CS) (Ld )(Lq )(L\'d)(L\'q)(L\"d)(Ll )(T\'d)(T\'q)(T\"d)(T\"q)\n"
+                    "(No)   (CS) (Xd )(Xq )(X'd)(X'q)(X\"d)(Xl )(T'd)(T'q)(T\"d)(T\"q)\n",
+                    "(No)   (CS) (Ld )(Lq )(L'd)(L'q)(L\"d)(Ll )(T'd)(T'q)(T\"d)(T\"q)\n",
+                    "(No) O (CS) (Xd )(Xq )(X'd)(X'q)(X\"d)(Xl )(T'd)(T'q)(T\"d)(T\"q)\n",
                 )
                 dmdgmd03(
                     anatem,
@@ -235,7 +239,7 @@ def rdat(
                 anatem.dfnt["dfnt"] = anatem.lines[anatem.linecount - 1][:]
                 anatem.dfnt["ruler"] = (
                     "( Nb)   Gr T (FP%) (FQ%)(Und)( Mc )u (R ou G) (X ou B) (Sbas)\n",
-                    "( Nb)   Gr T (FP%) (FQ%) Und ( Mc )u (R ou G) (X ou B) (Sbas)\n"
+                    "( Nb)   Gr T (FP%) (FQ%) Und ( Mc )u (R ou G) (X ou B) (Sbas)\n",
                 )
             dfnt(
                 anatem,
