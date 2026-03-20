@@ -801,7 +801,9 @@ def orwdyn(
     folder = organonfolder(
         anarede,
     )
-    organon.filedir = realpath(folder + "\\" + anarede.name + ".dyn",)
+    organon.filedir = realpath(
+        folder + "\\" + anarede.name + ".dyn",
+    )
     organon.file = open(organon.filedir, "w")
     organon.file.write("!\n")
     for file in organonfiles:
@@ -1496,7 +1498,7 @@ def prwdyr(
     for key in anatem.dmaq.keys():
         try:
             barra = int(key)
-            i=0
+            i = 0
             while i < len(anatem.dmaq[key]):
                 gerador = anatem.dmaq[key][i]["modelo_gerador"]
                 gendata = anatem.dmdg[gerador]
@@ -1547,7 +1549,9 @@ def prwdyr(
                 pss = anatem.dmaq[key][i]["modelo_estabilizador"]
                 if pss.strip() and anatem.dmaq[key][i]["modelo_estabilizador_u"] != "u":
                     pass
-                elif pss.strip() and anatem.dmaq[key][i]["modelo_estabilizador_u"] == "u":
+                elif (
+                    pss.strip() and anatem.dmaq[key][i]["modelo_estabilizador_u"] == "u"
+                ):
                     stabilizer += f"{barra:>7d} 'IEEEST' '{anatem.dmaq[key][i]['grupo']}' {1}  {0}  {0}  {0}  {0}  {0}  {0}  {0}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#KP1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMAX')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMIN')])}  {0}  {0} /\n"
 
                 if (
