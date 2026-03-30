@@ -118,9 +118,9 @@ def qlimnsubjac(
 
     ## Montagem Jacobiana
     # Condição
-    if anarede.controldim != 0:
-        anarede.extrarow = zeros([anarede.nger, anarede.controldim])
-        anarede.extracol = zeros([anarede.controldim, anarede.nger])
+    if anarede.ctrldim != 0:
+        anarede.extrarow = zeros([anarede.nger, anarede.ctrldim])
+        anarede.extracol = zeros([anarede.ctrldim, anarede.nger])
 
         ytv = csc_matrix(
             concatenate(
@@ -140,7 +140,7 @@ def qlimnsubjac(
             )
         )
 
-    elif anarede.controldim == 0:
+    elif anarede.ctrldim == 0:
         ytv = csc_matrix(concatenate((anarede.yt, anarede.yv), axis=1))
         pqyx = csc_matrix(concatenate((anarede.px, anarede.qx, anarede.yx), axis=0))
 
@@ -164,7 +164,7 @@ def qlimnupdt(
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             anarede.solution["qlim_reactive_generation"][idx] += (
-                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BASE"]
+                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["SBSE"]
             )
 
             # Incrementa contador
@@ -190,7 +190,7 @@ def qlimnsch(
     # Atualização da potência reativa especificada
     anarede.qsch += anarede.solution["qlim_reactive_generation"]
     anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
-    anarede.qsch /= anarede.cte["BASE"]
+    anarede.qsch /= anarede.cte["SBSE"]
 
 
 def qlimncorr(
@@ -228,7 +228,7 @@ def qlimnheur(
         ),
         where=~anarede.mask[(anarede.nbus) : (2 * anarede.nbus)],
     ):
-        anarede.controlheur = True
+        anarede.ctrlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (

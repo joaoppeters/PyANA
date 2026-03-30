@@ -56,7 +56,7 @@ def var(
     anarede.nbuseigenvalues = array([])
     anarede.nbuseigenvaluesPT = array([])
     anarede.nbuseigenvaluesQV = array([])
-    if "FREQ" in anarede.control:
+    if "FREQ" in anarede.ctrl:
         anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = array([])
 
     # Loop de Inicialização da Variável
@@ -69,7 +69,7 @@ def var(
             anarede.pqtv["Q-" + value["nome"]] = array([])
 
         elif (value["tipo"] == 0) and (
-            ("SVCs" in anarede.control)
+            ("SVCs" in anarede.ctrl)
             and (value["numero"] in anarede.dcerDF["barra"].to_numpy())
         ):
             # Variável de Armazenamento de Potência Reativa
@@ -101,7 +101,7 @@ def var(
                     )
 
                 elif (anarede.dbarDF["tipo"][value] == 0) and (
-                    ("SVCs" in anarede.control)
+                    ("SVCs" in anarede.ctrl)
                     and (
                         anarede.dbarDF["numero"][value]
                         in anarede.dcerDF["barra"].to_numpy()
@@ -145,7 +145,7 @@ def var(
                 )
 
             # Frequência
-            if "FREQ" in anarede.control:
+            if "FREQ" in anarede.ctrl:
                 anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
                     anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
                     item["freq"] * anarede.cte["FBSE"],
@@ -167,7 +167,7 @@ def var(
                     )
 
                 elif (anarede.dbarDF["tipo"][value] == 0) and (
-                    ("SVCs" in anarede.control)
+                    ("SVCs" in anarede.ctrl)
                     and (
                         anarede.dbarDF["numero"][value]
                         in anarede.dcerDF["barra"].to_numpy()
@@ -280,7 +280,7 @@ def var(
                 )
 
             # Frequência
-            if "FREQ" in anarede.control:
+            if "FREQ" in anarede.ctrl:
                 anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
                     anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
                     item["c"]["freq"] * anarede.cte["FBSE"],

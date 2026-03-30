@@ -14,12 +14,14 @@ from numpy import (
     conj,
     cos,
     diag,
+    divide,
     exp,
     ones,
     r_,
     sin,
     vectorize,
     zeros,
+    zeros_like,
 )
 from scipy.sparse import issparse, csr_matrix as sparse
 
@@ -48,38 +50,36 @@ def admittance(
     CODE RETRIEVED FROM: https://github.com/rwl/PYPOWER
     """
     ## Inicialização
-    Ysr = 1 / vectorize(complex)(
-        anarede.dlinDF["resistencia"], anarede.dlinDF["reatancia"]
-    )
-    Ysh = vectorize(complex)(0, anarede.dbarDF["shunt_barra"] / anarede.cte["BASE"])
+    active = anarede.dlinDF[anarede.dlinDF.estado]
+    nactive = len(active)
+    Ysr = 1 / vectorize(complex)(active.resistencia, active.reatancia)
+    Ysh = vectorize(complex)(0, anarede.dbarDF.shunt_barra / anarede.cte["SBSE"])
 
-    Ytt = Ysr + vectorize(complex)(0, anarede.dlinDF["susceptancia"])
-    Yff = Ytt / (
-        vectorize(complex)(anarede.dlinDF["tap"] * conj(anarede.dlinDF["tap"]))
-    )
-    Yft = -Ysr / vectorize(complex)(conj(anarede.dlinDF["tap"]))
-    Ytf = -Ysr / vectorize(complex)(anarede.dlinDF["tap"])
+    Ytt = Ysr + vectorize(complex)(0, active.susceptancia)
+    Yff = Ytt / (vectorize(complex)(active.tap * conj(active.tap)))
+    Yft = -Ysr / vectorize(complex)(conj(active.tap))
+    Ytf = -Ysr / vectorize(complex)(active.tap)
 
-    f = (anarede.dlinDF["de-idx"]).values
-    t = (anarede.dlinDF["para-idx"]).values
+    f = (active["de-idx"]).values
+    t = (active["para-idx"]).values
 
     ## connection matrix for line & from buses
     Cf = sparse(
-        (ones(anarede.nlin), (range(anarede.nlin), f)),
-        (anarede.nlin, anarede.nbus),
+        (ones(nactive), (range(nactive), f)),
+        (nactive, anarede.nbus),
     )
     ## connection matrix for line & to buses
     Ct = sparse(
-        (ones(anarede.nlin), (range(anarede.nlin), t)),
-        (anarede.nlin, anarede.nbus),
+        (ones(nactive), (range(nactive), t)),
+        (nactive, anarede.nbus),
     )
 
     ## build Yf and Yt such that Yf * V is the vector of complex branch currents injected
     ## at each branch's "from" bus, and Yt is the same for the "to" bus end
-    i = r_[range(anarede.nlin), range(anarede.nlin)]  ## double set of row indices
+    i = r_[range(nactive), range(nactive)]  ## double set of row indices
 
-    Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (anarede.nlin, anarede.nbus))
-    Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (anarede.nlin, anarede.nbus))
+    Yf = sparse((r_[Yff, Yft], (i, r_[f, t])), (nactive, anarede.nbus))
+    Yt = sparse((r_[Ytf, Ytt], (i, r_[f, t])), (nactive, anarede.nbus))
 
     ## build Ybus
     anarede.Yb = sparse(
@@ -113,10 +113,10 @@ def matrices(
         (concatenate((A11, A21), axis=0), concatenate((A12, A22), axis=0)), axis=1
     )
 
-    if anarede.controlcount > 0:
-        from ctrl import controljac
+    if anarede.ctrlcount > 0:
+        from ctrl import ctrljac
 
-        controljac(
+        ctrljac(
             anarede,
         )
 
@@ -179,10 +179,10 @@ def matrices(
         anarede.hessian = M1.real + M2.imag
 
         # Submatrizes de controles ativos
-        if anarede.controlcount > 0:
-            from ctrl import controlhess
+        if anarede.ctrlcount > 0:
+            from ctrl import ctrlhess
 
-            controlhess(
+            ctrlhess(
                 anarede,
             )
 

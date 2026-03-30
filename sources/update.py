@@ -9,13 +9,13 @@
 from copy import deepcopy
 from numpy import conj, diag, exp
 
-from ctrl import controlupdt
+from ctrl import ctrlupdt
 
 
 def updtstt(
     anarede,
     case: int = 0,
-    stage: str = None,
+    stage: str = "",
 ):
     """atualização das variáveis de estado
 
@@ -38,20 +38,20 @@ def updtstt(
         )
 
         # Atualização das variáveis de estado adicionais para controles ativos
-        if anarede.controlcount > 0:
-            controlupdt(
+        if anarede.ctrlcount > 0:
+            ctrlupdt(
                 anarede,
             )
 
         if anarede.solution["method"] == "EXPC":
             anarede.solution["lambda"] += (
                 anarede.solution["sign"]
-                * anarede.statevar[(anarede.Tval + anarede.Vval + anarede.controldim)]
+                * anarede.statevar[(anarede.Tval + anarede.Vval + anarede.ctrldim)]
             )
             anarede.solution["eigen"][anarede.mask] += (
                 anarede.solution["sign"]
                 * anarede.statevar[
-                    (anarede.Tval + anarede.Vval + anarede.controldim + 1) :
+                    (anarede.Tval + anarede.Vval + anarede.ctrldim + 1) :
                 ]
             )
 
@@ -110,8 +110,8 @@ def updtstt(
             anarede.solution["stepsch"] += anarede.statevar[-1]
 
     # Atualização das variáveis de estado adicionais para controles ativos
-    if anarede.controlcount > 0 and stage != None:
-        controlupdt(
+    if anarede.ctrlcount > 0 and stage != None:
+        ctrlupdt(
             anarede,
         )
 
@@ -130,10 +130,10 @@ def updtpwr(
     S = diag(V) @ conj(I)
 
     anarede.solution["active"] = (
-        S.real * anarede.cte["BASE"] + anarede.dbarDF["demanda_ativa"].tolist()
+        S.real * anarede.cte["SBSE"] + anarede.dbarDF["demanda_ativa"].tolist()
     )
     anarede.solution["reactive"] = (
-        S.imag * anarede.cte["BASE"] + anarede.dbarDF["demanda_reativa"].tolist()
+        S.imag * anarede.cte["SBSE"] + anarede.dbarDF["demanda_reativa"].tolist()
     )
 
 

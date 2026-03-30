@@ -9,6 +9,226 @@
 from folder import organonfolder, pssefolder
 from os.path import realpath
 from numpy import exp
+from datetime import datetime as dt
+import sys
+
+
+def orgntw(
+    anarede,
+    organon,
+):
+    """escrita de dados de rede no formato ORGANON (.pwf -> .ntw)
+
+    Args
+        anarede:
+        organon
+    """
+    ## Inicialização
+    ntwpath = organonfolder(
+        anarede,
+    )
+
+    # ======================================================
+    # OPEN NTW FILE (LOSSLESS WRITE)
+    # ======================================================
+
+    fOrg = r"C:\\Program Files\\HPPA\\Organon\\bin"
+    vPyt = "3.8"
+    fMod = fOrg + "\\Python\\" + vPyt
+    sys.path.append(fMod)
+
+    import organon
+
+    app = organon.GetApp()
+    ret = app.OpenFile(anarede.dirPWF)
+    print("\nOpen Return Code: {}".format(ret))
+    if not ret == 0:
+        print("File not loaded. Exiting...")
+        exit()
+
+    app.RunScriptCommand("PARAM PFBLKTAP T")
+
+    for i in range(2):
+        print("\n--- POWER FLOW #{} ---".format(i + 1))
+        app.RunScriptCommand("NEWTON")
+
+    ntwfile = realpath(ntwpath + anarede.system[:-4] + ".ntw")
+    organon.file = open(ntwfile, "w", encoding="latin-1")
+    organon.file.write("           7           0\n")
+    organon.file.write(
+        f" {dt.now().strftime('%Y%m%d %H:%M:%S')}  {anarede.cte['SBSE']}\n"
+    )
+    organon.file.write(f"{anarede.titu['ruler']}\n")
+    loaddata = ""
+    gendata = ""
+    shuntdata = ""
+    organon.file.write(
+        f"(BUS_ID), '  BUS_NAME  ', (VBASEKV), TP, S, (GSHT_MW), (BSHMVAR), ARE, ZON, (MODV_PU), (ANGV_DEG), (VMXN_PU), (VMNN_PU), (VMXE_PU), (VMNE_PU), OWN SUB ARG\n"
+    )
+    for idx, value in anarede.dbarDF.iterrows():
+        tipo = 0 if value.tipo == 0 else 2 if value.tipo == 1 else 3
+        dgbt = (
+            anarede.dgbtDF.loc[
+                anarede.dgbtDF.grupo == value.grupo_base_tensao, "tensao"
+            ].values[0]
+            if anarede.pwfblock["DGBT"]
+            else 500.0
+        )
+        shunt = 1 if value.shunt_barra != 0.0 else 0
+        if anarede.pwfblock["DGLT"]:
+            vmax = anarede.dgltDF.loc[
+                anarede.dgltDF.grupo_limite_tensao == value.grupo_limite_tensao,
+                "limite_maximo",
+            ].values[0]
+            vmin = anarede.dgltDF.loc[
+                anarede.dgltDF.grupo_limite_tensao == value.grupo_limite_tensao,
+                "limite_minimo",
+            ].values[0]
+            vmaxE = anarede.dgltDF.loc[
+                anarede.dgltDF.grupo_limite_tensao == value.grupo_limite_tensao,
+                "limite_maximo_E",
+            ].values[0]
+            vminE = anarede.dgltDF.loc[
+                anarede.dgltDF.grupo_limite_tensao == value.grupo_limite_tensao,
+                "limite_minimo_E",
+            ].values[0]
+        else:
+            vmax = 1.05
+            vmin = 0.95
+            vmaxE = 1.1
+            vminE = 0.9
+        bctrl = (
+            value.numero if value.barra_controlada == "0" else value.barra_controlada
+        )
+        if anarede.pwfblock["DGER"]:
+            genst = 1 if value.numero in anarede.dgerDF.numero.values else 0
+            fpercent = (
+                anarede.dgerDF.loc[
+                    anarede.dgerDF.numero == value.numero,
+                    "fator_participacao_controle_remoto",
+                ].values[0]
+                if genst
+                else 100.0
+            )
+            pmax = (
+                anarede.dgerDF.loc[
+                    anarede.dgerDF.numero == value.numero, "potencia_ativa_maxima"
+                ].values[0]
+                if genst
+                else 0.0
+            )
+            pmin = (
+                anarede.dgerDF.loc[
+                    anarede.dgerDF.numero == value.numero, "potencia_ativa_minima"
+                ].values[0]
+                if genst
+                else 0.0
+            )
+            grupo = 10
+        else:
+            genst = 0
+            fpercent = 100.0
+            pmax = 99999.0
+            pmin = 0.0
+            grupo = 10
+        organon.file.write(
+            f"{int(value.numero):>8},'{value.nome:>12s}',{dgbt:>10},{tipo:>3},{shunt:>2},{0.0:>10},{value.shunt_barra:>10.3f},{value.area:>4},{1:>4},{value.tensao:>10.5f},{value.angulo:>11.4f},{vmax:>10.5f},{vmin:10.5f},{vmaxE:10.5f},{vminE:10.5f},{0:>2} /\n"
+        )
+        loaddata += (
+            f"{int(value.numero):>8},' 1', 1,{value.demanda_ativa:>11.3f},{value.demanda_reativa:>12.3f},{0.0:>12},{0.0:>12},{0.0:>12},{1:>6},{0.1e8:>12E},{0.1e8:>12E},'Unnamed' /\n"
+            if value.demanda_ativa != 0.0 and value.demanda_reativa != 0.0
+            else ""
+        )
+        gendata += (
+            f"{int(value.numero):>8},' 1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao:>10.5f},{bctrl:>10},{anarede.cte['SBSE']:>11.3f},{0.0:>10},{0.0:>10},{1.0:>10},{genst:>2},{fpercent:>8.1f},{pmax:>12.3f},{pmin:>12.3f},{grupo:>5},{0:>10},{1:>6},{2:>11},{0.0:>13.3f}"
+            if tipo >= 2
+            else ""
+        )
+    organon.file.write(f" 0  / END OF BUS DATA, BEGIN LOAD DATA\n")
+    organon.file.write(
+        f"(BUS_ID) ,'ID',ST,    (PL_MW),   (QL_MVAR),    (IPL_MW),  (IQL_MVAR),    (ZPL_MW),  (ZQL_MVAR), (OWN), (R0), (X0), (Name)\n"
+    )
+    organon.file.write(f"0  / END OF LOAD DATA, BEGIN GENERATOR DATA\n")
+    organon.file.write(
+        f"(BUS_ID) ,'ID',   (PG_MW),  (QG_MVAR), (QMX_MVAR), (QMN_MVAR), (VSPECPU),  (BCO_ID), (BASE_MVA), (RTRF_PU), (XTRF_PU),  (TAP_PU),ST,   (FP%),   (PMAX_MW),  (PMIN_MW),(GRP), (BLOCKED), OWNER, CONNECTION, R1, X1, R2, X2, R0, X0, RGRD, XGRD, XQ, SF, MAXANG, TYPE, NAME, NMAX, NON, COMP. BUS\n"
+    )
+    organon.file.write(f"0  / END OF GENERATOR DATA, BEGIN SHUNT DATA\n")
+    organon.file.write(
+        f"! BUS_ID, TC, VMAX_PU, VMIN_PU, BCO_ID, B0_MVAR, ST, ST1, N1, B1_Mvar, XZ1_PU, ST2, N2, B2_Mvar, XZ2_PU, ...\n"
+    )
+
+    transformerdata = ""
+    capacitordata = ""
+    mutualimpedancedata = ""
+    organon.file.write(
+        f"0 / END OF SWITCHED SHUNT DATA, BEGIN TRANSMISSION LINE DATA\n"
+    )
+    organon.file.write(
+        f"! BFR_ID, BTO_ID,'CI', RL_PU , XL_PU, B_MVAR, L1_MVA, L2_MVA, L3_MVA, F, T, LEN_KM, ARE, OWN, R0_PU, X0_PU, BSH0_PU, NAME, BCSHTF_ID, CSHTF_ST, BCSHTT_ID, CSHTT_ST, SHTF1_ST, GSHTF1_PU, BSHTF1_PU, SHTT1_ST, GSHTT1_PU, BSHTT1_PU, SHTF2_ST, GSHTF2_PU, BSHTF2_PU, SHTT2_ST, GSHTT2_PU, BSHTT2_PU, SHTF3_ST, GSHTF3_PU, BSHTF3_PU, SHTT3_ST, GSHTT3_PU, BSHTT3_PU\n"
+    )
+    organon.file.write(f"0  / END OF TRANSMISSION LINE DATA, BEGIN TRANSFORMER DATA\n")
+    organon.file.write(f"0  / END OF TRANSFORMER DATA, BEGIN SERIES CAPACITOR DATA\n")
+    organon.file.write(
+        f"! BFROM_ID, BTO_ID, 'CRC', R_PU, X_PU, RATEA_MVA, RATEB_MVA, RATEC_MVA, SHTF_ST, GSHTF, BSHTF, SHTT_ST, GSHTT, BSHTT, BRKERF_ST, BRKERT_ST, OWNER, NAME\n"
+    )
+
+    dclinkdata = ""
+    organon.file.write(f"0  / END OF SERIES CAPACITOR DATA, BEGIN DCLINK DATA\n")
+    organon.file.write(
+        f"! BIP, ARE, ZON, TC, RL_OHM, VALCONT, VSPEC_KV, VCCMIN_KV, DELTI_A, STATUS, VNOM_KV, PNOM_MW, NAME\n"
+    )
+    organon.file.write(
+        f"! RET_ID, NC, ALFA, ALFMN, RTRFC_PU, XTRFC_PU, BASE_KV, TRR, TAPC_PU, TMXC_PU, TMNC_PU, TSTC_PU, XCCC_OHM\n"
+    )
+    organon.file.write(
+        f"! INV_ID, NC, GAMA, GAMMN, ITRFC_PU, XTRFC_PU, BASE_KV, TRI, TAPC_PU, TMXC_PU, TMNC_PU, TSTC_PU, XCCC_OHM\n"
+    )
+    organon.file.write(f"0  / END OF DCLINK DATA, BEGIN VSC DATA\n")  # nada v
+    organon.file.write(f"(NUM) (NAME) (STATUS) (TYPE)\n")
+    organon.file.write(
+        f"(CONV_NUM), (BUS), (PSTATUS), (NSTATUS), (PTYPE), (PSET1), (PSET2), (QTYPE), (QSET), (A), (B), (C), (SMAX), (IMAX), (QMAX), (QMIN), (VMAX), (VMIN), (RC), (XC), (BF), (RT), (XT), (VBASE), (LPWF), (GND), (NS), (TYPE)\n"
+    )
+    organon.file.write(f"(FROM_NODE), (TO_NODE), (STATUS), (PRDC) (NRDC) (GRDC)\n")
+
+    areadata = ""
+    organon.file.write(f"0  / END OF VSC DATA, BEGIN AREA DATA\n")
+    organon.file.write(f"(#AR), (ASW_ID),  (INT_MW),'(          AREA_NAME         )'\n")
+    organon.file.write(f"0  / END OF AREA DATA, BEGIN OF ZONE DATA\n")  # nada v
+    organon.file.write(f"! ZONE ID, ZONE NAME\n")
+    organon.file.write(f"0 / END OF ZONE DATA, BEGIN OWNER DATA\n")  # nada v
+    organon.file.write(f"! OWNER ID, OWNER NAME\n")
+    organon.file.write(f"0 / END OF OWNER DATA, BEGIN OF SUBSTATION DATA\n")
+    organon.file.write(f"! SUBSTATION ID, SUB NAME, LATITUDE, LONGITUDE\n")
+    organon.file.write(
+        f" 0  / END OF SUBSTATION DATA, BEGIN OF TRANSFORMER IMPEDANCE CORRECTION DATA\n"
+    )  # nada v
+    organon.file.write(f"! TABLE ID, TAP1, CORR1, TAP2, CORR2, TAP3, CORR3, ...\n")
+    organon.file.write(
+        f" 0 / END OF IMPEDANCE CORRECTION DATA, BEGIN OF LINE MUTUAL IMPEDANCE DATA\n"
+    )
+    organon.file.write(
+        f"! BFR1, BTO1, CRC1, INI1(%), FIN1(%), BFR2, BTO2, CRC2, INI2(%), FIN2(%), R_PU, X_PU\n"
+    )
+    organon.file.write(
+        f" 0 / END OF LINE MUTUAL IMPEDANCE DATA, BEGIN OF INDUCTION MOTOR DATA\n"
+    )  # nada v
+    organon.file.write(
+        f"! BUS,  ID,  STATUS, COUNT  MVA,  PE,  QE,  RS, XS, XM, R1, X1, R0, X0, OWNER, TYPE NAME\n"
+    )
+    organon.file.write(
+        f"0  / END OF INDUCTION MOTOR DATA, BEGIN OF BREAKER CONFIGURATION DATA\n"
+    )  # nada v
+    organon.file.write(f"! BUS No.,  Node 1, Node 2, ...\n")
+    organon.file.write(
+        f"0  / END OF BREAKER CONFIGURATION DATA, BEGIN OF FACTS DATA\n"
+    )  # nada v
+    organon.file.write(
+        f"! NAME, SEND-BUS, TERMINAL-BUS, CRC, TYPE, PREF(MW), QREF(MVAR), VSET(PU), ISHTMAX(MVA), PTRXMAX(MW), VTMIN(PU), VTMAX(PU), VCMAX(PU), VCMIN(PU) ICMAX(MVA), ICEMR(MVA), ICMIN(MVA), XC(PU), DROOP, CUROVR, IINI, IINC, IOFFI, IOFFC, STATUS, OWNER\n"
+    )
+    organon.file.write(f"0  / END OF FACTS DATA")
+    organon.file.write(f"")
+    organon.file.write(f"")
+    organon.file.write(f"")
 
 
 def orwudc(
@@ -19,7 +239,9 @@ def orwudc(
     """escrita de controladores definidos pelo usuário no formato ORGANON (.cdu -> .udc)
 
     Args
+        anarede:
         anatem:
+        organon:
     """
     ## Inicialização
     anatemfiles = list()
@@ -787,14 +1009,15 @@ def orwdyn(
     anarede,
     anatem,
     organon,
-    anatemfiles,
     organonfiles,
 ):
     """escrita de dados de máquina síncrona no formato ORGANON (.stb -> .dyn)
 
     Args:
         anatem:
+        anatem:
         organon:
+        organonfiles:
     """
     ## Inicialização
     # Arquivo
@@ -1348,7 +1571,7 @@ def prwraw(
     rawfile = realpath(pssepath + anarede.system[:-4] + ".raw")
     psse.file = open(rawfile, "w", encoding="latin-1")
     psse.file.write(
-        f"{0:>6d},{anarede.cte['BASE']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n"
+        f"{0:>6d},{anarede.cte['SBSE']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n"
     )
     (
         psse.file.write(f" {anarede.titu['ruler'].strip():>60}")
@@ -1392,7 +1615,7 @@ def prwraw(
             else ""
         )
         generatorsdata += (
-            f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['BASE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
+            f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['SBSE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
             if code != 1
             else ""
         )
@@ -1438,7 +1661,7 @@ def prwraw(
             else ""
         )
         transformersdata += (
-            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{1:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['BASE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
+            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{1:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['SBSE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
             if value.estado and value.tap.real != 0
             else ""
         )

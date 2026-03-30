@@ -10,7 +10,7 @@ from copy import deepcopy
 from numpy import array, concatenate, vstack, zeros
 from numpy.linalg import LinAlgError, lstsq, norm
 
-from ctrl import controlsol
+from ctrl import ctrlsol
 from increment import increment
 from matrices import matrices
 from residue import residue
@@ -45,7 +45,7 @@ def poc(
     )
 
     # Controles
-    controlsol(
+    ctrlsol(
         anarede,
     )
 
@@ -137,8 +137,8 @@ def expansion(
     anarede.dtf = vstack(
         (anarede.solution["demanda_ativa"], anarede.solution["demanda_reativa"])
     )
-    anarede.dtf = anarede.dtf.reshape((2 * anarede.nbus, 1)) / anarede.cte["BASE"]
-    anarede.dtf = concatenate((anarede.dtf, zeros((anarede.controldim, 1))), axis=0)
+    anarede.dtf = anarede.dtf.reshape((2 * anarede.nbus, 1)) / anarede.cte["SBSE"]
+    anarede.dtf = concatenate((anarede.dtf, zeros((anarede.ctrldim, 1))), axis=0)
 
     # Reducao Total
     anarede.dtf = anarede.dtf[anarede.mask]

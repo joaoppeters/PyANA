@@ -10,13 +10,13 @@ from copy import deepcopy
 from numpy import absolute, zeros
 from numpy.linalg import det, eig, inv
 
-from ctrl import controlpop
+from ctrl import ctrlpop
 
 
 def eigensens(
     case,
     powerflow,
-    stage: str = None,
+    stage: str = "",
 ):
     """análise de autovalores e autovetores
 
@@ -36,22 +36,22 @@ def eigensens(
     pv = deepcopy(
         jacobian[: (anarede.Tval), :][
             :,
-            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.ctrldim),
         ]
     )
     qt = deepcopy(
         jacobian[
-            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.ctrldim),
             :,
         ][:, : (anarede.Tval)]
     )
     qv = deepcopy(
         jacobian[
-            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.ctrldim),
             :,
         ][
             :,
-            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.controldim),
+            (anarede.Tval) : (anarede.Tval + anarede.Vval + anarede.ctrldim),
         ]
     )
 

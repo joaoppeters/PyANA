@@ -49,7 +49,7 @@ def lineflow(
 
         # Potência reativa k -> m
         anarede.solution["reactive_flow_F2"][idx] = -(
-            (value["susceptancia"] / (2 * anarede.cte["BASE"])) + yline.imag
+            (value["susceptancia"] / (2 * anarede.cte["SBSE"])) + yline.imag
         ) * (anarede.solution["voltage"][k] ** 2) + anarede.solution["voltage"][
             k
         ] * anarede.solution[
@@ -75,7 +75,7 @@ def lineflow(
 
         # Potência reativa m -> k
         anarede.solution["reactive_flow_2F"][idx] = -(
-            (value["susceptancia"] / (2 * anarede.cte["BASE"])) + yline.imag
+            (value["susceptancia"] / (2 * anarede.cte["SBSE"])) + yline.imag
         ) * (anarede.solution["voltage"][m] ** 2) + anarede.solution["voltage"][
             k
         ] * anarede.solution[
@@ -90,15 +90,15 @@ def lineflow(
         )
 
     # Active Flow
-    anarede.solution["active_flow_F2"] *= anarede.cte["BASE"]
-    anarede.solution["active_flow_2F"] *= anarede.cte["BASE"]
+    anarede.solution["active_flow_F2"] *= anarede.cte["SBSE"]
+    anarede.solution["active_flow_2F"] *= anarede.cte["SBSE"]
     anarede.solution["active_flow_loss"] = deepcopy(
         anarede.solution["active_flow_F2"] + anarede.solution["active_flow_2F"]
     )
 
     # Reactive Flow
-    anarede.solution["reactive_flow_F2"] *= anarede.cte["BASE"]
-    anarede.solution["reactive_flow_2F"] *= anarede.cte["BASE"]
+    anarede.solution["reactive_flow_F2"] *= anarede.cte["SBSE"]
+    anarede.solution["reactive_flow_2F"] *= anarede.cte["SBSE"]
     anarede.solution["reactive_flow_loss"] = deepcopy(
         anarede.solution["reactive_flow_F2"] + anarede.solution["reactive_flow_2F"]
     )

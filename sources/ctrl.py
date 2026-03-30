@@ -17,7 +17,7 @@ from ctrlqlimn import *
 from ctrlsvcs import *
 
 
-def controlsol(
+def ctrlsol(
     anarede,
 ):
     """altera variável de armazenamento de solução do fluxo de potência em função do controle ativo
@@ -28,85 +28,83 @@ def controlsol(
     ## Inicialização
     # Variável
     if not hasattr(anarede, "ctrlcount"):
-        anarede.controlcount = 0
-        anarede.totaldevicescontrol = 0
-        anarede.controlorder = dict()
+        anarede.ctrlcount = 0
+        anarede.totaldevicesctrl = 0
+        anarede.ctrlorder = dict()
 
-    # Loop
-    for value in anarede.control:
-        # controle remoto de tensão
-        if value == "CREM":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "CREM"
-            pass
-        # controle secundário de tensão
-        elif value == "CST":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "CST"
-            pass
-        # controle de tap variável de transformador
-        elif value == "CTAP":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "CTAP"
-            pass
-        # controle de ângulo de transformador defasador
-        elif value == "CTAPd":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "CTAPd"
-            pass
-        # controle de regulação primária de frequência
-        elif value == "FREQ":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "FREQ"
-            freqsol(
-                anarede,
-            )
-        # controle de limite de geração de potência reativa
-        elif value == "QLIM":
-            anarede.controlcount += 1
-            anarede.totaldevicescontrol += anarede.nger
-            anarede.controlorder[anarede.controlcount] = "QLIM"
-            qlimsol(
-                anarede,
-            )
-        # controle suave simbolico de limite de geração de potência reativa
-        elif value == "QLIMs":
-            anarede.controlcount += 1
-            anarede.totaldevicescontrol += anarede.nger
-            anarede.controlorder[anarede.controlcount] = "QLIMs"
-            qlimssol(
-                anarede,
-            )
-        # controle suave numerico de limite de geração de potência reativa
-        elif value == "QLIMn":
-            anarede.controlcount += 1
-            anarede.totaldevicescontrol += anarede.nger
-            anarede.controlorder[anarede.controlcount] = "QLIMn"
-            qlimnsol(
-                anarede,
-            )
-        # controle de compensadores estáticos de potência reativa
-        elif value == "SVCs":
-            anarede.controlcount += 1
-            anarede.totaldevicescontrol += anarede.ncer
-            anarede.controlorder[anarede.controlcount] = "SVCs"
-            svcssol(
-                anarede,
-            )
-        # controle de magnitude de tensão de barramentos
-        elif value == "VCTRL":
-            anarede.controlcount += 1
-            anarede.controlorder[anarede.controlcount] = "VCTRL"
-            pass
+    # controle remoto de tensão
+    if anarede.ctrl["CREM"]:
+        anarede.ctrlcount += 1
+        anarede.ctrlorder[anarede.ctrlcount] = "CREM"
+        pass
+    # # controle secundário de tensão
+    # if anarede.ctrl['CST']:
+    #     anarede.ctrlcount += 1
+    #     anarede.ctrlorder[anarede.ctrlcount] = "CST"
+    #     pass
+    # controle de tap variável de transformador
+    if anarede.ctrl["CTAP"]:
+        anarede.ctrlcount += 1
+        anarede.ctrlorder[anarede.ctrlcount] = "CTAP"
+        pass
+    # controle de ângulo de transformador defasador
+    if anarede.ctrl["CPHS"]:
+        anarede.ctrlcount += 1
+        anarede.ctrlorder[anarede.ctrlcount] = "CPHS"
+        pass
+    # controle de regulação primária de frequência
+    if anarede.ctrl["FREQ"]:
+        anarede.ctrlcount += 1
+        anarede.ctrlorder[anarede.ctrlcount] = "FREQ"
+        freqsol(
+            anarede,
+        )
+    # controle de limite de geração de potência reativa
+    if anarede.ctrl["QLIM"]:
+        anarede.ctrlcount += 1
+        anarede.totaldevicesctrl += anarede.nger
+        anarede.ctrlorder[anarede.ctrlcount] = "QLIM"
+        qlimsol(
+            anarede,
+        )
+    # controle suave simbolico de limite de geração de potência reativa
+    # if anarede.ctrl['QLIMs']:
+    #     anarede.ctrlcount += 1
+    #     anarede.totaldevicesctrl += anarede.nger
+    #     anarede.ctrlorder[anarede.ctrlcount] = "QLIMs"
+    #     qlimssol(
+    #         anarede,
+    #     )
+    # # controle suave numerico de limite de geração de potência reativa
+    # if anarede.ctrl['QLIMn']:
+    #     anarede.ctrlcount += 1
+    #     anarede.totaldevicesctrl += anarede.nger
+    #     anarede.ctrlorder[anarede.ctrlcount] = "QLIMn"
+    #     qlimnsol(
+    #         anarede,
+    #     )
+    # # controle de compensadores estáticos de potência reativa
+    # if anarede.ctrl['SVCs']:
+    #     anarede.ctrlcount += 1
+    #     anarede.totaldevicesctrl += anarede.ncer
+    #     anarede.ctrlorder[anarede.ctrlcount] = "SVCs"
+    #     svcssol(
+    #         anarede,
+    #     )
+    # controle de magnitude de tensão de barramentos
+    if anarede.ctrl["VLIM"]:
+        anarede.ctrlcount += 1
+        anarede.ctrlorder[anarede.ctrlcount] = "VLIM"
+        pass
 
     anarede.Tval = sum(anarede.maskP)
     anarede.Vval = sum(anarede.maskQ)
 
-    if not anarede.controlcount:
-        anarede.controldim = 0
+    if not anarede.ctrlcount:
+        anarede.ctrldim = 0
 
 
-def controlsch(
+def ctrlsch(
     anarede,
 ):
     """adiciona variáveis especificadas de controles ativos
@@ -116,7 +114,7 @@ def controlsch(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -159,7 +157,7 @@ def controlsch(
             pass
 
 
-def controlres(
+def ctrlres(
     anarede,
     case: int = 0,
 ):
@@ -175,7 +173,7 @@ def controlres(
     anarede.deltaY = array([])
 
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -224,7 +222,7 @@ def controlres(
         anarede.deltaY = array([])
 
 
-def controljac(
+def ctrljac(
     anarede,
 ):
     """submatrizes referentes aos controles ativos
@@ -237,9 +235,9 @@ def controljac(
     anarede.truedim = deepcopy(anarede.jacobian.shape[0])
 
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # Dimensão
-        anarede.controldim = anarede.jacobian.shape[0] - anarede.truedim
+        anarede.ctrldim = anarede.jacobian.shape[0] - anarede.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -283,7 +281,7 @@ def controljac(
             pass
 
     # Dimensão
-    anarede.controldim = anarede.jacobian.shape[0] - anarede.truedim
+    anarede.ctrldim = anarede.jacobian.shape[0] - anarede.truedim
 
     # Atualização da Máscara da Jacobiana
     if (anarede.maskctrlcount == 0) and (anarede.solution["method"] != "EXPC"):
@@ -293,7 +291,7 @@ def controljac(
         anarede.maskctrlcount += 1
 
 
-def controlupdt(
+def ctrlupdt(
     anarede,
 ):
     """atualização das variáveis de estado adicionais por controle ativo
@@ -303,7 +301,7 @@ def controlupdt(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -346,7 +344,7 @@ def controlupdt(
             pass
 
 
-def controlcorrsol(
+def ctrlcorrsol(
     anarede,
     case,
 ):
@@ -358,7 +356,7 @@ def controlcorrsol(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -406,7 +404,7 @@ def controlcorrsol(
             pass
 
 
-def controlheuristics(
+def ctrlheuristics(
     anarede,
 ):
     """aplicação de heurísticas das variáveis de controle para a etapa de correção do fluxo de potência continuado
@@ -416,18 +414,16 @@ def controlheuristics(
     """
     ## Inicialização
     # Variável
-    anarede.controlheur = False
+    anarede.ctrlheur = False
     if not hasattr(anarede, "bifurcation"):
         anarede.bifurcation = False
 
     # Loop
-    for value in anarede.control:
-        if (anarede.controlheur) or (
-            (anarede.bifurcation) and (not anarede.cte["FULL"])
-        ):
+    for value in anarede.ctrl:
+        if (anarede.ctrlheur) or ((anarede.bifurcation) and (not anarede.cte["FULL"])):
             break
 
-        elif (not anarede.controlheur) and (not anarede.solution["pmc"]):
+        elif (not anarede.ctrlheur) and (not anarede.solution["pmc"]):
             # controle remoto de tensão
             if value == "CREM":
                 pass
@@ -468,7 +464,7 @@ def controlheuristics(
                 pass
 
 
-def controlpop(
+def ctrlpop(
     anarede,
     pop: int = 1,
 ):
@@ -480,7 +476,7 @@ def controlpop(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -513,7 +509,7 @@ def controlpop(
             pass
 
 
-def controlcpf(
+def ctrlcpf(
     anarede,
 ):
     """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
@@ -523,7 +519,7 @@ def controlcpf(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -558,7 +554,7 @@ def controlcpf(
             pass
 
 
-def controlsolcpf(
+def ctrlsolcpf(
     anarede,
     case,
 ):
@@ -570,7 +566,7 @@ def controlsolcpf(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -609,7 +605,7 @@ def controlsolcpf(
             pass
 
 
-def controldelta(
+def ctrldelta(
     anarede,
 ):
     """checagem da variação dos resíduos durante método iterativo de newton-raphson
@@ -623,7 +619,7 @@ def controldelta(
     ctrl = 0
 
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # controle remoto de tensão
         if value == "CREM":
             pass
@@ -681,7 +677,7 @@ def controldelta(
     return any(boollist)
 
 
-def controlhess(
+def ctrlhess(
     anarede,
 ):
     """submatrizes referentes aos controles ativos
@@ -691,9 +687,9 @@ def controlhess(
     """
     ## Inicialização
     # Loop
-    for value in anarede.control:
+    for value in anarede.ctrl:
         # Dimensão
-        anarede.controldim = anarede.hessian.shape[0] - anarede.truedim
+        anarede.ctrldim = anarede.hessian.shape[0] - anarede.truedim
 
         # controle remoto de tensão
         if value == "CREM":
@@ -737,4 +733,4 @@ def controlhess(
             pass
 
     # Dimensão
-    anarede.controldim = anarede.hessian.shape[0] - anarede.truedim
+    anarede.ctrldim = anarede.hessian.shape[0] - anarede.truedim

@@ -101,11 +101,11 @@ def alphavar(
         anarede:
     """
     ## Inicialização
-    anarede.alphaxc = (anarede.cte["BASE"]) / (
+    anarede.alphaxc = (anarede.cte["SBSE"]) / (
         anarede.dcerDF["potencia_reativa_maxima"][0]
     )
     anarede.alphaxl = (
-        (anarede.cte["BASE"]) / (anarede.dcerDF["potencia_reativa_maxima"][0])
+        (anarede.cte["SBSE"]) / (anarede.dcerDF["potencia_reativa_maxima"][0])
     ) / (
         1
         - (anarede.dcerDF["potencia_reativa_minima"][0])
@@ -191,7 +191,7 @@ def svcres(
                 case,
             )
             anarede.deltaQ[idxcer] = (
-                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["BASE"]
+                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["SBSE"]
             )
 
         elif value["controle"] == "I":
@@ -205,7 +205,7 @@ def svcres(
             anarede.deltaQ[idxcer] = (
                 deepcopy(anarede.solution["svc_generation"][ncer])
                 * anarede.solution["voltage"][idxcer]
-                / anarede.cte["BASE"]
+                / anarede.cte["SBSE"]
             )
 
         elif value["controle"] == "P":
@@ -217,11 +217,11 @@ def svcres(
                 case,
             )
             anarede.deltaQ[idxcer] = (
-                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["BASE"]
+                deepcopy(anarede.solution["svc_generation"][ncer]) / anarede.cte["SBSE"]
             )
 
         anarede.deltaQ[idxcer] -= (
-            anarede.dbarDF["demanda_reativa"][idxcer] / anarede.cte["BASE"]
+            anarede.dbarDF["demanda_reativa"][idxcer] / anarede.cte["SBSE"]
         )
         # anarede.deltaQ[idxcer] -= qcalc(
         #     anarede,
@@ -302,7 +302,7 @@ def svcsubjac(
         elif value["controle"] == "I":
             anarede.jacobian[anarede.nbus + idxcer, anarede.nbus + idxcer] -= (
                 anarede.solution["svc_generation"][ncer]
-            ) / anarede.cte["BASE"]
+            ) / anarede.cte["SBSE"]
             qx[idxcer, ncer] = -anarede.solution["voltage"][idxcer]
 
         elif value["controle"] == "P":
@@ -313,9 +313,9 @@ def svcsubjac(
 
     ## Montagem Jacobiana
     # Condição
-    if anarede.controldim != 0:
-        extrarow = zeros([anarede.nger, anarede.controldim])
-        extracol = zeros([anarede.controldim, anarede.nger])
+    if anarede.ctrldim != 0:
+        extrarow = zeros([anarede.nger, anarede.ctrldim])
+        extracol = zeros([anarede.ctrldim, anarede.nger])
 
         anarede.jacobian = concatenate(
             (
@@ -347,7 +347,7 @@ def svcsubjac(
             axis=1,
         )
 
-    elif anarede.controldim == 0:
+    elif anarede.ctrldim == 0:
         anarede.jacobian = concatenate(
             (
                 anarede.jacobian,
@@ -396,12 +396,12 @@ def svcupdt(
 
         elif value["controle"] == "I":
             anarede.solution["svc_generation"][ncer] += (
-                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["BASE"]
+                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["SBSE"]
             )
 
         elif value["controle"] == "P":
             anarede.solution["svc_generation"][ncer] += (
-                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["BASE"]
+                anarede.statevar[(anarede.dimpresvc + ncer)] * anarede.cte["SBSE"]
             )
 
         # Incrementa contador
@@ -427,14 +427,14 @@ def svcsch(
             anarede.dcerDF["controle"][0] == "P"
         ):
             anarede.qsch[idxcer] += (
-                anarede.solution["svc_generation"][ncer] / anarede.cte["BASE"]
+                anarede.solution["svc_generation"][ncer] / anarede.cte["SBSE"]
             )
 
         elif anarede.dcerDF["controle"][0] == "I":
             anarede.qsch[idxcer] += (
                 anarede.solution["svc_generation"][ncer]
                 * anarede.solution["voltage"][idxcer]
-            ) / anarede.cte["BASE"]
+            ) / anarede.cte["SBSE"]
 
         # Incrementa contador
         ncer += 1

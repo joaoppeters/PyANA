@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from numpy import cos, sin, zeros
-from ctrl import controlsch
+from ctrl import ctrlsch
 
 
 def scheduled(
@@ -44,11 +44,11 @@ def scheduled(
         anarede.qsch += anarede.dbarDF["potencia_reativa"].to_numpy()
         anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
 
-    anarede.psch /= anarede.cte["BASE"]
-    anarede.qsch /= anarede.cte["BASE"]
+    anarede.psch /= anarede.cte["SBSE"]
+    anarede.qsch /= anarede.cte["SBSE"]
 
     # Variáveis especificadas de controle ativos
-    if anarede.controlcount > 0 and anarede.solution["method"] != "LFDC":
-        controlsch(
+    if anarede.ctrlcount > 0 and anarede.solution["method"] != "LFDC":
+        ctrlsch(
             anarede,
         )

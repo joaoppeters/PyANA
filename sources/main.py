@@ -9,12 +9,15 @@
 from powerflow import PowerFlow
 
 system = "SISTEMA_REDUZIDO_NE_232B_B1.stb"
+system = "1Q2026.PWF"
+system = "IEEE14.PWF"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW
 # method =  "EXPC"  # POINT OF COLLAPSE
 # method = "EXSI"  # DYNAMIC SIMULATION
-method = "ORGAt"  # ORGANON DATA TRANSCRIPTION
+# method = "EXCT"  # CONTINGENCY ANALYSIS
+# method = "ORGAt"  # ORGANON DATA TRANSCRIPTION
 # method = "PSSEt"  # PSSE DATA TRANSCRIPTION
 
 PowerFlow(

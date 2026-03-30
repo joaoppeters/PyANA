@@ -13,7 +13,6 @@ from calc import pcalc, qcalc
 
 
 def freqsol(
-    self,
     anarede,
 ):
     """adiciona variáveis narea solução para caso controle de regulação primária de frequência esteja ativado
@@ -26,7 +25,7 @@ def freqsol(
     anarede.nare = 1
 
     # Condição
-    if (anarede.control["FREQ"]) and (anarede.pwfblock["DGER"]):
+    if (anarede.ctrl["FREQ"]) and (anarede.pwfblock["DGER"]):
         # Variáveis
         anarede.solution["active_generation"] = zeros(anarede.nger)
         anarede.solution["qlim_reactive_generation"] = zeros(anarede.nger)
@@ -38,10 +37,10 @@ def freqsol(
             # Barra tipo VT ou PV
             if value["tipo"] != 0:
                 anarede.solution["active_generation"][nger] = (
-                    value["potencia_ativa"] / anarede.cte["BASE"]
+                    value["potencia_ativa"] / anarede.cte["SBSE"]
                 )
                 anarede.solution["qlim_reactive_generation"][nger] = (
-                    value["potencia_reativa"] / anarede.cte["BASE"]
+                    value["potencia_reativa"] / anarede.cte["SBSE"]
                 )
                 nger += 1
         # Frequências máxima e mínima por gerador
@@ -51,7 +50,7 @@ def freqsol(
 
     # DGER não ativado
     else:
-        anarede.control["FREQ"] = False
+        anarede.ctrl["FREQ"] = False
         print(
             f"\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{anarede.system}`!\033[0m"
         )
@@ -86,7 +85,7 @@ def freqgerlim(
                 anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_minima"]
             )
-            / anarede.cte["BASE"]
+            / anarede.cte["SBSE"]
         )
         # Frequência mínima gerador `idx`
         anarede.freqger["min"][idx] = (
@@ -97,7 +96,7 @@ def freqgerlim(
                 anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_maxima"]
             )
-            / anarede.cte["BASE"]
+            / anarede.cte["SBSE"]
         )
 
 
@@ -141,8 +140,8 @@ def freqsch(
             nger += 1
 
     # Tratamento
-    anarede.pqsch["potencia_ativa_gerada_especificada"] /= anarede.cte["BASE"]
-    anarede.pqsch["potencia_reativa_gerada_especificada"] /= anarede.cte["BASE"]
+    anarede.pqsch["potencia_ativa_gerada_especificada"] /= anarede.cte["SBSE"]
+    anarede.pqsch["potencia_reativa_gerada_especificada"] /= anarede.cte["SBSE"]
 
 
 def freqres(
@@ -167,7 +166,7 @@ def freqres(
         if value["tipo"] != 0:
             # Cálculo do resíduo DeltaP
             anarede.deltaP[idx] = anarede.solution["active_generation"][nger]
-            anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["BASE"]
+            anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["SBSE"]
             anarede.deltaP[idx] -= pcalc(
                 anarede,
                 idx,
@@ -175,7 +174,7 @@ def freqres(
 
             # Cálculo do resíduo DeltaQ
             anarede.deltaQ[idx] = anarede.solution["qlim_reactive_generation"][nger]
-            anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["BASE"]
+            anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["SBSE"]
             anarede.deltaQ[idx] -= qcalc(
                 anarede,
                 idx,
@@ -294,14 +293,14 @@ def freqsubjac(
 
     ## Montagem Jacobiana
     # Condição
-    if anarede.controldim != 0:
-        anarede.extrarowp = zeros([anarede.nger, anarede.controldim])
-        anarede.extrarowq = zeros([anarede.nger, anarede.controldim])
-        anarede.extrarowy = zeros([anarede.nger, anarede.controldim])
+    if anarede.ctrldim != 0:
+        anarede.extrarowp = zeros([anarede.nger, anarede.ctrldim])
+        anarede.extrarowq = zeros([anarede.nger, anarede.ctrldim])
+        anarede.extrarowy = zeros([anarede.nger, anarede.ctrldim])
 
-        anarede.extracolp = zeros([anarede.controldim, anarede.nger])
-        anarede.extracolq = zeros([anarede.controldim, anarede.nger])
-        anarede.extracoly = zeros([anarede.controldim, anarede.nger])
+        anarede.extracolp = zeros([anarede.ctrldim, anarede.nger])
+        anarede.extracolq = zeros([anarede.ctrldim, anarede.nger])
+        anarede.extracoly = zeros([anarede.ctrldim, anarede.nger])
 
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
         anarede.jacobian = concatenate(
@@ -397,7 +396,7 @@ def freqsubjac(
             axis=1,
         )
 
-    elif anarede.controldim == 0:
+    elif anarede.ctrldim == 0:
         # H-N M-L + ypt-ypv + yqt-yqv + yxt-yxv
         anarede.jacobian = concatenate(
             (
@@ -495,12 +494,12 @@ def frequpdt(
     for idx, value in anarede.dgerDF.iterrows():
         if anarede.solution["freq"] >= anarede.freqger["max"][idx]:
             anarede.solution["active_generation"][idx] = (
-                value["potencia_ativa_minima"] / anarede.cte["BASE"]
+                value["potencia_ativa_minima"] / anarede.cte["SBSE"]
             )
             anarede.ypp[idx][idx] = inf
         elif anarede.solution["freq"] <= anarede.freqger["min"][idx]:
             anarede.solution["active_generation"][idx] = (
-                value["potencia_ativa_maxima"] / anarede.cte["BASE"]
+                value["potencia_ativa_maxima"] / anarede.cte["SBSE"]
             )
             anarede.ypp[idx][idx] = inf
         else:

@@ -703,7 +703,7 @@ def wdelo(
     file.write(format(delo.ruler.iloc[0]))
     for idx, value in delo.iterrows():
         file.write(
-            f"{value['numero']:>4} {value['operacao']:1} {value['tensao']:>5} {value['base']:>5} {value['nome']:>20} {value['modo_high']:1} {value['estado']:1}"
+            f"{value['numero']:>4} {value['operacao']:1} {value['tensao']:>5} {value['SBSE']:>5} {value['nome']:>20} {value['modo_high']:1} {value['estado']:1}"
         )
         file.write("\n")
     file.write("99999")

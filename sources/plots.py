@@ -38,7 +38,7 @@ def convergence(
     # )
 
     # # Condição
-    # if anarede.control:
+    # if anarede.ctrl:
     #     # Convergência de Equações de Controle Adicionais
     #     convY(
     #         anarede,
@@ -60,7 +60,7 @@ def convP(
     if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convP"] * anarede.cte["BASE"]),
+            (anarede.solution["convP"] * anarede.cte["SBSE"]),
             color="C0",
             linewidth=2,
             alpha=0.85,
@@ -68,7 +68,7 @@ def convP(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convP"] * anarede.cte["BASE"]),
+            (anarede.solution["convP"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -80,7 +80,7 @@ def convP(
     elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convP"] * anarede.cte["BASE"]),
+            (anarede.solution["convP"] * anarede.cte["SBSE"]),
             color="C0",
             linewidth=2,
             alpha=0.85,
@@ -88,7 +88,7 @@ def convP(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convP"] * anarede.cte["BASE"]),
+            (anarede.solution["convP"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -135,7 +135,7 @@ def convQ(
     if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convQ"] * anarede.cte["BASE"]),
+            (anarede.solution["convQ"] * anarede.cte["SBSE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
@@ -143,7 +143,7 @@ def convQ(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convQ"] * anarede.cte["BASE"]),
+            (anarede.solution["convQ"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -155,7 +155,7 @@ def convQ(
     elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convQ"] * anarede.cte["BASE"]),
+            (anarede.solution["convQ"] * anarede.cte["SBSE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
@@ -163,7 +163,7 @@ def convQ(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convQ"] * anarede.cte["BASE"]),
+            (anarede.solution["convQ"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -210,7 +210,7 @@ def convY(
     if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convY"] * anarede.cte["BASE"]),
+            (anarede.solution["convY"] * anarede.cte["SBSE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
@@ -218,7 +218,7 @@ def convY(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"] + 1),
-            (anarede.solution["convY"] * anarede.cte["BASE"]),
+            (anarede.solution["convY"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -230,7 +230,7 @@ def convY(
     elif anarede.solution["convergence"] == "SISTEMA DIVERGENTE":
         (line,) = ax.plot(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convY"] * anarede.cte["BASE"]),
+            (anarede.solution["convY"] * anarede.cte["SBSE"]),
             color="C1",
             linewidth=2,
             alpha=0.85,
@@ -238,7 +238,7 @@ def convY(
         )
         mark = ax.scatter(
             arange(0, anarede.solution["iter"]),
-            (anarede.solution["convY"] * anarede.cte["BASE"]),
+            (anarede.solution["convY"] * anarede.cte["SBSE"]),
             color=(1.0, 1.0, 1.0),
             marker="*",
             edgecolor=(0.0, 0.0, 0.0),
@@ -291,7 +291,7 @@ def statevar(
     # )
 
     # # Condição
-    # if anarede.control:
+    # if anarede.ctrl:
     #     # Resultado final de convergência das variáveis de estado adicionais
     #     stateY(
     #         anarede,

@@ -21,11 +21,11 @@ from numpy.linalg import lstsq, norm
 
 from convergence import convergence
 from ctrl import (
-    controlcorrsol,
-    controlupdt,
-    controlpop,
-    controldelta,
-    controlheuristics,
+    ctrlcorrsol,
+    ctrlupdt,
+    ctrlpop,
+    ctrldelta,
+    ctrlheuristics,
 )
 from eigen import eigensens
 from increment import increment
@@ -106,7 +106,7 @@ def prediction_correction(
     )
 
     # Smooth exicstorage
-    if "QLIMs" in anarede.control:
+    if "QLIMs" in anarede.ctrl:
         for _, v in anarede.qlimkeys.items():
             v.popitem()
         from smooth import qlimstorage
@@ -114,7 +114,7 @@ def prediction_correction(
         qlimstorage(
             anarede,
         )
-    if "SVCs" in anarede.control:
+    if "SVCs" in anarede.ctrl:
         for _, v in anarede.svckeys.items():
             v.popitem()
         from smooth import svcstorage
@@ -275,7 +275,7 @@ def correction(
     )
 
     # Adição de variáveis de controle na variável de armazenamento de solução
-    controlcorrsol(
+    ctrlcorrsol(
         anarede,
         case,
     )
@@ -306,7 +306,7 @@ def correction(
             anarede.deltaQ[anarede.maskQ],
         )
         > anarede.cte["TEPR"]
-        or controldelta(
+        or ctrldelta(
             anarede,
         )
     ):
@@ -438,7 +438,7 @@ def correction(
 
         # Reconfiguração do caso
         case -= 1
-        controlpop(
+        ctrlpop(
             anarede,
         )
 
@@ -465,7 +465,7 @@ def correction(
 
         # Reconfiguração do caso
         case -= 1
-        controlpop(
+        ctrlpop(
             anarede,
         )
 
@@ -568,11 +568,11 @@ def exicjacobian(
         (
             anarede.solution["demanda_ativa"] - anarede.solution["potencia_ativa"],
             anarede.solution["demanda_reativa"],
-            zeros(anarede.controldim + 1),
+            zeros(anarede.ctrldim + 1),
         ),
         axis=0,
     )
-    colarray = (colarray[anarede.mask] / anarede.cte["BASE"]).reshape(
+    colarray = (colarray[anarede.mask] / anarede.cte["SBSE"]).reshape(
         (sum(anarede.mask), 1)
     )
 
@@ -651,8 +651,8 @@ def update_statevar(
             anarede.solution["stepsch"] += anarede.statevar[-1]
 
     # Atualização das variáveis de estado adicionais para controles ativos
-    if anarede.controlcount > 0:
-        controlupdt(
+    if anarede.ctrlcount > 0:
+        ctrlupdt(
             anarede,
         )
 
@@ -813,7 +813,7 @@ def exicheuristics(
             # Reconfiguração do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 1
-            controlpop(
+            ctrlpop(
                 anarede,
             )
 
@@ -865,7 +865,7 @@ def exicheuristics(
             # Reconfiguração do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 2
-            controlpop(anarede, pop=2)
+            ctrlpop(anarede, pop=2)
 
             # Reconfiguração das variáveis de passo
             cpfkeys = {
@@ -915,7 +915,7 @@ def exicheuristics(
             # Reconfiguração do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 2
-            controlpop(anarede, pop=2)
+            ctrlpop(anarede, pop=2)
 
             # Reconfiguração das variáveis de passo
             cpfkeys = {
@@ -960,7 +960,7 @@ def exicheuristics(
             # Reconfiguração do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 1
-            controlpop(
+            ctrlpop(
                 anarede,
             )
 
@@ -1008,7 +1008,7 @@ def exicheuristics(
 
             # Reconfiguração de caso
             case -= 1
-            controlpop(
+            ctrlpop(
                 anarede,
             )
 
@@ -1044,7 +1044,7 @@ def exicheuristics(
                 # Reconfiguração do caso
                 self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
                 case -= 1
-                controlpop(
+                ctrlpop(
                     anarede,
                 )
 
@@ -1079,19 +1079,19 @@ def exicheuristics(
                 )
 
         # Condição de Heurísticas para controle
-        if anarede.controlcount > 0:
-            controlheuristics(
+        if anarede.ctrlcount > 0:
+            ctrlheuristics(
                 anarede,
             )
 
             # Condição de violação de limite máximo de geração de potência reativa
-            if (anarede.controlheur) and (not self.active_heuristic):
+            if (anarede.ctrlheur) and (not self.active_heuristic):
                 self.active_heuristic = True
 
                 # Reconfiguração do caso
                 self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
                 case -= 1
-                controlpop(
+                ctrlpop(
                     anarede,
                 )
 

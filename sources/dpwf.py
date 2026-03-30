@@ -7,7 +7,7 @@
 # ------------------------------------- #
 
 from copy import deepcopy
-from numpy import concatenate, exp, nan, ones, pi
+from numpy import concatenate, exp, nan, ones, pi, where
 from pandas import DataFrame as DF
 
 
@@ -251,14 +251,14 @@ def checkdanc(
             for idx, value in anarede.dbarDF.iterrows():
                 if value["area"] == area:
                     anarede.dbarDF.loc[idx, "demanda_ativa"] *= (
-                        1 + anarede.dancDF["fator_carga_ativa"][0] / anarede.cte["BASE"]
+                        1 + anarede.dancDF["fator_carga_ativa"][0] / anarede.cte["SBSE"]
                     )
                     anarede.dbarDF.loc[idx, "demanda_reativa"] *= (
                         1
-                        + anarede.dancDF["fator_carga_reativa"][0] / anarede.cte["BASE"]
+                        + anarede.dancDF["fator_carga_reativa"][0] / anarede.cte["SBSE"]
                     )
                     anarede.dbarDF.loc[idx, "shunt_barra"] *= (
-                        1 + anarede.dancDF["fator_shunt_barra"][0] / anarede.cte["BASE"]
+                        1 + anarede.dancDF["fator_shunt_barra"][0] / anarede.cte["SBSE"]
                     )
 
 
@@ -435,7 +435,7 @@ def dbar(
             "potencia_reativa": "float",
             "potencia_reativa_minima": "float",
             "potencia_reativa_maxima": "float",
-            "barra_controlada": "int",
+            "barra_controlada": "object",
             "demanda_ativa": "float",
             "demanda_reativa": "float",
             "shunt_barra": "float",
@@ -468,9 +468,10 @@ def dbar(
         # Barras geradoras: número & máscara
         anarede.npv = 0
         anarede.maskP = ones(anarede.nbus, dtype=bool)
-        anarede.maskLp = ones(anarede.nbus, dtype=bool)
         anarede.maskQ = ones(anarede.nbus, dtype=bool)
-        anarede.maskLq = ones(anarede.nbus, dtype=bool)
+        anarede.dbarDF.tensao = where(
+            anarede.dbarDF.tensao == 0, 1000.0, anarede.dbarDF.tensao
+        )
         for idx, value in anarede.dbarDF.iterrows():
             anarede.dbarDF.at[idx, "grupo_base_tensao"] = value[
                 "grupo_base_tensao"
@@ -478,7 +479,9 @@ def dbar(
             anarede.dbarDF.at[idx, "grupo_limite_tensao"] = value[
                 "grupo_limite_tensao"
             ].strip()
-            if (value["tipo"] == 2) or (value["tipo"] == 1):
+            if (value["tipo"] != 0) and (
+                (value["estado"] == "0") or (value["estado"] == "L")
+            ):
                 anarede.npv += 1
                 anarede.maskQ[idx] = False
 
@@ -497,12 +500,6 @@ def dbar(
                         "potencia_reativa_minima"
                     ]
 
-            if value["demanda_ativa"] == 0.0:
-                anarede.maskLp[idx] = False
-
-            if value["demanda_reativa"] == 0.0:
-                anarede.maskLq[idx] = False
-
             if value["grupo_base_tensao"] == "0":
                 anarede.dbarDF.at[idx, "grupo_base_tensao"] = " 0"
 
@@ -510,9 +507,10 @@ def dbar(
 
         # Número de barras PV
         anarede.nger = anarede.npv
+        anarede.npv = anarede.npv - 1
 
         # Número de barras PQ
-        anarede.npq = anarede.nbus - anarede.npv
+        anarede.npq = anarede.nbus - anarede.nger
 
         # Tensao Base
         anarede.dbarDF.loc[anarede.dbarDF["tensao_base"] == 0.0, "tensao_base"] = 1000.0
@@ -1628,7 +1626,7 @@ def delo(
     anarede.delo["numero"] = list()
     anarede.delo["operacao"] = list()
     anarede.delo["tensao"] = list()
-    anarede.delo["base"] = list()
+    anarede.delo["SBSE"] = list()
     anarede.delo["nome"] = list()
     anarede.delo["modo_high"] = list()
     anarede.delo["estado"] = list()
@@ -1640,7 +1638,7 @@ def delo(
             anarede.delo["numero"].append(anarede.lines[anarede.linecount][:4])
             anarede.delo["operacao"].append(anarede.lines[anarede.linecount][5])
             anarede.delo["tensao"].append(anarede.lines[anarede.linecount][7:12])
-            anarede.delo["base"].append(anarede.lines[anarede.linecount][13:18])
+            anarede.delo["SBSE"].append(anarede.lines[anarede.linecount][13:18])
             anarede.delo["nome"].append(anarede.lines[anarede.linecount][19:39])
             anarede.delo["modo_high"].append(anarede.lines[anarede.linecount][40])
             anarede.delo["estado"].append(anarede.lines[anarede.linecount][42])
@@ -1655,7 +1653,7 @@ def delo(
             "numero": "int",
             "operacao": "object",
             "tensao": "float",
-            "base": "float",
+            "SBSE": "float",
             "nome": "object",
             "modo_high": "object",
             "estado": "object",
@@ -1814,17 +1812,23 @@ def dger(
                 anarede.dbarDF,
                 on="numero",
             )
-            geradores["fator_participacao"] = (
-                geradores["potencia_ativa"] * 1e2 / geradores["potencia_ativa"].sum()
-            )
+
+            total_potencia = geradores["potencia_ativa"].sum()
+            if total_potencia != 0:
+                geradores["fator_participacao"] = (
+                    geradores["potencia_ativa"] * 100
+                ) / total_potencia
+            else:
+                geradores["fator_participacao"] = 0
 
             geradores.set_index("numero", inplace=True)
             anarede.dgerDF.set_index("numero", inplace=True)
 
-            anarede.dgerDF["fator_participacao"].update(geradores["fator_participacao"])
+            anarede.dgerDF.update(geradores[["fator_participacao"]])
+
             anarede.dgerDF.reset_index(inplace=True)
 
-        anarede.nger = anarede.dgerDF.shape[0]
+        # anarede.nger = anarede.dgerDF.shape[0]
 
 
 def dglt(
@@ -2275,6 +2279,9 @@ def dlin(
         ]
 
         anarede.dlinDF["numero_taps"] = anarede.dlinDF["numero_taps"].replace(0, 33)
+        anarede.dlinDF["tap"] = anarede.dlinDF["tap"].tolist() + 1 * (
+            ~anarede.dlinDF["transf"].values
+        )
         anarede.dlinDF["tapp"] = deepcopy(anarede.dlinDF["tap"])
         anarede.dlinDF["tap"] = anarede.dlinDF["tap"] * exp(
             1j * pi / 180 * anarede.dlinDF["tap_defasagem"]

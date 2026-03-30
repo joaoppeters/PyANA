@@ -23,7 +23,7 @@ def linear(
     """
     ## Inicialização
     # Variável para armazenamento de solução
-    anarede.controlcount = 0
+    anarede.ctrlcount = 0
     anarede.solution = {
         "method": "LFDC",
         "system": anarede.name,

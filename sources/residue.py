@@ -8,7 +8,7 @@
 
 from numpy import array, concatenate, conj, diag, exp, sin, zeros
 
-from ctrl import controlres
+from ctrl import ctrlres
 
 # from generator import md01peut
 
@@ -16,7 +16,7 @@ from ctrl import controlres
 def residue(
     anarede,
     case: int = 0,
-    stage: str = None,
+    stage: str = "",
 ):
     """cálculo de resíduos das equações diferenciáveis
 
@@ -37,8 +37,8 @@ def residue(
     anarede.deltaPQY = concatenate((anarede.deltaP, anarede.deltaQ), axis=0)
 
     # Resíduos de variáveis de estado de controle
-    if anarede.controlcount > 0:
-        controlres(
+    if anarede.ctrlcount > 0:
+        ctrlres(
             anarede,
             case,
         )

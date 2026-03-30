@@ -9,7 +9,7 @@
 from os.path import dirname, exists
 from simulation import *
 from setting import pwfsetting, stbsetting
-from transcript import orwudc, orwdyn, prwraw, prwdyr
+from transcript import *
 
 
 class PowerFlow:
@@ -30,8 +30,8 @@ class PowerFlow:
         self.anatem.method = method
 
         # --- Safe system type detection ---
-        if exists(dirname(dirname(__file__)) + "\\sistemas\\") is True:
-            if exists(dirname(dirname(__file__)) + "\\sistemas\\" + system) is True:
+        if exists(dirname(dirname(__file__)) + "\\sistemas\\"):
+            if exists(dirname(dirname(__file__)) + "\\sistemas\\" + system):
                 sys_type = system[-3:].casefold()
 
                 if sys_type == "pwf":
@@ -39,9 +39,13 @@ class PowerFlow:
                     exlf(self.anarede) if method == "EXLF" else None
                     exic(self.anarede) if method == "EXIC" else None
                     expc(self.anarede) if method == "EXPC" else None
+                    exct(self.anarede) if method == "EXCT" else None
                     if method == "EXSI":
                         stbsetting(self.anarede, self.anatem)
-                        exsi(self.anarede)
+                        exsi(self.anarede, self.anatem)
+                    elif method == "ORGAt":
+                        self.organon = PowerFlowContainer()
+                        orgntw(self.anarede, self.organon)
                     elif method == "PSSEt":
                         self.psse = PowerFlowContainer()
                         prwraw(self.anarede, self.psse)
@@ -53,8 +57,7 @@ class PowerFlow:
                     stbsetting(self.anarede, self.anatem)
                     if method == "ORGAt":
                         self.organon = PowerFlowContainer()
-                        self.organon.system = system
-                        self.organon.method = method
+                        orgntw(self.anarede, self.organon)
                         anatemfiles, organonfiles = orwudc(
                             self.anarede, self.anatem, self.organon
                         )
@@ -62,7 +65,6 @@ class PowerFlow:
                             self.anarede,
                             self.anatem,
                             self.organon,
-                            anatemfiles,
                             organonfiles,
                         )
                     elif method == "PSSEt":
@@ -79,7 +81,8 @@ class PowerFlow:
             raise ValueError("\033[91mA pasta 'sistemas' não foi encontrada.\033[0m")
 
 
-# Container class inherits the SAME base class, but skips its __init__
-class PowerFlowContainer(PowerFlow):
+class PowerFlowContainer:
     def __init__(self):
-        pass
+        # Initialize attributes so Pylance stays happy
+        self.system: str = ""
+        self.method: str = ""

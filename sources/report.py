@@ -149,8 +149,8 @@ def rheader(
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")
-    if anarede.control:
-        for k in anarede.control:
+    if anarede.ctrl:
+        for k in anarede.ctrl:
             file.write(f"{k} ")
     else:
         file.write("Nenhum controle ativo!")
@@ -188,14 +188,14 @@ def RCONV(
             for i in range(0, anarede.solution["iter"]):
                 file.write("\n")
                 file.write(
-                    f"| {(i+1):^4d} | {anarede.solution['freqiter'][i]:^6.3f} | {anarede.solution['convP'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i]]:^5d} | {anarede.solution['convQ'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i]]:^5d} | {anarede.solution['convY'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i]]:^5d} |"
+                    f"| {(i+1):^4d} | {anarede.solution['freqiter'][i]:^6.3f} | {anarede.solution['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i]]:^5d} | {anarede.solution['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i]]:^5d} | {anarede.solution['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i]]:^5d} |"
                 )
 
         elif anarede.method == "EXIC":
             for i in range(0, anarede.operationpoint[0]["iter"]):
                 file.write("\n")
                 file.write(
-                    f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
+                    f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
                 )
 
         file.write("\n")
@@ -219,14 +219,14 @@ def RCONV(
         anarede.solution["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
-            f"| {(i+1):^4d} | {anarede.solution['freqiter'][i+1]:^6.3f} | {anarede.solution['convP'][i+1]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i+1]]:^5d} | {anarede.solution['convQ'][i+1]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i+1]]:^5d} | {anarede.solution['convY'][i+1]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i+1]]:^5d} |"
+            f"| {(i+1):^4d} | {anarede.solution['freqiter'][i+1]:^6.3f} | {anarede.solution['convP'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i+1]]:^5d} | {anarede.solution['convQ'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i+1]]:^5d} | {anarede.solution['convY'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i+1]]:^5d} |"
         )
 
     elif (anarede.method == "EXIC") and (
         anarede.operationpoint[0]["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
-            f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['BASE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
+            f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
         )
 
     file.write("\n")
@@ -643,8 +643,8 @@ def tobecontinued(
     )
     filevtan.write("\n\n")
     filevtan.write("opcoes de controle ativadas: ")
-    if anarede.control:
-        for k in anarede.control:
+    if anarede.ctrl:
+        for k in anarede.ctrl:
             filevtan.write(f"{k} ")
     else:
         filevtan.write("Nenhum controle ativo!")
@@ -670,8 +670,8 @@ def tobecontinued(
     )
     filevarv.write("\n\n")
     filevarv.write("opcoes de controle ativadas: ")
-    if anarede.control:
-        for k in anarede.control:
+    if anarede.ctrl:
+        for k in anarede.ctrl:
             filevarv.write(f"{k} ")
     else:
         filevarv.write("Nenhum controle ativo!")
@@ -698,8 +698,8 @@ def tobecontinued(
         )
         filedeteigen.write("\n\n")
         filedeteigen.write("opcoes de controle ativadas: ")
-        if anarede.control:
-            for k in anarede.control:
+        if anarede.ctrl:
+            for k in anarede.ctrl:
                 filedeteigen.write(f"{k} ")
         else:
             filedeteigen.write("Nenhum controle ativo!")
@@ -981,7 +981,7 @@ def tobecontinued(
         #     )
 
     # Smooth
-    if ("QLIMs" in anarede.control) or ("QLIMn" in anarede.control):
+    if ("QLIMs" in anarede.ctrl) or ("QLIMn" in anarede.ctrl):
         for busname, cases in anarede.qlimkeys.items():
             busidx = anarede.dbarDF[anarede.dbarDF["nome"] == busname].index.values
 
@@ -1003,8 +1003,8 @@ def tobecontinued(
             )
             filesmooth.write("\n\n")
             filesmooth.write("opcoes de controle ativadas: ")
-            if anarede.control:
-                for k in anarede.control:
+            if anarede.ctrl:
+                for k in anarede.ctrl:
                     filesmooth.write(f"{k} ")
             else:
                 filesmooth.write("Nenhum controle ativo!")
@@ -1065,7 +1065,7 @@ def tobecontinued(
             )
             filesmooth.close()
 
-    elif "SVCs" in anarede.control:
+    elif "SVCs" in anarede.ctrl:
         for busname, cases in anarede.svckeys.items():
             busidx = anarede.dbarDF[anarede.dbarDF["nome"] == busname].index.values
 
@@ -1087,8 +1087,8 @@ def tobecontinued(
             )
             filesmooth.write("\n\n")
             filesmooth.write("opcoes de controle ativadas: ")
-            if anarede.control:
-                for k in anarede.control:
+            if anarede.ctrl:
+                for k in anarede.ctrl:
                     filesmooth.write(f"{k} ")
             else:
                 filesmooth.write("Nenhum controle ativo!")

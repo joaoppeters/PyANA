@@ -11,6 +11,7 @@ def exlf(
     anarede,
 ):
     """chamada automática do método de solução numérico newton-raphson não-linear
+
     Args
         anarede: objeto da classe PowerFlowContainer
     """
@@ -35,7 +36,8 @@ def exlf(
 def exic(
     anarede,
 ):
-    """chamada automática do método de solução de fluxo de potência continuado utilizando predição-correção e solução numérica newton-raphson não-linear
+    """chamada automática do método de solução de fluxo de potência continuado
+    utilizando predição-correção e solução numérica newton-raphson não-linear
     aplicação do método desenvolvildo por V. Ajjarapu e C. Christy (1992)
 
     Args
@@ -98,11 +100,13 @@ def expc(
 
 
 def exsi(
+    anarede,
     anatem,
 ):
     """chamada automática do método de simulação dinâmica
 
     Args
+        anarede: objeto da classe PowerFlowContainer
         anatem: objeto da classe PowerFlowContainer
     """
     ## Inicialização
@@ -113,6 +117,7 @@ def exsi(
     from stb import stb
 
     pathstb(
+        anarede,
         anatem,
     )
 
@@ -131,3 +136,43 @@ def exsi(
     # dynamic(
     #     anatem,
     # )
+
+
+def exct(
+    anarede,
+):
+    """chamada automática do método de solução numérico newton-raphson não-linear
+    com foco em análise de contingências (critério N-1)
+
+    Args
+        anarede: objeto da classe PowerFlowContainer
+    """
+    ## Inicialização
+    from matrices import admittance
+    from newton import newton
+    from report import reportfile
+
+    if anarede.pwfblock["DCTG"]:
+        pass
+    else:
+        trueDLIN = anarede.dlinDF.copy()
+        print(
+            f"Iniciando análise de contingências (critério N-1) para {trueDLIN.shape[0]} linhas..."
+        )
+        anarede.nlin -= 1
+        for idx, value in anarede.dlinDF.iterrows():
+            print(
+                f"Analisando contingência para linha: (de){value.de} -> (para){value.para}..."
+            )
+            anarede.dlinDF = anarede.dlinDF.drop(idx)
+            admittance(
+                anarede,
+            )
+            newton(
+                anarede,
+            )
+
+            # reportfile(
+            #     anarede,
+            # )
+            anarede.dlinDF = trueDLIN.copy()

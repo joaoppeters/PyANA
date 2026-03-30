@@ -7,7 +7,6 @@
 # ------------------------------------- #
 
 from numpy import zeros
-from copy import deepcopy
 
 
 def optionspwf(
@@ -22,7 +21,7 @@ def optionspwf(
     ## Inicialização
     anarede.cte = dict(
         {
-            "BASE": 100.0,  # base de potência para o sistema CA
+            "SBSE": 100.0,  # base de potência para o sistema CA
             "DASE": 100.0,  # base de potência default para o sistema CC
             "TEPA": 1e-3,  # tolerancia de convergencia de potencia ativa
             "TEPR": 1e-3,  # tolerancia de convergencia de potencia reativa
@@ -103,7 +102,7 @@ def optionspwf(
                 # idx = value["numero"] - 1
                 anarede.cte["cpfBeta"][idx] = value.fator_participacao
 
-    anarede.control = dict(
+    anarede.ctrl = dict(
         {
             "CPHS": False,
             "CREM": False,
@@ -117,13 +116,16 @@ def optionspwf(
     )
     anarede.maskctrlcount = 0
     print("\033[96mOpções de controle escolhidas: ", end="")
-    for idx, value in anarede.dopcDF.iterrows():
-        if (value.padrao == "L") and (value.opcao in anarede.control):
-            anarede.control[value.opcao] = True
-            anarede.maskctrlcount += 1
-            print(f"{value.opcao}", end=" ")
-    print("\033[0m")
-    if not any(anarede.control):
+    try:
+        for idx, value in anarede.dopcDF.iterrows():
+            if (value.padrao == "L") and (value.opcao in anarede.ctrl):
+                anarede.ctrl[value.opcao] = True
+                anarede.maskctrlcount += 1
+                print(f"{value.opcao}", end=" ")
+        print("\033[0m")
+        if not any(anarede.ctrl):
+            print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
+    except:
         print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
 
     anarede.excc = dict(
@@ -259,17 +261,20 @@ def optionspwf(
         }
     )
     print("\033[96mOpções de execução escolhidas: ", end="")
-    for idx, value in anarede.dopcDF.iterrows():
-        if (value.opcao == "RCER") and (~anarede.pwfblock["DCER"]):
-            continue
-        if (value.opcao == "FREQ") and (value.padrao == "L"):
-            anarede.freqjcount = 0
-        if (value.padrao == "L") and (value.opcao in anarede.excc):
-            anarede.excc[value.opcao] = True
-            print(f"{value.opcao}", end=" ")
-    print("\033[0m")
-    if not any(anarede.excc):
-        print("\033[96mNenhuma opção de execução foi escolhida.\033[0m")
+    try:
+        for idx, value in anarede.dopcDF.iterrows():
+            if (value.opcao == "RCER") and (~anarede.pwfblock["DCER"]):
+                continue
+            if (value.opcao == "FREQ") and (value.padrao == "L"):
+                anarede.freqjcount = 0
+            if (value.padrao == "L") and (value.opcao in anarede.excc):
+                anarede.excc[value.opcao] = True
+                print(f"{value.opcao}", end=" ")
+        print("\033[0m")
+        if not any(anarede.excc):
+            print("\033[96mNenhuma opção de execução foi escolhida.\033[0m")
+    except:
+        print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
 
     anarede.monitor = dict(
         {
@@ -284,12 +289,15 @@ def optionspwf(
         }
     )
     print("\033[96mOpções de monitoramento escolhidas: ", end="")
-    for idx, value in anarede.dopcDF.iterrows():
-        if (value.padrao == "L") and (value.opcao in anarede.monitor):
-            anarede.monitor[value.opcao] = True
-            print(f"{value.opcao}", end=" ")
-    print("\033[0m")
-    if not any(anarede.monitor):
+    try:
+        for idx, value in anarede.dopcDF.iterrows():
+            if (value.padrao == "L") and (value.opcao in anarede.monitor):
+                anarede.monitor[value.opcao] = True
+                print(f"{value.opcao}", end=" ")
+        print("\033[0m")
+        if not any(anarede.monitor):
+            print("\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m")
+    except:
         print("\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m")
 
     anarede.report = dict(
@@ -377,13 +385,16 @@ def optionspwf(
         }
     )
     print("\033[96mOpcoes de relatorio escolhidas: ", end="")
-    for idx, value in anarede.dopcDF.iterrows():
-        if (value.padrao == "L") and (value.opcao in anarede.report):
-            anarede.report[value.opcao] = True
-            print(f"{value.opcao}", end=" ")
-    print("\033[0m")
-    if not any(anarede.report):
-        print("\033[96mNenhuma opcao de relatorio foi escolhida.\033[0m")
+    try:
+        for idx, value in anarede.dopcDF.iterrows():
+            if (value.padrao == "L") and (value.opcao in anarede.report):
+                anarede.report[value.opcao] = True
+                print(f"{value.opcao}", end=" ")
+        print("\033[0m")
+        if not any(anarede.report):
+            print("\033[96mNenhuma opcao de relatorio foi escolhida.\033[0m")
+    except:
+        print("\033[96mNenhuma opção de relatório foi escolhida.\033[0m")
 
 
 def optionsstb(
@@ -426,7 +437,7 @@ def optionsstb(
         {
             "80CO": False,
             "ASYN": False,
-            "BASE": False,
+            "SBSE": False,
             "CCCO": False,
             "CILH": False,
             "CONV": False,

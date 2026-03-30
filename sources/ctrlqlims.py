@@ -139,9 +139,9 @@ def qlimssubjac(
             nger += 1
 
     ## Montagem Jacobiana
-    if anarede.controldim != 0:
-        extrarow = zeros([anarede.nger, anarede.controldim])
-        extracol = zeros([anarede.controldim, anarede.nger])
+    if anarede.ctrldim != 0:
+        extrarow = zeros([anarede.nger, anarede.ctrldim])
+        extracol = zeros([anarede.ctrldim, anarede.nger])
 
         anarede.jacobian = concatenate(
             (
@@ -173,7 +173,7 @@ def qlimssubjac(
             axis=1,
         )
 
-    elif anarede.controldim == 0:
+    elif anarede.ctrldim == 0:
         anarede.jacobian = concatenate(
             (
                 anarede.jacobian,
@@ -212,7 +212,7 @@ def qlimsupdt(
         anarede:
     """
     ## Inicialização
-    anarede.dimpreqlim = anarede.jacobian.shape[0] - anarede.controldim
+    anarede.dimpreqlim = anarede.jacobian.shape[0] - anarede.ctrldim
 
     # Contador
     nger = 0
@@ -222,7 +222,7 @@ def qlimsupdt(
         if value["tipo"] != 0:
             anarede.solution["qlim_reactive_generation"][idx] += anarede.solution[
                 "sign"
-            ] * (anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BASE"])
+            ] * (anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["SBSE"])
 
             # Incrementa contador
             nger += 1
@@ -247,7 +247,7 @@ def qlimssch(
     # Atualização da potência reativa especificada
     anarede.qsch += anarede.solution["qlim_reactive_generation"]
     anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
-    anarede.qsch /= anarede.cte["BASE"]
+    anarede.qsch /= anarede.cte["SBSE"]
 
 
 def qlimscorr(
@@ -285,7 +285,7 @@ def qlimsheur(
         ),
         where=~anarede.mask[(anarede.nbus) : (2 * anarede.nbus)],
     ):
-        anarede.controlheur = True
+        anarede.ctrlheur = True
 
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
@@ -427,9 +427,9 @@ def qlimssubhess(
             nger += 1
 
     ## Montagem Jacobiana
-    if anarede.controldim != 0:
-        extrarow = zeros([anarede.nger, anarede.controldim])
-        extracol = zeros([anarede.controldim, anarede.nger])
+    if anarede.ctrldim != 0:
+        extrarow = zeros([anarede.nger, anarede.ctrldim])
+        extracol = zeros([anarede.ctrldim, anarede.nger])
         anarede.hessian = concatenate(
             (
                 anarede.hessian,
@@ -460,7 +460,7 @@ def qlimssubhess(
             axis=1,
         )
 
-    elif anarede.controldim == 0:
+    elif anarede.ctrldim == 0:
         anarede.hessian = concatenate(
             (
                 anarede.hessian,

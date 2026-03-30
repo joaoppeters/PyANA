@@ -14,7 +14,7 @@ from numpy import (
 from numpy.linalg import lstsq, norm
 
 from convergence import convergence
-from ctrl import controlsol, controldelta
+from ctrl import ctrlsol, ctrldelta
 from matrices import matrices
 from residue import residue
 from scheduled import scheduled
@@ -51,7 +51,7 @@ def newton(
     }
 
     # Controles
-    controlsol(
+    ctrlsol(
         anarede,
     )
 
@@ -74,7 +74,7 @@ def newton(
             anarede.deltaQ[anarede.maskQ],
         )
         > anarede.cte["TEPR"]
-        or controldelta(
+        or ctrldelta(
             anarede,
         )
     ):
