@@ -44,21 +44,26 @@ def reportfile(
         anarede,
     )
 
-    if anarede.method != "EXPC":
-        # Relatorio de Convergencia
-        RCONV(
+    if anarede.method == "EXPC":
+        RXPC(
+            file,
+            anarede,
+        )
+    
+    elif anarede.method == "EXCT":
+        RXCT(
             file,
             anarede,
         )
 
     else:
-        RPoC(
+        RCNV(
             file,
             anarede,
         )
 
     # Relatorios Extras - ordem de prioridade
-    if anarede.report:
+    if any(anarede.report.values()):
         for r in anarede.report:
             # relatorio de barra
             if r == "RBAR":
@@ -149,20 +154,22 @@ def rheader(
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
     file.write("opcoes de controle ativadas: ")
-    if anarede.ctrl:
+    if any(anarede.ctrl.values()):
         for k in anarede.ctrl:
-            file.write(f"{k} ")
+            file.write(f"{k} ") if anarede.ctrl[k] else ""
     else:
         file.write("Nenhum controle ativo!")
     file.write("\n\n")
     file.write("opcoes de relatorio ativadas: ")
-    if anarede.report:
+    if any(anarede.report.values()):
         for k in anarede.report:
-            file.write(f"{k} ")
+            file.write(f"{k} ") if anarede.report[k] else ""
+    else:
+        file.write("Nenhuma opcao de relatorio selecionada!")
     file.write("\n\n\n\n")
 
 
-def RCONV(
+def RCNV(
     file,
     anarede,
 ):
@@ -231,6 +238,27 @@ def RCONV(
 
     file.write("\n")
     file.write("-" * 71)
+    file.write("\n\n")
+
+    slacks = anarede.dbarDF[anarede.dbarDF.tipo == 2]
+    file.write("Slack:")
+    file.write("\n")
+    file.write(
+        "|          BARRA           |         TENSAO       |        GERACAO      |"
+    )
+    file.write("\n")
+    file.write(
+        "| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |"
+    )
+    file.write("\n")
+    file.write("-" * 73)
+    file.write("\n")
+
+    for idx, value in slacks.iterrows():
+        file.write(
+            f"|{value.numero:^5}|{value.nome:^14}|{value.tipo:^5}|{anarede.solution['voltage'][idx]:^11.3f}|{degrees(anarede.solution['theta'][idx]):^+10.2f}|{anarede.solution['active'][idx]:^+10.3f}|{anarede.solution['reactive'][idx]:^+10.3f}|\n"
+        )
+    file.write("-" * 73)
     file.write("\n\n\n\n")
 
 
@@ -1147,7 +1175,7 @@ def tobecontinued(
             filesmooth.close()
 
 
-def RPoC(
+def RXPC(
     file,
     anarede,
 ):
@@ -1167,3 +1195,61 @@ def RPoC(
     # file.write("\n")
     file.write("Iteracoes: " + str(anarede.solution["iter"]))
     file.write("\n\n")
+
+
+def RXCT(
+    file,
+    anarede,
+):
+    """
+
+    Args
+        file:
+        anarede:
+    """
+    ## Inicialização
+    convergente = list()
+    divergente = list()
+    for key, value in anarede.exct.items():
+        file.write(f"vv contingencia do circuito {key} vv")
+        file.write("\n")
+        file.write("vv relatorio de convergencia vv")
+        file.write("\n\n")
+        file.write(" * * * * " + value["convergence"] + " * * * * ")
+        file.write("\n\n")
+        file.write(
+            "       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |"
+        )
+        file.write("\n")
+        file.write(
+            "| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |"
+        )
+        file.write("\n")
+        file.write("-" * 71)
+        file.write("\n")
+    
+        file.write(
+            f"| {value['iter']:^4d} | {value['freqiter'][-1]:^6.3f} | {value['convP'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busP'][-1]]:^5d} | {value['convQ'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busQ'][-1]]:^5d} | {value['convY'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busY'][-1]]:^5d} |"
+        )
+
+        file.write("\n")
+        file.write("-" * 71)
+        file.write("\n\n\n\n")
+
+        if value["convergence"] == "SISTEMA CONVERGENTE":
+            convergente.append(key)
+        else:
+            divergente.append(key)
+
+    file.write(f"Contingencias Convergentes: {len(convergente)}\n")
+    for c in convergente:
+        file.write(c)
+        file.write("\n")
+
+    file.write("\n")
+    file.write(f"Contingencias Divergentes: {len(divergente)}\n")
+    for c in divergente:
+        file.write(c)
+        file.write("\n")
+
+    

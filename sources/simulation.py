@@ -151,18 +151,22 @@ def exct(
     from matrices import admittance
     from newton import newton
     from report import reportfile
+    
+    trueDLIN = anarede.dlinDF.copy()
+    anarede.exct = dict()
+    # anarede.exct["convergente"] = list()
+    # anarede.exct["divergente"] = list()
 
     if anarede.pwfblock["DCTG"]:
         pass
     else:
-        trueDLIN = anarede.dlinDF.copy()
         print(
             f"Iniciando análise de contingências (critério N-1) para {trueDLIN.shape[0]} linhas..."
         )
         anarede.nlin -= 1
         for idx, value in anarede.dlinDF.iterrows():
             print(
-                f"Analisando contingência para linha: (de){value.de} -> (para){value.para}..."
+                f"Simulando contingência do circuito {value.de} - {value.para}..."
             )
             anarede.dlinDF = anarede.dlinDF.drop(idx)
             admittance(
@@ -171,8 +175,14 @@ def exct(
             newton(
                 anarede,
             )
+            anarede.exct[f"{value.de} - {value.para}"] = anarede.solution.copy()
+            # if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
+            #     anarede.exct["convergente"].append(f"{value.de} - {value.para}")
+            # else:
+            #     anarede.exct["divergente"].append(f"{value.de} - {value.para}")
 
-            # reportfile(
-            #     anarede,
-            # )
             anarede.dlinDF = trueDLIN.copy()
+
+        reportfile(
+            anarede,
+        )

@@ -1,0 +1,42 @@
+March 31, 2026
+
+
+relatorio do sistema 730
+
+solucao do fluxo de potencia via metodo newton-raphson
+
+opcoes de controle ativadas: Nenhum controle ativo!
+
+opcoes de relatorio ativadas: Nenhuma opcao de relatorio selecionada!
+
+
+
+vv relatorio de convergencia vv
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  1   | 60.000 | 10095.102 |  68   | 2150.702 |  134  |  0.000  |  10   |
+|  2   | 60.000 | 288.275 |  252  | 277.676 |  222  |  0.000  |  10   |
+|  3   | 60.000 | 21.323  |  252  | 27.514  |  222  |  0.000  |  10   |
+|  4   | 60.000 |  0.276  |  252  |  0.396  |  222  |  0.000  |  10   |
+-----------------------------------------------------------------------
+
+ * * * * SISTEMA CONVERGENTE * * * * 
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  4   | 60.000 |  0.000  |  252  |  0.000  |  222  |  0.000  |  10   |
+-----------------------------------------------------------------------
+
+Slack:
+|          BARRA           |         TENSAO       |        GERACAO      |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |
+-------------------------------------------------------------------------
+| 501 | ISOLTE-18MAQ |  2  |   1.015   |  +0.00   |+2247.668 | -514.029 |
+-------------------------------------------------------------------------
+
+
+
+fim do relatorio do sistema 730

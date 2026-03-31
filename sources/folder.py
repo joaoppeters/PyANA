@@ -268,11 +268,10 @@ def reportsfolder(
         anarede:
     """
     ## Inicialização
-    anarede.reportsfolder = anarede.resultsfolder + "Relatorios\\"
-    if exists(anarede.reportsfolder) is False:
-        mkdir(anarede.reportsfolder)
-
-    anarede.reportsfolder = anarede.reportsfolder + anarede.name + "\\"
+    folder(
+        anarede,
+    )
+    anarede.reportsfolder = anarede.resultsfolder + anarede.name + "\\"
     if exists(anarede.reportsfolder) is False:
         mkdir(anarede.reportsfolder)
 

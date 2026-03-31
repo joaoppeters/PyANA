@@ -7,7 +7,7 @@ TLPP     1. TEPR   1e-8 QLST    .04 TLPR   1e-8 TLPQ     2. TSBZ    .01
 TSBA     5. ASTP    .05 VSTP     5. TLVC    .05 TLTC    .01 TSFR  .1E-7
 ZMAX   500. TLPV     .5 VDVM   200. VDVN    40. TUDC   .001 TADC    .01
 PGER    30. TPST    .02 VFLD    70. ZMIN   .001 HIST    470 LFIT     10
-ACIT    100 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
+ACIT     20 LFCV      1 DCIT     10 VSIT     10 LPIT     50 LFLP     10
 PDIT     10 LCRT    200 LPRT     60 CSTP     5. ASDC     1.
 ICIT   9999 DMAX   9999 FDIV     2. ICMN   1e-9 VART     5. TSTP     32
 ICMV     .5 APAS    90. CPAR    70. VAVT     2. VAVF     5. VMVF    15.

@@ -36,11 +36,15 @@ class PowerFlow:
 
                 if sys_type == "pwf":
                     pwfsetting(self.anarede)
-                    exlf(self.anarede) if method == "EXLF" else None
-                    exic(self.anarede) if method == "EXIC" else None
-                    expc(self.anarede) if method == "EXPC" else None
-                    exct(self.anarede) if method == "EXCT" else None
-                    if method == "EXSI":
+                    if method == "EXLF":
+                        exlf(self.anarede)
+                    elif method == "EXIC":
+                        exic(self.anarede)
+                    elif method == "EXPC":
+                        expc(self.anarede)
+                    elif method == "EXCT":
+                        exct(self.anarede)
+                    elif method == "EXSI":
                         stbsetting(self.anarede, self.anatem)
                         exsi(self.anarede, self.anatem)
                     elif method == "ORGAt":

@@ -23,7 +23,7 @@ def updtstt(
         anarede:
     """
     ## Inicialização
-    if stage == None:
+    if stage == "":
         anarede.statevar = anarede.statevar.reshape(
             anarede.statevar.size,
         )
