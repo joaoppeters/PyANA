@@ -49,7 +49,7 @@ class PowerFlow:
                         exsi(self.anarede, self.anatem)
                     elif method == "ORGAt":
                         self.organon = PowerFlowContainer()
-                        orgntw(self.anarede, self.organon)
+                        orwntw(self.anarede, self.organon)
                     elif method == "PSSEt":
                         self.psse = PowerFlowContainer()
                         prwraw(self.anarede, self.psse)
@@ -61,10 +61,8 @@ class PowerFlow:
                     stbsetting(self.anarede, self.anatem)
                     if method == "ORGAt":
                         self.organon = PowerFlowContainer()
-                        orgntw(self.anarede, self.organon)
-                        anatemfiles, organonfiles = orwudc(
-                            self.anarede, self.anatem, self.organon
-                        )
+                        orwntw(self.anarede, self.organon)
+                        organonfiles = orwudc(self.anarede, self.anatem, self.organon)
                         orwdyn(
                             self.anarede,
                             self.anatem,
@@ -78,6 +76,18 @@ class PowerFlow:
                     elif method != "EXSI":
                         raise ValueError(f"Unknown method: {method}")
                     # exsi(self.anatem)
+
+                elif ".m" in sys_type and method == "MATPt":
+                    from dmatpower import rmatpower
+
+                    self.matpower = PowerFlowContainer()
+                    (
+                        self.matpower.dbarDF,
+                        self.matpower.dgerDF,
+                        self.matpower.dlinDF,
+                        self.matpower.sbse,
+                    ) = rmatpower(self.anarede, self.matpower)
+                    mrwpwf(self.anarede, self.matpower)
 
             else:
                 raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")

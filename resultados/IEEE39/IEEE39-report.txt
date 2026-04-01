@@ -1,0 +1,40 @@
+April 01, 2026
+
+
+relatorio do sistema IEEE39
+
+solucao do fluxo de potencia via metodo newton-raphson
+
+opcoes de controle ativadas: Nenhum controle ativo!
+
+opcoes de relatorio ativadas: Nenhuma opcao de relatorio selecionada!
+
+
+
+vv relatorio de convergencia vv
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  1   | 60.000 | 371.144 |   8   | 63.905  |   6   |  0.000  |   1   |
+|  2   | 60.000 |  0.146  |   7   |  1.549  |   8   |  0.000  |   1   |
+-----------------------------------------------------------------------
+
+ * * * * SISTEMA CONVERGENTE * * * * 
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  2   | 60.000 |  0.000  |   8   |  0.001  |   8   |  0.000  |   1   |
+-----------------------------------------------------------------------
+
+Slack:
+|          BARRA           |         TENSAO       |        GERACAO      |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |
+-------------------------------------------------------------------------
+| 39  |  BARRA-039   |  2  |   1.030   |  -11.00  |+1000.025 | +87.428  |
+-------------------------------------------------------------------------
+
+
+
+fim do relatorio do sistema IEEE39

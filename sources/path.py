@@ -18,7 +18,7 @@ def pathpwf(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de diretório principal
     anarede.maindir = dirname(dirname(__file__))
 
@@ -54,7 +54,7 @@ def pathstb(
     Args
         anatem: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de diretório principal
     anatem.maindir = dirname(dirname(__file__))
     if exists(anatem.maindir + "\\sistemas\\" + anatem.system) is True:
@@ -82,7 +82,7 @@ def pathdarq(
     from darq import rdat, rcdu, rblt
     from folder import logfolder, outfolder, pltfolder
 
-    ## Inicialização
+    ## Inicializacao
     for idx, value in anatem.darqDF.iterrows():
         if value.tipo.strip() in ["LOG", "OUT", "PLT"]:
             anatem.logfolder = (

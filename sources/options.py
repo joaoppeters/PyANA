@@ -7,6 +7,7 @@
 # ------------------------------------- #
 
 from numpy import zeros
+from pandas import DataFrame
 
 
 def optionspwf(
@@ -18,7 +19,7 @@ def optionspwf(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.cte = dict(
         {
             "SBSE": 100.0,  # base de potência para o sistema CA
@@ -90,9 +91,16 @@ def optionspwf(
             "CTOL": 1e-7,  # tolerância para as variáveis de estado do método direto (canizares) (criado por JP)
         }
     )
-
-    for idx, value in anarede.dcteDF.iterrows():
-        anarede.cte[value.constante] = value.valor_constante
+    try:
+        for idx, value in anarede.dcteDF.iterrows():
+            anarede.cte[value.constante] = value.valor_constante
+    except:
+        anarede.dcteDF = DataFrame(
+            {
+                "constante": list(anarede.cte.keys()),
+                "valor_constante": list(anarede.cte.values()),
+            }
+        )
 
     if anarede.pwfblock["DINC"]:
         anarede.cte["LMBD"] = anarede.dincDF.loc[0, "passo_incremento_potencia_ativa"]
@@ -108,7 +116,6 @@ def optionspwf(
             "CREM": False,
             "CSCA": False,
             "CTAP": False,
-            "CTAF": False,
             "FREQ": False,
             "QLIM": False,
             "VLIM": False,
@@ -132,7 +139,7 @@ def optionspwf(
         {
             "80CO": False,  # relatórios impressos em formato de 80 colunas
             "A0GI": False,  # gravação automática do arquivo de saída DGEI.dat durante etapa 1 de utilização do software ANAT0
-            "ACCC": False,  # força a reinicialização do controle de tensão de dois ou mais elos de corrente contínua do tipo ccc qie controlam a tensão da mesma barra CA pelo modo de tensão definido no código de execução DCCV
+            "ACCC": False,  # força a reInicializacao do controle de tensão de dois ou mais elos de corrente contínua do tipo ccc qie controlam a tensão da mesma barra CA pelo modo de tensão definido no código de execução DCCV
             "ACFP": False,  # executa a análise de casos de fluxo de potência através da impressão de relatórios que contêm dados de transformadores que podem causar problemas à convergência dos casos
             "ACLS": False,  # utilizada em conjunto com o código de execução DANC, permite a especificação da alteração do carregamento através da linguagem de seleção
             "ADRE": False,  # indica que as restrições lineares adicionais definidas no código de execução DRES serão consideradas durante a solução do problema de redespacho de potência ativa
@@ -406,7 +413,7 @@ def optionsstb(
     Args
         anatem:
     """
-    ## Inicialização
+    ## Inicializacao
     anatem.cte = dict(
         {
             "TETE": 1e-6,

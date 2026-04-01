@@ -6,14 +6,14 @@
 # email: joao.peters@ieee.org           #
 # ------------------------------------- #
 
-from folder import organonfolder, pssefolder
+from folder import organonfolder, pssefolder, matpowerfolder
 from os.path import realpath
 from numpy import exp
 from datetime import datetime as dt
 import sys
 
 
-def orgntw(
+def orwntw(
     anarede,
     organon,
 ):
@@ -23,7 +23,7 @@ def orgntw(
         anarede:
         organon
     """
-    ## Inicialização
+    ## Inicializacao
     ntwpath = organonfolder(
         anarede,
     )
@@ -243,7 +243,7 @@ def orwudc(
         anatem:
         organon:
     """
-    ## Inicialização
+    ## Inicializacao
     anatemfiles = list()
     organonfiles = list()
     cdupath = organonfolder(
@@ -1002,7 +1002,7 @@ def orwudc(
         anatemfiles.append(cdufile)
         organonfiles.append(udcfile)
 
-    return anatemfiles, organonfiles
+    return organonfiles
 
 
 def orwdyn(
@@ -1019,7 +1019,7 @@ def orwdyn(
         organon:
         organonfiles:
     """
-    ## Inicialização
+    ## Inicializacao
     # Arquivo
     folder = organonfolder(
         anarede,
@@ -1869,3 +1869,174 @@ def prwdyr(
     )
     psse.file.write(drivetrain)
     psse.file.close()
+
+
+def mrwpwf(
+    anarede,
+    matpower,
+):
+    """transcricao de dados em formato matpower para formato pwf
+
+    Args:
+        anarede (_type_): _description_
+        matpower (_type_): _description_
+    """
+    import string
+    from numpy import deg2rad, sort
+    from itertools import product
+
+    ## Inicializacao
+    mppath = matpowerfolder(
+        anarede,
+    )
+    pwffile = realpath(mppath + anarede.system[:-2] + ".pwf")
+    anarede.file = open(pwffile, "w", encoding="latin-1")
+
+    anarede.file.write("(")
+    anarede.file.write("\n")
+    anarede.file.write("( Transcricao de dados MATPOWER .M para dados ANAREDE .PWF")
+    anarede.file.write("\n")
+    anarede.file.write("( Joao Pedro Peters Barbosa - jpeters@usp.br")
+    anarede.file.write("\n")
+    anarede.file.write(
+        "( Data e Hora da Gravacao: {} {}, {}  -  {}:{}:{}".format(
+            dt.now().strftime("%B"),
+            dt.now().strftime("%d"),
+            dt.now().strftime("%Y"),
+            dt.now().strftime("%H"),
+            dt.now().strftime("%M"),
+            dt.now().strftime("%S"),
+        )
+    )
+    anarede.file.write("\n")
+    anarede.file.write("( ")
+    anarede.file.write("\n")
+
+    anarede.file.write("TITU")
+    anarede.file.write("\n")
+    anarede.file.write(f"{anarede.system[:-2]}")
+    anarede.file.write("\n")
+
+    anarede.file.write("DCTE")
+    anarede.file.write("\n")
+    anarede.file.write(
+        "(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)"
+    )
+    anarede.file.write("\n")
+    anarede.file.write(f"BASE {matpower.sbse:>6.1f}{60*' '}")
+    anarede.file.write("\n")
+    anarede.file.write("99999")
+    anarede.file.write("\n")
+
+    unique_dgbt = sorted(matpower.dbarDF.baseKV.unique())
+    num_unique = len(unique_dgbt)
+
+    def generate_labels(n):
+        labels = []
+        attempt = 1
+        while len(labels) < n:
+            # Generate combinations for the current length (1, 2, 3...)
+            for p in product(string.ascii_uppercase, repeat=attempt):
+                labels.append("".join(p))
+                if len(labels) == n:
+                    return labels
+            attempt += 1
+
+    labels = generate_labels(num_unique)
+    dgbt = dict(zip(unique_dgbt, labels))
+    matpower.dbarDF["baseKV"] = matpower.dbarDF["baseKV"].map(dgbt)
+
+    dbar = f""
+    anarede.file.write("DBAR")
+    anarede.file.write("\n")
+    anarede.file.write(
+        "(Num)OETGb(   nome   )Gl( V)( A)( Pg)( Qg)( Qn)( Qm)(Bc  )( Pl)( Ql)( Sh)Are(Vf)M(1)(2)(3)(4)(5)(6)(7)(8)(9)(10     "
+    )
+    anarede.file.write("\n")
+    for idx, value in matpower.dbarDF.iterrows():
+        num = value.bus_i
+        tipo = value.type - 1
+        gb = value.baseKV
+        nome = "BUS-" + str(value.bus_i)
+        v = int(value.Vm * 1e3)
+        a = str(deg2rad(value.Va))[:4]
+        pl = 5 * " " if not value.Pd else str(value.Pd)[:5]
+        ql = 5 * " " if not value.Qd else str(value.Qd)[:5]
+        sh = 5 * " " if not value.Bs else str(value.Bs)[:5]
+        if tipo == 1:
+            pg = str(matpower.dgerDF.loc[matpower.dgerDF.bus == num, "Pg"].values[0])[
+                :5
+            ]
+            qmx = str(
+                matpower.dgerDF.loc[matpower.dgerDF.bus == num, "Qmax"].values[0]
+            )[:5]
+            qmn = str(
+                matpower.dgerDF.loc[matpower.dgerDF.bus == num, "Qmin"].values[0]
+            )[:5]
+        else:
+            pg = 5 * " "
+            qmx = 5 * " "
+            qmn = 5 * " "
+
+        dbar += f"{num:>5}{2*' '}{tipo}{gb:>2}{nome:>12}{2*' '}{v:>4}{a:>4}{pg:>5}{5*' '}{qmn:>5}{qmx:>5}{6*' '}{pl:>5}{ql:>5}{sh:>5}{1:>3}{1000}{35*' '}\n"
+    anarede.file.write(dbar)
+    anarede.file.write("99999")
+    anarede.file.write("\n")
+
+    dger = f""
+    total_generation = matpower.dgerDF.Pg.sum()
+    anarede.file.write("DGER")
+    anarede.file.write("\n")
+    anarede.file.write(
+        "(No ) O (Pmn ) (Pmx ) ( Fp) (FpR) (FPn) (Fa) (Fr) (Ag) ( Xq) (Sno) (Est)"
+    )
+    anarede.file.write("\n")
+    for idx, value in matpower.dgerDF.iterrows():
+        num = int(value.bus)
+        pmn = value.Pmin
+        pmx = value.Pmax
+        fp = value.Pg / total_generation
+
+        dger += f"{num:>5}{3*' '}{pmn:>6.1f} {pmx:>6.1f} {fp:>5.1f}{45*' '}\n"
+
+    anarede.file.write(dger)
+    anarede.file.write("99999")
+    anarede.file.write("\n")
+
+    dlin = f""
+    rotas_ordenadas = sort(matpower.dlinDF[["fbus", "tbus"]].values, axis=1)
+    matpower.dlinDF["chave_rota"] = [f"{x[0]}_{x[1]}" for x in rotas_ordenadas]
+    matpower.dlinDF["nc"] = matpower.dlinDF.groupby("chave_rota").cumcount() + 1
+    matpower.dlinDF = matpower.dlinDF.drop(columns=["chave_rota"])
+    anarede.file.write("DLIN")
+    anarede.file.write("\n")
+    anarede.file.write(
+        "(De )d O d(Pa )NcEP ( R% )( X% )(Mvar)(Tap)(Tmn)(Tmx)(Phs)(Bc  )(Cn)(Ce)Ns(Cq)(1)(2)(3)(4)(5)(6)(7)(8)(9)(10                "
+    )
+    anarede.file.write("\n")
+    for idx, value in matpower.dlinDF.iterrows():
+        de = int(value.fbus)
+        para = int(value.tbus)
+        nc = int(value.nc)
+        r = str(value.r * 1e3)[:6]
+        x = str(value.x * 1e3)[:6]
+        b = str(value.b * 1e3)[:6]
+        tap = 5 * " " if not value.ratio else str(value.ratio)[:5]
+        mvar = str(value.b * 1e3)[:6]
+
+        dlin += f"{de:>5}{5*' '}{para:>5}{nc:>2}{3*' '}{r:>6}{x:>6}{mvar:>6}{tap:>5}{81*' '}\n"
+
+    anarede.file.write(dlin)
+    anarede.file.write("99999")
+    anarede.file.write("\n")
+
+    anarede.file.write("DGBT")
+    anarede.file.write("\n")
+    anarede.file.write("(G ( kV)")
+    anarede.file.write("\n")
+    for key, item in dgbt.items():
+        anarede.file.write(f"{item:>2} {key:>5.1f}\n")
+    anarede.file.write("99999")
+    anarede.file.write("\n")
+    anarede.file.write("FIM")
+    anarede.file.close()

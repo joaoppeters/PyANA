@@ -20,7 +20,7 @@ def freqsol(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.nare = 1
 
@@ -64,7 +64,7 @@ def freqgerlim(
     Args
         anarede:  self do arquivo powerflowl.py
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     anarede.freqger = {
         "max": zeros(anarede.nger),
@@ -108,7 +108,7 @@ def freqsch(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis adicionais
     anarede.pqsch["potencia_ativa_gerada_especificada"] = zeros(anarede.nger)
     anarede.pqsch["potencia_reativa_gerada_especificada"] = zeros(anarede.nger)
@@ -152,7 +152,7 @@ def freqres(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetor de resíduos
     anarede.deltaPger = zeros([anarede.nger])
     anarede.deltaQger = zeros([anarede.nger])
@@ -225,7 +225,7 @@ def freqsubjac(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -476,7 +476,7 @@ def frequpdt(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Atualização da potência ativa gerada
     anarede.solution["active_generation"] += anarede.statevar[
         (anarede.dimprefreq) : (anarede.dimprefreq + anarede.nger)
@@ -515,7 +515,7 @@ def freqcorr(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.solution["freq"] = deepcopy(anarede.operationpoint[case]["p"]["freq"])
     anarede.solution["active_generation"] = deepcopy(
@@ -534,7 +534,7 @@ def freqsubhess(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -556,5 +556,5 @@ def freqsubjacsym(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     pass

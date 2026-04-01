@@ -20,7 +20,7 @@ def stb(
     Args
         anatem:
     """
-    ## Inicialização
+    ## Inicializacao
     t = time.process_time()
 
     # Variáveis
@@ -57,7 +57,7 @@ def keywords(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anatem.end_line = "\n"
     anatem.end_archive = "FIM"
     anatem.end_block = (
@@ -76,7 +76,7 @@ def codes(
     Args
         anatem:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anatem.stbblock = dict(
         {
@@ -100,7 +100,7 @@ def rstb(
     Args
         anatem:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     f = open(f"{anatem.dirSTB}", "r", encoding="latin-1")
     anatem.lines = f.readlines()

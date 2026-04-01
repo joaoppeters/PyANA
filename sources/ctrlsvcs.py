@@ -24,7 +24,7 @@ def svcssol(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     if "svc_generation" not in anarede.solution:
         anarede.solution["svc_generation"] = zeros([anarede.ncer])
@@ -100,7 +100,7 @@ def alphavar(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.alphaxc = (anarede.cte["SBSE"]) / (
         anarede.dcerDF["potencia_reativa_maxima"][0]
     )
@@ -166,7 +166,7 @@ def svcres(
         anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetor de resíduos
     anarede.deltaSVC = zeros([anarede.ncer])
 
@@ -243,7 +243,7 @@ def svcsubjac(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -385,7 +385,7 @@ def svcupdt(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Contador
     ncer = 0
 
@@ -416,7 +416,7 @@ def svcsch(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Atualização da potência reativa especificada
     ncer = 0
     for _, value in anarede.dcerDF.iterrows():
@@ -450,7 +450,7 @@ def svccorr(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.solution["svc_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["svc_generation"]
@@ -465,7 +465,7 @@ def svcheur(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
     if (
         (not anarede.solution["pmc"])
@@ -486,7 +486,7 @@ def svccpf(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.solution["svc_generation"] = deepcopy(anarede.solution["svc_generation"])
 
 
@@ -500,7 +500,7 @@ def svcsolcpf(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição
     precase = case - 1
     if case == 1:
@@ -522,7 +522,7 @@ def svcsubhess(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -542,7 +542,7 @@ def svcsubjacsym(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #

@@ -1,0 +1,42 @@
+April 01, 2026
+
+
+relatorio do sistema 107
+
+solucao do fluxo de potencia via metodo newton-raphson
+
+opcoes de controle ativadas: Nenhum controle ativo!
+
+opcoes de relatorio ativadas: Nenhuma opcao de relatorio selecionada!
+
+
+
+vv relatorio de convergencia vv
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  1   | 60.000 | 3082.038 |  925  | 379.344 |  500  |  0.000  |  12   |
+|  2   | 60.000 | 14.078  |  925  | 17.228  |  301  |  0.000  |  12   |
+|  3   | 60.000 |  0.119  |  938  |  0.045  |  301  |  0.000  |  12   |
+|  4   | 60.000 |  0.000  |  938  |  0.000  |  500  |  0.000  |  12   |
+-----------------------------------------------------------------------
+
+ * * * * SISTEMA CONVERGENTE * * * * 
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  4   | 60.000 |  0.000  |  814  |  0.000  |  856  |  0.000  |  12   |
+-----------------------------------------------------------------------
+
+Slack:
+|          BARRA           |         TENSAO       |        GERACAO      |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |
+-------------------------------------------------------------------------
+| 18  | ITUMBIAR-6GR |  2  |   1.020   |  -24.00  | +996.089 | -398.819 |
+-------------------------------------------------------------------------
+
+
+
+fim do relatorio do sistema 107

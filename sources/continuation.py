@@ -44,7 +44,7 @@ def prediction_correction(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável para armazenamento das variáveis de solução do fluxo de potência continuado
     anarede.solution.update(
         {
@@ -133,7 +133,7 @@ def exicloop(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição de parada do fluxo de potência continuado -> Estável & Instável
     while (
         anarede.cte["LMBD"]
@@ -185,7 +185,7 @@ def prediction(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.solution["iter"] = 0
 
     # Incremento do Nível de Carregamento e Geração
@@ -250,7 +250,7 @@ def correction(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável para armazenamento de solução
     anarede.solution.update(
         {
@@ -498,7 +498,7 @@ def exicresidue(
         anarede:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-    ## Inicialização
+    ## Inicializacao
     residue(
         anarede,
         case,
@@ -552,7 +552,7 @@ def exicjacobian(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Arrays adicionais
     rowarray = zeros([1, anarede.jacobian.shape[0]])
 
@@ -598,7 +598,7 @@ def update_statevar(
         anarede:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.solution["theta"][anarede.maskP] += (
         anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
     )
@@ -672,7 +672,7 @@ def exicstorage(
         anarede:
         stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
     """
-    ## Inicialização
+    ## Inicializacao
     # Armazenamento das variáveis de solução do fluxo de potência
     anarede.operationpoint[case][stage] = {
         **deepcopy(anarede.solution),
@@ -698,7 +698,7 @@ def exicevaluate(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição Inicial
     if case == 1:
         # Lambda
@@ -791,7 +791,7 @@ def exicheuristics(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     ## Afundamento de tensão não desejado (em i+1) e retorno ao valor esperado (em i+2) -> correção: voltar duas casas
     # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
     if (
@@ -1142,7 +1142,7 @@ def exiccvgprint(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Impressão de convergência
     # print(
     #     f"Convergência: {anarede.solution['convergence']} - Caso: {len(anarede.operationpoint)} - Iteração: {anarede.solution['iter']}"

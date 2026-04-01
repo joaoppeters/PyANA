@@ -14,12 +14,12 @@ def rwpwf(
     anarede,
     folder,
 ):
-    """Inicialização
+    """Inicializacao
 
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Arquivo
     anarede.filedir = realpath(
         folder + "\\" + anarede.namecase + "{}.pwf".format(anarede.ones)
@@ -249,7 +249,7 @@ def wheader(
     Args
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write("(")
     file.write("\n")
     file.write("( Modificacao Automatica de Dados .PWF")
@@ -281,7 +281,7 @@ def wtitu(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(titu["titu"]))
     file.write(format(titu["ruler"]))
 
@@ -298,7 +298,7 @@ def wdagr(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     agr = 0
     file.write(format(dagr.dagr.iloc[0]))
     for idx, value in dagr1.iterrows():
@@ -328,7 +328,7 @@ def wdanc(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(danc.danc.iloc[0]))
     file.write(format(danc.ruler.iloc[0]))
     if "ACLS" in danc.danc:
@@ -353,7 +353,7 @@ def wdanc_acls(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(danc.danc.iloc[0]))
     file.write(format(danc.ruler.iloc[0]))
     for idx, value in danc.iterrows():
@@ -375,7 +375,7 @@ def wdare(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dare.dare.iloc[0]))
     file.write(format(dare.ruler.iloc[0]))
     for idx, value in dare.iterrows():
@@ -397,7 +397,7 @@ def wdbar(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dbar.dbar.iloc[0]))
     file.write(format(dbar.ruler_x.iloc[0]))
     for idx, value in dbar.iterrows():
@@ -433,7 +433,7 @@ def wdbsh(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     bsh = 0
     file.write(format(dbsh["dbsh"]))
     for idx1, value in dbsh1.iterrows():
@@ -465,7 +465,7 @@ def wdcar(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcar.dcar.iloc[0]))
     file.write(format(dcar.ruler.iloc[0]))
     for idx, value in dcar.iterrows():
@@ -487,7 +487,7 @@ def wdcba(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcba.dcba.iloc[0]))
     file.write(format(dcba.ruler.iloc[0]))
     for idx, value in dcba.iterrows():
@@ -509,7 +509,7 @@ def wdccv(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dccv.dccv.iloc[0]))
     file.write(format(dccv.ruler.iloc[0]))
     for idx, value in dccv.iterrows():
@@ -531,7 +531,7 @@ def wdcer(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcer.dcer.iloc[0]))
     file.write(format(dcer.ruler.iloc[0]))
     for idx, value in dcer.iterrows():
@@ -553,7 +553,7 @@ def wdcli(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcli.dcli.iloc[0]))
     file.write(format(dcli.ruler.iloc[0]))
     for idx, value in dcli.iterrows():
@@ -575,7 +575,7 @@ def wdcnv(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcnv.dcnv.iloc[0]))
     file.write(format(dcnv.ruler.iloc[0]))
     for idx, value in dcnv.iterrows():
@@ -597,7 +597,7 @@ def wdcsc(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcsc.dcsc.iloc[0]))
     file.write(format(dcsc.ruler.iloc[0]))
     for idx, value in dcsc.iterrows():
@@ -619,7 +619,7 @@ def wdcte(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dcte.dcte.iloc[0]))
     file.write(format(dcte.ruler.iloc[0]))
     for idx, value in dcte.iterrows():
@@ -644,7 +644,7 @@ def wdctg(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     ctg = 0
     file.write(format(dctg["dctg"]))
     for idx1, value in dctg1.iterrows():
@@ -676,7 +676,7 @@ def wdctr(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dctr.dctr.iloc[0]))
     file.write(format(dctr.ruler.iloc[0]))
     for idx, value in dctr.iterrows():
@@ -698,7 +698,7 @@ def wdelo(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(delo.delo.iloc[0]))
     file.write(format(delo.ruler.iloc[0]))
     for idx, value in delo.iterrows():
@@ -720,7 +720,7 @@ def wdgbt(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dgbt.dgbt.iloc[0]))
     file.write(format(dgbt.ruler.iloc[0]))
     for idx, value in dgbt.iterrows():
@@ -741,7 +741,7 @@ def wdger(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dger.dger.iloc[0]))
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
@@ -763,7 +763,7 @@ def wdglt(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dglt.dglt.iloc[0]))
     file.write(format(dglt.ruler.iloc[0]))
     for idx, value in dglt.iterrows():
@@ -785,7 +785,7 @@ def wdinc(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dinc.dinc.iloc[0]))
     file.write(format(dinc.ruler.iloc[0]))
     for idx, value in dinc.iterrows():
@@ -807,7 +807,7 @@ def wdinj(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dinj.dinj.iloc[0]))
     file.write(format(dinj.ruler.iloc[0]))
     for idx, value in dinj.iterrows():
@@ -829,7 +829,7 @@ def wdlin(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dlin.dlin.iloc[0]))
     file.write(format(dlin.ruler.iloc[0]))
     for idx, value in dlin.iterrows():
@@ -851,7 +851,7 @@ def wdmet(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dmet.dmet.iloc[0]))
     file.write(format(dmet.ruler.iloc[0]))
     for idx, value in dmet.iterrows():
@@ -873,7 +873,7 @@ def wdmfl(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
     for idx, value in dmfl.iterrows():
@@ -895,7 +895,7 @@ def wdmfl_circ(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
     for idx, value in dmfl.iterrows():
@@ -920,7 +920,7 @@ def wdmte(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dmte.dmte.iloc[0]))
     file.write(format(dmte.ruler.iloc[0]))
 
@@ -944,7 +944,7 @@ def wdopc(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dopc.dopc.iloc[0]))
     file.write(format(dopc.ruler.iloc[0]))
     for idx, value in dopcDF.iterrows():
@@ -969,7 +969,7 @@ def wdshl(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dshl.dshl.iloc[0]))
     file.write(format(dshl.ruler.iloc[0]))
     for idx, value in dshl.iterrows():
@@ -991,7 +991,7 @@ def wdtpf(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dtpf.dtpf.iloc[0]))
     file.write(format(dtpf.ruler.iloc[0]))
 
@@ -1014,7 +1014,7 @@ def wdtpf_circ(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(dtpf.dtpf.iloc[0]))
     file.write(format(dtpf.ruler.iloc[0]))
     for idx, value in dtpf.iterrows():
@@ -1039,7 +1039,7 @@ def wtail(
         anarede:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write("(")
     file.write("\n")
 
@@ -1055,12 +1055,12 @@ def wtail(
 def rwstb(
     anatem,
 ):
-    """Inicialização
+    """Inicializacao
 
     Args
         anatem:
     """
-    ## Inicialização
+    ## Inicializacao
     # Arquivo
     anatem.filedir = realpath(
         anatem.sxlffolder + "\\" + anatem.namecase + "{}.stb".format(anatem.ones)
@@ -1120,7 +1120,7 @@ def wheader(
     Args
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write("(")
     file.write("\n")
     file.write("( Modificacao Automatica de Dados .PWF")
@@ -1152,7 +1152,7 @@ def wdarq(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(anatem.titu["titu"]))
     file.write(format(anatem.titu["ruler"]))
 
@@ -1167,7 +1167,7 @@ def wdevt(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     agr = 0
     file.write(format(anatem.dagr.dagr.iloc[0]))
     for idx, value in anatem.dagr1.iterrows():
@@ -1197,7 +1197,7 @@ def wdmaq(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(anatem.danc.danc.iloc[0]))
     file.write(format(anatem.danc.ruler.iloc[0]))
     if "ACLS" in anatem.danc.danc:
@@ -1222,7 +1222,7 @@ def wdmdg_md01(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(anatem.danc.danc.iloc[0]))
     file.write(format(anatem.danc.ruler.iloc[0]))
     for idx, value in anatem.danc.iterrows():
@@ -1244,7 +1244,7 @@ def wdsim(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write(format(anatem.dare.dare.iloc[0]))
     file.write(format(anatem.dare.ruler.iloc[0]))
     for idx, value in anatem.dare.iterrows():
@@ -1265,7 +1265,7 @@ def wtail(
         anatem:
         file:
     """
-    ## Inicialização
+    ## Inicializacao
     file.write("(")
     file.write("\n")
 

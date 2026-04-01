@@ -15,7 +15,7 @@ def exlf(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     from matrices import admittance
     from newton import newton
     from report import reportfile
@@ -43,7 +43,7 @@ def exic(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
 
     from matrices import admittance
     from continuation import prediction_correction
@@ -76,7 +76,7 @@ def expc(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     from matrices import admittance
     from newton import newton
     from poc import poc
@@ -109,7 +109,7 @@ def exsi(
         anarede: objeto da classe PowerFlowContainer
         anatem: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     from matrices import admittance
     from dynamic import dynamic
     from newton import newton
@@ -147,11 +147,11 @@ def exct(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
+    ## Inicializacao
     from matrices import admittance
     from newton import newton
     from report import reportfile
-    
+
     trueDLIN = anarede.dlinDF.copy()
     anarede.exct = dict()
     # anarede.exct["convergente"] = list()
@@ -161,12 +161,13 @@ def exct(
         pass
     else:
         print(
-            f"Iniciando análise de contingências (critério N-1) para {trueDLIN.shape[0]} linhas..."
+            f"\033[94mIniciando análise de contingências (critério N-1) para {trueDLIN.shape[0]} linhas...\033[00m"
         )
         anarede.nlin -= 1
         for idx, value in anarede.dlinDF.iterrows():
             print(
-                f"Simulando contingência do circuito {value.de} - {value.para}..."
+                f"\033[94mSimulando contingência do circuito {value.de} - {value.para}...\033[00m",
+                end=" ",
             )
             anarede.dlinDF = anarede.dlinDF.drop(idx)
             admittance(
@@ -176,10 +177,10 @@ def exct(
                 anarede,
             )
             anarede.exct[f"{value.de} - {value.para}"] = anarede.solution.copy()
-            # if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
-            #     anarede.exct["convergente"].append(f"{value.de} - {value.para}")
-            # else:
-            #     anarede.exct["divergente"].append(f"{value.de} - {value.para}")
+            if anarede.solution["convergence"] == "SISTEMA CONVERGENTE":
+                print("\033[92mSISTEMA CONVERGENTE\033[00m")
+            else:
+                print("\033[91mSISTEMA DIVERGENTE\033[00m")
 
             anarede.dlinDF = trueDLIN.copy()
 

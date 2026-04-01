@@ -23,7 +23,7 @@ def residue(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetores de resíduo
     V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
     I = anarede.Yb @ V
@@ -102,7 +102,7 @@ def md01residue(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.deltagen[2 * gen] = (
         anarede.solution["delta"][gen]
         - anarede.solution["delta0"][gen]
@@ -149,7 +149,7 @@ def resexsi(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetores de resíduo
     ev0 = concatenate((anarede.solution["fem0"], anarede.solution["voltage0"]), axis=0)
     dt0 = concatenate((anarede.solution["delta0"], anarede.solution["theta0"]), axis=0)

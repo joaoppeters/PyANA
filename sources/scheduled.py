@@ -18,7 +18,7 @@ def scheduled(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Potências ativa e reativa especificadas
     if anarede.solution["method"] == "LFDC":
         anarede.psch = zeros(anarede.nbus)

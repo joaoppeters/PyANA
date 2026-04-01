@@ -49,7 +49,7 @@ def admittance(
     ALL RIGHTS RESERVED TO RAY ZIMMERMAN
     CODE RETRIEVED FROM: https://github.com/rwl/PYPOWER
     """
-    ## Inicialização
+    ## Inicializacao
     active = anarede.dlinDF[anarede.dlinDF.estado]
     nactive = len(active)
     Ysr = 1 / vectorize(complex)(active.resistencia, active.reatancia)
@@ -100,7 +100,7 @@ def matrices(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
 
     # Jacobiana
@@ -308,7 +308,7 @@ def load2ycte(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     load2ycte = diag(
         (
             anarede.dbarDF.demanda_ativa.values
@@ -330,7 +330,7 @@ def md01jacob(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     if gen == 0:
         anarede.jacobiangenoffright = zeros(
             (2 * anarede.nger, 2 * (anarede.nger + anarede.nbus))
@@ -422,7 +422,7 @@ def jacexsi(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     dS_dVm, dS_dVa = dSbus_dV(
         anarede.Yblc,
         concatenate((anarede.solution["fem"], anarede.solution["voltage"]), axis=0),

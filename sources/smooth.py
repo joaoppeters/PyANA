@@ -25,7 +25,7 @@ def qlims(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     anarede.qlimkeys[value["nome"]] = dict()
@@ -133,7 +133,7 @@ def qlimssmooth(
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
@@ -205,7 +205,7 @@ def qlimnsmooth(
         nger: índice de geradores
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
@@ -281,7 +281,7 @@ def svcsQ(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     # Variáveis Simbólicas
@@ -386,7 +386,7 @@ def svcsQsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
         anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
@@ -456,7 +456,7 @@ def svcsI(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     anarede.qlimkeys[value["nome"]] = dict()
@@ -567,7 +567,7 @@ def svcsIsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     # Variáveis
@@ -675,7 +675,7 @@ def svcsA(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     anarede.qlimkeys[value["nome"]] = dict()
@@ -786,7 +786,7 @@ def svcsAsmooth(
         ncer: índice do compensador estático de potência reativa
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     seterr(all="ignore")
 
     # Variáveis
@@ -962,7 +962,7 @@ def qlimspop(
         anarede:
         pop: quantidade de ações necessárias
     """
-    ## Inicialização
+    ## Inicializacao
     for _, value in anarede.dbarDF.iterrows():
         popped = 0
         if value["tipo"] != 0:
@@ -979,7 +979,7 @@ def qlimstorage(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Criação automática de diretório
     smoothfolder(
         anarede,
@@ -1264,7 +1264,7 @@ def svcstorage(
     Args:
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Criação automática de diretório
     smoothfolder(
         anarede,

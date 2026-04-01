@@ -24,7 +24,7 @@ def pcalc(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx] * anarede.solution["voltage"][idx]
 
@@ -71,7 +71,7 @@ def qcalc(
         q: float
             potência reativa calculada para o barramenpara `idx`
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx] * anarede.solution["voltage"][idx]
 
@@ -118,7 +118,7 @@ def pcalct(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx] * anarede.solution["voltage"][idx]
 
@@ -165,7 +165,7 @@ def pcalcv(
         p: float
             potência ativa calculada para o barramenpara `idx`
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx]
 
@@ -210,7 +210,7 @@ def qcalct(
         q: float
             potência reativa calculada para o barramenpara `idx`
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx] * anarede.solution["voltage"][idx]
 
@@ -258,7 +258,7 @@ def qcalcv(
             potência reativa calculada para o barramenpara `idx`
     """
 
-    ## Inicialização
+    ## Inicializacao
     # Variável de potência reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx]
     for lin in range(0, anarede.nlin):

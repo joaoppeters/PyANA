@@ -15,12 +15,12 @@ from folder import continuationfolder
 def loading(
     anarede,
 ):
-    """inicialização
+    """Inicializacao
 
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Criação automática de diretório
     continuationfolder(
         anarede,
@@ -48,7 +48,7 @@ def var(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.pqtv = {}
     anarede.MW = array([])
@@ -59,7 +59,7 @@ def var(
     if "FREQ" in anarede.ctrl:
         anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = array([])
 
-    # Loop de Inicialização da Variável
+    # Loop de Inicializacao da Variável
     for _, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             # Variável de Armazenamento de Potência Ativa
@@ -296,7 +296,7 @@ def pqvt(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Geração de Gráfico
     color = 0
     for key, item in anarede.pqtv.items():
@@ -399,7 +399,7 @@ def ruthe(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     rows = list(anarede.operationpoint.keys())[-1]
     cols = sum(anarede.mask)

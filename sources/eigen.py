@@ -24,7 +24,7 @@ def eigensens(
         anarede:
         stage: string de identificação da etapa do fluxo de potência continuado
     """
-    ## Inicialização
+    ## Inicializacao
     # Reorganização da Matriz Jacobiana Expandida
     jacobian = deepcopy(anarede.jacobian)
 

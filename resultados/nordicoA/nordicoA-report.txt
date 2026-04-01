@@ -1,0 +1,40 @@
+April 01, 2026
+
+
+relatorio do sistema nordicoA
+
+solucao do fluxo de potencia via metodo newton-raphson
+
+opcoes de controle ativadas: Nenhum controle ativo!
+
+opcoes de relatorio ativadas: Nenhuma opcao de relatorio selecionada!
+
+
+
+vv relatorio de convergencia vv
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  1   | 60.000 | 1073.029 | 4042  | 237.477 |  811  |  0.000  |   1   |
+|  2   | 60.000 |  4.561  | 4042  |  6.747  | 1012  |  0.000  |   1   |
+-----------------------------------------------------------------------
+
+ * * * * SISTEMA CONVERGENTE * * * * 
+
+       |  FREQ  |  ERROR  | BARRA |  ERROR  | BARRA |  ERROR  | BARRA |
+| ITER |    Hz  |     MW  |   NUM |   MVAr  |   NUM |   CTRL  |   NUM |
+-----------------------------------------------------------------------
+|  2   | 60.000 |  0.036  |   4   |  0.017  |  818  |  0.000  |   1   |
+-----------------------------------------------------------------------
+
+Slack:
+|          BARRA           |         TENSAO       |        GERACAO      |
+| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |
+-------------------------------------------------------------------------
+| 820 |     g20      |  2  |   1.019   |  +0.00   |+2137.862 | +378.533 |
+-------------------------------------------------------------------------
+
+
+
+fim do relatorio do sistema nordicoA

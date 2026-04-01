@@ -15,12 +15,12 @@ def pwf(
     anarede,
     file,
 ):
-    """inicialização
+    """Inicializacao
 
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     t = time.process_time()
 
     # Variáveis
@@ -53,7 +53,7 @@ def keywords(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.end_line = "\n"
     anarede.end_archive = "FIM"
     anarede.end_block = ("9999", "99999", "999999")
@@ -68,7 +68,7 @@ def codes(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.pwfblock = dict(
         {
@@ -114,7 +114,7 @@ def readfile(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     f = open(f"{file}", "r", encoding="latin-1")
     anarede.lines = f.readlines()
     f.close()

@@ -18,7 +18,7 @@ def convergence(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Trajetória de convergência da frequência
     anarede.solution["freqiter"] = append(
         anarede.solution["freqiter"],

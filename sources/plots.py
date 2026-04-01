@@ -15,13 +15,13 @@ from folder import convergencefolder, statevarfolder
 def convergence(
     anarede,
 ):
-    """inicialização
+    """Inicializacao
 
     Args
         anarede:
         setting: self do arquivo setting.py
     """
-    ## Inicialização
+    ## Inicializacao
     # Criação de pasta
     convergencefolder(
         anarede,
@@ -53,7 +53,7 @@ def convP(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -128,7 +128,7 @@ def convQ(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -203,7 +203,7 @@ def convY(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -273,13 +273,13 @@ def convY(
 def statevar(
     anarede,
 ):
-    """inicialização
+    """Inicializacao
 
     Args
         anarede:
         setting: self do arquivo setting.py
     """
-    ## Inicialização
+    ## Inicializacao
     # Criação de pasta
     statevarfolder(
         anarede,
@@ -307,7 +307,7 @@ def stateVT(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     fig, ax = plt.subplots(
         nrows=1, ncols=1, subplot_kw={"projection": "polar"}, figsize=(8, 9)
     )
@@ -424,5 +424,5 @@ def stateY(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     pass

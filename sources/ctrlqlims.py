@@ -20,7 +20,7 @@ def qlimssol(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
@@ -41,7 +41,7 @@ def qlimssol(
             anarede.diffyqgv = dict()
             anarede.diffyvv = dict()
 
-        # Inicialização sigmoides
+        # Inicializacao sigmoides
         for idx, value in anarede.dbarDF.iterrows():
             if value["tipo"] != 0:
                 qlims(
@@ -65,7 +65,7 @@ def qlimsres(
         anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetor de resíduos
     anarede.deltaQLIM = zeros([anarede.nger])
 
@@ -97,7 +97,7 @@ def qlimssubjac(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -211,7 +211,7 @@ def qlimsupdt(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.dimpreqlim = anarede.jacobian.shape[0] - anarede.ctrldim
 
     # Contador
@@ -240,7 +240,7 @@ def qlimssch(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.qsch = zeros([anarede.nbus])
 
@@ -260,7 +260,7 @@ def qlimscorr(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
@@ -275,7 +275,7 @@ def qlimsheur(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
     # anarede.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
@@ -323,7 +323,7 @@ def qlimspop(
         anarede:
         pop: quantidade de ações necessárias
     """
-    ## Inicialização
+    ## Inicializacao
     qlimspop(
         anarede,
         pop=pop,
@@ -338,7 +338,7 @@ def qlimscpf(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.solution["qlim_reactive_generation"]
     )
@@ -354,7 +354,7 @@ def qlimssolcpf(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição
     precase = case - 1
     if case == 1:
@@ -376,7 +376,7 @@ def qlimssubhess(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # hessiana - LEMBRANDO QUE A MATRIZ HESSIANA É CONSTRUÍDA COM A *TRANSPOSTA* DA JACOBIANA
     #
     #   H     M   yt

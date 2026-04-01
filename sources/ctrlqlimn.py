@@ -21,7 +21,7 @@ def qlimnsol(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variáveis
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
@@ -39,7 +39,7 @@ def qlimnres(
         anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
+    ## Inicializacao
     # Vetor de resíduos
     anarede.deltaQLIM = zeros([anarede.nger])
 
@@ -71,7 +71,7 @@ def qlimnsubjac(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # jacobiana:
     #
@@ -156,7 +156,7 @@ def qlimnupdt(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Contador
     nger = 0
 
@@ -183,7 +183,7 @@ def qlimnsch(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.qsch = zeros([anarede.nbus])
 
@@ -203,7 +203,7 @@ def qlimncorr(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
+    ## Inicializacao
     # Variável
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
@@ -218,7 +218,7 @@ def qlimnheur(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
     # anarede.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
@@ -266,7 +266,7 @@ def qlimnpop(
         anarede:
         pop: quantidade de ações necessárias
     """
-    ## Inicialização
+    ## Inicializacao
     qlimspop(
         anarede,
         pop=pop,
@@ -281,7 +281,7 @@ def qlimnsubhess(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
     #
     # hessiana:
     #
@@ -301,6 +301,6 @@ def qlimnsubjacsym(
     Args
         anarede:
     """
-    ## Inicialização
+    ## Inicializacao
 
     pass
