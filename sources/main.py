@@ -11,7 +11,7 @@ from powerflow import PowerFlow
 system = "SISTEMA_REDUZIDO_NE_232B_B1.stb"
 system = "1Q2026.PWF"
 system = "nordicoB.PWF"
-system = "case1354pegase.m"
+system = "case2869pegase.pwf"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW
@@ -20,7 +20,7 @@ method = "EXLF"  # NEWTON-RAPHSON
 # method = "EXCT"  # CONTINGENCY ANALYSIS
 # method = "ORGAt"  # ORGANON DATA TRANSCRIPTION
 # method = "PSSEt"  # PSSE DATA TRANSCRIPTION
-method = "MATPt"  # MATPOWER DATA TRANSCRIPTION
+# method = "MATPt"  # MATPOWER DATA TRANSCRIPTION
 
 PowerFlow(
     system=system,

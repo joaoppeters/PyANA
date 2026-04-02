@@ -1882,7 +1882,7 @@ def mrwpwf(
         matpower (_type_): _description_
     """
     import string
-    from numpy import deg2rad, sort
+    from numpy import sort
     from itertools import product
 
     ## Inicializacao
@@ -1959,7 +1959,7 @@ def mrwpwf(
         gb = value.baseKV
         nome = "BUS-" + str(value.bus_i)
         v = int(value.Vm * 1e3)
-        a = str(deg2rad(value.Va))[:4]
+        a = str(value.Va)[:4]
         pl = 5 * " " if not value.Pd else str(value.Pd)[:5]
         ql = 5 * " " if not value.Qd else str(value.Qd)[:5]
         sh = 5 * " " if not value.Bs else str(value.Bs)[:5]
@@ -1984,7 +1984,7 @@ def mrwpwf(
     anarede.file.write("\n")
 
     dger = f""
-    total_generation = matpower.dgerDF.Pg.sum()
+    total_generation = matpower.dgerDF[matpower.dgerDF.Pg > 0].Pg.sum()
     anarede.file.write("DGER")
     anarede.file.write("\n")
     anarede.file.write(
@@ -1993,11 +1993,11 @@ def mrwpwf(
     anarede.file.write("\n")
     for idx, value in matpower.dgerDF.iterrows():
         num = int(value.bus)
-        pmn = value.Pmin
-        pmx = value.Pmax
-        fp = value.Pg / total_generation
+        pmn = str(value.Pmin)[:6]
+        pmx = str(value.Pmax)[:6]
+        fp = str(value.Pg / total_generation * 100)[:5] if value.Pg > 0 else 5 * " "
 
-        dger += f"{num:>5}{3*' '}{pmn:>6.1f} {pmx:>6.1f} {fp:>5.1f}{45*' '}\n"
+        dger += f"{num:>5}{3*' '}{pmn:>6} {pmx:>6} {fp:>5}{45*' '}\n"
 
     anarede.file.write(dger)
     anarede.file.write("99999")
@@ -2018,11 +2018,10 @@ def mrwpwf(
         de = int(value.fbus)
         para = int(value.tbus)
         nc = int(value.nc)
-        r = str(value.r * 1e3)[:6]
-        x = str(value.x * 1e3)[:6]
-        b = str(value.b * 1e3)[:6]
+        r = 6 * " " if not value.r else str(value.r * 1e3)[:6]
+        x = 6 * " " if not value.x else str(value.x * 1e3)[:6]
         tap = 5 * " " if not value.ratio else str(value.ratio)[:5]
-        mvar = str(value.b * 1e3)[:6]
+        mvar = 6 * " " if not value.b else str(value.b * 1e3)[:6]
 
         dlin += f"{de:>5}{5*' '}{para:>5}{nc:>2}{3*' '}{r:>6}{x:>6}{mvar:>6}{tap:>5}{81*' '}\n"
 

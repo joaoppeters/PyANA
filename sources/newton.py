@@ -82,6 +82,7 @@ def newton(
         convergence(
             anarede,
         )
+        print(anarede.solution["iter"], end="\n")
 
         # Matriz Jacobiana
         matrices(
