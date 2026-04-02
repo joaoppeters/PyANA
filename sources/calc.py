@@ -13,19 +13,19 @@ def pcalc(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência ativa de cada barra
+    """calculo da potencia ativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência ativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia ativa
 
     Retorno
         p: float
-            potência ativa calculada para o barramenpara `idx`
+            potencia ativa calculada para o barramenpara `idx`
     """
     ## Inicializacao
-    # Variável de potência ativa calculada para o barramento para `idx`
+    # Variavel de potencia ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx] * anarede.solution["voltage"][idx]
 
     for lin in range(0, anarede.nlin):
@@ -48,7 +48,7 @@ def pcalc(
 
     p *= anarede.solution["voltage"][idx]
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
@@ -60,19 +60,19 @@ def qcalc(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência reativa de cada barra
+    """calculo da potencia reativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência reativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia reativa
 
     Retorno
         q: float
-            potência reativa calculada para o barramenpara `idx`
+            potencia reativa calculada para o barramenpara `idx`
     """
     ## Inicializacao
-    # Variável de potência reativa calculada para o barramento para `idx`
+    # Variavel de potencia reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx] * anarede.solution["voltage"][idx]
 
     for lin in range(0, anarede.nlin):
@@ -95,7 +95,7 @@ def qcalc(
 
     q *= anarede.solution["voltage"][idx]
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]
@@ -107,19 +107,19 @@ def pcalct(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência ativa de cada barra
+    """calculo da potencia ativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência ativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia ativa
 
     Retorno
         p: float
-            potência ativa calculada para o barramenpara `idx`
+            potencia ativa calculada para o barramenpara `idx`
     """
     ## Inicializacao
-    # Variável de potência ativa calculada para o barramento para `idx`
+    # Variavel de potencia ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx] * anarede.solution["voltage"][idx]
 
     for lin in range(0, anarede.nlin):
@@ -142,7 +142,7 @@ def pcalct(
 
     p *= anarede.solution["voltage"][idx]
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
@@ -154,19 +154,19 @@ def pcalcv(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência ativa de cada barra
+    """calculo da potencia ativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência ativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia ativa
 
     Retorno
         p: float
-            potência ativa calculada para o barramenpara `idx`
+            potencia ativa calculada para o barramenpara `idx`
     """
     ## Inicializacao
-    # Variável de potência ativa calculada para o barramento para `idx`
+    # Variavel de potencia ativa calculada para o barramento para `idx`
     p = anarede.gdiag[idx]
 
     for lin in range(0, anarede.nlin):
@@ -187,7 +187,7 @@ def pcalcv(
                 * sin(anarede.solution["theta"][idx] - anarede.solution["theta"][bus])
             )
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
@@ -199,19 +199,19 @@ def qcalct(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência reativa de cada barra
+    """calculo da potencia reativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência reativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia reativa
 
     Retorno
         q: float
-            potência reativa calculada para o barramenpara `idx`
+            potencia reativa calculada para o barramenpara `idx`
     """
     ## Inicializacao
-    # Variável de potência reativa calculada para o barramento para `idx`
+    # Variavel de potencia reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx] * anarede.solution["voltage"][idx]
 
     for lin in range(0, anarede.nlin):
@@ -234,7 +234,7 @@ def qcalct(
 
     q *= anarede.solution["voltage"][idx]
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]
@@ -246,20 +246,20 @@ def qcalcv(
     anarede,
     idx: int = None,
 ):
-    """cálculo da potência reativa de cada barra
+    """calculo da potencia reativa de cada barra
 
     Args
         anarede:
-        idx: int, obrigatório, valor padrão None
-            referencia o índice da barra a qual vai ser calculada a potência reativa
+        idx: int, obrigatorio, valor padrao None
+            referencia o indice da barra a qual vai ser calculada a potencia reativa
 
     Retorno
         q: float
-            potência reativa calculada para o barramenpara `idx`
+            potencia reativa calculada para o barramenpara `idx`
     """
 
     ## Inicializacao
-    # Variável de potência reativa calculada para o barramento para `idx`
+    # Variavel de potencia reativa calculada para o barramento para `idx`
     q = -anarede.bdiag[idx]
     for lin in range(0, anarede.nlin):
         if idx == anarede.dlinDF["de"].iloc[lin] - 1:
@@ -279,7 +279,7 @@ def qcalcv(
                 * cos(anarede.solution["theta"][idx] - anarede.solution["theta"][bus])
             )
 
-    # Armazenamenpara da potência ativa gerada equivalente do barramento para
+    # Armazenamenpara da potencia ativa gerada equivalente do barramento para
     anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]

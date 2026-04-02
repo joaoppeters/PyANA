@@ -21,35 +21,35 @@ def loading(
         anarede:
     """
     ## Inicializacao
-    # Criação automática de diretório
+    # Criacao automatica de diretorio
     continuationfolder(
         anarede,
     )
 
-    # Variáveis para geração dos gráficos de fluxo de potência continuado
+    # Variaveis para geracao dos graficos de fluxo de potencia continuado
     var(
         anarede,
     )
 
-    # # Gráficos de variáveis de estado e controle em função do carregamento
+    # # Graficos de variaveis de estado e controle em funcao do carregamento
     # self.pqvt(
     #     anarede,
     # )
 
-    # # Gráfico de rootlocus
+    # # Grafico de rootlocus
     # self.ruthe(anarede,)
 
 
 def var(
     anarede,
 ):
-    """variáveis para geração dos gráficos de fluxo de potência continuado
+    """variaveis para geracao dos graficos de fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.pqtv = {}
     anarede.MW = array([])
     anarede.MVAr = array([])
@@ -59,42 +59,42 @@ def var(
     if "FREQ" in anarede.ctrl:
         anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = array([])
 
-    # Loop de Inicializacao da Variável
+    # Loop de Inicializacao da Variavel
     for _, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            # Variável de Armazenamento de Potência Ativa
+            # Variavel de Armazenamento de Potencia Ativa
             anarede.pqtv["P-" + value["nome"]] = array([])
 
-            # Variável de Armazenamento de Potência Reativa
+            # Variavel de Armazenamento de Potencia Reativa
             anarede.pqtv["Q-" + value["nome"]] = array([])
 
         elif (value["tipo"] == 0) and (
             ("SVCs" in anarede.ctrl)
             and (value["numero"] in anarede.dcerDF["barra"].to_numpy())
         ):
-            # Variável de Armazenamento de Potência Reativa
+            # Variavel de Armazenamento de Potencia Reativa
             anarede.pqtv["Q-" + value["nome"]] = array([])
 
-        # Variável de Armazenamento de Magnitude de Tensão Corrigida
+        # Variavel de Armazenamento de Magnitude de Tensao Corrigida
         anarede.pqtv["Vcorr-" + value["nome"]] = array([])
 
-        # Variável de Armazenamento de Defasagem Angular Corrigida
+        # Variavel de Armazenamento de Defasagem Angular Corrigida
         anarede.pqtv["Tcorr-" + value["nome"]] = array([])
 
     # Loop de Armazenamento
     for key, item in anarede.operationpoint.items():
-        # Condição
+        # Condicao
         if key == 0:
             aux = anarede.dbarDF["nome"][0]  # usado no loop seguinte
             for value in range(0, item["voltage"].shape[0]):
                 if anarede.dbarDF["tipo"][value] != 0:
-                    # Armazenamento de Potência Ativa
+                    # Armazenamento de Potencia Ativa
                     anarede.pqtv["P-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["P-" + anarede.dbarDF["nome"][value]],
                         item["active"][value],
                     )
 
-                    # Armazenamento de Potência Reativa
+                    # Armazenamento de Potencia Reativa
                     anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["reactive"][value],
@@ -111,19 +111,19 @@ def var(
                         anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
-                    # Armazenamento de Potência Reativa
+                    # Armazenamento de Potencia Reativa
                     anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["svc_generation"][busidxcer],
                     )
 
-                # Armazenamento de Magnitude de Tensão
+                # Armazenamento de Magnitude de Tensao
                 anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]] = append(
                     anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]],
                     item["voltage"][value],
                 )
 
-                # Variável de Armazenamento de Defasagem Angular
+                # Variavel de Armazenamento de Defasagem Angular
                 anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]] = append(
                     anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]],
                     degrees(item["theta"][value]),
@@ -144,7 +144,7 @@ def var(
                     anarede.nbuseigenvaluesQV, item["eigenvalues-QV"]
                 )
 
-            # Frequência
+            # Frequencia
             if "FREQ" in anarede.ctrl:
                 anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
                     anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
@@ -154,13 +154,13 @@ def var(
         elif key > 0:
             for value in range(0, item["c"]["voltage"].shape[0]):
                 if anarede.dbarDF["tipo"][value] != 0:
-                    # Armazenamento de Potência Ativa
+                    # Armazenamento de Potencia Ativa
                     anarede.pqtv["P-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["P-" + anarede.dbarDF["nome"][value]],
                         item["c"]["active"][value],
                     )
 
-                    # Armazenamento de Potência Reativa
+                    # Armazenamento de Potencia Reativa
                     anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["c"]["reactive"][value],
@@ -177,19 +177,19 @@ def var(
                         anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[value]
                     ].tolist()[0]
 
-                    # Armazenamento de Potência Reativa
+                    # Armazenamento de Potencia Reativa
                     anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]] = append(
                         anarede.pqtv["Q-" + anarede.dbarDF["nome"][value]],
                         item["c"]["svc_generation"][busidxcer],
                     )
 
-                # Armazenamento de Magnitude de Tensão Corrigida
+                # Armazenamento de Magnitude de Tensao Corrigida
                 anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]] = append(
                     anarede.pqtv["Vcorr-" + anarede.dbarDF["nome"][value]],
                     item["c"]["voltage"][value],
                 )
 
-                # Variável de Armazenamento de Defasagem Angular Corrigida
+                # Variavel de Armazenamento de Defasagem Angular Corrigida
                 anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]] = append(
                     anarede.pqtv["Tcorr-" + anarede.dbarDF["nome"][value]],
                     degrees(item["c"]["theta"][value]),
@@ -279,7 +279,7 @@ def var(
                     anarede.nbuseigenvaluesQV, item["c"]["eigenvalues-QV"]
                 )
 
-            # Frequência
+            # Frequencia
             if "FREQ" in anarede.ctrl:
                 anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])] = append(
                     anarede.pqtv["FREQbase" + str(anarede.cte["FBSE"])],
@@ -291,19 +291,19 @@ def pqvt(
     self,
     anarede,
 ):
-    """geração e armazenamento de gráficos de variáveis de estado e controle em função do carregamento
+    """geracao e armazenamento de graficos de variaveis de estado e controle em funcao do carregamento
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Geração de Gráfico
+    # Geracao de Grafico
     color = 0
     for key, item in anarede.pqtv.items():
         if (key[:5] != "Vprev") and (key[:5] != "Tprev"):
             fig, ax = plt.subplots(nrows=1, ncols=1)
 
-            # Variáveis
+            # Variaveis
             if key[1:5] == "c":
                 busname = key[6:]
             else:
@@ -354,30 +354,30 @@ def pqvt(
                 ax.legend([(line,)], [busname])
 
             # Labels
-            # Condição de Potência Ativa
+            # Condicao de Potencia Ativa
             if key[0] == "P":
-                ax.set_title("Variação da Geração de Potência Ativa")
-                ax.set_ylabel("Geração de Potência Ativa [MW]")
+                ax.set_title("Variacao da Geracao de Potencia Ativa")
+                ax.set_ylabel("Geracao de Potencia Ativa [MW]")
 
-            # Condição de Potência Reativa
+            # Condicao de Potencia Reativa
             elif key[0] == "Q":
-                ax.set_title("Variação da Geração de Potência Reativa")
-                ax.set_ylabel("Geração de Potência Reativa [MVAr]")
+                ax.set_title("Variacao da Geracao de Potencia Reativa")
+                ax.set_ylabel("Geracao de Potencia Reativa [MVAr]")
 
-            # Magnitude de Tensão Nodal
+            # Magnitude de Tensao Nodal
             if key[0] == "V":
-                ax.set_title("Variação da Magnitude de Tensão do Barramento")
-                ax.set_ylabel("Magnitude de Tensão do Barramento [p.u.]")
+                ax.set_title("Variacao da Magnitude de Tensao do Barramento")
+                ax.set_ylabel("Magnitude de Tensao do Barramento [p.u.]")
 
-            # Defasagem Angular de Tensão Nodal
+            # Defasagem Angular de Tensao Nodal
             elif key[0] == "T":
-                ax.set_title("Variação da Defasagem Angular do Barramento")
+                ax.set_title("Variacao da Defasagem Angular do Barramento")
                 ax.set_ylabel("Defasagem Angular do Barramento [graus]")
 
-            # Frequência
+            # Frequencia
             elif key[0] == "F":
-                ax.set_title("Variação da Frequência do SEP")
-                ax.set_ylabel("Frequência [Hz]")
+                ax.set_title("Variacao da Frequencia do SEP")
+                ax.set_ylabel("Frequencia [Hz]")
 
             ax.set_xlabel("Carregamento [MW]")
             ax.grid()
@@ -394,19 +394,19 @@ def ruthe(
     self,
     anarede,
 ):
-    """geração e armazenamento de gráfico rootlocus
+    """geracao e armazenamento de grafico rootlocus
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     rows = list(anarede.operationpoint.keys())[-1]
     cols = sum(anarede.mask)
     colsP = sum(anarede.maskP)
     colsQ = sum(anarede.maskQ)
 
-    # Reconfiguração
+    # Reconfiguracao
     anarede.nbuseigenvalues = anarede.nbuseigenvalues.reshape(rows, cols).T.astype(
         dtype=complex
     )
@@ -417,7 +417,7 @@ def ruthe(
         dtype=complex
     )
 
-    # Geração de Gráfico - Autovalores da matriz Jacobiana Reduzida
+    # Geracao de Grafico - Autovalores da matriz Jacobiana Reduzida
     fig, ax = plt.subplots(nrows=1, ncols=1)
     color = 0
     for eigen in range(0, cols):
@@ -443,7 +443,7 @@ def ruthe(
     ax.axvline(0.0, linestyle=":", color="k", linewidth=0.75, zorder=-20)
 
     ax.set_title("Autovalores da Matriz Jacobiana Reduzida")
-    ax.set_ylabel(f"Eixo Imaginário ($j\omega$)")
+    ax.set_ylabel(f"Eixo Imaginario ($j\omega$)")
     ax.set_xlabel(f"Eixo Real ($\sigma$)")
 
     # Save
@@ -453,7 +453,7 @@ def ruthe(
     )
     plt.close(fig)
 
-    # Geração de Gráfico - Autovalores da matriz de sensisbilidade PT
+    # Geracao de Grafico - Autovalores da matriz de sensisbilidade PT
     fig, ax = plt.subplots(nrows=1, ncols=1)
     color = 0
     for eigen in range(0, colsP):
@@ -479,7 +479,7 @@ def ruthe(
     ax.axvline(0.0, linestyle=":", color="k", linewidth=0.75, zorder=-20)
 
     ax.set_title(f"Autovalores da Matriz de Sensibilidade $P\\theta$")
-    ax.set_ylabel(f"Eixo Imaginário ($j\omega$)")
+    ax.set_ylabel(f"Eixo Imaginario ($j\omega$)")
     ax.set_xlabel(f"Eixo Real ($\sigma$)")
 
     # Save
@@ -489,7 +489,7 @@ def ruthe(
     )
     plt.close(fig)
 
-    # Geração de Gráfico - Autovalores da matriz de sensibilidade QV
+    # Geracao de Grafico - Autovalores da matriz de sensibilidade QV
     fig, ax = plt.subplots(nrows=1, ncols=1)
     color = 0
     for eigen in range(0, colsQ):
@@ -515,7 +515,7 @@ def ruthe(
     ax.axvline(0.0, linestyle=":", color="k", linewidth=0.75, zorder=-20)
 
     ax.set_title(f"Autovalores da Matriz de Sensibilidade $QV$")
-    ax.set_ylabel(f"Eixo Imaginário ($j\omega$)")
+    ax.set_ylabel(f"Eixo Imaginario ($j\omega$)")
     ax.set_xlabel(f"Eixo Real ($\sigma$)")
 
     # Save

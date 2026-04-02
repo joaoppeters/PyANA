@@ -17,7 +17,7 @@ def updtstt(
     case: int = 0,
     stage: str = "",
 ):
-    """atualização das variáveis de estado
+    """atualizacao das variaveis de estado
 
     Args
         anarede:
@@ -28,7 +28,7 @@ def updtstt(
             anarede.statevar.size,
         )
 
-        # configuração reduzida
+        # configuracao reduzida
         anarede.solution["theta"][anarede.maskP] += (
             anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
         )
@@ -37,7 +37,7 @@ def updtstt(
             * anarede.statevar[(anarede.Tval) : (anarede.Tval + anarede.Vval)]
         )
 
-        # Atualização das variáveis de estado adicionais para controles ativos
+        # Atualizacao das variaveis de estado adicionais para controles ativos
         if anarede.ctrlcount > 0:
             ctrlupdt(
                 anarede,
@@ -55,12 +55,12 @@ def updtstt(
                 ]
             )
 
-    # Condição de previsão
+    # Condicao de previsao
     elif stage == "p":
         anarede.solution["theta"][anarede.maskP] += (
             anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
         )
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             anarede.solution["voltage"][anarede.maskQ] += (
                 anarede.solution["sign"]
@@ -76,7 +76,7 @@ def updtstt(
                 + anarede.statevar[(anarede.nbus + anarede.nodevarvolt)]
             )
 
-        # Verificação do Ponto de Máximo Carregamento
+        # Verificacao do Ponto de Maximo Carregamento
         if case > 0:
             if case == 1:
                 anarede.solution["stepmax"] = deepcopy(anarede.solution["stepsch"])
@@ -95,7 +95,7 @@ def updtstt(
                     anarede.solution["pmc"] = True
                     anarede.pmcidx = deepcopy(case)
 
-    # Condição de correção
+    # Condicao de correcao
     elif stage == "c":
         anarede.solution["theta"][anarede.maskP] += (
             anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
@@ -109,7 +109,7 @@ def updtstt(
         if anarede.solution["varstep"] == "volt":
             anarede.solution["stepsch"] += anarede.statevar[-1]
 
-    # Atualização das variáveis de estado adicionais para controles ativos
+    # Atualizacao das variaveis de estado adicionais para controles ativos
     if anarede.ctrlcount > 0 and stage != None:
         ctrlupdt(
             anarede,
@@ -119,7 +119,7 @@ def updtstt(
 def updtpwr(
     anarede,
 ):
-    """atualização das variáveis de estado
+    """atualizacao das variaveis de estado
 
     Args
         anarede:
@@ -146,7 +146,7 @@ def updtlinear(
         anarede:
     """
     ## Inicializacao
-    # Atualização dos ângulos dos barramentos
+    # Atualizacao dos ângulos dos barramentos
     anarede.solution["theta"] = deepcopy(anarede.statevar)
 
 
@@ -159,7 +159,7 @@ def updttm(
         anarede:
     """
     ## Inicializacao
-    # Atualização das variaveis dinamicas tempo
+    # Atualizacao das variaveis dinamicas tempo
     anarede.solution["delta"] += anarede.timestatevar[0 : 2 * anarede.nger : 2]
     anarede.solution["omega"] += anarede.timestatevar[1 : 2 * anarede.nger : 2]
     anarede.solution["theta"] += anarede.timestatevar[

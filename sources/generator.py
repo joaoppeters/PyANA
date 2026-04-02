@@ -85,7 +85,7 @@ def md01(
 #     delta,
 #     gen,
 # ):
-#     """equação de potência eletrica do modelo clássico do gerador
+#     """equacao de potencia eletrica do modelo classico do gerador
 
 #     Args
 #         anatem:

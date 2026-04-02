@@ -51,7 +51,7 @@ def darq(
     if anatem.darqDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DARQ`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DARQ`!\033[0m"
         )
     else:
         anatem.stbblock["DARQ"] = True
@@ -60,7 +60,7 @@ def darq(
 def dcar(
     anatem,
 ):
-    """Inicializacao para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+    """Inicializacao para leitura de Args A, B, C e D que estabelecem a curva de variacao de carga em relacao a magnitude de tensao nas barras
 
     Args
         anatem:
@@ -84,18 +84,18 @@ def dcar(
     anatem.dcar["parametro_D"] = list()
     anatem.dcar["tensao_limite"] = list()
 
-    # loop protegido contra estouro de índice
+    # loop protegido contra estouro de indice
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
-        # se linha vazia ou comentário: apenas avança
+        # se linha vazia ou comentario: apenas avanca
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
 
-        # extrai com safe_slice; use require_full=True se quiser forçar comprimento exato
+        # extrai com safe_slice; use require_full=True se quiser forcar comprimento exato
         anatem.dcar["tipo_elemento_1"].append(safe_slice(line, 0, 4))
         anatem.dcar["identificacao_elemento_1"].append(safe_slice(line, 5, 10))
         anatem.dcar["condicao_elemento_1"].append(safe_slice(line, 11, 12))
@@ -153,7 +153,7 @@ def dcdu(
             anatem.linecount += 1
             continue
 
-        # comentário
+        # comentario
         if line[0] == anatem.comment:
             raw_entry["kind"] = "comment"
             anatem.dcdu_raw.append(raw_entry)
@@ -175,7 +175,7 @@ def dcdu(
             }
             raw_index += 1
 
-            # comentário ou linha vazia dentro do bloco
+            # comentario ou linha vazia dentro do bloco
             if line == "" or line[0] == anatem.comment:
                 raw_entry["kind"] = "comment" if line else "blank"
                 anatem.dcdu_raw.append(raw_entry)
@@ -258,7 +258,7 @@ def dcdu(
                     safe_slice(line, 28, 34).strip()
                 )
 
-            # bloco padrão
+            # bloco padrao
             else:
                 raw_entry["kind"] = "bloco"
                 anatem.dcdu_raw.append(raw_entry)
@@ -330,14 +330,14 @@ def dcst(
         anatem:
     """
     ## Inicializacao
-    # proteção: evita erro se linecount estiver fora do intervalo
+    # protecao: evita erro se linecount estiver fora do intervalo
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # comentário ou linha vazia -> apenas avança
+        # comentario ou linha vazia -> apenas avanca
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -345,7 +345,7 @@ def dcst(
         # prev_line seguro (quando linecount == 0, prev_line = "")
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
-        # se a linha anterior é o ruler, cria novo registro
+        # se a linha anterior e o ruler, cria novo registro
         if prev_line[:] in anatem.dcst.get("ruler", ""):
             nbus = safe_slice(line, 0, 4).strip()
             anatem.dcst[nbus] = {
@@ -357,7 +357,7 @@ def dcst(
             anatem.linecount += 1
             continue
 
-        # se chegou aqui não é comentário nem ruler: apenas avança
+        # se chegou aqui nao e comentario nem ruler: apenas avanca
         anatem.linecount += 1
 
 
@@ -373,14 +373,14 @@ def dcte(
     anatem.dcte["constante"] = list()
     anatem.dcte["valor_constante"] = list()
 
-    # Proteção: garante que linecount esteja dentro do intervalo
+    # Protecao: garante que linecount esteja dentro do intervalo
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular linhas vazias e comentários
+        # pular linhas vazias e comentarios
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -404,12 +404,12 @@ def dcte(
     if anatem.dcteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCTE`!\033[0m"
         )
     else:
         anatem.stbblock["DCTE"] = True
 
-        # substitui "0" por NaN, remove linhas sem constante e mantém a última ocorrência
+        # substitui "0" por NaN, remove linhas sem constante e mantem a última ocorrencia
         anatem.dcteDF["constante"] = anatem.dcteDF["constante"].replace(
             "0", float("nan")
         )
@@ -445,14 +445,14 @@ def devt(
     anatem.devt["susceptancia"] = list()
     anatem.devt["defasagem"] = list()
 
-    # loop protegido contra estouro de índice
+    # loop protegido contra estouro de indice
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular linhas vazias e comentários
+        # pular linhas vazias e comentarios
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -477,14 +477,14 @@ def devt(
 
         anatem.linecount += 1
 
-    # DataFrame dos Dados de Alteração do Nível de Carregamento
+    # DataFrame dos Dados de Alteracao do Nivel de Carregamento
     anatem.devtDF = DF(data=anatem.devt)
     anatem.devt = deepcopy(anatem.devtDF)
-    # substitui campos vazios por "0" para conversão segura
+    # substitui campos vazios por "0" para conversao segura
     anatem.devtDF = anatem.devtDF.replace(r"^\s*$", "0", regex=True)
-    # ordena por tempo (já convertido a string "0" para float abaixo)
+    # ordena por tempo (ja convertido a string "0" para float abaixo)
     anatem.devtDF = anatem.devtDF.sort_values(by=["tempo"], ascending=True)
-    # converte tipos (se alguma conversão falhar levanta exceção)
+    # converte tipos (se alguma conversao falhar levanta excecao)
     anatem.devtDF = anatem.devtDF.astype(
         {
             "tipo": "object",
@@ -506,7 +506,7 @@ def devt(
         }
     )
     if anatem.devtDF.empty:
-        # se vazio, mantém comportamento anterior (pass)
+        # se vazio, mantem comportamento anterior (pass)
         pass
     else:
         anatem.stbblock["DEVT"] = True
@@ -529,7 +529,7 @@ def dfnt(
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular comentário/linha vazia
+        # pular comentario/linha vazia
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -555,14 +555,14 @@ def dfnt(
             anatem.linecount += 1
             continue
 
-        # caso não seja o início do bloco, avança
+        # caso nao seja o inicio do bloco, avanca
         anatem.linecount += 1
 
 
 def dger(
     anatem,
 ):
-    """Inicializacao para leitura de dados de alteração do nível de carregamento
+    """Inicializacao para leitura de dados de alteracao do nivel de carregamento
 
     Args
         anatem:
@@ -588,20 +588,20 @@ def dger(
     anatem.dger["tensao_bloqueio_potencia_reativa"] = list()
     anatem.dger["tensao_desbloqueio_potencia_reativa"] = list()
 
-    # loop protegido contra estouro de índice
+    # loop protegido contra estouro de indice
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular linhas vazias e comentários
+        # pular linhas vazias e comentarios
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
 
         # extrai com safe_slice; se quiser exigir comprimento exato para alguns campos,
-        # use require_full=True nesse safe_slice específico
+        # use require_full=True nesse safe_slice especifico
         anatem.dger["tipo_elemento_1"].append(safe_slice(line, 0, 4))
         anatem.dger["identificacao_elemento_1"].append(safe_slice(line, 5, 10))
         anatem.dger["condicao_1"].append(safe_slice(line, 11, 12))
@@ -632,7 +632,7 @@ def dger(
 def dmaq(
     anatem,
 ):
-    """Inicializacao para leitura de dados de modelos predefinidos de máquinas síncronas
+    """Inicializacao para leitura de dados de modelos predefinidos de maquinas sincronas
 
     Args
         anatem:
@@ -646,7 +646,7 @@ def dmaq(
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular comentário/linha vazia
+        # pular comentario/linha vazia
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -681,14 +681,14 @@ def dmaq(
             anatem.linecount += 1
             continue
 
-        # caso não seja o início do bloco, avança
+        # caso nao seja o inicio do bloco, avanca
         anatem.linecount += 1
 
 
 def dmdgmd01(
     anatem,
 ):
-    """Inicializacao para leitura de dados de modelos predefinidos de máquina síncrona - modelo clássico
+    """Inicializacao para leitura de dados de modelos predefinidos de maquina sincrona - modelo classico
 
     Args
         anatem:
@@ -701,7 +701,7 @@ def dmdgmd01(
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular comentário/linha vazia
+        # pular comentario/linha vazia
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
@@ -724,14 +724,14 @@ def dmdgmd01(
             anatem.linecount += 1
             continue
 
-        # caso não seja o início do bloco, avança
+        # caso nao seja o inicio do bloco, avanca
         anatem.linecount += 1
 
 
 def dmdgmd02(
     anatem,
 ):
-    """Inicializacao para leitura de dados de modelos predefinidos de máquina síncrona - MD02
+    """Inicializacao para leitura de dados de modelos predefinidos de maquina sincrona - MD02
 
     Args
         anatem:
@@ -749,7 +749,7 @@ def dmdgmd02(
         prev_line = anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
 
         if prev_line[:] in anatem.dmdg.get("md02_ruler", ""):
-            # garantir existência das linhas seguintes (linha atual +2)
+            # garantir existencia das linhas seguintes (linha atual +2)
             line2 = (
                 anatem.lines[anatem.linecount + 2].rstrip("\n")
                 if (anatem.linecount + 2) < len(anatem.lines)
@@ -785,7 +785,7 @@ def dmdgmd02(
 def dmdgmd03(
     anatem,
 ):
-    """Inicializacao para leitura de dados de modelos predefinidos de máquina síncrona - MD03
+    """Inicializacao para leitura de dados de modelos predefinidos de maquina sincrona - MD03
 
     Args
         anatem:
@@ -839,7 +839,7 @@ def dmdgmd03(
 def dopc(
     anatem,
 ):
-    """Inicializacao para leitura de dados de código de opções de controle e execução padrão
+    """Inicializacao para leitura de dados de codigo de opcoes de controle e execucao padrao
 
     Args
         anatem:
@@ -848,7 +848,7 @@ def dopc(
     anatem.dopc["opcao"] = list()
     anatem.dopc["padrao"] = list()
 
-    # posições (start,end,pad_index) conforme seu layout original
+    # posicoes (start,end,pad_index) conforme seu layout original
     pairs = [
         (0, 4, 5),
         (7, 11, 12),
@@ -862,23 +862,23 @@ def dopc(
         (63, 67, 68),
     ]
 
-    # loop protegido contra estouro de índice
+    # loop protegido contra estouro de indice
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
     ):
         line = anatem.lines[anatem.linecount].rstrip("\n")
 
-        # pular linha vazia ou comentário
+        # pular linha vazia ou comentario
         if line.strip() == "" or (len(line) > 0 and line[0] == anatem.comment):
             anatem.linecount += 1
             continue
 
-        # para cada posição, extrai opção e padrão; só adiciona se opção não for vazia
+        # para cada posicao, extrai opcao e padrao; so adiciona se opcao nao for vazia
         for start, end, pad_idx in pairs:
             opt = safe_slice(line, start, end)
             if opt.strip() == "":
-                # não há opção nesta faixa: ignora
+                # nao ha opcao nesta faixa: ignora
                 continue
             pad = safe_slice(
                 line, pad_idx, pad_idx + 1
@@ -901,7 +901,7 @@ def dopc(
     if anatem.dopcDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DOPC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DOPC`!\033[0m"
         )
     else:
         anatem.stbblock["DOPC"] = True
@@ -1241,7 +1241,7 @@ def drgvmd07(
 def dsim(
     anatem,
 ):
-    """Inicializacao para leitura de dados de controle de simulação
+    """Inicializacao para leitura de dados de controle de simulacao
 
     Args
         anatem:
@@ -1264,7 +1264,7 @@ def dsim(
             anatem.dsim["freq"].append(anatem.lines[anatem.linecount][27:32])
         anatem.linecount += 1
 
-    # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
+    # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     anatem.dsimDF = DF(data=anatem.dsim)
     anatem.dsim = deepcopy(anatem.dsimDF)
     anatem.dsimDF = anatem.dsimDF.replace(r"^\s*$", "0", regex=True)
@@ -1280,7 +1280,7 @@ def dsim(
     if anatem.dsimDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DSIM`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DSIM`!\033[0m"
         )
     else:
         anatem.stbblock["DSIM"] = True
@@ -1292,7 +1292,7 @@ def safe_slice(
     """
     Retorna line[start:end] de forma segura:
     - se start >= len(line) -> default
-    - slice é seguro mesmo se end > len(line)
+    - slice e seguro mesmo se end > len(line)
     - se require_full=True e a fatia for menor que (end-start) -> default
     """
     if line is None:

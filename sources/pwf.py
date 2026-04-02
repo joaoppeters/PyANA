@@ -23,15 +23,15 @@ def pwf(
     ## Inicializacao
     t = time.process_time()
 
-    # Variáveis
+    # Variaveis
     anarede.linecount = 0
 
-    # Funções
+    # Funcoes
     keywords(
         anarede,
     )
 
-    # Códigos
+    # Codigos
     codes(
         anarede,
     )
@@ -63,13 +63,13 @@ def keywords(
 def codes(
     anarede,
 ):
-    """códigos de dados de execução implementados
+    """codigos de dados de execucao implementados
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.pwfblock = dict(
         {
             "TITU": False,
@@ -137,7 +137,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Alteração do Nível de Carregamento
+        # Dados de Alteracao do Nivel de Carregamento
         elif (
             anarede.lines[anarede.linecount].strip() == "DANC"
             or anarede.lines[anarede.linecount].strip() == "DANC IMPR"
@@ -157,7 +157,7 @@ def readfile(
                     anarede,
                 )
 
-        # Dados de Intercâmbio de Potência Ativa entre Áreas
+        # Dados de Intercâmbio de Potencia Ativa entre areas
         elif (
             anarede.lines[anarede.linecount].strip() == "DARE"
             or anarede.lines[anarede.linecount].strip() == "DARE IMPR"
@@ -183,7 +183,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Bancos de Capacitores e/ou Reatores Individualizados de Barras CA ou de Linhas de Transmissão
+        # Dados de Bancos de Capacitores e/ou Reatores Individualizados de Barras CA ou de Linhas de Transmissao
         elif (
             anarede.lines[anarede.linecount].strip() == "DBSH"
             or anarede.lines[anarede.linecount].strip() == "DBSH IMPR"
@@ -238,7 +238,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Compensadores Estáticos de Potência Reativa
+        # Dados de Compensadores Estaticos de Potencia Reativa
         elif (
             anarede.lines[anarede.linecount].strip() == "DCER"
             or anarede.lines[anarede.linecount].strip() == "DCER IMPR"
@@ -277,7 +277,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Compensador Série Controlável
+        # Dados de Compensador Serie Controlavel
         elif (
             anarede.lines[anarede.linecount].strip() == "DCSC"
             or anarede.lines[anarede.linecount].strip() == "DCSC IMPR"
@@ -303,7 +303,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Contingências
+        # Dados de Contingencias
         elif (
             anarede.lines[anarede.linecount].strip() == "DCTG"
             or anarede.lines[anarede.linecount].strip() == "DCTG IMPR"
@@ -345,7 +345,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Grupo de Base de Tensão de Barras CA
+        # Dados de Grupo de Base de Tensao de Barras CA
         elif (
             anarede.lines[anarede.linecount].strip() == "DGBT"
             or anarede.lines[anarede.linecount].strip() == "DGBT IMPR"
@@ -371,7 +371,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Grupos de Limites de Tensão
+        # Dados de Grupos de Limites de Tensao
         elif (
             anarede.lines[anarede.linecount].strip() == "DGLT"
             or anarede.lines[anarede.linecount].strip() == "DGLT IMPR"
@@ -384,7 +384,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Incremento do Nível de Carregamento
+        # Dados de Incremento do Nivel de Carregamento
         elif (
             anarede.lines[anarede.linecount].strip() == "DINC"
             or anarede.lines[anarede.linecount].strip() == "DINC IMPR"
@@ -397,7 +397,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Injeções de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
+        # Dados de Injecoes de Potencias, Shunts e Fatores de Participacao de Geracao do Modelo Equivalente
         elif (
             anarede.lines[anarede.linecount].strip() == "DINJ"
             or anarede.lines[anarede.linecount].strip() == "DINJ IMPR"
@@ -423,7 +423,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Monitoração para Estabilidade de Tensão em Barra CA
+        # Dados de Monitoracao para Estabilidade de Tensao em Barra CA
         elif (
             anarede.lines[anarede.linecount].strip() == "DMET"
             or anarede.lines[anarede.linecount].strip() == "DMET IMPR"
@@ -436,7 +436,7 @@ def readfile(
                 anarede,
             )
 
-        # Dados de Monitoração de Fluxo em Circuito CA
+        # Dados de Monitoracao de Fluxo em Circuito CA
         elif (
             anarede.lines[anarede.linecount].strip() == "DMFL"
             or anarede.lines[anarede.linecount].strip() == "DMFL IMPR"
@@ -456,7 +456,7 @@ def readfile(
                     anarede,
                 )
 
-        # Dados de Monitoração de Tensão em Barra CA
+        # Dados de Monitoracao de Tensao em Barra CA
         # elif (
         #     anarede.lines[anarede.linecount].strip() == "DMTE"
         #     or anarede.lines[anarede.linecount].strip() == "DMTE IMPR"
@@ -469,7 +469,7 @@ def readfile(
         #         anarede,
         #     )
 
-        # Dados de Opções de Controle e Execução Padrão
+        # Dados de Opcoes de Controle e Execucao Padrao
         elif (
             anarede.lines[anarede.linecount].strip() == "DOPC"
             or anarede.lines[anarede.linecount].strip() == "DOPC IMPR"
@@ -515,7 +515,7 @@ def readfile(
                     anarede,
                 )
 
-        # Título do Sistema/Caso em Estudo
+        # Titulo do Sistema/Caso em Estudo
         elif (
             anarede.lines[anarede.linecount].strip() == "TITU"
             or anarede.lines[anarede.linecount].strip() == "TITU IMPR"
@@ -531,7 +531,7 @@ def readfile(
     ## SUCESSO NA LEITURA
     print(f"\033[32mSucesso na leitura de arquivo `{anarede.name + '.pwf'}`!\033[0m")
 
-    # Checa alteração do nível de carregamento
+    # Checa alteracao do nivel de carregamento
     checkdanc(
         anarede,
     )

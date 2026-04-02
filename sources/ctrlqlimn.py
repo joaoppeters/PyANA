@@ -16,13 +16,13 @@ from smooth import qlimnsmooth, qlimspop
 def qlimnsol(
     anarede,
 ):
-    """variável de estado adicional para o problema de fluxo de potência
+    """variavel de estado adicional para o problema de fluxo de potencia
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
         anarede.maskQ = ones(anarede.nbus, dtype=bool)
@@ -33,14 +33,14 @@ def qlimnres(
     anarede,
     case,
 ):
-    """cálculo de resíduos das equações de controle adicionais
+    """calculo de residuos das equacoes de controle adicionais
 
     Args
         anarede:
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
-    # Vetor de resíduos
+    # Vetor de residuos
     anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
@@ -59,7 +59,7 @@ def qlimnres(
             # Incrementa contador
             nger += 1
 
-    # Resíduo de equação de controle
+    # Residuo de equacao de controle
     anarede.deltaY = append(anarede.deltaY, anarede.deltaQLIM)
 
 
@@ -80,7 +80,7 @@ def qlimnsubjac(
     #  yt    yv   yx
     #
 
-    # Dimensão da matriz Jacobiana
+    # Dimensao da matriz Jacobiana
     anarede.dimpreqlim = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
@@ -117,7 +117,7 @@ def qlimnsubjac(
             nger += 1
 
     ## Montagem Jacobiana
-    # Condição
+    # Condicao
     if anarede.ctrldim != 0:
         anarede.extrarow = zeros([anarede.nger, anarede.ctrldim])
         anarede.extracol = zeros([anarede.ctrldim, anarede.nger])
@@ -151,7 +151,7 @@ def qlimnsubjac(
 def qlimnupdt(
     anarede,
 ):
-    """atualização das variáveis de estado adicionais
+    """atualizacao das variaveis de estado adicionais
 
     Args
         anarede:
@@ -160,7 +160,7 @@ def qlimnupdt(
     # Contador
     nger = 0
 
-    # Atualização da potência reativa gerada
+    # Atualizacao da potencia reativa gerada
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             anarede.solution["qlim_reactive_generation"][idx] += (
@@ -178,16 +178,16 @@ def qlimnupdt(
 def qlimnsch(
     anarede,
 ):
-    """atualização do valor de potência reativa especificada
+    """atualizacao do valor de potencia reativa especificada
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.qsch = zeros([anarede.nbus])
 
-    # Atualização da potência reativa especificada
+    # Atualizacao da potencia reativa especificada
     anarede.qsch += anarede.solution["qlim_reactive_generation"]
     anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
     anarede.qsch /= anarede.cte["SBSE"]
@@ -197,14 +197,14 @@ def qlimncorr(
     anarede,
     case,
 ):
-    """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
+    """atualizacao dos valores de potencia reativa gerada para a etapa de correcao do fluxo de potencia continuado
 
     Args
         anarede:
-        case: etapa do fluxo de potência continuado analisada
+        case: etapa do fluxo de potencia continuado analisada
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
@@ -213,13 +213,13 @@ def qlimncorr(
 def qlimnheur(
     anarede,
 ):
-    """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
+    """heuristicas aplicadas ao tratamento de limites de geracao de potencia reativa no problema do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Condição de geração de potência reativa ser superior ao valor máximo - analisa apenas para as barras de geração
+    # Condicao de geracao de potencia reativa ser superior ao valor maximo - analisa apenas para as barras de geracao
     # anarede.dbarDF['potencia_reativa_maxima'].to_numpy()
     if any(
         (
@@ -230,7 +230,7 @@ def qlimnheur(
     ):
         anarede.ctrlheur = True
 
-    # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
+    # Condicao de atingimento do ponto de maximo carregamento ou bifurcacao LIB
     if (
         (not anarede.solution["pmc"])
         and (anarede.solution["varstep"] == "lambda")
@@ -240,7 +240,7 @@ def qlimnheur(
         )
     ):
         anarede.bifurcation = True
-        # Condição de curva completa do fluxo de potência continuado
+        # Condicao de curva completa do fluxo de potencia continuado
         if anarede.cte["FULL"]:
             anarede.dbarDF["true_potencia_reativa_minima"] = anarede.dbarDF.loc[
                 :, "potencia_reativa_minima"
@@ -259,12 +259,12 @@ def qlimnpop(
     anarede,
     pop: int = 1,
 ):
-    """deleta última instância salva em variável de controle caso sistema divergente ou atuação de heurísticas
-            atua diretamente na variável de controle associada à opção de controle QLIMn
+    """deleta última instância salva em variavel de controle caso sistema divergente ou atuacao de heuristicas
+            atua diretamente na variavel de controle associada à opcao de controle QLIMn
 
     Args
         anarede:
-        pop: quantidade de ações necessárias
+        pop: quantidade de acoes necessarias
     """
     ## Inicializacao
     qlimspop(

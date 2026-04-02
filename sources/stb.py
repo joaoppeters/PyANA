@@ -23,15 +23,15 @@ def stb(
     ## Inicializacao
     t = time.process_time()
 
-    # Variáveis
+    # Variaveis
     anatem.linecount = 0
 
-    # Funções
+    # Funcoes
     keywords(
         anatem,
     )
 
-    # Funções
+    # Funcoes
     codes(
         anatem,
     )
@@ -71,13 +71,13 @@ def keywords(
 def codes(
     anatem,
 ):
-    """códigos de dados de execução implementados
+    """codigos de dados de execucao implementados
 
     Args
         anatem:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anatem.stbblock = dict(
         {
             "TITU": False,
@@ -101,12 +101,12 @@ def rstb(
         anatem:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     f = open(f"{anatem.dirSTB}", "r", encoding="latin-1")
     anatem.lines = f.readlines()
     f.close()
 
-    # salvar linhas com comentários
+    # salvar linhas com comentarios
     anatem.full_stb = anatem.lines.copy()
 
     # Loop de leitura de linhas do `.stb`
@@ -120,7 +120,7 @@ def rstb(
                 anatem,
             )
 
-        # Dados de Cargas Funcionais Estáticas
+        # Dados de Cargas Funcionais Estaticas
         elif (
             anatem.lines[anatem.linecount].strip() == "DCAR"
             or anatem.lines[anatem.linecount].strip() == "DCAR IMPR"
@@ -133,7 +133,7 @@ def rstb(
                 anatem,
             )
 
-        # Dados de Controle de Execução do Programa
+        # Dados de Controle de Execucao do Programa
         elif (
             anatem.lines[anatem.linecount].strip() == "DCTE"
             or anatem.lines[anatem.linecount].strip() == "DCTE IMPR"
@@ -158,7 +158,7 @@ def rstb(
                 anatem,
             )
 
-        # Dados de Opções de Controle e Execução Padrão
+        # Dados de Opcoes de Controle e Execucao Padrao
         elif (
             anatem.lines[anatem.linecount].strip() == "DOPC"
             or anatem.lines[anatem.linecount].strip() == "DOPC IMPR"
@@ -171,7 +171,7 @@ def rstb(
                 anatem,
             )
 
-        # Dados de Variáveis para Plotagem
+        # Dados de Variaveis para Plotagem
         elif (
             anatem.lines[anatem.linecount].strip() == "DPLT"
             or anatem.lines[anatem.linecount].strip() == "DPLT IMPR"
@@ -184,7 +184,7 @@ def rstb(
             #     anatem,
             # )
 
-        # Dados de Controle da Simulação
+        # Dados de Controle da Simulacao
         elif anatem.lines[anatem.linecount].strip() == "DSIM":
             anatem.linecount += 1
             anatem.dsim = dict()
@@ -193,7 +193,7 @@ def rstb(
                 anatem,
             )
 
-        # Título do Sistema/Caso em Estudo
+        # Titulo do Sistema/Caso em Estudo
         elif (
             anatem.lines[anatem.linecount].strip() == "TITU"
             or anatem.lines[anatem.linecount].strip() == "TITU IMPR"

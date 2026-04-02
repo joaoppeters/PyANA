@@ -10,7 +10,7 @@
 def exlf(
     anarede,
 ):
-    """chamada automática do método de solução numérico newton-raphson não-linear
+    """chamada automatica do metodo de solucao numerico newton-raphson nao-linear
 
     Args
         anarede: objeto da classe PowerFlowContainer
@@ -36,9 +36,9 @@ def exlf(
 def exic(
     anarede,
 ):
-    """chamada automática do método de solução de fluxo de potência continuado
-    utilizando predição-correção e solução numérica newton-raphson não-linear
-    aplicação do método desenvolvildo por V. Ajjarapu e C. Christy (1992)
+    """chamada automatica do metodo de solucao de fluxo de potencia continuado
+    utilizando predicao-correcao e solucao numerica newton-raphson nao-linear
+    aplicacao do metodo desenvolvildo por V. Ajjarapu e C. Christy (1992)
 
     Args
         anarede: objeto da classe PowerFlowContainer
@@ -70,8 +70,8 @@ def exic(
 def expc(
     anarede,
 ):
-    """chamada automática do método de solução do ponto de colapso
-    aplicação do método desenvolvido por C. Canizares et al (1998)
+    """chamada automatica do metodo de solucao do ponto de colapso
+    aplicacao do metodo desenvolvido por C. Canizares et al (1998)
 
     Args
         anarede: objeto da classe PowerFlowContainer
@@ -103,7 +103,7 @@ def exsi(
     anarede,
     anatem,
 ):
-    """chamada automática do método de simulação dinâmica
+    """chamada automatica do metodo de simulacao dinâmica
 
     Args
         anarede: objeto da classe PowerFlowContainer
@@ -141,8 +141,8 @@ def exsi(
 def exct(
     anarede,
 ):
-    """chamada automática do método de solução numérico newton-raphson não-linear
-    com foco em análise de contingências (critério N-1)
+    """chamada automatica do metodo de solucao numerico newton-raphson nao-linear
+    com foco em analise de contingencias (criterio N-1)
 
     Args
         anarede: objeto da classe PowerFlowContainer
@@ -161,12 +161,12 @@ def exct(
         pass
     else:
         print(
-            f"\033[94mIniciando análise de contingências (critério N-1) para {trueDLIN.shape[0]} linhas...\033[00m"
+            f"\033[94mIniciando analise de contingencias (criterio N-1) para {trueDLIN.shape[0]} linhas...\033[00m"
         )
         anarede.nlin -= 1
         for idx, value in anarede.dlinDF.iterrows():
             print(
-                f"\033[94mSimulando contingência do circuito {value.de} - {value.para}...\033[00m",
+                f"\033[94mSimulando contingencia do circuito {value.de} - {value.para}...\033[00m",
                 end=" ",
             )
             anarede.dlinDF = anarede.dlinDF.drop(idx)

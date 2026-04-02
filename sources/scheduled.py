@@ -13,13 +13,13 @@ from ctrl import ctrlsch
 def scheduled(
     anarede,
 ):
-    """método para armazenamento dos Args especificados
+    """metodo para armazenamento dos Args especificados
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Potências ativa e reativa especificadas
+    # Potencias ativa e reativa especificadas
     if anarede.solution["method"] == "LFDC":
         anarede.psch = zeros(anarede.nbus)
         anarede.qsch = zeros(anarede.nbus)
@@ -47,7 +47,7 @@ def scheduled(
     anarede.psch /= anarede.cte["SBSE"]
     anarede.qsch /= anarede.cte["SBSE"]
 
-    # Variáveis especificadas de controle ativos
+    # Variaveis especificadas de controle ativos
     if anarede.ctrlcount > 0 and anarede.solution["method"] != "LFDC":
         ctrlsch(
             anarede,

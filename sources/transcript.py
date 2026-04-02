@@ -236,7 +236,7 @@ def orwudc(
     anatem,
     organon,
 ):
-    """escrita de controladores definidos pelo usuário no formato ORGANON (.cdu -> .udc)
+    """escrita de controladores definidos pelo usuario no formato ORGANON (.cdu -> .udc)
 
     Args
         anarede:
@@ -1011,7 +1011,7 @@ def orwdyn(
     organon,
     organonfiles,
 ):
-    """escrita de dados de máquina síncrona no formato ORGANON (.stb -> .dyn)
+    """escrita de dados de maquina sincrona no formato ORGANON (.stb -> .dyn)
 
     Args:
         anatem:
@@ -1560,7 +1560,7 @@ def prwraw(
     anarede,
     psse,
 ):
-    """escrita de dados de máquina síncrona no formato PSS/E (.pwf -> .raw)
+    """escrita de dados de maquina sincrona no formato PSS/E (.pwf -> .raw)
 
     Args:
         anarede:
@@ -1698,7 +1698,7 @@ def prwdyr(
     anatem,
     psse,
 ):
-    """escrita de dados de máquina síncrona no formato PSS/E (.stb -> .dyr)
+    """escrita de dados de maquina sincrona no formato PSS/E (.stb -> .dyr)
 
     Args:
         anarede:

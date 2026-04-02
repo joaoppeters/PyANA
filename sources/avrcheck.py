@@ -33,7 +33,7 @@ def generate_line_range_hash(
                     content_lines.append(line)
 
         # 3. Concatenar o conteúdo lido e fazer o hash
-        # O join garante que o conteúdo do intervalo seja exatamente o que você deseja
+        # O join garante que o conteúdo do intervalo seja exatamente o que voce deseja
         target_content = "".join(content_lines)
 
         # Codifica a string lida para bytes antes de fazer o hash
@@ -42,7 +42,7 @@ def generate_line_range_hash(
         return hash_func.hexdigest()
 
     except OSError as e:
-        # Trata erros como permissão negada ou arquivo inexistente
+        # Trata erros como permissao negada ou arquivo inexistente
         print(f"Erro ao ler arquivo {filepath}: {e}")
         return ""
 
@@ -51,14 +51,14 @@ def check_line_range_differences(
     folder_path: str, pattern: str, start: int, end: int
 ) -> Tuple[bool, Dict[str, List[str]]]:
     """
-    Verifica a diferença de conteúdo (no intervalo de linhas especificado)
-    em arquivos que correspondem ao padrão na pasta.
+    Verifica a diferenca de conteúdo (no intervalo de linhas especificado)
+    em arquivos que correspondem ao padrao na pasta.
     """
     full_pattern = os.path.join(folder_path, pattern)
     file_paths: List[Path] = [Path(p) for p in glob.glob(full_pattern)]
 
     if not file_paths:
-        print(f"Nenhum arquivo encontrado com o padrão '{full_pattern}'.")
+        print(f"Nenhum arquivo encontrado com o padrao '{full_pattern}'.")
         return True, {}
 
     print(
@@ -69,7 +69,7 @@ def check_line_range_differences(
     hash_map: Dict[str, List[str]] = {}
 
     for filepath in file_paths:
-        # Usa a função modificada para o intervalo de linhas (12 a 30)
+        # Usa a funcao modificada para o intervalo de linhas (12 a 30)
         file_hash = generate_line_range_hash(filepath, start_line=start, end_line=end)
 
         if file_hash:
@@ -84,14 +84,14 @@ def check_line_range_differences(
     return is_identical, hash_map
 
 
-# --- Configuração ---
+# --- Configuracao ---
 TARGET_FOLDER = (
     "C:\\Users\\JoaoPedroPetersBarbo\\Documents\\github\\PyANA\\sistemas\\organon"
 )
 FILE_PATTERN = "CDU_AVR_*.cdu"
-START_LINE = 12  # Começa na Linha 12 (inclusiva)
+START_LINE = 12  # Comeca na Linha 12 (inclusiva)
 END_LINE = 30  # Termina na Linha 30 (inclusiva)
-# --- Execução ---
+# --- Execucao ---
 
 are_all_identical, difference_map = check_line_range_differences(
     TARGET_FOLDER, FILE_PATTERN, START_LINE, END_LINE
@@ -101,14 +101,14 @@ print("\n--- Resultados ---")
 if are_all_identical:
     num_files = sum(len(files) for files in difference_map.values())
     print(
-        f"✅ Sucesso! O conteúdo (das linhas {START_LINE} a {END_LINE}) de todos os {num_files} arquivos é **IDÊNTICO**."
+        f"✅ Sucesso! O conteúdo (das linhas {START_LINE} a {END_LINE}) de todos os {num_files} arquivos e **IDeNTICO**."
     )
 else:
     print(
-        f"❌ Diferenças Encontradas no Conteúdo (das linhas {START_LINE} a {END_LINE})!"
+        f"❌ Diferencas Encontradas no Conteúdo (das linhas {START_LINE} a {END_LINE})!"
     )
     print(
-        "Os arquivos NÃO são idênticos nesse intervalo. Agrupamento por conteúdo único (hash):"
+        "Os arquivos NaO sao identicos nesse intervalo. Agrupamento por conteúdo único (hash):"
     )
 
     for hash_val, file_list in difference_map.items():

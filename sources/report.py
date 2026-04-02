@@ -64,37 +64,36 @@ def reportfile(
 
     # Relatorios Extras - ordem de prioridade
     if any(anarede.report.values()):
-        for r in anarede.report:
-            # relatorio de barra
-            if r == "RBAR":
-                RBAR(
-                    file,
-                    anarede,
-                )
-            # relatorio de linha
-            elif r == "RLIN":
-                from lineflow import lineflow
+        # relatorio de barra
+        if anarede.report["RBAR"]:
+            RBAR(
+                file,
+                anarede,
+            )
+        # relatorio de linha
+        if anarede.report["RLIN"]:
+            from lineflow import lineflow
 
-                lineflow(
-                    anarede,
-                )
+            lineflow(
+                anarede,
+            )
 
-                RLIN(
-                    file,
-                    anarede,
-                )
-            # relatorio de geradores
-            elif (r == "RGER") and (anarede.pwfblock["DGER"]):
-                RGER(
-                    file,
-                    anarede,
-                )
-            # relatorio de compensadores estaticos de potencia reativa
-            elif (r == "RSVC") and (anarede.pwfblock["DCER"]):
-                RSVC(
-                    file,
-                    anarede,
-                )
+            RLIN(
+                file,
+                anarede,
+            )
+        # relatorio de geradores
+        if anarede.report["RGER"] and anarede.pwfblock["DGER"]:
+            RGER(
+                file,
+                anarede,
+            )
+    # relatorio de compensadores estaticos de potencia reativa
+    if anarede.pwfblock["DCER"]:
+        RSVC(
+            file,
+            anarede,
+        )
 
     # relatorio de fluxo de potencia continuado
     if anarede.method == "EXIC":
@@ -131,25 +130,25 @@ def rheader(
     file.write("relatorio do sistema " + anarede.name)
     file.write("\n\n")
     file.write("solucao do fluxo de potencia via metodo ")
-    # Chamada específica metodo de Newton-Raphson Nao-Linear
+    # Chamada especifica metodo de Newton-Raphson Nao-Linear
     if anarede.method == "EXLF":
         file.write("newton-raphson")
-    # Chamada específica metodo de Gauss-Seidel
+    # Chamada especifica metodo de Gauss-Seidel
     elif anarede.method == "GAUSS":
         file.write("gauss-seidel")
-    # Chamada específica metodo de Newton-Raphson Linearizado
+    # Chamada especifica metodo de Newton-Raphson Linearizado
     elif anarede.method == "LINEAR":
         file.write("linearizado")
-    # Chamada específica metodo Desacoplado
+    # Chamada especifica metodo Desacoplado
     elif anarede.method == "DECOUP":
         file.write("desacoplado")
-    # Chamada específica metodo Desacoplado Rapido
+    # Chamada especifica metodo Desacoplado Rapido
     elif anarede.method == "fDECOUP":
         file.write("desacoplado rapido")
-    # Chamada específica metodo Continuado
+    # Chamada especifica metodo Continuado
     elif anarede.method == "EXIC":
         file.write("do fluxo de potencia continuado")
-    # Chamada específica metodo direto (Canizares, 1993)
+    # Chamada especifica metodo direto (Canizares, 1993)
     elif anarede.method == "EXPC":
         file.write("do fluxo de potencia direto (Canizares, 1993)")
     file.write("\n\n")
@@ -469,7 +468,7 @@ def RSVC(
 
             file.write("\n")
             file.write(
-                f"| {anarede.dcerDF['barra'][i]:^3d} | {anarede.dbarDF['nome'][idxcer]:^12} | {anarede.solution['voltage'][idxcer]:^9.3f} | {(-anarede.dcerDF['droop'][i] * 1E2):^5.2f} | {(anarede.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(anarede.dcerDF['potencia_reativa_minima'][i] * anarede.dcerDF['unidades'][i] * (anarede.solution['voltage'][idxcer] ** 2)):^8.3f} | {anarede.solution['svc_generation'][i]:^8.3f} | {(anarede.dcerDF['potencia_reativa_maxima'][i] * anarede.dcerDF['unidades'][i] * (anarede.solution['voltage'][idxcer] ** 2)):^8.3f} | {anarede.dcerDF['barra_controlada'][i]:^3d} | {anarede.solution['voltage'][idxctrl]:^9.3f} | {anarede.dcerDF['controle'][i]:1} | {anarede.dcerDF['unidades'][i]:^8d} | {anarede.dcerDF['grupo_base'][i]:^3d} | {regiao:^10} |"
+                f"| {anarede.dcerDF['barra'][i]:^3d} | {anarede.dbarDF['nome'][idxcer]:^12} | {anarede.solution['voltage'][idxcer]:^9.3f} | {(-anarede.dcerDF['droop'][i] * 1E2):^5.2f} | {(anarede.dbarDF['tensao'][idxcer] * 1E-3):^9.3f} | {(anarede.dcerDF['potencia_reativa_minima'][i] * anarede.dcerDF['unidades'][i] * (anarede.solution['voltage'][idxcer] ** 2)):^8.3f} | {anarede.solution['svc_generation'][i]:^8.3f} | {(anarede.dcerDF['potencia_reativa_maxima'][i] * anarede.dcerDF['unidades'][i] * (anarede.solution['voltage'][idxcer] ** 2)):^8.3f} | {anarede.dcerDF['barra_controlada'][i]:^3d} | {anarede.solution['voltage'][idxctrl]:^9.3f} | {anarede.dcerDF['controle'][i]:1} | {anarede.dcerDF['unidades'][i]:^8d} | {anarede.dcerDF['grupo_base'][i].strip():^3} | {regiao:^10} |"
             )
             file.write("\n")
             file.write("-" * 139)
@@ -1191,10 +1190,25 @@ def RXPC(
     file.write("\n\n")
     file.write("Ponto de Maximo Carregamento: " + f"{anarede.solution['lambda']:^f}")
     file.write("\n")
-    # file.write("Autovalores: " + str(anarede.H))
-    # file.write("\n")
-    file.write("Iteracoes: " + str(anarede.solution["iter"]))
-    file.write("\n\n")
+    slacks = anarede.dbarDF[anarede.dbarDF.tipo == 2]
+    file.write("Slack:")
+    file.write("\n")
+    file.write(
+        "|          BARRA           |         TENSAO       |        GERACAO      |"
+    )
+    file.write("\n")
+    file.write(
+        "| NUM |     NOME     |  T  |    MOD    |    ANG   |    MW    |   MVAr   |"
+    )
+    file.write("\n")
+    file.write("-" * 73)
+    file.write("\n")
+    for idx, value in slacks.iterrows():
+        file.write(
+            f"|{value.numero:^5}|{value.nome:^14}|{value.tipo:^5}|{anarede.solution['voltage'][idx]:^11.3f}|{degrees(anarede.solution['theta'][idx]):^+10.2f}|{anarede.solution['active'][idx]:^+10.3f}|{anarede.solution['reactive'][idx]:^+10.3f}|\n"
+        )
+    file.write("-" * 73)
+    file.write("\n\n\n\n")
 
 
 def RXCT(

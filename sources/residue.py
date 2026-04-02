@@ -18,25 +18,25 @@ def residue(
     case: int = 0,
     stage: str = "",
 ):
-    """cálculo de resíduos das equações diferenciáveis
+    """calculo de residuos das equacoes diferenciaveis
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Vetores de resíduo
+    # Vetores de residuo
     V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
     I = anarede.Yb @ V
     S = diag(V) @ conj(I)
 
-    # Resíduos de potência ativa e reativa
+    # Residuos de potencia ativa e reativa
     anarede.deltaP = anarede.psch - S.real
     anarede.deltaQ = anarede.qsch - S.imag
 
-    # Concatenação de resíduos de potencia ativa e reativa em função da formulação jacobiana
+    # Concatenacao de residuos de potencia ativa e reativa em funcao da formulacao jacobiana
     anarede.deltaPQY = concatenate((anarede.deltaP, anarede.deltaQ), axis=0)
 
-    # Resíduos de variáveis de estado de controle
+    # Residuos de variaveis de estado de controle
     if anarede.ctrlcount > 0:
         ctrlres(
             anarede,
@@ -52,11 +52,11 @@ def residue(
 
     anarede.deltaPQY = anarede.deltaPQY[anarede.mask]
 
-    # Resíduo de Fluxo de Potência Continuado
-    # Condição de previsão
+    # Residuo de Fluxo de Potencia Continuado
+    # Condicao de previsao
     if stage == "p":
         anarede.deltaPQY = zeros(anarede.deltaPQY.shape[0] + 1)
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             if not anarede.solution["pmc"]:
                 anarede.deltaPQY[-1] = anarede.cte["LMBD"] * (
@@ -73,9 +73,9 @@ def residue(
                 -1 * anarede.cte["ICMV"] * (5e-1 ** anarede.solution["ndiv"])
             )
 
-    # Condição de correção
+    # Condicao de correcao
     elif stage == "c":
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             anarede.deltaY = array(
                 [anarede.solution["stepsch"] - anarede.solution["step"]]
@@ -150,7 +150,7 @@ def resexsi(
         anarede:
     """
     ## Inicializacao
-    # Vetores de resíduo
+    # Vetores de residuo
     ev0 = concatenate((anarede.solution["fem0"], anarede.solution["voltage0"]), axis=0)
     dt0 = concatenate((anarede.solution["delta0"], anarede.solution["theta0"]), axis=0)
     V0 = ev0 * exp(1j * dt0)

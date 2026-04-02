@@ -14,13 +14,13 @@ from scipy.sparse import csc_matrix, hstack, vstack
 def qlimsol(
     anarede,
 ):
-    """variável de estado adicional para o problema de fluxo de potência
+    """variavel de estado adicional para o problema de fluxo de potencia
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
         anarede.maskQ = ones(anarede.nbus, dtype=bool)
@@ -31,13 +31,13 @@ def qlimsol(
 def qlimres(
     anarede,
 ):
-    """cálculo de resíduos das equações de controle adicionais
+    """calculo de residuos das equacoes de controle adicionais
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Vetor de resíduos
+    # Vetor de residuos
     anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
@@ -55,7 +55,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_minima"]
                 ):
-                    # Tratamento de limite de magnitude de tensão
+                    # Tratamento de limite de magnitude de tensao
                     anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
                     anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
                     anarede.deltaQLIM[nger] *= anarede.cte["SBSE"]
@@ -64,7 +64,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
-                    # Tratamento de limite de potência reativa gerada máxima
+                    # Tratamento de limite de potencia reativa gerada maxima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -75,7 +75,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ):
-                    # Tratamento de limite de potência reativa gerada mínima
+                    # Tratamento de limite de potencia reativa gerada minima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -97,7 +97,7 @@ def qlimres(
                     )
                     and (anarede.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
-                    # Tratamento de backoff de magnitude de tensão
+                    # Tratamento de backoff de magnitude de tensao
                     anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
                     anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
                     anarede.deltaQLIM[nger] *= anarede.cte["SBSE"]
@@ -107,7 +107,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ) and (anarede.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
-                    # Tratamento de limite de potência reativa gerada máxima
+                    # Tratamento de limite de potencia reativa gerada maxima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -117,7 +117,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ) and (anarede.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
-                    # Tratamento de limite de potência reativa gerada mínima
+                    # Tratamento de limite de potencia reativa gerada minima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -132,7 +132,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     > value["potencia_reativa_minima"]
                 ):
-                    # Tratamento de limite de magnitude de tensão
+                    # Tratamento de limite de magnitude de tensao
                     anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
                     anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
                     anarede.deltaQLIM[nger] *= anarede.cte["SBSE"]
@@ -141,7 +141,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ):
-                    # Tratamento de limite de potência reativa gerada máxima
+                    # Tratamento de limite de potencia reativa gerada maxima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -152,7 +152,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ):
-                    # Tratamento de limite de potência reativa gerada mínima
+                    # Tratamento de limite de potencia reativa gerada minima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -174,7 +174,7 @@ def qlimres(
                     )
                     and (anarede.solution["voltage"][idx] < value["tensao"] * (1e-3))
                 ):
-                    # Tratamento de backoff de magnitude de tensão
+                    # Tratamento de backoff de magnitude de tensao
                     anarede.deltaQLIM[nger] += value["tensao"] * (1e-3)
                     anarede.deltaQLIM[nger] -= anarede.solution["voltage"][idx]
                     anarede.deltaQLIM[nger] *= anarede.cte["SBSE"]
@@ -184,7 +184,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     >= value["potencia_reativa_maxima"]
                 ) and (anarede.solution["voltage"][idx] <= value["tensao"] * (1e-3)):
-                    # Tratamento de limite de potência reativa gerada máxima
+                    # Tratamento de limite de potencia reativa gerada maxima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_maxima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -194,7 +194,7 @@ def qlimres(
                     anarede.solution["qlim_reactive_generation"][idx]
                     <= value["potencia_reativa_minima"]
                 ) and (anarede.solution["voltage"][idx] >= value["tensao"] * (1e-3)):
-                    # Tratamento de limite de potência reativa gerada mínima
+                    # Tratamento de limite de potencia reativa gerada minima
                     anarede.deltaQLIM[nger] += value["potencia_reativa_minima"]
                     anarede.deltaQLIM[nger] -= anarede.solution[
                         "qlim_reactive_generation"
@@ -203,7 +203,7 @@ def qlimres(
             # Incrementa contador
             nger += 1
 
-    # Resíduo de equação de controle
+    # Residuo de equacao de controle
     anarede.deltaQLIM /= anarede.cte["SBSE"]
     anarede.deltaY = append(anarede.deltaY, anarede.deltaQLIM)
 
@@ -225,7 +225,7 @@ def qlimsubjac(
     #  yt    yv   yx
     #
 
-    # Dimensão da matriz Jacobiana
+    # Dimensao da matriz Jacobiana
     anarede.dimpreqlim = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
@@ -262,7 +262,7 @@ def qlimsubjac(
             nger += 1
 
     ## Montagem Jacobiana
-    # Condição
+    # Condicao
     if anarede.ctrldim != 0:
         anarede.extrarow = zeros([anarede.nger, anarede.ctrldim])
         anarede.extracol = zeros([anarede.ctrldim, anarede.nger])
@@ -296,7 +296,7 @@ def qlimsubjac(
 def qlimupdt(
     anarede,
 ):
-    """atualização das variáveis de estado adicionais
+    """atualizacao das variaveis de estado adicionais
 
     Args
         anarede:
@@ -305,7 +305,7 @@ def qlimupdt(
     # Contador
     nger = 0
 
-    # Atualização da potência reativa gerada
+    # Atualizacao da potencia reativa gerada
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             anarede.solution["qlim_reactive_generation"][idx] += (
@@ -347,16 +347,16 @@ def qlimupdt(
 def qlimsch(
     anarede,
 ):
-    """atualização do valor de potência reativa especificada
+    """atualizacao do valor de potencia reativa especificada
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.qsch = zeros([anarede.nbus])
 
-    # Atualização da potência reativa especificada
+    # Atualizacao da potencia reativa especificada
     anarede.qsch += anarede.solution["qlim_reactive_generation"]
     anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
     anarede.qsch /= anarede.cte["SBSE"]
@@ -366,13 +366,13 @@ def qlimcorr(
     anarede,
     case,
 ):
-    """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
+    """atualizacao dos valores de potencia reativa gerada para a etapa de correcao do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
@@ -387,7 +387,7 @@ def qlimheur(
         anarede:
     """
     ## Inicializacao
-    # Condição de geração de potência reativa ser superior ao valor máximo
+    # Condicao de geracao de potencia reativa ser superior ao valor maximo
     if any(
         (
             anarede.solution["qlim_reactive_generation"]
@@ -397,7 +397,7 @@ def qlimheur(
     ):
         anarede.ctrlheur = True
 
-    # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
+    # Condicao de atingimento do ponto de maximo carregamento ou bifurcacao LIB
     if (
         (not anarede.solution["pmc"])
         and (anarede.solution["varstep"] == "lambda")
@@ -407,7 +407,7 @@ def qlimheur(
         )
     ):
         anarede.bifurcation = True
-        # Condição de curva completa do fluxo de potência continuado
+        # Condicao de curva completa do fluxo de potencia continuado
         if anarede.cte["FULL"]:
             anarede.dbarDF["true_potencia_reativa_minima"] = anarede.dbarDF.loc[
                 :, "potencia_reativa_minima"

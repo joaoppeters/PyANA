@@ -19,10 +19,10 @@ def folder(
         anarede:
     """
     ## Inicializacao
-    # Diretório de Sistemas
+    # Diretorio de Sistemas
     dirSistemas = dirname(anarede.dirPWF)
 
-    # Criação de diretório Resultados
+    # Criacao de diretorio Resultados
     anarede.resultsfolder = dirname(dirSistemas) + "\\resultados\\"
     if exists(anarede.resultsfolder) is False:
         mkdir(anarede.resultsfolder)
@@ -31,11 +31,11 @@ def folder(
 def areasfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de análise de área
+    """criacao de diretorio para armazenar resultados de analise de area
 
     Args
         anarede:
-        name: nome do diretório
+        name: nome do diretorio
     """
     ## Inicializacao
     anarede.infofolder = anarede.resultsfolder + "iNFO\\"
@@ -46,7 +46,7 @@ def areasfolder(
 def admittancefolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de matriz admitância
+    """criacao de diretorio para armazenar resultados de matriz admitância
 
     Args
         anarede:
@@ -126,7 +126,7 @@ def bxctfolder(
 def convergencefolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados da trajetória de convergência
+    """criacao de diretorio para armazenar resultados da trajetoria de convergencia
 
     Args
         anarede:
@@ -144,7 +144,7 @@ def convergencefolder(
 def continuationfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de fluxo de potência continuado
+    """criacao de diretorio para armazenar resultados de fluxo de potencia continuado
 
     Args
         anarede:
@@ -172,7 +172,7 @@ def continuationfolder(
 def jacobifolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de matriz jacobiana
+    """criacao de diretorio para armazenar resultados de matriz jacobiana
 
     Args
         anarede:
@@ -190,7 +190,7 @@ def jacobifolder(
 def logfolder(
     logfolder,
 ):
-    """criação de diretório para armazenar arquivos de log
+    """criacao de diretorio para armazenar arquivos de log
 
     Args
         directory:
@@ -204,7 +204,7 @@ def logfolder(
 def matpowerfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados no formato do matpower
+    """criacao de diretorio para armazenar resultados no formato do matpower
 
     Args
         anarede:
@@ -219,7 +219,7 @@ def matpowerfolder(
 def organonfolder(
     anarede,
 ):
-    """criação de diretório para armazenar arquivos CDU
+    """criacao de diretorio para armazenar arquivos CDU
 
     Args
         none
@@ -234,7 +234,7 @@ def organonfolder(
 def outfolder(
     outfolder,
 ):
-    """criação de diretório para armazenar arquivos de saída
+    """criacao de diretorio para armazenar arquivos de saida
 
     Args
         directory:
@@ -248,7 +248,7 @@ def outfolder(
 def pltfolder(
     pltfolder,
 ):
-    """criação de diretório para armazenar arquivos de plotagem
+    """criacao de diretorio para armazenar arquivos de plotagem
 
     Args
         directory:
@@ -262,7 +262,7 @@ def pltfolder(
 def pssefolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados no formato do PSSe
+    """criacao de diretorio para armazenar resultados no formato do PSSe
 
     Args
         anarede:
@@ -277,7 +277,7 @@ def pssefolder(
 def reportsfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de relatórios
+    """criacao de diretorio para armazenar resultados de relatorios
 
     Args
         anarede:
@@ -294,7 +294,7 @@ def reportsfolder(
 def rbarfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de análise de barra
+    """criacao de diretorio para armazenar resultados de analise de barra
 
     Args
         anarede:
@@ -340,7 +340,7 @@ def rintfolder(
 def rlinfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de análise de linha
+    """criacao de diretorio para armazenar resultados de analise de linha
 
     Args
         anarede:
@@ -384,7 +384,7 @@ def sagefolder(
     anarede,
     pwffile,
 ):
-    """criação de diretório para armazenar resultados de SAGE
+    """criacao de diretorio para armazenar resultados de SAGE
 
     Args
         anarede:
@@ -403,13 +403,13 @@ def sagefolder(
 def smoothfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados suaves
+    """criacao de diretorio para armazenar resultados suaves
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Condição de método
+    # Condicao de metodo
     if anarede.method == "EXLF":
         anarede.dirsmooth = anarede.resultsfolder + "Smooth\\"
         if exists(anarede.dirsmooth) is False:
@@ -430,7 +430,7 @@ def sxlffolder(
     loadstd,
     geolstd,
 ):
-    """criação de diretório para armazenar dados de simulação estocástica
+    """criacao de diretorio para armazenar dados de simulacao estocastica
 
     Args
         anarede:
@@ -470,7 +470,7 @@ def sxicfolder(
     loadstd,
     geolstd,
 ):
-    """criação de diretório para armazenar dados de simulação estocástica
+    """criacao de diretorio para armazenar dados de simulacao estocastica
 
     Args
         anarede:
@@ -481,7 +481,7 @@ def sxicfolder(
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
-            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+            f"\033[91mERROR: Diretorio de simulacao estocastica nao encontrado\033[0m"
         )
 
     anarede.exicfolder = dirname(anarede.dirPWF) + "\\EXIC\\"
@@ -516,7 +516,7 @@ def sxctfolder(
     loadstd,
     geolstd,
 ):
-    """criação de diretório para armazenar dados de simulação estocástica
+    """criacao de diretorio para armazenar dados de simulacao estocastica
 
     Args
         anarede:
@@ -527,7 +527,7 @@ def sxctfolder(
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
-            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+            f"\033[91mERROR: Diretorio de simulacao estocastica nao encontrado\033[0m"
         )
 
     anarede.exctfolder = dirname(anarede.dirPWF) + "\\EXCT\\"
@@ -562,7 +562,7 @@ def spvctfolder(
     loadstd,
     geolstd,
 ):
-    """criação de diretório para armazenar dados de simulação estocástica
+    """criacao de diretorio para armazenar dados de simulacao estocastica
 
     Args
         anarede:
@@ -573,7 +573,7 @@ def spvctfolder(
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
-            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+            f"\033[91mERROR: Diretorio de simulacao estocastica nao encontrado\033[0m"
         )
 
     anarede.pvctfolder = dirname(anarede.dirPWF) + "\\PVCT\\"
@@ -606,7 +606,7 @@ def spvctfolder(
 def statevarfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados finais de convergência das variáveis de estado
+    """criacao de diretorio para armazenar resultados finais de convergencia das variaveis de estado
 
     Args
         anarede:
@@ -624,7 +624,7 @@ def statevarfolder(
 def vsmfolder(
     anarede,
 ):
-    """criação de diretório para armazenar resultados de análise de sensibilidade de tensão
+    """criacao de diretorio para armazenar resultados de analise de sensibilidade de tensao
 
     Args
         anarede:
@@ -633,7 +633,7 @@ def vsmfolder(
     exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(exlffolder) is False:
         raise ValueError(
-            f"\033[91mERROR: Diretório de simulação estocástica não encontrado\033[0m"
+            f"\033[91mERROR: Diretorio de simulacao estocastica nao encontrado\033[0m"
         )
 
     exicfolder = dirname(anarede.dirPWF) + "\\EXIC"

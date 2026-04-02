@@ -15,18 +15,18 @@ from calc import pcalc, qcalc
 def freqsol(
     anarede,
 ):
-    """adiciona variáveis narea solução para caso controle de regulação primária de frequência esteja ativado
+    """adiciona variaveis narea solucao para caso controle de regulacao primaria de frequencia esteja ativado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.nare = 1
 
-    # Condição
+    # Condicao
     if (anarede.ctrl["FREQ"]) and (anarede.pwfblock["DGER"]):
-        # Variáveis
+        # Variaveis
         anarede.solution["active_generation"] = zeros(anarede.nger)
         anarede.solution["qlim_reactive_generation"] = zeros(anarede.nger)
         anarede.fesp = 1
@@ -43,29 +43,29 @@ def freqsol(
                     value["potencia_reativa"] / anarede.cte["SBSE"]
                 )
                 nger += 1
-        # Frequências máxima e mínima por gerador
+        # Frequencias maxima e minima por gerador
         freqgerlim(
             anarede,
         )
 
-    # DGER não ativado
+    # DGER nao ativado
     else:
         anarede.ctrl["FREQ"] = False
         print(
-            f"\033[93mERROR: Controle `FREQ` não será ativado por ausência de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{anarede.system}`!\033[0m"
+            f"\033[93mERROR: Controle `FREQ` nao sera ativado por ausencia de dados de barras geradoras! Atualize o campo `DGER` do arquivo `{anarede.system}`!\033[0m"
         )
 
 
 def freqgerlim(
     anarede,
 ):
-    """cálculo das frequências máximas e mínimas de operação de cada gerador
+    """calculo das frequencias maximas e minimas de operacao de cada gerador
 
     Args
         anarede:  self do arquivo powerflowl.py
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     anarede.freqger = {
         "max": zeros(anarede.nger),
         "min": zeros(anarede.nger),
@@ -76,7 +76,7 @@ def freqgerlim(
     for idx, value in anarede.dgerDF.iterrows():
         # Armazenamento da barra por ordem de entrada de dados dos geradores
         anarede.dgerorder[idx] = anarede.dbarDF["nome"][value["numero"] - 1]
-        # Frequência máxima gerador `idx`
+        # Frequencia maxima gerador `idx`
         anarede.freqger["max"][idx] = (
             anarede.fesp
             + value["estatismo"]
@@ -87,7 +87,7 @@ def freqgerlim(
             )
             / anarede.cte["SBSE"]
         )
-        # Frequência mínima gerador `idx`
+        # Frequencia minima gerador `idx`
         anarede.freqger["min"][idx] = (
             anarede.fesp
             + value["estatismo"]
@@ -103,13 +103,13 @@ def freqgerlim(
 def freqsch(
     anarede,
 ):
-    """armazenamento de Args especificados das equações de controle adicionais
+    """armazenamento de Args especificados das equacoes de controle adicionais
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variáveis adicionais
+    # Variaveis adicionais
     anarede.pqsch["potencia_ativa_gerada_especificada"] = zeros(anarede.nger)
     anarede.pqsch["potencia_reativa_gerada_especificada"] = zeros(anarede.nger)
     anarede.pqsch["magnitude_tensao_especificada"] = zeros(anarede.nbus)
@@ -120,17 +120,17 @@ def freqsch(
 
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            # Potência ativa gerada
+            # Potencia ativa gerada
             anarede.pqsch["potencia_ativa_gerada_especificada"][nger] = value[
                 "potencia_ativa"
             ]
-            # Potência reativa gerada
+            # Potencia reativa gerada
             anarede.pqsch["potencia_reativa_gerada_especificada"][nger] = value[
                 "potencia_reativa"
             ]
-            # Magnitude de tensão
+            # Magnitude de tensao
             anarede.pqsch["magnitude_tensao_especificada"][idx] = value["tensao"] * 1e-3
-            # Condição - slack
+            # Condicao - slack
             if value["tipo"] == 2:
                 # Defasagem angular
                 anarede.pqsch["defasagem_angular_especificada"][idx] = radians(
@@ -147,13 +147,13 @@ def freqsch(
 def freqres(
     anarede,
 ):
-    """cálculo de resíduos das equações de controle adicionais
+    """calculo de residuos das equacoes de controle adicionais
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Vetor de resíduos
+    # Vetor de residuos
     anarede.deltaPger = zeros([anarede.nger])
     anarede.deltaQger = zeros([anarede.nger])
     anarede.deltaTger = zeros([anarede.nare])
@@ -164,7 +164,7 @@ def freqres(
     # Loop
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
-            # Cálculo do resíduo DeltaP
+            # Calculo do residuo DeltaP
             anarede.deltaP[idx] = anarede.solution["active_generation"][nger]
             anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["SBSE"]
             anarede.deltaP[idx] -= pcalc(
@@ -172,7 +172,7 @@ def freqres(
                 idx,
             )
 
-            # Cálculo do resíduo DeltaQ
+            # Calculo do residuo DeltaQ
             anarede.deltaQ[idx] = anarede.solution["qlim_reactive_generation"][nger]
             anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["SBSE"]
             anarede.deltaQ[idx] -= qcalc(
@@ -180,7 +180,7 @@ def freqres(
                 idx,
             )
 
-            # Tratamento de limite de potência ativa
+            # Tratamento de limite de potencia ativa
             if (anarede.solution["freq"] >= anarede.freqger["max"][nger]) or (
                 anarede.solution["freq"] <= anarede.freqger["min"][nger]
             ):
@@ -194,13 +194,13 @@ def freqres(
                     1 / (anarede.dgerDF["estatismo"][nger] * 1e-2)
                 ) * (anarede.solution["freq"] - anarede.fesp)
 
-            # Tratamento de limite de magnitude de tensão
+            # Tratamento de limite de magnitude de tensao
             anarede.deltaQger[nger] += anarede.pqsch["magnitude_tensao_especificada"][
                 idx
             ]
             anarede.deltaQger[nger] -= anarede.solution["voltage"][idx]
 
-            # Condição - slack
+            # Condicao - slack
             if value["tipo"] == 2:
                 # Tratamento de limite de
                 anarede.deltaTger += anarede.pqsch["defasagem_angular_especificada"][
@@ -211,7 +211,7 @@ def freqres(
             # Incrementa contador
             nger += 1
 
-    # Resíduo de equação de controle
+    # Residuo de equacao de controle
     anarede.deltaY = append(anarede.deltaY, anarede.deltaPger)
     anarede.deltaY = append(anarede.deltaY, anarede.deltaQger)
     anarede.deltaY = append(anarede.deltaY, anarede.deltaTger)
@@ -236,12 +236,12 @@ def freqsubjac(
     # yxt   yxv   yxp   yxq   yxx
     #
 
-    # Variável
+    # Variavel
     anarede.dimprefreq = deepcopy(anarede.jacobian.shape[0])
 
-    # Condição
+    # Condicao
     if anarede.freqjcount == 0:
-        # Variável
+        # Variavel
         anarede.freqjcount += 1
 
         # Submatrizes
@@ -292,7 +292,7 @@ def freqsubjac(
             anarede.ypx[idx, nare] = 1.0 / (value["estatismo"] * 1e-2)
 
     ## Montagem Jacobiana
-    # Condição
+    # Condicao
     if anarede.ctrldim != 0:
         anarede.extrarowp = zeros([anarede.nger, anarede.ctrldim])
         anarede.extrarowq = zeros([anarede.nger, anarede.ctrldim])
@@ -471,26 +471,26 @@ def freqsubjac(
 def frequpdt(
     anarede,
 ):
-    """atualização das variáveis de estado adicionais
+    """atualizacao das variaveis de estado adicionais
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Atualização da potência ativa gerada
+    # Atualizacao da potencia ativa gerada
     anarede.solution["active_generation"] += anarede.statevar[
         (anarede.dimprefreq) : (anarede.dimprefreq + anarede.nger)
     ]
-    # Atualização da potência reativa gerada
+    # Atualizacao da potencia reativa gerada
     anarede.solution["qlim_reactive_generation"] += anarede.statevar[
         (anarede.dimprefreq + anarede.nger) : (anarede.dimprefreq + 2 * anarede.nger)
     ]
-    # Atualização da defasagem angular
+    # Atualizacao da defasagem angular
     anarede.solution["freq"] += anarede.statevar[
         (anarede.dimprefreq + 2 * anarede.nger)
     ]
 
-    # Tratamento de limite de potência ativa
+    # Tratamento de limite de potencia ativa
     for idx, value in anarede.dgerDF.iterrows():
         if anarede.solution["freq"] >= anarede.freqger["max"][idx]:
             anarede.solution["active_generation"][idx] = (
@@ -510,13 +510,13 @@ def freqcorr(
     anarede,
     case,
 ):
-    """atualização dos valores de frequência para a etapa de correção do fluxo de potência continuado
+    """atualizacao dos valores de frequencia para a etapa de correcao do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.solution["freq"] = deepcopy(anarede.operationpoint[case]["p"]["freq"])
     anarede.solution["active_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["active_generation"]

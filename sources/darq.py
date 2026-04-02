@@ -161,7 +161,7 @@ def rcdu(
         arquivo:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")

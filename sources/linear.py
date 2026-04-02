@@ -16,13 +16,13 @@ from update import updtlinear
 def linear(
     anarede,
 ):
-    """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+    """analise do fluxo de potencia nao-linear em regime permanente de SEP via metodo Newton-Raphson
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável para armazenamento de solução
+    # Variavel para armazenamento de solucao
     anarede.ctrlcount = 0
     anarede.solution = {
         "method": "LFDC",
@@ -39,17 +39,17 @@ def linear(
         "busQ": zeros([]),
     }
 
-    # Variáveis Especificadas
+    # Variaveis Especificadas
     scheduled(
         anarede,
     )
 
-    # Resíduos
+    # Residuos
     residue(
         anarede,
     )
 
-    # Armazenamento da trajetória de convergência
+    # Armazenamento da trajetoria de convergencia
     convergence(
         anarede,
     )
@@ -60,25 +60,25 @@ def linear(
     Ybus[:, anarede.slackidx] = 0
     Ybus[anarede.slackidx, anarede.slackidx] = 1
 
-    # Variáveis de estado
+    # Variaveis de estado
     anarede.statevar = solve(-Ybus, anarede.psch)
 
-    # Atualização das Variáveis de estado
+    # Atualizacao das Variaveis de estado
     updtlinear(
         anarede,
     )
 
-    # Convergência
+    # Convergencia
     anarede.solution["convergence"] = "SISTEMA CONVERGENTE"
 
 
 def residue(
     anarede,
 ):
-    """cálculo de resíduos das equações diferenciáveis"""
+    """calculo de residuos das equacoes diferenciaveis"""
 
     ## Inicializacao
-    # Vetores de resíduo
+    # Vetores de residuo
     anarede.deltaP = zeros(anarede.nbus)
     anarede.deltaQ = zeros(anarede.nbus)
 
@@ -86,19 +86,19 @@ def residue(
 def convergence(
     anarede,
 ):
-    """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
+    """armazenamento da trajetoria de convergencia do processo de solucao do fluxo de potencia
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Trajetória de convergência da frequência
+    # Trajetoria de convergencia da frequencia
     anarede.solution["freq"] = append(anarede.solution["freq"], 0.0)
 
-    # Trajetória de convergência da potência ativa
+    # Trajetoria de convergencia da potencia ativa
     anarede.solution["convP"] = append(anarede.solution["convP"], 0.0)
     anarede.solution["busP"] = append(anarede.solution["busP"], 0)
 
-    # Trajetória de convergência da potência reativa
+    # Trajetoria de convergencia da potencia reativa
     anarede.solution["convQ"] = append(anarede.solution["convQ"], 0.0)
     anarede.solution["busQ"] = append(anarede.solution["busQ"], 0)

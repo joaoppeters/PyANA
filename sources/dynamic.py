@@ -41,7 +41,7 @@ def dynamic(
         anatem:
     """
     ## Inicializacao
-    # Variável para armazenamento de solução
+    # Variavel para armazenamento de solucao
     anatem.solution.update(
         {
             "method": "EXSI",
@@ -50,7 +50,7 @@ def dynamic(
         }
     )
 
-    # Transformação das cargas para impedância constante e expansao da matriz admitância
+    # Transformacao das cargas para impedância constante e expansao da matriz admitância
     # load2ycte(
     #     anatem,
     # )
@@ -58,7 +58,7 @@ def dynamic(
         anatem,
     )
 
-    # Estado SEP após fluxo de potência
+    # Estado SEP apos fluxo de potencia
     V = anatem.solution["voltage"] * exp(1j * anatem.solution["theta"])
     I = anatem.Yb @ V
 
@@ -206,18 +206,18 @@ def timenewt(
                 "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
             )
 
-        # Atualização das Variáveis de estado
+        # Atualizacao das Variaveis de estado
         updttm(
             anatem,
         )
 
-        # Incremento de iteração
+        # Incremento de iteracao
         anatem.solution["iter"] += 1
 
-        # Condição de Divergência por iterações
+        # Condicao de Divergencia por iteracoes
         if anatem.solution["iter"] > anatem.options["ACIT"]:
             anatem.solution["convergence"] = (
-                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                "SISTEMA DIVERGENTE (extrapolacao de numero maximo de iteracoes)"
             )
             break
 

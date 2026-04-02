@@ -21,13 +21,13 @@ from update import updtstt, updtpwr
 def poc(
     anarede,
 ):
-    """análise do fluxo de potência não-linear em regime permanente de SEP via método direto (Canizares, 1993)
+    """analise do fluxo de potencia nao-linear em regime permanente de SEP via metodo direto (Canizares, 1993)
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável para armazenamento de solução
+    # Variavel para armazenamento de solucao
     anarede.solution.update(
         {
             "method": "EXPC",
@@ -50,17 +50,17 @@ def poc(
     )
 
     while True:
-        # Incremento do Nível de Carregamento e Geração
+        # Incremento do Nivel de Carregamento e Geracao
         increment(
             anarede,
         )
 
-        # Variáveis Especificadas
+        # Variaveis Especificadas
         scheduled(
             anarede,
         )
 
-        # Resíduos
+        # Residuos
         residue(
             anarede,
         )
@@ -96,21 +96,21 @@ def poc(
                 "\033[91mERROR: Falha ao inverter a Matriz (singularidade)!\033[0m"
             )
 
-        # Atualização das Variáveis de estado
+        # Atualizacao das Variaveis de estado
         updtstt(
             anarede,
         )
 
-        # Incremento de iteração
+        # Incremento de iteracao
         anarede.solution["iter"] += 1
 
         if anarede.solution["cvgprint"]:
             print(norm(anarede.statevar), anarede.solution["lambda"])
 
-        # Condição de Divergência por iterações
+        # Condicao de Divergencia por iteracoes
         if anarede.solution["iter"] > anarede.cte["ACIT"]:
             anarede.solution["convergence"] = (
-                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                "SISTEMA DIVERGENTE (extrapolacao de numero maximo de iteracoes)"
             )
             break
 
@@ -128,7 +128,7 @@ def poc(
 def expansion(
     anarede,
 ):
-    """expansão da matriz jacobiana para o método direto (Canizares, 1993)
+    """expansao da matriz jacobiana para o metodo direto (Canizares, 1993)
 
     Args
         anarede:

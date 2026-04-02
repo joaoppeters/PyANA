@@ -24,13 +24,13 @@ from update import updtpwr, updtstt
 def newton(
     anarede,
 ):
-    """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+    """analise do fluxo de potencia nao-linear em regime permanente de SEP via metodo Newton-Raphson
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável para armazenamento de solução
+    # Variavel para armazenamento de solucao
     anarede.solution = {
         "system": anarede.name,
         "method": "EXLF",
@@ -55,12 +55,12 @@ def newton(
         anarede,
     )
 
-    # Variáveis Especificadas
+    # Variaveis Especificadas
     scheduled(
         anarede,
     )
 
-    # Resíduos
+    # Residuos
     residue(
         anarede,
     )
@@ -78,52 +78,51 @@ def newton(
             anarede,
         )
     ):
-        # Armazenamento da trajetória de convergência
+        # Armazenamento da trajetoria de convergencia
         convergence(
             anarede,
         )
-        print(anarede.solution["iter"], end="\n")
 
         # Matriz Jacobiana
         matrices(
             anarede,
         )
 
-        # Variáveis de estado
+        # Variaveis de estado
         anarede.statevar, residuals, rank, singular = lstsq(
             anarede.jacobian,
             anarede.deltaPQY,
             rcond=None,
         )
 
-        # Atualização das Variáveis de estado
+        # Atualizacao das Variaveis de estado
         updtstt(
             anarede,
         )
 
-        # Atualização das potências
+        # Atualizacao das potencias
         updtpwr(
             anarede,
         )
 
-        # Atualização dos resíduos
+        # Atualizacao dos residuos
         residue(
             anarede,
         )
 
-        # Incremento de iteração
+        # Incremento de iteracao
         anarede.solution["iter"] += 1
 
-        # Condição Divergência por iterações
+        # Condicao Divergencia por iteracoes
         if anarede.solution["iter"] > anarede.cte["ACIT"]:
             anarede.solution["convergence"] = (
-                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                "SISTEMA DIVERGENTE (extrapolacao de numero maximo de iteracoes)"
             )
             break
 
-    # Iteração Adicional
+    # Iteracao Adicional
     if anarede.solution["iter"] <= anarede.cte["ACIT"]:
-        # Armazenamento da trajetória de convergência
+        # Armazenamento da trajetoria de convergencia
         convergence(
             anarede,
         )
@@ -133,27 +132,27 @@ def newton(
             anarede,
         )
 
-        # Variáveis de estado
+        # Variaveis de estado
         anarede.statevar, residuals, rank, singular = lstsq(
             anarede.jacobian,
             anarede.deltaPQY,
             rcond=None,
         )
 
-        # Atualização das variáveis de estado
+        # Atualizacao das variaveis de estado
         updtstt(
             anarede,
         )
 
-        # Atualização das potências
+        # Atualizacao das potencias
         updtpwr(
             anarede,
         )
 
-        # Atualização dos resíduos
+        # Atualizacao dos residuos
         residue(
             anarede,
         )
 
-        # Convergência
+        # Convergencia
         anarede.solution["convergence"] = "SISTEMA CONVERGENTE"

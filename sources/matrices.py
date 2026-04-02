@@ -29,7 +29,7 @@ from scipy.sparse import issparse, csr_matrix as sparse
 def admittance(
     anarede,
 ):
-    """Método para cálculo dos Args da matriz Admitância
+    """Metodo para calculo dos Args da matriz Admitância
 
     Args
         anarede:

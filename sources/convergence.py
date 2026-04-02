@@ -13,19 +13,19 @@ from numpy.linalg import norm
 def convergence(
     anarede,
 ):
-    """armazenamento da trajetória de convergência do processo de solução do fluxo de potência
+    """armazenamento da trajetoria de convergencia do processo de solucao do fluxo de potencia
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Trajetória de convergência da frequência
+    # Trajetoria de convergencia da frequencia
     anarede.solution["freqiter"] = append(
         anarede.solution["freqiter"],
         anarede.solution["freq"] * anarede.cte["FBSE"],
     )
 
-    # Trajetória de convergência da potência ativa
+    # Trajetoria de convergencia da potencia ativa
     anarede.solution["convP"] = append(
         anarede.solution["convP"], norm(anarede.deltaP[anarede.maskP])
     )
@@ -33,7 +33,7 @@ def convergence(
         anarede.solution["busP"], argmax(abs(anarede.deltaP[anarede.maskP]))
     )
 
-    # Trajetória de convergência da potência reativa
+    # Trajetoria de convergencia da potencia reativa
     anarede.solution["convQ"] = append(
         anarede.solution["convQ"], norm(anarede.deltaQ[anarede.maskQ])
     )
@@ -44,7 +44,7 @@ def convergence(
     except:
         anarede.solution["busQ"] = append(anarede.solution["busQ"], [0.0])
 
-    # Trajetória de convergência referente a cada equação de controle adicional
+    # Trajetoria de convergencia referente a cada equacao de controle adicional
     if anarede.deltaY.size != 0:
         anarede.solution["convY"] = append(
             anarede.solution["convY"], norm(anarede.deltaY)

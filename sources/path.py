@@ -13,16 +13,16 @@ from os import mkdir
 def pathpwf(
     anarede,
 ):
-    """verificação automática de diretório sistemas
+    """verificacao automatica de diretorio sistemas
 
     Args
         anarede: objeto da classe PowerFlowContainer
     """
     ## Inicializacao
-    # Variável de diretório principal
+    # Variavel de diretorio principal
     anarede.maindir = dirname(dirname(__file__))
 
-    # Variável de nome do SEP em estudo
+    # Variavel de nome do SEP em estudo
     anarede.name = anarede.system.split(".")[0]
 
     if exists(anarede.maindir + "\\sistemas\\") is True:
@@ -35,13 +35,13 @@ def pathpwf(
             )
         else:
             raise ValueError(
-                f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{anarede.name + '.pwf'}` do SEP informado.\nInsira o arquivo `{anarede.name + '.pwf'}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
+                f"\033[91mERROR: Pasta `PyANA/sistemas/` nao contem o arquivo `{anarede.name + '.pwf'}` do SEP informado.\nInsira o arquivo `{anarede.name + '.pwf'}` que contem os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
             )
 
     else:
         mkdir(anarede.maindir + "\\sistemas\\")
         raise ValueError(
-            f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{anarede.name + '.pwf'}` que contém os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
+            f"\033[91mERROR: Pasta `PyANA/sistemas/` acabou de ser criada.\nLembre-se de inserir o arquivo `{anarede.name + '.pwf'}` que contem os dados do SEP que gostaria de analisar na pasta e rode novamente!\033[0m"
         )
 
 
@@ -49,13 +49,13 @@ def pathstb(
     anarede,
     anatem,
 ):
-    """verificação automática de diretório sistemas
+    """verificacao automatica de diretorio sistemas
 
     Args
         anatem: objeto da classe PowerFlowContainer
     """
     ## Inicializacao
-    # Variável de diretório principal
+    # Variavel de diretorio principal
     anatem.maindir = dirname(dirname(__file__))
     if exists(anatem.maindir + "\\sistemas\\" + anatem.system) is True:
         anatem.dirSTB = realpath(
@@ -66,14 +66,14 @@ def pathstb(
         )
     else:
         raise ValueError(
-            f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{anarede.name + '.stb'}` do SEP informado.\nInsira o arquivo `{anarede.name + '.stb'}` que contém os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
+            f"\033[91mERROR: Pasta `PyANA/sistemas/` nao contem o arquivo `{anarede.name + '.stb'}` do SEP informado.\nInsira o arquivo `{anarede.name + '.stb'}` que contem os dados do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
         )
 
 
 def pathdarq(
     anatem,
 ):
-    """verificação automática de diretório sistemas
+    """verificacao automatica de diretorio sistemas
 
     Args
         anatem: objeto da classe PowerFlowContainer
@@ -102,7 +102,7 @@ def pathdarq(
             )
         elif exists(anatem.maindir + "\\sistemas\\" + value.nome.strip()) is False:
             raise ValueError(
-                f"\033[91mERROR: Pasta `PyANA/sistemas/` não contém o arquivo `{value['nome']}` do SEP informado.\nInsira o arquivo `{value['nome']}` que contém os dados adicionais do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
+                f"\033[91mERROR: Pasta `PyANA/sistemas/` nao contem o arquivo `{value['nome']}` do SEP informado.\nInsira o arquivo `{value['nome']}` que contem os dados adicionais do SEP que gostaria de analisar na pasta e rode novemente!\033[0m"
             )
         else:
             print(

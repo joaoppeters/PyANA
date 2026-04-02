@@ -14,7 +14,7 @@ from pandas import DataFrame as DF
 def dagr(
     anarede,
 ):
-    """Inicializacao para leitura de dados de agregadores genéricos
+    """Inicializacao para leitura de dados de agregadores genericos
 
     Args
         anarede:
@@ -76,7 +76,7 @@ def dagr(
     if anarede.dagr1DF.empty or anarede.dagr2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DAGR`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DAGR`!\033[0m"
         )
     else:
         anarede.pwfblock["DAGR"] = True
@@ -85,7 +85,7 @@ def dagr(
 def danc(
     anarede,
 ):
-    """Inicializacao para leitura de dados de alteração do nível de carregamento
+    """Inicializacao para leitura de dados de alteracao do nivel de carregamento
 
     Args
         anarede:
@@ -112,7 +112,7 @@ def danc(
             )
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Alteração do Nível de Carregamento
+    # DataFrame dos Dados de Alteracao do Nivel de Carregamento
     anarede.dancDF = DF(data=anarede.danc)
     anarede.danc = deepcopy(anarede.dancDF)
     anarede.dancDF = anarede.dancDF.replace(r"^\s*$", "0", regex=True)
@@ -127,7 +127,7 @@ def danc(
     if anarede.dancDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DANC`!\033[0m"
         )
     else:
         anarede.pwfblock["DANC"] = True
@@ -136,7 +136,7 @@ def danc(
 def danc_acls(
     anarede,
 ):
-    """Inicializacao para leitura de dados de alteração do nível de carregamento
+    """Inicializacao para leitura de dados de alteracao do nivel de carregamento
 
     Args
         anarede:
@@ -205,7 +205,7 @@ def danc_acls(
             )
         anarede.linecount += 1
 
-    # DataFrame dos dados de Alteração do Nível de Carregamento
+    # DataFrame dos dados de Alteracao do Nivel de Carregamento
     anarede.dancDF = DF(data=anarede.danc)
     anarede.dancDF = deepcopy(anarede.dancDF)
     anarede.dancDF = anarede.dancDF.replace(r"^\s*$", "0", regex=True)
@@ -230,7 +230,7 @@ def danc_acls(
     if anarede.dancDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DANC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DANC`!\033[0m"
         )
     else:
         anarede.pwfblock["DANC"] = True
@@ -239,13 +239,13 @@ def danc_acls(
 def checkdanc(
     anarede,
 ):
-    """checa alteração no nível de carregamento
+    """checa alteracao no nivel de carregamento
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     if anarede.pwfblock["DANC"]:
         for area in anarede.dancDF["area"].values:
             for idx, value in anarede.dbarDF.iterrows():
@@ -265,7 +265,7 @@ def checkdanc(
 def dare(
     anarede,
 ):
-    """Inicializacao para leitura de dados de intercâmbio de potência ativa entre áreas
+    """Inicializacao para leitura de dados de intercâmbio de potencia ativa entre areas
 
     Args
         anarede:
@@ -294,7 +294,7 @@ def dare(
             )
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
+    # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     anarede.dareDF = DF(data=anarede.dare)
     anarede.dare = deepcopy(anarede.dareDF)
     anarede.dareDF = anarede.dareDF.replace(r"^\s*$", "0", regex=True)
@@ -310,7 +310,7 @@ def dare(
     if anarede.dareDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DARE`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DARE`!\033[0m"
         )
     else:
         anarede.pwfblock["DARE"] = True
@@ -457,7 +457,7 @@ def dbar(
     if anarede.dbarDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DBAR`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DBAR`!\033[0m"
         )
     else:
         anarede.pwfblock["DBAR"] = True
@@ -465,7 +465,7 @@ def dbar(
         # Número de barras do sistema
         anarede.nbus = len(anarede.dbarDF.tipo.values)
 
-        # Barras geradoras: número & máscara
+        # Barras geradoras: número & mascara
         anarede.npv = 0
         anarede.maskP = ones(anarede.nbus, dtype=bool)
         anarede.maskQ = ones(anarede.nbus, dtype=bool)
@@ -521,7 +521,7 @@ def dbar(
 def dbsh(
     anarede,
 ):
-    """Inicializacao para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
+    """Inicializacao para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissao
 
     Args
         anarede:
@@ -645,7 +645,7 @@ def dbsh(
     if anarede.dbsh1DF.empty or anarede.dbsh2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DBSH`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DBSH`!\033[0m"
         )
     else:
         anarede.pwfblock["DBSH"] = True
@@ -660,7 +660,7 @@ def dbsh(
 def dcar(
     anarede,
 ):
-    """Inicializacao para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+    """Inicializacao para leitura de Args A, B, C e D que estabelecem a curva de variacao de carga em relacao a magnitude de tensao nas barras
 
     Args
         anarede:
@@ -731,7 +731,7 @@ def dcar(
             )
         anarede.linecount += 1
 
-    # DataFrame dos dados de Variação do Tipo de Carga
+    # DataFrame dos dados de Variacao do Tipo de Carga
     anarede.dcarDF = DF(data=anarede.dcar)
     anarede.dcarDF = deepcopy(anarede.dcarDF)
     anarede.dcarDF = anarede.dcarDF.replace(r"^\s*$", "0", regex=True)
@@ -759,7 +759,7 @@ def dcar(
     if anarede.dcarDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCAR`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCAR`!\033[0m"
         )
     else:
         anarede.pwfblock["DCAR"] = True
@@ -825,7 +825,7 @@ def dcba(
     if anarede.dcbaDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCBA`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCBA`!\033[0m"
         )
     else:
         anarede.pwfblock["DCBA"] = True
@@ -905,7 +905,7 @@ def dccv(
             anarede.dccv["tap_reduzido"].append(anarede.lines[anarede.linecount][73:78])
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Controle de Conversores de Tensão CC
+    # DataFrame dos Dados de Controle de Conversores de Tensao CC
     anarede.dccvDF = DF(data=anarede.dccv)
     anarede.dccv = deepcopy(anarede.dccvDF)
     anarede.dccvDF = anarede.dccvDF.replace(r"^\s*$", "0", regex=True)
@@ -934,7 +934,7 @@ def dccv(
     if anarede.dccvDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCCV`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCCV`!\033[0m"
         )
     else:
         anarede.pwfblock["DCCV"] = True
@@ -943,7 +943,7 @@ def dccv(
 def dcer(
     anarede,
 ):
-    """Inicializacao para leitura de dados de compensadores estáticos de potência reativa
+    """Inicializacao para leitura de dados de compensadores estaticos de potencia reativa
 
     Args
         anarede:
@@ -990,7 +990,7 @@ def dcer(
             )
         anarede.linecount += 1
 
-    # DataFrame dos Dados dos Compensadores Estáticos de Potência Reativa
+    # DataFrame dos Dados dos Compensadores Estaticos de Potencia Reativa
     anarede.dcerDF = DF(data=anarede.dcer)
     anarede.dcer = deepcopy(anarede.dcerDF)
     anarede.dcerDF = anarede.dcerDF.replace(r"^\s*$", "0", regex=True)
@@ -1012,12 +1012,12 @@ def dcer(
     if anarede.dcerDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código e execução `DCER`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo e execucao `DCER`!\033[0m"
         )
     else:
         anarede.pwfblock["DCER"] = True
 
-        # Número de Compensadores Estáticos de Potência Reativa
+        # Número de Compensadores Estaticos de Potencia Reativa
         anarede.ncer = 0
         for idx, value in anarede.dcerDF.iterrows():
             if value["estado"] == "D":
@@ -1067,7 +1067,7 @@ def dcer(
 def dcli(
     anarede,
 ):
-    """Inicializacao para leitura de dados de linhas de transmissão CC
+    """Inicializacao para leitura de dados de linhas de transmissao CC
 
     Args
         anarede:
@@ -1096,7 +1096,7 @@ def dcli(
             anarede.dcli["capacidade"].append(anarede.lines[anarede.linecount][60:64])
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Linhas de Transmissão CC
+    # DataFrame dos Dados de Linhas de Transmissao CC
     anarede.dcliDF = DF(data=anarede.dcli)
     anarede.dcli = deepcopy(anarede.dcliDF)
     anarede.dcliDF = anarede.dcliDF.replace(r"^\s*$", "0", regex=True)
@@ -1116,7 +1116,7 @@ def dcli(
     if anarede.dcliDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCLI`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCLI`!\033[0m"
         )
     else:
         anarede.pwfblock["DCLI"] = True
@@ -1205,7 +1205,7 @@ def dcnv(
     if anarede.dcnvDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCNV`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCNV`!\033[0m"
         )
     else:
         anarede.pwfblock["DCNV"] = True
@@ -1214,7 +1214,7 @@ def dcnv(
 def dcsc(
     anarede,
 ):
-    """Inicializacao para leitura de dados de compensador série controlável
+    """Inicializacao para leitura de dados de compensador serie controlavel
 
     Args
         anarede:
@@ -1291,7 +1291,7 @@ def dcsc(
             anarede.dcsc["agreg10"].append(anarede.lines[anarede.linecount][99:102])
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Compensador Série Controlável
+    # DataFrame dos Dados de Compensador Serie Controlavel
     anarede.dcscDF = DF(data=anarede.dcsc)
     anarede.dcsc = deepcopy(anarede.dcscDF)
     anarede.dcscDF = anarede.dcscDF.replace(r"^\s*$", "0", regex=True)
@@ -1330,7 +1330,7 @@ def dcsc(
     if anarede.dcscDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCSC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCSC`!\033[0m"
         )
     else:
         anarede.pwfblock["DCSC"] = True
@@ -1391,7 +1391,7 @@ def dcte(
     if anarede.dcteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCTE`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCTE`!\033[0m"
         )
     else:
         anarede.pwfblock["DCTE"] = True
@@ -1406,7 +1406,7 @@ def dcte(
 def dctg(
     anarede,
 ):
-    """Inicializacao para leitura de lista de casos de contingência
+    """Inicializacao para leitura de lista de casos de contingencia
 
     Args
         anarede:
@@ -1526,7 +1526,7 @@ def dctg(
     if anarede.dctg1DF.empty or anarede.dctg2DF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCTG`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCTG`!\033[0m"
         )
     else:
         anarede.pwfblock["DCTG"] = True
@@ -1608,7 +1608,7 @@ def dctr(
     if anarede.dctrDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DCTR`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DCTR`!\033[0m"
         )
     else:
         anarede.pwfblock["DCTR"] = True
@@ -1663,7 +1663,7 @@ def delo(
     if anarede.deloDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DELO`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DELO`!\033[0m"
         )
     else:
         anarede.pwfblock["DELO"] = True
@@ -1672,7 +1672,7 @@ def delo(
 def dgbt(
     anarede,
 ):
-    """Inicializacao para leitura de dados de grupos de base de tensão de barras CA
+    """Inicializacao para leitura de dados de grupos de base de tensao de barras CA
 
     Args
         anarede:
@@ -1689,7 +1689,7 @@ def dgbt(
             anarede.dgbt["tensao"].append(anarede.lines[anarede.linecount][3:8])
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
+    # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     anarede.dgbtDF = DF(data=anarede.dgbt)
     anarede.dgbt = deepcopy(anarede.dgbtDF)
     anarede.dgbtDF = anarede.dgbtDF.replace(r"^\s*$", "0", regex=True)
@@ -1702,7 +1702,7 @@ def dgbt(
     if anarede.dgbtDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DGBT`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DGBT`!\033[0m"
         )
     else:
         anarede.pwfblock["DGBT"] = True
@@ -1799,7 +1799,7 @@ def dger(
     if anarede.dgerDF.empty:  # or (anarede.dgerDF.shape[0] != anarede.nger):
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DGER`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DGER`!\033[0m"
         )
     else:
         anarede.pwfblock["DGER"] = True
@@ -1834,7 +1834,7 @@ def dger(
 def dglt(
     anarede,
 ):
-    """Inicializacao para leitura de dados de grupos de limites de tensão
+    """Inicializacao para leitura de dados de grupos de limites de tensao
 
     Args
         anarede:
@@ -1863,7 +1863,7 @@ def dglt(
             )
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Intercâmbio de Potência Ativa entre Áreas
+    # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     anarede.dgltDF = DF(data=anarede.dglt)
     anarede.dglt = deepcopy(anarede.dgltDF)
     anarede.dgltDF = anarede.dgltDF.replace(r"^\s*$", "0", regex=True)
@@ -1879,7 +1879,7 @@ def dglt(
     if anarede.dgltDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DGLT`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DGLT`!\033[0m"
         )
     else:
         anarede.pwfblock["DGLT"] = True
@@ -1908,7 +1908,7 @@ def dglt(
 def dinc(
     anarede,
 ):
-    """Inicializacao para leitura de dados de incremento do nível de carregamento
+    """Inicializacao para leitura de dados de incremento do nivel de carregamento
 
     Args
         anarede:
@@ -1993,7 +1993,7 @@ def dinc(
             )
         anarede.linecount += 1
 
-    # DataFrame dos dados de Incremento do Nível de Carregamento
+    # DataFrame dos dados de Incremento do Nivel de Carregamento
     anarede.dincDF = DF(data=anarede.dinc)
     anarede.dinc = deepcopy(anarede.dincDF)
     anarede.dincDF = anarede.dincDF.replace(r"^\s*$", "0", regex=True)
@@ -2022,7 +2022,7 @@ def dinc(
     if anarede.dincDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DINC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DINC`!\033[0m"
         )
     else:
         anarede.pwfblock["DINC"] = True
@@ -2044,7 +2044,7 @@ def dinc(
 def dinj(
     anarede,
 ):
-    """Inicializacao para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
+    """Inicializacao para leitura de dados de injecoes de potencias, shunts e fatores de participacao de geracao do modelo equivalente
 
     Args
         anarede:
@@ -2075,7 +2075,7 @@ def dinj(
             )
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Injeção de Potências, Shunts e Fatores de Participação de Geração do Modelo Equivalente
+    # DataFrame dos Dados de Injecao de Potencias, Shunts e Fatores de Participacao de Geracao do Modelo Equivalente
     anarede.dinjDF = DF(data=anarede.dinj)
     anarede.dinj = deepcopy(anarede.dinjDF)
     anarede.dinjDF = anarede.dinjDF.replace(r"^\s*$", "0", regex=True)
@@ -2092,7 +2092,7 @@ def dinj(
     if anarede.dinjDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DINJ`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DINJ`!\033[0m"
         )
     else:
         anarede.pwfblock["DINJ"] = True
@@ -2128,7 +2128,7 @@ def dinj(
 def dlin(
     anarede,
 ):
-    """Inicializacao para leitura de dados de linha de transmissão CA
+    """Inicializacao para leitura de dados de linha de transmissao CA
 
     Args
         anarede:
@@ -2255,7 +2255,7 @@ def dlin(
     if anarede.dlinDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DLIN`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DLIN`!\033[0m"
         )
     else:
         anarede.pwfblock["DLIN"] = True
@@ -2306,7 +2306,7 @@ def dlin(
 def dmet(
     anarede,
 ):
-    """Inicializacao para leitura de dados de monitoração para estabilidade de tensão em barra CA
+    """Inicializacao para leitura de dados de monitoracao para estabilidade de tensao em barra CA
 
     Args
         anarede:
@@ -2363,7 +2363,7 @@ def dmet(
             anarede.dmte["operacao"].append(anarede.lines[anarede.linecount][50])
         anarede.linecount += 1
 
-    # DataFrame dos Dados de Monitoração para Estabilidade de Tensão em Barra CA
+    # DataFrame dos Dados de Monitoracao para Estabilidade de Tensao em Barra CA
     anarede.dmteDF = DF(data=anarede.dmte)
     anarede.dmte = deepcopy(anarede.dmteDF)
     anarede.dmteDF = anarede.dmteDF.replace(r"^\s*$", "0", regex=True)
@@ -2386,7 +2386,7 @@ def dmet(
     if anarede.dmteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DMET`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DMET`!\033[0m"
         )
     else:
         anarede.pwfblock["DMET"] = True
@@ -2395,7 +2395,7 @@ def dmet(
 def dmfl(
     anarede,
 ):
-    """Inicializacao para leitura de dados de monitoração de fluxo em circuito CA
+    """Inicializacao para leitura de dados de monitoracao de fluxo em circuito CA
 
     Args
         anarede:
@@ -2454,7 +2454,7 @@ def dmfl(
             anarede.dmfl["interligacao"].append(anarede.lines[anarede.linecount][52])
         anarede.linecount += 1
 
-    # DataFrame dos dados de Monitoração de Fluxo em Circuito CA
+    # DataFrame dos dados de Monitoracao de Fluxo em Circuito CA
     anarede.dmflDF = DF(data=anarede.dmfl)
     anarede.dmfl = deepcopy(anarede.dmflDF)
     anarede.dmflDF = anarede.dmflDF.replace(r"^\s*$", "0", regex=True)
@@ -2478,7 +2478,7 @@ def dmfl(
     if anarede.dmflDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DMFL`!\033[0m"
         )
     else:
         anarede.pwfblock["DMFL"] = True
@@ -2487,7 +2487,7 @@ def dmfl(
 def dmfl_circ(
     anarede,
 ):
-    """Inicializacao para leitura de dados de monitoração de fluxo em circuito CA
+    """Inicializacao para leitura de dados de monitoracao de fluxo em circuito CA
 
     Args
         anarede:
@@ -2544,7 +2544,7 @@ def dmfl_circ(
     if anarede.dmflDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DMFL`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DMFL`!\033[0m"
         )
     else:
         anarede.pwfblock["DMFL"] = True
@@ -2553,7 +2553,7 @@ def dmfl_circ(
 def dmte(
     anarede,
 ):
-    """Inicializacao para leitura de dados de monitoração de tensão em barra CA
+    """Inicializacao para leitura de dados de monitoracao de tensao em barra CA
 
     Args
         anarede:
@@ -2612,7 +2612,7 @@ def dmte(
             anarede.dmte["interligacao"].append(anarede.lines[anarede.linecount][52])
         anarede.linecount += 1
 
-    # DataFrame dos dados de Monitoração de Tensão em Circuito CA
+    # DataFrame dos dados de Monitoracao de Tensao em Circuito CA
     anarede.dmteDF = DF(data=anarede.dmte)
     anarede.dmte = deepcopy(anarede.dmteDF)
     anarede.dmteDF = anarede.dmteDF.replace(r"^\s*$", "0", regex=True)
@@ -2636,7 +2636,7 @@ def dmte(
     if anarede.dmteDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DMTE`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DMTE`!\033[0m"
         )
     else:
         anarede.pwfblock["DMTE"] = True
@@ -2645,7 +2645,7 @@ def dmte(
 def dopc(
     anarede,
 ):
-    """Inicializacao para leitura de dados de código de opções de controle e execução padrão
+    """Inicializacao para leitura de dados de codigo de opcoes de controle e execucao padrao
 
     Args
         anarede:
@@ -2697,7 +2697,7 @@ def dopc(
     if anarede.dopcDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DOPC`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DOPC`!\033[0m"
         )
     else:
         anarede.pwfblock["DOPC"] = True
@@ -2764,7 +2764,7 @@ def dshl(
     if anarede.dshlDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DSHL`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DSHL`!\033[0m"
         )
     else:
         anarede.pwfblock["DSHL"] = True
@@ -2773,7 +2773,7 @@ def dshl(
 def dtpf(
     anarede,
 ):
-    """Inicializacao para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+    """Inicializacao para leitura de dados de fixacao na aplicacao do controle de tensao por variacao automatica de tap
 
     Args
         anarede:
@@ -2832,7 +2832,7 @@ def dtpf(
             anarede.dtpf["interligacao"].append(anarede.lines[anarede.linecount][52])
         anarede.linecount += 1
 
-    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    # DataFrame dos dados de Fixacao na Aplicacao do Controle de Tensao por Variacao Automatica de Tap
     anarede.dtpfDF = DF(data=anarede.dtpf)
     anarede.dtpf = deepcopy(anarede.dtpfDF)
     anarede.dtpfDF = anarede.dtpfDF.replace(r"^\s*$", "0", regex=True)
@@ -2856,7 +2856,7 @@ def dtpf(
     if anarede.dtpfDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DTPF`!\033[0m"
         )
     else:
         anarede.pwfblock["DTPF"] = True
@@ -2865,7 +2865,7 @@ def dtpf(
 def dtpf_circ(
     anarede,
 ):
-    """Inicializacao para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+    """Inicializacao para leitura de dados de fixacao na aplicacao do controle de tensao por variacao automatica de tap
 
     Args
         anarede:
@@ -2906,7 +2906,7 @@ def dtpf_circ(
                 break
         anarede.linecount += 1
 
-    # DataFrame dos dados de Fixação na Aplicação do Controle de Tensão por Variação Automática de Tap
+    # DataFrame dos dados de Fixacao na Aplicacao do Controle de Tensao por Variacao Automatica de Tap
     anarede.dtpfDF = DF(data=anarede.dtpf)
     anarede.dtpf = deepcopy(anarede.dtpfDF)
     anarede.dtpfDF = anarede.dtpfDF.replace(r"^\s*$", "0", regex=True)
@@ -2921,7 +2921,7 @@ def dtpf_circ(
     if anarede.dtpfDF.empty:
         ## ERROR - VERMELHO
         raise ValueError(
-            "\033[91mERROR: Falha na leitura de código de execução `DTPF`!\033[0m"
+            "\033[91mERROR: Falha na leitura de codigo de execucao `DTPF`!\033[0m"
         )
     else:
         anarede.pwfblock["DTPF"] = True

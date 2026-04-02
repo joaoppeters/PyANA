@@ -15,13 +15,13 @@ from stb import stb
 def pwfsetting(
     anarede,
 ):
-    """configurações iniciais para simulação estática de fluxo de potência
+    """configuracoes iniciais para simulacao estatica de fluxo de potencia
 
     Args
         anarede:  objeto da classe PowerFlowContainer
     """
     ## Inicializacao
-    # Verificação de diretório
+    # Verificacao de diretorio
     pathpwf(
         anarede,
     )
@@ -32,7 +32,7 @@ def pwfsetting(
         anarede.dirPWF,
     )
 
-    # Classe para determinação dos valores padrão das variáveis de tolerância
+    # Classe para determinacao dos valores padrao das variaveis de tolerância
     optionspwf(
         anarede,
     )
@@ -42,14 +42,14 @@ def stbsetting(
     anarede,
     anatem,
 ):
-    """configurações iniciais para simulação dinâmica de fluxo de potência
+    """configuracoes iniciais para simulacao dinâmica de fluxo de potencia
 
     Args
         anarede: objeto da classe PowerFlowContainer
         anatem:  objeto da classe PowerFlowContainer
     """
     ## Inicializacao
-    # Verificação de diretório
+    # Verificacao de diretorio
     pathstb(
         anarede,
         anatem,
@@ -60,7 +60,7 @@ def stbsetting(
         anatem,
     )
 
-    # Classe para determinação dos valores padrão das variáveis de tolerância
+    # Classe para determinacao dos valores padrao das variaveis de tolerância
     optionsstb(
         anatem,
     )

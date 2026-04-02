@@ -18,14 +18,14 @@ def eigensens(
     powerflow,
     stage: str = "",
 ):
-    """análise de autovalores e autovetores
+    """analise de autovalores e autovetores
 
     Args
         anarede:
-        stage: string de identificação da etapa do fluxo de potência continuado
+        stage: string de identificacao da etapa do fluxo de potencia continuado
     """
     ## Inicializacao
-    # Reorganização da Matriz Jacobiana Expandida
+    # Reorganizacao da Matriz Jacobiana Expandida
     jacobian = deepcopy(anarede.jacobian)
 
     if case > 0:
@@ -56,7 +56,7 @@ def eigensens(
     )
 
     try:
-        # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+        # Calculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
         rightvalues, rightvector = eig(anarede.jacobian)
         anarede.jacpfactor = zeros(anarede.jacobian.shape)
 
@@ -71,19 +71,19 @@ def eigensens(
                     rightvectorQV[col, row] * inv(rightvectorQV)[row, col]
                 )
 
-        # Condição
+        # Condicao
         if stage == None:
-            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
+            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansao)
             anarede.operationpoint[case]["jacobian"] = anarede.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
             anarede.operationpoint[case]["determinant"] = det(anarede.jacobian)
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+            # Calculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             anarede.operationpoint[case]["eigenvalues"] = rightvalues
             anarede.operationpoint[case]["eigenvectors"] = rightvector
 
-            # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
+            # Calculo e armazenamento do fator de participacao da matriz Jacobiana reduzida
             anarede.operationpoint[case]["participation_factor"] = anarede.jacpfactor
 
             # Armazenamento da matriz de sensibilidade QV
@@ -92,27 +92,27 @@ def eigensens(
             # Armazenamento do determinante da matriz de sensibilidade QV
             anarede.operationpoint[case]["determinant-QV"] = det(anarede.jacQV)
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
+            # Calculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
             anarede.operationpoint[case]["eigenvalues-QV"] = rightvaluesQV
             anarede.operationpoint[case]["eigenvectors-QV"] = rightvectorQV
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
+            # Calculo e armazenamento do fator de participacao da matriz de sensibilidade QV
             anarede.operationpoint[case][
                 "participationfactor-QV"
             ] = anarede.jacQVpfactor
 
         elif stage != None:
-            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansão)
+            # Armazenamento da matriz Jacobiana reduzida (sem bignumber e sem expansao)
             anarede.operationpoint[case][stage]["jacobian"] = anarede.jacobian
 
             # Armazenamento do determinante da matriz Jacobiana reduzida
             anarede.operationpoint[case][stage]["determinant"] = det(anarede.jacobian)
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
+            # Calculo e armazenamento dos autovalores e autovetores da matriz Jacobiana reduzida
             anarede.operationpoint[case][stage]["eigenvalues"] = rightvalues
             anarede.operationpoint[case][stage]["eigenvectors"] = rightvector
 
-            # Cálculo e armazenamento do fator de participação da matriz Jacobiana reduzida
+            # Calculo e armazenamento do fator de participacao da matriz Jacobiana reduzida
             anarede.operationpoint[case][stage][
                 "participationfactor"
             ] = anarede.jacpfactor
@@ -123,28 +123,28 @@ def eigensens(
             # Armazenamento do determinante da matriz de sensibilidade QV
             anarede.operationpoint[case][stage]["determinant-QV"] = det(anarede.jacQV)
 
-            # Cálculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
+            # Calculo e armazenamento dos autovalores e autovetores da matriz de sensibilidade QV
             anarede.operationpoint[case][stage]["eigenvalues-QV"] = rightvaluesQV
             anarede.operationpoint[case][stage]["eigenvectors-QV"] = rightvectorQV
 
-            # Cálculo e armazenamento do fator de participação da matriz de sensibilidade QV
+            # Calculo e armazenamento do fator de participacao da matriz de sensibilidade QV
             anarede.operationpoint[case][stage][
                 "participationfactor-QV"
             ] = anarede.jacQVpfactor
 
-    # Caso não seja possível realizar a inversão da matriz PT pelo fato da geração de potência reativa
-    # ter sido superior ao limite máximo durante a análise de tratamento de limites de geração de potência reativa
+    # Caso nao seja possivel realizar a inversao da matriz PT pelo fato da geracao de potencia reativa
+    # ter sido superior ao limite maximo durante a analise de tratamento de limites de geracao de potencia reativa
     except:
         # self.active_heuristic = True
 
-        # Reconfiguração do caso
+        # Reconfiguracao do caso
         auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
         case -= 1
         controlpop(
             powerflow,
         )
 
-        # Reconfiguração das variáveis de passo
+        # Reconfiguracao das variaveis de passo
         cpfkeys = {
             "system",
             "pmc",
@@ -166,7 +166,7 @@ def eigensens(
         }
         anarede.solution["ndiv"] = auxdiv
 
-        # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+        # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
         anarede.solution["voltage"] = deepcopy(
             anarede.operationpoint[case]["c"]["voltage"]
         )

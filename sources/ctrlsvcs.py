@@ -19,13 +19,13 @@ from smooth import svcsA, svcsAsmooth, svcsI, svcsIsmooth, svcsQ, svcsQsmooth
 def svcssol(
     anarede,
 ):
-    """variável de estado adicional para o problema de fluxo de potência
+    """variavel de estado adicional para o problema de fluxo de potencia
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variáveis
+    # Variaveis
     if "svc_generation" not in anarede.solution:
         anarede.solution["svc_generation"] = zeros([anarede.ncer])
 
@@ -140,14 +140,14 @@ def alphavar(
     ][0].real
     anarede.solution["alpha0"] = deepcopy(anarede.solution["alpha"])
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     global alpha
     alpha = Symbol("alpha")
     anarede.alphabeq = -(
         (anarede.alphaxc / pi) * (2 * (pi - alpha) + sin(2 * alpha)) - anarede.alphaxl
     ) / (anarede.alphaxc * anarede.alphaxl)
 
-    # Potência Reativa
+    # Potencia Reativa
     idxcer = anarede.dbarDF.index[
         anarede.dbarDF["numero"] == anarede.dcerDF["barra"][0]
     ].tolist()[0]
@@ -160,14 +160,14 @@ def svcres(
     anarede,
     case,
 ):
-    """cálculo de resíduos das equações de controle adicionais
+    """calculo de residuos das equacoes de controle adicionais
 
     Args
         anarede:
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
-    # Vetor de resíduos
+    # Vetor de residuos
     anarede.deltaSVC = zeros([anarede.ncer])
 
     # Contador
@@ -231,7 +231,7 @@ def svcres(
         # Incrementa contador
         ncer += 1
 
-    # Resíduo de equação de controle
+    # Residuo de equacao de controle
     anarede.deltaY = append(anarede.deltaY, anarede.deltaSVC)
 
 
@@ -252,7 +252,7 @@ def svcsubjac(
     #  yt    yv   yx
     #
 
-    # Dimensão da matriz Jacobiana
+    # Dimensao da matriz Jacobiana
     anarede.dimpresvc = deepcopy(anarede.jacobian.shape[0])
 
     # Submatrizes
@@ -285,7 +285,7 @@ def svcsubjac(
             # Derivada Vk + Vm
             yv[ncer, idxcer] = anarede.svcdiff[idxcer][0] + anarede.svcdiff[idxcer][1]
 
-        # Derivada Equação de Controle Adicional por Variável de Estado Adicional
+        # Derivada Equacao de Controle Adicional por Variavel de Estado Adicional
         yx[ncer, ncer] = anarede.svcdiff[idxcer][2]
 
         # Derivada Qk
@@ -312,7 +312,7 @@ def svcsubjac(
         ncer += 1
 
     ## Montagem Jacobiana
-    # Condição
+    # Condicao
     if anarede.ctrldim != 0:
         extrarow = zeros([anarede.nger, anarede.ctrldim])
         extracol = zeros([anarede.ctrldim, anarede.nger])
@@ -380,7 +380,7 @@ def svcsubjac(
 def svcupdt(
     anarede,
 ):
-    """atualização das variáveis de estado adicionais
+    """atualizacao das variaveis de estado adicionais
 
     Args
         anarede:
@@ -389,7 +389,7 @@ def svcupdt(
     # Contador
     ncer = 0
 
-    # Atualização da potência reativa gerada
+    # Atualizacao da potencia reativa gerada
     for _, value in anarede.dcerDF.iterrows():
         if value["controle"] == "A":
             anarede.solution["alpha"] += anarede.statevar[(anarede.dimpresvc + ncer)]
@@ -411,13 +411,13 @@ def svcupdt(
 def svcsch(
     anarede,
 ):
-    """atualização do valor de potência reativa especificada
+    """atualizacao do valor de potencia reativa especificada
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Atualização da potência reativa especificada
+    # Atualizacao da potencia reativa especificada
     ncer = 0
     for _, value in anarede.dcerDF.iterrows():
         idxcer = anarede.dbarDF.index[
@@ -444,14 +444,14 @@ def svccorr(
     anarede,
     case,
 ):
-    """atualização dos valores de potência reativa gerada para a etapa de correção do fluxo de potência continuado
+    """atualizacao dos valores de potencia reativa gerada para a etapa de correcao do fluxo de potencia continuado
 
     Args
         anarede:
-        case: etapa do fluxo de potência continuado analisada
+        case: etapa do fluxo de potencia continuado analisada
     """
     ## Inicializacao
-    # Variável
+    # Variavel
     anarede.solution["svc_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["svc_generation"]
     )
@@ -460,13 +460,13 @@ def svccorr(
 def svcheur(
     anarede,
 ):
-    """heurísticas aplicadas ao tratamento de limites de geração de potência reativa no problema do fluxo de potência continuado
+    """heuristicas aplicadas ao tratamento de limites de geracao de potencia reativa no problema do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
+    # Condicao de atingimento do ponto de maximo carregamento ou bifurcacao LIB
     if (
         (not anarede.solution["pmc"])
         and (anarede.solution["varstep"] == "lambda")
@@ -481,7 +481,7 @@ def svcheur(
 def svccpf(
     anarede,
 ):
-    """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
+    """armazenamento das variaveis de controle presentes na solucao do fluxo de potencia continuado
 
     Args
         anarede:
@@ -494,14 +494,14 @@ def svcsolcpf(
     anarede,
     case,
 ):
-    """armazenamento das variáveis de controle presentes na solução do fluxo de potência continuado
+    """armazenamento das variaveis de controle presentes na solucao do fluxo de potencia continuado
 
     Args
         anarede:
-        case: etapa do fluxo de potência continuado analisada
+        case: etapa do fluxo de potencia continuado analisada
     """
     ## Inicializacao
-    # Condição
+    # Condicao
     precase = case - 1
     if case == 1:
         anarede.solution["svc_generation"] = deepcopy(

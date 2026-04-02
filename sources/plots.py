@@ -22,24 +22,24 @@ def convergence(
         setting: self do arquivo setting.py
     """
     ## Inicializacao
-    # Criação de pasta
+    # Criacao de pasta
     convergencefolder(
         anarede,
     )
 
-    # # Convergência de Potência Ativa
+    # # Convergencia de Potencia Ativa
     # convP(
     #     anarede,
     # )
 
-    # # Convergência de Potência Reativa
+    # # Convergencia de Potencia Reativa
     # convQ(
     #     anarede,
     # )
 
-    # # Condição
+    # # Condicao
     # if anarede.ctrl:
-    #     # Convergência de Equações de Controle Adicionais
+    #     # Convergencia de Equacoes de Controle Adicionais
     #     convY(
     #         anarede,
     #     )
@@ -48,7 +48,7 @@ def convergence(
 def convP(
     anarede,
 ):
-    """trajetória de convergência de equação de potência ativa
+    """trajetoria de convergencia de equacao de potencia ativa
 
     Args
         anarede:
@@ -98,10 +98,10 @@ def convP(
         )
 
     # Label
-    ax.set_title("Trajetória de Convergência de Potência Ativa")
-    ax.set_xlabel("Iterações")
+    ax.set_title("Trajetoria de Convergencia de Potencia Ativa")
+    ax.set_xlabel("iteracoes")
     ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
-    ax.set_ylabel("Resíduo de Potência Ativa [MW]")
+    ax.set_ylabel("Residuo de Potencia Ativa [MW]")
     ax.legend(
         [
             (
@@ -123,7 +123,7 @@ def convP(
 def convQ(
     anarede,
 ):
-    """trajetória de convergência de equação de potência reativa
+    """trajetoria de convergencia de equacao de potencia reativa
 
     Args
         anarede:
@@ -173,10 +173,10 @@ def convQ(
         )
 
     # Label
-    ax.set_title("Trajetória de Convergência de Potência Reativa")
-    ax.set_xlabel("Iterações")
+    ax.set_title("Trajetoria de Convergencia de Potencia Reativa")
+    ax.set_xlabel("iteracoes")
     ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
-    ax.set_ylabel("Resíduo de Potência Reativa [MVAr]")
+    ax.set_ylabel("Residuo de Potencia Reativa [MVAr]")
     ax.legend(
         [
             (
@@ -198,7 +198,7 @@ def convQ(
 def convY(
     anarede,
 ):
-    """trajetória de convergência de equações de controle adicionais
+    """trajetoria de convergencia de equacoes de controle adicionais
 
     Args
         anarede:
@@ -248,10 +248,10 @@ def convY(
         )
 
     # Label
-    ax.set_title("Trajetória de Convergência de Potência Reativa")
-    ax.set_xlabel("Iterações")
+    ax.set_title("Trajetoria de Convergencia de Potencia Reativa")
+    ax.set_xlabel("iteracoes")
     ax.set_xticks(arange(0, anarede.solution["iter"] + 1))
-    ax.set_ylabel("Resíduo de Variável de Controle")
+    ax.set_ylabel("Residuo de Variavel de Controle")
     ax.legend(
         [
             (
@@ -280,19 +280,19 @@ def statevar(
         setting: self do arquivo setting.py
     """
     ## Inicializacao
-    # Criação de pasta
+    # Criacao de pasta
     statevarfolder(
         anarede,
     )
 
-    # # Resultado final de convergência das magnitudes e ângulos de tensão
+    # # Resultado final de convergencia das magnitudes e ângulos de tensao
     # stateVT(
     #     anarede,
     # )
 
-    # # Condição
+    # # Condicao
     # if anarede.ctrl:
-    #     # Resultado final de convergência das variáveis de estado adicionais
+    #     # Resultado final de convergencia das variaveis de estado adicionais
     #     stateY(
     #         anarede,
     #     )
@@ -302,7 +302,7 @@ def stateVT(
     self,
     anarede,
 ):
-    """resultado final de convergência das magnitudes e ângulos de tensão
+    """resultado final de convergencia das magnitudes e ângulos de tensao
 
     Args
         anarede:
@@ -312,7 +312,7 @@ def stateVT(
         nrows=1, ncols=1, subplot_kw={"projection": "polar"}, figsize=(8, 9)
     )
 
-    # Referência
+    # Referencia
     self.thetaref = anarede.solution["theta"][
         anarede.dbarDF.loc[anarede.dbarDF["tipo"] == 2].index[0]
     ]
@@ -329,7 +329,7 @@ def stateVT(
         zorder=3,
     )
 
-    # Limite tensão
+    # Limite tensao
     ax.plot(
         linspace(
             0,
@@ -387,7 +387,7 @@ def stateVT(
         )
 
     # Label
-    ax.set_title("Magnitude e Ângulo de Tensão dos Barramentos")
+    ax.set_title("Magnitude e Ângulo de Tensao dos Barramentos")
     ax.set_thetamax(max(degrees(anarede.solution["theta"])) + 5)
     ax.set_thetamin(min(degrees(anarede.solution["theta"])) - 5)
     ax.set_rticks(
@@ -419,7 +419,7 @@ def stateY(
     self,
     anarede,
 ):
-    """resultado final de convergência das variáveis de estado adicionais
+    """resultado final de convergencia das variaveis de estado adicionais
 
     Args
         anarede:

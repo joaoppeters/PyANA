@@ -31,20 +31,20 @@ def qlims(
     anarede.qlimkeys[value["nome"]] = dict()
     anarede.qlimkeys[value["nome"]][0] = list()
 
-    anarede.qlimsch[idx] = dict()
-    anarede.qlimsch[idx]["ch1"] = list()
-    anarede.qlimsch[idx]["ch2"] = list()
-    anarede.qlimsch[idx]["ch3"] = list()
-    anarede.qlimsch[idx]["ch4"] = list()
+    anarede.ctrlsch[idx] = dict()
+    anarede.ctrlsch[idx]["ch1"] = list()
+    anarede.ctrlsch[idx]["ch2"] = list()
+    anarede.ctrlsch[idx]["ch3"] = list()
+    anarede.ctrlsch[idx]["ch4"] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     qg = Symbol("qg%s" % idx)
     v = Symbol("v%s" % idx)
     vr = Symbol("vr%s" % idx)
     qgx = Symbol("qgx%s" % idx)
     qgn = Symbol("qgn%s" % idx)
 
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.qlimvar.update(
         {
             qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
@@ -56,46 +56,46 @@ def qlims(
     )
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vr + anarede.cte["SIGV"]
     vliminf = vr - anarede.cte["SIGV"]
 
-    # Limites de Potência Reativa
+    # Limites de Potencia Reativa
     qlimsup = qgx - anarede.cte["SIGQ"]
     qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa
-    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
+    # Chave Superior de Potencia Reativa
+    anarede.ctrlsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
-    # Chave Inferior de Potência Reativa
-    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
+    # Chave Inferior de Potencia Reativa
+    anarede.ctrlsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
-    # Chave Superior de Tensão
-    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
+    # Chave Superior de Tensao
+    anarede.ctrlsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
-    # Chave Inferior de Tensão
-    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
+    # Chave Inferior de Tensao
+    anarede.ctrlsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
-    ## Equações de Controle
+    ## Equacoes de Controle
     # Normal
     Ynormal = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.ctrlsch[idx]["ch1"] * anarede.ctrlsch[idx]["ch3"])
+        * (1 - anarede.ctrlsch[idx]["ch2"] * anarede.ctrlsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (anarede.ctrlsch[idx]["ch1"] * anarede.ctrlsch[idx]["ch3"])
+        * (1 - anarede.ctrlsch[idx]["ch2"] * anarede.ctrlsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.ctrlsch[idx]["ch1"] * anarede.ctrlsch[idx]["ch3"])
+        * (anarede.ctrlsch[idx]["ch2"] * anarede.ctrlsch[idx]["ch4"])
         * (qg - qgn)
     )
 
@@ -125,23 +125,23 @@ def qlimssmooth(
     nger,
     case,
 ):
-    """aplicação da função suave sigmoide para tratamento de limite de geração de potência reativa
+    """aplicacao da funcao suave sigmoide para tratamento de limite de geracao de potencia reativa
 
     Args
-        idx: índice da da barra geradora
+        idx: indice da da barra geradora
         anarede:
-        nger: índice de geradores
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        nger: indice de geradores
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     qg = Symbol("qg%s" % idx)
     v = Symbol("v%s" % idx)
 
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.qlimvar.update(
         {
             qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
@@ -149,7 +149,7 @@ def qlimssmooth(
         }
     )
 
-    # Expressão Geral
+    # Expressao Geral
     if anarede.solution["method"] != "EXPC":
         anarede.qlimdiff[idx] = array(
             [
@@ -171,7 +171,7 @@ def qlimssmooth(
             dtype="float64",
         )
 
-    ## Resíduo
+    ## Residuo
     anarede.deltaQLIM[nger] = (
         -anarede.Y[idx][0].subs(anarede.qlimvar)
         - anarede.Y[idx][1].subs(anarede.qlimvar)
@@ -182,10 +182,10 @@ def qlimssmooth(
     anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case].append(
         array(
             [
-                anarede.qlimsch[idx]["ch1"].subs(anarede.qlimvar),
-                anarede.qlimsch[idx]["ch2"].subs(anarede.qlimvar),
-                anarede.qlimsch[idx]["ch3"].subs(anarede.qlimvar),
-                anarede.qlimsch[idx]["ch4"].subs(anarede.qlimvar),
+                anarede.ctrlsch[idx]["ch1"].subs(anarede.qlimvar),
+                anarede.ctrlsch[idx]["ch2"].subs(anarede.qlimvar),
+                anarede.ctrlsch[idx]["ch3"].subs(anarede.qlimvar),
+                anarede.ctrlsch[idx]["ch4"].subs(anarede.qlimvar),
             ]
         )
     )
@@ -197,19 +197,19 @@ def qlimnsmooth(
     nger,
     case,
 ):
-    """aplicação da função suave sigmoide para tratamento de limite de geração de potência reativa
+    """aplicacao da funcao suave sigmoide para tratamento de limite de geracao de potencia reativa
 
     Args
-        idx: índice da da barra geradora
+        idx: indice da da barra geradora
         anarede:
-        nger: índice de geradores
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        nger: indice de geradores
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     qg = anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"]
     v = anarede.solution["voltage"][idx]
     vr = anarede.dbarDF.loc[idx, "tensao"] * 1e-3
@@ -217,28 +217,28 @@ def qlimnsmooth(
     qgn = anarede.dbarDF.loc[idx, "potencia_reativa_minima"] / anarede.cte["SBSE"]
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vr + anarede.cte["SIGV"]
     vliminf = vr - anarede.cte["SIGV"]
 
-    # Limites de Potência Reativa
+    # Limites de Potencia Reativa
     qlimsup = qgx - anarede.cte["SIGQ"]
     qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa
+    # Chave Superior de Potencia Reativa
     ch1 = 1 / (1 + npexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
-    # Chave Inferior de Poência Reativa
+    # Chave Inferior de Poencia Reativa
     ch2 = 1 / (1 + npexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
-    # Chave Superior de Tensão
+    # Chave Superior de Tensao
     ch3 = 1 / (1 + npexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
-    # Chave Inferior de Tensão
+    # Chave Inferior de Tensao
     ch4 = 1 / (1 + npexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
-    ## Equações de Controle
+    ## Equacoes de Controle
     # Normal
     Ynormal = (1 - ch1 * ch3) * (1 - ch2 * ch4) * (v - vr)
 
@@ -249,7 +249,7 @@ def qlimnsmooth(
     Yinferior = (1 - ch1 * ch3) * (ch2 * ch4) * (qg - qgn)
 
     ## Derivadas
-    # Expressão Geral
+    # Expressao Geral
     anarede.qlimdiff[idx] = array(
         [
             (1 - ch1 * ch3) * (1 - ch2 * ch4),  # Derivada Parcial de Y por V
@@ -259,7 +259,7 @@ def qlimnsmooth(
         dtype="float64",
     )
 
-    ## Resíduo
+    ## Residuo
     anarede.deltaQLIM[nger] = -Ynormal - Ysuperior - Yinferior
 
     ## Armazenamento de valores das chaves
@@ -284,7 +284,7 @@ def svcsQ(
     ## Inicializacao
     seterr(all="ignore")
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     vk = Symbol("vk%s" % idxcer)
     vm = Symbol("vm%s" % idxcer)
     qgk = Symbol("qgk%s" % idxcer)
@@ -296,7 +296,7 @@ def svcsQ(
     vmmax = vmsch + (r * bmin * (vk**2))
     vmmin = vmsch + (r * bmax * (vk**2))
 
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.svcvar.update(
         {
             vk: anarede.solution["voltage"][idxcer],
@@ -317,33 +317,33 @@ def svcsQ(
     )
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vmmax + anarede.cte["SIGV"]
     vliminf = vmmin - anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa - Região Indutiva
+    # Chave Superior de Potencia Reativa - Regiao Indutiva
     anarede.svcsch[idxcer]["ch1"] = 1 / (
         1 + spexp(-anarede.cte["SIGK"] * (vm - vlimsup))
     )
 
-    # Chave Inferior de Poência Reativa - Região Capacitiva
+    # Chave Inferior de Poencia Reativa - Regiao Capacitiva
     anarede.svcsch[idxcer]["ch2"] = 1 / (
         1 + spexp(anarede.cte["SIGK"] * (vm - vliminf))
     )
 
-    ## Equações de Controle
-    # Região Indutiva
+    ## Equacoes de Controle
+    # Regiao Indutiva
     Yindutiva = (anarede.svcsch[idxcer]["ch1"]) * (-(vk**2) * bmin + qgk)
 
-    # Região Linear
+    # Regiao Linear
     Ylinear = (
         (1 - anarede.svcsch[idxcer]["ch1"])
         * (1 - anarede.svcsch[idxcer]["ch2"])
         * (-vmsch - (r * qgk) + vm)
     )
 
-    # Região Capacitiva
+    # Regiao Capacitiva
     Ycapacitiva = (anarede.svcsch[idxcer]["ch2"]) * (-(vk**2) * bmax + qgk)
 
     anarede.Y[idxcer] = [
@@ -376,28 +376,28 @@ def svcsQsmooth(
     ncer,
     case,
 ):
-    """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
-        metodologia por potência reativa injetada
+    """aplicacao da funcao suave sigmoide para modelagem de compensadores estaticos de potencia reativa
+        metodologia por potencia reativa injetada
 
     Args
-        idxcer: índice da barra do compensador estático de potência reativa
-        idxctrl: índice da barra controlada pelo compensador estático de potência reativa
+        idxcer: indice da barra do compensador estatico de potencia reativa
+        idxctrl: indice da barra controlada pelo compensador estatico de potencia reativa
         anarede:
-        ncer: índice do compensador estático de potência reativa
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        ncer: indice do compensador estatico de potencia reativa
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
     if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
         anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     vk = Symbol("vk%s" % idxcer)
     vm = Symbol("vm%s" % idxcer)
     qgk = Symbol("qgk%s" % idxcer)
     r = Symbol("r%s" % idxcer)
     bmin = Symbol("bmn%s" % idxcer)
     bmax = Symbol("bmx%s" % idxcer)
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.svcvar.update(
         {
             vk: anarede.solution["voltage"][idxcer],
@@ -417,7 +417,7 @@ def svcsQsmooth(
         }
     )
 
-    # Expressão Geral
+    # Expressao Geral
     anarede.svcdiff[idxcer] = array(
         [
             anarede.diffyvk[idxcer].subs(anarede.svcvar),
@@ -427,7 +427,7 @@ def svcsQsmooth(
         dtype="float64",
     )
 
-    ## Resíduo
+    ## Residuo
     anarede.deltaSVC[ncer] = (
         -anarede.Y[idxcer][0].subs(anarede.svcvar)
         - anarede.Y[idxcer][1].subs(anarede.svcvar)
@@ -459,26 +459,26 @@ def svcsI(
     ## Inicializacao
     seterr(all="ignore")
 
-    anarede.qlimkeys[value["nome"]] = dict()
-    anarede.qlimkeys[value["nome"]][0] = list()
+    anarede.svckeys[value["nome"]] = dict()
+    anarede.svckeys[value["nome"]][0] = list()
 
-    anarede.qlimsch[idx] = dict()
-    anarede.qlimsch[idx]["ch1"] = list()
-    anarede.qlimsch[idx]["ch2"] = list()
-    anarede.qlimsch[idx]["ch3"] = list()
-    anarede.qlimsch[idx]["ch4"] = list()
+    anarede.svcsch[idx] = dict()
+    anarede.svcsch[idx]["ch1"] = list()
+    anarede.svcsch[idx]["ch2"] = list()
+    anarede.svcsch[idx]["ch3"] = list()
+    anarede.svcsch[idx]["ch4"] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     qg = Symbol("qg%s" % idx)
     v = Symbol("v%s" % idx)
     vr = Symbol("vr%s" % idx)
     qgx = Symbol("qgx%s" % idx)
     qgn = Symbol("qgn%s" % idx)
 
-    # Associação das variáveis
-    anarede.qlimvar.update(
+    # Associacao das variaveis
+    anarede.svcvar.update(
         {
-            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["svc_generation"][idx] / anarede.cte["SBSE"],
             v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
             qgx: value["potencia_reativa_maxima"] / anarede.cte["SBSE"],
@@ -487,46 +487,46 @@ def svcsI(
     )
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vr + anarede.cte["SIGV"]
     vliminf = vr - anarede.cte["SIGV"]
 
-    # Limites de Potência Reativa
+    # Limites de Potencia Reativa
     qlimsup = qgx - anarede.cte["SIGQ"]
     qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa
-    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
+    # Chave Superior de Potencia Reativa
+    anarede.svcsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
-    # Chave Inferior de Potência Reativa
-    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
+    # Chave Inferior de Potencia Reativa
+    anarede.svcsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
-    # Chave Superior de Tensão
-    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
+    # Chave Superior de Tensao
+    anarede.svcsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
-    # Chave Inferior de Tensão
-    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
+    # Chave Inferior de Tensao
+    anarede.svcsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
-    ## Equações de Controle
+    ## Equacoes de Controle
     # Normal
     Ynormal = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (1 - anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (1 - anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (qg - qgn)
     )
 
@@ -557,24 +557,24 @@ def svcsIsmooth(
     ncer,
     case,
 ):
-    """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
+    """aplicacao da funcao suave sigmoide para modelagem de compensadores estaticos de potencia reativa
         metodologia por corrente injetada
 
     Args
-        idxcer: índice da barra do compensador estático de potência reativa
-        idxctrl: índice da barra controlada pelo compensador estático de potência reativa
+        idxcer: indice da barra do compensador estatico de potencia reativa
+        idxctrl: indice da barra controlada pelo compensador estatico de potencia reativa
         anarede:
-        ncer: índice do compensador estático de potência reativa
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        ncer: indice do compensador estatico de potencia reativa
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
     seterr(all="ignore")
 
-    # Variáveis
+    # Variaveis
     if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
         anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     vk = Symbol("Vk")
     vm = Symbol("Vm")
 
@@ -588,7 +588,7 @@ def svcsIsmooth(
     vmmax = vmsch + (r * bmin * vk)
     vmmin = vmsch + (r * bmax * vk)
 
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.svcivarkey = {
         vk: anarede.solution["voltage"][idxcer],
         vm: anarede.solution["voltage"][idxctrl],
@@ -605,25 +605,25 @@ def svcsIsmooth(
     )
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vmmax + anarede.cte["SIGV"]
     vliminf = vmmin - anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa - Região Indutiva
+    # Chave Superior de Potencia Reativa - Regiao Indutiva
     ch1 = 1 / (1 + spexp(-anarede.cte["SIGK"] * (vm - vlimsup)))
 
-    # Chave Inferior de Poência Reativa - Região Capacitiva
+    # Chave Inferior de Poencia Reativa - Regiao Capacitiva
     ch2 = 1 / (1 + spexp(anarede.cte["SIGK"] * (vm - vliminf)))
 
-    ## Equações de Controle
-    # Região Indutiva
+    ## Equacoes de Controle
+    # Regiao Indutiva
     Yindutiva = (ch1) * (-vk * bmin + ik)
 
-    # Região Linear
+    # Regiao Linear
     Ylinear = (1 - ch1) * (1 - ch2) * (-vmsch - (r * ik) + vm)
 
-    # Região Capacitiva
+    # Regiao Capacitiva
     Ycapacitiva = (ch2) * (-vk * bmax + ik)
 
     ## Derivadas
@@ -636,7 +636,7 @@ def svcsIsmooth(
     # Derivada Parcial de Y por Ik
     anarede.diffyik = (Yindutiva + Ylinear + Ycapacitiva).diff(ik)
 
-    # Expressão Geral
+    # Expressao Geral
     anarede.svcdiff[idxcer] = array(
         [
             anarede.diffyvk.subs(anarede.svcivar),
@@ -646,7 +646,7 @@ def svcsIsmooth(
         dtype="float64",
     )
 
-    ## Resíduo
+    ## Residuo
     anarede.deltaSVC[ncer] = (
         -Yindutiva.subs(anarede.svcivar)
         - Ylinear.subs(anarede.svcivar)
@@ -668,6 +668,8 @@ def svcsIsmooth(
 def svcsA(
     anarede,
     idx,
+    idxcer,
+    idxctrl,
     value,
 ):
     """_summary_
@@ -678,74 +680,81 @@ def svcsA(
     ## Inicializacao
     seterr(all="ignore")
 
-    anarede.qlimkeys[value["nome"]] = dict()
-    anarede.qlimkeys[value["nome"]][0] = list()
+    anarede.svckeys[
+        anarede.dbarDF.loc[anarede.dbarDF.numero == value.barra, "nome"].iloc[0]
+    ] = dict()
+    anarede.svckeys[
+        anarede.dbarDF.loc[anarede.dbarDF.numero == value.barra, "nome"].iloc[0]
+    ] = list()
 
-    anarede.qlimsch[idx] = dict()
-    anarede.qlimsch[idx]["ch1"] = list()
-    anarede.qlimsch[idx]["ch2"] = list()
-    anarede.qlimsch[idx]["ch3"] = list()
-    anarede.qlimsch[idx]["ch4"] = list()
+    anarede.svcsch[idx] = dict()
+    anarede.svcsch[idx]["ch1"] = list()
+    anarede.svcsch[idx]["ch2"] = list()
+    anarede.svcsch[idx]["ch3"] = list()
+    anarede.svcsch[idx]["ch4"] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     qg = Symbol("qg%s" % idx)
     v = Symbol("v%s" % idx)
     vr = Symbol("vr%s" % idx)
     qgx = Symbol("qgx%s" % idx)
     qgn = Symbol("qgn%s" % idx)
 
-    # Associação das variáveis
-    anarede.qlimvar.update(
+    # Associacao das variaveis
+    anarede.svcvar.update(
         {
-            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["svc_generation"][idx] / anarede.cte["SBSE"],
             v: anarede.solution["voltage"][idx],
-            vr: value["tensao"] * 1e-3,
+            vr: anarede.dbarDF.loc[anarede.dbarDF.numero == value.barra, "tensao"].iloc[
+                0
+            ]
+            * 1e-3,
             qgx: value["potencia_reativa_maxima"] / anarede.cte["SBSE"],
             qgn: value["potencia_reativa_minima"] / anarede.cte["SBSE"],
         }
     )
 
     ## Limites
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vr + anarede.cte["SIGV"]
     vliminf = vr - anarede.cte["SIGV"]
 
-    # Limites de Potência Reativa
+    # Limites de Potencia Reativa
     qlimsup = qgx - anarede.cte["SIGQ"]
     qliminf = qgn + anarede.cte["SIGV"]
 
     ## Chaves
-    # Chave Superior de Potência Reativa
-    anarede.qlimsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
+    # Chave Superior de Potencia Reativa
+    anarede.svcsch[idx]["ch1"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (qg - qlimsup)))
 
-    # Chave Inferior de Potência Reativa
-    anarede.qlimsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
+    # Chave Inferior de Potencia Reativa
+    anarede.svcsch[idx]["ch2"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (qg - qliminf)))
 
-    # Chave Superior de Tensão
-    anarede.qlimsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
+    # Chave Superior de Tensao
+    anarede.svcsch[idx]["ch3"] = 1 / (1 + spexp(anarede.cte["SIGK"] * (v - vlimsup)))
 
-    # Chave Inferior de Tensão
-    anarede.qlimsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
+    # Chave Inferior de Tensao
+    anarede.svcsch[idx]["ch4"] = 1 / (1 + spexp(-anarede.cte["SIGK"] * (v - vliminf)))
 
-    ## Equações de Controle
+    ## Equacoes de Controle
     # Normal
     Ynormal = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (1 - anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (v - vr)
     )
 
     # Superior
     Ysuperior = (
-        (anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (1 - anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (1 - anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (qg - qgx)
     )
 
     # Inferior
     Yinferior = (
-        (1 - anarede.qlimsch[idx]["ch1"] * anarede.qlimsch[idx]["ch3"])
-        * (anarede.qlimsch[idx]["ch2"] * anarede.qlimsch[idx]["ch4"])
+        (1 - anarede.svcsch[idx]["ch1"] * anarede.svcsch[idx]["ch3"])
+        * (anarede.svcsch[idx]["ch2"] * anarede.svcsch[idx]["ch4"])
         * (qg - qgn)
     )
 
@@ -753,12 +762,12 @@ def svcsA(
 
     ## Derivadas
     # Derivada Parcial de Y por Qg
-    anarede.diffyqg[idx] = (
+    anarede.diffyqgk[idx] = (
         anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(qg)
 
     # Derivada Parcial de Y por V
-    anarede.diffyv[idx] = (
+    anarede.diffyvk[idx] = (
         anarede.Y[idx][0] + anarede.Y[idx][1] + anarede.Y[idx][2]
     ).diff(v)
 
@@ -776,24 +785,24 @@ def svcsAsmooth(
     ncer,
     case,
 ):
-    """aplicação da função suave sigmoide para modelagem de compensadores estáticos de potência reativa
+    """aplicacao da funcao suave sigmoide para modelagem de compensadores estaticos de potencia reativa
         metodologia por ângulo de disparo
 
     Args
-        idxcer: índice da barra do compensador estático de potência reativa
-        idxctrl: índice da barra controlada pelo compensador estático de potência reativa
+        idxcer: indice da barra do compensador estatico de potencia reativa
+        idxctrl: indice da barra controlada pelo compensador estatico de potencia reativa
         anarede:
-        ncer: índice do compensador estático de potência reativa
-        case: caso analisado do fluxo de potência continuado (prev + corr)
+        ncer: indice do compensador estatico de potencia reativa
+        case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
     ## Inicializacao
     seterr(all="ignore")
 
-    # Variáveis
+    # Variaveis
     if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
         anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
-    # Variáveis Simbólicas
+    # Variaveis Simbolicas
     vk = Symbol("Vk")
     vm = Symbol("Vm")
 
@@ -812,7 +821,7 @@ def svcsAsmooth(
         * (anarede.solution["voltage"][idxcer] ** 2)
     )
 
-    # Associação das variáveis
+    # Associacao das variaveis
     anarede.svcavar = {
         vk: anarede.solution["voltage"][idxcer],
         vm: anarede.solution["voltage"][idxctrl],
@@ -825,7 +834,7 @@ def svcsAsmooth(
     alphalimsup = pi - anarede.cte["SIGA"]
     alphaliminf = pi / 2 + anarede.cte["SIGA"]
 
-    # Limites de Tensão
+    # Limites de Tensao
     vlimsup = vmmax + anarede.cte["SIGV"]
     vliminf = vmmin - anarede.cte["SIGV"]
 
@@ -840,7 +849,7 @@ def svcsAsmooth(
         1 + npexp(-anarede.cte["SIGK"] * (anarede.solution["alpha"] - alphalimsup))
     )
 
-    # Chave Inferior de Tensão
+    # Chave Inferior de Tensao
     ch3 = 1 / (
         1
         + npexp(
@@ -856,24 +865,24 @@ def svcsAsmooth(
         )
     )
 
-    # Equações de Controle
+    # Equacoes de Controle
 
     # ch1 = sw10
     # ch2 = sw9
     # ch3 = sw12
     # ch4 = sw11
 
-    # Região Indutiva
+    # Regiao Indutiva
     Yindutiva = ch1 * (1 - ch3) * (alpha - pi / 2)
 
-    # Região Linear
+    # Regiao Linear
     Ylinear = (
         (1 - ch1) * (1 - ch3) * ch4
         + (1 - ch2) * (1 - ch4) * ch3
         + (1 - ch1) * (1 - ch2) * (1 - ch3) * (1 - ch4)
     ) * (-vmsch - (r * (vk**2) * anarede.alphabeq) + vm)
 
-    # Região Capacitiva
+    # Regiao Capacitiva
     Ycapacitiva = ch2 * (1 - ch4) * (alpha - pi)
 
     ## Derivadas
@@ -911,7 +920,7 @@ def svcsAsmooth(
         * anarede.cte["SBSE"]
     )
 
-    # Expressão Geral
+    # Expressao Geral
     anarede.svcdiff[idxcer] = array(
         [
             anarede.diffyvk.subs(anarede.svcavar),
@@ -921,7 +930,7 @@ def svcsAsmooth(
         dtype="float64",
     )
 
-    ## Resíduo
+    ## Residuo
     anarede.deltaSVC[ncer] = (
         -Yindutiva.subs(
             {
@@ -956,11 +965,11 @@ def qlimspop(
     anarede,
     pop: int = 1,
 ):
-    """deleta última instância salva em variável anarede.qlimskeys
+    """deleta última instância salva em variavel anarede.qlimskeys
 
     Args
         anarede:
-        pop: quantidade de ações necessárias
+        pop: quantidade de acoes necessarias
     """
     ## Inicializacao
     for _, value in anarede.dbarDF.iterrows():
@@ -974,20 +983,20 @@ def qlimspop(
 def qlimstorage(
     anarede,
 ):
-    """armazenamento e geração de imagens referente a comutação das chaves
+    """armazenamento e geracao de imagens referente a comutacao das chaves
 
     Args:
         anarede:
     """
     ## Inicializacao
-    # Criação automática de diretório
+    # Criacao automatica de diretorio
     smoothfolder(
         anarede,
     )
 
-    # Condição de método
+    # Condicao de metodo
     if anarede.method == "EXIC":
-        # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
+        # indice para o caso do fluxo de potencia continuado para o minimo valor de determinante da matriz de sensibilidade
         for key, value in anarede.operationpoint.items():
             if key == 0:
                 casekeymin = key
@@ -1003,7 +1012,7 @@ def qlimstorage(
 
         # Loop
         for busname, _ in anarede.qlimkeys.items():
-            # Variáveis
+            # Variaveis
             busidx = anarede.dbarDF.index[anarede.dbarDF["nome"] == busname].tolist()[0]
 
             qgx = anarede.dbarDF.loc[
@@ -1109,7 +1118,7 @@ def qlimstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax1.set_title("Chave 1 - Mvar máximo", fontsize=8)
+            ax1.set_title("Chave 1 - Mvar maximo", fontsize=8)
 
             # smooth2
             ax2.hlines(
@@ -1156,7 +1165,7 @@ def qlimstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax2.set_title("Chave 2 - Mvar mínimo", fontsize=8)
+            ax2.set_title("Chave 2 - Mvar minimo", fontsize=8)
 
             # smooth3
             ax3.hlines(
@@ -1203,7 +1212,7 @@ def qlimstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax3.set_title("Chave 3 - Volt máximo", fontsize=8)
+            ax3.set_title("Chave 3 - Volt maximo", fontsize=8)
 
             # smooth4
             ax4.hlines(
@@ -1250,7 +1259,7 @@ def qlimstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax4.set_title("Chave 4 - Volt mínimo", fontsize=8)
+            ax4.set_title("Chave 4 - Volt minimo", fontsize=8)
 
             fig.savefig(anarede.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
             plt.close(fig)
@@ -1259,20 +1268,20 @@ def qlimstorage(
 def svcstorage(
     anarede,
 ):
-    """armazenamento e geração de imagens referente a comutação das chaves
+    """armazenamento e geracao de imagens referente a comutacao das chaves
 
     Args:
         anarede:
     """
     ## Inicializacao
-    # Criação automática de diretório
+    # Criacao automatica de diretorio
     smoothfolder(
         anarede,
     )
 
-    # Condição de método
+    # Condicao de metodo
     if anarede.method == "EXIC":
-        # índice para o caso do fluxo de potência continuado para o mínimo valor de determinante da matriz de sensibilidade
+        # indice para o caso do fluxo de potencia continuado para o minimo valor de determinante da matriz de sensibilidade
         for key, value in anarede.operationpoint.items():
             if key == 0:
                 casekeymin = key
@@ -1290,7 +1299,7 @@ def svcstorage(
 
         # Loop
         for busname, _ in anarede.svckeys.items():
-            # Variáveis
+            # Variaveis
             busidx = anarede.dbarDF.index[anarede.dbarDF["nome"] == busname].tolist()[0]
             busidxcer = anarede.dcerDF.index[
                 anarede.dcerDF["barra"] == anarede.dbarDF["numero"].iloc[busidx]
@@ -1383,7 +1392,7 @@ def svcstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax1.set_title("Chave 1 - V máximo", fontsize=8)
+            ax1.set_title("Chave 1 - V maximo", fontsize=8)
 
             # smooth2
             ax2.hlines(
@@ -1430,7 +1439,7 @@ def svcstorage(
                 s=50,
                 alpha=0.75,
             )
-            ax2.set_title("Chave 2 - V mínimo", fontsize=8)
+            ax2.set_title("Chave 2 - V minimo", fontsize=8)
 
             fig.savefig(anarede.dirsmoothsys + "smooth-" + busname + ".png", dpi=400)
             plt.close(fig)

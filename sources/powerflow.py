@@ -92,7 +92,7 @@ class PowerFlow:
             else:
                 raise ValueError("\033[91mNenhum sistema foi selecionado.\033[0m")
         else:
-            raise ValueError("\033[91mA pasta 'sistemas' não foi encontrada.\033[0m")
+            raise ValueError("\033[91mA pasta 'sistemas' nao foi encontrada.\033[0m")
 
 
 class PowerFlowContainer:

@@ -13,7 +13,7 @@ from numpy import cos, sin, zeros
 def lineflow(
     anarede,
 ):
-    """cálculo do fluxo de potência nas linhas de transmissão
+    """calculo do fluxo de potencia nas linhas de transmissao
 
     Args
         anarede:
@@ -33,11 +33,11 @@ def lineflow(
         m = anarede.dbarDF.index[anarede.dbarDF["numero"] == value["para"]][0]
         yline = 1 / ((value["resistencia"] / 100) + 1j * (value["reatancia"] / 100))
 
-        # Verifica presença de transformadores com tap != 1.
+        # Verifica presenca de transformadores com tap != 1.
         if value["tap"] != 0:
             yline /= value["tap"]
 
-        # Potência ativa k -> m
+        # Potencia ativa k -> m
         anarede.solution["active_flow_F2"][idx] = yline.real * (
             anarede.solution["voltage"][k] ** 2
         ) - anarede.solution["voltage"][k] * anarede.solution["voltage"][m] * (
@@ -47,7 +47,7 @@ def lineflow(
             * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
-        # Potência reativa k -> m
+        # Potencia reativa k -> m
         anarede.solution["reactive_flow_F2"][idx] = -(
             (value["susceptancia"] / (2 * anarede.cte["SBSE"])) + yline.imag
         ) * (anarede.solution["voltage"][k] ** 2) + anarede.solution["voltage"][
@@ -63,7 +63,7 @@ def lineflow(
             * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
-        # Potência ativa m -> k
+        # Potencia ativa m -> k
         anarede.solution["active_flow_2F"][idx] = yline.real * (
             anarede.solution["voltage"][m] ** 2
         ) - anarede.solution["voltage"][k] * anarede.solution["voltage"][m] * (
@@ -73,7 +73,7 @@ def lineflow(
             * sin(anarede.solution["theta"][k] - anarede.solution["theta"][m])
         )
 
-        # Potência reativa m -> k
+        # Potencia reativa m -> k
         anarede.solution["reactive_flow_2F"][idx] = -(
             (value["susceptancia"] / (2 * anarede.cte["SBSE"])) + yline.imag
         ) * (anarede.solution["voltage"][m] ** 2) + anarede.solution["voltage"][

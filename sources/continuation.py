@@ -39,13 +39,13 @@ from update import updtstt, updtpwr
 def prediction_correction(
     anarede,
 ):
-    """análise do fluxo de potência não-linear em regime permanente de SEP via método Newton-Raphson
+    """analise do fluxo de potencia nao-linear em regime permanente de SEP via metodo Newton-Raphson
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável para armazenamento das variáveis de solução do fluxo de potência continuado
+    # Variavel para armazenamento das variaveis de solucao do fluxo de potencia continuado
     anarede.solution.update(
         {
             "method": "EXIC",
@@ -67,13 +67,13 @@ def prediction_correction(
         }
     )
 
-    # Variável para armazenamento da solução do fluxo de potência continuado
+    # Variavel para armazenamento da solucao do fluxo de potencia continuado
     anarede.operationpoint = dict()
 
-    # Variável para armazenamento de solução por casos do continuado (previsão e correção)
+    # Variavel para armazenamento de solucao por casos do continuado (previsao e correcao)
     case = 0
 
-    # Armazenamento da solução inicial
+    # Armazenamento da solucao inicial
     anarede.operationpoint[case] = {
         **deepcopy(anarede.solution),
     }
@@ -84,15 +84,15 @@ def prediction_correction(
     #     case,
     # )
 
-    # Reconfiguração da Máscara - Elimina expansão da matriz Jacobiana
+    # Reconfiguracao da Mascara - Elimina expansao da matriz Jacobiana
     anarede.mask = append(anarede.mask, False)
 
-    # Barra com maior variação de magnitude de tensão - CASO BASE
+    # Barra com maior variacao de magnitude de tensao - CASO BASE
     anarede.nodevarvolt = argmax(
         norm(anarede.solution["voltage"] - anarede.dbarDF["tensao"] * 1e-3)
     )
 
-    # Loop de Previsão - Correção
+    # Loop de Previsao - Correcao
     exicloop(
         anarede,
         case,
@@ -100,7 +100,7 @@ def prediction_correction(
 
     del anarede.operationpoint[len(anarede.operationpoint) - 1]
 
-    # Geração e armazenamento de gráficos de perfil de tensão e autovalores
+    # Geracao e armazenamento de graficos de perfil de tensao e autovalores
     loading(
         anarede,
     )
@@ -128,13 +128,13 @@ def exicloop(
     anarede,
     case,
 ):
-    """loop do fluxo de potência continuado
+    """loop do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Condição de parada do fluxo de potência continuado -> Estável & Instável
+    # Condicao de parada do fluxo de potencia continuado -> Estavel & Instavel
     while (
         anarede.cte["LMBD"]
         * ((1 / anarede.cte["FDIV"]) ** anarede.solution["ndiv"])
@@ -147,16 +147,16 @@ def exicloop(
         # Incremento de Caso
         case += 1
 
-        # Variável de armazenamento
+        # Variavel de armazenamento
         anarede.operationpoint[case] = dict()
 
-        # Previsão
+        # Previsao
         prediction(
             anarede,
             case,
         )
 
-        # Correção
+        # Correcao
         case = correction(
             anarede,
             case,
@@ -171,7 +171,7 @@ def exicloop(
                 case,
             )
 
-        # Break Curva de Carregamento - Parte Estável
+        # Break Curva de Carregamento - Parte Estavel
         if (not anarede.cte["FULL"]) and (anarede.solution["pmc"]):
             break
 
@@ -180,7 +180,7 @@ def prediction(
     anarede,
     case,
 ):
-    """etapa de previsão do fluxo de potência continuado
+    """etapa de previsao do fluxo de potencia continuado
 
     Args
         anarede:
@@ -188,41 +188,41 @@ def prediction(
     ## Inicializacao
     anarede.solution["iter"] = 0
 
-    # Incremento do Nível de Carregamento e Geração
+    # Incremento do Nivel de Carregamento e Geracao
     increment(
         anarede,
     )
 
-    # Variáveis Especificadas
+    # Variaveis Especificadas
     scheduled(
         anarede,
     )
 
-    # Resíduos
+    # Residuos
     residue(
         anarede,
         case,
         stage="p",
     )
 
-    # Atualização da Matriz Jacobiana
+    # Atualizacao da Matriz Jacobiana
     matrices(
         anarede,
     )
 
-    # Expansão Jacobiana
+    # Expansao Jacobiana
     exicjacobian(
         anarede,
     )
 
-    # Variáveis de estado
+    # Variaveis de estado
     anarede.statevar, residuals, rank, singular = lstsq(
         anarede.jacobian,
         anarede.deltaPQY,
         rcond=None,
     )
 
-    # Atualização das Variáveis de estado
+    # Atualizacao das Variaveis de estado
     updtstt(
         anarede,
         case,
@@ -233,7 +233,7 @@ def prediction(
         anarede,
     )
 
-    # Armazenamento de Solução
+    # Armazenamento de Solucao
     exicstorage(
         anarede,
         case,
@@ -245,13 +245,13 @@ def correction(
     anarede,
     case,
 ):
-    """etapa de correção do fluxo de potência continuado
+    """etapa de correcao do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Variável para armazenamento de solução
+    # Variavel para armazenamento de solucao
     anarede.solution.update(
         {
             "iter": 0,
@@ -274,23 +274,23 @@ def correction(
         }
     )
 
-    # Adição de variáveis de controle na variável de armazenamento de solução
+    # Adicao de variaveis de controle na variavel de armazenamento de solucao
     ctrlcorrsol(
         anarede,
         case,
     )
 
-    # Incremento do Nível de Carregamento e Geração
+    # Incremento do Nivel de Carregamento e Geracao
     increment(
         anarede,
     )
 
-    # Variáveis Especificadas
+    # Variaveis Especificadas
     scheduled(
         anarede,
     )
 
-    # Resíduos
+    # Residuos
     residue(
         anarede,
         case,
@@ -310,29 +310,29 @@ def correction(
             anarede,
         )
     ):
-        # Armazenamento da trajetória de convergência
+        # Armazenamento da trajetoria de convergencia
         convergence(
             anarede,
         )
 
-        # Atualização da Matriz Jacobiana
+        # Atualizacao da Matriz Jacobiana
         matrices(
             anarede,
         )
 
-        # Expansão Jacobiana
+        # Expansao Jacobiana
         exicjacobian(
             anarede,
         )
 
-        # Variáveis de estado
+        # Variaveis de estado
         anarede.statevar, residuals, rank, singular = lstsq(
             anarede.jacobian,
             anarede.deltaPQY,
             rcond=None,
         )
 
-        # Atualização das Variáveis de estado
+        # Atualizacao das Variaveis de estado
         updtstt(
             anarede,
             case,
@@ -343,61 +343,61 @@ def correction(
             anarede,
         )
 
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "volt":
-            # Incremento do Nível de Carregamento e Geração
+            # Incremento do Nivel de Carregamento e Geracao
             increment(
                 anarede,
             )
 
-            # Variáveis Especificadas
+            # Variaveis Especificadas
             scheduled(
                 anarede,
             )
 
-        # Atualização dos resíduos
+        # Atualizacao dos residuos
         residue(
             anarede,
             case,
             stage="c",
         )
 
-        # Incremento de iteração
+        # Incremento de iteracao
         anarede.solution["iter"] += 1
 
-        # Condição de Divergência por iterações
+        # Condicao de Divergencia por iteracoes
         if anarede.solution["iter"] > anarede.cte["ACIT"]:
             anarede.solution["convergence"] = (
-                "SISTEMA DIVERGENTE (extrapolação de número máximo de iterações)"
+                "SISTEMA DIVERGENTE (extrapolacao de numero maximo de iteracoes)"
             )
             break
 
-    ## Condição
-    # Iteração Adicional em Caso de Convergência
+    ## Condicao
+    # Iteracao Adicional em Caso de Convergencia
     if anarede.solution["iter"] < anarede.cte["ACIT"]:
-        # Armazenamento da trajetória de convergência
+        # Armazenamento da trajetoria de convergencia
         convergence(
             anarede,
         )
 
-        # Atualização da Matriz Jacobiana
+        # Atualizacao da Matriz Jacobiana
         matrices(
             anarede,
         )
 
-        # Expansão Jacobiana
+        # Expansao Jacobiana
         exicjacobian(
             anarede,
         )
 
-        # Variáveis de estado
+        # Variaveis de estado
         anarede.statevar, residuals, rank, singular = lstsq(
             anarede.jacobian,
             anarede.deltaPQY,
             rcond=None,
         )
 
-        # Atualização das Variáveis de estado
+        # Atualizacao das Variaveis de estado
         updtstt(
             anarede,
             case,
@@ -408,77 +408,77 @@ def correction(
             anarede,
         )
 
-        # Atualização dos resíduos
+        # Atualizacao dos residuos
         residue(
             anarede,
             case,
             stage="c",
         )
 
-        # Armazenamento de Solução
+        # Armazenamento de Solucao
         exicstorage(
             anarede,
             case,
             stage="c",
         )
 
-        # Convergência
+        # Convergencia
         anarede.solution["convergence"] = "SISTEMA CONVERGENTE"
 
-        # Avaliação
+        # Avaliacao
         exicevaluate(
             anarede,
             case,
         )
 
-    # Reconfiguração dos Dados de Solução em Caso de Divergência
+    # Reconfiguracao dos Dados de Solucao em Caso de Divergencia
     elif ((anarede.solution["iter"] >= anarede.cte["ACIT"])) and (case == 1):
         # self.active_heuristic = True
         anarede.solution["convergence"] = "SISTEMA DIVERGENTE"
 
-        # Reconfiguração do caso
+        # Reconfiguracao do caso
         case -= 1
         ctrlpop(
             anarede,
         )
 
-        # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+        # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
         anarede.solution["voltage"] = deepcopy(
             anarede.operationpoint[case]["c"]["voltage"]
         )
         anarede.solution["theta"] = deepcopy(anarede.operationpoint[case]["c"]["theta"])
 
-        # Reconfiguração da variável de passo
+        # Reconfiguracao da variavel de passo
         anarede.solution["ndiv"] += 1
 
-        # Reconfiguração do valor da variável de passo
+        # Reconfiguracao do valor da variavel de passo
         anarede.solution["step"] = deepcopy(anarede.operationpoint[case]["c"]["step"])
         anarede.solution["stepsch"] = deepcopy(
             anarede.operationpoint[case]["c"]["stepsch"]
         )
         anarede.solution["vsch"] = deepcopy(anarede.operationpoint[case]["c"]["vsch"])
 
-    # Reconfiguração dos Dados de Solução em Caso de Divergência
+    # Reconfiguracao dos Dados de Solucao em Caso de Divergencia
     elif ((anarede.solution["iter"] >= anarede.cte["ACIT"])) and (case > 1):
         # self.active_heuristic = True
         anarede.solution["convergence"] = "SISTEMA DIVERGENTE"
 
-        # Reconfiguração do caso
+        # Reconfiguracao do caso
         case -= 1
         ctrlpop(
             anarede,
         )
 
-        # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+        # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
         anarede.solution["voltage"] = deepcopy(
             anarede.operationpoint[case]["c"]["voltage"]
         )
         anarede.solution["theta"] = deepcopy(anarede.operationpoint[case]["c"]["theta"])
 
-        # Reconfiguração da variável de passo
+        # Reconfiguracao da variavel de passo
         anarede.solution["ndiv"] += 1
 
-        # Reconfiguração do valor da variável de passo
+        # Reconfiguracao do valor da variavel de passo
         anarede.solution["step"] = deepcopy(anarede.operationpoint[case]["c"]["step"])
         anarede.solution["stepsch"] = deepcopy(
             anarede.operationpoint[case]["c"]["stepsch"]
@@ -492,11 +492,11 @@ def exicresidue(
     case,
     stage: str = None,
 ):
-    """cálculo de resíduos das equações diferenciáveis
+    """calculo de residuos das equacoes diferenciaveis
 
     Args
         anarede:
-        stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
+        stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
     ## Inicializacao
     residue(
@@ -504,11 +504,11 @@ def exicresidue(
         case,
     )
 
-    # Resíduo de Fluxo de Potência Continuado
-    # Condição de previsão
+    # Residuo de Fluxo de Potencia Continuado
+    # Condicao de previsao
     if stage == "p":
         anarede.deltaPQY = zeros(anarede.deltaPQY.shape[0] + 1)
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             if not anarede.solution["pmc"]:
                 anarede.deltaPQY[-1] = anarede.cte["LMBD"] * (
@@ -525,9 +525,9 @@ def exicresidue(
                 -1 * anarede.cte["ICMV"] * (5e-1 ** anarede.solution["ndiv"])
             )
 
-    # Condição de correção
+    # Condicao de correcao
     elif stage == "c":
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             anarede.deltaY = array(
                 [anarede.solution["stepsch"] - anarede.solution["step"]]
@@ -547,7 +547,7 @@ def exicresidue(
 def exicjacobian(
     anarede,
 ):
-    """expansão da matriz jacobiana para o método continuado
+    """expansao da matriz jacobiana para o metodo continuado
 
     Args
         anarede:
@@ -556,7 +556,7 @@ def exicjacobian(
     # Arrays adicionais
     rowarray = zeros([1, anarede.jacobian.shape[0]])
 
-    # Condição de variável de passo
+    # Condicao de variavel de passo
     if anarede.solution["varstep"] == "lambda":
         stepvar = 1
 
@@ -576,7 +576,7 @@ def exicjacobian(
         (sum(anarede.mask), 1)
     )
 
-    # Expansão Jacobiana Continuada
+    # Expansao Jacobiana Continuada
     anarede.jacobian = concatenate(
         (anarede.jacobian, colarray),
         axis=1,
@@ -592,19 +592,19 @@ def update_statevar(
     case,
     stage: str = None,
 ):
-    """atualização das variáveis de estado
+    """atualizacao das variaveis de estado
 
     Args
         anarede:
-        stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
+        stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
     ## Inicializacao
     anarede.solution["theta"][anarede.maskP] += (
         anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
     )
-    # Condição de previsão
+    # Condicao de previsao
     if stage == "p":
-        # Condição de variável de passo
+        # Condicao de variavel de passo
         if anarede.solution["varstep"] == "lambda":
             anarede.solution["voltage"][anarede.maskQ] += (
                 anarede.solution["sign"]
@@ -620,7 +620,7 @@ def update_statevar(
                 + anarede.statevar[(anarede.nbus + anarede.nodevarvolt)]
             )
 
-        # Verificação do Ponto de Máximo Carregamento
+        # Verificacao do Ponto de Maximo Carregamento
         if case > 0:
             if case == 1:
                 anarede.solution["stepmax"] = deepcopy(anarede.solution["stepsch"])
@@ -639,7 +639,7 @@ def update_statevar(
                     anarede.solution["pmc"] = True
                     anarede.pmcidx = deepcopy(case)
 
-    # Condição de correção
+    # Condicao de correcao
     elif stage == "c":
         anarede.solution["voltage"][anarede.maskQ] += (
             anarede.solution["sign"]
@@ -650,7 +650,7 @@ def update_statevar(
         if anarede.solution["varstep"] == "volt":
             anarede.solution["stepsch"] += anarede.statevar[-1]
 
-    # Atualização das variáveis de estado adicionais para controles ativos
+    # Atualizacao das variaveis de estado adicionais para controles ativos
     if anarede.ctrlcount > 0:
         ctrlupdt(
             anarede,
@@ -666,22 +666,22 @@ def exicstorage(
     case,
     stage: str = None,
 ):
-    """armazenamento dos resultados de fluxo de potência continuado
+    """armazenamento dos resultados de fluxo de potencia continuado
 
     Args
         anarede:
-        stage: string de identificação da etapa do fluxo de potência continuado (previsão/correção)
+        stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
     ## Inicializacao
-    # Armazenamento das variáveis de solução do fluxo de potência
+    # Armazenamento das variaveis de solucao do fluxo de potencia
     anarede.operationpoint[case][stage] = {
         **deepcopy(anarede.solution),
     }
 
-    # Armazenamento do índice do barramento com maior variação de magnitude de tensão
+    # Armazenamento do indice do barramento com maior variacao de magnitude de tensao
     anarede.operationpoint[case]["nodevarvolt"] = deepcopy(anarede.nodevarvolt)
 
-    # # Análise de sensibilidade e armazenamento
+    # # Analise de sensibilidade e armazenamento
     # eigensens(
     #     anarede,
     #     case,
@@ -693,13 +693,13 @@ def exicevaluate(
     anarede,
     case,
 ):
-    """avaliação para determinação do passo do fluxo de potência continuado
+    """avaliacao para determinacao do passo do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Condição Inicial
+    # Condicao Inicial
     if case == 1:
         # Lambda
         varlambda = abs((anarede.solution["step"] - 0) / (anarede.solution["step"]))
@@ -716,7 +716,7 @@ def exicevaluate(
             / anarede.solution["voltage"][anarede.nodevarvolt]
         )
 
-    # Condição Durante
+    # Condicao Durante
     elif case != 1:
         # Lambda
         varlambda = abs(
@@ -742,7 +742,7 @@ def exicevaluate(
             / anarede.operationpoint[case]["c"]["voltage"][anarede.nodevarvolt]
         )
 
-    # Avaliação
+    # Avaliacao
     if (varlambda > varvolt) and (anarede.solution["varstep"] == "lambda"):
         anarede.solution["varstep"] = "lambda"
 
@@ -786,14 +786,14 @@ def exicheuristics(
     self,
     anarede,
 ):
-    """heurísticas para determinação do funcionamento do fluxo de potência continuado
+    """heuristicas para determinacao do funcionamento do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    ## Afundamento de tensão não desejado (em i+1) e retorno ao valor esperado (em i+2) -> correção: voltar duas casas
-    # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
+    ## Afundamento de tensao nao desejado (em i+1) e retorno ao valor esperado (em i+2) -> correcao: voltar duas casas
+    # Condicao de caso para sistema != ieee24 (pq nesse sistema ha aumento de magnitude de tensao na barra 17 PQ)
     if (
         (anarede.name != "ieee24")
         and (anarede.name != "ieee118")
@@ -810,14 +810,14 @@ def exicheuristics(
         ):
             self.active_heuristic = True
 
-            # Reconfiguração do caso
+            # Reconfiguracao do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 1
             ctrlpop(
                 anarede,
             )
 
-            # Reconfiguração das variáveis de passo
+            # Reconfiguracao das variaveis de passo
             cpfkeys = {
                 "system",
                 "pmc",
@@ -839,7 +839,7 @@ def exicheuristics(
             }
             anarede.solution["ndiv"] = self.auxdiv
 
-            # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+            # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
             anarede.solution["voltage"] = deepcopy(
                 anarede.operationpoint[case]["voltage"]
             )
@@ -862,12 +862,12 @@ def exicheuristics(
         ):
             self.active_heuristic = True
 
-            # Reconfiguração do caso
+            # Reconfiguracao do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 2
             ctrlpop(anarede, pop=2)
 
-            # Reconfiguração das variáveis de passo
+            # Reconfiguracao das variaveis de passo
             cpfkeys = {
                 "system",
                 "pmc",
@@ -889,7 +889,7 @@ def exicheuristics(
             }
             anarede.solution["ndiv"] = self.auxdiv
 
-            # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+            # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
             anarede.solution["voltage"] = deepcopy(
                 anarede.operationpoint[case]["voltage"]
             )
@@ -912,12 +912,12 @@ def exicheuristics(
         ):
             self.active_heuristic = True
 
-            # Reconfiguração do caso
+            # Reconfiguracao do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 2
             ctrlpop(anarede, pop=2)
 
-            # Reconfiguração das variáveis de passo
+            # Reconfiguracao das variaveis de passo
             cpfkeys = {
                 "system",
                 "pmc",
@@ -939,7 +939,7 @@ def exicheuristics(
             }
             anarede.solution["ndiv"] = self.auxdiv
 
-            # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+            # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
             anarede.solution["voltage"] = deepcopy(
                 anarede.operationpoint[case]["c"]["voltage"]
             )
@@ -948,7 +948,7 @@ def exicheuristics(
             )
 
     if case > 0:
-        # Condição de divergência na etapa de previsão por excesso de iterações
+        # Condicao de divergencia na etapa de previsao por excesso de iteracoes
         if (
             (anarede.operationpoint[case]["p"]["iter"] > anarede.cte["ACIT"])
             and (not self.active_heuristic)
@@ -957,14 +957,14 @@ def exicheuristics(
         ):
             self.active_heuristic = True
 
-            # Reconfiguração do caso
+            # Reconfiguracao do caso
             self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
             case -= 1
             ctrlpop(
                 anarede,
             )
 
-            # Reconfiguração das variáveis de passo
+            # Reconfiguracao das variaveis de passo
             cpfkeys = {
                 "system",
                 "pmc",
@@ -986,7 +986,7 @@ def exicheuristics(
             }
             anarede.solution["ndiv"] = self.auxdiv
 
-            # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+            # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
             anarede.solution["voltage"] = deepcopy(
                 anarede.operationpoint[case]["c"]["voltage"]
             )
@@ -994,7 +994,7 @@ def exicheuristics(
                 anarede.operationpoint[case]["c"]["theta"]
             )
 
-        # Condição de atingimento do PMC para varstep volt pequeno
+        # Condicao de atingimento do PMC para varstep volt pequeno
         if (
             (not anarede.solution["pmc"])
             and (anarede.solution["varstep"] == "volt")
@@ -1006,21 +1006,21 @@ def exicheuristics(
         ):
             self.active_heuristic = True
 
-            # Reconfiguração de caso
+            # Reconfiguracao de caso
             case -= 1
             ctrlpop(
                 anarede,
             )
 
-            # Reconfiguração da variável de passo
+            # Reconfiguracao da variavel de passo
             anarede.solution["ndiv"] = 0
 
-            # Condição de máximo carregamento atingida
+            # Condicao de maximo carregamento atingida
             anarede.solution["pmc"] = True
             anarede.operationpoint[case]["c"]["pmc"] = True
             anarede.pmcidx = deepcopy(case)
 
-        # Condição de valor de tensão da barra slack variar
+        # Condicao de valor de tensao da barra slack variar
         if (
             (
                 anarede.solution["voltage"][anarede.slackidx]
@@ -1032,7 +1032,7 @@ def exicheuristics(
             )
         ) and (not self.active_heuristic):
 
-            # variação de tensão da barra slack
+            # variacao de tensao da barra slack
             if (anarede.name == "ieee118") and (
                 sum(anarede.dbarDF.demanda_ativa.to_numpy()) > 5400
             ):
@@ -1041,14 +1041,14 @@ def exicheuristics(
             else:
                 self.active_heuristic = True
 
-                # Reconfiguração do caso
+                # Reconfiguracao do caso
                 self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
                 case -= 1
                 ctrlpop(
                     anarede,
                 )
 
-                # Reconfiguração das variáveis de passo
+                # Reconfiguracao das variaveis de passo
                 cpfkeys = {
                     "system",
                     "pmc",
@@ -1070,7 +1070,7 @@ def exicheuristics(
                 }
                 anarede.solution["ndiv"] = self.auxdiv
 
-                # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+                # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
                 anarede.solution["voltage"] = deepcopy(
                     anarede.operationpoint[case]["c"]["voltage"]
                 )
@@ -1078,24 +1078,24 @@ def exicheuristics(
                     anarede.operationpoint[case]["c"]["theta"]
                 )
 
-        # Condição de Heurísticas para controle
+        # Condicao de Heuristicas para controle
         if anarede.ctrlcount > 0:
             ctrlheuristics(
                 anarede,
             )
 
-            # Condição de violação de limite máximo de geração de potência reativa
+            # Condicao de violacao de limite maximo de geracao de potencia reativa
             if (anarede.ctrlheur) and (not self.active_heuristic):
                 self.active_heuristic = True
 
-                # Reconfiguração do caso
+                # Reconfiguracao do caso
                 self.auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
                 case -= 1
                 ctrlpop(
                     anarede,
                 )
 
-                # Reconfiguração das variáveis de passo
+                # Reconfiguracao das variaveis de passo
                 cpfkeys = {
                     "system",
                     "pmc",
@@ -1117,7 +1117,7 @@ def exicheuristics(
                 }
                 anarede.solution["ndiv"] = self.auxdiv
 
-                # Reconfiguração dos valores de magnitude de tensão e defasagem angular de barramento
+                # Reconfiguracao dos valores de magnitude de tensao e defasagem angular de barramento
                 anarede.solution["voltage"] = deepcopy(
                     anarede.operationpoint[case]["c"]["voltage"]
                 )
@@ -1125,7 +1125,7 @@ def exicheuristics(
                     anarede.operationpoint[case]["c"]["theta"]
                 )
 
-            # Condição de atingimento de ponto de bifurcação
+            # Condicao de atingimento de ponto de bifurcacao
             if (anarede.bifurcation) and (not anarede.solution["pmc"]):
                 anarede.solution["pmc"] = True
                 anarede.pmcidx = deepcopy(case)
@@ -1137,51 +1137,51 @@ def exiccvgprint(
     anarede,
     case,
 ):
-    """impressão de convergência do fluxo de potência continuado
+    """impressao de convergencia do fluxo de potencia continuado
 
     Args
         anarede:
     """
     ## Inicializacao
-    # Impressão de convergência
+    # Impressao de convergencia
     # print(
-    #     f"Convergência: {anarede.solution['convergence']} - Caso: {len(anarede.operationpoint)} - Iteração: {anarede.solution['iter']}"
+    #     f"Convergencia: {anarede.solution['convergence']} - Caso: {len(anarede.operationpoint)} - Iteracao: {anarede.solution['iter']}"
     # )
     # print(
-    #     f"Variação de Magnitude de Tensão: {norm(anarede.solution['voltage'] - anarede.operationpoint[0]['voltage'])}"
+    #     f"Variacao de Magnitude de Tensao: {norm(anarede.solution['voltage'] - anarede.operationpoint[0]['voltage'])}"
     # )
     # print(
-    #     f"Variação de Defasagem Angular: {norm(anarede.solution['theta'] - anarede.operationpoint[0]['theta'])}"
+    #     f"Variacao de Defasagem Angular: {norm(anarede.solution['theta'] - anarede.operationpoint[0]['theta'])}"
     # )
     # print(
-    #     f"Variação de Potência Ativa: {norm(anarede.solution['active'] - anarede.operationpoint[0]['active'])}"
+    #     f"Variacao de Potencia Ativa: {norm(anarede.solution['active'] - anarede.operationpoint[0]['active'])}"
     # )
     # print(
-    #     f"Variação de Potência Reativa: {norm(anarede.solution['reactive'] - anarede.operationpoint[0]['reactive'])}"
+    #     f"Variacao de Potencia Reativa: {norm(anarede.solution['reactive'] - anarede.operationpoint[0]['reactive'])}"
     # )
     # print(
-    #     f"Variação de Frequência: {norm(anarede.solution['freq'] - anarede.operationpoint[0]['freq'])}"
+    #     f"Variacao de Frequencia: {norm(anarede.solution['freq'] - anarede.operationpoint[0]['freq'])}"
     # )
     # print(
-    #     f"Variação de Passo: {anarede.solution['step'] - anarede.operationpoint[0]['step']}"
+    #     f"Variacao de Passo: {anarede.solution['step'] - anarede.operationpoint[0]['step']}"
     # )
     # print(
-    #     f"Variação de Passo Programado: {anarede.solution['stepsch'] - anarede.operationpoint[0]['stepsch']}"
+    #     f"Variacao de Passo Programado: {anarede.solution['stepsch'] - anarede.operationpoint[0]['stepsch']}"
     # )
     # print(
-    #     f"Variação de Magnitude de Tensão Programada: {anarede.solution['vsch'] - anarede.operationpoint[0]['vsch']}"
+    #     f"Variacao de Magnitude de Tensao Programada: {anarede.solution['vsch'] - anarede.operationpoint[0]['vsch']}"
     # )
     # print(
-    #     f"Variação de Lambda: {anarede.solution['step'] - anarede.operationpoint[0]['step']}"
+    #     f"Variacao de Lambda: {anarede.solution['step'] - anarede.operationpoint[0]['step']}"
     # )
     # print(
-    #     f"Variação de Lambda Programado: {anarede.solution['stepsch'] - anarede.operationpoint[0]['stepsch']}"
+    #     f"Variacao de Lambda Programado: {anarede.solution['stepsch'] - anarede.operationpoint[0]['stepsch']}"
     # )
     # print(
-    #     f"Variação de Magnitude de Tensão Programada: {anarede.solution['vsch'] - anarede.operationpoint[0]['vsch']}"
+    #     f"Variacao de Magnitude de Tensao Programada: {anarede.solution['vsch'] - anarede.operationpoint[0]['vsch']}"
     # )
     # print(
-    #     f"Variação de Passo Máximo: {anarede.solution['stepmax'] - anarede.operationpoint[0]['stepmax']}"
+    #     f"Variacao de Passo Maximo: {anarede.solution['stepmax'] - anarede.operationpoint[0]['stepmax']}"
     # )
 
     if (anarede.solution["convergence"] == "SISTEMA CONVERGENTE") and (case > 0):

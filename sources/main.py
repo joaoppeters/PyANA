@@ -9,9 +9,7 @@
 from powerflow import PowerFlow
 
 system = "SISTEMA_REDUZIDO_NE_232B_B1.stb"
-system = "1Q2026.PWF"
-system = "nordicoB.PWF"
-system = "case2869pegase.pwf"
+system = "nordicoA-SVC.PWF"
 
 method = "EXLF"  # NEWTON-RAPHSON
 # method =  "EXIC"  # CONTINUATION POWER FLOW

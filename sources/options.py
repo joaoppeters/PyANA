@@ -13,8 +13,8 @@ from pandas import DataFrame
 def optionspwf(
     anarede,
 ):
-    """configuração de variáveis para processos de convergência em análise estática de fluxos de potência
-    determinação dos valores padrão das constantes, variáveis de controle, variáveis de execução, variáveis de monitoramento e variáveis de relatórios
+    """configuracao de variaveis para processos de convergencia em analise estatica de fluxos de potencia
+    determinacao dos valores padrao das constantes, variaveis de controle, variaveis de execucao, variaveis de monitoramento e variaveis de relatorios
 
     Args
         anarede:
@@ -22,73 +22,73 @@ def optionspwf(
     ## Inicializacao
     anarede.cte = dict(
         {
-            "SBSE": 100.0,  # base de potência para o sistema CA
-            "DASE": 100.0,  # base de potência default para o sistema CC
+            "SBSE": 100.0,  # base de potencia para o sistema CA
+            "DASE": 100.0,  # base de potencia default para o sistema CC
             "TEPA": 1e-3,  # tolerancia de convergencia de potencia ativa
             "TEPR": 1e-3,  # tolerancia de convergencia de potencia reativa
-            "TLPR": 1e-3,  # tolerância para limite de geração de potência reativa
-            "TLVC": 5e-3,  # tolerância para tensões controladas
+            "TLPR": 1e-3,  # tolerância para limite de geracao de potencia reativa
+            "TLVC": 5e-3,  # tolerância para tensoes controladas
             "TLTC": 1e-4,  # tolerância para limite de tap de transformador
-            "TETP": 5e-2,  # tolerância para erro de intercâmbio de potência ativa entre áreas
-            "TBPA": 5e-2,  # tolerância para erro de redistribuição de potência ativa em contingências de geração/carga
-            "TSFR": 1e-4,  # tolerância para detecção de separação física da rede elétrica
-            "TUDC": 1e-5,  # tolerância de convergência do erro de tensão em barra CC
-            "TADC": 1e-4,  # tolerância para limite de ângulo de disparo/extinção de conversor
-            "TPST": 2e-3,  # tolerância de erro de potência reativa para aplicação de variação automática de tap de transformador
-            "QLST": 4e-3,  # tolerância de erro de potência reativa para aplicação de controle de limite de geração de potência reativa
-            "EXST": 4e-3,  # tolerância de erro de potência ativa para aplicação de controle de intercâmbio de potência ativa entre áreas
+            "TETP": 5e-2,  # tolerância para erro de intercâmbio de potencia ativa entre areas
+            "TBPA": 5e-2,  # tolerância para erro de redistribuicao de potencia ativa em contingencias de geracao/carga
+            "TSFR": 1e-4,  # tolerância para deteccao de separacao fisica da rede eletrica
+            "TUDC": 1e-5,  # tolerância de convergencia do erro de tensao em barra CC
+            "TADC": 1e-4,  # tolerância para limite de ângulo de disparo/extincao de conversor
+            "TPST": 2e-3,  # tolerância de erro de potencia reativa para aplicacao de variacao automatica de tap de transformador
+            "QLST": 4e-3,  # tolerância de erro de potencia reativa para aplicacao de controle de limite de geracao de potencia reativa
+            "EXST": 4e-3,  # tolerância de erro de potencia ativa para aplicacao de controle de intercâmbio de potencia ativa entre areas
             "TLPP": 1e-2,  # tolerância para a capacidade de carregamento de circuitos
-            "TSBZ": 1e-4,  # tolerância para detecção de variação nula de fluxo de potência ativa nos circuitos do sistema externo
-            "TSBA": 5e-2,  # tolerância para detecção de pequenas variações de fluxo de potência ativa nos circuitos do sistema externo
-            "PGER": 0.3,  # percentagem de geração de potência ativa a ser removida dos geradores do sistema interno para o cálculo das variações de fluxo de potência ativa nos circuitos do sistema externo
-            "VFLD": 0.7,  # valor de tensão abaixo do qual a parcela de potência constante das cargas funcionais passa a ser modelada como uma impedância constante
-            "VART": 5e-2,  # variação da tensão (em relação ao caso base) a partir da qual uma barra passa a ser automaticamente monitorada no problema de fluxo de potência continuado
+            "TSBZ": 1e-4,  # tolerância para deteccao de variacao nula de fluxo de potencia ativa nos circuitos do sistema externo
+            "TSBA": 5e-2,  # tolerância para deteccao de pequenas variacoes de fluxo de potencia ativa nos circuitos do sistema externo
+            "PGER": 0.3,  # percentagem de geracao de potencia ativa a ser removida dos geradores do sistema interno para o calculo das variacoes de fluxo de potencia ativa nos circuitos do sistema externo
+            "VFLD": 0.7,  # valor de tensao abaixo do qual a parcela de potencia constante das cargas funcionais passa a ser modelada como uma impedância constante
+            "VART": 5e-2,  # variacao da tensao (em relacao ao caso base) a partir da qual uma barra passa a ser automaticamente monitorada no problema de fluxo de potencia continuado
             "TSTP": 33,  # número de steps do transformador com tap discreto
-            "NDIR": 20,  # número de direções utilizado no processo de construção da região de segurança
-            "STIR": 1,  # fator de divisão do passo atual de transferência de geração de potência ativa quando ocorre alguma violação no processo de construção da região de segurança
-            "STTR": 5e-2,  # passo de transferência de geração de potência ativa utilizado no processo de construção da região de segurança
-            "TRPT": 1,  #  percentagem de geração de potência ativa utilizado no processo de construção da região de segurança
-            "ZMIN": 1e-5,  # valor mínimo do módulo de impedância dos circuitos CA
-            "VDVN": 0.4,  # tensão mínima para teste de divergência automática do caso
-            "ICMN": 5e-4,  # valor mínimo do incremento automático de carga (utilizado como critério de parada do método de fluxo de potência continuado)
-            "BFPO": 1e-2,  # valor mínimo de injeção de potência reativa de um banco shunt alocado pelo programa flupot
-            "ZMAX": 5e2,  # tensão mínima para teste de divergência do caso
-            "VDVM": 2.0,  # tensão máxima para teste de divergência do caso
-            "ASTP": 0.05,  # valor máximo de correção de ângulo de fase da tensão durante o processo de solução
-            "VSTP": 5e-2,  # valor máximo de correção de magnitude da tensão durante o processo de solução
-            "CSTP": 5e-2,  # valor máximo de correção de susceptância do CSC durante o processo de solução
-            "DMAX": 5,  # número máximo de vezes consecutivas que o fator de divisão FDIV pode ser aplicado (utilizado como critério de parada do método de fluxo de potência continuado)
-            "TSDC": 0.02,  # valor máximo de correção do tap do conversor do elo CC durante o processo de solução
-            "ASDC": 1,  # valor máximo de correção do ângulo de disparo do conversor do elo CC durante o processo de solução
-            "ACIT": 30,  # número máximo de iterações na solução do fluxo de potência CA
-            "ICIT": 30,  # número máximo de soluções do fluxo de potência a serem calculadas durante a execução do problema de fluxo de potência continuado
-            "LPIT": 50,  # número máximo de iterações do problema de programação linear
-            "LFLP": 10,  # número máximo de iterações do problema de redespacho de potência ativa
-            "LFIT": 10,  # número máximo de iterações na solução da interface CA-CC
-            "DCIT": 10,  # número máximo de iterações na solução do fluxo de potência CC
-            "VSIT": 10,  # número máximo de iterações no ajuste da tensão em barra CC
-            "LFCV": 1,  # número de iterações do método desacoplado rápido antes do início do processo de solução pelo método de newton raphson
-            "PDIT": 10,  # número de iterações na estimação das perdas no modelo de fluxo de potência linearizado
-            "FDIV": 2,  # fator de redução do incremento automático de carga quando o problema de fluxo de potência não apresenta solução durante a execução do programa de fluxo de potência continuado
-            "ICMV": 5e-3,  # tamanho do passo inicial quando o parâmetro de continuação muda de carregamento para o módulo de tensão
-            "APAS": 0.9,  # determina o ponto a partir do qual o tamanho do passo do fluxo de potência continuado parametrizado será acelerado (% do carregamento máximo)
-            "CPAR": 0.7,  # especifica o ponto de para do fluxo de potência continuado parametrizado (% do carregamento máximo)
-            "VAVT": 2e-2,  # critério de variação de tensão para a determinação da rede complementar
-            "VAVF": 5e-2,  # critério de variação de fluxo em função do carregamento nominal para a determinação da rede complementar
-            "VMVF": 15e-2,  # critério de variação de fluxo para a determinação da rede complementar
-            "VPVT": 2e-2,  # critério de variação de tensão para a terminação da rede de simulação - primeiro critério
-            "VPVF": 5e-2,  # critério de variação de fluxo em função do carregamento nominal para a determinação da rede de simulação - primeiro critério
-            "VPMF": 10e-2,  # critério de variação de fluxo para a determinação da rede de simulação - primeiro critério
+            "NDIR": 20,  # número de direcoes utilizado no processo de construcao da regiao de seguranca
+            "STIR": 1,  # fator de divisao do passo atual de transferencia de geracao de potencia ativa quando ocorre alguma violacao no processo de construcao da regiao de seguranca
+            "STTR": 5e-2,  # passo de transferencia de geracao de potencia ativa utilizado no processo de construcao da regiao de seguranca
+            "TRPT": 1,  #  percentagem de geracao de potencia ativa utilizado no processo de construcao da regiao de seguranca
+            "ZMIN": 1e-5,  # valor minimo do modulo de impedância dos circuitos CA
+            "VDVN": 0.4,  # tensao minima para teste de divergencia automatica do caso
+            "ICMN": 5e-4,  # valor minimo do incremento automatico de carga (utilizado como criterio de parada do metodo de fluxo de potencia continuado)
+            "BFPO": 1e-2,  # valor minimo de injecao de potencia reativa de um banco shunt alocado pelo programa flupot
+            "ZMAX": 5e2,  # tensao minima para teste de divergencia do caso
+            "VDVM": 2.0,  # tensao maxima para teste de divergencia do caso
+            "ASTP": 0.05,  # valor maximo de correcao de ângulo de fase da tensao durante o processo de solucao
+            "VSTP": 5e-2,  # valor maximo de correcao de magnitude da tensao durante o processo de solucao
+            "CSTP": 5e-2,  # valor maximo de correcao de susceptância do CSC durante o processo de solucao
+            "DMAX": 5,  # numero maximo de vezes consecutivas que o fator de divisao FDIV pode ser aplicado (utilizado como criterio de parada do metodo de fluxo de potencia continuado)
+            "TSDC": 0.02,  # valor maximo de correcao do tap do conversor do elo CC durante o processo de solucao
+            "ASDC": 1,  # valor maximo de correcao do ângulo de disparo do conversor do elo CC durante o processo de solucao
+            "ACIT": 30,  # numero maximo de iteracoes na solucao do fluxo de potencia CA
+            "ICIT": 30,  # numero maximo de solucoes do fluxo de potencia a serem calculadas durante a execucao do problema de fluxo de potencia continuado
+            "LPIT": 50,  # numero maximo de iteracoes do problema de programacao linear
+            "LFLP": 10,  # numero maximo de iteracoes do problema de redespacho de potencia ativa
+            "LFIT": 10,  # numero maximo de iteracoes na solucao da interface CA-CC
+            "DCIT": 10,  # numero maximo de iteracoes na solucao do fluxo de potencia CC
+            "VSIT": 10,  # numero maximo de iteracoes no ajuste da tensao em barra CC
+            "LFCV": 1,  # número de iteracoes do metodo desacoplado rapido antes do inicio do processo de solucao pelo metodo de newton raphson
+            "PDIT": 10,  # número de iteracoes na estimacao das perdas no modelo de fluxo de potencia linearizado
+            "FDIV": 2,  # fator de reducao do incremento automatico de carga quando o problema de fluxo de potencia nao apresenta solucao durante a execucao do programa de fluxo de potencia continuado
+            "ICMV": 5e-3,  # tamanho do passo inicial quando o parâmetro de continuacao muda de carregamento para o modulo de tensao
+            "APAS": 0.9,  # determina o ponto a partir do qual o tamanho do passo do fluxo de potencia continuado parametrizado sera acelerado (% do carregamento maximo)
+            "CPAR": 0.7,  # especifica o ponto de para do fluxo de potencia continuado parametrizado (% do carregamento maximo)
+            "VAVT": 2e-2,  # criterio de variacao de tensao para a determinacao da rede complementar
+            "VAVF": 5e-2,  # criterio de variacao de fluxo em funcao do carregamento nominal para a determinacao da rede complementar
+            "VMVF": 15e-2,  # criterio de variacao de fluxo para a determinacao da rede complementar
+            "VPVT": 2e-2,  # criterio de variacao de tensao para a terminacao da rede de simulacao - primeiro criterio
+            "VPVF": 5e-2,  # criterio de variacao de fluxo em funcao do carregamento nominal para a determinacao da rede de simulacao - primeiro criterio
+            "VPMF": 10e-2,  # criterio de variacao de fluxo para a determinacao da rede de simulacao - primeiro criterio
             # novas constantes adicionadas por JP
             "FBSE": 60.0,  # frequencia base do sep (criado por JP)
-            "SIGA": 1e-6,  # tolerância da chave sigmóide SVC-A (criado por JP)
-            "SIGQ": 1e-6,  # tolerância da chave sigmóide SVC-Q e QLIM (criado por JP)
-            "SIGI": 1e-6,  # tolerância da chave sigmóide SVC-I (criado por JP)
-            "SIGV": 1e-6,  # tolerância da chave sigmóide referente à variável de tensão (criado por JP)
-            "SIGK": 1e8,  # variável de inclinação da chave sigmóide (criado por JP)
-            "FULL": 0,  # Curva completa do fluxo de potência continuado (criado por JP)
+            "SIGA": 1e-6,  # tolerância da chave sigmoide SVC-A (criado por JP)
+            "SIGQ": 1e-6,  # tolerância da chave sigmoide SVC-Q e QLIM (criado por JP)
+            "SIGI": 1e-6,  # tolerância da chave sigmoide SVC-I (criado por JP)
+            "SIGV": 1e-6,  # tolerância da chave sigmoide referente à variavel de tensao (criado por JP)
+            "SIGK": 1e8,  # variavel de inclinacao da chave sigmoide (criado por JP)
+            "FULL": 0,  # Curva completa do fluxo de potencia continuado (criado por JP)
             "VVAR": 1e-6,  # (criado por JP)
-            "CTOL": 1e-7,  # tolerância para as variáveis de estado do método direto (canizares) (criado por JP)
+            "CTOL": 1e-7,  # tolerância para as variaveis de estado do metodo direto (canizares) (criado por JP)
         }
     )
     try:
@@ -122,7 +122,7 @@ def optionspwf(
         }
     )
     anarede.maskctrlcount = 0
-    print("\033[96mOpções de controle escolhidas: ", end="")
+    print("\033[96mOpcoes de controle escolhidas: ", end="")
     try:
         for idx, value in anarede.dopcDF.iterrows():
             if (value.padrao == "L") and (value.opcao in anarede.ctrl):
@@ -131,24 +131,24 @@ def optionspwf(
                 print(f"{value.opcao}", end=" ")
         print("\033[0m")
         if not any(anarede.ctrl):
-            print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
+            print("\033[96mNenhuma opcao de controle foi escolhida.\033[0m")
     except:
-        print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de controle foi escolhida.\033[0m")
 
     anarede.excc = dict(
         {
-            "80CO": False,  # relatórios impressos em formato de 80 colunas
-            "A0GI": False,  # gravação automática do arquivo de saída DGEI.dat durante etapa 1 de utilização do software ANAT0
-            "ACCC": False,  # força a reInicializacao do controle de tensão de dois ou mais elos de corrente contínua do tipo ccc qie controlam a tensão da mesma barra CA pelo modo de tensão definido no código de execução DCCV
-            "ACFP": False,  # executa a análise de casos de fluxo de potência através da impressão de relatórios que contêm dados de transformadores que podem causar problemas à convergência dos casos
-            "ACLS": False,  # utilizada em conjunto com o código de execução DANC, permite a especificação da alteração do carregamento através da linguagem de seleção
-            "ADRE": False,  # indica que as restrições lineares adicionais definidas no código de execução DRES serão consideradas durante a solução do problema de redespacho de potência ativa
-            "AGRE": False,  # utilizada com o código de execução RELA, em conjunto com as opções para relatórios de equipamentos (RBAR, DADB, RLIN, DADL, RGER, RTRA, RLTC, RCSC, DADC, RSHB, RSHL, RBSH, RBSL, RFCR, RFQL), imprime o relatório apenas dos agregadores e grupos selecionados de acordo com os campo de número de agregador e número de grupo do código de execução DAGR
-            "AGRF": False,  # utilizada com o código de execução EXMT e com a opção de execução IDSA, atua nas etapas de agrupamento e incremento de geração da ferramenta de identificação de subáreas e áreas de modo a garantir que os elementos selecionados reduzam a folga do circuito de maior fator
-            "ALPR": False,  # permite a alteração da prioridade máxima de ativação das variáveis de controle
-            "AMOT": False,  # após a execução do processo de otimização pelo código de execução EXOT, adiciona as modificações sugeridas pelo processo de otimização (FPO) ao caso em memória
-            "AREA": False,  # utilizada com o código de execução RELA, permite selecionar a área ou as áreas que serão impressas, de acordo com o campo número do código de execução DARE
-            "AREG": False,  # utilizada com o código de execução ARQV, habilita o acréscimo automático de registros ao arquivo histórico
+            "80CO": False,  # relatorios impressos em formato de 80 colunas
+            "A0GI": False,  # gravacao automatica do arquivo de saida DGEI.dat durante etapa 1 de utilizacao do software ANAT0
+            "ACCC": False,  # forca a reInicializacao do controle de tensao de dois ou mais elos de corrente continua do tipo ccc qie controlam a tensao da mesma barra CA pelo modo de tensao definido no codigo de execucao DCCV
+            "ACFP": False,  # executa a analise de casos de fluxo de potencia atraves da impressao de relatorios que contem dados de transformadores que podem causar problemas à convergencia dos casos
+            "ACLS": False,  # utilizada em conjunto com o codigo de execucao DANC, permite a especificacao da alteracao do carregamento atraves da linguagem de selecao
+            "ADRE": False,  # indica que as restricoes lineares adicionais definidas no codigo de execucao DRES serao consideradas durante a solucao do problema de redespacho de potencia ativa
+            "AGRE": False,  # utilizada com o codigo de execucao RELA, em conjunto com as opcoes para relatorios de equipamentos (RBAR, DADB, RLIN, DADL, RGER, RTRA, RLTC, RCSC, DADC, RSHB, RSHL, RBSH, RBSL, RFCR, RFQL), imprime o relatorio apenas dos agregadores e grupos selecionados de acordo com os campo de número de agregador e número de grupo do codigo de execucao DAGR
+            "AGRF": False,  # utilizada com o codigo de execucao EXMT e com a opcao de execucao IDSA, atua nas etapas de agrupamento e incremento de geracao da ferramenta de identificacao de subareas e areas de modo a garantir que os elementos selecionados reduzam a folga do circuito de maior fator
+            "ALPR": False,  # permite a alteracao da prioridade maxima de ativacao das variaveis de controle
+            "AMOT": False,  # apos a execucao do processo de otimizacao pelo codigo de execucao EXOT, adiciona as modificacoes sugeridas pelo processo de otimizacao (FPO) ao caso em memoria
+            "AREA": False,  # utilizada com o codigo de execucao RELA, permite selecionar a area ou as areas que serao impressas, de acordo com o campo número do codigo de execucao DARE
+            "AREG": False,  # utilizada com o codigo de execucao ARQV, habilita o acrescimo automatico de registros ao arquivo historico
             "ASLK": False,
             "ATCR": False,
             "AUTO": False,
@@ -267,7 +267,7 @@ def optionspwf(
             "VNUL": False,
         }
     )
-    print("\033[96mOpções de execução escolhidas: ", end="")
+    print("\033[96mOpcoes de execucao escolhidas: ", end="")
     try:
         for idx, value in anarede.dopcDF.iterrows():
             if (value.opcao == "RCER") and (~anarede.pwfblock["DCER"]):
@@ -279,9 +279,9 @@ def optionspwf(
                 print(f"{value.opcao}", end=" ")
         print("\033[0m")
         if not any(anarede.excc):
-            print("\033[96mNenhuma opção de execução foi escolhida.\033[0m")
+            print("\033[96mNenhuma opcao de execucao foi escolhida.\033[0m")
     except:
-        print("\033[96mNenhuma opção de controle foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de controle foi escolhida.\033[0m")
 
     anarede.monitor = dict(
         {
@@ -295,7 +295,7 @@ def optionspwf(
             "MOCV": False,
         }
     )
-    print("\033[96mOpções de monitoramento escolhidas: ", end="")
+    print("\033[96mOpcoes de monitoramento escolhidas: ", end="")
     try:
         for idx, value in anarede.dopcDF.iterrows():
             if (value.padrao == "L") and (value.opcao in anarede.monitor):
@@ -303,9 +303,9 @@ def optionspwf(
                 print(f"{value.opcao}", end=" ")
         print("\033[0m")
         if not any(anarede.monitor):
-            print("\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m")
+            print("\033[96mNenhuma opcao de monitoramento foi escolhida.\033[0m")
     except:
-        print("\033[96mNenhuma opção de monitoramento foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de monitoramento foi escolhida.\033[0m")
 
     anarede.report = dict(
         {
@@ -401,14 +401,14 @@ def optionspwf(
         if not any(anarede.report):
             print("\033[96mNenhuma opcao de relatorio foi escolhida.\033[0m")
     except:
-        print("\033[96mNenhuma opção de relatório foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de relatorio foi escolhida.\033[0m")
 
 
 def optionsstb(
     anatem,
 ):
-    """configuração de variáveis para processos de convergência em análise dinâmica do sistema elétrico de potência
-    determinação dos valores padrão das constantes, variáveis de controle, variáveis de execução, variáveis de monitoramento e variáveis de relatórios
+    """configuracao de variaveis para processos de convergencia em analise dinâmica do sistema eletrico de potencia
+    determinacao dos valores padrao das constantes, variaveis de controle, variaveis de execucao, variaveis de monitoramento e variaveis de relatorios
 
     Args
         anatem:
@@ -514,14 +514,14 @@ def optionsstb(
             "WARN": False,
         }
     )
-    print("\033[96mOpções de execução escolhidas: ", end="")
+    print("\033[96mOpcoes de execucao escolhidas: ", end="")
     for idx, value in anatem.dopcDF.iterrows():
         if (value.padrao == "L") and (value.opcao in anatem.excc):
             anatem.excc[value.opcao] = True
             print(f"{value.opcao}", end=" ")
     print("\033[0m")
     if not any(anatem.excc):
-        print("\033[96mNenhuma opção de execução foi escolhida.\033[0m")
+        print("\033[96mNenhuma opcao de execucao foi escolhida.\033[0m")
 
     anatem.report = dict(
         {
@@ -551,7 +551,7 @@ def optionsstb(
             "RSEG": False,
         }
     )
-    print("\033[96mOpções de relatorio escolhidas: ", end="")
+    print("\033[96mOpcoes de relatorio escolhidas: ", end="")
     for idx, value in anatem.dopcDF.iterrows():
         if (value.padrao == "L") and (value.opcao in anatem.report):
             anatem.report[value.opcao] = True
