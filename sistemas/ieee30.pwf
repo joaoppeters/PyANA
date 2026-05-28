@@ -101,12 +101,12 @@ DGBT
 99999
 DMET
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O
-AREA    1  A AREA  9999                               
+AREA    1  A AREA  9999      
 99999
 DINC
 (tp) (no ) C (tp) (no ) C (tp) (no ) C (tp) (no ) O ( P ) ( Q ) (Pmx) (Qmx)
 AREA    1  A AREA  9999                               1.    1.
 99999
 EXLF NEWT RBAR
-(EXIC NEWT
+EXIC NEWT
 FIM

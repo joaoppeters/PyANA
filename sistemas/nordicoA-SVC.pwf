@@ -1,8 +1,5 @@
 TITU
 Nordic32_Point_A                                                                
-DOPC
-RBAR L
-99999
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
 BASE   100. DASE   100. TEPA    .01 EXST     .4 TETP     5. TBPA     5.
@@ -208,8 +205,8 @@ LD   20.
 GE   15.
 99999
 DCER
-(No ) O Gr Un (Kb ) (Incl) ( Qg)( Qn)( Qm) C E L
-1041    1  1   1041   5.    10. -200. 200. A L   
+(No ) O Gr Un (Kb ) (Incl) ( Qg)( Qn)( Qm) C E
+1041    1  1   1041   1.     0. -200. 200. P L
 99999
 EXLF NEWT
 RELA RBAR

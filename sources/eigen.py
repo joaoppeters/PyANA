@@ -15,7 +15,7 @@ from ctrl import ctrlpop
 
 def eigensens(
     case,
-    powerflow,
+    anarede,
     stage: str = "",
 ):
     """analise de autovalores e autovetores
@@ -140,7 +140,7 @@ def eigensens(
         auxdiv = deepcopy(anarede.solution["ndiv"]) + 1
         case -= 1
         controlpop(
-            powerflow,
+            anarede,
         )
 
         # Reconfiguracao das variaveis de passo

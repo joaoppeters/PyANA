@@ -1,10 +1,10 @@
 TITU
 Sistema-Teste de 107 Barras - Caso Base                                         
-(DOPC IMPR
-((Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
-(QLIM L CREM L CTAP L STEP L NEWT L MOCT L MOCG L MOCF L RCVG L RMON L
-(FILE L
-(99999
+DOPC IMPR
+(Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E (Op) E
+QLIM L CREM L CTAP L STEP L NEWT L MOCT L MOCG L MOCF L RCVG L RMON L
+FILE L
+99999
 DCTE
 (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) 
 BASE   100. DASE   100. TEPA   1e-8 EXST    .04 TETP     5. TBPA     5.

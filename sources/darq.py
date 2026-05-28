@@ -285,14 +285,12 @@ def rdat(
             anatem.linecount += 1
             if not hasattr(anatem, "acdu"):
                 anatem.acdu = dict()
-                anatem.acdu["ruler"] = (
-                    "(ncdu) (ntop) ( nome cdu )",
-                )
+                anatem.acdu["ruler"] = ("(ncdu) (ntop) ( nome cdu )",)
                 anatem.acdu["defpar_ruler"] = "(EFPAR (nome) (     valor      )\n"
             acdu(
                 anatem,
             )
-            
+
         anatem.linecount += 1
 
     print(f"\033[32mSucesso na leitura de arquivo `{nome}`!\033[0m")

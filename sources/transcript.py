@@ -1837,32 +1837,52 @@ def prwdyr(
             barra = int(key)
             if anatem.dfnt[key]["modelo_fonte_u"]:
                 if barra in anarede.dlinDF.de.values:
-                    other_busbar = anarede.dlinDF.loc[anarede.dlinDF.de == barra, "para"].values[0]
-                    circuito = anarede.dlinDF.loc[anarede.dlinDF.de == barra, "circuito"].values[0]
+                    other_busbar = anarede.dlinDF.loc[
+                        anarede.dlinDF.de == barra, "para"
+                    ].values[0]
+                    circuito = anarede.dlinDF.loc[
+                        anarede.dlinDF.de == barra, "circuito"
+                    ].values[0]
                 elif barra in anarede.dlinDF.para.values:
-                    other_busbar = anarede.dlinDF.loc[anarede.dlinDF.para == barra, "de"].values[0]
-                    circuito = anarede.dlinDF.loc[anarede.dlinDF.para == barra, "circuito"].values[0]
+                    other_busbar = anarede.dlinDF.loc[
+                        anarede.dlinDF.para == barra, "de"
+                    ].values[0]
+                    circuito = anarede.dlinDF.loc[
+                        anarede.dlinDF.para == barra, "circuito"
+                    ].values[0]
                 regc += f"{barra:>7d} 'REGCA1' '1' 1  0.02  99  0.90  0.50  1.20  1.20  0.2  0.05  -1.30  0.02  1.50  99  -99  1 /\n"
                 reec += f"{barra:>7d} 'REECA1' '1' 0  0  1  1  0  1  0.85  1.2  0.01  -0.05  0.05  0.8  0.75  -0.75  0  0  0  0  0.05  0.436  -0.436  1.2  0.8  1  10  1  10  0  8  99  -99  1.2  0.04  1.11  0.02  0  0.75  0.2  0.750001  0.5  0.750002  1  0.750003  0.2  1.11  0.5  1.110001  0.75  1.110002  1  1.110003 /\n"
                 repc += f"{barra:>7d} 'REPCA1' '1' {barra:>7d} {barra:>7d}  {other_busbar:>7d}  '{circuito:>02d}'  0  0  0  0.02  18.0  5.00  0.00  0.05  0.70  0.00  0.00  0.00  0.10  -0.10  -0.00333  0.00333  0.436  -0.436  0.00  0.00  0.02  -0.0006  0.0006  999  -999  1  0  0.00  0.00  0.00 /\n"
                 torque += (
                     f"{barra:>7d} 'WTTQA1' '1' 1  3.00  0.60  0.05  30  1.20  0.08  0.20  0.69  0.40  0.78  0.60  0.98  0.74  1.20  0 /\n"
-                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    if "WT3"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    or "EOL"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 pitch += (
                     f"{barra:>7d} 'WTPTA1' '1' 5.00  150  30.0  3.00  0.00  0.30  27.0  0.00  10.0  -10.0 /\n"
-                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    if "WT3"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    or "EOL"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 aerodynamic += (
                     f"{barra:>7d} 'WTARA1' '1' 0.007  0.00 /\n"
-                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    if "WT3"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    or "EOL"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 drivetrain += (
                     f"{barra:>7d} 'WTDTA1' '1' 4.754  0  0.869  37.35  1.5 /\n"
-                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    if "WT3"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    or "EOL"
+                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
         except:

@@ -18,14 +18,14 @@ def acdu(
     anatem,
 ):
     """leitura de dados de associacao de topologias a controladores definidos pelo usuario
-    
+
     Args
         anatem:
     """
     anatem.acdu["dcdu"] = list()
     anatem.acdu["dtdu"] = list()
     anatem.acdu["nome"] = list()
-    
+
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -100,16 +100,13 @@ def acdu(
             "defval_variavel",
             "defval_parametro_d1",
             "defval_exclusao",
-            "defval_parametro_d2"
+            "defval_parametro_d2",
         ]
         anatem.dcdu[ncdu].update({k: anatem.dcdu[ntop][k] for k in keys2copy})
 
         anatem.linecount += 1
         if anatem.linecount >= len(anatem.lines):
             break
-
-    
-
 
 
 def darq(
