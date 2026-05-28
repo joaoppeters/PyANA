@@ -20,10 +20,6 @@ def pwf(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     t = time.process_time()
 
     # Variaveis
@@ -56,10 +52,6 @@ def keywords(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.end_line = "\n"
     anarede.end_archive = "FIM"
     anarede.end_block = ("9999", "99999", "999999")
@@ -74,12 +66,7 @@ def codes(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.pwfblock = dict(
         {
             "TITU": False,
@@ -124,10 +111,6 @@ def readfile(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     f = open(f"{file}", "r", encoding="latin-1")
     anarede.lines = f.readlines()
     f.close()

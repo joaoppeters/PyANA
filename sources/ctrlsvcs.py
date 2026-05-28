@@ -24,12 +24,7 @@ def svcssol(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variaveis
-=======
     # Variáveis
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if "svc_generation" not in anarede.solution:
         anarede.solution["svc_generation"] = zeros([anarede.ncer])
 
@@ -104,10 +99,6 @@ def alphavar(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.alphaxc = (anarede.cte["SBSE"]) / (
         anarede.dcerDF["potencia_reativa_maxima"][0]
     )
@@ -173,12 +164,7 @@ def svcres(
         anarede:
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Vetor de residuos
-=======
     # Vetor de resíduos
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.deltaSVC = zeros([anarede.ncer])
 
     # Contador
@@ -254,10 +240,6 @@ def svcsubjac(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -399,10 +381,6 @@ def svcupdt(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Contador
     ncer = 0
 
@@ -433,12 +411,7 @@ def svcsch(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Atualizacao da potencia reativa especificada
-=======
     # Atualização da potência reativa especificada
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     ncer = 0
     for _, value in anarede.dcerDF.iterrows():
         idxcer = anarede.dbarDF.index[
@@ -471,12 +444,7 @@ def svccorr(
         anarede:
         case: etapa do fluxo de potencia continuado analisada
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["svc_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["svc_generation"]
     )
@@ -490,12 +458,7 @@ def svcheur(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Condicao de atingimento do ponto de maximo carregamento ou bifurcacao LIB
-=======
     # Condição de atingimento do ponto de máximo carregamento ou bifurcação LIB
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if (
         (not anarede.solution["pmc"])
         and (anarede.solution["varstep"] == "lambda")
@@ -515,10 +478,6 @@ def svccpf(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["svc_generation"] = deepcopy(anarede.solution["svc_generation"])
 
 
@@ -532,12 +491,7 @@ def svcsolcpf(
         anarede:
         case: etapa do fluxo de potencia continuado analisada
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Condicao
-=======
     # Condição
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     precase = case - 1
     if case == 1:
         anarede.solution["svc_generation"] = deepcopy(
@@ -558,10 +512,6 @@ def svcsubhess(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -581,10 +531,6 @@ def svcsubjacsym(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #

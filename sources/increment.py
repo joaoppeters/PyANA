@@ -18,12 +18,7 @@ def increment(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     preincrement = sum(anarede.dbarDF["demanda_ativa"].to_numpy())
 
     ## Point of Collapse Method (Canizares, 1992)

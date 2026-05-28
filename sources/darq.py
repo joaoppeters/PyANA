@@ -18,12 +18,6 @@ def rdarq(
     Args
         anatem:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    anatem.cdcdu = dict()
-    anatem.dcdu = dict()
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     pathdarq(
         anatem,
     )
@@ -40,10 +34,6 @@ def rblt(
         anatem:
         arquivo:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")
@@ -166,12 +156,7 @@ def rcdu(
         anatem:
         arquivo:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variaveis
-=======
     # Variáveis
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")
@@ -213,10 +198,6 @@ def rdat(
         anatem:
         arquivo:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")

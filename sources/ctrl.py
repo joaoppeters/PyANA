@@ -25,12 +25,7 @@ def ctrlsol(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if not hasattr(anarede, "ctrlcount"):
         anarede.ctrlcount = 0
         anarede.totaldevicesctrl = 0
@@ -117,53 +112,6 @@ def ctrlsch(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-
-    # controle de compensadores estaticos de potencia reativa
-    if anarede.pwfblock["DCER"]:
-        svcsch(
-            anarede,
-        )
-
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        freqsch(
-            anarede,
-        )
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        qlimsch(
-            anarede,
-        )
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # elif anarede.ctrl["QLIMs"]:
-    #     qlimssch(
-    #         anarede,
-    #     )
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # elif anarede.ctrl["QLIMn"]:
-    #     qlimnsch(
-    #         anarede,
-    #     )
-    # # controle de magnitude de tensao de barramentos
-    # elif anarede.ctrl["VLIM"]:
-    #     vlimsch(
-    #         anarede,
-    #     )
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -206,7 +154,6 @@ def ctrlsch(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrlres(
@@ -220,12 +167,7 @@ def ctrlres(
         case: caso analisado do fluxo de potencia continuado (prev + corr)
             valor padrao igual a zero -> Newton-Raphson
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.deltaY = array([])
 
     # controle de compensadores estaticos de potencia reativa
@@ -285,12 +227,7 @@ def ctrljac(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.truedim = deepcopy(anarede.jacobian.shape[0])
 
     # Dimensao
@@ -357,51 +294,6 @@ def ctrlupdt(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-
-    # controle de compensadores estaticos de potencia reativa
-    if anarede.pwfblock["DCER"]:
-        svcupdt(
-            anarede,
-        )
-
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        frequpdt(
-            anarede,
-        )
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        qlimupdt(
-            anarede,
-        )
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMs"]:
-    #     qlimsupdt(
-    #         anarede,
-    #     )
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMn"]:
-    #     qlimnupdt(
-    #         anarede,
-    #     )
-    # # controle de magnitude de tensao de barramentos
-    # if anarede.ctrl["VCTRL"]:
-    #     pass
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -444,7 +336,6 @@ def ctrlupdt(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrlcorrsol(
@@ -457,56 +348,6 @@ def ctrlcorrsol(
         anarede:
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-
-    # controle de compensadores estaticos de potencia reativa
-    if anarede.pwfblock["DCER"]:
-        svccorr(
-            anarede,
-            case,
-        )
-
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        freqcorr(
-            anarede,
-            case,
-        )
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        qlimcorr(
-            anarede,
-            case,
-        )
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMs"]:
-    #     qlimscorr(
-    #         anarede,
-    #         case,
-    #     )
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMn"]:
-    #     qlimncorr(
-    #         anarede,
-    #         case,
-    #     )
-    # # controle de magnitude de tensao de barramentos
-    # if anarede.ctrl["VCTRL"]:
-    #     pass
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -554,7 +395,6 @@ def ctrlcorrsol(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrlheuristics(
@@ -565,12 +405,7 @@ def ctrlheuristics(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.ctrlheur = False
     if not hasattr(anarede, "bifurcation"):
         anarede.bifurcation = False
@@ -633,39 +468,6 @@ def ctrlpop(
         anarede:
         pop: quantidade de acoes necessarias
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        pass
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        pass
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMs"]:
-    #     qlimspop(anarede, pop=pop)
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMn"]:
-    #     qlimnpop(anarede, pop=pop)
-    # # controle de compensadores estaticos de potencia reativa
-    # if anarede.ctrl["SVCs"]:
-    #     pass
-    # # controle de magnitude de tensao de barramentos
-    # if anarede.ctrl["VCTRL"]:
-    #     pass
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -698,7 +500,6 @@ def ctrlpop(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrlcpf(
@@ -709,43 +510,6 @@ def ctrlcpf(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-
-    # controle de compensadores estaticos de potencia reativa
-    if anarede.pwfblock["DCER"]:
-        svccpf(
-            anarede,
-        )
-
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        pass
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        pass
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMs"]:
-    #     pass
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMn"]:
-    #     pass
-    # # controle de magnitude de tensao de barramentos
-    # if anarede.ctrl["VCTRL"]:
-    #     pass
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -780,7 +544,6 @@ def ctrlcpf(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrlsolcpf(
@@ -793,47 +556,6 @@ def ctrlsolcpf(
         anarede:
         case: etapa do fluxo de potencia continuado analisada
     """
-<<<<<<< HEAD
-    ## Inicializacao
-
-    # controle de compensadores estaticos de potencia reativa
-    if anarede.pwfblock["DCER"]:
-        svcsolcpf(
-            anarede,
-            case,
-        )
-
-    # controle remoto de tensao
-    if anarede.ctrl["CREM"]:
-        pass
-    # # controle secundario de tensao
-    # if anarede.ctrl["CST"]:
-    #     pass
-    # controle de tap variavel de transformador
-    if anarede.ctrl["CTAP"]:
-        pass
-    # controle de ângulo de transformador defasador
-    if anarede.ctrl["CPHS"]:
-        pass
-    # controle de regulacao primaria de frequencia
-    if anarede.ctrl["FREQ"]:
-        pass
-    # controle de limite de geracao de potencia reativa
-    if anarede.ctrl["QLIM"]:
-        pass
-    # # controle suave simbolico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMs"]:
-    #     qlimssolcpf(
-    #         anarede,
-    #         case,
-    #     )
-    # # controle suave numerico de limite de geracao de potencia reativa
-    # if anarede.ctrl["QLIMn"]:
-    #     pass
-    # # controle de magnitude de tensao de barramentos
-    # if anarede.ctrl["VCTRL"]:
-    #     pass
-=======
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -872,7 +594,6 @@ def ctrlsolcpf(
         # controle de magnitude de tensão de barramentos
         elif value == "VCTRL":
             pass
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
 
 def ctrldelta(
@@ -883,12 +604,7 @@ def ctrldelta(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     boollist = list()
     ctrl = 0
 
@@ -958,16 +674,10 @@ def ctrlhess(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Dimensao
-    anarede.ctrldim = anarede.hessian.shape[0] - anarede.truedim
-=======
     # Loop
     for value in anarede.ctrl:
         # Dimensão
         anarede.ctrldim = anarede.hessian.shape[0] - anarede.truedim
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     # controle de compensadores estaticos de potencia reativa
     if anarede.pwfblock["DCER"]:

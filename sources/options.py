@@ -19,10 +19,6 @@ def optionspwf(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.cte = dict(
         {
             "SBSE": 100.0,  # base de potencia para o sistema CA
@@ -416,10 +412,6 @@ def optionsstb(
     Args
         anatem:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.cte = dict(
         {
             "TETE": 1e-6,

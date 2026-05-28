@@ -14,19 +14,11 @@ from pandas import DataFrame as DF
 def dagr(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de agregadores genericos
-=======
     """leitura de dados de agregadores genéricos
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dagr1["numero"] = list()
     anarede.dagr1["descricao"] = list()
     anarede.dagr1["ndagr2"] = list()
@@ -92,19 +84,11 @@ def dagr(
 def danc(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de alteracao do nivel de carregamento
-=======
     """leitura de dados de alteração do nível de carregamento
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.danc["area"] = list()
     anarede.danc["fator_carga_ativa"] = list()
     anarede.danc["fator_carga_reativa"] = list()
@@ -150,19 +134,11 @@ def danc(
 def danc_acls(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de alteracao do nivel de carregamento
-=======
     """leitura de dados de alteração do nível de carregamento
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.danc["tipo_elemento_1"] = list()
     anarede.danc["identificacao_elemento_1"] = list()
     anarede.danc["condicao_elemento_1"] = list()
@@ -265,12 +241,7 @@ def checkdanc(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if anarede.pwfblock["DANC"]:
         for area in anarede.dancDF["area"].values:
             for idx, value in anarede.dbarDF.iterrows():
@@ -290,19 +261,11 @@ def checkdanc(
 def dare(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de intercâmbio de potencia ativa entre areas
-=======
     """leitura de dados de intercâmbio de potência ativa entre áreas
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dare["numero"] = list()
     anarede.dare["intercambio_liquido"] = list()
     anarede.dare["nome"] = list()
@@ -355,19 +318,11 @@ def dare(
 def dbar(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de barra
-=======
     """leitura de dados de barra
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dbar["numero"] = list()
     anarede.dbar["operacao"] = list()
     anarede.dbar["estado"] = list()
@@ -560,19 +515,11 @@ def dbar(
 def dbsh(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissao
-=======
     """leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dbsh1["from"] = list()
     anarede.dbsh1["operacao"] = list()
     anarede.dbsh1["to"] = list()
@@ -706,19 +653,11 @@ def dbsh(
 def dcar(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de Args A, B, C e D que estabelecem a curva de variacao de carga em relacao a magnitude de tensao nas barras
-=======
     """leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcar["tipo_elemento_1"] = list()
     anarede.dcar["identificacao_elemento_1"] = list()
     anarede.dcar["condicao_elemento_1"] = list()
@@ -821,19 +760,11 @@ def dcar(
 def dcba(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de barra CC
-=======
     """leitura de dados de barra CC
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcba["numero"] = list()
     anarede.dcba["operacao"] = list()
     anarede.dcba["tipo"] = list()
@@ -894,19 +825,11 @@ def dcba(
 def dccv(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de controle de conversores CA/CC
-=======
     """leitura de dados de controle de conversores CA/CC
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dccv["numero"] = list()
     anarede.dccv["operacao"] = list()
     anarede.dccv["folga"] = list()
@@ -1010,19 +933,11 @@ def dccv(
 def dcer(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de compensadores estaticos de potencia reativa
-=======
     """leitura de dados de compensadores estáticos de potência reativa
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcer["barra"] = list()
     anarede.dcer["operacao"] = list()
     anarede.dcer["grupo_base"] = list()
@@ -1141,19 +1056,11 @@ def dcer(
 def dcli(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de linhas de transmissao CC
-=======
     """leitura de dados de linhas de transmissão CC
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcli["de"] = list()
     anarede.dcli["operacao"] = list()
     anarede.dcli["para"] = list()
@@ -1206,19 +1113,11 @@ def dcli(
 def dcnv(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de conversores CA/CC
-=======
     """leitura de dados de conversores CA/CC
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcnv["numero"] = list()
     anarede.dcnv["operacao"] = list()
     anarede.dcnv["barra_CA"] = list()
@@ -1302,19 +1201,11 @@ def dcnv(
 def dcsc(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de compensador serie controlavel
-=======
     """leitura de dados de compensador série controlável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcsc["de"] = list()
     anarede.dcsc["operacao"] = list()
     anarede.dcsc["para"] = list()
@@ -1434,19 +1325,11 @@ def dcsc(
 def dcte(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de constantes
-=======
     """leitura de dados de constantes
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dcte["constante"] = list()
     anarede.dcte["valor_constante"] = list()
 
@@ -1508,19 +1391,11 @@ def dcte(
 def dctg(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de lista de casos de contingencia
-=======
     """leitura de lista de casos de contingência
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dctg1["identificacao"] = list()
     anarede.dctg1["operacao"] = list()
     anarede.dctg1["prioridade"] = list()
@@ -1644,19 +1519,11 @@ def dctg(
 def dctr(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados complementares de transformadores
-=======
     """leitura de dados complementares de transformadores
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dctr["de"] = list()
     anarede.dctr["operacao"] = list()
     anarede.dctr["para"] = list()
@@ -1733,19 +1600,11 @@ def dctr(
 def delo(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de elo CC
-=======
     """leitura de dados de elo CC
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.delo["numero"] = list()
     anarede.delo["operacao"] = list()
     anarede.delo["tensao"] = list()
@@ -1795,19 +1654,11 @@ def delo(
 def dgbt(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de grupos de base de tensao de barras CA
-=======
     """leitura de dados de grupos de base de tensão de barras CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dgbt["grupo"] = list()
     anarede.dgbt["tensao"] = list()
 
@@ -1846,19 +1697,11 @@ def dgbt(
 def dger(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de geradores
-=======
     """leitura de dados de geradores
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dger["numero"] = list()
     anarede.dger["operacao"] = list()
     anarede.dger["potencia_ativa_minima"] = list()
@@ -1971,19 +1814,11 @@ def dger(
 def dglt(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de grupos de limites de tensao
-=======
     """leitura de dados de grupos de limites de tensão
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dglt["grupo_limite_tensao"] = list()
     anarede.dglt["limite_minimo"] = list()
     anarede.dglt["limite_maximo"] = list()
@@ -2052,19 +1887,11 @@ def dglt(
 def dinc(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de incremento do nivel de carregamento
-=======
     """leitura de dados de incremento do nível de carregamento
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dinc["tipo_incremento_1"] = list()
     anarede.dinc["identificacao_incremento_1"] = list()
     anarede.dinc["condicao_incremento_1"] = list()
@@ -2195,19 +2022,11 @@ def dinc(
 def dinj(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de injecoes de potencias, shunts e fatores de participacao de geracao do modelo equivalente
-=======
     """leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dinj["numero"] = list()
     anarede.dinj["operacao"] = list()
     anarede.dinj["injecao_ativa_eq"] = list()
@@ -2286,19 +2105,11 @@ def dinj(
 def dlin(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de linha de transmissao CA
-=======
     """leitura de dados de linha de transmissão CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dlin["de"] = list()
     anarede.dlin["abertura_de"] = list()
     anarede.dlin["operacao"] = list()
@@ -2471,19 +2282,11 @@ def dlin(
 def dmet(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de monitoracao para estabilidade de tensao em barra CA
-=======
     """leitura de dados de monitoração para estabilidade de tensão em barra CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dmte["tipo_elemento_1"] = list()
     anarede.dmte["identificacao_elemento_1"] = list()
     anarede.dmte["condicao_elemento_1"] = list()
@@ -2567,19 +2370,11 @@ def dmet(
 def dmfl(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de monitoracao de fluxo em circuito CA
-=======
     """leitura de dados de monitoração de fluxo em circuito CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dmfl["tipo_elemento_1"] = list()
     anarede.dmfl["identificacao_elemento_1"] = list()
     anarede.dmfl["condicao_elemento_1"] = list()
@@ -2666,19 +2461,11 @@ def dmfl(
 def dmfl_circ(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de monitoracao de fluxo em circuito CA
-=======
     """leitura de dados de monitoração de fluxo em circuito CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dmfl["de"] = list()
     anarede.dmfl["para"] = list()
     anarede.dmfl["circuito"] = list()
@@ -2739,19 +2526,11 @@ def dmfl_circ(
 def dmte(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de monitoracao de tensao em barra CA
-=======
     """leitura de dados de monitoração de tensão em barra CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dmte["tipo_elemento_1"] = list()
     anarede.dmte["identificacao_elemento_1"] = list()
     anarede.dmte["condicao_elemento_1"] = list()
@@ -2838,19 +2617,11 @@ def dmte(
 def dopc(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de codigo de opcoes de controle e execucao padrao
-=======
     """leitura de dados de código de opções de controle e execução padrão
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dopc["opcao"] = list()
     anarede.dopc["padrao"] = list()
 
@@ -2912,19 +2683,11 @@ def dopc(
 def dshl(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de dispositivos shunt de circuito CA
-=======
     """leitura de dados de dispositivos shunt de circuito CA
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dshl["from"] = list()
     anarede.dshl["operacao"] = list()
     anarede.dshl["to"] = list()
@@ -2980,19 +2743,11 @@ def dshl(
 def dtpf(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de fixacao na aplicacao do controle de tensao por variacao automatica de tap
-=======
     """leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dtpf["tipo_elemento_1"] = list()
     anarede.dtpf["identificacao_elemento_1"] = list()
     anarede.dtpf["condicao_elemento_1"] = list()
@@ -3079,19 +2834,11 @@ def dtpf(
 def dtpf_circ(
     anarede,
 ):
-<<<<<<< HEAD
-    """Inicializacao para leitura de dados de fixacao na aplicacao do controle de tensao por variacao automatica de tap
-=======
     """leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dtpf["de"] = list()
     anarede.dtpf["para"] = list()
     anarede.dtpf["circuito"] = list()

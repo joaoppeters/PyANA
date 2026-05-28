@@ -15,10 +15,6 @@ def exlf(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     from matrices import admittance
     from newton import newton
     from report import reportfile
@@ -46,10 +42,6 @@ def exic(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
 
     from matrices import admittance
     from continuation import prediction_correction
@@ -82,10 +74,6 @@ def expc(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     from matrices import admittance
     from newton import newton
     from poc import poc
@@ -118,10 +106,6 @@ def exsi(
         anarede: objeto da classe PowerFlowContainer
         anatem: objeto da classe PowerFlowContainer
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     from matrices import admittance
     from dynamic import dynamic
     from newton import newton
@@ -159,10 +143,6 @@ def exct(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     from matrices import admittance
     from newton import newton
     from report import reportfile
@@ -180,14 +160,7 @@ def exct(
         )
         anarede.nlin -= 1
         for idx, value in anarede.dlinDF.iterrows():
-<<<<<<< HEAD
-            print(
-                f"\033[94mSimulando contingencia do circuito {value.de} - {value.para}...\033[00m",
-                end=" ",
-            )
-=======
             print(f"Simulando contingência do circuito {value.de} - {value.para}...")
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
             anarede.dlinDF = anarede.dlinDF.drop(idx)
             admittance(
                 anarede,

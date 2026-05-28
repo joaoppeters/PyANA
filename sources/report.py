@@ -118,10 +118,6 @@ def rheader(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -180,10 +176,6 @@ def RCNV(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("vv relatorio de convergencia vv")
     if anarede.method != "LINEAR":
         file.write("\n\n")
@@ -276,10 +268,6 @@ def RBAR(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Loop por area
     for area in anarede.dbarDF["area"].unique():
         file.write("vv relatorio de barras vv area {} vv".format(area))
@@ -332,10 +320,6 @@ def RLIN(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("vv relatorio de linhas vv")
     file.write("\n\n")
     file.write(
@@ -421,10 +405,6 @@ def RGER(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     pass
 
 
@@ -437,10 +417,6 @@ def RSVC(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("vv relatorio de compensadores estaticos de potencia reativa vv")
     file.write("\n\n")
     if (anarede.dcerDF["controle"][0] == "A") or (anarede.dcerDF["controle"][0] == "P"):
@@ -558,10 +534,6 @@ def exiconv(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     var = False
     file.write("vv relatorio de execucao do fluxo de potencia continuado vv")
     file.write("\n\n")
@@ -662,10 +634,6 @@ def tobecontinued(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     var = False
 
     # Manipulacao
@@ -1207,10 +1175,6 @@ def RXPC(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("vv relatorio de convergencia vv")
     file.write("\n\n")
     file.write(" * * * * " + anarede.solution["convergence"] + " * * * * ")
@@ -1248,10 +1212,6 @@ def RXCT(
         file:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     convergente = list()
     divergente = list()
     for key, value in anarede.exct.items():

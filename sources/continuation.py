@@ -44,12 +44,7 @@ def prediction_correction(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel para armazenamento das variaveis de solucao do fluxo de potencia continuado
-=======
     # Variável para armazenamento das variáveis de solução do fluxo de potência continuado
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution.update(
         {
             "method": "EXIC",
@@ -137,12 +132,7 @@ def exicloop(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Condicao de parada do fluxo de potencia continuado -> Estavel & Instavel
-=======
     # Condição de parada do fluxo de potência continuado -> Estável & Instável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     while (
         anarede.cte["LMBD"]
         * ((1 / anarede.cte["FDIV"]) ** anarede.solution["ndiv"])
@@ -193,10 +183,6 @@ def prediction(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["iter"] = 0
 
     # Incremento do Nivel de Carregamento e Geracao
@@ -261,12 +247,7 @@ def correction(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel para armazenamento de solucao
-=======
     # Variável para armazenamento de solução
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution.update(
         {
             "iter": 0,
@@ -513,10 +494,6 @@ def exicresidue(
         anarede:
         stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     residue(
         anarede,
         case,
@@ -570,10 +547,6 @@ def exicjacobian(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Arrays adicionais
     rowarray = zeros([1, anarede.jacobian.shape[0]])
 
@@ -619,10 +592,6 @@ def update_statevar(
         anarede:
         stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["theta"][anarede.maskP] += (
         anarede.solution["sign"] * anarede.statevar[0 : (anarede.Tval)]
     )
@@ -696,12 +665,7 @@ def exicstorage(
         anarede:
         stage: string de identificacao da etapa do fluxo de potencia continuado (previsao/correcao)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Armazenamento das variaveis de solucao do fluxo de potencia
-=======
     # Armazenamento das variáveis de solução do fluxo de potência
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.operationpoint[case][stage] = {
         **deepcopy(anarede.solution),
     }
@@ -726,12 +690,7 @@ def exicevaluate(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Condicao Inicial
-=======
     # Condição Inicial
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if case == 1:
         # Lambda
         varlambda = abs((anarede.solution["step"] - 0) / (anarede.solution["step"]))
@@ -823,14 +782,8 @@ def exicheuristics(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    ## Afundamento de tensao nao desejado (em i+1) e retorno ao valor esperado (em i+2) -> correcao: voltar duas casas
-    # Condicao de caso para sistema != ieee24 (pq nesse sistema ha aumento de magnitude de tensao na barra 17 PQ)
-=======
     ## Afundamento de tensão não desejado (em i+1) e retorno ao valor esperado (em i+2) -> correção: voltar duas casas
     # Condição de caso para sistema != ieee24 (pq nesse sistema há aumento de magnitude de tensão na barra 17 PQ)
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if (
         (anarede.name != "ieee24")
         and (anarede.name != "ieee118")
@@ -1179,12 +1132,7 @@ def exiccvgprint(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Impressao de convergencia
-=======
     # Impressão de convergência
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # print(
     #     f"Convergencia: {anarede.solution['convergence']} - Caso: {len(anarede.operationpoint)} - Iteracao: {anarede.solution['iter']}"
     # )

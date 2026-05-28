@@ -23,10 +23,6 @@ def orwntw(
         anarede:
         organon
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     ntwpath = organonfolder(
         anarede,
     )
@@ -246,10 +242,6 @@ def orwudc(
         anatem:
         organon:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatemfiles = list()
     organonfiles = list()
     cdupath = organonfolder(
@@ -1025,10 +1017,6 @@ def orwdyn(
         organon:
         organonfiles:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Arquivo
     folder = organonfolder(
         anarede,

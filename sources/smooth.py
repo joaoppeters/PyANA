@@ -25,10 +25,6 @@ def qlims(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     anarede.qlimkeys[value["nome"]] = dict()
@@ -136,10 +132,6 @@ def qlimssmooth(
         nger: indice de geradores
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
@@ -211,10 +203,6 @@ def qlimnsmooth(
         nger: indice de geradores
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if case not in anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]]:
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
@@ -290,10 +278,6 @@ def svcsQ(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     # Variaveis Simbolicas
@@ -398,10 +382,6 @@ def svcsQsmooth(
         ncer: indice do compensador estatico de potencia reativa
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if case not in anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]]:
         anarede.svckeys[anarede.dbarDF.loc[idxcer, "nome"]][case] = list()
 
@@ -471,10 +451,6 @@ def svcsI(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     anarede.svckeys[value["nome"]] = dict()
@@ -585,10 +561,6 @@ def svcsIsmooth(
         ncer: indice do compensador estatico de potencia reativa
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     # Variaveis
@@ -698,10 +670,6 @@ def svcsA(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     anarede.svckeys[
@@ -819,10 +787,6 @@ def svcsAsmooth(
         ncer: indice do compensador estatico de potencia reativa
         case: caso analisado do fluxo de potencia continuado (prev + corr)
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     seterr(all="ignore")
 
     # Variaveis
@@ -998,10 +962,6 @@ def qlimspop(
         anarede:
         pop: quantidade de acoes necessarias
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     for _, value in anarede.dbarDF.iterrows():
         popped = 0
         if value["tipo"] != 0:
@@ -1018,12 +978,7 @@ def qlimstorage(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Criacao automatica de diretorio
-=======
     # Criação automática de diretório
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     smoothfolder(
         anarede,
     )
@@ -1307,12 +1262,7 @@ def svcstorage(
     Args:
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Criacao automatica de diretorio
-=======
     # Criação automática de diretório
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     smoothfolder(
         anarede,
     )

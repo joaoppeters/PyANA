@@ -40,12 +40,7 @@ def dynamic(
     Args
         anatem:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel para armazenamento de solucao
-=======
     # Variável para armazenamento de solução
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.solution.update(
         {
             "method": "EXSI",
@@ -170,10 +165,6 @@ def timenewt(
     Args
         anatem:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.solution["iter"] = 0
     anatem.deltagen = zeros((2 * (2 * anatem.nger + anatem.nbus)))
 
@@ -244,10 +235,6 @@ def timeplot(
         anatem:
         y:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # savetxt(anatem.maindir + "\\sistemas\\" + anatem.name + anatem.solution["eventname"] + '.txt', y, fmt='%.4f')
 
     linestyles = [

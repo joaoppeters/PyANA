@@ -20,12 +20,7 @@ def freqsol(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.nare = 1
 
     # Condicao
@@ -68,12 +63,7 @@ def freqgerlim(
     Args
         anarede:  self do arquivo powerflowl.py
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variaveis
-=======
     # Variáveis
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.freqger = {
         "max": zeros(anarede.nger),
         "min": zeros(anarede.nger),
@@ -116,12 +106,7 @@ def freqsch(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variaveis adicionais
-=======
     # Variáveis adicionais
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.pqsch["potencia_ativa_gerada_especificada"] = zeros(anarede.nger)
     anarede.pqsch["potencia_reativa_gerada_especificada"] = zeros(anarede.nger)
     anarede.pqsch["magnitude_tensao_especificada"] = zeros(anarede.nbus)
@@ -164,12 +149,7 @@ def freqres(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Vetor de residuos
-=======
     # Vetor de resíduos
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.deltaPger = zeros([anarede.nger])
     anarede.deltaQger = zeros([anarede.nger])
     anarede.deltaTger = zeros([anarede.nare])
@@ -241,10 +221,6 @@ def freqsubjac(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -495,12 +471,7 @@ def frequpdt(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Atualizacao da potencia ativa gerada
-=======
     # Atualização da potência ativa gerada
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["active_generation"] += anarede.statevar[
         (anarede.dimprefreq) : (anarede.dimprefreq + anarede.nger)
     ]
@@ -538,12 +509,7 @@ def freqcorr(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-    # Variavel
-=======
     # Variável
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["freq"] = deepcopy(anarede.operationpoint[case]["p"]["freq"])
     anarede.solution["active_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["active_generation"]
@@ -561,10 +527,6 @@ def freqsubhess(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -586,8 +548,4 @@ def freqsubjacsym(
     Args
         anarede:
     """
-<<<<<<< HEAD
-    ## Inicializacao
-=======
->>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     pass
