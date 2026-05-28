@@ -19,7 +19,6 @@ def qlimsol(
     Args
         anarede:
     """
-    ## Inicialização
     # Variáveis
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
@@ -36,7 +35,6 @@ def qlimres(
     Args
         anarede:
     """
-    ## Inicialização
     # Vetor de resíduos
     anarede.deltaQLIM = zeros([anarede.nger])
 
@@ -216,7 +214,6 @@ def qlimsubjac(
     Args
         anarede:
     """
-    ## Inicialização
     #
     # jacobiana:
     #
@@ -301,7 +298,6 @@ def qlimupdt(
     Args
         anarede:
     """
-    ## Inicialização
     # Contador
     nger = 0
 
@@ -352,7 +348,6 @@ def qlimsch(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     anarede.qsch = zeros([anarede.nbus])
 
@@ -371,7 +366,6 @@ def qlimcorr(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
@@ -386,7 +380,6 @@ def qlimheur(
     Args
         anarede:
     """
-    ## Inicialização
     # Condição de geração de potência reativa ser superior ao valor máximo
     if any(
         (
@@ -430,7 +423,6 @@ def qlimsubhess(
     Args
         anarede:
     """
-    ## Inicialização
     #
     # jacobiana:
     #
@@ -450,5 +442,4 @@ def qlimsubjacsym(
     Args
         anarede:
     """
-    ## Inicialização
     pass

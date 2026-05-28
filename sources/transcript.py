@@ -23,7 +23,6 @@ def orgntw(
         anarede:
         organon
     """
-    ## Inicialização
     ntwpath = organonfolder(
         anarede,
     )
@@ -243,7 +242,6 @@ def orwudc(
         anatem:
         organon:
     """
-    ## Inicialização
     anatemfiles = list()
     organonfiles = list()
     cdupath = organonfolder(
@@ -1019,7 +1017,6 @@ def orwdyn(
         organon:
         organonfiles:
     """
-    ## Inicialização
     # Arquivo
     folder = organonfolder(
         anarede,
@@ -1585,6 +1582,8 @@ def prwraw(
     fixedshuntdata = ""
     generatorsdata = ""
     for idx, value in anarede.dbarDF.iterrows():
+        if value.estado == "D":
+            continue
         dgbt = anarede.dgbtDF[
             anarede.dgbtDF.grupo == value.grupo_base_tensao
         ].tensao.values[0]
@@ -1605,17 +1604,17 @@ def prwraw(
             f"{value.numero:>6d},'{value.nome:<12}',{dgbt:>9.4f},{code:>3d},{value.area:>5d},{1:>5d},{1:>5d},{value.tensao*1e-3:>11.6f},{value.angulo:>11.4f}\n"
         )
         loaddata += (
-            f"{value.numero:>6d},'1 ',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f},{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n"
+            f"{value.numero:>6d},'1',{1:2d},{value.area:>4d},{1:>5d},{value.demanda_ativa:>11.3f},{value.demanda_reativa:>11.3f},{0:>10.3f},{0:>12.3f},{0:>12.3f},{0:>10.3f},{1:>4d},{1:>2d}\n"
             if value.demanda_ativa != 0 or value.demanda_reativa != 0
             else ""
         )
         fixedshuntdata += (
-            f"{value.numero:>6d},' 1 ',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n"
+            f"{value.numero:>6d},'1',{1:3d},{0:>11.3f},{value.shunt_barra:>11.3f}\n"
             if value.shunt_barra != 0
             else ""
         )
         generatorsdata += (
-            f"{value.numero:>6d},'1 ',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['SBSE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
+            f"{value.numero:>6d},'1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['SBSE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
             if code != 1
             else ""
         )
@@ -1628,7 +1627,26 @@ def prwraw(
     psse.file.write(" 0  / END OF GENERATOR DATA, BEGIN BRANCH DATA\n")
     transformersdata = ""
     for idx, value in anarede.dlinDF.iterrows():
-        st = 1 if value.estado == "L" else 0
+        if (
+            anarede.dbarDF.loc[anarede.dbarDF.numero == value.de, "estado"].values[0]
+            == "D"
+            or anarede.dbarDF.loc[anarede.dbarDF.numero == value.para, "estado"].values[
+                0
+            ]
+            == "D"
+        ):
+            continue
+        st = (
+            0
+            if value.estado == "D"
+            or anarede.dbarDF.loc[anarede.dbarDF.numero == value.de, "estado"].values[0]
+            == "D"
+            or anarede.dbarDF.loc[anarede.dbarDF.numero == value.para, "estado"].values[
+                0
+            ]
+            == "D"
+            else 1
+        )
         if value.barra_controlada < 0 and abs(value.barra_controlada) == value.de:
             bc = value.para
         elif value.barra_controlada < 0 and abs(value.barra_controlada) == value.para:
@@ -1643,26 +1661,28 @@ def prwraw(
         cod1 = 1 if bc != 0 else 0
         cont1 = bc if bc != 0 else 0
         vx = (
-            anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0]
+            anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] * 1e-3
             if bc != 0
             else 0
         )
         vn = (
-            anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0]
+            anarede.dbarDF[anarede.dbarDF.numero == bc].tensao.values[0] * 1e-3
             if bc != 0
             else 0
         )
         nome_de = anarede.dbarDF[anarede.dbarDF.numero == value.de].nome.values[0]
+
         (
             psse.file.write(
-                f"{value.de:>6d},{value.para:>6d},'{value.circuito:02d}',{value.resistencia:>12.4E},{value.reatancia:>13.4E},{value.susceptancia*2:>10.4f},{value.capacidade_normal:>12.2f},{value.capacidade_emergencial:>12.2f},{value.capacidade_equipamento:>12.2f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{1:>3d},{1:>3d},{0:>9.2f},{1:>4d},{1:>9.4f}\n"
+                f"{value.de:>6d},{value.para:>6d},'{value.circuito:02d}',{value.resistencia:>12.5E},{value.reatancia:>13.5E},{value.susceptancia*2:>10.5f},{value.capacidade_normal:>12.2f},{value.capacidade_emergencial:>12.2f},{value.capacidade_equipamento:>12.2f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{0:>10.5f},{1:>3d},{1:>3d},{0:>9.2f},{1:>4d},{1:>9.4f}\n"
             )
-            if value.estado and value.tap.real == 0
+            if value.estado and not value.transf
             else ""
         )
+
         transformersdata += (
-            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{1:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['SBSE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
-            if value.estado and value.tap.real != 0
+            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{0:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['SBSE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
+            if value.estado and value.transf
             else ""
         )
     psse.file.write(" 0  / END OF BRANCH DATA, BEGIN TRANSFORMER DATA\n")
@@ -1750,12 +1770,12 @@ def prwdyr(
                 else:
                     sat1 = 0.105
                     sat12 = 0.318
-                if genmodel == "MD01":
-                    gencls += f"{barra:>7d} 'GENCLS' '{anatem.dmaq[key][i]['grupo']}' {float(gendata['inercia'])}  {amortecimento} /\n"
-                elif genmodel == "MD02":
-                    gensae += f"{barra:>7d} 'GENSAE' '{anatem.dmaq[key][i]['grupo']}' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
+                # if genmodel == "MD01":
+                #     gencls += f"{barra:>7d} 'GENCLS' '1'  {float(gendata['inercia']):6.4f}  {amortecimento:6.4f} /\n"
+                if genmodel == "MD02":
+                    gensae += f"{barra:>7d} 'GENSAE' '1'  {float(gendata['tau_d0_prime']):6.4f}  {float(gendata['tau_d0_double_prime']):6.4f}  {float(gendata['tau_q0_double_prime']):6.4f}  {float(gendata['inercia']):6.4f}  {amortecimento:6.4f}  {float(gendata['l_d'])*1e-2:6.4f}  {float(gendata['l_q'])*1e-2:6.4f}  {float(gendata['l_d_prime'])*1e-2:6.4f}  {float(gendata['l_d_double_prime'])*1e-2:6.4f}  {float(gendata['l_l'])*1e-2:6.4f}  {sat1:6.4f}  {sat12:6.4f} /\n"
                 elif genmodel == "MD03":
-                    genroe += f"{barra:>7d} 'GENROE' '{anatem.dmaq[key][i]['grupo']}' {float(gendata['tau_d0_prime'])}  {float(gendata['tau_d0_double_prime'])}  {float(gendata['tau_q0_prime'])}  {float(gendata['tau_q0_double_prime'])}  {float(gendata['inercia'])}  {amortecimento}  {float(gendata['l_d'])*1e-2}  {float(gendata['l_q'])*1e-2}  {float(gendata['l_d_prime'])*1e-2}  {float(gendata['l_q_prime'])*1e-2}  {float(gendata['l_d_double_prime'])*1e-2}  {float(gendata['l_l'])*1e-2}  {sat1}  {sat12} /\n"
+                    genroe += f"{barra:>7d} 'GENROE' '1'  {float(gendata['tau_d0_prime']):6.4f}  {float(gendata['tau_d0_double_prime']):6.4f}  {float(gendata['tau_q0_prime']):6.4f}  {float(gendata['tau_q0_double_prime']):6.4f}  {float(gendata['inercia']):6.4f}  {amortecimento:6.4f}  {float(gendata['l_d'])*1e-2:6.4f}  {float(gendata['l_q'])*1e-2:6.4f}  {float(gendata['l_d_prime'])*1e-2:6.4f}  {float(gendata['l_q_prime'])*1e-2:6.4f}  {float(gendata['l_d_double_prime'])*1e-2:6.4f}  {float(gendata['l_l'])*1e-2:6.4f}  {sat1:6.4f}  {sat12:6.4f} /\n"
                 avr = anatem.dmaq[key][i]["modelo_regulador_tensao"]
                 gov = anatem.dmaq[key][i]["modelo_regulador_velocidade"]
                 if (
@@ -1764,9 +1784,9 @@ def prwdyr(
                 ):
                     govdata = anatem.drgv[gov]
                     if anatem.drgv[gov]["modelo"].strip() == "MD01":
-                        governor += f"{barra:>7d} 'HYGOV' '{anatem.dmaq[key][i]['grupo']}' {float(govdata['estatismo'])}  {float(govdata['estatismo_transitorio'])}  {float(govdata['cte_tempo_regulador'])}  {float(govdata['cte_tempo_filtragem'])}  {float(govdata['cte_tempo_servomotor'])}  {0.}  {float(govdata['limite_maximo'])}  {float(govdata['limite_minimo'])}  {float(govdata['cte_tempo_agua'])}  {float(govdata['ganho_turbina'])}  {float(govdata['amortecimento_turbina'])}  {float(govdata['vazao_noload'])} /\n"
+                        governor += f"{barra:>7d} 'HYGOV' '1'  {float(govdata['estatismo']):6.4f}  {float(govdata['estatismo_transitorio']):6.4f}  {float(govdata['cte_tempo_regulador']):6.4f}  {float(govdata['cte_tempo_filtragem']):6.4f}  {float(govdata['cte_tempo_servomotor']):6.4f}  {0.}  {float(govdata['limite_maximo']):6.4f}  {float(govdata['limite_minimo']):6.4f}  {float(govdata['cte_tempo_agua']):6.4f}  {float(govdata['ganho_turbina']):6.4f}  {float(govdata['amortecimento_turbina']):6.4f}  {float(govdata['vazao_noload']):6.4f} /\n"
                     elif anatem.drgv[gov]["modelo"].strip() == "MD02":
-                        governor += f"{barra:>7d} 'TGOV1' '{anatem.dmaq[key][i]['grupo']}' {float(govdata['estatismo'])}  {float(govdata['cte_tempo_regulador'])}  {float(govdata['limite_maximo'])}  {float(govdata['limite_minimo'])}  {float(govdata['cte_tempo_1'])}  {float(govdata['cte_tempo_reaquecimento'])}  {float(govdata['amortecimento_turbina'])} /\n"
+                        governor += f"{barra:>7d} 'TGOV1' '1'  {float(govdata['estatismo']):6.4f}  {float(govdata['cte_tempo_regulador']):6.4f}  {float(govdata['limite_maximo']):6.4f}  {float(govdata['limite_minimo']):6.4f}  {float(govdata['cte_tempo_1']):6.4f}  {float(govdata['cte_tempo_reaquecimento']):6.4f}  {float(govdata['amortecimento_turbina']):6.4f} /\n"
                 else:
                     pass
                 pss = anatem.dmaq[key][i]["modelo_estabilizador"]
@@ -1775,18 +1795,18 @@ def prwdyr(
                 elif (
                     pss.strip() and anatem.dmaq[key][i]["modelo_estabilizador_u"] == "u"
                 ):
-                    stabilizer += f"{barra:>7d} 'IEEEST' '{anatem.dmaq[key][i]['grupo']}' {1}  {0}  {0}  {0}  {0}  {0}  {0}  {0}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#KP1')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMAX')])}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMIN')])}  {0}  {0} /\n"
+                    stabilizer += f"{barra:>7d} 'IEEEST' '1'  {1}  {0}  {0}  {0}  {0}  {0}  {0}  {0}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TN1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TD1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#TW1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#KP1')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMAX')]):6.4f}  {float(anatem.dcdu[pss]['defpar_valor'][anatem.dcdu[pss]['defpar_nome'].index('#LMIN')]):6.4f}  {0:6.4f}  {0:6.4f} /\n"
 
                 if (
                     anarede.dbarDF.loc[anarede.dbarDF.numero == barra, "tipo"].values[0]
                     == 1
                 ):
-                    excitation += f"{barra:>7d} 'IEEET1' '{anatem.dmaq[key][i]['grupo']}' 0.00  100  0.05  8.00  -4.00  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
+                    excitation += f"{barra:>7d} 'IEEET1' '1'  {0.00:6.4f}  {100:6.4f}  {0.05:6.4f}  {8.00:6.4f}  {-4.00:6.4f}  {1.00:6.4f}  {1.50:6.4f}  {0.30:6.4f}  {3.00:6.4f}  {0:6.4f}  {0.5:6.4f}  {0.35:6.4f}  {0.8:6.4f}  {0.35:6.4f} /\n"
                 elif (
                     anarede.dbarDF.loc[anarede.dbarDF.numero == barra, "tipo"].values[0]
                     == 2
                 ):
-                    excitation += f"{barra:>7d} 'IEEET1' '{anatem.dmaq[key][i]['grupo']}' 0.00  100  0.05  20  -20  1.00  1.50  0.30  3.00  0  0.5  0.35  0.8  0.35 /\n"
+                    excitation += f"{barra:>7d} 'IEEET1' '1'  {0.00:6.4f}  {100:6.4f}  {0.05:6.4f}  {20:6.4f}  {-20:6.4f}  {1.00:6.4f}  {1.50:6.4f}  {0.30:6.4f}  {3.00:6.4f}  {0:6.4f}  {0.5:6.4f}  {0.35:6.4f}  {0.8:6.4f}  {0.35:6.4f} /\n"
                 i += 1
         except:
             pass
@@ -1816,32 +1836,33 @@ def prwdyr(
         try:
             barra = int(key)
             if anatem.dfnt[key]["modelo_fonte_u"]:
-                # gendata = anatem.dcdu[anatem.dfnt[key]['modelo_fonte'].strip()]
-                regc += f"{barra:>7d} 'REGCA1' '{anatem.dfnt[key]['grupo']}' 1  0.02  99  0.90  0.50  1.20  1.20  0.2  0.05  -1.30  0.02  1.50  99  -99  1 /\n"
-                reec += f"{barra:>7d} 'REECA1' '{anatem.dfnt[key]['grupo']}' 0  0  1  1  0  1  0.85  1.2  0.01  -0.05  0.05  0.8  0.75  -0.75  0  0  0  0  0.05  0.436  -0.436  1.2  0.8  1  10  1  10  0  8  99  -99  1.2  0.04  1.11  0.02  0  0.75  0.2  0.750001  0.5  0.750002  1  0.750003  0.2  1.11  0.5  1.110001  0.75  1.110002  1  1.110003 /\n"
-                repc += f"{barra:>7d} 'REPCA1' '{anatem.dfnt[key]['grupo']}' {barra:>7d}{barra:>7d}  55412  '01'  0  0 0  0.02  18.0  5.00  0.00  0.05  0.70  0.00  0.00  0.00  0.10  -0.10  -0.00333  0.00333  0.436  -0.436  0.00  0.00  0.02  -0.0006  0.0006  999  -999  1  0  0.00  0.00  0.00 /\n"
+                if barra in anarede.dlinDF.de.values:
+                    other_busbar = anarede.dlinDF.loc[anarede.dlinDF.de == barra, "para"].values[0]
+                    circuito = anarede.dlinDF.loc[anarede.dlinDF.de == barra, "circuito"].values[0]
+                elif barra in anarede.dlinDF.para.values:
+                    other_busbar = anarede.dlinDF.loc[anarede.dlinDF.para == barra, "de"].values[0]
+                    circuito = anarede.dlinDF.loc[anarede.dlinDF.para == barra, "circuito"].values[0]
+                regc += f"{barra:>7d} 'REGCA1' '1' 1  0.02  99  0.90  0.50  1.20  1.20  0.2  0.05  -1.30  0.02  1.50  99  -99  1 /\n"
+                reec += f"{barra:>7d} 'REECA1' '1' 0  0  1  1  0  1  0.85  1.2  0.01  -0.05  0.05  0.8  0.75  -0.75  0  0  0  0  0.05  0.436  -0.436  1.2  0.8  1  10  1  10  0  8  99  -99  1.2  0.04  1.11  0.02  0  0.75  0.2  0.750001  0.5  0.750002  1  0.750003  0.2  1.11  0.5  1.110001  0.75  1.110002  1  1.110003 /\n"
+                repc += f"{barra:>7d} 'REPCA1' '1' {barra:>7d} {barra:>7d}  {other_busbar:>7d}  '{circuito:>02d}'  0  0  0  0.02  18.0  5.00  0.00  0.05  0.70  0.00  0.00  0.00  0.10  -0.10  -0.00333  0.00333  0.436  -0.436  0.00  0.00  0.02  -0.0006  0.0006  999  -999  1  0  0.00  0.00  0.00 /\n"
                 torque += (
-                    f"{barra:>7d} 'WTTQA1' '{anatem.dfnt[key]['grupo']}' 1  3.00  0.60  0.05  30  1.20  0.08  0.20  0.69  0.40  0.78  0.60  0.98  0.74  1.20  0 /\n"
-                    if "WT3"
-                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    f"{barra:>7d} 'WTTQA1' '1' 1  3.00  0.60  0.05  30  1.20  0.08  0.20  0.69  0.40  0.78  0.60  0.98  0.74  1.20  0 /\n"
+                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 pitch += (
-                    f"{barra:>7d} 'WTPTA1' '{anatem.dfnt[key]['grupo']}' 5.00  150  30.0  3.00  0.00  0.30  27.0  0.00  10.0  -10.0 /\n"
-                    if "WT3"
-                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    f"{barra:>7d} 'WTPTA1' '1' 5.00  150  30.0  3.00  0.00  0.30  27.0  0.00  10.0  -10.0 /\n"
+                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 aerodynamic += (
-                    f"{barra:>7d} 'WTARA1' '{anatem.dfnt[key]['grupo']}' 0.007  0.00 /\n"
-                    if "WT3"
-                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    f"{barra:>7d} 'WTARA1' '1' 0.007  0.00 /\n"
+                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
                 drivetrain += (
-                    f"{barra:>7d} 'WTDTA1' '{anatem.dfnt[key]['grupo']}' 4.754  0  0.869  37.35  1.5 /\n"
-                    if "WT3"
-                    in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
+                    f"{barra:>7d} 'WTDTA1' '1' 4.754  0  0.869  37.35  1.5 /\n"
+                    if "WT3" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"] or "EOL" in anatem.dcdu[anatem.dfnt[key]["modelo_fonte"].strip()]["nome"]
                     else ""
                 )
         except:

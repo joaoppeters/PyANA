@@ -14,12 +14,11 @@ from pandas import DataFrame as DF
 def dagr(
     anarede,
 ):
-    """inicialização para leitura de dados de agregadores genéricos
+    """leitura de dados de agregadores genéricos
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dagr1["numero"] = list()
     anarede.dagr1["descricao"] = list()
     anarede.dagr1["ndagr2"] = list()
@@ -85,12 +84,11 @@ def dagr(
 def danc(
     anarede,
 ):
-    """inicialização para leitura de dados de alteração do nível de carregamento
+    """leitura de dados de alteração do nível de carregamento
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.danc["area"] = list()
     anarede.danc["fator_carga_ativa"] = list()
     anarede.danc["fator_carga_reativa"] = list()
@@ -136,12 +134,11 @@ def danc(
 def danc_acls(
     anarede,
 ):
-    """inicialização para leitura de dados de alteração do nível de carregamento
+    """leitura de dados de alteração do nível de carregamento
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.danc["tipo_elemento_1"] = list()
     anarede.danc["identificacao_elemento_1"] = list()
     anarede.danc["condicao_elemento_1"] = list()
@@ -244,7 +241,6 @@ def checkdanc(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     if anarede.pwfblock["DANC"]:
         for area in anarede.dancDF["area"].values:
@@ -265,12 +261,11 @@ def checkdanc(
 def dare(
     anarede,
 ):
-    """inicialização para leitura de dados de intercâmbio de potência ativa entre áreas
+    """leitura de dados de intercâmbio de potência ativa entre áreas
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dare["numero"] = list()
     anarede.dare["intercambio_liquido"] = list()
     anarede.dare["nome"] = list()
@@ -323,12 +318,11 @@ def dare(
 def dbar(
     anarede,
 ):
-    """inicialização para leitura de dados de barra
+    """leitura de dados de barra
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dbar["numero"] = list()
     anarede.dbar["operacao"] = list()
     anarede.dbar["estado"] = list()
@@ -521,12 +515,11 @@ def dbar(
 def dbsh(
     anarede,
 ):
-    """inicialização para leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
+    """leitura de dados de bancos de capacitores e/ou reatores individualizados de barras CA ou de linhas de transmissão
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dbsh1["from"] = list()
     anarede.dbsh1["operacao"] = list()
     anarede.dbsh1["to"] = list()
@@ -660,12 +653,11 @@ def dbsh(
 def dcar(
     anarede,
 ):
-    """inicialização para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+    """leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcar["tipo_elemento_1"] = list()
     anarede.dcar["identificacao_elemento_1"] = list()
     anarede.dcar["condicao_elemento_1"] = list()
@@ -768,12 +760,11 @@ def dcar(
 def dcba(
     anarede,
 ):
-    """inicialização para leitura de dados de barra CC
+    """leitura de dados de barra CC
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcba["numero"] = list()
     anarede.dcba["operacao"] = list()
     anarede.dcba["tipo"] = list()
@@ -834,12 +825,11 @@ def dcba(
 def dccv(
     anarede,
 ):
-    """inicialização para leitura de dados de controle de conversores CA/CC
+    """leitura de dados de controle de conversores CA/CC
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dccv["numero"] = list()
     anarede.dccv["operacao"] = list()
     anarede.dccv["folga"] = list()
@@ -943,12 +933,11 @@ def dccv(
 def dcer(
     anarede,
 ):
-    """inicialização para leitura de dados de compensadores estáticos de potência reativa
+    """leitura de dados de compensadores estáticos de potência reativa
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcer["barra"] = list()
     anarede.dcer["operacao"] = list()
     anarede.dcer["grupo_base"] = list()
@@ -1067,12 +1056,11 @@ def dcer(
 def dcli(
     anarede,
 ):
-    """inicialização para leitura de dados de linhas de transmissão CC
+    """leitura de dados de linhas de transmissão CC
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcli["de"] = list()
     anarede.dcli["operacao"] = list()
     anarede.dcli["para"] = list()
@@ -1125,12 +1113,11 @@ def dcli(
 def dcnv(
     anarede,
 ):
-    """inicialização para leitura de dados de conversores CA/CC
+    """leitura de dados de conversores CA/CC
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcnv["numero"] = list()
     anarede.dcnv["operacao"] = list()
     anarede.dcnv["barra_CA"] = list()
@@ -1214,12 +1201,11 @@ def dcnv(
 def dcsc(
     anarede,
 ):
-    """inicialização para leitura de dados de compensador série controlável
+    """leitura de dados de compensador série controlável
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcsc["de"] = list()
     anarede.dcsc["operacao"] = list()
     anarede.dcsc["para"] = list()
@@ -1339,12 +1325,11 @@ def dcsc(
 def dcte(
     anarede,
 ):
-    """inicialização para leitura de dados de constantes
+    """leitura de dados de constantes
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dcte["constante"] = list()
     anarede.dcte["valor_constante"] = list()
 
@@ -1406,12 +1391,11 @@ def dcte(
 def dctg(
     anarede,
 ):
-    """inicialização para leitura de lista de casos de contingência
+    """leitura de lista de casos de contingência
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dctg1["identificacao"] = list()
     anarede.dctg1["operacao"] = list()
     anarede.dctg1["prioridade"] = list()
@@ -1535,12 +1519,11 @@ def dctg(
 def dctr(
     anarede,
 ):
-    """inicialização para leitura de dados complementares de transformadores
+    """leitura de dados complementares de transformadores
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dctr["de"] = list()
     anarede.dctr["operacao"] = list()
     anarede.dctr["para"] = list()
@@ -1617,12 +1600,11 @@ def dctr(
 def delo(
     anarede,
 ):
-    """inicialização para leitura de dados de elo CC
+    """leitura de dados de elo CC
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.delo["numero"] = list()
     anarede.delo["operacao"] = list()
     anarede.delo["tensao"] = list()
@@ -1672,12 +1654,11 @@ def delo(
 def dgbt(
     anarede,
 ):
-    """inicialização para leitura de dados de grupos de base de tensão de barras CA
+    """leitura de dados de grupos de base de tensão de barras CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dgbt["grupo"] = list()
     anarede.dgbt["tensao"] = list()
 
@@ -1716,12 +1697,11 @@ def dgbt(
 def dger(
     anarede,
 ):
-    """inicialização para leitura de dados de geradores
+    """leitura de dados de geradores
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dger["numero"] = list()
     anarede.dger["operacao"] = list()
     anarede.dger["potencia_ativa_minima"] = list()
@@ -1834,12 +1814,11 @@ def dger(
 def dglt(
     anarede,
 ):
-    """inicialização para leitura de dados de grupos de limites de tensão
+    """leitura de dados de grupos de limites de tensão
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dglt["grupo_limite_tensao"] = list()
     anarede.dglt["limite_minimo"] = list()
     anarede.dglt["limite_maximo"] = list()
@@ -1908,12 +1887,11 @@ def dglt(
 def dinc(
     anarede,
 ):
-    """inicialização para leitura de dados de incremento do nível de carregamento
+    """leitura de dados de incremento do nível de carregamento
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dinc["tipo_incremento_1"] = list()
     anarede.dinc["identificacao_incremento_1"] = list()
     anarede.dinc["condicao_incremento_1"] = list()
@@ -2044,12 +2022,11 @@ def dinc(
 def dinj(
     anarede,
 ):
-    """inicialização para leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
+    """leitura de dados de injeções de potências, shunts e fatores de participação de geração do modelo equivalente
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dinj["numero"] = list()
     anarede.dinj["operacao"] = list()
     anarede.dinj["injecao_ativa_eq"] = list()
@@ -2128,12 +2105,11 @@ def dinj(
 def dlin(
     anarede,
 ):
-    """inicialização para leitura de dados de linha de transmissão CA
+    """leitura de dados de linha de transmissão CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dlin["de"] = list()
     anarede.dlin["abertura_de"] = list()
     anarede.dlin["operacao"] = list()
@@ -2301,12 +2277,11 @@ def dlin(
 def dmet(
     anarede,
 ):
-    """inicialização para leitura de dados de monitoração para estabilidade de tensão em barra CA
+    """leitura de dados de monitoração para estabilidade de tensão em barra CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dmte["tipo_elemento_1"] = list()
     anarede.dmte["identificacao_elemento_1"] = list()
     anarede.dmte["condicao_elemento_1"] = list()
@@ -2390,12 +2365,11 @@ def dmet(
 def dmfl(
     anarede,
 ):
-    """inicialização para leitura de dados de monitoração de fluxo em circuito CA
+    """leitura de dados de monitoração de fluxo em circuito CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dmfl["tipo_elemento_1"] = list()
     anarede.dmfl["identificacao_elemento_1"] = list()
     anarede.dmfl["condicao_elemento_1"] = list()
@@ -2482,12 +2456,11 @@ def dmfl(
 def dmfl_circ(
     anarede,
 ):
-    """inicialização para leitura de dados de monitoração de fluxo em circuito CA
+    """leitura de dados de monitoração de fluxo em circuito CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dmfl["de"] = list()
     anarede.dmfl["para"] = list()
     anarede.dmfl["circuito"] = list()
@@ -2548,12 +2521,11 @@ def dmfl_circ(
 def dmte(
     anarede,
 ):
-    """inicialização para leitura de dados de monitoração de tensão em barra CA
+    """leitura de dados de monitoração de tensão em barra CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dmte["tipo_elemento_1"] = list()
     anarede.dmte["identificacao_elemento_1"] = list()
     anarede.dmte["condicao_elemento_1"] = list()
@@ -2640,12 +2612,11 @@ def dmte(
 def dopc(
     anarede,
 ):
-    """inicialização para leitura de dados de código de opções de controle e execução padrão
+    """leitura de dados de código de opções de controle e execução padrão
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dopc["opcao"] = list()
     anarede.dopc["padrao"] = list()
 
@@ -2707,12 +2678,11 @@ def dopc(
 def dshl(
     anarede,
 ):
-    """inicialização para leitura de dados de dispositivos shunt de circuito CA
+    """leitura de dados de dispositivos shunt de circuito CA
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dshl["from"] = list()
     anarede.dshl["operacao"] = list()
     anarede.dshl["to"] = list()
@@ -2768,12 +2738,11 @@ def dshl(
 def dtpf(
     anarede,
 ):
-    """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+    """leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dtpf["tipo_elemento_1"] = list()
     anarede.dtpf["identificacao_elemento_1"] = list()
     anarede.dtpf["condicao_elemento_1"] = list()
@@ -2860,12 +2829,11 @@ def dtpf(
 def dtpf_circ(
     anarede,
 ):
-    """inicialização para leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
+    """leitura de dados de fixação na aplicação do controle de tensão por variação automática de tap
 
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dtpf["de"] = list()
     anarede.dtpf["para"] = list()
     anarede.dtpf["circuito"] = list()

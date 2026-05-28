@@ -18,7 +18,6 @@ def increment(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     preincrement = sum(anarede.dbarDF["demanda_ativa"].to_numpy())
 

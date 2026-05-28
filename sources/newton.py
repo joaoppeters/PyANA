@@ -29,7 +29,6 @@ def newton(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável para armazenamento de solução
     anarede.solution = {
         "system": anarede.name,

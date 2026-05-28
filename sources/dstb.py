@@ -14,15 +14,112 @@ from pandas import DataFrame as DF
 DEFAULT = ""
 
 
+def acdu(
+    anatem,
+):
+    """leitura de dados de associacao de topologias a controladores definidos pelo usuario
+    
+    Args
+        anatem:
+    """
+    anatem.acdu["dcdu"] = list()
+    anatem.acdu["dtdu"] = list()
+    anatem.acdu["nome"] = list()
+    
+    while (
+        0 <= anatem.linecount < len(anatem.lines)
+        and anatem.lines[anatem.linecount].strip() not in anatem.end_block
+    ):
+        line = anatem.lines[anatem.linecount].rstrip("\n")
+
+        # linha em branco
+        if line == "" or line[0] == anatem.comment:
+            anatem.linecount += 1
+            continue
+
+        # bloco interno
+        while (
+            0 <= anatem.linecount < len(anatem.lines)
+            and anatem.lines[anatem.linecount].strip() != "FIMCDU"
+        ):
+            line = anatem.lines[anatem.linecount].rstrip("\n")
+
+            # comentário ou linha vazia dentro do bloco
+            if line == "" or line[0] == anatem.comment:
+                anatem.linecount += 1
+                continue
+
+            prev_line = (
+                anatem.lines[anatem.linecount - 1] if anatem.linecount > 0 else ""
+            )
+
+            # ncdu
+            if prev_line[:].strip() in anatem.acdu.get("ruler", ""):
+                ncdu = safe_slice(line, 0, 6).strip()
+                ntop = safe_slice(line, 7, 13).strip()
+
+                anatem.dcdu[ncdu] = {
+                    "nome": safe_slice(line, 14, 26),
+                    "defpar": [],
+                    "defpar_nome": [],
+                    "defpar_valor": [],
+                }
+
+            # DEFPAR
+            elif prev_line[:] in anatem.dcdu.get("defpar_ruler", "") or (
+                line.split() and line.split()[0] == "DEFPAR"
+            ):
+
+                anatem.dcdu[ncdu]["defpar"].append(safe_slice(line, 0, 6).strip())
+                anatem.dcdu[ncdu]["defpar_nome"].append(safe_slice(line, 7, 13).strip())
+                anatem.dcdu[ncdu]["defpar_valor"].append(
+                    safe_slice(line, 14, 32).strip()
+                )
+
+            anatem.linecount += 1
+
+        # FIMCDU
+        fim_line = anatem.lines[anatem.linecount].rstrip("\n")
+        keys2copy = [
+            "bloco_numero",
+            "bloco_inicializacao",
+            "bloco_tipo",
+            "bloco_omitir",
+            "bloco_subtipo",
+            "bloco_sinal",
+            "bloco_entrada",
+            "bloco_saida",
+            "bloco_parametro1",
+            "bloco_parametro2",
+            "bloco_parametro3",
+            "bloco_parametro4",
+            "bloco_limite_minimo",
+            "bloco_limite_maximo",
+            "defval",
+            "defval_subtipo",
+            "defval_variavel",
+            "defval_parametro_d1",
+            "defval_exclusao",
+            "defval_parametro_d2"
+        ]
+        anatem.dcdu[ncdu].update({k: anatem.dcdu[ntop][k] for k in keys2copy})
+
+        anatem.linecount += 1
+        if anatem.linecount >= len(anatem.lines):
+            break
+
+    
+
+
+
 def darq(
     anatem,
 ):
-    """inicialização para leitura de dados de entrada e saida de arquivos
+    """leitura de dados de entrada e saida de arquivos
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.darq["tipo"] = list()
     anatem.darq["c"] = list()
     anatem.darq["nome"] = list()
@@ -60,12 +157,11 @@ def darq(
 def dcar(
     anatem,
 ):
-    """inicialização para leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
+    """leitura de Args A, B, C e D que estabelecem a curva de variação de carga em relação a magnitude de tensão nas barras
 
     Args
         anatem:
     """
-    ## Inicialização (mantive sua estrutura)
     anatem.dcar["tipo_elemento_1"] = list()
     anatem.dcar["identificacao_elemento_1"] = list()
     anatem.dcar["condicao_elemento_1"] = list()
@@ -125,7 +221,6 @@ def dcdu(
     Args
         anatem:
     """
-    ## Inicialização
     if not hasattr(anatem, "dcdu_raw"):
         anatem.dcdu_raw = []
 
@@ -324,12 +419,11 @@ def dcdu(
 def dcst(
     anatem,
 ):
-    """inicialização para leitura de dados de constantes
+    """leitura de dados de constantes
 
     Args
         anatem:
     """
-    ## Inicialização
     # proteção: evita erro se linecount estiver fora do intervalo
     while (
         0 <= anatem.linecount < len(anatem.lines)
@@ -364,12 +458,11 @@ def dcst(
 def dcte(
     anatem,
 ):
-    """inicialização para leitura de dados de constantes
+    """leitura de dados de constantes
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.dcte["constante"] = list()
     anatem.dcte["valor_constante"] = list()
 
@@ -422,12 +515,11 @@ def dcte(
 def devt(
     anatem,
 ):
-    """inicialização para leitura de dados de eventos
+    """leitura de dados de eventos
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.devt["tipo"] = list()
     anatem.devt["tempo"] = list()
     anatem.devt["elemento"] = list()
@@ -515,12 +607,11 @@ def devt(
 def dfnt(
     anatem,
 ):
-    """inicialização para leitura de dados de fontes shunt controladas
+    """leitura de dados de fontes shunt controladas
 
     Args
         anatem:
     """
-    ## Inicialização
     innit = False
     # loop protegido
     while (
@@ -562,12 +653,11 @@ def dfnt(
 def dger(
     anatem,
 ):
-    """inicialização para leitura de dados de alteração do nível de carregamento
+    """leitura de dados de alteração do nível de carregamento
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.dger["tipo_elemento_1"] = list()
     anatem.dger["identificacao_elemento_1"] = list()
     anatem.dger["condicao_1"] = list()
@@ -632,12 +722,11 @@ def dger(
 def dmaq(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de máquinas síncronas
+    """leitura de dados de modelos predefinidos de máquinas síncronas
 
     Args
         anatem:
     """
-    ## Inicialização
     innit = False
     # loop protegido
     while (
@@ -688,12 +777,11 @@ def dmaq(
 def dmdgmd01(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de máquina síncrona - modelo clássico
+    """leitura de dados de modelos predefinidos de máquina síncrona - modelo clássico
 
     Args
         anatem:
     """
-    ## Inicialização
     # loop protegido
     while (
         0 <= anatem.linecount < len(anatem.lines)
@@ -731,12 +819,11 @@ def dmdgmd01(
 def dmdgmd02(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de máquina síncrona - MD02
+    """leitura de dados de modelos predefinidos de máquina síncrona - MD02
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -785,12 +872,11 @@ def dmdgmd02(
 def dmdgmd03(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de máquina síncrona - MD03
+    """leitura de dados de modelos predefinidos de máquina síncrona - MD03
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -839,12 +925,11 @@ def dmdgmd03(
 def dopc(
     anatem,
 ):
-    """inicialização para leitura de dados de código de opções de controle e execução padrão
+    """leitura de dados de código de opções de controle e execução padrão
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.dopc["opcao"] = list()
     anatem.dopc["padrao"] = list()
 
@@ -916,12 +1001,11 @@ def dopc(
 def drgvmd01(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md01
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md01
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -960,12 +1044,11 @@ def drgvmd01(
 def drgvmd02(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md02
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md02
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -998,12 +1081,11 @@ def drgvmd02(
 def drgvmd03(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md03
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md03
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -1038,12 +1120,11 @@ def drgvmd03(
 def drgvmd04(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md04
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md04
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -1089,12 +1170,11 @@ def drgvmd04(
 def drgvmd05(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md05
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md05
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -1129,12 +1209,11 @@ def drgvmd05(
 def drgvmd06(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md06
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md06
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -1188,12 +1267,11 @@ def drgvmd06(
 def drgvmd07(
     anatem,
 ):
-    """inicialização para leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md07
+    """leitura de dados de modelos predefinidos de reguladores de velocidade - modelo md07
 
     Args
         anatem:
     """
-    ## Inicialização
     while (
         0 <= anatem.linecount < len(anatem.lines)
         and anatem.lines[anatem.linecount].strip() not in anatem.end_block
@@ -1241,12 +1319,11 @@ def drgvmd07(
 def dsim(
     anatem,
 ):
-    """inicialização para leitura de dados de controle de simulação
+    """leitura de dados de controle de simulação
 
     Args
         anatem:
     """
-    ## Inicialização
     anatem.dsim["tmax"] = list()
     anatem.dsim["step"] = list()
     anatem.dsim["plot"] = list()

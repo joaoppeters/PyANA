@@ -17,7 +17,6 @@ def postflow(
     Args
         anatem:
     """
-    ## Inicialização
     Ya = zeros([anatem.nger, anatem.nger], dtype=complex)
     Yb = zeros([anatem.nger, anatem.nbus], dtype=complex)
     Yd = zeros([anatem.nbus, anatem.nbus], dtype=complex)
@@ -68,7 +67,6 @@ def md01(
         gen: indice do gerador
         dmdg: informacoes obtidas do dmdgDF
     """
-    ## Inicialização
     anatem.generator[gen].append("MD01")
     anatem.generator[gen].append(
         dmdg["inercia"].values[0] / (pi * anatem.options["FBSE"])

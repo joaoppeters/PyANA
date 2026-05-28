@@ -26,7 +26,6 @@ def poc(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável para armazenamento de solução
     anarede.solution.update(
         {
@@ -133,7 +132,6 @@ def expansion(
     Args
         anarede:
     """
-    ## Inicialização
     anarede.dtf = vstack(
         (anarede.solution["demanda_ativa"], anarede.solution["demanda_reativa"])
     )

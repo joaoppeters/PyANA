@@ -18,9 +18,6 @@ def rdarq(
     Args
         anatem:
     """
-    ## Inicialização
-    anatem.cdcdu = dict()
-    anatem.dcdu = dict()
     pathdarq(
         anatem,
     )
@@ -37,7 +34,6 @@ def rblt(
         anatem:
         arquivo:
     """
-    ## Inicialização
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")
@@ -160,7 +156,6 @@ def rcdu(
         anatem:
         arquivo:
     """
-    ## Inicialização
     # Variáveis
     anatem.linecount = 0
 
@@ -172,16 +167,18 @@ def rcdu(
     while anatem.lines[anatem.linecount].strip() != anatem.end_archive:
         if anatem.lines[anatem.linecount].strip()[:4] == "DCDU":
             anatem.linecount += 1
-            anatem.dcdu["dctg"] = anatem.lines[anatem.linecount - 1][:]
-            anatem.dcdu["ncdu_ruler"] = (
-                "(ncdu) ( nome cdu )\n",
-                "( nc ) ( nome cdu )\n",
-            )
-            anatem.dcdu["defpar_ruler"] = "(EFPAR (nome) (     valor      )\n"
-            anatem.dcdu["bloco_ruler"] = (
-                "(nb)i(tipo)o(stip)s(vent) (vsai) ( p1 )( p2 )( p3 )( p4 ) (vmin) (vmax)\n"
-            )
-            anatem.dcdu["defval_ruler"] = "(EFVAL (stip) (vdef) ( d1 )o( d2 )\n"
+            if not hasattr(anatem, "dcdu"):
+                anatem.dcdu = dict()
+                anatem.dcdu["dctg"] = anatem.lines[anatem.linecount - 1][:]
+                anatem.dcdu["ncdu_ruler"] = (
+                    "(ncdu) ( nome cdu )\n",
+                    "( nc ) ( nome cdu )\n",
+                )
+                anatem.dcdu["defpar_ruler"] = "(EFPAR (nome) (     valor      )\n"
+                anatem.dcdu["bloco_ruler"] = (
+                    "(nb)i(tipo)o(stip)s(vent) (vsai) ( p1 )( p2 )( p3 )( p4 ) (vmin) (vmax)\n"
+                )
+                anatem.dcdu["defval_ruler"] = "(EFVAL (stip) (vdef) ( d1 )o( d2 )\n"
             dcdu(
                 anatem,
             )
@@ -201,7 +198,6 @@ def rdat(
         anatem:
         arquivo:
     """
-    ## Inicialização
     anatem.linecount = 0
 
     f = open(f"{arquivo}", "r", encoding="latin-1")
@@ -244,6 +240,59 @@ def rdat(
             dfnt(
                 anatem,
             )
+        elif anatem.lines[anatem.linecount].strip()[:4] == "DCDU":
+            anatem.linecount += 1
+            if not hasattr(anatem, "dcdu"):
+                anatem.dcdu = dict()
+                anatem.dcdu["dctg"] = anatem.lines[anatem.linecount - 1][:]
+                anatem.dcdu["ncdu_ruler"] = (
+                    "(ncdu) ( nome cdu )\n",
+                    "( nc ) ( nome cdu )\n",
+                )
+                anatem.dcdu["defpar_ruler"] = "(EFPAR (nome) (     valor      )\n"
+                anatem.dcdu["bloco_ruler"] = (
+                    "(nb)i(tipo)o(stip)s(vent) (vsai) ( p1 )( p2 )( p3 )( p4 ) (vmin) (vmax)\n"
+                )
+                anatem.dcdu["defval_ruler"] = "(EFVAL (stip) (vdef) ( d1 )o( d2 )\n"
+            dcdu(
+                anatem,
+            )
+
+        elif anatem.lines[anatem.linecount].strip()[:4] == "DTDU":
+            anatem.linecount += 1
+            if not hasattr(anatem, "dtdu"):
+                anatem.dtdu = dict()
+                anatem.dtdu["ruler"] = (
+                    "(ntop) ( nome cdu )\n",
+                    "(ntop) ( nome topo)\n",
+                )
+                anatem.dtdu["defpar_ruler"] = "(EFTDU (nome) (     valor      )\n"
+                anatem.dtdu["bloco_ruler"] = (
+                    "(nb)i(tipo)o(stip)s(vent) (vsai) ( p1 )( p2 )( p3 )( p4 ) (vmin) (vmax)\n"
+                )
+                anatem.dtdu["defval_ruler"] = "(EFTDUVAL (stip) (vdef) ( d1 )o( d2 )\n"
+                anatem.dcdu["ncdu_ruler"] += (
+                    "(ntop) ( nome cdu )\n",
+                    "(ntop) ( nome topo)\n",
+                    "(ntop) ( nome cdu ) \n",
+                    "(ntop) ( nome topo) \n",
+                )
+            dcdu(
+                anatem,
+            )
+
+        elif anatem.lines[anatem.linecount].strip()[:4] == "ACDU":
+            anatem.linecount += 1
+            if not hasattr(anatem, "acdu"):
+                anatem.acdu = dict()
+                anatem.acdu["ruler"] = (
+                    "(ncdu) (ntop) ( nome cdu )",
+                )
+                anatem.acdu["defpar_ruler"] = "(EFPAR (nome) (     valor      )\n"
+            acdu(
+                anatem,
+            )
+            
         anatem.linecount += 1
 
     print(f"\033[32mSucesso na leitura de arquivo `{nome}`!\033[0m")

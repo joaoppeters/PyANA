@@ -20,7 +20,6 @@ def loading(
     Args
         anarede:
     """
-    ## Inicialização
     # Criação automática de diretório
     continuationfolder(
         anarede,
@@ -48,7 +47,6 @@ def var(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     anarede.pqtv = {}
     anarede.MW = array([])
@@ -296,7 +294,6 @@ def pqvt(
     Args
         anarede:
     """
-    ## Inicialização
     # Geração de Gráfico
     color = 0
     for key, item in anarede.pqtv.items():
@@ -399,7 +396,6 @@ def ruthe(
     Args
         anarede:
     """
-    ## Inicialização
     # Variáveis
     rows = list(anarede.operationpoint.keys())[-1]
     cols = sum(anarede.mask)

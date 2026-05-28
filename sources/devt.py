@@ -16,7 +16,6 @@ def apcb(
     Args
         anatem:
     """
-    ## Inicialização
     anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
     busidx = anatem.devtDF.iloc[idx].elemento - 1
     anatem.Yblc[anatem.nger + busidx, :] = 0
@@ -33,7 +32,6 @@ def rmgr(
     Args
         anatem:
     """
-    ## Inicialização
     pass
     anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
 
@@ -47,7 +45,6 @@ def abci(
     Args
         anatem:
     """
-    ## Inicialização
     anatem.solution["eventname"] += str(anatem.devtDF.iloc[idx].elemento)
     de = anatem.devtDF.iloc[idx].elemento - 1
     para = anatem.devtDF.iloc[idx].para - 1

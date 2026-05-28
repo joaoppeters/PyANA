@@ -18,7 +18,6 @@ def optionspwf(
     Args
         anarede:
     """
-    ## Inicialização
     anarede.cte = dict(
         {
             "SBSE": 100.0,  # base de potência para o sistema CA
@@ -406,7 +405,6 @@ def optionsstb(
     Args
         anatem:
     """
-    ## Inicialização
     anatem.cte = dict(
         {
             "TETE": 1e-6,

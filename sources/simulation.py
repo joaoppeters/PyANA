@@ -15,7 +15,6 @@ def exlf(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     from matrices import admittance
     from newton import newton
     from report import reportfile
@@ -43,7 +42,6 @@ def exic(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
 
     from matrices import admittance
     from continuation import prediction_correction
@@ -76,7 +74,6 @@ def expc(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     from matrices import admittance
     from newton import newton
     from poc import poc
@@ -109,7 +106,6 @@ def exsi(
         anarede: objeto da classe PowerFlowContainer
         anatem: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     from matrices import admittance
     from dynamic import dynamic
     from newton import newton
@@ -147,11 +143,10 @@ def exct(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     from matrices import admittance
     from newton import newton
     from report import reportfile
-    
+
     trueDLIN = anarede.dlinDF.copy()
     anarede.exct = dict()
     # anarede.exct["convergente"] = list()
@@ -165,9 +160,7 @@ def exct(
         )
         anarede.nlin -= 1
         for idx, value in anarede.dlinDF.iterrows():
-            print(
-                f"Simulando contingência do circuito {value.de} - {value.para}..."
-            )
+            print(f"Simulando contingência do circuito {value.de} - {value.para}...")
             anarede.dlinDF = anarede.dlinDF.drop(idx)
             admittance(
                 anarede,

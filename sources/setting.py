@@ -20,7 +20,6 @@ def pwfsetting(
     Args
         anarede:  objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     # Verificação de diretório
     pathpwf(
         anarede,
@@ -48,7 +47,6 @@ def stbsetting(
         anarede: objeto da classe PowerFlowContainer
         anatem:  objeto da classe PowerFlowContainer
     """
-    ## Inicialização
     # Verificação de diretório
     pathstb(
         anarede,

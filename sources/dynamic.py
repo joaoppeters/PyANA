@@ -40,7 +40,6 @@ def dynamic(
     Args
         anatem:
     """
-    ## Inicialização
     # Variável para armazenamento de solução
     anatem.solution.update(
         {
@@ -166,7 +165,6 @@ def timenewt(
     Args
         anatem:
     """
-    ## Inicialização
     anatem.solution["iter"] = 0
     anatem.deltagen = zeros((2 * (2 * anatem.nger + anatem.nbus)))
 
@@ -237,7 +235,6 @@ def timeplot(
         anatem:
         y:
     """
-    ## Inicialização
     # savetxt(anatem.maindir + "\\sistemas\\" + anatem.name + anatem.solution["eventname"] + '.txt', y, fmt='%.4f')
 
     linestyles = [

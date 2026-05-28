@@ -25,7 +25,6 @@ def ctrlsol(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     if not hasattr(anarede, "ctrlcount"):
         anarede.ctrlcount = 0
@@ -112,7 +111,6 @@ def ctrlsch(
     Args
         anarede:
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -168,7 +166,6 @@ def ctrlres(
         case: caso analisado do fluxo de potência continuado (prev + corr)
             valor padrão igual a zero -> Newton-Raphson
     """
-    ## Inicialização
     # Variável
     anarede.deltaY = array([])
 
@@ -230,7 +227,6 @@ def ctrljac(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     anarede.truedim = deepcopy(anarede.jacobian.shape[0])
 
@@ -299,7 +295,6 @@ def ctrlupdt(
     Args
         anarede:
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -354,7 +349,6 @@ def ctrlcorrsol(
         anarede:
         case: caso analisado do fluxo de potência continuado (prev + corr)
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -412,7 +406,6 @@ def ctrlheuristics(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     anarede.ctrlheur = False
     if not hasattr(anarede, "bifurcation"):
@@ -474,7 +467,6 @@ def ctrlpop(
         anarede:
         pop: quantidade de ações necessárias
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -517,7 +509,6 @@ def ctrlcpf(
     Args
         anarede:
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -564,7 +555,6 @@ def ctrlsolcpf(
         anarede:
         case: etapa do fluxo de potência continuado analisada
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # controle remoto de tensão
@@ -613,7 +603,6 @@ def ctrldelta(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável
     boollist = list()
     ctrl = 0
@@ -685,7 +674,6 @@ def ctrlhess(
     Args
         anarede:
     """
-    ## Inicialização
     # Loop
     for value in anarede.ctrl:
         # Dimensão

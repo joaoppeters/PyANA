@@ -21,7 +21,6 @@ def linear(
     Args
         anarede:
     """
-    ## Inicialização
     # Variável para armazenamento de solução
     anarede.ctrlcount = 0
     anarede.solution = {
@@ -77,7 +76,6 @@ def residue(
 ):
     """cálculo de resíduos das equações diferenciáveis"""
 
-    ## Inicialização
     # Vetores de resíduo
     anarede.deltaP = zeros(anarede.nbus)
     anarede.deltaQ = zeros(anarede.nbus)
@@ -91,7 +89,6 @@ def convergence(
     Args
         anarede:
     """
-    ## Inicialização
     # Trajetória de convergência da frequência
     anarede.solution["freq"] = append(anarede.solution["freq"], 0.0)
 

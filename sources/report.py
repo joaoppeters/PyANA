@@ -49,7 +49,7 @@ def reportfile(
             file,
             anarede,
         )
-    
+
     elif anarede.method == "EXCT":
         RXCT(
             file,
@@ -119,7 +119,6 @@ def rheader(
     Args
         anarede:
     """
-    ## Inicialização
     file.write(
         "{} {}, {}".format(
             dt.now().strftime("%B"),
@@ -178,7 +177,6 @@ def RCNV(
     Args
         anarede:
     """
-    ## Inicialização
     file.write("vv relatorio de convergencia vv")
     if anarede.method != "LINEAR":
         file.write("\n\n")
@@ -271,7 +269,6 @@ def RBAR(
     Args
         anarede:
     """
-    ## Inicialização
     # Loop por area
     for area in anarede.dbarDF["area"].unique():
         file.write("vv relatorio de barras vv area {} vv".format(area))
@@ -324,7 +321,6 @@ def RLIN(
     Args
         anarede:
     """
-    ## Inicialização
     file.write("vv relatorio de linhas vv")
     file.write("\n\n")
     file.write(
@@ -410,7 +406,6 @@ def RGER(
     Args
         anarede:
     """
-    ## Inicialização
     pass
 
 
@@ -423,7 +418,6 @@ def RSVC(
     Args
         anarede:
     """
-    ## Inicialização
     file.write("vv relatorio de compensadores estaticos de potencia reativa vv")
     file.write("\n\n")
     if (anarede.dcerDF["controle"][0] == "A") or (anarede.dcerDF["controle"][0] == "P"):
@@ -541,7 +535,6 @@ def exiconv(
     Args
         anarede:
     """
-    ## Inicialização
     var = False
     file.write("vv relatorio de execucao do fluxo de potencia continuado vv")
     file.write("\n\n")
@@ -642,7 +635,6 @@ def tobecontinued(
     Args
         anarede:
     """
-    ## Inicialização
     var = False
 
     # Manipulacao
@@ -1184,7 +1176,6 @@ def RXPC(
     Args
         anarede:
     """
-    ## Inicialização
     file.write("vv relatorio de convergencia vv")
     file.write("\n\n")
     file.write(" * * * * " + anarede.solution["convergence"] + " * * * * ")
@@ -1207,7 +1198,6 @@ def RXCT(
         file:
         anarede:
     """
-    ## Inicialização
     convergente = list()
     divergente = list()
     for key, value in anarede.exct.items():
@@ -1227,7 +1217,7 @@ def RXCT(
         file.write("\n")
         file.write("-" * 71)
         file.write("\n")
-    
+
         file.write(
             f"| {value['iter']:^4d} | {value['freqiter'][-1]:^6.3f} | {value['convP'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busP'][-1]]:^5d} | {value['convQ'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busQ'][-1]]:^5d} | {value['convY'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busY'][-1]]:^5d} |"
         )
@@ -1251,5 +1241,3 @@ def RXCT(
     for c in divergente:
         file.write(c)
         file.write("\n")
-
-    

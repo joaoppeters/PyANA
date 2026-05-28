@@ -18,7 +18,6 @@ def lineflow(
     Args
         anarede:
     """
-    ## Inicialização
     anarede.solution.update(
         {
             "active_flow_F2": zeros(anarede.nlin),
