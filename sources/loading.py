@@ -20,8 +20,12 @@ def loading(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Criacao automatica de diretorio
+=======
+    # Criação automática de diretório
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     continuationfolder(
         anarede,
     )
@@ -48,8 +52,12 @@ def var(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel
+=======
+    # Variável
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.pqtv = {}
     anarede.MW = array([])
     anarede.MVAr = array([])
@@ -296,8 +304,12 @@ def pqvt(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Geracao de Grafico
+=======
+    # Geração de Gráfico
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     color = 0
     for key, item in anarede.pqtv.items():
         if (key[:5] != "Vprev") and (key[:5] != "Tprev"):
@@ -399,8 +411,12 @@ def ruthe(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variaveis
+=======
+    # Variáveis
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     rows = list(anarede.operationpoint.keys())[-1]
     cols = sum(anarede.mask)
     colsP = sum(anarede.maskP)

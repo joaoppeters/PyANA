@@ -19,7 +19,10 @@ def rwpwf(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Arquivo
     anarede.filedir = realpath(
         folder + "\\" + anarede.namecase + "{}.pwf".format(anarede.ones)
@@ -249,7 +252,10 @@ def wheader(
     Args
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("(")
     file.write("\n")
     file.write("( Modificacao Automatica de Dados .PWF")
@@ -281,7 +287,10 @@ def wtitu(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(titu["titu"]))
     file.write(format(titu["ruler"]))
 
@@ -298,7 +307,10 @@ def wdagr(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     agr = 0
     file.write(format(dagr.dagr.iloc[0]))
     for idx, value in dagr1.iterrows():
@@ -328,7 +340,10 @@ def wdanc(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(danc.danc.iloc[0]))
     file.write(format(danc.ruler.iloc[0]))
     if "ACLS" in danc.danc:
@@ -353,7 +368,10 @@ def wdanc_acls(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(danc.danc.iloc[0]))
     file.write(format(danc.ruler.iloc[0]))
     for idx, value in danc.iterrows():
@@ -375,7 +393,10 @@ def wdare(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dare.dare.iloc[0]))
     file.write(format(dare.ruler.iloc[0]))
     for idx, value in dare.iterrows():
@@ -397,7 +418,10 @@ def wdbar(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dbar.dbar.iloc[0]))
     file.write(format(dbar.ruler_x.iloc[0]))
     for idx, value in dbar.iterrows():
@@ -433,7 +457,10 @@ def wdbsh(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     bsh = 0
     file.write(format(dbsh["dbsh"]))
     for idx1, value in dbsh1.iterrows():
@@ -465,7 +492,10 @@ def wdcar(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcar.dcar.iloc[0]))
     file.write(format(dcar.ruler.iloc[0]))
     for idx, value in dcar.iterrows():
@@ -487,7 +517,10 @@ def wdcba(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcba.dcba.iloc[0]))
     file.write(format(dcba.ruler.iloc[0]))
     for idx, value in dcba.iterrows():
@@ -509,7 +542,10 @@ def wdccv(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dccv.dccv.iloc[0]))
     file.write(format(dccv.ruler.iloc[0]))
     for idx, value in dccv.iterrows():
@@ -531,7 +567,10 @@ def wdcer(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcer.dcer.iloc[0]))
     file.write(format(dcer.ruler.iloc[0]))
     for idx, value in dcer.iterrows():
@@ -553,7 +592,10 @@ def wdcli(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcli.dcli.iloc[0]))
     file.write(format(dcli.ruler.iloc[0]))
     for idx, value in dcli.iterrows():
@@ -575,7 +617,10 @@ def wdcnv(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcnv.dcnv.iloc[0]))
     file.write(format(dcnv.ruler.iloc[0]))
     for idx, value in dcnv.iterrows():
@@ -597,7 +642,10 @@ def wdcsc(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcsc.dcsc.iloc[0]))
     file.write(format(dcsc.ruler.iloc[0]))
     for idx, value in dcsc.iterrows():
@@ -619,7 +667,10 @@ def wdcte(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dcte.dcte.iloc[0]))
     file.write(format(dcte.ruler.iloc[0]))
     for idx, value in dcte.iterrows():
@@ -644,7 +695,10 @@ def wdctg(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     ctg = 0
     file.write(format(dctg["dctg"]))
     for idx1, value in dctg1.iterrows():
@@ -676,7 +730,10 @@ def wdctr(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dctr.dctr.iloc[0]))
     file.write(format(dctr.ruler.iloc[0]))
     for idx, value in dctr.iterrows():
@@ -698,7 +755,10 @@ def wdelo(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(delo.delo.iloc[0]))
     file.write(format(delo.ruler.iloc[0]))
     for idx, value in delo.iterrows():
@@ -720,7 +780,10 @@ def wdgbt(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dgbt.dgbt.iloc[0]))
     file.write(format(dgbt.ruler.iloc[0]))
     for idx, value in dgbt.iterrows():
@@ -741,7 +804,10 @@ def wdger(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dger.dger.iloc[0]))
     file.write(format(dger.ruler.iloc[0]))
     for idx, value in dger.iterrows():
@@ -763,7 +829,10 @@ def wdglt(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dglt.dglt.iloc[0]))
     file.write(format(dglt.ruler.iloc[0]))
     for idx, value in dglt.iterrows():
@@ -785,7 +854,10 @@ def wdinc(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dinc.dinc.iloc[0]))
     file.write(format(dinc.ruler.iloc[0]))
     for idx, value in dinc.iterrows():
@@ -807,7 +879,10 @@ def wdinj(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dinj.dinj.iloc[0]))
     file.write(format(dinj.ruler.iloc[0]))
     for idx, value in dinj.iterrows():
@@ -829,7 +904,10 @@ def wdlin(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dlin.dlin.iloc[0]))
     file.write(format(dlin.ruler.iloc[0]))
     for idx, value in dlin.iterrows():
@@ -851,7 +929,10 @@ def wdmet(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dmet.dmet.iloc[0]))
     file.write(format(dmet.ruler.iloc[0]))
     for idx, value in dmet.iterrows():
@@ -873,7 +954,10 @@ def wdmfl(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
     for idx, value in dmfl.iterrows():
@@ -895,7 +979,10 @@ def wdmfl_circ(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dmfl.dmfl.iloc[0]))
     file.write(format(dmfl.ruler.iloc[0]))
     for idx, value in dmfl.iterrows():
@@ -920,7 +1007,10 @@ def wdmte(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dmte.dmte.iloc[0]))
     file.write(format(dmte.ruler.iloc[0]))
 
@@ -944,7 +1034,10 @@ def wdopc(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dopc.dopc.iloc[0]))
     file.write(format(dopc.ruler.iloc[0]))
     for idx, value in dopcDF.iterrows():
@@ -969,7 +1062,10 @@ def wdshl(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dshl.dshl.iloc[0]))
     file.write(format(dshl.ruler.iloc[0]))
     for idx, value in dshl.iterrows():
@@ -991,7 +1087,10 @@ def wdtpf(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dtpf.dtpf.iloc[0]))
     file.write(format(dtpf.ruler.iloc[0]))
 
@@ -1014,7 +1113,10 @@ def wdtpf_circ(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(dtpf.dtpf.iloc[0]))
     file.write(format(dtpf.ruler.iloc[0]))
     for idx, value in dtpf.iterrows():
@@ -1039,7 +1141,10 @@ def wtail(
         anarede:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("(")
     file.write("\n")
 

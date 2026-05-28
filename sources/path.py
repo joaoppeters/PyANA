@@ -18,8 +18,12 @@ def pathpwf(
     Args
         anarede: objeto da classe PowerFlowContainer
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel de diretorio principal
+=======
+    # Variável de diretório principal
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.maindir = dirname(dirname(__file__))
 
     # Variavel de nome do SEP em estudo
@@ -54,8 +58,12 @@ def pathstb(
     Args
         anatem: objeto da classe PowerFlowContainer
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel de diretorio principal
+=======
+    # Variável de diretório principal
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.maindir = dirname(dirname(__file__))
     if exists(anatem.maindir + "\\sistemas\\" + anatem.system) is True:
         anatem.dirSTB = realpath(
@@ -82,7 +90,10 @@ def pathdarq(
     from darq import rdat, rcdu, rblt
     from folder import logfolder, outfolder, pltfolder
 
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     for idx, value in anatem.darqDF.iterrows():
         if value.tipo.strip() in ["LOG", "OUT", "PLT"]:
             anatem.logfolder = (

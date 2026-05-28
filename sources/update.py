@@ -22,7 +22,10 @@ def updtstt(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if stage == "":
         anarede.statevar = anarede.statevar.reshape(
             anarede.statevar.size,
@@ -124,7 +127,10 @@ def updtpwr(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     V = anarede.solution["voltage"] * exp(1j * anarede.solution["theta"])
     I = anarede.Yb @ V
     S = diag(V) @ conj(I)
@@ -145,8 +151,12 @@ def updtlinear(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Atualizacao dos ângulos dos barramentos
+=======
+    # Atualização dos ângulos dos barramentos
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["theta"] = deepcopy(anarede.statevar)
 
 
@@ -158,8 +168,12 @@ def updttm(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Atualizacao das variaveis dinamicas tempo
+=======
+    # Atualização das variaveis dinamicas tempo
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["delta"] += anarede.timestatevar[0 : 2 * anarede.nger : 2]
     anarede.solution["omega"] += anarede.timestatevar[1 : 2 * anarede.nger : 2]
     anarede.solution["theta"] += anarede.timestatevar[

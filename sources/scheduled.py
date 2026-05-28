@@ -18,8 +18,12 @@ def scheduled(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Potencias ativa e reativa especificadas
+=======
+    # Potências ativa e reativa especificadas
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if anarede.solution["method"] == "LFDC":
         anarede.psch = zeros(anarede.nbus)
         anarede.qsch = zeros(anarede.nbus)

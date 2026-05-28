@@ -18,8 +18,12 @@ def folder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Diretorio de Sistemas
+=======
+    # Diretório de Sistemas
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     dirSistemas = dirname(anarede.dirPWF)
 
     # Criacao de diretorio Resultados
@@ -37,7 +41,10 @@ def areasfolder(
         anarede:
         name: nome do diretorio
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.infofolder = anarede.resultsfolder + "iNFO\\"
     if exists(anarede.infofolder) is False:
         mkdir(anarede.infofolder)
@@ -51,7 +58,10 @@ def admittancefolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.admittancefolder = anarede.resultsfolder + "MatrizAdmitancia\\"
     if exists(anarede.admittancefolder) is False:
         mkdir(anarede.admittancefolder)
@@ -69,7 +79,10 @@ def bxlffolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         mkdir(anarede.exlffolder)
@@ -87,7 +100,10 @@ def bxicfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     bxlffolder(
         anarede,
     )
@@ -109,7 +125,10 @@ def bxctfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     bxicfolder(
         anarede,
     )
@@ -131,7 +150,10 @@ def convergencefolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.convergencefolder = anarede.resultsfolder + "TrajetoriaConvergencia\\"
     if exists(anarede.convergencefolder) is False:
         mkdir(anarede.convergencefolder)
@@ -149,7 +171,10 @@ def continuationfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.continuationfolder = anarede.resultsfolder + "Continuado\\"
     if exists(anarede.continuationfolder) is False:
         mkdir(anarede.continuationfolder)
@@ -177,7 +202,10 @@ def jacobifolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.jacobifolder = anarede.resultsfolder + "MatrizJacobiana\\"
     if exists(anarede.jacobifolder) is False:
         mkdir(anarede.jacobifolder)
@@ -195,7 +223,10 @@ def logfolder(
     Args
         directory:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if exists(logfolder) is False:
         mkdir(logfolder)
     return logfolder
@@ -224,7 +255,10 @@ def organonfolder(
     Args
         none
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     cdufolder = dirname(dirname(__file__)) + "\\sistemas\\organon\\"
     if not exists(cdufolder):
         mkdir(cdufolder)
@@ -239,7 +273,10 @@ def outfolder(
     Args
         directory:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if exists(outfolder) is False:
         mkdir(outfolder)
     return outfolder
@@ -253,7 +290,10 @@ def pltfolder(
     Args
         directory:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if exists(pltfolder) is False:
         mkdir(pltfolder)
     return pltfolder
@@ -267,7 +307,10 @@ def pssefolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.pssefolder = dirname(dirname(__file__)) + "\\sistemas\\psse\\"
     if exists(anarede.pssefolder) is False:
         mkdir(anarede.pssefolder)
@@ -282,7 +325,10 @@ def reportsfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     folder(
         anarede,
     )
@@ -299,7 +345,10 @@ def rbarfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     bxctfolder(
         anarede,
     )
@@ -324,7 +373,10 @@ def rintfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     anarede.exicfolder = dirname(anarede.dirPWF) + "\\EXIC\\"
     if exists(anarede.exlffolder) is False:
@@ -345,7 +397,10 @@ def rlinfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     bxctfolder(
         anarede,
     )
@@ -370,7 +425,10 @@ def rtotfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         mkdir(anarede.exlffolder)
@@ -390,7 +448,10 @@ def sagefolder(
         anarede:
         pwffile:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     sagefolder = dirname(anarede.dirPWF) + "\\SAGE\\"
     if exists(sagefolder) is False:
         mkdir(sagefolder)
@@ -408,8 +469,12 @@ def smoothfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Condicao de metodo
+=======
+    # Condição de método
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if anarede.method == "EXLF":
         anarede.dirsmooth = anarede.resultsfolder + "Smooth\\"
         if exists(anarede.dirsmooth) is False:
@@ -437,7 +502,10 @@ def sxlffolder(
         loadstd:
         geolstd:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         mkdir(anarede.exlffolder)
@@ -477,7 +545,10 @@ def sxicfolder(
         loadstd:
         geolstd:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
@@ -523,7 +594,10 @@ def sxctfolder(
         loadstd:
         geolstd:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
@@ -569,7 +643,10 @@ def spvctfolder(
         loadstd:
         geolstd:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(anarede.exlffolder) is False:
         raise ValueError(
@@ -611,7 +688,10 @@ def statevarfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.statevarfolder = anarede.resultsfolder + "VariaveisEstado\\"
     if exists(anarede.statevarfolder) is False:
         mkdir(anarede.statevarfolder)
@@ -629,7 +709,10 @@ def vsmfolder(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     exlffolder = dirname(anarede.dirPWF) + "\\EXLF\\"
     if exists(exlffolder) is False:
         raise ValueError(

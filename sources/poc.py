@@ -26,8 +26,12 @@ def poc(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel para armazenamento de solucao
+=======
+    # Variável para armazenamento de solução
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution.update(
         {
             "method": "EXPC",
@@ -133,7 +137,10 @@ def expansion(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.dtf = vstack(
         (anarede.solution["demanda_ativa"], anarede.solution["demanda_reativa"])
     )

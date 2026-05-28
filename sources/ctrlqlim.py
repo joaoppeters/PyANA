@@ -19,8 +19,12 @@ def qlimsol(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variaveis
+=======
+    # Variáveis
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if "qlim_reactive_generation" not in anarede.solution:
         anarede.solution["qlim_reactive_generation"] = zeros([anarede.nbus])
         anarede.maskQ = ones(anarede.nbus, dtype=bool)
@@ -36,8 +40,12 @@ def qlimres(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Vetor de residuos
+=======
+    # Vetor de resíduos
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.deltaQLIM = zeros([anarede.nger])
 
     # Contador
@@ -216,7 +224,10 @@ def qlimsubjac(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -301,7 +312,10 @@ def qlimupdt(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Contador
     nger = 0
 
@@ -352,8 +366,12 @@ def qlimsch(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel
+=======
+    # Variável
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.qsch = zeros([anarede.nbus])
 
     # Atualizacao da potencia reativa especificada
@@ -371,8 +389,12 @@ def qlimcorr(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel
+=======
+    # Variável
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["qlim_reactive_generation"] = deepcopy(
         anarede.operationpoint[case]["p"]["qlim_reactive_generation"]
     )
@@ -386,8 +408,12 @@ def qlimheur(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Condicao de geracao de potencia reativa ser superior ao valor maximo
+=======
+    # Condição de geração de potência reativa ser superior ao valor máximo
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     if any(
         (
             anarede.solution["qlim_reactive_generation"]
@@ -430,7 +456,10 @@ def qlimsubhess(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     #
     # jacobiana:
     #
@@ -450,5 +479,8 @@ def qlimsubjacsym(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     pass

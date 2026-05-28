@@ -18,8 +18,12 @@ def convergence(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Trajetoria de convergencia da frequencia
+=======
+    # Trajetória de convergência da frequência
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["freqiter"] = append(
         anarede.solution["freqiter"],
         anarede.solution["freq"] * anarede.cte["FBSE"],

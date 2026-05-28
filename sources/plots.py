@@ -21,8 +21,12 @@ def convergence(
         anarede:
         setting: self do arquivo setting.py
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Criacao de pasta
+=======
+    # Criação de pasta
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     convergencefolder(
         anarede,
     )
@@ -53,7 +57,10 @@ def convP(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -128,7 +135,10 @@ def convQ(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -203,7 +213,10 @@ def convY(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     # Plots
@@ -279,8 +292,12 @@ def statevar(
         anarede:
         setting: self do arquivo setting.py
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Criacao de pasta
+=======
+    # Criação de pasta
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     statevarfolder(
         anarede,
     )
@@ -307,7 +324,10 @@ def stateVT(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     fig, ax = plt.subplots(
         nrows=1, ncols=1, subplot_kw={"projection": "polar"}, figsize=(8, 9)
     )
@@ -424,5 +444,8 @@ def stateY(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     pass

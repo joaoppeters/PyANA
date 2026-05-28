@@ -24,8 +24,12 @@ def eigensens(
         anarede:
         stage: string de identificacao da etapa do fluxo de potencia continuado
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Reorganizacao da Matriz Jacobiana Expandida
+=======
+    # Reorganização da Matriz Jacobiana Expandida
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     jacobian = deepcopy(anarede.jacobian)
 
     if case > 0:

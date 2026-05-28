@@ -20,7 +20,10 @@ def stb(
     Args
         anatem:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     t = time.process_time()
 
     # Variaveis
@@ -57,7 +60,10 @@ def keywords(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.end_line = "\n"
     anatem.end_archive = "FIM"
     anatem.end_block = (
@@ -76,8 +82,12 @@ def codes(
     Args
         anatem:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel
+=======
+    # Variável
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anatem.stbblock = dict(
         {
             "TITU": False,
@@ -100,8 +110,12 @@ def rstb(
     Args
         anatem:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variaveis
+=======
+    # Variáveis
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     f = open(f"{anatem.dirSTB}", "r", encoding="latin-1")
     anatem.lines = f.readlines()
     f.close()

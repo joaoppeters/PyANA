@@ -18,7 +18,10 @@ def rwstb(
     Args
         anatem:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     # Arquivo
     anatem.filedir = realpath(
         anatem.sxlffolder + "\\" + anatem.namecase + "{}.stb".format(anatem.ones)
@@ -78,7 +81,10 @@ def wheader(
     Args
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("(")
     file.write("\n")
     file.write("( Modificacao Automatica de Dados .PWF")
@@ -110,7 +116,10 @@ def wdarq(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(anatem.titu["titu"]))
     file.write(format(anatem.titu["ruler"]))
 
@@ -125,7 +134,10 @@ def wdevt(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     agr = 0
     file.write(format(anatem.dagr.dagr.iloc[0]))
     for idx, value in anatem.dagr1.iterrows():
@@ -155,7 +167,10 @@ def wdmaq(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(anatem.danc.danc.iloc[0]))
     file.write(format(anatem.danc.ruler.iloc[0]))
     if "ACLS" in anatem.danc.danc:
@@ -180,7 +195,10 @@ def wdmdg_md01(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(anatem.danc.danc.iloc[0]))
     file.write(format(anatem.danc.ruler.iloc[0]))
     for idx, value in anatem.danc.iterrows():
@@ -202,7 +220,10 @@ def wdsim(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write(format(anatem.dare.dare.iloc[0]))
     file.write(format(anatem.dare.ruler.iloc[0]))
     for idx, value in anatem.dare.iterrows():
@@ -223,7 +244,10 @@ def wtail(
         anatem:
         file:
     """
+<<<<<<< HEAD
     ## Inicializacao
+=======
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     file.write("(")
     file.write("\n")
 

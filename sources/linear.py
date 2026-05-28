@@ -21,8 +21,12 @@ def linear(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Variavel para armazenamento de solucao
+=======
+    # Variável para armazenamento de solução
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.ctrlcount = 0
     anarede.solution = {
         "method": "LFDC",
@@ -77,8 +81,12 @@ def residue(
 ):
     """calculo de residuos das equacoes diferenciaveis"""
 
+<<<<<<< HEAD
     ## Inicializacao
     # Vetores de residuo
+=======
+    # Vetores de resíduo
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.deltaP = zeros(anarede.nbus)
     anarede.deltaQ = zeros(anarede.nbus)
 
@@ -91,8 +99,12 @@ def convergence(
     Args
         anarede:
     """
+<<<<<<< HEAD
     ## Inicializacao
     # Trajetoria de convergencia da frequencia
+=======
+    # Trajetória de convergência da frequência
+>>>>>>> f7a4f3cc9f2adfd6e5ead37f79750b46d7aab35a
     anarede.solution["freq"] = append(anarede.solution["freq"], 0.0)
 
     # Trajetoria de convergencia da potencia ativa
