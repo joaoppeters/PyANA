@@ -135,7 +135,7 @@ def expansion(
     anarede.dtf = vstack(
         (anarede.solution["demanda_ativa"], anarede.solution["demanda_reativa"])
     )
-    anarede.dtf = anarede.dtf.reshape((2 * anarede.nbus, 1)) / anarede.cte["SBSE"]
+    anarede.dtf = anarede.dtf.reshape((2 * anarede.nbus, 1)) / anarede.cte["BMVA"]
     anarede.dtf = concatenate((anarede.dtf, zeros((anarede.ctrldim, 1))), axis=0)
 
     # Reducao Total

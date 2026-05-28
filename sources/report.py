@@ -192,14 +192,14 @@ def RCNV(
             for i in range(0, anarede.solution["iter"]):
                 file.write("\n")
                 file.write(
-                    f"| {(i+1):^4d} | {anarede.solution['freqiter'][i]:^6.3f} | {anarede.solution['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i]]:^5d} | {anarede.solution['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i]]:^5d} | {anarede.solution['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i]]:^5d} |"
+                    f"| {(i+1):^4d} | {anarede.solution['freqiter'][i]:^6.3f} | {anarede.solution['convP'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i]]:^5d} | {anarede.solution['convQ'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i]]:^5d} | {anarede.solution['convY'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i]]:^5d} |"
                 )
 
         elif anarede.method == "EXIC":
             for i in range(0, anarede.operationpoint[0]["iter"]):
                 file.write("\n")
                 file.write(
-                    f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
+                    f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
                 )
 
         file.write("\n")
@@ -223,14 +223,14 @@ def RCNV(
         anarede.solution["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
-            f"| {(i+1):^4d} | {anarede.solution['freqiter'][i+1]:^6.3f} | {anarede.solution['convP'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i+1]]:^5d} | {anarede.solution['convQ'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i+1]]:^5d} | {anarede.solution['convY'][i+1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i+1]]:^5d} |"
+            f"| {(i+1):^4d} | {anarede.solution['freqiter'][i+1]:^6.3f} | {anarede.solution['convP'][i+1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busP'][i+1]]:^5d} | {anarede.solution['convQ'][i+1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busQ'][i+1]]:^5d} | {anarede.solution['convY'][i+1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.solution['busY'][i+1]]:^5d} |"
         )
 
     elif (anarede.method == "EXIC") and (
         anarede.operationpoint[0]["convergence"] == "SISTEMA CONVERGENTE"
     ):
         file.write(
-            f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
+            f"| {(i+1):^4d} | {anarede.operationpoint[0]['freqiter'][i]:^6.3f} | {anarede.operationpoint[0]['convP'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busP'][i]]:^5d} | {anarede.operationpoint[0]['convQ'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busQ'][i]]:^5d} | {anarede.operationpoint[0]['convY'][i]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][anarede.operationpoint[0]['busY'][i]]:^5d} |"
         )
 
     file.write("\n")
@@ -1233,7 +1233,7 @@ def RXCT(
         file.write("\n")
 
         file.write(
-            f"| {value['iter']:^4d} | {value['freqiter'][-1]:^6.3f} | {value['convP'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busP'][-1]]:^5d} | {value['convQ'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busQ'][-1]]:^5d} | {value['convY'][-1]*anarede.cte['SBSE']:^7.3f} | {anarede.dbarDF['numero'][value['busY'][-1]]:^5d} |"
+            f"| {value['iter']:^4d} | {value['freqiter'][-1]:^6.3f} | {value['convP'][-1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][value['busP'][-1]]:^5d} | {value['convQ'][-1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][value['busQ'][-1]]:^5d} | {value['convY'][-1]*anarede.cte['BMVA']:^7.3f} | {anarede.dbarDF['numero'][value['busY'][-1]]:^5d} |"
         )
 
         file.write("\n")

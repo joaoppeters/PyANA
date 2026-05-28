@@ -46,11 +46,11 @@ def qlims(
     # Associacao das variaveis
     anarede.qlimvar.update(
         {
-            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BMVA"],
             v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / anarede.cte["SBSE"],
-            qgn: value["potencia_reativa_minima"] / anarede.cte["SBSE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BMVA"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BMVA"],
         }
     )
 
@@ -142,7 +142,7 @@ def qlimssmooth(
     # Associacao das variaveis
     anarede.qlimvar.update(
         {
-            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BMVA"],
             v: anarede.solution["voltage"][idx],
         }
     )
@@ -207,11 +207,11 @@ def qlimnsmooth(
         anarede.qlimkeys[anarede.dbarDF.loc[idx, "nome"]][case] = list()
 
     # Variaveis Simbolicas
-    qg = anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["SBSE"]
+    qg = anarede.solution["qlim_reactive_generation"][idx] / anarede.cte["BMVA"]
     v = anarede.solution["voltage"][idx]
     vr = anarede.dbarDF.loc[idx, "tensao"] * 1e-3
-    qgx = anarede.dbarDF.loc[idx, "potencia_reativa_maxima"] / anarede.cte["SBSE"]
-    qgn = anarede.dbarDF.loc[idx, "potencia_reativa_minima"] / anarede.cte["SBSE"]
+    qgx = anarede.dbarDF.loc[idx, "potencia_reativa_maxima"] / anarede.cte["BMVA"]
+    qgn = anarede.dbarDF.loc[idx, "potencia_reativa_minima"] / anarede.cte["BMVA"]
 
     ## Limites
     # Limites de Tensao
@@ -300,15 +300,15 @@ def svcsQ(
             r: value["droop"],
             bmin: value["potencia_reativa_minima"]
             / (
-                anarede.cte["SBSE"]
+                anarede.cte["BMVA"]
                 * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             bmax: value["potencia_reativa_maxima"]
             / (
-                anarede.cte["SBSE"]
+                anarede.cte["BMVA"]
                 * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["SBSE"],
+            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["BMVA"],
         }
     )
 
@@ -400,15 +400,15 @@ def svcsQsmooth(
             r: anarede.dcerDF.loc[ncer, "droop"],
             bmin: anarede.dcerDF.loc[ncer, "potencia_reativa_minima"]
             / (
-                anarede.cte["SBSE"]
+                anarede.cte["BMVA"]
                 * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
             bmax: anarede.dcerDF.loc[ncer, "potencia_reativa_maxima"]
             / (
-                anarede.cte["SBSE"]
+                anarede.cte["BMVA"]
                 * (anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3) ** 2
             ),
-            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["SBSE"],
+            qgk: anarede.solution["svc_generation"][ncer] / anarede.cte["BMVA"],
         }
     )
 
@@ -472,11 +472,11 @@ def svcsI(
     # Associacao das variaveis
     anarede.svcvar.update(
         {
-            qg: anarede.solution["svc_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["svc_generation"][idx] / anarede.cte["BMVA"],
             v: anarede.solution["voltage"][idx],
             vr: value["tensao"] * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / anarede.cte["SBSE"],
-            qgn: value["potencia_reativa_minima"] / anarede.cte["SBSE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BMVA"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BMVA"],
         }
     )
 
@@ -587,14 +587,14 @@ def svcsIsmooth(
         vm: anarede.solution["voltage"][idxctrl],
         r: anarede.dcerDF.loc[ncer, "droop"],
         bmin: anarede.dcerDF.loc[ncer, "potencia_reativa_minima"]
-        / (anarede.cte["SBSE"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
+        / (anarede.cte["BMVA"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
         bmax: anarede.dcerDF.loc[ncer, "potencia_reativa_maxima"]
-        / (anarede.cte["SBSE"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
+        / (anarede.cte["BMVA"] * anarede.dbarDF.loc[idxcer, "tensao_base"] * 1e-3),
     }
 
     anarede.svcivar = deepcopy(anarede.svcivarkey)
     anarede.svcivar[ik] = (anarede.solution["svc_generation"][ncer]) / (
-        anarede.cte["SBSE"]
+        anarede.cte["BMVA"]
     )
 
     ## Limites
@@ -695,14 +695,14 @@ def svcsA(
     # Associacao das variaveis
     anarede.svcvar.update(
         {
-            qg: anarede.solution["svc_generation"][idx] / anarede.cte["SBSE"],
+            qg: anarede.solution["svc_generation"][idx] / anarede.cte["BMVA"],
             v: anarede.solution["voltage"][idx],
             vr: anarede.dbarDF.loc[anarede.dbarDF.numero == value.barra, "tensao"].iloc[
                 0
             ]
             * 1e-3,
-            qgx: value["potencia_reativa_maxima"] / anarede.cte["SBSE"],
-            qgn: value["potencia_reativa_minima"] / anarede.cte["SBSE"],
+            qgx: value["potencia_reativa_maxima"] / anarede.cte["BMVA"],
+            qgn: value["potencia_reativa_minima"] / anarede.cte["BMVA"],
         }
     )
 
@@ -908,7 +908,7 @@ def svcsAsmooth(
     anarede.solution["svc_generation"][ncer] = (
         (anarede.solution["voltage"][idxcer] ** 2)
         * anarede.alphabeq.subs(alpha, anarede.solution["alpha"])
-        * anarede.cte["SBSE"]
+        * anarede.cte["BMVA"]
     )
 
     # Expressao Geral
@@ -1301,7 +1301,7 @@ def svcstorage(
             bmin = anarede.dcerDF["potencia_reativa_minima"].iloc[busidxcer]
             vk = anarede.solution["voltage"][busidx]
             vmref = anarede.dbarDF["tensao"].iloc[ctrlbusidxcer] * 1e-3
-            droop = anarede.dcerDF["droop"].iloc[busidxcer] / anarede.cte["SBSE"]
+            droop = anarede.dcerDF["droop"].iloc[busidxcer] / anarede.cte["BMVA"]
 
             vmmax = vmref + (droop * bmin * (vk**2))
             vmmin = vmref + (droop * bmax * (vk**2))

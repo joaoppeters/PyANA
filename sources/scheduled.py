@@ -43,8 +43,8 @@ def scheduled(
         anarede.qsch += anarede.dbarDF["potencia_reativa"].to_numpy()
         anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
 
-    anarede.psch /= anarede.cte["SBSE"]
-    anarede.qsch /= anarede.cte["SBSE"]
+    anarede.psch /= anarede.cte["BMVA"]
+    anarede.qsch /= anarede.cte["BMVA"]
 
     # Variaveis especificadas de controle ativos
     if anarede.ctrlcount > 0 and anarede.solution["method"] != "LFDC":

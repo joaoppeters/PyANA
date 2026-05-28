@@ -36,10 +36,10 @@ def freqsol(
             # Barra tipo VT ou PV
             if value["tipo"] != 0:
                 anarede.solution["active_generation"][nger] = (
-                    value["potencia_ativa"] / anarede.cte["SBSE"]
+                    value["potencia_ativa"] / anarede.cte["BMVA"]
                 )
                 anarede.solution["qlim_reactive_generation"][nger] = (
-                    value["potencia_reativa"] / anarede.cte["SBSE"]
+                    value["potencia_reativa"] / anarede.cte["BMVA"]
                 )
                 nger += 1
         # Frequencias maxima e minima por gerador
@@ -83,7 +83,7 @@ def freqgerlim(
                 anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_minima"]
             )
-            / anarede.cte["SBSE"]
+            / anarede.cte["BMVA"]
         )
         # Frequencia minima gerador `idx`
         anarede.freqger["min"][idx] = (
@@ -94,7 +94,7 @@ def freqgerlim(
                 anarede.dbarDF["potencia_ativa"][value["numero"] - 1]
                 - value["potencia_ativa_maxima"]
             )
-            / anarede.cte["SBSE"]
+            / anarede.cte["BMVA"]
         )
 
 
@@ -137,8 +137,8 @@ def freqsch(
             nger += 1
 
     # Tratamento
-    anarede.pqsch["potencia_ativa_gerada_especificada"] /= anarede.cte["SBSE"]
-    anarede.pqsch["potencia_reativa_gerada_especificada"] /= anarede.cte["SBSE"]
+    anarede.pqsch["potencia_ativa_gerada_especificada"] /= anarede.cte["BMVA"]
+    anarede.pqsch["potencia_reativa_gerada_especificada"] /= anarede.cte["BMVA"]
 
 
 def freqres(
@@ -162,7 +162,7 @@ def freqres(
         if value["tipo"] != 0:
             # Calculo do residuo DeltaP
             anarede.deltaP[idx] = anarede.solution["active_generation"][nger]
-            anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["SBSE"]
+            anarede.deltaP[idx] -= value["demanda_ativa"] / anarede.cte["BMVA"]
             anarede.deltaP[idx] -= pcalc(
                 anarede,
                 idx,
@@ -170,7 +170,7 @@ def freqres(
 
             # Calculo do residuo DeltaQ
             anarede.deltaQ[idx] = anarede.solution["qlim_reactive_generation"][nger]
-            anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["SBSE"]
+            anarede.deltaQ[idx] -= value["demanda_reativa"] / anarede.cte["BMVA"]
             anarede.deltaQ[idx] -= qcalc(
                 anarede,
                 idx,
@@ -488,12 +488,12 @@ def frequpdt(
     for idx, value in anarede.dgerDF.iterrows():
         if anarede.solution["freq"] >= anarede.freqger["max"][idx]:
             anarede.solution["active_generation"][idx] = (
-                value["potencia_ativa_minima"] / anarede.cte["SBSE"]
+                value["potencia_ativa_minima"] / anarede.cte["BMVA"]
             )
             anarede.ypp[idx][idx] = inf
         elif anarede.solution["freq"] <= anarede.freqger["min"][idx]:
             anarede.solution["active_generation"][idx] = (
-                value["potencia_ativa_maxima"] / anarede.cte["SBSE"]
+                value["potencia_ativa_maxima"] / anarede.cte["BMVA"]
             )
             anarede.ypp[idx][idx] = inf
         else:

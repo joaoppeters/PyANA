@@ -247,14 +247,14 @@ def checkdanc(
             for idx, value in anarede.dbarDF.iterrows():
                 if value["area"] == area:
                     anarede.dbarDF.loc[idx, "demanda_ativa"] *= (
-                        1 + anarede.dancDF["fator_carga_ativa"][0] / anarede.cte["SBSE"]
+                        1 + anarede.dancDF["fator_carga_ativa"][0] / anarede.cte["BMVA"]
                     )
                     anarede.dbarDF.loc[idx, "demanda_reativa"] *= (
                         1
-                        + anarede.dancDF["fator_carga_reativa"][0] / anarede.cte["SBSE"]
+                        + anarede.dancDF["fator_carga_reativa"][0] / anarede.cte["BMVA"]
                     )
                     anarede.dbarDF.loc[idx, "shunt_barra"] *= (
-                        1 + anarede.dancDF["fator_shunt_barra"][0] / anarede.cte["SBSE"]
+                        1 + anarede.dancDF["fator_shunt_barra"][0] / anarede.cte["BMVA"]
                     )
 
 
@@ -1608,7 +1608,7 @@ def delo(
     anarede.delo["numero"] = list()
     anarede.delo["operacao"] = list()
     anarede.delo["tensao"] = list()
-    anarede.delo["SBSE"] = list()
+    anarede.delo["BMVA"] = list()
     anarede.delo["nome"] = list()
     anarede.delo["modo_high"] = list()
     anarede.delo["estado"] = list()
@@ -1620,7 +1620,7 @@ def delo(
             anarede.delo["numero"].append(anarede.lines[anarede.linecount][:4])
             anarede.delo["operacao"].append(anarede.lines[anarede.linecount][5])
             anarede.delo["tensao"].append(anarede.lines[anarede.linecount][7:12])
-            anarede.delo["SBSE"].append(anarede.lines[anarede.linecount][13:18])
+            anarede.delo["BMVA"].append(anarede.lines[anarede.linecount][13:18])
             anarede.delo["nome"].append(anarede.lines[anarede.linecount][19:39])
             anarede.delo["modo_high"].append(anarede.lines[anarede.linecount][40])
             anarede.delo["estado"].append(anarede.lines[anarede.linecount][42])
@@ -1635,7 +1635,7 @@ def delo(
             "numero": "int",
             "operacao": "object",
             "tensao": "float",
-            "SBSE": "float",
+            "BMVA": "float",
             "nome": "object",
             "modo_high": "object",
             "estado": "object",

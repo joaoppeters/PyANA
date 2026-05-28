@@ -85,7 +85,7 @@ class PowerFlow:
                         self.matpower.dbarDF,
                         self.matpower.dgerDF,
                         self.matpower.dlinDF,
-                        self.matpower.sbse,
+                        self.matpower.BMVA,
                     ) = rmatpower(self.anarede, self.matpower)
                     mrwpwf(self.anarede, self.matpower)
 

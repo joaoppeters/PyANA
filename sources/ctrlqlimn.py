@@ -160,7 +160,7 @@ def qlimnupdt(
     for idx, value in anarede.dbarDF.iterrows():
         if value["tipo"] != 0:
             anarede.solution["qlim_reactive_generation"][idx] += (
-                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["SBSE"]
+                anarede.statevar[(anarede.dimpreqlim + nger)] * anarede.cte["BMVA"]
             )
 
             # Incrementa contador
@@ -185,7 +185,7 @@ def qlimnsch(
     # Atualizacao da potencia reativa especificada
     anarede.qsch += anarede.solution["qlim_reactive_generation"]
     anarede.qsch -= anarede.dbarDF["demanda_reativa"].to_numpy()
-    anarede.qsch /= anarede.cte["SBSE"]
+    anarede.qsch /= anarede.cte["BMVA"]
 
 
 def qlimncorr(

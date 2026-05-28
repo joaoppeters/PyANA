@@ -52,7 +52,7 @@ def admittance(
     active = anarede.dlinDF[anarede.dlinDF.estado]
     nactive = len(active)
     Ysr = 1 / vectorize(complex)(active.resistencia, active.reatancia)
-    Ysh = vectorize(complex)(0, anarede.dbarDF.shunt_barra / anarede.cte["SBSE"])
+    Ysh = vectorize(complex)(0, anarede.dbarDF.shunt_barra / anarede.cte["BMVA"])
 
     Ytt = Ysr + vectorize(complex)(0, active.susceptancia)
     Yff = Ytt / (vectorize(complex)(active.tap * conj(active.tap)))

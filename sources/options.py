@@ -21,7 +21,7 @@ def optionspwf(
     """
     anarede.cte = dict(
         {
-            "SBSE": 100.0,  # base de potencia para o sistema CA
+            "BMVA": 100.0,  # base de potencia para o sistema CA
             "DASE": 100.0,  # base de potencia default para o sistema CC
             "TEPA": 1e-3,  # tolerancia de convergencia de potencia ativa
             "TEPR": 1e-3,  # tolerancia de convergencia de potencia reativa
@@ -442,7 +442,7 @@ def optionsstb(
         {
             "80CO": False,
             "ASYN": False,
-            "SBSE": False,
+            "BMVA": False,
             "CCCO": False,
             "CILH": False,
             "CONV": False,

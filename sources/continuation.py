@@ -566,7 +566,7 @@ def exicjacobian(
         ),
         axis=0,
     )
-    colarray = (colarray[anarede.mask] / anarede.cte["SBSE"]).reshape(
+    colarray = (colarray[anarede.mask] / anarede.cte["BMVA"]).reshape(
         (sum(anarede.mask), 1)
     )
 

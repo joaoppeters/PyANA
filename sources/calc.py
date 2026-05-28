@@ -48,7 +48,7 @@ def pcalc(
     p *= anarede.solution["voltage"][idx]
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["active"][idx] = (p * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
 
@@ -94,7 +94,7 @@ def qcalc(
     q *= anarede.solution["voltage"][idx]
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["reactive"][idx] = (q * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]
 
@@ -140,7 +140,7 @@ def pcalct(
     p *= anarede.solution["voltage"][idx]
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["active"][idx] = (p * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
 
@@ -184,7 +184,7 @@ def pcalcv(
             )
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["active"][idx] = (p * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["active"][idx] = (p * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_ativa"
     ][idx]
 
@@ -230,7 +230,7 @@ def qcalct(
     q *= anarede.solution["voltage"][idx]
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["reactive"][idx] = (q * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]
 
@@ -274,7 +274,7 @@ def qcalcv(
             )
 
     # Armazenamenpara da potencia ativa gerada equivalente do barramento para
-    anarede.solution["reactive"][idx] = (q * anarede.cte["SBSE"]) + anarede.dbarDF[
+    anarede.solution["reactive"][idx] = (q * anarede.cte["BMVA"]) + anarede.dbarDF[
         "demanda_reativa"
     ][idx]
 

@@ -55,7 +55,7 @@ def orwntw(
     organon.file = open(ntwfile, "w", encoding="latin-1")
     organon.file.write("           7           0\n")
     organon.file.write(
-        f" {dt.now().strftime('%Y%m%d %H:%M:%S')}  {anarede.cte['SBSE']}\n"
+        f" {dt.now().strftime('%Y%m%d %H:%M:%S')}  {anarede.cte['BMVA']}\n"
     )
     organon.file.write(f"{anarede.titu['ruler']}\n")
     loaddata = ""
@@ -139,7 +139,7 @@ def orwntw(
             else ""
         )
         gendata += (
-            f"{int(value.numero):>8},' 1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao:>10.5f},{bctrl:>10},{anarede.cte['SBSE']:>11.3f},{0.0:>10},{0.0:>10},{1.0:>10},{genst:>2},{fpercent:>8.1f},{pmax:>12.3f},{pmin:>12.3f},{grupo:>5},{0:>10},{1:>6},{2:>11},{0.0:>13.3f}"
+            f"{int(value.numero):>8},' 1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao:>10.5f},{bctrl:>10},{anarede.cte['BMVA']:>11.3f},{0.0:>10},{0.0:>10},{1.0:>10},{genst:>2},{fpercent:>8.1f},{pmax:>12.3f},{pmin:>12.3f},{grupo:>5},{0:>10},{1:>6},{2:>11},{0.0:>13.3f}"
             if tipo >= 2
             else ""
         )
@@ -1568,7 +1568,7 @@ def prwraw(
     rawfile = realpath(pssepath + anarede.system[:-4] + ".raw")
     psse.file = open(rawfile, "w", encoding="latin-1")
     psse.file.write(
-        f"{0:>6d},{anarede.cte['SBSE']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n"
+        f"{0:>6d},{anarede.cte['BMVA']:>8.1f},{32:>6d},{0:>6d},{0:>6d},{anarede.cte['FBSE']:>8.2f} / PSS(R)E 32\n"
     )
     (
         psse.file.write(f" {anarede.titu['ruler'].strip():>60}")
@@ -1614,7 +1614,7 @@ def prwraw(
             else ""
         )
         generatorsdata += (
-            f"{value.numero:>6d},'1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['SBSE']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
+            f"{value.numero:>6d},'1',{value.potencia_ativa:>10.3f},{value.potencia_reativa:>11.3f},{value.potencia_reativa_maxima:>11.3f},{value.potencia_reativa_minima:>11.3f},{value.tensao*1e-3:>10.4f},{value.barra_controlada:>7},{anarede.cte['BMVA']:>11.3f},{0:>11.4f},{1:>11.4f},{0:>10.4f},{0:>10.4f},{1:>10.4f},{1:>3d},{100:>8.1f},{value.potencia_ativa:>12.3f},{value.potencia_ativa:>12.3f},{1:>5d},{1:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>6d},{0:>9.3f},{0:>3d},{0:>11.3f}/\n"
             if code != 1
             else ""
         )
@@ -1681,7 +1681,7 @@ def prwraw(
         )
 
         transformersdata += (
-            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{0:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['SBSE']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
+            f"{value.de:>6d},{value.para:>7d},{0:>7d},'{value.circuito:02d}',{1:>2d},{1:>2d},{1:>2d},{0:>11.3f},{0:>11.3f},{1:>2d}, '{nome_de:12}',{1:>2d},{0:>5d},{1:>10.5f}\n {value.resistencia:>11.5E},{value.reatancia:>13.5E},{anarede.cte['BMVA']:>11.3E}\n {value.tap.real:>8.4f},{0:>10.4f},{td:>10.4f},{value.capacidade_normal:>10.2f},{value.capacidade_emergencial:>10.2f},{value.capacidade_equipamento:>10.2f},{cod1:>3d},{cont1:>8d},{tx:>13.5f},{tn:>13.5f},{vx:>13.5f},{vn:>13.5f},{value.numero_taps:>3d},{0:>3d},{0:>10.5f},{0:>10.5f}\n {1:>8.5f},{0:>10.5f}\n"
             if value.estado and value.transf
             else ""
         )
@@ -1800,7 +1800,7 @@ def prwdyr(
                 if (
                     anarede.dbarDF.loc[anarede.dbarDF.numero == barra, "tipo"].values[0]
                     == 1
-                ):
+                ) and (genmodel in ["MD02", "MD03"]):
                     excitation += f"{barra:>7d} 'IEEET1' '1'  {0.00:6.4f}  {100:6.4f}  {0.05:6.4f}  {8.00:6.4f}  {-4.00:6.4f}  {1.00:6.4f}  {1.50:6.4f}  {0.30:6.4f}  {3.00:6.4f}  {0:6.4f}  {0.5:6.4f}  {0.35:6.4f}  {0.8:6.4f}  {0.35:6.4f} /\n"
                 elif (
                     anarede.dbarDF.loc[anarede.dbarDF.numero == barra, "tipo"].values[0]
@@ -1964,7 +1964,7 @@ def mrwpwf(
         "(Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val) (Mn) ( Val)"
     )
     anarede.file.write("\n")
-    anarede.file.write(f"BASE {matpower.sbse:>6.1f}{60*' '}")
+    anarede.file.write(f"BASE {matpower.BMVA:>6.1f}{60*' '}")
     anarede.file.write("\n")
     anarede.file.write("99999")
     anarede.file.write("\n")

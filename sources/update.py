@@ -128,10 +128,10 @@ def updtpwr(
     S = diag(V) @ conj(I)
 
     anarede.solution["active"] = (
-        S.real * anarede.cte["SBSE"] + anarede.dbarDF["demanda_ativa"].tolist()
+        S.real * anarede.cte["BMVA"] + anarede.dbarDF["demanda_ativa"].tolist()
     )
     anarede.solution["reactive"] = (
-        S.imag * anarede.cte["SBSE"] + anarede.dbarDF["demanda_reativa"].tolist()
+        S.imag * anarede.cte["BMVA"] + anarede.dbarDF["demanda_reativa"].tolist()
     )
 
 
